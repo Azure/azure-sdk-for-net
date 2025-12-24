@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Base object for representing capability. </summary>
+    /// <summary>
+    /// Base object for representing capability
+    /// Serialized Name: CapabilityBase
+    /// </summary>
     public partial class PostgreSqlBaseCapability
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlBaseCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus">
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </param>
+        /// <param name="reason">
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlBaseCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The status of the capability. </summary>
+        /// <summary>
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </summary>
         [WirePath("status")]
         public PostgreSqlFlexbileServerCapabilityStatus? CapabilityStatus { get; }
-        /// <summary> The reason for the capability not being available. </summary>
+        /// <summary>
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </summary>
         [WirePath("reason")]
         public string Reason { get; }
     }

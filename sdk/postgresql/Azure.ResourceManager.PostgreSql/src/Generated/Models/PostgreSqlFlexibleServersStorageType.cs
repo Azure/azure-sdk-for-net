@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Type of storage assigned to a server. Allowed values are Premium_LRS, PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to Premium_LRS. </summary>
+    /// <summary>
+    /// Type of storage assigned to a server. Allowed values are Premium_LRS, PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to Premium_LRS.
+    /// Serialized Name: StorageType
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServersStorageType : IEquatable<PostgreSqlFlexibleServersStorageType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string PremiumV2LRSValue = "PremiumV2_LRS";
         private const string UltraSSDLRSValue = "UltraSSD_LRS";
 
-        /// <summary> Standard Solid State Disk (SSD) backed storage offering consistent performance for general purpose workloads. </summary>
+        /// <summary>
+        /// Premium_LRS
+        /// Serialized Name: StorageType.Premium_LRS
+        /// </summary>
         public static PostgreSqlFlexibleServersStorageType PremiumLRS { get; } = new PostgreSqlFlexibleServersStorageType(PremiumLRSValue);
-        /// <summary> Next generation Solid State Disk (SSD) storage with improved scalability and performance for demanding enterprise workloads. </summary>
+        /// <summary>
+        /// PremiumV2_LRS
+        /// Serialized Name: StorageType.PremiumV2_LRS
+        /// </summary>
         public static PostgreSqlFlexibleServersStorageType PremiumV2LRS { get; } = new PostgreSqlFlexibleServersStorageType(PremiumV2LRSValue);
-        /// <summary> High-end Solid State Disk (SSD) storage designed for extreme IOPS and latency-sensitive applications. </summary>
+        /// <summary>
+        /// UltraSSD_LRS
+        /// Serialized Name: StorageType.UltraSSD_LRS
+        /// </summary>
         public static PostgreSqlFlexibleServersStorageType UltraSSDLRS { get; } = new PostgreSqlFlexibleServersStorageType(UltraSSDLRSValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersStorageType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServersStorageType left, PostgreSqlFlexibleServersStorageType right) => left.Equals(right);

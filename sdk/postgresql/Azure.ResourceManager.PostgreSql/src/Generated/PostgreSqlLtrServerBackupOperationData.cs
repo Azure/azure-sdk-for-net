@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary>
     /// A class representing the PostgreSqlLtrServerBackupOperation data model.
     /// Response for the LTR backup Operation API call
+    /// Serialized Name: BackupsLongTermRetentionOperation
     /// </summary>
     public partial class PostgreSqlLtrServerBackupOperationData : ResourceData
     {
@@ -61,16 +62,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
-        /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
-        /// <param name="backupName"> Name of Backup operation. </param>
-        /// <param name="backupMetadata"> Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc. </param>
-        /// <param name="status"> Service-set extensible enum indicating the status of operation. </param>
-        /// <param name="startOn"> Start time of the operation. </param>
-        /// <param name="endOn"> End time of the operation. </param>
-        /// <param name="percentComplete"> PercentageCompleted. </param>
-        /// <param name="errorCode"> The error code. </param>
-        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="datasourceSizeInBytes">
+        /// Size of datasource in bytes
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.datasourceSizeInBytes
+        /// </param>
+        /// <param name="dataTransferredInBytes">
+        /// Data transferred in bytes
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.dataTransferredInBytes
+        /// </param>
+        /// <param name="backupName">
+        /// Name of Backup operation
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.backupName
+        /// </param>
+        /// <param name="backupMetadata">
+        /// Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.backupMetadata
+        /// </param>
+        /// <param name="status">
+        /// Service-set extensible enum indicating the status of operation
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.status
+        /// </param>
+        /// <param name="startOn">
+        /// Start time of the operation.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End time of the operation.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.endTime
+        /// </param>
+        /// <param name="percentComplete">
+        /// PercentageCompleted
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.percentComplete
+        /// </param>
+        /// <param name="errorCode">
+        /// The error code.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorCode
+        /// </param>
+        /// <param name="errorMessage">
+        /// The error message.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorMessage
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -87,34 +118,64 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Size of datasource in bytes. </summary>
+        /// <summary>
+        /// Size of datasource in bytes
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.datasourceSizeInBytes
+        /// </summary>
         [WirePath("properties.datasourceSizeInBytes")]
         public long? DatasourceSizeInBytes { get; set; }
-        /// <summary> Data transferred in bytes. </summary>
+        /// <summary>
+        /// Data transferred in bytes
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.dataTransferredInBytes
+        /// </summary>
         [WirePath("properties.dataTransferredInBytes")]
         public long? DataTransferredInBytes { get; set; }
-        /// <summary> Name of Backup operation. </summary>
+        /// <summary>
+        /// Name of Backup operation
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.backupName
+        /// </summary>
         [WirePath("properties.backupName")]
         public string BackupName { get; set; }
-        /// <summary> Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc. </summary>
+        /// <summary>
+        /// Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.backupMetadata
+        /// </summary>
         [WirePath("properties.backupMetadata")]
         public string BackupMetadata { get; set; }
-        /// <summary> Service-set extensible enum indicating the status of operation. </summary>
+        /// <summary>
+        /// Service-set extensible enum indicating the status of operation
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.status
+        /// </summary>
         [WirePath("properties.status")]
         public PostgreSqlExecutionStatus? Status { get; set; }
-        /// <summary> Start time of the operation. </summary>
+        /// <summary>
+        /// Start time of the operation.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.startTime
+        /// </summary>
         [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> End time of the operation. </summary>
+        /// <summary>
+        /// End time of the operation.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.endTime
+        /// </summary>
         [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> PercentageCompleted. </summary>
+        /// <summary>
+        /// PercentageCompleted
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.percentComplete
+        /// </summary>
         [WirePath("properties.percentComplete")]
         public double? PercentComplete { get; set; }
-        /// <summary> The error code. </summary>
+        /// <summary>
+        /// The error code.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorCode
+        /// </summary>
         [WirePath("properties.errorCode")]
         public string ErrorCode { get; }
-        /// <summary> The error message. </summary>
+        /// <summary>
+        /// The error message.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorMessage
+        /// </summary>
         [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
     }

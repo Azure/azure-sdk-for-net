@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> List of virtual endpoints. </summary>
+    /// <summary>
+    /// List of virtual endpoints.
+    /// Serialized Name: VirtualEndpointsList
+    /// </summary>
     internal partial class VirtualEndpointsList
     {
         /// <summary>
@@ -46,14 +50,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEndpointsList"/>. </summary>
-        internal VirtualEndpointsList()
+        /// <param name="value">
+        /// The VirtualEndpoint items on this page
+        /// Serialized Name: VirtualEndpointsList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal VirtualEndpointsList(IEnumerable<VirtualEndpointResourceData> value)
         {
-            Value = new ChangeTrackingList<VirtualEndpointResourceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEndpointsList"/>. </summary>
-        /// <param name="value"> List of virtual endpoints. </param>
-        /// <param name="nextLink"> Link used to get the next page of results. </param>
+        /// <param name="value">
+        /// The VirtualEndpoint items on this page
+        /// Serialized Name: VirtualEndpointsList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: VirtualEndpointsList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualEndpointsList(IReadOnlyList<VirtualEndpointResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +79,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of virtual endpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEndpointsList"/> for deserialization. </summary>
+        internal VirtualEndpointsList()
+        {
+        }
+
+        /// <summary>
+        /// The VirtualEndpoint items on this page
+        /// Serialized Name: VirtualEndpointsList.value
+        /// </summary>
         public IReadOnlyList<VirtualEndpointResourceData> Value { get; }
-        /// <summary> Link used to get the next page of results. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: VirtualEndpointsList.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

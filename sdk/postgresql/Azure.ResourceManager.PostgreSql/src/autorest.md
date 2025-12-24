@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: PostgreSql
 namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/b24c97bfc136b01dd46a1c8ddcecd0bb5a1ab152/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/96086ecacd33f5e91557e03cf5838d5f45be9f3b/specification/postgresql/resource-manager/readme.md
 #tag: package-flexibleserver-2025-08-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -21,8 +21,8 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+ show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -60,7 +60,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-  Vcore: VCore
+#   Vcore: VCore
   Vcores: VCores
   UTC: Utc
   Nine5: NinePointFive
@@ -68,26 +68,12 @@ acronym-mapping:
   Ten0: TenPointZero
   Ten2: TenPointTwo
 
-no-property-type-replacement:
-  - PostgreSqlFlexibleServerData
-
 prepend-rp-prefix:
   - Configuration
   - Database
   - FirewallRule
   - Server
-  - ServerKey
-  - ServerSecurityAlertPolicy
-  - ServerVersion
-  - VirtualNetworkRule
-  - AdministratorType
-  - ConfigurationListContent
   - CreateMode
-  - DatabaseListResult
-  - FirewallRuleListResult
-  - LogFile
-  - LogFileListResult
-  - MinimalTlsVersionEnum
   - GeoRedundantBackup
   - InfrastructureEncryption
   - NameAvailabilityRequest
@@ -139,14 +125,12 @@ rename-mapping:
   Server: PostgreSqlFlexibleServer
   PostgresMajorVersion: PostgreSqlFlexibleServerVersion
   MaintenanceWindow: PostgreSqlFlexibleServerMaintenanceWindow
-  BackupForPatch: PostgreSqlFlexibleServerBackupProperties
+  Backup: PostgreSqlFlexibleServerBackupProperties
   Storage: PostgreSqlFlexibleServerStorage
-  SkuForPatch: PostgreSqlFlexibleServerSku
+  Sku: PostgreSqlFlexibleServerSku
   Network: PostgreSqlFlexibleServerNetwork
-  HighAvailability: PostgreSqlFlexibleServerHighAvailability
-#   HighAvailabilityMode: PostgreSqlFlexibleServerHighAvailabilityMode
-#   PostgreSqlFlexibleServerHighAvailabilityMode: PostgreSqlFlexibleServerHAMode
   ServerListResult: PostgreSqlFlexibleServerListResult
+  HighAvailability: PostgreSqlFlexibleServerHighAvailability
   ServerState: PostgreSqlFlexibleServerState
   FirewallRuleListResult: PostgreSqlFlexibleServerFirewallRuleListResult
   DatabaseListResult: PostgreSqlFlexibleServerDatabaseListResult
@@ -223,7 +207,6 @@ rename-mapping:
   MigrationResourceListResult: PostgreSqlMigrationResourceListResult
   MigrationNameAvailability: PostgreSqlCheckMigrationNameAvailabilityContent
   MigrationNameAvailability.nameAvailable: IsNameAvailable
-  MigrationSecretParametersForPatch: PostgreSqlMigrationSecretParametersForUpdate
   MigrationSecretParameters: PostgreSqlMigrationSecretParameters
   MigrationState: PostgreSqlMigrationState
   MigrationStatus: PostgreSqlMigrationStatus
@@ -247,18 +230,37 @@ rename-mapping:
   DatabaseMigrationState: DbMigrationStatus
   TuningOption: FooTuningOption
   UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
+  HighAvailabilityMode: PostgreSqlFlexibleServerHAMode
 
 override-operation-name:
-  CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
-  CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation
-  CheckMigrationNameAvailability: CheckPostgreSqlMigrationNameAvailability
-  LogFiles_ListByServer: GetPostgreSqlFlexibleServerLogFiles
+  PrivateDnsZoneSuffix_Get: ExecuteGetPrivateDnsZoneSuffix
+  VirtualNetworkSubnetUsage_List: ExecuteVirtualNetworkSubnetUsage
+  NameAvailability_CheckWithLocation: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation
+  NameAvailability_CheckGlobally: CheckPostgreSqlFlexibleServerNameAvailability
+  BackupsLongTermRetention_CheckPrerequisites: TriggerLtrPreBackupFlexibleServer
+  Migrations_CheckNameAvailability: CheckPostgreSqlMigrationNameAvailability
+  BackupsLongTermRetention_Start: StartLtrBackupFlexibleServer
+  CapturedLogs_ListByServer: GetPostgreSqlFlexibleServerLogFiles
+  CapabilitiesByServer_List: GetServerCapabilities
+  CapabilitiesByLocation_List: ExecuteLocationBasedCapabilities
+
+no-property-type-replacement:
+  - PostgreSqlFlexibleServerUserAssignedIdentity
 
 directive:
   - from: swagger-document
     where: $.definitions.ServerPropertiesForPatch
     transform: >
       $.properties.location = {"type": "string", "description": "The location the resource resides in."};
+      $.properties.backup['$ref'] = '#/definitions/Backup';
+      $.properties.maintenanceWindow['$ref'] = '#/definitions/MaintenanceWindow';
+      $.properties.highAvailability['$ref'] = '#/definitions/HighAvailability';
+      $.properties.authConfig['$ref'] = '#/definitions/AuthConfig';
+      $.properties.administratorLogin['readOnly'] = false;
+  - from: swagger-document
+    where: $.definitions.ServerForPatch
+    transform: >
+      $.properties.sku['$ref'] = '#/definitions/Sku';
   - from: swagger-document
     where: $.definitions.CheckNameAvailabilityRequest
     transform: >
@@ -268,4 +270,47 @@ directive:
     transform: >
       const parameters = $.parameters;
       $.parameters[parameters.length-1].schema["$ref"] = "#/definitions/Configuration"
+  - from: swagger-document
+    where: $.definitions.MigrationPropertiesForPatch
+    transform: >
+      $.properties.secretParameters['$ref'] = '#/definitions/MigrationSecretParameters';
+  - from: swagger-document
+    where: $.definitions.DataEncryption
+    transform: >
+      $.properties.primaryEncryptionKeyStatus['readOnly'] = false;
+      $.properties.geoBackupEncryptionKeyStatus['readOnly'] = false;
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $['UserIdentity'] = {
+          "description": "User assigned managed identity associated with a flexible server.",
+          "type": "object",
+          "properties": {
+            "principalId": {
+              "type": "string",
+              "description": "Identifier of the object of the service principal associated to the user assigned managed identity."
+            },
+            "clientId": {
+              "type": "string",
+              "description": "Identifier of the client of the service principal associated to the user assigned managed identity."
+            }
+          }
+        };
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $['UserAssignedIdentityMap'] = {
+          "type": "object",
+          "description": "Map of user assigned managed identities.",
+          "additionalProperties": {
+            "$ref": "#/definitions/UserIdentity"
+          }
+        };
+  - from: swagger-document
+    where: $.definitions.UserAssignedIdentity
+    transform: >
+      $.properties['userAssignedIdentities'] = {
+          "$ref": "#/definitions/UserAssignedIdentityMap",
+          "description": "Map of user assigned managed identities."
+        };
 ```

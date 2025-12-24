@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Virtual network subnet usage parameter. </summary>
+    /// <summary>
+    /// Virtual network subnet usage parameter
+    /// Serialized Name: VirtualNetworkSubnetUsageParameter
+    /// </summary>
     public partial class PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/>. </summary>
-        /// <param name="virtualNetworkArmResourceId"> Virtual network resource id. </param>
+        /// <param name="virtualNetworkArmResourceId">
+        /// Virtual network resource id.
+        /// Serialized Name: VirtualNetworkSubnetUsageParameter.virtualNetworkArmResourceId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(ResourceIdentifier virtualNetworkArmResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Virtual network resource id. </summary>
+        /// <summary>
+        /// Virtual network resource id.
+        /// Serialized Name: VirtualNetworkSubnetUsageParameter.virtualNetworkArmResourceId
+        /// </summary>
         [WirePath("virtualNetworkArmResourceId")]
         public ResourceIdentifier VirtualNetworkArmResourceId { get; set; }
     }

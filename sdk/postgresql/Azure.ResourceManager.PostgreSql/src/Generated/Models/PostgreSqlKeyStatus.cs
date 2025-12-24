@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the primary storage associated to the server. </summary>
+    /// <summary>
+    /// Status of key used by a server configured with data encryption based on customer managed key, to encrypt the primary storage associated to the server.
+    /// Serialized Name: EncryptionKeyStatus
+    /// </summary>
     public readonly partial struct PostgreSqlKeyStatus : IEquatable<PostgreSqlKeyStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ValidValue = "Valid";
         private const string InvalidValue = "Invalid";
 
-        /// <summary> Key is valid and can be used for encryption. </summary>
+        /// <summary>
+        /// Valid
+        /// Serialized Name: EncryptionKeyStatus.Valid
+        /// </summary>
         public static PostgreSqlKeyStatus Valid { get; } = new PostgreSqlKeyStatus(ValidValue);
-        /// <summary> Key is invalid and cannot be used for encryption. Possible causes include key deletion, permission changes, key being disabled, key type not supported, or current date being outside of validity period associated to the key. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: EncryptionKeyStatus.Invalid
+        /// </summary>
         public static PostgreSqlKeyStatus Invalid { get; } = new PostgreSqlKeyStatus(InvalidValue);
         /// <summary> Determines if two <see cref="PostgreSqlKeyStatus"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlKeyStatus left, PostgreSqlKeyStatus right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> State of migration. </summary>
+    /// <summary>
+    /// State of migration.
+    /// Serialized Name: MigrationState
+    /// </summary>
     public readonly partial struct PostgreSqlMigrationState : IEquatable<PostgreSqlMigrationState>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ValidationFailedValue = "ValidationFailed";
         private const string CleaningUpValue = "CleaningUp";
 
-        /// <summary> Migration is in progress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: MigrationState.InProgress
+        /// </summary>
         public static PostgreSqlMigrationState InProgress { get; } = new PostgreSqlMigrationState(InProgressValue);
-        /// <summary> Migration is waiting for user action. </summary>
+        /// <summary>
+        /// WaitingForUserAction
+        /// Serialized Name: MigrationState.WaitingForUserAction
+        /// </summary>
         public static PostgreSqlMigrationState WaitingForUserAction { get; } = new PostgreSqlMigrationState(WaitingForUserActionValue);
-        /// <summary> Migration has been canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: MigrationState.Canceled
+        /// </summary>
         public static PostgreSqlMigrationState Canceled { get; } = new PostgreSqlMigrationState(CanceledValue);
-        /// <summary> Migration has failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: MigrationState.Failed
+        /// </summary>
         public static PostgreSqlMigrationState Failed { get; } = new PostgreSqlMigrationState(FailedValue);
-        /// <summary> Migration has succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: MigrationState.Succeeded
+        /// </summary>
         public static PostgreSqlMigrationState Succeeded { get; } = new PostgreSqlMigrationState(SucceededValue);
-        /// <summary> Validation for migration has failed. </summary>
+        /// <summary>
+        /// ValidationFailed
+        /// Serialized Name: MigrationState.ValidationFailed
+        /// </summary>
         public static PostgreSqlMigrationState ValidationFailed { get; } = new PostgreSqlMigrationState(ValidationFailedValue);
-        /// <summary> Migration is cleaning up resources. </summary>
+        /// <summary>
+        /// CleaningUp
+        /// Serialized Name: MigrationState.CleaningUp
+        /// </summary>
         public static PostgreSqlMigrationState CleaningUp { get; } = new PostgreSqlMigrationState(CleaningUpValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationState left, PostgreSqlMigrationState right) => left.Equals(right);

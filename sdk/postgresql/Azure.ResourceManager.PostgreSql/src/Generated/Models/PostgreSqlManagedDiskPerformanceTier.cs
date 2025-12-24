@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Storage tier of a server. </summary>
+    /// <summary>
+    /// Storage tier of a server.
+    /// Serialized Name: AzureManagedDiskPerformanceTier
+    /// </summary>
     public readonly partial struct PostgreSqlManagedDiskPerformanceTier : IEquatable<PostgreSqlManagedDiskPerformanceTier>
     {
         private readonly string _value;
@@ -37,33 +40,75 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string P70Value = "P70";
         private const string P80Value = "P80";
 
-        /// <summary> Entry-level SSD for minimal IOPS, ideal for light development or testing workloads. </summary>
+        /// <summary>
+        /// P1
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P1
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P1 { get; } = new PostgreSqlManagedDiskPerformanceTier(P1Value);
-        /// <summary> Slightly higher IOPS for small-scale applications needing consistent low latency. </summary>
+        /// <summary>
+        /// P2
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P2
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P2 { get; } = new PostgreSqlManagedDiskPerformanceTier(P2Value);
-        /// <summary> Balanced performance for basic production workloads with moderate throughput. </summary>
+        /// <summary>
+        /// P3
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P3
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P3 { get; } = new PostgreSqlManagedDiskPerformanceTier(P3Value);
-        /// <summary> Enhanced IOPS for growing apps with predictable performance needs. </summary>
+        /// <summary>
+        /// P4
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P4
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P4 { get; } = new PostgreSqlManagedDiskPerformanceTier(P4Value);
-        /// <summary> Mid-tier SSD for steady workloads requiring reliable throughput and latency. </summary>
+        /// <summary>
+        /// P6
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P6
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P6 { get; } = new PostgreSqlManagedDiskPerformanceTier(P6Value);
-        /// <summary> Popular choice for general-purpose production workloads with scalable performance. </summary>
+        /// <summary>
+        /// P10
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P10
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P10 { get; } = new PostgreSqlManagedDiskPerformanceTier(P10Value);
-        /// <summary> High IOPS tier for demanding apps with frequent read/write operations. </summary>
+        /// <summary>
+        /// P15
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P15
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P15 { get; } = new PostgreSqlManagedDiskPerformanceTier(P15Value);
-        /// <summary> Entry point for high-performance Solid State Disks (SSDs), suitable for small-scale I/O-intensive workloads. </summary>
+        /// <summary>
+        /// P20
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P20
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P20 { get; } = new PostgreSqlManagedDiskPerformanceTier(P20Value);
-        /// <summary> Balanced tier for moderate throughput and latency-sensitive applications. </summary>
+        /// <summary>
+        /// P30
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P30
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P30 { get; } = new PostgreSqlManagedDiskPerformanceTier(P30Value);
-        /// <summary> Enhanced performance for growing production workloads with consistent IOPS demands. </summary>
+        /// <summary>
+        /// P40
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P40
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P40 { get; } = new PostgreSqlManagedDiskPerformanceTier(P40Value);
-        /// <summary> Optimized for enterprise-grade applications needing sustained high throughput. </summary>
+        /// <summary>
+        /// P50
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P50
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P50 { get; } = new PostgreSqlManagedDiskPerformanceTier(P50Value);
-        /// <summary> High-capacity tier for large databases and analytics workloads with elevated IOPS. </summary>
+        /// <summary>
+        /// P60
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P60
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P60 { get; } = new PostgreSqlManagedDiskPerformanceTier(P60Value);
-        /// <summary> Designed for mission-critical systems requiring ultra-low latency and high concurrency. </summary>
+        /// <summary>
+        /// P70
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P70
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P70 { get; } = new PostgreSqlManagedDiskPerformanceTier(P70Value);
-        /// <summary> Top-tier SSD for maximum IOPS and throughput, ideal for the most demanding workloads. </summary>
+        /// <summary>
+        /// P80
+        /// Serialized Name: AzureManagedDiskPerformanceTier.P80
+        /// </summary>
         public static PostgreSqlManagedDiskPerformanceTier P80 { get; } = new PostgreSqlManagedDiskPerformanceTier(P80Value);
         /// <summary> Determines if two <see cref="PostgreSqlManagedDiskPerformanceTier"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlManagedDiskPerformanceTier left, PostgreSqlManagedDiskPerformanceTier right) => left.Equals(right);

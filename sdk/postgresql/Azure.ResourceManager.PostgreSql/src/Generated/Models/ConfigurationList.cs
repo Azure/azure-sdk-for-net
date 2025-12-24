@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> List of configurations (also known as server parameters). </summary>
+    /// <summary>
+    /// List of configurations (also known as server parameters).
+    /// Serialized Name: ConfigurationList
+    /// </summary>
     internal partial class ConfigurationList
     {
         /// <summary>
@@ -46,14 +50,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationList"/>. </summary>
-        internal ConfigurationList()
+        /// <param name="value">
+        /// The Configuration items on this page
+        /// Serialized Name: ConfigurationList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ConfigurationList(IEnumerable<PostgreSqlFlexibleServerConfigurationData> value)
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServerConfigurationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationList"/>. </summary>
-        /// <param name="value"> List of configurations (also known as server parameters). </param>
-        /// <param name="nextLink"> Link used to get the next page of results. </param>
+        /// <param name="value">
+        /// The Configuration items on this page
+        /// Serialized Name: ConfigurationList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: ConfigurationList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConfigurationList(IReadOnlyList<PostgreSqlFlexibleServerConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +79,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of configurations (also known as server parameters). </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationList"/> for deserialization. </summary>
+        internal ConfigurationList()
+        {
+        }
+
+        /// <summary>
+        /// The Configuration items on this page
+        /// Serialized Name: ConfigurationList.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerConfigurationData> Value { get; }
-        /// <summary> Link used to get the next page of results. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: ConfigurationList.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // invoke the operation
             string configurationName = "constraint_exclusion";
-            ConfigurationForUpdate configurationForUpdate = new ConfigurationForUpdate
+            PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent content = new PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent
             {
                 Value = "on",
                 Source = "user-override",
             };
-            ArmOperation<PostgreSqlFlexibleServerConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, configurationForUpdate);
+            ArmOperation<PostgreSqlFlexibleServerConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, content);
             PostgreSqlFlexibleServerConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

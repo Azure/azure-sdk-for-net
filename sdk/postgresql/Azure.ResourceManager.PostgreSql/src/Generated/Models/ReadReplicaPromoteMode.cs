@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Type of operation to apply on the read replica. This property is write only. Standalone means that the read replica will be promoted to a standalone server, and will become a completely independent entity from the replication set. Switchover means that the read replica will roles with the primary server. </summary>
+    /// <summary>
+    /// Type of operation to apply on the read replica. This property is write only. Standalone means that the read replica will be promoted to a standalone server, and will become a completely independent entity from the replication set. Switchover means that the read replica will roles with the primary server.
+    /// Serialized Name: ReadReplicaPromoteMode
+    /// </summary>
     public readonly partial struct ReadReplicaPromoteMode : IEquatable<ReadReplicaPromoteMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string StandaloneValue = "Standalone";
         private const string SwitchoverValue = "Switchover";
 
-        /// <summary> Read replica will become an independent server. </summary>
+        /// <summary>
+        /// Read replica will become an independent server.
+        /// Serialized Name: ReadReplicaPromoteMode.Standalone
+        /// </summary>
         public static ReadReplicaPromoteMode Standalone { get; } = new ReadReplicaPromoteMode(StandaloneValue);
-        /// <summary> Read replica will swap roles with primary server. </summary>
+        /// <summary>
+        /// Read replica will swap roles with primary server.
+        /// Serialized Name: ReadReplicaPromoteMode.Switchover
+        /// </summary>
         public static ReadReplicaPromoteMode Switchover { get; } = new ReadReplicaPromoteMode(SwitchoverValue);
         /// <summary> Determines if two <see cref="ReadReplicaPromoteMode"/> values are the same. </summary>
         public static bool operator ==(ReadReplicaPromoteMode left, ReadReplicaPromoteMode right) => left.Equals(right);
