@@ -25,7 +25,7 @@ This pattern enables:
 - **File**: `ExtensionProvider.cs`
 - **Purpose**: Generates the public static extension class (`{ServiceName}Extensions`)
 - **Responsibilities**:
-  - Creates `GetCachedClient` methods to instantiate mockable providers
+  - Generates `GetCachedClient` methods to instantiate mockable providers
   - Generates forwarding methods that delegate to mockable providers
 
 **Methods Forwarded**: All public methods from mockable providers are forwarded, including:
