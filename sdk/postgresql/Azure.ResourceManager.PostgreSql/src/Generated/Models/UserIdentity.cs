@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary>
-    /// User assigned managed identity associated with a flexible server.
+    /// User assigned managed identity associated with a server.
     /// Serialized Name: UserIdentity
     /// </summary>
     public partial class UserIdentity

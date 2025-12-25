@@ -74,51 +74,22 @@ prepend-rp-prefix:
   - FirewallRule
   - Server
   - CreateMode
-  - GeoRedundantBackup
-  - InfrastructureEncryption
-  - NameAvailabilityRequest
-  - PerformanceTierListResult
-  - PerformanceTierProperties
-  - PerformanceTierServiceLevelObjectives
-  - PrivateEndpointProvisioningState
-  - PrivateLinkServiceConnectionStateStatus
-  - PublicNetworkAccessEnum
   - Replica
   - ReplicationState
-  - StorageProfile
-  - ServerPropertiesForCreate
-  - ServerPropertiesForDefaultCreate
-  - ServerPropertiesForRestore
-  - ServerPropertiesForGeoRestore
-  - ServerPropertiesForReplica
-  - SecurityAlertPolicyName
-  - ServerKeyListResult
-  - ServerKeyType
-  - ServerListResult
-  - ServerPrivateEndpointConnection
-  - ServerPrivateEndpointConnectionProperties
-  - ServerPrivateLinkServiceConnectionStateProperty
-  - ServerSecurityAlertPolicyListResult
-  - ServerSecurityAlertPolicyState
   - ServerSku
   - ServerState
   - SourceType
-  - SslEnforcementEnum
   - SslMode
-  - StorageAutogrow
   - StorageType
   - ValidationDetails
   - ValidationMessage
   - ValidationState
-  - VirtualNetworkRuleListResult
-  - VirtualNetworkRuleState
 
 rename-mapping:
   Configuration: PostgreSqlFlexibleServerConfiguration
   ConfigurationDataType: PostgreSqlFlexibleServerConfigurationDataType
   CreateModeForPatch: PostgreSqlFlexibleServerCreateModeForUpdate
   FailoverMode: PostgreSqlFlexibleServerFailoverMode
-  FlexibleServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
   GeographicallyRedundantBackup: PostgreSqlFlexibleServerGeoRedundantBackupEnum
   Database: PostgreSqlFlexibleServerDatabase
   FirewallRule: PostgreSqlFlexibleServerFirewallRule
@@ -129,20 +100,14 @@ rename-mapping:
   Storage: PostgreSqlFlexibleServerStorage
   Sku: PostgreSqlFlexibleServerSku
   Network: PostgreSqlFlexibleServerNetwork
-  ServerListResult: PostgreSqlFlexibleServerListResult
   HighAvailability: PostgreSqlFlexibleServerHighAvailability
   ServerState: PostgreSqlFlexibleServerState
-  FirewallRuleListResult: PostgreSqlFlexibleServerFirewallRuleListResult
-  DatabaseListResult: PostgreSqlFlexibleServerDatabaseListResult
-  ConfigurationListResult: PostgreSqlFlexibleServerConfigurationListResult
   VirtualNetworkSubnetUsageParameter: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter
   DelegatedSubnetUsage: PostgreSqlFlexibleServerDelegatedSubnetUsage
   VirtualNetworkSubnetUsageModel: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
   ServerVersionCapability: PostgreSqlFlexibleServerServerVersionCapability
-  ServerVersionCapability.supportedVcores: SupportedVCores
   StorageEditionCapability: PostgreSqlFlexibleServerStorageEditionCapability
   ServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
-  CapabilitiesListResult: PostgreSqlFlexibleServerCapabilitiesListResult
   CheckNameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityContent
   CheckNameAvailabilityResponse: PostgreSqlFlexibleServerNameAvailabilityResponse
   CheckNameAvailabilityReason: PostgreSqlFlexibleServerNameUnavailableReason
@@ -158,9 +123,7 @@ rename-mapping:
   ServerPublicNetworkAccessState: PostgreSqlFlexibleServerPublicNetworkAccessState
   StorageEditionCapability.supportedStorageMb: SupportedStorageCapabilities
   Server.properties.pointInTimeUTC: PointInTimeUtc
-  ActiveDirectoryAdministrator: PostgreSqlFlexibleServerActiveDirectoryAdministrator
   MicrosoftEntraAuth: PostgreSqlFlexibleServerActiveDirectoryAuthEnum
-  AdministratorListResult: PostgreSqlFlexibleServerAdministratorListResult
   DataEncryptionType: PostgreSqlFlexibleServerKeyType
   AuthConfig: PostgreSqlFlexibleServerAuthConfig
   DataEncryption: PostgreSqlFlexibleServerDataEncryption
@@ -171,7 +134,6 @@ rename-mapping:
   PrincipalType: PostgreSqlFlexibleServerPrincipalType
   ReplicationRole: PostgreSqlFlexibleServerReplicationRole
   BackupAutomaticAndOnDemand: PostgreSqlFlexibleServerBackup
-  ServerBackupListResult: PostgreSqlFlexibleServerBackupListResult
   StorageTierCapability: PostgreSqlFlexibleServerStorageTierCapability
   AdminCredentials: PostgreSqlMigrationAdminCredentials
   BackupSettings: PostgreSqlFlexibleServerBackupSettings
@@ -187,7 +149,6 @@ rename-mapping:
   Capability.fastProvisioningSupported: SupportFastProvisioning
   Capability: PostgreSqlFlexibleServerCapabilityProperties
   CapturedLog: PostgreSqlFlexibleServerLogFile
-  LogFileListResult: PostgreSqlFlexibleServerLogFileListResult
   GeographicallyRedundantBackupSupport: PostgreSqlFlexibleServerGeoBackupSupported
   ZoneRedundantHighAvailabilitySupport: PostgreSqlFlexibleServerZoneRedundantHaSupported
   ZoneRedundantHighAvailabilityAndGeographicallyRedundantBackupSupport: PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported
@@ -204,7 +165,6 @@ rename-mapping:
   MigrationListFilter: PostgreSqlMigrationListFilter
   MigrationMode: PostgreSqlMigrationMode
   MigrationNameAvailabilityReason: PostgreSqlMigrationNameUnavailableReason
-  MigrationResourceListResult: PostgreSqlMigrationResourceListResult
   MigrationNameAvailability: PostgreSqlCheckMigrationNameAvailabilityContent
   MigrationNameAvailability.nameAvailable: IsNameAvailable
   MigrationSecretParameters: PostgreSqlMigrationSecretParameters
@@ -228,9 +188,9 @@ rename-mapping:
   MigrationDatabaseState: MigrationDbState
   MigrateRolesAndPermissions: MigrateRolesEnum
   DatabaseMigrationState: DbMigrationStatus
-  TuningOption: FooTuningOption
   UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
   HighAvailabilityMode: PostgreSqlFlexibleServerHAMode
+#   UserIdentity:
 
 override-operation-name:
   PrivateDnsZoneSuffix_Get: ExecuteGetPrivateDnsZoneSuffix
@@ -251,7 +211,6 @@ directive:
   - from: swagger-document
     where: $.definitions.ServerPropertiesForPatch
     transform: >
-      $.properties.location = {"type": "string", "description": "The location the resource resides in."};
       $.properties.backup['$ref'] = '#/definitions/Backup';
       $.properties.maintenanceWindow['$ref'] = '#/definitions/MaintenanceWindow';
       $.properties.highAvailability['$ref'] = '#/definitions/HighAvailability';
@@ -261,6 +220,7 @@ directive:
     where: $.definitions.ServerForPatch
     transform: >
       $.properties.sku['$ref'] = '#/definitions/Sku';
+      $.properties.location = {"type": "string", "description": "The location the resource resides in."};
   - from: swagger-document
     where: $.definitions.CheckNameAvailabilityRequest
     transform: >
@@ -279,38 +239,4 @@ directive:
     transform: >
       $.properties.primaryEncryptionKeyStatus['readOnly'] = false;
       $.properties.geoBackupEncryptionKeyStatus['readOnly'] = false;
-  - from: swagger-document
-    where: $.definitions
-    transform: >
-      $['UserIdentity'] = {
-          "description": "User assigned managed identity associated with a flexible server.",
-          "type": "object",
-          "properties": {
-            "principalId": {
-              "type": "string",
-              "description": "Identifier of the object of the service principal associated to the user assigned managed identity."
-            },
-            "clientId": {
-              "type": "string",
-              "description": "Identifier of the client of the service principal associated to the user assigned managed identity."
-            }
-          }
-        };
-  - from: swagger-document
-    where: $.definitions
-    transform: >
-      $['UserAssignedIdentityMap'] = {
-          "type": "object",
-          "description": "Map of user assigned managed identities.",
-          "additionalProperties": {
-            "$ref": "#/definitions/UserIdentity"
-          }
-        };
-  - from: swagger-document
-    where: $.definitions.UserAssignedIdentity
-    transform: >
-      $.properties['userAssignedIdentities'] = {
-          "$ref": "#/definitions/UserAssignedIdentityMap",
-          "description": "Map of user assigned managed identities."
-        };
 ```
