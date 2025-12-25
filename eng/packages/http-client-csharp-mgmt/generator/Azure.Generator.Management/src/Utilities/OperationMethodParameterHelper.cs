@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
@@ -23,6 +24,7 @@ namespace Azure.Generator.Management.Utilities
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
+            var scopeParameterTransformed = false;
 
             // Add WaitUntil parameter for long-running operations
             if (forceLro || serviceMethod.IsLongRunningOperation())
@@ -50,13 +52,25 @@ namespace Azure.Generator.Management.Utilities
                     continue;
                 }
 
+                // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope
+                // This is the scope parameter for non-resource operations
+                if (enclosingTypeProvider is MockableArmClientProvider &&
+                    !scopeParameterTransformed &&
+                    parameter.Type is InputPrimitiveType primitiveType &&
+                    primitiveType.Kind == InputPrimitiveTypeKind.String)
+                {
+                    // Update the parameter to use ResourceIdentifier type and "scope" name while preserving wire info
+                    outputParameter.Update(name: "scope", description: $"The scope that the resource will apply against.", type: typeof(ResourceIdentifier));
+                    scopeParameterTransformed = true;
+                }
+
                 if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
                 {
                     outputParameter.Update(name: "data");
                 }
 
-                // Rename body parameters for resource/resourcecollection operations
-                if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider) &&
+                // Rename body parameters for resource/resourcecollection/mockablearmclient operations
+                if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider or MockableArmClientProvider) &&
                     (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
                 {
                     var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);

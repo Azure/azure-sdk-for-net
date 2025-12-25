@@ -6,7 +6,7 @@
     <Folder Include="SessionRecords\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" VersionOverride="1.0.0" />
+    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
     <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
   <ItemGroup>
