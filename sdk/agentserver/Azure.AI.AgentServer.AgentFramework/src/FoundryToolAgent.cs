@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Runtime.CompilerServices;
+using System.Reflection;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
 
@@ -11,11 +12,13 @@ internal sealed class FoundryToolAgent : DelegatingAIAgent, IAsyncDisposable
 {
     private readonly ToolClient _toolClient;
     private readonly bool _innerAgentAddsDefaultTools;
+    private static readonly PropertyInfo? s_innerAgentProperty =
+        typeof(DelegatingAIAgent).GetProperty("InnerAgent", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
     public FoundryToolAgent(AIAgent innerAgent, ToolClient toolClient) : base(innerAgent)
     {
         _toolClient = toolClient ?? throw new ArgumentNullException(nameof(toolClient));
-        _innerAgentAddsDefaultTools = innerAgent.GetService<ChatClientAgent>() is not null;
+        _innerAgentAddsDefaultTools = IsOrWrapsChatClientAgent(innerAgent);
     }
 
     public override async Task<AgentRunResponse> RunAsync(
@@ -45,6 +48,12 @@ internal sealed class FoundryToolAgent : DelegatingAIAgent, IAsyncDisposable
 
     private async Task<AgentRunOptions?> CreateRunOptionsAsync(AgentRunOptions? options, CancellationToken cancellationToken)
     {
+        var isChatClientAgent = IsOrWrapsChatClientAgent(InnerAgent);
+        if (!isChatClientAgent)
+        {
+            return options;
+        }
+
         var foundryTools = await _toolClient.ListToolsAsync(cancellationToken).ConfigureAwait(false);
         var requestTools = (options as ChatClientAgentRunOptions)?.ChatOptions?.Tools;
         var agentTools = InnerAgent.GetService<ChatOptions>()?.Tools;
@@ -128,5 +137,34 @@ internal sealed class FoundryToolAgent : DelegatingAIAgent, IAsyncDisposable
         }
 
         return runOptions;
+    }
+
+    private static bool IsOrWrapsChatClientAgent(AIAgent agent) => TryFindChatClientAgent(agent) is not null;
+
+    private static ChatClientAgent? TryFindChatClientAgent(AIAgent agent)
+    {
+        var current = agent;
+        while (current is not null)
+        {
+            if (current is ChatClientAgent chatClientAgent)
+            {
+                return chatClientAgent;
+            }
+
+            if (current is DelegatingAIAgent delegating)
+            {
+                current = GetInnerAgent(delegating);
+                continue;
+            }
+
+            return null;
+        }
+
+        return null;
+    }
+
+    private static AIAgent? GetInnerAgent(DelegatingAIAgent agent)
+    {
+        return s_innerAgentProperty?.GetValue(agent) as AIAgent;
     }
 }
