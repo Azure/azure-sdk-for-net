@@ -120,16 +120,21 @@ export async function createCSharpSdkContext(
  * @returns A normalized schema object suitable for deep comparison
  */
 export function normalizeSchemaForComparison(schema: ArmProviderSchema) {
-  // it is known issue that the resources.metadata.resourceName might be different therefore we need to ignore it
-  for (const resource of schema.resources) {
+  // Work on a deep copy to avoid mutating the original schema used elsewhere in tests.
+  const normalizedSchema: ArmProviderSchema = JSON.parse(JSON.stringify(schema));
+
+  // it is a known issue that the resources.metadata.resourceName might be different therefore we need to ignore it
+  for (const resource of normalizedSchema.resources) {
     resource.metadata.resourceName = "<normalized>";
   }
 
   // sort resources by resourceIdPattern
-  schema.resources.sort((a, b) => a.metadata.resourceIdPattern.localeCompare(b.metadata.resourceIdPattern));
+  normalizedSchema.resources.sort((a, b) =>
+    a.metadata.resourceIdPattern.localeCompare(b.metadata.resourceIdPattern)
+  );
 
   // sort nonResourceMethods by methodId
-  schema.nonResourceMethods.sort((a, b) => a.methodId.localeCompare(b.methodId));
+  normalizedSchema.nonResourceMethods.sort((a, b) => a.methodId.localeCompare(b.methodId));
 
-  return schema;
+  return normalizedSchema;
 }

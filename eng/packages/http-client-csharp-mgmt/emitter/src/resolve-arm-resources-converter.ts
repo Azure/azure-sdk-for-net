@@ -176,9 +176,9 @@ export function resolveArmResources(
   // now we assign one of the most matched resourceInstancePath in above candidates to each list operation's resourceScope
   for (const listOp of listOperations) {
     const validCandidates: Array<string[]> = [];
-    const listOpSegments = listOp.operationPath.split('/').filter(s => s.length > 0);
+    const listOperationPathSegments = listOp.operationPath.split('/').filter(s => s.length > 0);
     for (const candidatePath of resourceInstancePaths) {
-      if (canBeListResourceScope(listOpSegments, candidatePath)) {
+      if (canBeListResourceScope(listOperationPathSegments, candidatePath)) {
         validCandidates.push(candidatePath);
       }
     }
@@ -238,8 +238,11 @@ function convertResolvedResourceToMetadata(
             operationScope: resourceScope,
             resourceScope: resolvedResource.resourceInstancePath
           });
+          // Use the first read operation's path as the resource ID pattern
+          if (!resourceIdPattern) {
+            resourceIdPattern = readOp.path;
+          }
         }
-        resourceIdPattern = readOp.path;
       }
     }
 
@@ -298,10 +301,9 @@ function convertResolvedResourceToMetadata(
           methodId,
           kind: ResourceOperationKind.List,
           operationPath: listOp.path,
-          // TODO: now resolveArmResources is not returning therefore we have to calculate this.
+          // TODO: resolveArmResources is not returning the operation scope for list operations, so we calculate it from the path.
           operationScope: getOperationScopeFromPath(listOp.path),
-          // TODO: now resolveArmResources is not returning therefore we have to calculate this.
-          // this should be polulated later
+          // TODO: resolveArmResources is not returning the resource scope for list operations, so this should be populated later.
           resourceScope: undefined
         });
       }
@@ -439,7 +441,7 @@ function extractSingletonName(path: string): string | undefined {
 }
 
 function canBeListResourceScope(listPathSegments: string[], resourceInstancePathSegments: string[]): boolean {
-  // then we check if resourceInstancePath is a prefix of listPath
+  // Check if resourceInstancePath is a prefix of listPath
   if (listPathSegments.length < resourceInstancePathSegments.length) {
     return false;
   }

@@ -901,18 +901,11 @@ interface Employees {
     ok(resolvedSchema);
     ok(resolvedSchema.resources);
 
-    // Verify tenant-scoped resources
-    const resolvedEmployee = resolvedSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments/employees"
+    // Compare both schemas using deepStrictEqual
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
     );
-    ok(resolvedEmployee, "Employee resource must exist in resolved schema");
-    strictEqual(resolvedEmployee.metadata.resourceScope, "Tenant");
-
-    const resolvedCompany = resolvedSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies"
-    );
-    ok(resolvedCompany, "Company resource must exist in resolved schema");
-    strictEqual(resolvedCompany.metadata.resourceScope, "Tenant");
   });
 
   it("resource scope determined from Read method when no explicit decorator", async () => {
