@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorLogin))
@@ -132,11 +137,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("cluster"u8);
                 writer.WriteObjectValue(Cluster, options);
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -178,6 +178,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerSku sku = default;
             PostgreSqlFlexibleServerUserAssignedIdentity identity = default;
             IDictionary<string, string> tags = default;
+            AzureLocation? location = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
             PostgreSqlFlexibleServerVersion? version = default;
@@ -193,7 +194,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServersReplica replica = default;
             PostgreSqlFlexibleServerNetwork network = default;
             Cluster cluster = default;
-            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,6 +228,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -362,15 +371,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             cluster = Cluster.DeserializeCluster(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("location"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            location = new AzureLocation(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -384,6 +384,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 sku,
                 identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 administratorLogin,
                 administratorLoginPassword,
                 version,
@@ -399,7 +400,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 replica,
                 network,
                 cluster,
-                location,
                 serializedAdditionalRawData);
         }
 

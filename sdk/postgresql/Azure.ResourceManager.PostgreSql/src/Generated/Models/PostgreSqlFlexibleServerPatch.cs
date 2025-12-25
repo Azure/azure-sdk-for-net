@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Application-specific metadata in the form of key-value pairs.
         /// Serialized Name: ServerForPatch.tags
         /// </param>
+        /// <param name="location">
+        /// The location the resource resides in.
+        /// Serialized Name: ServerForPatch.location
+        /// </param>
         /// <param name="administratorLogin">
         /// Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted.
         /// Serialized Name: ServerForPatch.properties.administratorLogin
@@ -128,16 +132,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Cluster properties of a server.
         /// Serialized Name: ServerForPatch.properties.cluster
         /// </param>
-        /// <param name="location">
-        /// The location the resource resides in.
-        /// Serialized Name: ServerForPatch.properties.location
-        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, string availabilityZone, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, Cluster cluster, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, IDictionary<string, string> tags, AzureLocation? location, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, string availabilityZone, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, Cluster cluster, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
             Tags = tags;
+            Location = location;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
@@ -153,7 +154,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Replica = replica;
             Network = network;
             Cluster = cluster;
-            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -175,6 +175,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+        /// <summary>
+        /// The location the resource resides in.
+        /// Serialized Name: ServerForPatch.location
+        /// </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; set; }
         /// <summary>
         /// Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted.
         /// Serialized Name: ServerForPatch.properties.administratorLogin
@@ -265,11 +271,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         [WirePath("properties.cluster")]
         public Cluster Cluster { get; set; }
-        /// <summary>
-        /// The location the resource resides in.
-        /// Serialized Name: ServerForPatch.properties.location
-        /// </summary>
-        [WirePath("properties.location")]
-        public AzureLocation? Location { get; set; }
     }
 }
