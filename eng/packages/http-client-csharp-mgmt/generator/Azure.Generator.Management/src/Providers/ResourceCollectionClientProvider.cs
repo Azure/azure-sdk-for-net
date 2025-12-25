@@ -131,6 +131,7 @@ namespace Azure.Generator.Management.Providers
 
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
+        internal ModelProvider ResourceData => _resource.ResourceData;
 
         protected override TypeProvider[] BuildSerializationProviders() => [];
 
@@ -376,8 +377,20 @@ namespace Azure.Generator.Management.Providers
             return getAll.InputMethod switch
             {
                 InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName),
-                _ => new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, getAll.InputMethod, isAsync, methodName)
+                _ => BuildNonPagingGetAllMethod(getAll.InputMethod, restClientInfo, isAsync, methodName)
             };
+        }
+
+        private MethodProvider BuildNonPagingGetAllMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName)
+        {
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            var responseBodyType = method.GetResponseBodyType();
+            if (responseBodyType != null && responseBodyType.IsList)
+            {
+                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+            }
+
+            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
         }
 
         private MethodProvider? BuildGetMethod(bool isAsync)
