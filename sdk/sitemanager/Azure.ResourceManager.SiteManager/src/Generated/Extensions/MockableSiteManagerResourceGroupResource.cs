@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         {
         }
 
-        /// <summary> Gets a collection of EdgeSites in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EdgeSites and their operations over a EdgeSiteResource. </returns>
-        public virtual EdgeSiteCollection GetEdgeSites()
+        /// <summary> Gets a collection of ResourceGroupEdgeSites in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ResourceGroupEdgeSites and their operations over a ResourceGroupEdgeSiteResource. </returns>
+        public virtual ResourceGroupEdgeSiteCollection GetResourceGroupEdgeSites()
         {
-            return GetCachedClient(client => new EdgeSiteCollection(client, Id));
+            return GetCachedClient(client => new ResourceGroupEdgeSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeSiteResource>> GetEdgeSiteAsync(string siteName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupEdgeSiteResource>> GetResourceGroupEdgeSiteAsync(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            return await GetEdgeSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupEdgeSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EdgeSiteResource> GetEdgeSite(string siteName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupEdgeSiteResource> GetResourceGroupEdgeSite(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            return GetEdgeSites().Get(siteName, cancellationToken);
+            return GetResourceGroupEdgeSites().Get(siteName, cancellationToken);
         }
     }
 }

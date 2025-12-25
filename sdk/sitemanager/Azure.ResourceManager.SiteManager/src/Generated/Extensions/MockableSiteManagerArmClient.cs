@@ -26,13 +26,31 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="EdgeSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ResourceGroupEdgeSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeSiteResource"/> object. </returns>
-        public virtual EdgeSiteResource GetEdgeSiteResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupEdgeSiteResource"/> object. </returns>
+        public virtual ResourceGroupEdgeSiteResource GetResourceGroupEdgeSiteResource(ResourceIdentifier id)
         {
-            EdgeSiteResource.ValidateResourceId(id);
-            return new EdgeSiteResource(Client, id);
+            ResourceGroupEdgeSiteResource.ValidateResourceId(id);
+            return new ResourceGroupEdgeSiteResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SubscriptionEdgeSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionEdgeSiteResource"/> object. </returns>
+        public virtual SubscriptionEdgeSiteResource GetSubscriptionEdgeSiteResource(ResourceIdentifier id)
+        {
+            SubscriptionEdgeSiteResource.ValidateResourceId(id);
+            return new SubscriptionEdgeSiteResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServiceGroupEdgeSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceGroupEdgeSiteResource"/> object. </returns>
+        public virtual ServiceGroupEdgeSiteResource GetServiceGroupEdgeSiteResource(ResourceIdentifier id)
+        {
+            ServiceGroupEdgeSiteResource.ValidateResourceId(id);
+            return new ServiceGroupEdgeSiteResource(Client, id);
         }
     }
 }

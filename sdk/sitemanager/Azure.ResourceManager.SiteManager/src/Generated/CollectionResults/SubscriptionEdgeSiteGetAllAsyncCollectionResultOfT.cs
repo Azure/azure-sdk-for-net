@@ -15,27 +15,27 @@ using Azure.ResourceManager.SiteManager.Models;
 
 namespace Azure.ResourceManager.SiteManager
 {
-    internal partial class SitesBySubscriptionGetAllAsyncCollectionResultOfT : AsyncPageable<EdgeSiteData>
+    internal partial class SubscriptionEdgeSiteGetAllAsyncCollectionResultOfT : AsyncPageable<EdgeSiteData>
     {
-        private readonly SitesBySubscription _client;
+        private readonly SubscriptionEdgeSite _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of SitesBySubscriptionGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The SitesBySubscription client used to send requests. </param>
+        /// <summary> Initializes a new instance of SubscriptionEdgeSiteGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The SubscriptionEdgeSite client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SitesBySubscriptionGetAllAsyncCollectionResultOfT(SitesBySubscription client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public SubscriptionEdgeSiteGetAllAsyncCollectionResultOfT(SubscriptionEdgeSite client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
         }
 
-        /// <summary> Gets the pages of SitesBySubscriptionGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SubscriptionEdgeSiteGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of SitesBySubscriptionGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of SubscriptionEdgeSiteGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<EdgeSiteData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SiteManager
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSiteManagerSubscriptionResource.GetEdgeSites");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSiteManagerSubscriptionResource.GetResourceGroupEdgeSites");
             scope.Start();
             try
             {

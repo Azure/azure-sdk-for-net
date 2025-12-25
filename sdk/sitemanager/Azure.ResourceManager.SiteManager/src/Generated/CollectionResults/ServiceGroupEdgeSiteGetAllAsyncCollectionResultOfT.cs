@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,33 +15,33 @@ using Azure.ResourceManager.SiteManager.Models;
 
 namespace Azure.ResourceManager.SiteManager
 {
-    internal partial class SitesByServiceGroupGetByServiceGroupCollectionResultOfT : Pageable<EdgeSiteData>
+    internal partial class ServiceGroupEdgeSiteGetAllAsyncCollectionResultOfT : AsyncPageable<EdgeSiteData>
     {
-        private readonly SitesByServiceGroup _client;
+        private readonly ServiceGroupEdgeSite _client;
         private readonly string _servicegroupName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of SitesByServiceGroupGetByServiceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The SitesByServiceGroup client used to send requests. </param>
+        /// <summary> Initializes a new instance of ServiceGroupEdgeSiteGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ServiceGroupEdgeSite client used to send requests. </param>
         /// <param name="servicegroupName"> The name of the service group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SitesByServiceGroupGetByServiceGroupCollectionResultOfT(SitesByServiceGroup client, string servicegroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ServiceGroupEdgeSiteGetAllAsyncCollectionResultOfT(ServiceGroupEdgeSite client, string servicegroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _servicegroupName = servicegroupName;
             _context = context;
         }
 
-        /// <summary> Gets the pages of SitesByServiceGroupGetByServiceGroupCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ServiceGroupEdgeSiteGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of SitesByServiceGroupGetByServiceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<EdgeSiteData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ServiceGroupEdgeSiteGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<EdgeSiteData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -58,14 +59,14 @@ namespace Azure.ResourceManager.SiteManager
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByServiceGroupRequest(nextLink, _servicegroupName, _context) : _client.CreateGetByServiceGroupRequest(_servicegroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSiteManagerTenantResource.GetEdgeSites");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _servicegroupName, _context) : _client.CreateGetAllRequest(_servicegroupName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSiteManagerTenantResource.GetResourceGroupEdgeSites");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

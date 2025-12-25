@@ -13,7 +13,7 @@ using Azure.ResourceManager.SiteManager.Models;
 
 namespace Azure.ResourceManager.SiteManager
 {
-    /// <summary> Site as ARM Resource. </summary>
+    /// <summary> Site as Extension Resource. </summary>
     public partial class EdgeSiteData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
