@@ -46,6 +46,87 @@ namespace Azure.ResourceManager.Resources.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetPolicyDefinitionVersions_ListAllPolicyDefinitionVersionsAtSubscription()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/listAllPolicyDefinitionVersions.json
+            // this example is just showing the usage of "PolicyDefinitionVersions_ListAll" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (PolicyDefinitionVersionData item in subscription.GetPolicyDefinitionVersionsAsync())
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetPolicySetDefinitionVersions_ListAllPolicyDefinitionVersionsAtSubscription()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/listAllPolicySetDefinitionVersions.json
+            // this example is just showing the usage of "PolicySetDefinitionVersions_ListAll" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (PolicySetDefinitionVersionData item in subscription.GetPolicySetDefinitionVersionsAsync())
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task AcquirePolicyToken_AcquireAPolicyToken()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/acquirePolicyToken.json
+            // this example is just showing the usage of "PolicyTokens_Acquire" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            PolicyTokenRequest policyTokenRequest = new PolicyTokenRequest(new PolicyTokenOperation(new Uri("https://management.azure.com/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/resourceGroups/testRG/providers/Microsoft.Compute/virtualMachines/testVM?api-version=2024-01-01"), "delete"));
+            PolicyTokenResponse result = await subscription.AcquirePolicyTokenAsync(policyTokenRequest);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLocations_GetLocationsWithASubscriptionId()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/examples/GetLocations.json

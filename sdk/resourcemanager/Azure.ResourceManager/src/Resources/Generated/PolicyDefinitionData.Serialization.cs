@@ -96,6 +96,26 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsCollectionDefined(Versions))
+            {
+                writer.WritePropertyName("versions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Versions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ExternalEvaluationEnforcementSettings))
+            {
+                writer.WritePropertyName("externalEvaluationEnforcementSettings"u8);
+                writer.WriteObjectValue(ExternalEvaluationEnforcementSettings, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -130,6 +150,9 @@ namespace Azure.ResourceManager.Resources
             BinaryData policyRule = default;
             BinaryData metadata = default;
             IDictionary<string, ArmPolicyParameter> parameters = default;
+            string version = default;
+            IList<string> versions = default;
+            ExternalEvaluationEnforcementSettings externalEvaluationEnforcementSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,6 +246,34 @@ namespace Azure.ResourceManager.Resources
                             parameters = dictionary;
                             continue;
                         }
+                        if (property0.NameEquals("version"u8))
+                        {
+                            version = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("versions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            versions = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("externalEvaluationEnforcementSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            externalEvaluationEnforcementSettings = ExternalEvaluationEnforcementSettings.DeserializeExternalEvaluationEnforcementSettings(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -244,6 +295,9 @@ namespace Azure.ResourceManager.Resources
                 policyRule,
                 metadata,
                 parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameter>(),
+                version,
+                versions ?? new ChangeTrackingList<string>(),
+                externalEvaluationEnforcementSettings,
                 serializedAdditionalRawData);
         }
 
@@ -448,6 +502,80 @@ namespace Azure.ResourceManager.Resources
                         }
                         builder.AppendLine("    }");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    builder.Append("    version: ");
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Versions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    versions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Versions))
+                {
+                    if (Versions.Any())
+                    {
+                        builder.Append("    versions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Versions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalEvaluationEnforcementSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    externalEvaluationEnforcementSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExternalEvaluationEnforcementSettings))
+                {
+                    builder.Append("    externalEvaluationEnforcementSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExternalEvaluationEnforcementSettings, options, 4, false, "    externalEvaluationEnforcementSettings: ");
                 }
             }
 

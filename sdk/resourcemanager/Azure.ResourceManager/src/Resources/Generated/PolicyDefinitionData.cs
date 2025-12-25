@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.Resources
         public PolicyDefinitionData()
         {
             Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameter>();
+            Versions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyDefinitionData"/>. </summary>
@@ -69,8 +70,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyRule"> The policy rule. </param>
         /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
+        /// <param name="version"> The policy definition version in #.#.# format. </param>
+        /// <param name="versions"> A list of available versions for this policy definition. </param>
+        /// <param name="externalEvaluationEnforcementSettings"> The details of the source of external evaluation results required by the policy during enforcement evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, BinaryData policyRule, BinaryData metadata, IDictionary<string, ArmPolicyParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, BinaryData policyRule, BinaryData metadata, IDictionary<string, ArmPolicyParameter> parameters, string version, IList<string> versions, ExternalEvaluationEnforcementSettings externalEvaluationEnforcementSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PolicyType = policyType;
             Mode = mode;
@@ -79,6 +83,9 @@ namespace Azure.ResourceManager.Resources
             PolicyRule = policyRule;
             Metadata = metadata;
             Parameters = parameters;
+            Version = version;
+            Versions = versions;
+            ExternalEvaluationEnforcementSettings = externalEvaluationEnforcementSettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -161,5 +168,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </summary>
         [WirePath("properties.parameters")]
         public IDictionary<string, ArmPolicyParameter> Parameters { get; }
+        /// <summary> The policy definition version in #.#.# format. </summary>
+        [WirePath("properties.version")]
+        public string Version { get; set; }
+        /// <summary> A list of available versions for this policy definition. </summary>
+        [WirePath("properties.versions")]
+        public IList<string> Versions { get; }
+        /// <summary> The details of the source of external evaluation results required by the policy during enforcement evaluation. </summary>
+        [WirePath("properties.externalEvaluationEnforcementSettings")]
+        public ExternalEvaluationEnforcementSettings ExternalEvaluationEnforcementSettings { get; set; }
     }
 }

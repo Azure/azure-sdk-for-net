@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> List of policy assignments. </summary>
+    /// <summary> The response of a PolicyAssignment list operation. </summary>
     internal partial class PolicyAssignmentListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Resources.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PolicyAssignmentListResult"/>. </summary>
-        internal PolicyAssignmentListResult()
+        /// <param name="value"> The PolicyAssignment items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PolicyAssignmentListResult(IEnumerable<PolicyAssignmentData> value)
         {
-            Value = new ChangeTrackingList<PolicyAssignmentData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyAssignmentListResult"/>. </summary>
-        /// <param name="value"> An array of policy assignments. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value"> The PolicyAssignment items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyAssignmentListResult(IReadOnlyList<PolicyAssignmentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicyAssignmentListResult(IReadOnlyList<PolicyAssignmentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array of policy assignments. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentListResult"/> for deserialization. </summary>
+        internal PolicyAssignmentListResult()
+        {
+        }
+
+        /// <summary> The PolicyAssignment items on this page. </summary>
         public IReadOnlyList<PolicyAssignmentData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

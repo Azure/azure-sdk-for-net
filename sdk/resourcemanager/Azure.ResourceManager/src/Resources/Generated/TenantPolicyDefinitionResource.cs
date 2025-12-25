@@ -85,6 +85,75 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of PolicyDefinitionVersionResources in the TenantPolicyDefinition. </summary>
+        /// <returns> An object representing collection of PolicyDefinitionVersionResources and their operations over a PolicyDefinitionVersionResource. </returns>
+        public virtual PolicyDefinitionVersionCollection GetPolicyDefinitionVersions()
+        {
+            return GetCachedClient(client => new PolicyDefinitionVersionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// This operation retrieves the built-in policy definition version with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/versions/{policyDefinitionVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyDefinitionVersions_GetBuiltIn</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyDefinitionVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyDefinitionVersion"> The policy definition version.  The format is x.y.z where x is the major version number, y is the minor version number, and z is the patch number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolicyDefinitionVersionResource>> GetPolicyDefinitionVersionAsync(string policyDefinitionVersion, CancellationToken cancellationToken = default)
+        {
+            return await GetPolicyDefinitionVersions().GetAsync(policyDefinitionVersion, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation retrieves the built-in policy definition version with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/versions/{policyDefinitionVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyDefinitionVersions_GetBuiltIn</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyDefinitionVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyDefinitionVersion"> The policy definition version.  The format is x.y.z where x is the major version number, y is the minor version number, and z is the patch number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolicyDefinitionVersionResource> GetPolicyDefinitionVersion(string policyDefinitionVersion, CancellationToken cancellationToken = default)
+        {
+            return GetPolicyDefinitionVersions().Get(policyDefinitionVersion, cancellationToken);
+        }
+
         /// <summary>
         /// This operation retrieves the built-in policy definition with the given name.
         /// <list type="bullet">
@@ -98,7 +167,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -138,7 +207,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

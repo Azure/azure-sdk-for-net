@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         private const string PolicyEffectValue = "policyEffect";
+        private const string DefinitionVersionValue = "definitionVersion";
 
         /// <summary> It will override the policy effect type. </summary>
         public static PolicyOverrideKind PolicyEffect { get; } = new PolicyOverrideKind(PolicyEffectValue);
+        /// <summary> It will override the definition version property value of the policy assignment. </summary>
+        public static PolicyOverrideKind DefinitionVersion { get; } = new PolicyOverrideKind(DefinitionVersionValue);
         /// <summary> Determines if two <see cref="PolicyOverrideKind"/> values are the same. </summary>
         public static bool operator ==(PolicyOverrideKind left, PolicyOverrideKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyOverrideKind"/> values are not the same. </summary>

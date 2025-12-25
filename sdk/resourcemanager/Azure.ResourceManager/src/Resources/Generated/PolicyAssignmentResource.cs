@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -108,14 +108,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicyAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyAssignmentResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _policyAssignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _policyAssignmentRestClient.GetAsync(Id.Parent, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,14 +149,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicyAssignmentResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PolicyAssignmentResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = _policyAssignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                var response = _policyAssignmentRestClient.Get(Id.Parent, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -180,7 +182,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +226,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,7 +258,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        ///  This operation updates a policy assignment with the given scope and name. Policy assignments apply to all resources contained within their scope. For example, when you assign a policy at resource group scope, that policy applies to all resources in the group.
+        /// This operation updates a policy assignment with the given scope and name. Policy assignments apply to all resources contained within their scope. For example, when you assign a policy at resource group scope, that policy applies to all resources in the group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -268,7 +270,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -298,7 +300,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        ///  This operation updates a policy assignment with the given scope and name. Policy assignments apply to all resources contained within their scope. For example, when you assign a policy at resource group scope, that policy applies to all resources in the group.
+        /// This operation updates a policy assignment with the given scope and name. Policy assignments apply to all resources contained within their scope. For example, when you assign a policy at resource group scope, that policy applies to all resources in the group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -310,7 +312,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

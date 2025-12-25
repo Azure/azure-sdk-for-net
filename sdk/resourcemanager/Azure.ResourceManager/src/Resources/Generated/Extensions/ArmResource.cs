@@ -35,7 +35,7 @@ namespace Azure.ResourceManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -44,13 +44,14 @@ namespace Azure.ResourceManager
         /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PolicyAssignmentResource>> GetPolicyAssignmentAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyAssignmentResource>> GetPolicyAssignmentAsync(string policyAssignmentName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetPolicyAssignments().GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetPolicyAssignments().GetAsync(policyAssignmentName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -75,13 +76,14 @@ namespace Azure.ResourceManager
         /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PolicyAssignmentResource> GetPolicyAssignment(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<PolicyAssignmentResource> GetPolicyAssignment(string policyAssignmentName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyAssignments().Get(policyAssignmentName, cancellationToken);
+            return GetPolicyAssignments().Get(policyAssignmentName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagementLockResources in the ArmResource. </summary>

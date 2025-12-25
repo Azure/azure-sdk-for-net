@@ -87,6 +87,77 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ManagementGroupPolicySetDefinitionVersionResources in the ManagementGroupPolicySetDefinition. </summary>
+        /// <returns> An object representing collection of ManagementGroupPolicySetDefinitionVersionResources and their operations over a ManagementGroupPolicySetDefinitionVersionResource. </returns>
+        public virtual ManagementGroupPolicySetDefinitionVersionCollection GetManagementGroupPolicySetDefinitionVersions()
+        {
+            return GetCachedClient(client => new ManagementGroupPolicySetDefinitionVersionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// This operation retrieves the policy set definition version in the given management group with the given name and version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitionVersions_GetAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicySetDefinitionVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyDefinitionVersion"> The policy set definition version.  The format is x.y.z where x is the major version number, y is the minor version number, and z is the patch number. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagementGroupPolicySetDefinitionVersionResource>> GetManagementGroupPolicySetDefinitionVersionAsync(string policyDefinitionVersion, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return await GetManagementGroupPolicySetDefinitionVersions().GetAsync(policyDefinitionVersion, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation retrieves the policy set definition version in the given management group with the given name and version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitionVersions_GetAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicySetDefinitionVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyDefinitionVersion"> The policy set definition version.  The format is x.y.z where x is the major version number, y is the minor version number, and z is the patch number. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagementGroupPolicySetDefinitionVersionResource> GetManagementGroupPolicySetDefinitionVersion(string policyDefinitionVersion, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetManagementGroupPolicySetDefinitionVersions().Get(policyDefinitionVersion, expand, cancellationToken);
+        }
+
         /// <summary>
         /// This operation retrieves the policy set definition in the given management group with the given name.
         /// <list type="bullet">
@@ -100,7 +171,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -108,14 +179,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagementGroupPolicySetDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupPolicySetDefinitionResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managementGroupPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = await _managementGroupPolicySetDefinitionPolicySetDefinitionsRestClient.GetAtManagementGroupAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupPolicySetDefinitionPolicySetDefinitionsRestClient.GetAtManagementGroupAsync(Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementGroupPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
@@ -140,7 +212,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,14 +220,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementGroupPolicySetDefinitionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupPolicySetDefinitionResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managementGroupPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = _managementGroupPolicySetDefinitionPolicySetDefinitionsRestClient.GetAtManagementGroup(Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managementGroupPolicySetDefinitionPolicySetDefinitionsRestClient.GetAtManagementGroup(Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementGroupPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
@@ -180,7 +253,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +297,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,7 +341,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,7 +389,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

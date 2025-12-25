@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicySetDefinition()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/createOrUpdatePolicySetDefinition.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createOrUpdatePolicySetDefinition.json
             // this example is just showing the usage of "PolicySetDefinitions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,7 +103,7 @@ PolicyDefinitionReferenceId = "Resource_Naming",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicySetDefinitionWithGroups()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/createOrUpdatePolicySetDefinitionWithGroups.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createOrUpdatePolicySetDefinitionWithGroups.json
             // this example is just showing the usage of "PolicySetDefinitions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,6 +132,7 @@ PolicyDefinitionReferenceId = "Resource_Naming",
                 }),
                 PolicyDefinitions = {new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/7433c107-6db4-4ad1-b57a-a76dce0154a1")
 {
+DefinitionVersion = "1.*.*",
 Parameters =
 {
 ["listOfAllowedSKUs"] = new ArmPolicyParameterValue
@@ -147,6 +148,7 @@ PolicyDefinitionReferenceId = "Limit_Skus",
 GroupNames = {"CostSaving"},
 }, new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming")
 {
+DefinitionVersion = "1.*.*",
 Parameters =
 {
 ["prefix"] = new ArmPolicyParameterValue
@@ -185,7 +187,7 @@ Description = "Policies that help enforce resource organization standards within
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicySetDefinition()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinition.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicySetDefinition.json
             // this example is just showing the usage of "PolicySetDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -217,7 +219,7 @@ Description = "Policies that help enforce resource organization standards within
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPolicySetDefinitions()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/listPolicySetDefinitions.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/listPolicySetDefinitions.json
             // this example is just showing the usage of "PolicySetDefinitions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -251,7 +253,7 @@ Description = "Policies that help enforce resource organization standards within
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicySetDefinition()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinition.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicySetDefinition.json
             // this example is just showing the usage of "PolicySetDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -279,7 +281,7 @@ Description = "Policies that help enforce resource organization standards within
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicySetDefinition()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinition.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicySetDefinition.json
             // this example is just showing the usage of "PolicySetDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

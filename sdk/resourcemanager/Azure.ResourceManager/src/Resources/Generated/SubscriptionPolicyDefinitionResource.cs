@@ -86,6 +86,75 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SubscriptionPolicyDefinitionVersionResources in the SubscriptionPolicyDefinition. </summary>
+        /// <returns> An object representing collection of SubscriptionPolicyDefinitionVersionResources and their operations over a SubscriptionPolicyDefinitionVersionResource. </returns>
+        public virtual SubscriptionPolicyDefinitionVersionCollection GetSubscriptionPolicyDefinitionVersions()
+        {
+            return GetCachedClient(client => new SubscriptionPolicyDefinitionVersionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// This operation retrieves the policy definition version in the given subscription with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/versions/{policyDefinitionVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyDefinitionVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPolicyDefinitionVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyDefinitionVersion"> The policy definition version.  The format is x.y.z where x is the major version number, y is the minor version number, and z is the patch number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionPolicyDefinitionVersionResource>> GetSubscriptionPolicyDefinitionVersionAsync(string policyDefinitionVersion, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionPolicyDefinitionVersions().GetAsync(policyDefinitionVersion, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation retrieves the policy definition version in the given subscription with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/versions/{policyDefinitionVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyDefinitionVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPolicyDefinitionVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyDefinitionVersion"> The policy definition version.  The format is x.y.z where x is the major version number, y is the minor version number, and z is the patch number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionPolicyDefinitionVersionResource> GetSubscriptionPolicyDefinitionVersion(string policyDefinitionVersion, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionPolicyDefinitionVersions().Get(policyDefinitionVersion, cancellationToken);
+        }
+
         /// <summary>
         /// This operation retrieves the policy definition in the given subscription with the given name.
         /// <list type="bullet">
@@ -99,7 +168,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -139,7 +208,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +248,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +292,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,7 +336,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +384,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
