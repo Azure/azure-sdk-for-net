@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveABuiltInPolicySetDefinition()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getBuiltInPolicySetDefinition.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2021-06-01/examples/getBuiltInPolicySetDefinition.json
             // this example is just showing the usage of "PolicySetDefinitions_GetBuiltIn" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListBuiltInPolicySetDefinitions()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/listBuiltInPolicySetDefinitions.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2021-06-01/examples/listBuiltInPolicySetDefinitions.json
             // this example is just showing the usage of "PolicySetDefinitions_ListBuiltIn" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveABuiltInPolicySetDefinition()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getBuiltInPolicySetDefinition.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2021-06-01/examples/getBuiltInPolicySetDefinition.json
             // this example is just showing the usage of "PolicySetDefinitions_GetBuiltIn" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveABuiltInPolicySetDefinition()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getBuiltInPolicySetDefinition.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2021-06-01/examples/getBuiltInPolicySetDefinition.json
             // this example is just showing the usage of "PolicySetDefinitions_GetBuiltIn" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

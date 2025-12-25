@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveADataPolicyManifestByPolicyMode()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/examples/getDataPolicyManifest.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2020-09-01/examples/getDataPolicyManifest.json
             // this example is just showing the usage of "DataPolicyManifests_GetByPolicyMode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
