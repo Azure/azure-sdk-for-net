@@ -20,6 +20,9 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
+#mgmt-debug:
+#  show-serialized-names: true
+
 override-operation-name:
   CommunicationServices_CheckNameAvailability: CheckCommunicationNameAvailability
 
@@ -76,8 +79,13 @@ rename-mapping:
   DnsRecord: VerificationDnsRecord
   DomainsProvisioningState: DomainProvisioningState
   ProvisioningState: CommunicationServiceProvisioningState
-  SuppressionListResource.properties.createdTimeStamp: -|date-time
-  SuppressionListResource.properties.lastUpdatedTimeStamp: -|date-time
+  SuppressionListResource.properties.createdTimeStamp: LastUpdatedOn|date-time
+  SuppressionListResource.properties.lastUpdatedTimeStamp: CreatedOn|date-time
+  CommunicationServiceResource.properties.disableLocalAuth: IsLocalAuthDisabled
+  SmtpUsernameResource: CommunicationSmtpUsername
+  SuppressionListAddressResource: EmailSuppressionListAddress
+  SuppressionListResource: EmailSuppressionList
+  PublicNetworkAccess: CommunicationPublicNetworkAccess
 
 directive:
  - from: types.json

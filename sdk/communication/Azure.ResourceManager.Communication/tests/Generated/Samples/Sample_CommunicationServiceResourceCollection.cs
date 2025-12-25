@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Communication.Samples
             CommunicationServiceResourceData data = new CommunicationServiceResourceData(new AzureLocation("Global"))
             {
                 DataLocation = "United States",
-                DisableLocalAuth = true,
+                IsLocalAuthDisabled = true,
             };
             ArmOperation<CommunicationServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
             CommunicationServiceResource result = lro.Value;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Communication.Samples
             CommunicationServiceResourceData data = new CommunicationServiceResourceData(new AzureLocation("Global"))
             {
                 DataLocation = "United States",
-                PublicNetworkAccess = PublicNetworkAccess.Enabled,
+                PublicNetworkAccess = CommunicationPublicNetworkAccess.Enabled,
             };
             ArmOperation<CommunicationServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
             CommunicationServiceResource result = lro.Value;

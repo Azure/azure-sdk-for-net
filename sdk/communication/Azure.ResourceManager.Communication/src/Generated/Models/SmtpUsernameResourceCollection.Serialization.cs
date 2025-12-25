@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            IReadOnlyList<SmtpUsernameResourceData> value = default;
+            IReadOnlyList<CommunicationSmtpUsernameData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    List<SmtpUsernameResourceData> array = new List<SmtpUsernameResourceData>();
+                    List<CommunicationSmtpUsernameData> array = new List<CommunicationSmtpUsernameData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SmtpUsernameResourceData.DeserializeSmtpUsernameResourceData(item, options));
+                        array.Add(CommunicationSmtpUsernameData.DeserializeCommunicationSmtpUsernameData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SmtpUsernameResourceCollection(value ?? new ChangeTrackingList<SmtpUsernameResourceData>(), nextLink, serializedAdditionalRawData);
+            return new SmtpUsernameResourceCollection(value ?? new ChangeTrackingList<CommunicationSmtpUsernameData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

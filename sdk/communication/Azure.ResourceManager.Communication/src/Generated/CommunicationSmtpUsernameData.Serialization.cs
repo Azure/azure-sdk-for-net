@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    public partial class SmtpUsernameResourceData : IUtf8JsonSerializable, IJsonModel<SmtpUsernameResourceData>
+    public partial class CommunicationSmtpUsernameData : IUtf8JsonSerializable, IJsonModel<CommunicationSmtpUsernameData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmtpUsernameResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationSmtpUsernameData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SmtpUsernameResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommunicationSmtpUsernameData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Communication
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SmtpUsernameResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CommunicationSmtpUsernameData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmtpUsernameResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunicationSmtpUsernameData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.Communication
             writer.WriteEndObject();
         }
 
-        SmtpUsernameResourceData IJsonModel<SmtpUsernameResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CommunicationSmtpUsernameData IJsonModel<CommunicationSmtpUsernameData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SmtpUsernameResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CommunicationSmtpUsernameData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmtpUsernameResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunicationSmtpUsernameData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSmtpUsernameResourceData(document.RootElement, options);
+            return DeserializeCommunicationSmtpUsernameData(document.RootElement, options);
         }
 
-        internal static SmtpUsernameResourceData DeserializeSmtpUsernameResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CommunicationSmtpUsernameData DeserializeCommunicationSmtpUsernameData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Communication
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SmtpUsernameResourceData(
+            return new CommunicationSmtpUsernameData(
                 id,
                 name,
                 type,
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.Communication
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<SmtpUsernameResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CommunicationSmtpUsernameData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SmtpUsernameResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CommunicationSmtpUsernameData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -303,26 +303,26 @@ namespace Azure.ResourceManager.Communication
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SmtpUsernameResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunicationSmtpUsernameData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SmtpUsernameResourceData IPersistableModel<SmtpUsernameResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CommunicationSmtpUsernameData IPersistableModel<CommunicationSmtpUsernameData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SmtpUsernameResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CommunicationSmtpUsernameData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSmtpUsernameResourceData(document.RootElement, options);
+                        return DeserializeCommunicationSmtpUsernameData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SmtpUsernameResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunicationSmtpUsernameData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SmtpUsernameResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommunicationSmtpUsernameData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A class representing the SuppressionListResource data model.
+    /// A class representing the EmailSuppressionList data model.
     /// A class representing a SuppressionList resource.
     /// </summary>
-    public partial class SuppressionListResourceData : ResourceData
+    public partial class EmailSuppressionListData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,26 +50,26 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SuppressionListResourceData"/>. </summary>
-        public SuppressionListResourceData()
+        /// <summary> Initializes a new instance of <see cref="EmailSuppressionListData"/>. </summary>
+        public EmailSuppressionListData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SuppressionListResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailSuppressionListData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="listName"> The name of the suppression list. This value must match one of the valid sender usernames of the sending domain. </param>
-        /// <param name="lastUpdatedTimeStamp"> The date the resource was last updated. </param>
-        /// <param name="createdTimeStamp"> The date the resource was created. </param>
+        /// <param name="createdOn"> The date the resource was last updated. </param>
+        /// <param name="lastUpdatedOn"> The date the resource was created. </param>
         /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SuppressionListResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string listName, DateTimeOffset? lastUpdatedTimeStamp, DateTimeOffset? createdTimeStamp, string dataLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EmailSuppressionListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string listName, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string dataLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ListName = listName;
-            LastUpdatedTimeStamp = lastUpdatedTimeStamp;
-            CreatedTimeStamp = createdTimeStamp;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             DataLocation = dataLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Communication
         public string ListName { get; set; }
         /// <summary> The date the resource was last updated. </summary>
         [WirePath("properties.lastUpdatedTimeStamp")]
-        public DateTimeOffset? LastUpdatedTimeStamp { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The date the resource was created. </summary>
         [WirePath("properties.createdTimeStamp")]
-        public DateTimeOffset? CreatedTimeStamp { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </summary>
         [WirePath("properties.dataLocation")]
         public string DataLocation { get; }

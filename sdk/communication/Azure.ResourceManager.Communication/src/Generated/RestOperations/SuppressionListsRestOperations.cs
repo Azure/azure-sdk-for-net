@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.SuppressionListResourceCollection>> ListByDomainAsync(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        public async Task<Response<SuppressionListResourceCollection>> ListByDomainAsync(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        Models.SuppressionListResourceCollection value = default;
+                        SuppressionListResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = Models.SuppressionListResourceCollection.DeserializeSuppressionListResourceCollection(document.RootElement);
+                        value = SuppressionListResourceCollection.DeserializeSuppressionListResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.SuppressionListResourceCollection> ListByDomain(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        public Response<SuppressionListResourceCollection> ListByDomain(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        Models.SuppressionListResourceCollection value = default;
+                        SuppressionListResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = Models.SuppressionListResourceCollection.DeserializeSuppressionListResourceCollection(document.RootElement);
+                        value = SuppressionListResourceCollection.DeserializeSuppressionListResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="suppressionListName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SuppressionListResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, CancellationToken cancellationToken = default)
+        public async Task<Response<EmailSuppressionListData>> GetAsync(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -203,13 +203,13 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        SuppressionListResourceData value = default;
+                        EmailSuppressionListData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SuppressionListResourceData.DeserializeSuppressionListResourceData(document.RootElement);
+                        value = EmailSuppressionListData.DeserializeEmailSuppressionListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SuppressionListResourceData)null, message.Response);
+                    return Response.FromValue((EmailSuppressionListData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="suppressionListName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SuppressionListResourceData> Get(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, CancellationToken cancellationToken = default)
+        public Response<EmailSuppressionListData> Get(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -238,19 +238,19 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        SuppressionListResourceData value = default;
+                        EmailSuppressionListData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SuppressionListResourceData.DeserializeSuppressionListResourceData(document.RootElement);
+                        value = EmailSuppressionListData.DeserializeEmailSuppressionListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SuppressionListResourceData)null, message.Response);
+                    return Response.FromValue((EmailSuppressionListData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, SuppressionListResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, EmailSuppressionListData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Communication
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, SuppressionListResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, EmailSuppressionListData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/>, <paramref name="suppressionListName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SuppressionListResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, SuppressionListResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<EmailSuppressionListData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, EmailSuppressionListData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -322,9 +322,9 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                 case 201:
                     {
-                        SuppressionListResourceData value = default;
+                        EmailSuppressionListData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SuppressionListResourceData.DeserializeSuppressionListResourceData(document.RootElement);
+                        value = EmailSuppressionListData.DeserializeEmailSuppressionListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/>, <paramref name="suppressionListName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SuppressionListResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, SuppressionListResourceData data, CancellationToken cancellationToken = default)
+        public Response<EmailSuppressionListData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, EmailSuppressionListData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -358,9 +358,9 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                 case 201:
                     {
-                        SuppressionListResourceData value = default;
+                        EmailSuppressionListData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SuppressionListResourceData.DeserializeSuppressionListResourceData(document.RootElement);
+                        value = EmailSuppressionListData.DeserializeEmailSuppressionListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.SuppressionListResourceCollection>> ListByDomainNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        public async Task<Response<SuppressionListResourceCollection>> ListByDomainNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -513,9 +513,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        Models.SuppressionListResourceCollection value = default;
+                        SuppressionListResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = Models.SuppressionListResourceCollection.DeserializeSuppressionListResourceCollection(document.RootElement);
+                        value = SuppressionListResourceCollection.DeserializeSuppressionListResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.SuppressionListResourceCollection> ListByDomainNextPage(string nextLink, string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        public Response<SuppressionListResourceCollection> ListByDomainNextPage(string nextLink, string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -546,9 +546,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        Models.SuppressionListResourceCollection value = default;
+                        SuppressionListResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = Models.SuppressionListResourceCollection.DeserializeSuppressionListResourceCollection(document.RootElement);
+                        value = SuppressionListResourceCollection.DeserializeSuppressionListResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

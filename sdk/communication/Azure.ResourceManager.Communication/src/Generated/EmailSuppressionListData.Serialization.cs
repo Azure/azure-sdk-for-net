@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    public partial class SuppressionListAddressResourceData : IUtf8JsonSerializable, IJsonModel<SuppressionListAddressResourceData>
+    public partial class EmailSuppressionListData : IUtf8JsonSerializable, IJsonModel<EmailSuppressionListData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuppressionListAddressResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmailSuppressionListData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SuppressionListAddressResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EmailSuppressionListData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,39 +30,29 @@ namespace Azure.ResourceManager.Communication
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SuppressionListAddressResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EmailSuppressionListData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuppressionListAddressResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EmailSuppressionListData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Email))
+            if (Optional.IsDefined(ListName))
             {
-                writer.WritePropertyName("email"u8);
-                writer.WriteStringValue(Email);
+                writer.WritePropertyName("listName"u8);
+                writer.WriteStringValue(ListName);
             }
-            if (Optional.IsDefined(FirstName))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("firstName"u8);
-                writer.WriteStringValue(FirstName);
+                writer.WritePropertyName("lastUpdatedTimeStamp"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastName))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
-                writer.WritePropertyName("lastName"u8);
-                writer.WriteStringValue(LastName);
-            }
-            if (Optional.IsDefined(Notes))
-            {
-                writer.WritePropertyName("notes"u8);
-                writer.WriteStringValue(Notes);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastModified))
-            {
-                writer.WritePropertyName("lastModified"u8);
-                writer.WriteStringValue(LastModified.Value, "O");
+                writer.WritePropertyName("createdTimeStamp"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(DataLocation))
             {
@@ -72,19 +62,19 @@ namespace Azure.ResourceManager.Communication
             writer.WriteEndObject();
         }
 
-        SuppressionListAddressResourceData IJsonModel<SuppressionListAddressResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EmailSuppressionListData IJsonModel<EmailSuppressionListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SuppressionListAddressResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EmailSuppressionListData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuppressionListAddressResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EmailSuppressionListData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSuppressionListAddressResourceData(document.RootElement, options);
+            return DeserializeEmailSuppressionListData(document.RootElement, options);
         }
 
-        internal static SuppressionListAddressResourceData DeserializeSuppressionListAddressResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EmailSuppressionListData DeserializeEmailSuppressionListData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,11 +86,9 @@ namespace Azure.ResourceManager.Communication
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string email = default;
-            string firstName = default;
-            string lastName = default;
-            string notes = default;
-            DateTimeOffset? lastModified = default;
+            string listName = default;
+            DateTimeOffset? lastUpdatedTimeStamp = default;
+            DateTimeOffset? createdTimeStamp = default;
             string dataLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -139,33 +127,27 @@ namespace Azure.ResourceManager.Communication
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("email"u8))
+                        if (property0.NameEquals("listName"u8))
                         {
-                            email = property0.Value.GetString();
+                            listName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("firstName"u8))
-                        {
-                            firstName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastName"u8))
-                        {
-                            lastName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("notes"u8))
-                        {
-                            notes = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModified"u8))
+                        if (property0.NameEquals("lastUpdatedTimeStamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            lastModified = property0.Value.GetDateTimeOffset("O");
+                            lastUpdatedTimeStamp = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("createdTimeStamp"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            createdTimeStamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("dataLocation"u8))
@@ -182,16 +164,14 @@ namespace Azure.ResourceManager.Communication
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SuppressionListAddressResourceData(
+            return new EmailSuppressionListData(
                 id,
                 name,
                 type,
                 systemData,
-                email,
-                firstName,
-                lastName,
-                notes,
-                lastModified,
+                listName,
+                lastUpdatedTimeStamp,
+                createdTimeStamp,
                 dataLocation,
                 serializedAdditionalRawData);
         }
@@ -262,110 +242,57 @@ namespace Azure.ResourceManager.Communication
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Email), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ListName), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    email: ");
+                builder.Append("    listName: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(Email))
+                if (Optional.IsDefined(ListName))
                 {
-                    builder.Append("    email: ");
-                    if (Email.Contains(Environment.NewLine))
+                    builder.Append("    listName: ");
+                    if (ListName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Email}'''");
+                        builder.AppendLine($"{ListName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Email}'");
+                        builder.AppendLine($"'{ListName}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FirstName), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    firstName: ");
+                builder.Append("    lastUpdatedTimeStamp: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(FirstName))
+                if (Optional.IsDefined(CreatedOn))
                 {
-                    builder.Append("    firstName: ");
-                    if (FirstName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FirstName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FirstName}'");
-                    }
+                    builder.Append("    lastUpdatedTimeStamp: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastName), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    lastName: ");
+                builder.Append("    createdTimeStamp: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(LastName))
+                if (Optional.IsDefined(LastUpdatedOn))
                 {
-                    builder.Append("    lastName: ");
-                    if (LastName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LastName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LastName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Notes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    notes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Notes))
-                {
-                    builder.Append("    notes: ");
-                    if (Notes.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Notes}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Notes}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModified), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    lastModified: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastModified))
-                {
-                    builder.Append("    lastModified: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastModified.Value, "o");
+                    builder.Append("    createdTimeStamp: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
@@ -398,9 +325,9 @@ namespace Azure.ResourceManager.Communication
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<SuppressionListAddressResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EmailSuppressionListData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SuppressionListAddressResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EmailSuppressionListData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -409,26 +336,26 @@ namespace Azure.ResourceManager.Communication
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SuppressionListAddressResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmailSuppressionListData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SuppressionListAddressResourceData IPersistableModel<SuppressionListAddressResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EmailSuppressionListData IPersistableModel<EmailSuppressionListData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SuppressionListAddressResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EmailSuppressionListData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSuppressionListAddressResourceData(document.RootElement, options);
+                        return DeserializeEmailSuppressionListData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SuppressionListAddressResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmailSuppressionListData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SuppressionListAddressResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EmailSuppressionListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

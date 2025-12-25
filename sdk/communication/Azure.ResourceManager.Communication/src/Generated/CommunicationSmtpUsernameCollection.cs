@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SmtpUsernameResource"/> and their operations.
-    /// Each <see cref="SmtpUsernameResource"/> in the collection will belong to the same instance of <see cref="CommunicationServiceResource"/>.
-    /// To get a <see cref="SmtpUsernameResourceCollection"/> instance call the GetSmtpUsernameResources method from an instance of <see cref="CommunicationServiceResource"/>.
+    /// A class representing a collection of <see cref="CommunicationSmtpUsernameResource"/> and their operations.
+    /// Each <see cref="CommunicationSmtpUsernameResource"/> in the collection will belong to the same instance of <see cref="CommunicationServiceResource"/>.
+    /// To get a <see cref="CommunicationSmtpUsernameCollection"/> instance call the GetCommunicationSmtpUsernames method from an instance of <see cref="CommunicationServiceResource"/>.
     /// </summary>
-    public partial class SmtpUsernameResourceCollection : ArmCollection, IEnumerable<SmtpUsernameResource>, IAsyncEnumerable<SmtpUsernameResource>
+    public partial class CommunicationSmtpUsernameCollection : ArmCollection, IEnumerable<CommunicationSmtpUsernameResource>, IAsyncEnumerable<CommunicationSmtpUsernameResource>
     {
-        private readonly ClientDiagnostics _smtpUsernameResourceSmtpUsernamesClientDiagnostics;
-        private readonly SmtpUsernamesRestOperations _smtpUsernameResourceSmtpUsernamesRestClient;
+        private readonly ClientDiagnostics _communicationSmtpUsernameSmtpUsernamesClientDiagnostics;
+        private readonly SmtpUsernamesRestOperations _communicationSmtpUsernameSmtpUsernamesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SmtpUsernameResourceCollection"/> class for mocking. </summary>
-        protected SmtpUsernameResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="CommunicationSmtpUsernameCollection"/> class for mocking. </summary>
+        protected CommunicationSmtpUsernameCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SmtpUsernameResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunicationSmtpUsernameCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SmtpUsernameResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CommunicationSmtpUsernameCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _smtpUsernameResourceSmtpUsernamesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", SmtpUsernameResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SmtpUsernameResource.ResourceType, out string smtpUsernameResourceSmtpUsernamesApiVersion);
-            _smtpUsernameResourceSmtpUsernamesRestClient = new SmtpUsernamesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, smtpUsernameResourceSmtpUsernamesApiVersion);
+            _communicationSmtpUsernameSmtpUsernamesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationSmtpUsernameResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CommunicationSmtpUsernameResource.ResourceType, out string communicationSmtpUsernameSmtpUsernamesApiVersion);
+            _communicationSmtpUsernameSmtpUsernamesRestClient = new SmtpUsernamesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communicationSmtpUsernameSmtpUsernamesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="CommunicationSmtpUsernameResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="smtpUsername"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SmtpUsernameResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string smtpUsername, SmtpUsernameResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommunicationSmtpUsernameResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string smtpUsername, CommunicationSmtpUsernameData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(smtpUsername, nameof(smtpUsername));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResourceCollection.CreateOrUpdate");
+            using var scope = _communicationSmtpUsernameSmtpUsernamesClientDiagnostics.CreateScope("CommunicationSmtpUsernameCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _smtpUsernameResourceSmtpUsernamesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, data, cancellationToken).ConfigureAwait(false);
-                var uri = _smtpUsernameResourceSmtpUsernamesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, data);
+                var response = await _communicationSmtpUsernameSmtpUsernamesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, data, cancellationToken).ConfigureAwait(false);
+                var uri = _communicationSmtpUsernameSmtpUsernamesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CommunicationArmOperation<SmtpUsernameResource>(Response.FromValue(new SmtpUsernameResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new CommunicationArmOperation<CommunicationSmtpUsernameResource>(Response.FromValue(new CommunicationSmtpUsernameResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="CommunicationSmtpUsernameResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="smtpUsername"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SmtpUsernameResource> CreateOrUpdate(WaitUntil waitUntil, string smtpUsername, SmtpUsernameResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommunicationSmtpUsernameResource> CreateOrUpdate(WaitUntil waitUntil, string smtpUsername, CommunicationSmtpUsernameData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(smtpUsername, nameof(smtpUsername));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResourceCollection.CreateOrUpdate");
+            using var scope = _communicationSmtpUsernameSmtpUsernamesClientDiagnostics.CreateScope("CommunicationSmtpUsernameCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _smtpUsernameResourceSmtpUsernamesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, data, cancellationToken);
-                var uri = _smtpUsernameResourceSmtpUsernamesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, data);
+                var response = _communicationSmtpUsernameSmtpUsernamesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, data, cancellationToken);
+                var uri = _communicationSmtpUsernameSmtpUsernamesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CommunicationArmOperation<SmtpUsernameResource>(Response.FromValue(new SmtpUsernameResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new CommunicationArmOperation<CommunicationSmtpUsernameResource>(Response.FromValue(new CommunicationSmtpUsernameResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="CommunicationSmtpUsernameResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="smtpUsername"/> is null. </exception>
-        public virtual async Task<Response<SmtpUsernameResource>> GetAsync(string smtpUsername, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationSmtpUsernameResource>> GetAsync(string smtpUsername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(smtpUsername, nameof(smtpUsername));
 
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResourceCollection.Get");
+            using var scope = _communicationSmtpUsernameSmtpUsernamesClientDiagnostics.CreateScope("CommunicationSmtpUsernameCollection.Get");
             scope.Start();
             try
             {
-                var response = await _smtpUsernameResourceSmtpUsernamesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationSmtpUsernameSmtpUsernamesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SmtpUsernameResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunicationSmtpUsernameResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="CommunicationSmtpUsernameResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="smtpUsername"/> is null. </exception>
-        public virtual Response<SmtpUsernameResource> Get(string smtpUsername, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationSmtpUsernameResource> Get(string smtpUsername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(smtpUsername, nameof(smtpUsername));
 
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResourceCollection.Get");
+            using var scope = _communicationSmtpUsernameSmtpUsernamesClientDiagnostics.CreateScope("CommunicationSmtpUsernameCollection.Get");
             scope.Start();
             try
             {
-                var response = _smtpUsernameResourceSmtpUsernamesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken);
+                var response = _communicationSmtpUsernameSmtpUsernamesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SmtpUsernameResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunicationSmtpUsernameResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,17 +260,17 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="CommunicationSmtpUsernameResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SmtpUsernameResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SmtpUsernameResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CommunicationSmtpUsernameResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommunicationSmtpUsernameResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _smtpUsernameResourceSmtpUsernamesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _smtpUsernameResourceSmtpUsernamesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SmtpUsernameResource(Client, SmtpUsernameResourceData.DeserializeSmtpUsernameResourceData(e)), _smtpUsernameResourceSmtpUsernamesClientDiagnostics, Pipeline, "SmtpUsernameResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _communicationSmtpUsernameSmtpUsernamesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _communicationSmtpUsernameSmtpUsernamesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunicationSmtpUsernameResource(Client, CommunicationSmtpUsernameData.DeserializeCommunicationSmtpUsernameData(e)), _communicationSmtpUsernameSmtpUsernamesClientDiagnostics, Pipeline, "CommunicationSmtpUsernameCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -290,17 +290,17 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="CommunicationSmtpUsernameResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SmtpUsernameResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SmtpUsernameResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommunicationSmtpUsernameResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommunicationSmtpUsernameResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _smtpUsernameResourceSmtpUsernamesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _smtpUsernameResourceSmtpUsernamesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SmtpUsernameResource(Client, SmtpUsernameResourceData.DeserializeSmtpUsernameResourceData(e)), _smtpUsernameResourceSmtpUsernamesClientDiagnostics, Pipeline, "SmtpUsernameResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _communicationSmtpUsernameSmtpUsernamesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _communicationSmtpUsernameSmtpUsernamesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunicationSmtpUsernameResource(Client, CommunicationSmtpUsernameData.DeserializeCommunicationSmtpUsernameData(e)), _communicationSmtpUsernameSmtpUsernamesClientDiagnostics, Pipeline, "CommunicationSmtpUsernameCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="CommunicationSmtpUsernameResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNullOrEmpty(smtpUsername, nameof(smtpUsername));
 
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResourceCollection.Exists");
+            using var scope = _communicationSmtpUsernameSmtpUsernamesClientDiagnostics.CreateScope("CommunicationSmtpUsernameCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _smtpUsernameResourceSmtpUsernamesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _communicationSmtpUsernameSmtpUsernamesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="CommunicationSmtpUsernameResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNullOrEmpty(smtpUsername, nameof(smtpUsername));
 
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResourceCollection.Exists");
+            using var scope = _communicationSmtpUsernameSmtpUsernamesClientDiagnostics.CreateScope("CommunicationSmtpUsernameCollection.Exists");
             scope.Start();
             try
             {
-                var response = _smtpUsernameResourceSmtpUsernamesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken: cancellationToken);
+                var response = _communicationSmtpUsernameSmtpUsernamesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="CommunicationSmtpUsernameResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,18 +414,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="smtpUsername"/> is null. </exception>
-        public virtual async Task<NullableResponse<SmtpUsernameResource>> GetIfExistsAsync(string smtpUsername, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<CommunicationSmtpUsernameResource>> GetIfExistsAsync(string smtpUsername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(smtpUsername, nameof(smtpUsername));
 
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResourceCollection.GetIfExists");
+            using var scope = _communicationSmtpUsernameSmtpUsernamesClientDiagnostics.CreateScope("CommunicationSmtpUsernameCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _smtpUsernameResourceSmtpUsernamesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _communicationSmtpUsernameSmtpUsernamesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<SmtpUsernameResource>(response.GetRawResponse());
-                return Response.FromValue(new SmtpUsernameResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<CommunicationSmtpUsernameResource>(response.GetRawResponse());
+                return Response.FromValue(new CommunicationSmtpUsernameResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="CommunicationSmtpUsernameResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,18 +459,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="smtpUsername"/> is null. </exception>
-        public virtual NullableResponse<SmtpUsernameResource> GetIfExists(string smtpUsername, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<CommunicationSmtpUsernameResource> GetIfExists(string smtpUsername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(smtpUsername, nameof(smtpUsername));
 
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResourceCollection.GetIfExists");
+            using var scope = _communicationSmtpUsernameSmtpUsernamesClientDiagnostics.CreateScope("CommunicationSmtpUsernameCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _smtpUsernameResourceSmtpUsernamesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken: cancellationToken);
+                var response = _communicationSmtpUsernameSmtpUsernamesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, smtpUsername, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<SmtpUsernameResource>(response.GetRawResponse());
-                return Response.FromValue(new SmtpUsernameResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<CommunicationSmtpUsernameResource>(response.GetRawResponse());
+                return Response.FromValue(new CommunicationSmtpUsernameResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        IEnumerator<SmtpUsernameResource> IEnumerable<SmtpUsernameResource>.GetEnumerator()
+        IEnumerator<CommunicationSmtpUsernameResource> IEnumerable<CommunicationSmtpUsernameResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Communication
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SmtpUsernameResource> IAsyncEnumerable<SmtpUsernameResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CommunicationSmtpUsernameResource> IAsyncEnumerable<CommunicationSmtpUsernameResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

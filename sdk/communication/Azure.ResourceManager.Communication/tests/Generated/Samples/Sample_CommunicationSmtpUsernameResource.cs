@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Samples
 {
-    public partial class Sample_SmtpUsernameResource
+    public partial class Sample_CommunicationSmtpUsernameResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.Communication.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SmtpUsernameResource created on azure
-            // for more information of creating SmtpUsernameResource, please refer to the document of SmtpUsernameResource
+            // this example assumes you already have this CommunicationSmtpUsernameResource created on azure
+            // for more information of creating CommunicationSmtpUsernameResource, please refer to the document of CommunicationSmtpUsernameResource
             string subscriptionId = "11112222-3333-4444-5555-666677778888";
             string resourceGroupName = "contosoResourceGroup";
             string communicationServiceName = "contosoACSService";
             string smtpUsername = "smtpusername1";
-            ResourceIdentifier smtpUsernameResourceId = SmtpUsernameResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName, smtpUsername);
-            SmtpUsernameResource smtpUsernameResource = client.GetSmtpUsernameResource(smtpUsernameResourceId);
+            ResourceIdentifier communicationSmtpUsernameResourceId = CommunicationSmtpUsernameResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName, smtpUsername);
+            CommunicationSmtpUsernameResource communicationSmtpUsername = client.GetCommunicationSmtpUsernameResource(communicationSmtpUsernameResourceId);
 
             // invoke the operation
-            SmtpUsernameResource result = await smtpUsernameResource.GetAsync();
+            CommunicationSmtpUsernameResource result = await communicationSmtpUsername.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SmtpUsernameResourceData resourceData = result.Data;
+            CommunicationSmtpUsernameData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Communication.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SmtpUsernameResource created on azure
-            // for more information of creating SmtpUsernameResource, please refer to the document of SmtpUsernameResource
+            // this example assumes you already have this CommunicationSmtpUsernameResource created on azure
+            // for more information of creating CommunicationSmtpUsernameResource, please refer to the document of CommunicationSmtpUsernameResource
             string subscriptionId = "11112222-3333-4444-5555-666677778888";
             string resourceGroupName = "MyResourceGroup";
             string communicationServiceName = "contosoACSService";
             string smtpUsername = "smtpusername1";
-            ResourceIdentifier smtpUsernameResourceId = SmtpUsernameResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName, smtpUsername);
-            SmtpUsernameResource smtpUsernameResource = client.GetSmtpUsernameResource(smtpUsernameResourceId);
+            ResourceIdentifier communicationSmtpUsernameResourceId = CommunicationSmtpUsernameResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName, smtpUsername);
+            CommunicationSmtpUsernameResource communicationSmtpUsername = client.GetCommunicationSmtpUsernameResource(communicationSmtpUsernameResourceId);
 
             // invoke the operation
-            await smtpUsernameResource.DeleteAsync(WaitUntil.Completed);
+            await communicationSmtpUsername.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -85,28 +85,28 @@ namespace Azure.ResourceManager.Communication.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SmtpUsernameResource created on azure
-            // for more information of creating SmtpUsernameResource, please refer to the document of SmtpUsernameResource
+            // this example assumes you already have this CommunicationSmtpUsernameResource created on azure
+            // for more information of creating CommunicationSmtpUsernameResource, please refer to the document of CommunicationSmtpUsernameResource
             string subscriptionId = "11112222-3333-4444-5555-666677778888";
             string resourceGroupName = "contosoResourceGroup";
             string communicationServiceName = "contosoACSService";
             string smtpUsername = "smtpusername1";
-            ResourceIdentifier smtpUsernameResourceId = SmtpUsernameResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName, smtpUsername);
-            SmtpUsernameResource smtpUsernameResource = client.GetSmtpUsernameResource(smtpUsernameResourceId);
+            ResourceIdentifier communicationSmtpUsernameResourceId = CommunicationSmtpUsernameResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName, smtpUsername);
+            CommunicationSmtpUsernameResource communicationSmtpUsername = client.GetCommunicationSmtpUsernameResource(communicationSmtpUsernameResourceId);
 
             // invoke the operation
-            SmtpUsernameResourceData data = new SmtpUsernameResourceData
+            CommunicationSmtpUsernameData data = new CommunicationSmtpUsernameData
             {
                 Username = "newuser1@contoso.com",
                 EntraApplicationId = "aaaa1111-bbbb-2222-3333-aaaa111122bb",
                 TenantId = Guid.Parse("aaaa1111-bbbb-2222-3333-aaaa11112222"),
             };
-            ArmOperation<SmtpUsernameResource> lro = await smtpUsernameResource.UpdateAsync(WaitUntil.Completed, data);
-            SmtpUsernameResource result = lro.Value;
+            ArmOperation<CommunicationSmtpUsernameResource> lro = await communicationSmtpUsername.UpdateAsync(WaitUntil.Completed, data);
+            CommunicationSmtpUsernameResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SmtpUsernameResourceData resourceData = result.Data;
+            CommunicationSmtpUsernameData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

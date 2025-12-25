@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A class representing the SuppressionListAddressResource data model.
+    /// A class representing the EmailSuppressionListAddress data model.
     /// A object that represents a SuppressionList record.
     /// </summary>
-    public partial class SuppressionListAddressResourceData : ResourceData
+    public partial class EmailSuppressionListAddressData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SuppressionListAddressResourceData"/>. </summary>
-        public SuppressionListAddressResourceData()
+        /// <summary> Initializes a new instance of <see cref="EmailSuppressionListAddressData"/>. </summary>
+        public EmailSuppressionListAddressData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SuppressionListAddressResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailSuppressionListAddressData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="lastModified"> The date the address was last updated in a suppression list. </param>
         /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SuppressionListAddressResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string email, string firstName, string lastName, string notes, DateTimeOffset? lastModified, string dataLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EmailSuppressionListAddressData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string email, string firstName, string lastName, string notes, DateTimeOffset? lastModified, string dataLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Email = email;
             FirstName = firstName;

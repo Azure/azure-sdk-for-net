@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
             writer.WriteEndObject();
         }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Communication
             string version = default;
             Guid? immutableResourceId = default;
             IList<string> linkedDomains = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            CommunicationPublicNetworkAccess? publicNetworkAccess = default;
             bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Communication
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new CommunicationPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("disableLocalAuth"u8))
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Communication
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableLocalAuth), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLocalAuthDisabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    disableLocalAuth: ");
@@ -606,10 +606,10 @@ namespace Azure.ResourceManager.Communication
             }
             else
             {
-                if (Optional.IsDefined(DisableLocalAuth))
+                if (Optional.IsDefined(IsLocalAuthDisabled))
                 {
                     builder.Append("    disableLocalAuth: ");
-                    var boolValue = DisableLocalAuth.Value == true ? "true" : "false";
+                    var boolValue = IsLocalAuthDisabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

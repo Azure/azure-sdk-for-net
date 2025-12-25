@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SuppressionListResource"/> and their operations.
-    /// Each <see cref="SuppressionListResource"/> in the collection will belong to the same instance of <see cref="CommunicationDomainResource"/>.
-    /// To get a <see cref="SuppressionListResourceCollection"/> instance call the GetSuppressionListResources method from an instance of <see cref="CommunicationDomainResource"/>.
+    /// A class representing a collection of <see cref="EmailSuppressionListResource"/> and their operations.
+    /// Each <see cref="EmailSuppressionListResource"/> in the collection will belong to the same instance of <see cref="CommunicationDomainResource"/>.
+    /// To get an <see cref="EmailSuppressionListCollection"/> instance call the GetEmailSuppressionLists method from an instance of <see cref="CommunicationDomainResource"/>.
     /// </summary>
-    public partial class SuppressionListResourceCollection : ArmCollection, IEnumerable<SuppressionListResource>, IAsyncEnumerable<SuppressionListResource>
+    public partial class EmailSuppressionListCollection : ArmCollection, IEnumerable<EmailSuppressionListResource>, IAsyncEnumerable<EmailSuppressionListResource>
     {
-        private readonly ClientDiagnostics _suppressionListResourceSuppressionListsClientDiagnostics;
-        private readonly SuppressionListsRestOperations _suppressionListResourceSuppressionListsRestClient;
+        private readonly ClientDiagnostics _emailSuppressionListSuppressionListsClientDiagnostics;
+        private readonly SuppressionListsRestOperations _emailSuppressionListSuppressionListsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SuppressionListResourceCollection"/> class for mocking. </summary>
-        protected SuppressionListResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="EmailSuppressionListCollection"/> class for mocking. </summary>
+        protected EmailSuppressionListCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SuppressionListResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EmailSuppressionListCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SuppressionListResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EmailSuppressionListCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _suppressionListResourceSuppressionListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", SuppressionListResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SuppressionListResource.ResourceType, out string suppressionListResourceSuppressionListsApiVersion);
-            _suppressionListResourceSuppressionListsRestClient = new SuppressionListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, suppressionListResourceSuppressionListsApiVersion);
+            _emailSuppressionListSuppressionListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", EmailSuppressionListResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(EmailSuppressionListResource.ResourceType, out string emailSuppressionListSuppressionListsApiVersion);
+            _emailSuppressionListSuppressionListsRestClient = new SuppressionListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, emailSuppressionListSuppressionListsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SuppressionListResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string suppressionListName, SuppressionListResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EmailSuppressionListResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string suppressionListName, EmailSuppressionListData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.CreateOrUpdate");
+            using var scope = _emailSuppressionListSuppressionListsClientDiagnostics.CreateScope("EmailSuppressionListCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _suppressionListResourceSuppressionListsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _suppressionListResourceSuppressionListsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, data);
+                var response = await _emailSuppressionListSuppressionListsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _emailSuppressionListSuppressionListsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CommunicationArmOperation<SuppressionListResource>(Response.FromValue(new SuppressionListResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new CommunicationArmOperation<EmailSuppressionListResource>(Response.FromValue(new EmailSuppressionListResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SuppressionListResource> CreateOrUpdate(WaitUntil waitUntil, string suppressionListName, SuppressionListResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EmailSuppressionListResource> CreateOrUpdate(WaitUntil waitUntil, string suppressionListName, EmailSuppressionListData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.CreateOrUpdate");
+            using var scope = _emailSuppressionListSuppressionListsClientDiagnostics.CreateScope("EmailSuppressionListCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _suppressionListResourceSuppressionListsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, data, cancellationToken);
-                var uri = _suppressionListResourceSuppressionListsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, data);
+                var response = _emailSuppressionListSuppressionListsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, data, cancellationToken);
+                var uri = _emailSuppressionListSuppressionListsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CommunicationArmOperation<SuppressionListResource>(Response.FromValue(new SuppressionListResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new CommunicationArmOperation<EmailSuppressionListResource>(Response.FromValue(new EmailSuppressionListResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
-        public virtual async Task<Response<SuppressionListResource>> GetAsync(string suppressionListName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EmailSuppressionListResource>> GetAsync(string suppressionListName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
 
-            using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.Get");
+            using var scope = _emailSuppressionListSuppressionListsClientDiagnostics.CreateScope("EmailSuppressionListCollection.Get");
             scope.Start();
             try
             {
-                var response = await _suppressionListResourceSuppressionListsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken).ConfigureAwait(false);
+                var response = await _emailSuppressionListSuppressionListsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SuppressionListResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EmailSuppressionListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
-        public virtual Response<SuppressionListResource> Get(string suppressionListName, CancellationToken cancellationToken = default)
+        public virtual Response<EmailSuppressionListResource> Get(string suppressionListName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
 
-            using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.Get");
+            using var scope = _emailSuppressionListSuppressionListsClientDiagnostics.CreateScope("EmailSuppressionListCollection.Get");
             scope.Start();
             try
             {
-                var response = _suppressionListResourceSuppressionListsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken);
+                var response = _emailSuppressionListSuppressionListsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SuppressionListResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EmailSuppressionListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,17 +260,17 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SuppressionListResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SuppressionListResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EmailSuppressionListResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EmailSuppressionListResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _suppressionListResourceSuppressionListsRestClient.CreateListByDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _suppressionListResourceSuppressionListsRestClient.CreateListByDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SuppressionListResource(Client, SuppressionListResourceData.DeserializeSuppressionListResourceData(e)), _suppressionListResourceSuppressionListsClientDiagnostics, Pipeline, "SuppressionListResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _emailSuppressionListSuppressionListsRestClient.CreateListByDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emailSuppressionListSuppressionListsRestClient.CreateListByDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EmailSuppressionListResource(Client, EmailSuppressionListData.DeserializeEmailSuppressionListData(e)), _emailSuppressionListSuppressionListsClientDiagnostics, Pipeline, "EmailSuppressionListCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -290,17 +290,17 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SuppressionListResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SuppressionListResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EmailSuppressionListResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EmailSuppressionListResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _suppressionListResourceSuppressionListsRestClient.CreateListByDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _suppressionListResourceSuppressionListsRestClient.CreateListByDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SuppressionListResource(Client, SuppressionListResourceData.DeserializeSuppressionListResourceData(e)), _suppressionListResourceSuppressionListsClientDiagnostics, Pipeline, "SuppressionListResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _emailSuppressionListSuppressionListsRestClient.CreateListByDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emailSuppressionListSuppressionListsRestClient.CreateListByDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EmailSuppressionListResource(Client, EmailSuppressionListData.DeserializeEmailSuppressionListData(e)), _emailSuppressionListSuppressionListsClientDiagnostics, Pipeline, "EmailSuppressionListCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
 
-            using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.Exists");
+            using var scope = _emailSuppressionListSuppressionListsClientDiagnostics.CreateScope("EmailSuppressionListCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _suppressionListResourceSuppressionListsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _emailSuppressionListSuppressionListsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
 
-            using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.Exists");
+            using var scope = _emailSuppressionListSuppressionListsClientDiagnostics.CreateScope("EmailSuppressionListCollection.Exists");
             scope.Start();
             try
             {
-                var response = _suppressionListResourceSuppressionListsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken: cancellationToken);
+                var response = _emailSuppressionListSuppressionListsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,18 +414,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
-        public virtual async Task<NullableResponse<SuppressionListResource>> GetIfExistsAsync(string suppressionListName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<EmailSuppressionListResource>> GetIfExistsAsync(string suppressionListName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
 
-            using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.GetIfExists");
+            using var scope = _emailSuppressionListSuppressionListsClientDiagnostics.CreateScope("EmailSuppressionListCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _suppressionListResourceSuppressionListsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _emailSuppressionListSuppressionListsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<SuppressionListResource>(response.GetRawResponse());
-                return Response.FromValue(new SuppressionListResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<EmailSuppressionListResource>(response.GetRawResponse());
+                return Response.FromValue(new EmailSuppressionListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,18 +459,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
-        public virtual NullableResponse<SuppressionListResource> GetIfExists(string suppressionListName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<EmailSuppressionListResource> GetIfExists(string suppressionListName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
 
-            using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.GetIfExists");
+            using var scope = _emailSuppressionListSuppressionListsClientDiagnostics.CreateScope("EmailSuppressionListCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _suppressionListResourceSuppressionListsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken: cancellationToken);
+                var response = _emailSuppressionListSuppressionListsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<SuppressionListResource>(response.GetRawResponse());
-                return Response.FromValue(new SuppressionListResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<EmailSuppressionListResource>(response.GetRawResponse());
+                return Response.FromValue(new EmailSuppressionListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        IEnumerator<SuppressionListResource> IEnumerable<SuppressionListResource>.GetEnumerator()
+        IEnumerator<EmailSuppressionListResource> IEnumerable<EmailSuppressionListResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Communication
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SuppressionListResource> IAsyncEnumerable<SuppressionListResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<EmailSuppressionListResource> IAsyncEnumerable<EmailSuppressionListResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Communication.Models
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             IList<string> linkedDomains = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            CommunicationPublicNetworkAccess? publicNetworkAccess = default;
             bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Communication.Models
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new CommunicationPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("disableLocalAuth"u8))

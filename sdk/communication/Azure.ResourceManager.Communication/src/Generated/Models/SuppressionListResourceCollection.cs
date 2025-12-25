@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of <see cref="SuppressionListResourceCollection"/>. </summary>
         internal SuppressionListResourceCollection()
         {
-            Value = new ChangeTrackingList<SuppressionListResourceData>();
+            Value = new ChangeTrackingList<EmailSuppressionListData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SuppressionListResourceCollection"/>. </summary>
         /// <param name="value"> List of SuppressionListResource. </param>
         /// <param name="nextLink"> The URL the client should use to fetch the next page (per server side paging). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SuppressionListResourceCollection(IReadOnlyList<SuppressionListResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SuppressionListResourceCollection(IReadOnlyList<EmailSuppressionListData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> List of SuppressionListResource. </summary>
-        public IReadOnlyList<SuppressionListResourceData> Value { get; }
+        public IReadOnlyList<EmailSuppressionListData> Value { get; }
         /// <summary> The URL the client should use to fetch the next page (per server side paging). </summary>
         public string NextLink { get; }
     }

@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Communication.Samples
             // invoke the operation
             CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch
             {
-                PublicNetworkAccess = PublicNetworkAccess.Enabled,
+                PublicNetworkAccess = CommunicationPublicNetworkAccess.Enabled,
                 Tags =
 {
 ["newTag"] = "newVal"

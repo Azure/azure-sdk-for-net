@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.SmtpUsernameResourceCollection>> ListAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SmtpUsernameResourceCollection>> ListAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        Models.SmtpUsernameResourceCollection value = default;
+                        SmtpUsernameResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = Models.SmtpUsernameResourceCollection.DeserializeSmtpUsernameResourceCollection(document.RootElement);
+                        value = SmtpUsernameResourceCollection.DeserializeSmtpUsernameResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.SmtpUsernameResourceCollection> List(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
+        public Response<SmtpUsernameResourceCollection> List(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        Models.SmtpUsernameResourceCollection value = default;
+                        SmtpUsernameResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = Models.SmtpUsernameResourceCollection.DeserializeSmtpUsernameResourceCollection(document.RootElement);
+                        value = SmtpUsernameResourceCollection.DeserializeSmtpUsernameResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="smtpUsername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SmtpUsernameResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationSmtpUsernameData>> GetAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        SmtpUsernameResourceData value = default;
+                        CommunicationSmtpUsernameData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SmtpUsernameResourceData.DeserializeSmtpUsernameResourceData(document.RootElement);
+                        value = CommunicationSmtpUsernameData.DeserializeCommunicationSmtpUsernameData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SmtpUsernameResourceData)null, message.Response);
+                    return Response.FromValue((CommunicationSmtpUsernameData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="smtpUsername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SmtpUsernameResourceData> Get(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, CancellationToken cancellationToken = default)
+        public Response<CommunicationSmtpUsernameData> Get(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        SmtpUsernameResourceData value = default;
+                        CommunicationSmtpUsernameData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SmtpUsernameResourceData.DeserializeSmtpUsernameResourceData(document.RootElement);
+                        value = CommunicationSmtpUsernameData.DeserializeCommunicationSmtpUsernameData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SmtpUsernameResourceData)null, message.Response);
+                    return Response.FromValue((CommunicationSmtpUsernameData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, SmtpUsernameResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, CommunicationSmtpUsernameData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Communication
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, SmtpUsernameResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, CommunicationSmtpUsernameData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/>, <paramref name="smtpUsername"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SmtpUsernameResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, SmtpUsernameResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationSmtpUsernameData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, CommunicationSmtpUsernameData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -300,9 +300,9 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                 case 201:
                     {
-                        SmtpUsernameResourceData value = default;
+                        CommunicationSmtpUsernameData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SmtpUsernameResourceData.DeserializeSmtpUsernameResourceData(document.RootElement);
+                        value = CommunicationSmtpUsernameData.DeserializeCommunicationSmtpUsernameData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/>, <paramref name="smtpUsername"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SmtpUsernameResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, SmtpUsernameResourceData data, CancellationToken cancellationToken = default)
+        public Response<CommunicationSmtpUsernameData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername, CommunicationSmtpUsernameData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                 case 201:
                     {
-                        SmtpUsernameResourceData value = default;
+                        CommunicationSmtpUsernameData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SmtpUsernameResourceData.DeserializeSmtpUsernameResourceData(document.RootElement);
+                        value = CommunicationSmtpUsernameData.DeserializeCommunicationSmtpUsernameData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.SmtpUsernameResourceCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SmtpUsernameResourceCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -479,9 +479,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        Models.SmtpUsernameResourceCollection value = default;
+                        SmtpUsernameResourceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = Models.SmtpUsernameResourceCollection.DeserializeSmtpUsernameResourceCollection(document.RootElement);
+                        value = SmtpUsernameResourceCollection.DeserializeSmtpUsernameResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.SmtpUsernameResourceCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
+        public Response<SmtpUsernameResourceCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -510,9 +510,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        Models.SmtpUsernameResourceCollection value = default;
+                        SmtpUsernameResourceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = Models.SmtpUsernameResourceCollection.DeserializeSmtpUsernameResourceCollection(document.RootElement);
+                        value = SmtpUsernameResourceCollection.DeserializeSmtpUsernameResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

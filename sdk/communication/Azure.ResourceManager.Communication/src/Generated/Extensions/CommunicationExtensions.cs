@@ -110,60 +110,60 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SmtpUsernameResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SmtpUsernameResource.CreateResourceIdentifier" /> to create a <see cref="SmtpUsernameResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CommunicationSmtpUsernameResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CommunicationSmtpUsernameResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationSmtpUsernameResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetSmtpUsernameResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetCommunicationSmtpUsernameResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SmtpUsernameResource"/> object. </returns>
-        public static SmtpUsernameResource GetSmtpUsernameResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CommunicationSmtpUsernameResource"/> object. </returns>
+        public static CommunicationSmtpUsernameResource GetCommunicationSmtpUsernameResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCommunicationArmClient(client).GetSmtpUsernameResource(id);
+            return GetMockableCommunicationArmClient(client).GetCommunicationSmtpUsernameResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SuppressionListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SuppressionListResource.CreateResourceIdentifier" /> to create a <see cref="SuppressionListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EmailSuppressionListResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EmailSuppressionListResource.CreateResourceIdentifier" /> to create an <see cref="EmailSuppressionListResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetSuppressionListResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetEmailSuppressionListResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SuppressionListResource"/> object. </returns>
-        public static SuppressionListResource GetSuppressionListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EmailSuppressionListResource"/> object. </returns>
+        public static EmailSuppressionListResource GetEmailSuppressionListResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCommunicationArmClient(client).GetSuppressionListResource(id);
+            return GetMockableCommunicationArmClient(client).GetEmailSuppressionListResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SuppressionListAddressResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SuppressionListAddressResource.CreateResourceIdentifier" /> to create a <see cref="SuppressionListAddressResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EmailSuppressionListAddressResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EmailSuppressionListAddressResource.CreateResourceIdentifier" /> to create an <see cref="EmailSuppressionListAddressResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetSuppressionListAddressResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetEmailSuppressionListAddressResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SuppressionListAddressResource"/> object. </returns>
-        public static SuppressionListAddressResource GetSuppressionListAddressResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EmailSuppressionListAddressResource"/> object. </returns>
+        public static EmailSuppressionListAddressResource GetEmailSuppressionListAddressResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCommunicationArmClient(client).GetSuppressionListAddressResource(id);
+            return GetMockableCommunicationArmClient(client).GetEmailSuppressionListAddressResource(id);
         }
 
         /// <summary>

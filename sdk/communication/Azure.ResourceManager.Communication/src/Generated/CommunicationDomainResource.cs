@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.Communication
             return GetSenderUsernameResources().Get(senderUsername, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SuppressionListResources in the CommunicationDomainResource. </summary>
-        /// <returns> An object representing collection of SuppressionListResources and their operations over a SuppressionListResource. </returns>
-        public virtual SuppressionListResourceCollection GetSuppressionListResources()
+        /// <summary> Gets a collection of EmailSuppressionListResources in the CommunicationDomainResource. </summary>
+        /// <returns> An object representing collection of EmailSuppressionListResources and their operations over a EmailSuppressionListResource. </returns>
+        public virtual EmailSuppressionListCollection GetEmailSuppressionLists()
         {
-            return GetCachedClient(client => new SuppressionListResourceCollection(client, Id));
+            return GetCachedClient(client => new EmailSuppressionListCollection(client, Id));
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SuppressionListResource>> GetSuppressionListResourceAsync(string suppressionListName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EmailSuppressionListResource>> GetEmailSuppressionListAsync(string suppressionListName, CancellationToken cancellationToken = default)
         {
-            return await GetSuppressionListResources().GetAsync(suppressionListName, cancellationToken).ConfigureAwait(false);
+            return await GetEmailSuppressionLists().GetAsync(suppressionListName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
+        /// <description><see cref="EmailSuppressionListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SuppressionListResource> GetSuppressionListResource(string suppressionListName, CancellationToken cancellationToken = default)
+        public virtual Response<EmailSuppressionListResource> GetEmailSuppressionList(string suppressionListName, CancellationToken cancellationToken = default)
         {
-            return GetSuppressionListResources().Get(suppressionListName, cancellationToken);
+            return GetEmailSuppressionLists().Get(suppressionListName, cancellationToken);
         }
 
         /// <summary>

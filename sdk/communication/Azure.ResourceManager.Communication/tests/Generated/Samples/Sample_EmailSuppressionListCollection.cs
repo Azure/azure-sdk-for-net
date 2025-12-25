@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Samples
 {
-    public partial class Sample_SuppressionListResourceCollection
+    public partial class Sample_EmailSuppressionListCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,21 +36,21 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationDomainResourceId = CommunicationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName);
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
-            // get the collection of this SuppressionListResource
-            SuppressionListResourceCollection collection = communicationDomainResource.GetSuppressionListResources();
+            // get the collection of this EmailSuppressionListResource
+            EmailSuppressionListCollection collection = communicationDomainResource.GetEmailSuppressionLists();
 
             // invoke the operation
             string suppressionListName = "aaaa1111-bbbb-2222-3333-aaaa11112222";
-            SuppressionListResourceData data = new SuppressionListResourceData
+            EmailSuppressionListData data = new EmailSuppressionListData
             {
                 ListName = "contosoNewsAlerts",
             };
-            ArmOperation<SuppressionListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, suppressionListName, data);
-            SuppressionListResource result = lro.Value;
+            ArmOperation<EmailSuppressionListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, suppressionListName, data);
+            EmailSuppressionListResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SuppressionListResourceData resourceData = result.Data;
+            EmailSuppressionListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -76,16 +76,16 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationDomainResourceId = CommunicationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName);
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
-            // get the collection of this SuppressionListResource
-            SuppressionListResourceCollection collection = communicationDomainResource.GetSuppressionListResources();
+            // get the collection of this EmailSuppressionListResource
+            EmailSuppressionListCollection collection = communicationDomainResource.GetEmailSuppressionLists();
 
             // invoke the operation
             string suppressionListName = "aaaa1111-bbbb-2222-3333-aaaa11112222";
-            SuppressionListResource result = await collection.GetAsync(suppressionListName);
+            EmailSuppressionListResource result = await collection.GetAsync(suppressionListName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SuppressionListResourceData resourceData = result.Data;
+            EmailSuppressionListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -111,15 +111,15 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationDomainResourceId = CommunicationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName);
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
-            // get the collection of this SuppressionListResource
-            SuppressionListResourceCollection collection = communicationDomainResource.GetSuppressionListResources();
+            // get the collection of this EmailSuppressionListResource
+            EmailSuppressionListCollection collection = communicationDomainResource.GetEmailSuppressionLists();
 
             // invoke the operation and iterate over the result
-            await foreach (SuppressionListResource item in collection.GetAllAsync())
+            await foreach (EmailSuppressionListResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SuppressionListResourceData resourceData = item.Data;
+                EmailSuppressionListData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationDomainResourceId = CommunicationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName);
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
-            // get the collection of this SuppressionListResource
-            SuppressionListResourceCollection collection = communicationDomainResource.GetSuppressionListResources();
+            // get the collection of this EmailSuppressionListResource
+            EmailSuppressionListCollection collection = communicationDomainResource.GetEmailSuppressionLists();
 
             // invoke the operation
             string suppressionListName = "aaaa1111-bbbb-2222-3333-aaaa11112222";
@@ -179,13 +179,13 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationDomainResourceId = CommunicationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName);
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
-            // get the collection of this SuppressionListResource
-            SuppressionListResourceCollection collection = communicationDomainResource.GetSuppressionListResources();
+            // get the collection of this EmailSuppressionListResource
+            EmailSuppressionListCollection collection = communicationDomainResource.GetEmailSuppressionLists();
 
             // invoke the operation
             string suppressionListName = "aaaa1111-bbbb-2222-3333-aaaa11112222";
-            NullableResponse<SuppressionListResource> response = await collection.GetIfExistsAsync(suppressionListName);
-            SuppressionListResource result = response.HasValue ? response.Value : null;
+            NullableResponse<EmailSuppressionListResource> response = await collection.GetIfExistsAsync(suppressionListName);
+            EmailSuppressionListResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Communication.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SuppressionListResourceData resourceData = result.Data;
+                EmailSuppressionListData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -15,53 +15,55 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A Class representing a SmtpUsernameResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SmtpUsernameResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSmtpUsernameResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CommunicationServiceResource"/> using the GetSmtpUsernameResource method.
+    /// A Class representing an EmailSuppressionListAddress along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EmailSuppressionListAddressResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEmailSuppressionListAddressResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EmailSuppressionListResource"/> using the GetEmailSuppressionListAddress method.
     /// </summary>
-    public partial class SmtpUsernameResource : ArmResource
+    public partial class EmailSuppressionListAddressResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SmtpUsernameResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="EmailSuppressionListAddressResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="communicationServiceName"> The communicationServiceName. </param>
-        /// <param name="smtpUsername"> The smtpUsername. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername)
+        /// <param name="emailServiceName"> The emailServiceName. </param>
+        /// <param name="domainName"> The domainName. </param>
+        /// <param name="suppressionListName"> The suppressionListName. </param>
+        /// <param name="addressId"> The addressId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, string addressId)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/smtpUsernames/{smtpUsername}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}/suppressionListAddresses/{addressId}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _smtpUsernameResourceSmtpUsernamesClientDiagnostics;
-        private readonly SmtpUsernamesRestOperations _smtpUsernameResourceSmtpUsernamesRestClient;
-        private readonly SmtpUsernameResourceData _data;
+        private readonly ClientDiagnostics _emailSuppressionListAddressSuppressionListAddressesClientDiagnostics;
+        private readonly SuppressionListAddressesRestOperations _emailSuppressionListAddressSuppressionListAddressesRestClient;
+        private readonly EmailSuppressionListAddressData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Communication/communicationServices/smtpUsernames";
+        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices/domains/suppressionLists/suppressionListAddresses";
 
-        /// <summary> Initializes a new instance of the <see cref="SmtpUsernameResource"/> class for mocking. </summary>
-        protected SmtpUsernameResource()
+        /// <summary> Initializes a new instance of the <see cref="EmailSuppressionListAddressResource"/> class for mocking. </summary>
+        protected EmailSuppressionListAddressResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SmtpUsernameResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EmailSuppressionListAddressResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SmtpUsernameResource(ArmClient client, SmtpUsernameResourceData data) : this(client, data.Id)
+        internal EmailSuppressionListAddressResource(ArmClient client, EmailSuppressionListAddressData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SmtpUsernameResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EmailSuppressionListAddressResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SmtpUsernameResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EmailSuppressionListAddressResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _smtpUsernameResourceSmtpUsernamesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string smtpUsernameResourceSmtpUsernamesApiVersion);
-            _smtpUsernameResourceSmtpUsernamesRestClient = new SmtpUsernamesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, smtpUsernameResourceSmtpUsernamesApiVersion);
+            _emailSuppressionListAddressSuppressionListAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string emailSuppressionListAddressSuppressionListAddressesApiVersion);
+            _emailSuppressionListAddressSuppressionListAddressesRestClient = new SuppressionListAddressesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, emailSuppressionListAddressSuppressionListAddressesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SmtpUsernameResourceData Data
+        public virtual EmailSuppressionListAddressData Data
         {
             get
             {
@@ -89,15 +91,15 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get a SmtpUsernameResource.
+        /// Get a SuppressionListAddress.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/smtpUsernames/{smtpUsername}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}/suppressionListAddresses/{addressId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SmtpUsernames_Get</description>
+        /// <description>SuppressionListAddresses_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -105,21 +107,21 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="EmailSuppressionListAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SmtpUsernameResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EmailSuppressionListAddressResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResource.Get");
+            using var scope = _emailSuppressionListAddressSuppressionListAddressesClientDiagnostics.CreateScope("EmailSuppressionListAddressResource.Get");
             scope.Start();
             try
             {
-                var response = await _smtpUsernameResourceSmtpUsernamesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _emailSuppressionListAddressSuppressionListAddressesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SmtpUsernameResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EmailSuppressionListAddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,15 +131,15 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get a SmtpUsernameResource.
+        /// Get a SuppressionListAddress.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/smtpUsernames/{smtpUsername}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}/suppressionListAddresses/{addressId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SmtpUsernames_Get</description>
+        /// <description>SuppressionListAddresses_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -145,21 +147,21 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="EmailSuppressionListAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SmtpUsernameResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<EmailSuppressionListAddressResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResource.Get");
+            using var scope = _emailSuppressionListAddressSuppressionListAddressesClientDiagnostics.CreateScope("EmailSuppressionListAddressResource.Get");
             scope.Start();
             try
             {
-                var response = _smtpUsernameResourceSmtpUsernamesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _emailSuppressionListAddressSuppressionListAddressesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SmtpUsernameResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EmailSuppressionListAddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,15 +171,15 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Operation to delete a single SmtpUsername resource.
+        /// Operation to delete a single address from a suppression list.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/smtpUsernames/{smtpUsername}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}/suppressionListAddresses/{addressId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SmtpUsernames_Delete</description>
+        /// <description>SuppressionListAddresses_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -185,7 +187,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="EmailSuppressionListAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,12 +195,12 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResource.Delete");
+            using var scope = _emailSuppressionListAddressSuppressionListAddressesClientDiagnostics.CreateScope("EmailSuppressionListAddressResource.Delete");
             scope.Start();
             try
             {
-                var response = await _smtpUsernameResourceSmtpUsernamesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _smtpUsernameResourceSmtpUsernamesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _emailSuppressionListAddressSuppressionListAddressesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _emailSuppressionListAddressSuppressionListAddressesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new CommunicationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -213,15 +215,15 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Operation to delete a single SmtpUsername resource.
+        /// Operation to delete a single address from a suppression list.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/smtpUsernames/{smtpUsername}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}/suppressionListAddresses/{addressId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SmtpUsernames_Delete</description>
+        /// <description>SuppressionListAddresses_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -229,7 +231,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="EmailSuppressionListAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,12 +239,12 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResource.Delete");
+            using var scope = _emailSuppressionListAddressSuppressionListAddressesClientDiagnostics.CreateScope("EmailSuppressionListAddressResource.Delete");
             scope.Start();
             try
             {
-                var response = _smtpUsernameResourceSmtpUsernamesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _smtpUsernameResourceSmtpUsernamesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _emailSuppressionListAddressSuppressionListAddressesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _emailSuppressionListAddressSuppressionListAddressesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new CommunicationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -257,15 +259,15 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Create or update an SmtpUsernameResource.
+        /// Create or update a SuppressionListAddress.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/smtpUsernames/{smtpUsername}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}/suppressionListAddresses/{addressId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SmtpUsernames_CreateOrUpdate</description>
+        /// <description>SuppressionListAddresses_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -273,7 +275,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="EmailSuppressionListAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,18 +283,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="data"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SmtpUsernameResource>> UpdateAsync(WaitUntil waitUntil, SmtpUsernameResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EmailSuppressionListAddressResource>> UpdateAsync(WaitUntil waitUntil, EmailSuppressionListAddressData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResource.Update");
+            using var scope = _emailSuppressionListAddressSuppressionListAddressesClientDiagnostics.CreateScope("EmailSuppressionListAddressResource.Update");
             scope.Start();
             try
             {
-                var response = await _smtpUsernameResourceSmtpUsernamesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _smtpUsernameResourceSmtpUsernamesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _emailSuppressionListAddressSuppressionListAddressesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _emailSuppressionListAddressSuppressionListAddressesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CommunicationArmOperation<SmtpUsernameResource>(Response.FromValue(new SmtpUsernameResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new CommunicationArmOperation<EmailSuppressionListAddressResource>(Response.FromValue(new EmailSuppressionListAddressResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -305,15 +307,15 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Create or update an SmtpUsernameResource.
+        /// Create or update a SuppressionListAddress.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/smtpUsernames/{smtpUsername}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}/suppressionListAddresses/{addressId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SmtpUsernames_CreateOrUpdate</description>
+        /// <description>SuppressionListAddresses_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -321,7 +323,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// <description><see cref="EmailSuppressionListAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,18 +331,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="data"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SmtpUsernameResource> Update(WaitUntil waitUntil, SmtpUsernameResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EmailSuppressionListAddressResource> Update(WaitUntil waitUntil, EmailSuppressionListAddressData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _smtpUsernameResourceSmtpUsernamesClientDiagnostics.CreateScope("SmtpUsernameResource.Update");
+            using var scope = _emailSuppressionListAddressSuppressionListAddressesClientDiagnostics.CreateScope("EmailSuppressionListAddressResource.Update");
             scope.Start();
             try
             {
-                var response = _smtpUsernameResourceSmtpUsernamesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _smtpUsernameResourceSmtpUsernamesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _emailSuppressionListAddressSuppressionListAddressesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _emailSuppressionListAddressSuppressionListAddressesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CommunicationArmOperation<SmtpUsernameResource>(Response.FromValue(new SmtpUsernameResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new CommunicationArmOperation<EmailSuppressionListAddressResource>(Response.FromValue(new EmailSuppressionListAddressResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Samples
 {
-    public partial class Sample_SmtpUsernameResourceCollection
+    public partial class Sample_CommunicationSmtpUsernameCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -35,23 +35,23 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
             CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
 
-            // get the collection of this SmtpUsernameResource
-            SmtpUsernameResourceCollection collection = communicationServiceResource.GetSmtpUsernameResources();
+            // get the collection of this CommunicationSmtpUsernameResource
+            CommunicationSmtpUsernameCollection collection = communicationServiceResource.GetCommunicationSmtpUsernames();
 
             // invoke the operation
             string smtpUsername = "smtpusername1";
-            SmtpUsernameResourceData data = new SmtpUsernameResourceData
+            CommunicationSmtpUsernameData data = new CommunicationSmtpUsernameData
             {
                 Username = "newuser1@contoso.com",
                 EntraApplicationId = "aaaa1111-bbbb-2222-3333-aaaa111122bb",
                 TenantId = Guid.Parse("aaaa1111-bbbb-2222-3333-aaaa11112222"),
             };
-            ArmOperation<SmtpUsernameResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, smtpUsername, data);
-            SmtpUsernameResource result = lro.Value;
+            ArmOperation<CommunicationSmtpUsernameResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, smtpUsername, data);
+            CommunicationSmtpUsernameResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SmtpUsernameResourceData resourceData = result.Data;
+            CommunicationSmtpUsernameData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -76,16 +76,16 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
             CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
 
-            // get the collection of this SmtpUsernameResource
-            SmtpUsernameResourceCollection collection = communicationServiceResource.GetSmtpUsernameResources();
+            // get the collection of this CommunicationSmtpUsernameResource
+            CommunicationSmtpUsernameCollection collection = communicationServiceResource.GetCommunicationSmtpUsernames();
 
             // invoke the operation
             string smtpUsername = "smtpusername1";
-            SmtpUsernameResource result = await collection.GetAsync(smtpUsername);
+            CommunicationSmtpUsernameResource result = await collection.GetAsync(smtpUsername);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SmtpUsernameResourceData resourceData = result.Data;
+            CommunicationSmtpUsernameData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -110,15 +110,15 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
             CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
 
-            // get the collection of this SmtpUsernameResource
-            SmtpUsernameResourceCollection collection = communicationServiceResource.GetSmtpUsernameResources();
+            // get the collection of this CommunicationSmtpUsernameResource
+            CommunicationSmtpUsernameCollection collection = communicationServiceResource.GetCommunicationSmtpUsernames();
 
             // invoke the operation and iterate over the result
-            await foreach (SmtpUsernameResource item in collection.GetAllAsync())
+            await foreach (CommunicationSmtpUsernameResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SmtpUsernameResourceData resourceData = item.Data;
+                CommunicationSmtpUsernameData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
             CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
 
-            // get the collection of this SmtpUsernameResource
-            SmtpUsernameResourceCollection collection = communicationServiceResource.GetSmtpUsernameResources();
+            // get the collection of this CommunicationSmtpUsernameResource
+            CommunicationSmtpUsernameCollection collection = communicationServiceResource.GetCommunicationSmtpUsernames();
 
             // invoke the operation
             string smtpUsername = "smtpusername1";
@@ -176,13 +176,13 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
             CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
 
-            // get the collection of this SmtpUsernameResource
-            SmtpUsernameResourceCollection collection = communicationServiceResource.GetSmtpUsernameResources();
+            // get the collection of this CommunicationSmtpUsernameResource
+            CommunicationSmtpUsernameCollection collection = communicationServiceResource.GetCommunicationSmtpUsernames();
 
             // invoke the operation
             string smtpUsername = "smtpusername1";
-            NullableResponse<SmtpUsernameResource> response = await collection.GetIfExistsAsync(smtpUsername);
-            SmtpUsernameResource result = response.HasValue ? response.Value : null;
+            NullableResponse<CommunicationSmtpUsernameResource> response = await collection.GetIfExistsAsync(smtpUsername);
+            CommunicationSmtpUsernameResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Communication.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SmtpUsernameResourceData resourceData = result.Data;
+                CommunicationSmtpUsernameData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

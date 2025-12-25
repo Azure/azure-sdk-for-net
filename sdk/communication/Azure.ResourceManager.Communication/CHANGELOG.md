@@ -4,23 +4,9 @@
 
 ### Features Added
 
-- Added support for Email Suppression List and SMTP Usernames.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version to '2025-09-01'.
+    - Added support for Email Suppression List and SMTP Usernames.
+- Make `Azure.ResourceManager.Communication` AOT-compatible.
 
 ## 1.2.1 (2025-03-11)
 

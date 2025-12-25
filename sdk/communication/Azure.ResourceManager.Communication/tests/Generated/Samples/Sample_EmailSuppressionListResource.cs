@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Samples
 {
-    public partial class Sample_SuppressionListResource
+    public partial class Sample_EmailSuppressionListResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Communication.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SuppressionListResource created on azure
-            // for more information of creating SuppressionListResource, please refer to the document of SuppressionListResource
+            // this example assumes you already have this EmailSuppressionListResource created on azure
+            // for more information of creating EmailSuppressionListResource, please refer to the document of EmailSuppressionListResource
             string subscriptionId = "11112222-3333-4444-5555-666677778888";
             string resourceGroupName = "contosoResourceGroup";
             string emailServiceName = "contosoEmailService";
             string domainName = "contoso.com";
             string suppressionListName = "aaaa1111-bbbb-2222-3333-aaaa11112222";
-            ResourceIdentifier suppressionListResourceId = SuppressionListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName, suppressionListName);
-            SuppressionListResource suppressionListResource = client.GetSuppressionListResource(suppressionListResourceId);
+            ResourceIdentifier emailSuppressionListResourceId = EmailSuppressionListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName, suppressionListName);
+            EmailSuppressionListResource emailSuppressionList = client.GetEmailSuppressionListResource(emailSuppressionListResourceId);
 
             // invoke the operation
-            SuppressionListResource result = await suppressionListResource.GetAsync();
+            EmailSuppressionListResource result = await emailSuppressionList.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SuppressionListResourceData resourceData = result.Data;
+            EmailSuppressionListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,18 +59,18 @@ namespace Azure.ResourceManager.Communication.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SuppressionListResource created on azure
-            // for more information of creating SuppressionListResource, please refer to the document of SuppressionListResource
+            // this example assumes you already have this EmailSuppressionListResource created on azure
+            // for more information of creating EmailSuppressionListResource, please refer to the document of EmailSuppressionListResource
             string subscriptionId = "11112222-3333-4444-5555-666677778888";
             string resourceGroupName = "MyResourceGroup";
             string emailServiceName = "MyEmailServiceResource";
             string domainName = "mydomain.com";
             string suppressionListName = "aaaa1111-bbbb-2222-3333-aaaa11112222";
-            ResourceIdentifier suppressionListResourceId = SuppressionListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName, suppressionListName);
-            SuppressionListResource suppressionListResource = client.GetSuppressionListResource(suppressionListResourceId);
+            ResourceIdentifier emailSuppressionListResourceId = EmailSuppressionListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName, suppressionListName);
+            EmailSuppressionListResource emailSuppressionList = client.GetEmailSuppressionListResource(emailSuppressionListResourceId);
 
             // invoke the operation
-            await suppressionListResource.DeleteAsync(WaitUntil.Completed);
+            await emailSuppressionList.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -87,27 +87,27 @@ namespace Azure.ResourceManager.Communication.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SuppressionListResource created on azure
-            // for more information of creating SuppressionListResource, please refer to the document of SuppressionListResource
+            // this example assumes you already have this EmailSuppressionListResource created on azure
+            // for more information of creating EmailSuppressionListResource, please refer to the document of EmailSuppressionListResource
             string subscriptionId = "11112222-3333-4444-5555-666677778888";
             string resourceGroupName = "contosoResourceGroup";
             string emailServiceName = "contosoEmailService";
             string domainName = "contoso.com";
             string suppressionListName = "aaaa1111-bbbb-2222-3333-aaaa11112222";
-            ResourceIdentifier suppressionListResourceId = SuppressionListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName, suppressionListName);
-            SuppressionListResource suppressionListResource = client.GetSuppressionListResource(suppressionListResourceId);
+            ResourceIdentifier emailSuppressionListResourceId = EmailSuppressionListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName, suppressionListName);
+            EmailSuppressionListResource emailSuppressionList = client.GetEmailSuppressionListResource(emailSuppressionListResourceId);
 
             // invoke the operation
-            SuppressionListResourceData data = new SuppressionListResourceData
+            EmailSuppressionListData data = new EmailSuppressionListData
             {
                 ListName = "contosoNewsAlerts",
             };
-            ArmOperation<SuppressionListResource> lro = await suppressionListResource.UpdateAsync(WaitUntil.Completed, data);
-            SuppressionListResource result = lro.Value;
+            ArmOperation<EmailSuppressionListResource> lro = await emailSuppressionList.UpdateAsync(WaitUntil.Completed, data);
+            EmailSuppressionListResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SuppressionListResourceData resourceData = result.Data;
+            EmailSuppressionListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

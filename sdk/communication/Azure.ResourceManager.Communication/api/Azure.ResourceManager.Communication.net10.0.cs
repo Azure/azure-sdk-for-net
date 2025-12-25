@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Communication
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationDomainResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationDomainResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListResource> GetEmailSuppressionList(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListResource>> GetEmailSuppressionListAsync(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Communication.EmailSuppressionListCollection GetEmailSuppressionLists() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.SenderUsernameResource> GetSenderUsernameResource(string senderUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SenderUsernameResource>> GetSenderUsernameResourceAsync(string senderUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Communication.SenderUsernameResourceCollection GetSenderUsernameResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.SuppressionListResource> GetSuppressionListResource(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SuppressionListResource>> GetSuppressionListResourceAsync(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Communication.SuppressionListResourceCollection GetSuppressionListResources() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation InitiateVerification(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.Models.DomainsRecordVerificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> InitiateVerificationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.Models.DomainsRecordVerificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationDomainResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -87,16 +87,16 @@ namespace Azure.ResourceManager.Communication
         public static Azure.ResourceManager.Communication.CommunicationServiceResourceCollection GetCommunicationServiceResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Communication.CommunicationServiceResource> GetCommunicationServiceResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Communication.CommunicationServiceResource> GetCommunicationServiceResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource GetCommunicationSmtpUsernameResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Communication.EmailServiceResource GetEmailServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Communication.EmailServiceResource> GetEmailServiceResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string emailServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.EmailServiceResource>> GetEmailServiceResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string emailServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Communication.EmailServiceResourceCollection GetEmailServiceResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Communication.EmailServiceResource> GetEmailServiceResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Communication.EmailServiceResource> GetEmailServiceResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Communication.EmailSuppressionListAddressResource GetEmailSuppressionListAddressResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Communication.EmailSuppressionListResource GetEmailSuppressionListResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Communication.SenderUsernameResource GetSenderUsernameResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Communication.SmtpUsernameResource GetSmtpUsernameResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Communication.SuppressionListAddressResource GetSuppressionListAddressResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Communication.SuppressionListResource GetSuppressionListResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.Communication
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationServiceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationServiceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource> GetCommunicationSmtpUsername(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource>> GetCommunicationSmtpUsernameAsync(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Communication.CommunicationSmtpUsernameCollection GetCommunicationSmtpUsernames() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.SmtpUsernameResource> GetSmtpUsernameResource(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SmtpUsernameResource>> GetSmtpUsernameResourceAsync(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Communication.SmtpUsernameResourceCollection GetSmtpUsernameResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.Models.LinkedNotificationHub> LinkNotificationHub(Azure.ResourceManager.Communication.Models.LinkNotificationHubContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.LinkedNotificationHub>> LinkNotificationHubAsync(Azure.ResourceManager.Communication.Models.LinkNotificationHubContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys> RegenerateKey(Azure.ResourceManager.Communication.Models.RegenerateCommunicationServiceKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Communication
     {
         public CommunicationServiceResourceData(Azure.Core.AzureLocation location) { }
         public string DataLocation { get { throw null; } set { } }
-        public bool? DisableLocalAuth { get { throw null; } set { } }
         public string HostName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Guid? ImmutableResourceId { get { throw null; } }
+        public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LinkedDomains { get { throw null; } }
         public Azure.Core.ResourceIdentifier NotificationHubId { get { throw null; } }
         public Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string Version { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Communication.CommunicationServiceResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.CommunicationServiceResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -170,6 +170,55 @@ namespace Azure.ResourceManager.Communication
         Azure.ResourceManager.Communication.CommunicationServiceResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationServiceResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationServiceResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationServiceResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CommunicationSmtpUsernameCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource>, System.Collections.IEnumerable
+    {
+        protected CommunicationSmtpUsernameCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string smtpUsername, Azure.ResourceManager.Communication.CommunicationSmtpUsernameData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string smtpUsername, Azure.ResourceManager.Communication.CommunicationSmtpUsernameData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource> Get(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource>> GetAsync(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource> GetIfExists(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource>> GetIfExistsAsync(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class CommunicationSmtpUsernameData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>
+    {
+        public CommunicationSmtpUsernameData() { }
+        public string EntraApplicationId { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
+        public string Username { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Communication.CommunicationSmtpUsernameData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Communication.CommunicationSmtpUsernameData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CommunicationSmtpUsernameResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CommunicationSmtpUsernameResource() { }
+        public virtual Azure.ResourceManager.Communication.CommunicationSmtpUsernameData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Communication.CommunicationSmtpUsernameData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Communication.CommunicationSmtpUsernameData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationSmtpUsernameData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.CommunicationSmtpUsernameData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.CommunicationSmtpUsernameData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class EmailServiceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailServiceResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailServiceResourceData>
     {
@@ -228,6 +277,111 @@ namespace Azure.ResourceManager.Communication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailServiceResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailServiceResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class EmailSuppressionListAddressCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource>, System.Collections.IEnumerable
+    {
+        protected EmailSuppressionListAddressCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string addressId, Azure.ResourceManager.Communication.EmailSuppressionListAddressData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string addressId, Azure.ResourceManager.Communication.EmailSuppressionListAddressData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource> Get(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource>> GetAsync(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource> GetIfExists(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource>> GetIfExistsAsync(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class EmailSuppressionListAddressData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>
+    {
+        public EmailSuppressionListAddressData() { }
+        public string DataLocation { get { throw null; } }
+        public string Email { get { throw null; } set { } }
+        public string FirstName { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModified { get { throw null; } }
+        public string LastName { get { throw null; } set { } }
+        public string Notes { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Communication.EmailSuppressionListAddressData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Communication.EmailSuppressionListAddressData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EmailSuppressionListAddressResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected EmailSuppressionListAddressResource() { }
+        public virtual Azure.ResourceManager.Communication.EmailSuppressionListAddressData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, string addressId) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Communication.EmailSuppressionListAddressData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Communication.EmailSuppressionListAddressData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListAddressData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.EmailSuppressionListAddressData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.EmailSuppressionListAddressData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class EmailSuppressionListCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.EmailSuppressionListResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.EmailSuppressionListResource>, System.Collections.IEnumerable
+    {
+        protected EmailSuppressionListCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.EmailSuppressionListResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string suppressionListName, Azure.ResourceManager.Communication.EmailSuppressionListData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.EmailSuppressionListResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string suppressionListName, Azure.ResourceManager.Communication.EmailSuppressionListData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListResource> Get(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Communication.EmailSuppressionListResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Communication.EmailSuppressionListResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListResource>> GetAsync(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Communication.EmailSuppressionListResource> GetIfExists(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Communication.EmailSuppressionListResource>> GetIfExistsAsync(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Communication.EmailSuppressionListResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.EmailSuppressionListResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Communication.EmailSuppressionListResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.EmailSuppressionListResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class EmailSuppressionListData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListData>
+    {
+        public EmailSuppressionListData() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string DataLocation { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public string ListName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Communication.EmailSuppressionListData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Communication.EmailSuppressionListData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EmailSuppressionListResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected EmailSuppressionListResource() { }
+        public virtual Azure.ResourceManager.Communication.EmailSuppressionListData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource> GetEmailSuppressionListAddress(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.EmailSuppressionListAddressResource>> GetEmailSuppressionListAddressAsync(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Communication.EmailSuppressionListAddressCollection GetEmailSuppressionListAddresses() { throw null; }
+        Azure.ResourceManager.Communication.EmailSuppressionListData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.EmailSuppressionListData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Communication.EmailSuppressionListData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.EmailSuppressionListData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.EmailSuppressionListResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.EmailSuppressionListData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.EmailSuppressionListResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.EmailSuppressionListData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class SenderUsernameResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SenderUsernameResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SenderUsernameResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -278,160 +432,6 @@ namespace Azure.ResourceManager.Communication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SenderUsernameResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SenderUsernameResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SmtpUsernameResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected SmtpUsernameResource() { }
-        public virtual Azure.ResourceManager.Communication.SmtpUsernameResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationServiceName, string smtpUsername) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.SmtpUsernameResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SmtpUsernameResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Communication.SmtpUsernameResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Communication.SmtpUsernameResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SmtpUsernameResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.SmtpUsernameResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SmtpUsernameResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.SmtpUsernameResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class SmtpUsernameResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.SmtpUsernameResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.SmtpUsernameResource>, System.Collections.IEnumerable
-    {
-        protected SmtpUsernameResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SmtpUsernameResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string smtpUsername, Azure.ResourceManager.Communication.SmtpUsernameResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SmtpUsernameResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string smtpUsername, Azure.ResourceManager.Communication.SmtpUsernameResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.SmtpUsernameResource> Get(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Communication.SmtpUsernameResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Communication.SmtpUsernameResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SmtpUsernameResource>> GetAsync(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Communication.SmtpUsernameResource> GetIfExists(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Communication.SmtpUsernameResource>> GetIfExistsAsync(string smtpUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Communication.SmtpUsernameResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.SmtpUsernameResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Communication.SmtpUsernameResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.SmtpUsernameResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class SmtpUsernameResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>
-    {
-        public SmtpUsernameResourceData() { }
-        public string EntraApplicationId { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
-        public string Username { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Communication.SmtpUsernameResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Communication.SmtpUsernameResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SmtpUsernameResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SuppressionListAddressResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected SuppressionListAddressResource() { }
-        public virtual Azure.ResourceManager.Communication.SuppressionListAddressResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, string addressId) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.SuppressionListAddressResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SuppressionListAddressResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Communication.SuppressionListAddressResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Communication.SuppressionListAddressResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SuppressionListAddressResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.SuppressionListAddressResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SuppressionListAddressResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.SuppressionListAddressResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class SuppressionListAddressResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.SuppressionListAddressResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.SuppressionListAddressResource>, System.Collections.IEnumerable
-    {
-        protected SuppressionListAddressResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SuppressionListAddressResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string addressId, Azure.ResourceManager.Communication.SuppressionListAddressResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SuppressionListAddressResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string addressId, Azure.ResourceManager.Communication.SuppressionListAddressResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.SuppressionListAddressResource> Get(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Communication.SuppressionListAddressResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Communication.SuppressionListAddressResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SuppressionListAddressResource>> GetAsync(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Communication.SuppressionListAddressResource> GetIfExists(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Communication.SuppressionListAddressResource>> GetIfExistsAsync(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Communication.SuppressionListAddressResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.SuppressionListAddressResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Communication.SuppressionListAddressResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.SuppressionListAddressResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class SuppressionListAddressResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>
-    {
-        public SuppressionListAddressResourceData() { }
-        public string DataLocation { get { throw null; } }
-        public string Email { get { throw null; } set { } }
-        public string FirstName { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModified { get { throw null; } }
-        public string LastName { get { throw null; } set { } }
-        public string Notes { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Communication.SuppressionListAddressResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Communication.SuppressionListAddressResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListAddressResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SuppressionListResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListResourceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected SuppressionListResource() { }
-        public virtual Azure.ResourceManager.Communication.SuppressionListResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.SuppressionListResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SuppressionListResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.SuppressionListAddressResource> GetSuppressionListAddressResource(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SuppressionListAddressResource>> GetSuppressionListAddressResourceAsync(string addressId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Communication.SuppressionListAddressResourceCollection GetSuppressionListAddressResources() { throw null; }
-        Azure.ResourceManager.Communication.SuppressionListResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Communication.SuppressionListResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SuppressionListResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.SuppressionListResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SuppressionListResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.SuppressionListResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class SuppressionListResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.SuppressionListResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.SuppressionListResource>, System.Collections.IEnumerable
-    {
-        protected SuppressionListResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SuppressionListResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string suppressionListName, Azure.ResourceManager.Communication.SuppressionListResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SuppressionListResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string suppressionListName, Azure.ResourceManager.Communication.SuppressionListResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.SuppressionListResource> Get(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Communication.SuppressionListResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Communication.SuppressionListResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SuppressionListResource>> GetAsync(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Communication.SuppressionListResource> GetIfExists(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Communication.SuppressionListResource>> GetIfExistsAsync(string suppressionListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Communication.SuppressionListResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.SuppressionListResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Communication.SuppressionListResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.SuppressionListResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class SuppressionListResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListResourceData>
-    {
-        public SuppressionListResourceData() { }
-        public System.DateTimeOffset? CreatedTimeStamp { get { throw null; } }
-        public string DataLocation { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedTimeStamp { get { throw null; } }
-        public string ListName { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Communication.SuppressionListResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.SuppressionListResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Communication.SuppressionListResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.SuppressionListResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.Communication.Mocking
 {
@@ -440,11 +440,11 @@ namespace Azure.ResourceManager.Communication.Mocking
         protected MockableCommunicationArmClient() { }
         public virtual Azure.ResourceManager.Communication.CommunicationDomainResource GetCommunicationDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Communication.CommunicationServiceResource GetCommunicationServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Communication.CommunicationSmtpUsernameResource GetCommunicationSmtpUsernameResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Communication.EmailServiceResource GetEmailServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Communication.EmailSuppressionListAddressResource GetEmailSuppressionListAddressResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Communication.EmailSuppressionListResource GetEmailSuppressionListResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Communication.SenderUsernameResource GetSenderUsernameResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Communication.SmtpUsernameResource GetSmtpUsernameResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Communication.SuppressionListAddressResource GetSuppressionListAddressResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Communication.SuppressionListResource GetSuppressionListResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableCommunicationResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -478,18 +478,18 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.CommunicationServiceKeys CommunicationServiceKeys(string primaryKey = null, string secondaryKey = null, string primaryConnectionString = null, string secondaryConnectionString = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Communication.CommunicationServiceResourceData CommunicationServiceResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, Azure.Core.ResourceIdentifier notificationHubId, string version, System.Guid? immutableResourceId, System.Collections.Generic.IEnumerable<string> linkedDomains) { throw null; }
-        public static Azure.ResourceManager.Communication.CommunicationServiceResourceData CommunicationServiceResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState? provisioningState = default(Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState?), string hostName = null, string dataLocation = null, Azure.Core.ResourceIdentifier notificationHubId = null, string version = null, System.Guid? immutableResourceId = default(System.Guid?), System.Collections.Generic.IEnumerable<string> linkedDomains = null, Azure.ResourceManager.Communication.Models.PublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Communication.Models.PublicNetworkAccess?), bool? disableLocalAuth = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Communication.CommunicationServiceResourceData CommunicationServiceResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState? provisioningState = default(Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState?), string hostName = null, string dataLocation = null, Azure.Core.ResourceIdentifier notificationHubId = null, string version = null, System.Guid? immutableResourceId = default(System.Guid?), System.Collections.Generic.IEnumerable<string> linkedDomains = null, Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess?), bool? isLocalAuthDisabled = default(bool?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Communication.CommunicationServiceResourceData CommunicationServiceResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, Azure.Core.ResourceIdentifier notificationHubId, string version, System.Guid? immutableResourceId, System.Collections.Generic.IEnumerable<string> linkedDomains) { throw null; }
+        public static Azure.ResourceManager.Communication.CommunicationSmtpUsernameData CommunicationSmtpUsernameData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string username = null, string entraApplicationId = null, System.Guid? tenantId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Communication.Models.DomainPropertiesVerificationRecords DomainPropertiesVerificationRecords(Azure.ResourceManager.Communication.Models.VerificationDnsRecord domain = null, Azure.ResourceManager.Communication.Models.VerificationDnsRecord spf = null, Azure.ResourceManager.Communication.Models.VerificationDnsRecord dkim = null, Azure.ResourceManager.Communication.Models.VerificationDnsRecord dkim2 = null, Azure.ResourceManager.Communication.Models.VerificationDnsRecord dmarc = null) { throw null; }
         public static Azure.ResourceManager.Communication.Models.DomainPropertiesVerificationStates DomainPropertiesVerificationStates(Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord domain = null, Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord spf = null, Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord dkim = null, Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord dkim2 = null, Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord dmarc = null) { throw null; }
         public static Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord DomainVerificationStatusRecord(Azure.ResourceManager.Communication.Models.DomainRecordVerificationStatus? status = default(Azure.ResourceManager.Communication.Models.DomainRecordVerificationStatus?), string errorCode = null) { throw null; }
         public static Azure.ResourceManager.Communication.EmailServiceResourceData EmailServiceResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState? provisioningState = default(Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState?), string dataLocation = null) { throw null; }
+        public static Azure.ResourceManager.Communication.EmailSuppressionListAddressData EmailSuppressionListAddressData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string email = null, string firstName = null, string lastName = null, string notes = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), string dataLocation = null) { throw null; }
+        public static Azure.ResourceManager.Communication.EmailSuppressionListData EmailSuppressionListData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string listName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), string dataLocation = null) { throw null; }
         public static Azure.ResourceManager.Communication.Models.LinkedNotificationHub LinkedNotificationHub(Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.Communication.SenderUsernameResourceData SenderUsernameResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string dataLocation = null, string username = null, string displayName = null, Azure.ResourceManager.Communication.Models.CommunicationServiceProvisioningState? provisioningState = default(Azure.ResourceManager.Communication.Models.CommunicationServiceProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Communication.SmtpUsernameResourceData SmtpUsernameResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string username = null, string entraApplicationId = null, System.Guid? tenantId = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.Communication.SuppressionListAddressResourceData SuppressionListAddressResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string email = null, string firstName = null, string lastName = null, string notes = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), string dataLocation = null) { throw null; }
-        public static Azure.ResourceManager.Communication.SuppressionListResourceData SuppressionListResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string listName = null, System.DateTimeOffset? lastUpdatedTimeStamp = default(System.DateTimeOffset?), System.DateTimeOffset? createdTimeStamp = default(System.DateTimeOffset?), string dataLocation = null) { throw null; }
         public static Azure.ResourceManager.Communication.Models.VerificationDnsRecord VerificationDnsRecord(string dnsRecordType = null, string name = null, string value = null, int? timeToLiveInSeconds = default(int?)) { throw null; }
     }
     public partial class CommunicationAcceptTags : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.Models.CommunicationAcceptTags>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.Models.CommunicationAcceptTags>
@@ -557,6 +557,25 @@ namespace Azure.ResourceManager.Communication.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommunicationPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommunicationPublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess Enabled { get { throw null; } }
+        public static Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess SecuredByPerimeter { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess left, Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess left, Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class CommunicationServiceKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys>
     {
         internal CommunicationServiceKeys() { }
@@ -617,7 +636,7 @@ namespace Azure.ResourceManager.Communication.Models
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LinkedDomains { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Communication.Models.CommunicationPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Communication.Models.CommunicationServiceResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.Models.CommunicationServiceResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.Models.CommunicationServiceResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -847,25 +866,6 @@ namespace Azure.ResourceManager.Communication.Models
         Azure.ResourceManager.Communication.Models.LinkNotificationHubContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.Models.LinkNotificationHubContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.Models.LinkNotificationHubContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.Models.LinkNotificationHubContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Communication.Models.PublicNetworkAccess>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PublicNetworkAccess(string value) { throw null; }
-        public static Azure.ResourceManager.Communication.Models.PublicNetworkAccess Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Communication.Models.PublicNetworkAccess Enabled { get { throw null; } }
-        public static Azure.ResourceManager.Communication.Models.PublicNetworkAccess SecuredByPerimeter { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Communication.Models.PublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Communication.Models.PublicNetworkAccess left, Azure.ResourceManager.Communication.Models.PublicNetworkAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Communication.Models.PublicNetworkAccess (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Communication.Models.PublicNetworkAccess left, Azure.ResourceManager.Communication.Models.PublicNetworkAccess right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class RegenerateCommunicationServiceKeyContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.Models.RegenerateCommunicationServiceKeyContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.Models.RegenerateCommunicationServiceKeyContent>
     {

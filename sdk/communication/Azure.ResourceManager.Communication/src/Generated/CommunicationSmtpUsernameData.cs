@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A class representing the SmtpUsernameResource data model.
+    /// A class representing the CommunicationSmtpUsername data model.
     /// The object describing the smtp username resource.
     /// </summary>
-    public partial class SmtpUsernameResourceData : ResourceData
+    public partial class CommunicationSmtpUsernameData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SmtpUsernameResourceData"/>. </summary>
-        public SmtpUsernameResourceData()
+        /// <summary> Initializes a new instance of <see cref="CommunicationSmtpUsernameData"/>. </summary>
+        public CommunicationSmtpUsernameData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SmtpUsernameResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationSmtpUsernameData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="entraApplicationId"> The application Id for the linked Entra Application. </param>
         /// <param name="tenantId"> The tenant of the linked Entra Application. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SmtpUsernameResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string username, string entraApplicationId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CommunicationSmtpUsernameData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string username, string entraApplicationId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Username = username;
             EntraApplicationId = entraApplicationId;

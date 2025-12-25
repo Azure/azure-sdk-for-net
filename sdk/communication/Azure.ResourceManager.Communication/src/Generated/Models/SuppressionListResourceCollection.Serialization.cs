@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            IReadOnlyList<SuppressionListResourceData> value = default;
+            IReadOnlyList<EmailSuppressionListData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    List<SuppressionListResourceData> array = new List<SuppressionListResourceData>();
+                    List<EmailSuppressionListData> array = new List<EmailSuppressionListData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SuppressionListResourceData.DeserializeSuppressionListResourceData(item, options));
+                        array.Add(EmailSuppressionListData.DeserializeEmailSuppressionListData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SuppressionListResourceCollection(value ?? new ChangeTrackingList<SuppressionListResourceData>(), nextLink, serializedAdditionalRawData);
+            return new SuppressionListResourceCollection(value ?? new ChangeTrackingList<EmailSuppressionListData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
