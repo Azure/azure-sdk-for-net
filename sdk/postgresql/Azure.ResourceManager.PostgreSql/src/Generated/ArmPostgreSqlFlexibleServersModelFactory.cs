@@ -354,9 +354,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: UserAssignedIdentity.tenantId
         /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserIdentity> userAssignedIdentities = null, Guid? principalId = null, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = null)
+        public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null, Guid? principalId = null, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = null)
         {
-            userAssignedIdentities ??= new Dictionary<string, UserIdentity>();
+            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
 
             return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, principalId, identityType, tenantId, serializedAdditionalRawData: null);
         }
