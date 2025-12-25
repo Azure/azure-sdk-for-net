@@ -19,28 +19,18 @@ public static class AIAgentBuilderExtensions
     /// </summary>
     /// <param name="builder">The <see cref="AIAgentBuilder"/> to augment.</param>
     /// <param name="toolDefinitions">The Foundry tool definitions to resolve.</param>
-    /// <param name="projectEndpoint">
-    /// Optional Foundry project endpoint. If not provided, the method uses the
-    /// <c>AZURE_AI_PROJECT_ENDPOINT</c> or <c>AGENT_PROJECT_NAME</c> environment variables.
-    /// </param>
-    /// <param name="credential">
-    /// Optional credential for accessing Foundry tools. If not provided, the method falls back to
-    /// a <see cref="DefaultAzureCredential"/> or a resolved <see cref="TokenCredential"/> from the service provider.
-    /// </param>
     /// <returns>The <see cref="AIAgentBuilder"/> instance with tool discovery added.</returns>
     public static AIAgentBuilder UseFoundryTools(
         this AIAgentBuilder builder,
-        IList<ToolDefinition> toolDefinitions,
-        Uri? projectEndpoint = null,
-        TokenCredential? credential = null)
+        params ToolDefinition[] toolDefinitions)
     {
         ArgumentNullException.ThrowIfNull(builder);
         ArgumentNullException.ThrowIfNull(toolDefinitions);
 
         return builder.Use((innerAgent, services) =>
         {
-            var endpoint = ResolveProjectEndpoint(projectEndpoint);
-            var toolCredential = credential ?? (services.GetService(typeof(TokenCredential)) as TokenCredential) ?? new DefaultAzureCredential();
+            var endpoint = ResolveProjectEndpoint();
+            var toolCredential = (services.GetService(typeof(TokenCredential)) as TokenCredential) ?? new DefaultAzureCredential();
 
             var options = new AzureAIToolClientOptions
             {
@@ -52,13 +42,8 @@ public static class AIAgentBuilderExtensions
         });
     }
 
-    private static Uri ResolveProjectEndpoint(Uri? projectEndpoint)
+    private static Uri ResolveProjectEndpoint()
     {
-        if (projectEndpoint is not null)
-        {
-            return projectEndpoint;
-        }
-
         var endpointFromEnv = Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_ENDPOINT");
         if (!string.IsNullOrWhiteSpace(endpointFromEnv))
         {
