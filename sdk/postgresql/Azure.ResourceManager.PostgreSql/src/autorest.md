@@ -190,7 +190,6 @@ rename-mapping:
   DatabaseMigrationState: DbMigrationStatus
   UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
   HighAvailabilityMode: PostgreSqlFlexibleServerHAMode
-#   UserIdentity:
 
 override-operation-name:
   PrivateDnsZoneSuffix_Get: ExecuteGetPrivateDnsZoneSuffix
@@ -204,10 +203,32 @@ override-operation-name:
   CapabilitiesByServer_List: GetServerCapabilities
   CapabilitiesByLocation_List: ExecuteLocationBasedCapabilities
 
-no-property-type-replacement:
-  - PostgreSqlFlexibleServerUserAssignedIdentity
-
 directive:
+  - from: swagger-document
+    where: $.definitions.UserAssignedIdentity
+    transform: >
+      $.properties['userAssignedIdentities'] = {
+          "type": "object",
+          "description": "Map of user assigned managed identities.",
+          "additionalProperties": {
+              "type": "object",
+              "description": "User assigned identity properties",
+              "properties": {
+                "principalId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The principal ID of the assigned identity.",
+                  "readOnly": true
+                },
+                "clientId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The client ID of the assigned identity.",
+                  "readOnly": true
+                }
+              }
+            },
+        };
   - from: swagger-document
     where: $.definitions.ServerPropertiesForPatch
     transform: >

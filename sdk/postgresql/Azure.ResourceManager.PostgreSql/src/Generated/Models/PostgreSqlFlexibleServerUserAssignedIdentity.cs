@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </param>
         public PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType identityType)
         {
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserIdentity>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
             IdentityType = identityType;
         }
 
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: UserAssignedIdentity.tenantId
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserIdentity> userAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserAssignedIdentities = userAssignedIdentities;
             PrincipalId = principalId;
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: UserAssignedIdentity.userAssignedIdentities
         /// </summary>
         [WirePath("userAssignedIdentities")]
-        public IDictionary<string, UserIdentity> UserAssignedIdentities { get; }
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
         /// <summary>
         /// Identifier of the object of the service principal associated to the user assigned managed identity.
         /// Serialized Name: UserAssignedIdentity.principalId
