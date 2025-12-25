@@ -15,8 +15,8 @@
 - Total libraries: 398
 - Management Plane (MPG): 226
   - Autorest/Swagger: 156
-  - New Emitter (TypeSpec): 35
-  - Old TypeSpec: 35
+  - New Emitter (TypeSpec): 38
+  - Old TypeSpec: 32
 - Data Plane (DPG): 172
   - Autorest/Swagger: 86
   - New Emitter (TypeSpec): 20
@@ -169,7 +169,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 35 / 70 (50%)
+**Migration Status**: 38 / 70 (54.3%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -235,13 +235,13 @@ Libraries that provide resource management APIs for Azure services and have been
 | standbypool | Azure.ResourceManager.StandbyPool |  |
 | storageactions | Azure.ResourceManager.StorageActions | ✅ |
 | storagediscovery | Azure.ResourceManager.StorageDiscovery | ✅ |
-| storagemover | Azure.ResourceManager.StorageMover |  |
+| storagemover | Azure.ResourceManager.StorageMover | ✅ |
 | storagesync | Azure.ResourceManager.StorageSync | ✅ |
 | terraform | Azure.ResourceManager.Terraform | ✅ |
 | trustedsigning | Azure.ResourceManager.TrustedSigning | ✅ |
-| virtualenclaves | Azure.ResourceManager.VirtualEnclaves |  |
+| virtualenclaves | Azure.ResourceManager.VirtualEnclaves | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
-| workloadorchestration | Azure.ResourceManager.WorkloadOrchestration |  |
+| workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance |  |
 
 

@@ -300,7 +300,8 @@ namespace Azure.Generator.Visitors
                 {
                     if (!headerFlags.HasFlag(flag))
                     {
-                        var validationStatement = new IfStatement(requestConditionsParameter.Property(propertyName).NotEqual(Null))
+                        var validationStatement = new IfStatement(
+                            Snippet.NullConditional(requestConditionsParameter).Property(propertyName).NotEqual(Null))
                         {
                             Throw(New.Instance(new CSharpType(typeof(ArgumentException)),
                                 Literal($"Service does not support the {_requestConditionsFlagMap[flag]} header for this operation.")))

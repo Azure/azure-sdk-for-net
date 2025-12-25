@@ -125,17 +125,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
         }
 
-        /// <summary> Gets or sets the FlattenedProperty. </summary>
+        /// <summary> Gets the FlattenedProperty. </summary>
         [WirePath("optionalProperty.flattenedProperty")]
-        public string FlattenedProperty
+        public IList<string> FlattenedProperty
         {
             get
             {
-                return OptionalProperty is null ? default : OptionalProperty.FlattenedProperty;
-            }
-            set
-            {
-                OptionalProperty = new SafeFlattenModel(value);
+                if (OptionalProperty is null)
+                {
+                    OptionalProperty = new SafeFlattenModel();
+                }
+                return OptionalProperty.FlattenedProperty;
             }
         }
     }

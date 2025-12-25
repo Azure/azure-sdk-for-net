@@ -133,12 +133,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="etag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
-        /// <param name="flattenedProperty"> Gets or sets the FlattenedProperty. </param>
+        /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, string flattenedProperty = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -159,7 +159,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     (prop1 ?? new ChangeTrackingList<string>()).ToList(),
                     (prop2 ?? new ChangeTrackingList<int>()).ToList(),
                     new NestedFooModel(nestedPropertyProperties, null),
-                    new SafeFlattenModel(flattenedProperty, null),
+                    new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), null),
                     etag,
                     writableSubResourceProp,
                     null),
@@ -175,12 +175,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop1"></param>
         /// <param name="prop2"></param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
-        /// <param name="flattenedProperty"> Gets or sets the FlattenedProperty. </param>
+        /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
         /// <param name="etag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, string flattenedProperty = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default)
         {
             prop1 ??= new ChangeTrackingList<string>();
             prop2 ??= new ChangeTrackingList<int>();
@@ -194,7 +194,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 prop1.ToList(),
                 prop2.ToList(),
                 nestedPropertyProperties is null ? default : new NestedFooModel(nestedPropertyProperties, null),
-                flattenedProperty is null ? default : new SafeFlattenModel(flattenedProperty, null),
+                flattenedProperty is null ? default : new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), null),
                 etag,
                 writableSubResourceProp,
                 additionalBinaryDataProperties: null);
@@ -215,6 +215,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public static FooActionResult FooActionResult(string msg = default, ResponseError error = default)
         {
             return new FooActionResult(msg, error, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FooDependency. </summary>
+        /// <param name="dependencyName"></param>
+        /// <param name="version"></param>
+        /// <returns> A new <see cref="Models.FooDependency"/> instance for mocking. </returns>
+        public static FooDependency FooDependency(string dependencyName = default, string version = default)
+        {
+            return new FooDependency(dependencyName, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -505,6 +514,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 selfHelpId is null ? default : new SelfHelpResourceProperties(selfHelpId, null));
+        }
+
+        /// <summary> The CheckNameAvailabilityResponse. </summary>
+        /// <param name="nameAvailable"></param>
+        /// <param name="reason"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool nameAvailable = default, string reason = default, string message = default)
+        {
+            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Subscription-level location-based Playwright quota resource. </summary>
