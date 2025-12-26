@@ -999,10 +999,8 @@ public class FineTuningTests : ProjectsClientTestBase
     {
         // This test demonstrates importing files from Azure Blob URLs (with SAS tokens) for fine-tuning.
         // NOTE: Update these URLs with valid SAS tokens when running.
-        string trainingFileUrl = Environment.GetEnvironmentVariable("FT_TRAINING_FILE_URL")
-            ?? "https://yourstorageaccount.blob.core.windows.net/container/sft_training_set.jsonl?sv=...";
-        string validationFileUrl = Environment.GetEnvironmentVariable("FT_VALIDATION_FILE_URL")
-            ?? "https://yourstorageaccount.blob.core.windows.net/container/sft_validation_set.jsonl?sv=...";
+        string trainingFileUrl = Environment.GetEnvironmentVariable("FT_TRAINING_FILE_URL");
+        string validationFileUrl = Environment.GetEnvironmentVariable("FT_VALIDATION_FILE_URL");
 
         await RunImportFileFromUrlTestAsync(
             trainingFileUrl, "sft_training_set.jsonl",
