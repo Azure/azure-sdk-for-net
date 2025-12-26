@@ -57,10 +57,11 @@ import { AzureMgmtEmitterOptions } from "./options.js";
 
 export async function updateClients(
   codeModel: CodeModel,
-  sdkContext: CSharpEmitterContext
+  sdkContext: CSharpEmitterContext,
+  options: AzureMgmtEmitterOptions
 ) {
   // Build the unified ARM provider schema and apply it to the root client
-  const armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
+  const armProviderSchema = buildArmProviderSchema(sdkContext, codeModel, options);
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
 }
 
@@ -74,14 +75,15 @@ export async function updateClients(
  *
  * @param sdkContext - The emitter context
  * @param codeModel - The code model to analyze
+ * @param options - The emitter options (optional, for testing without options)
  * @returns The unified ARM provider schema containing all resources and non-resource methods
  */
 export function buildArmProviderSchema(
   sdkContext: CSharpEmitterContext,
-  codeModel: CodeModel
+  codeModel: CodeModel,
+  options?: AzureMgmtEmitterOptions
 ): ArmProviderSchema {
   // Check if the use-resolve-arm-resources flag is enabled
-  const options = sdkContext.options as AzureMgmtEmitterOptions;
   if (options?.["use-resolve-arm-resources"] === true) {
     // Use the standardized resolveArmResources API
     return resolveArmResources(sdkContext.program, sdkContext);
