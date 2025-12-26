@@ -55,13 +55,13 @@ interface Employees {
       runner
     );
 
-    // Create emitter context without the flag (uses default = true, legacy behavior)
+    // Create emitter context with default options (flag defaults to true, legacy behavior)
     const emitterContext = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(emitterContext);
     const codeModel = await createModel(sdkContext);
 
     // Build the schema - should use the default custom logic
-    // Pass undefined for options to simulate no options passed
+    // Pass undefined for options to simulate no options explicitly passed
     const schema = buildArmProviderSchema(sdkContext, codeModel);
 
     // Verify the schema is valid and has resources
