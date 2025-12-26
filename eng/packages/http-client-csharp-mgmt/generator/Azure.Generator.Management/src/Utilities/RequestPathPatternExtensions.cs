@@ -18,6 +18,23 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class RequestPathPatternExtensions
     {
+        private const string IfMatch = "If-Match";
+        private const string IfNoneMatch = "If-None-Match";
+        private const string IfModifiedSince = "If-Modified-Since";
+        private const string IfUnmodifiedSince = "If-Unmodified-Since";
+
+        private static readonly Dictionary<string, string> _conditionalHeaderToPropertyName = new(StringComparer.OrdinalIgnoreCase)
+        {
+            { IfMatch, nameof(MatchConditions.IfMatch) },
+            { IfNoneMatch, nameof(MatchConditions.IfNoneMatch) },
+            { IfModifiedSince, nameof(RequestConditions.IfModifiedSince) },
+            { IfUnmodifiedSince, nameof(RequestConditions.IfUnmodifiedSince) },
+            { "ifMatch", nameof(MatchConditions.IfMatch) },
+            { "ifNoneMatch", nameof(MatchConditions.IfNoneMatch) },
+            { "ifModifiedSince", nameof(RequestConditions.IfModifiedSince) },
+            { "ifUnmodifiedSince", nameof(RequestConditions.IfUnmodifiedSince) }
+        };
+
         public static IReadOnlyList<ValueExpression> PopulateArguments(
             this RequestPathPattern contextualPath,
             ScopedApi<ResourceIdentifier> idProperty,
@@ -64,6 +81,11 @@ namespace Azure.Generator.Management.Utilities
                     {
                         arguments.Add(Convert(methodParam, methodParam.Type, parameter.Type));
                     }
+                    else if (TryGetMatchConditionsArgument(parameter, methodParameters, out var matchConditionsArgument))
+                    {
+                        // Handle unwrapping MatchConditions/RequestConditions to individual header parameters
+                        arguments.Add(matchConditionsArgument);
+                    }
                     else
                     {
                         arguments.Add(Null);
@@ -99,6 +121,44 @@ namespace Azure.Generator.Management.Utilities
                 // other unhandled cases, we will add when we need them in the future.
                 return expression;
             }
+        }
+
+        /// <summary>
+        /// Tries to get an argument expression for a conditional header parameter from a MatchConditions/RequestConditions parameter.
+        /// </summary>
+        /// <param name="requestParameter">The request parameter (e.g., ifMatch, ifNoneMatch).</param>
+        /// <param name="methodParameters">The method parameters to search for MatchConditions/RequestConditions.</param>
+        /// <param name="argument">The output argument expression.</param>
+        /// <returns>True if the parameter was found and unwrapped; otherwise, false.</returns>
+        private static bool TryGetMatchConditionsArgument(
+            ParameterProvider requestParameter,
+            IReadOnlyList<ParameterProvider> methodParameters,
+            out ValueExpression argument)
+        {
+            argument = Null;
+
+            // Check if the request parameter is a conditional header
+            var serializedName = requestParameter.WireInfo.SerializedName;
+            if (!_conditionalHeaderToPropertyName.TryGetValue(serializedName, out var propertyName))
+            {
+                return false;
+            }
+
+            // Find MatchConditions or RequestConditions parameter in method parameters
+            var matchConditionsParam = methodParameters.FirstOrDefault(p =>
+                p.Type.Equals(typeof(MatchConditions)) ||
+                p.Type.Equals(new CSharpType(typeof(MatchConditions), true)) ||
+                p.Type.Equals(typeof(RequestConditions)) ||
+                p.Type.Equals(new CSharpType(typeof(RequestConditions), true)));
+
+            if (matchConditionsParam == null)
+            {
+                return false;
+            }
+
+            // Generate: matchConditions?.IfMatch or matchConditions?.IfNoneMatch, etc.
+            argument = Snippet.NullConditional(matchConditionsParam).Property(propertyName);
+            return true;
         }
     }
 }
