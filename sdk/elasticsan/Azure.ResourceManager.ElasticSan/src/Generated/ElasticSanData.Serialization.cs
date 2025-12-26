@@ -10,16 +10,23 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    public partial class ElasticSanData : IUtf8JsonSerializable, IJsonModel<ElasticSanData>
+    /// <summary> Response for ElasticSan request. </summary>
+    public partial class ElasticSanData : TrackedResourceData, IJsonModel<ElasticSanData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/> for deserialization. </summary>
+        internal ElasticSanData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticSanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,330 +38,137 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticSanData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
-            if (Optional.IsCollectionDefined(AvailabilityZones))
-            {
-                writer.WritePropertyName("availabilityZones"u8);
-                writer.WriteStartArray();
-                foreach (var item in AvailabilityZones)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WritePropertyName("baseSizeTiB"u8);
-            writer.WriteNumberValue(BaseSizeTiB);
-            writer.WritePropertyName("extendedCapacitySizeTiB"u8);
-            writer.WriteNumberValue(ExtendedCapacitySizeTiB);
-            if (options.Format != "W" && Optional.IsDefined(TotalVolumeSizeGiB))
-            {
-                writer.WritePropertyName("totalVolumeSizeGiB"u8);
-                writer.WriteNumberValue(TotalVolumeSizeGiB.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(VolumeGroupCount))
-            {
-                writer.WritePropertyName("volumeGroupCount"u8);
-                writer.WriteNumberValue(VolumeGroupCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TotalIops))
-            {
-                writer.WritePropertyName("totalIops"u8);
-                writer.WriteNumberValue(TotalIops.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TotalMbps))
-            {
-                writer.WritePropertyName("totalMBps"u8);
-                writer.WriteNumberValue(TotalMbps.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TotalSizeTiB))
-            {
-                writer.WritePropertyName("totalSizeTiB"u8);
-                writer.WriteNumberValue(TotalSizeTiB.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
-            {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(AutoScaleProperties))
-            {
-                writer.WritePropertyName("autoScaleProperties"u8);
-                writer.WriteObjectValue(AutoScaleProperties, options);
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
-        ElasticSanData IJsonModel<ElasticSanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticSanData IJsonModel<ElasticSanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ElasticSanData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticSanData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeElasticSanData(document.RootElement, options);
         }
 
-        internal static ElasticSanData DeserializeElasticSanData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ElasticSanData DeserializeElasticSanData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            ElasticSanSku sku = default;
-            IList<string> availabilityZones = default;
-            ElasticSanProvisioningState? provisioningState = default;
-            long baseSizeTiB = default;
-            long extendedCapacitySizeTiB = default;
-            long? totalVolumeSizeGiB = default;
-            long? volumeGroupCount = default;
-            long? totalIops = default;
-            long? totalMBps = default;
-            long? totalSizeTiB = default;
-            IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
-            ElasticSanPublicNetworkAccess? publicNetworkAccess = default;
-            AutoScaleProperties autoScaleProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ElasticSanProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerElasticSanContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerElasticSanContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("sku"u8))
-                        {
-                            sku = ElasticSanSku.DeserializeElasticSanSku(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("availabilityZones"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            availabilityZones = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ElasticSanProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("baseSizeTiB"u8))
-                        {
-                            baseSizeTiB = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("extendedCapacitySizeTiB"u8))
-                        {
-                            extendedCapacitySizeTiB = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("totalVolumeSizeGiB"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            totalVolumeSizeGiB = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("volumeGroupCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            volumeGroupCount = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("totalIops"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            totalIops = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("totalMBps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            totalMBps = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("totalSizeTiB"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            totalSizeTiB = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateEndpointConnections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ElasticSanPrivateEndpointConnectionData> array = new List<ElasticSanPrivateEndpointConnectionData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(item, options));
-                            }
-                            privateEndpointConnections = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicNetworkAccess = new ElasticSanPublicNetworkAccess(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("autoScaleProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoScaleProperties = AutoScaleProperties.DeserializeAutoScaleProperties(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = ElasticSanProperties.DeserializeElasticSanProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticSanData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku,
-                availabilityZones ?? new ChangeTrackingList<string>(),
-                provisioningState,
-                baseSizeTiB,
-                extendedCapacitySizeTiB,
-                totalVolumeSizeGiB,
-                volumeGroupCount,
-                totalIops,
-                totalMBps,
-                totalSizeTiB,
-                privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
-                publicNetworkAccess,
-                autoScaleProperties,
-                serializedAdditionalRawData);
+                properties);
         }
 
-        BinaryData IPersistableModel<ElasticSanData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ElasticSanData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -364,15 +178,20 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
-        ElasticSanData IPersistableModel<ElasticSanData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticSanData IPersistableModel<ElasticSanData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ElasticSanData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticSanData(document.RootElement, options);
                     }
                 default:
@@ -380,6 +199,26 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticSanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="elasticSanData"> The <see cref="ElasticSanData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ElasticSanData elasticSanData)
+        {
+            if (elasticSanData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(elasticSanData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticSanData"/> from. </param>
+        internal static ElasticSanData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeElasticSanData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

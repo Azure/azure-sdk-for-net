@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanScaleUpProperties : IUtf8JsonSerializable, IJsonModel<ElasticSanScaleUpProperties>
+    /// <summary> Scale up properties on Elastic San Appliance. </summary>
+    public partial class ElasticSanScaleUpProperties : IJsonModel<ElasticSanScaleUpProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanScaleUpProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticSanScaleUpProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticSanScaleUpProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(UnusedSizeTiB))
             {
                 writer.WritePropertyName("unusedSizeTiB"u8);
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("autoScalePolicyEnforcement"u8);
                 writer.WriteStringValue(AutoScalePolicyEnforcement.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +71,27 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
-        ElasticSanScaleUpProperties IJsonModel<ElasticSanScaleUpProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticSanScaleUpProperties IJsonModel<ElasticSanScaleUpProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticSanScaleUpProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticSanScaleUpProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeElasticSanScaleUpProperties(document.RootElement, options);
         }
 
-        internal static ElasticSanScaleUpProperties DeserializeElasticSanScaleUpProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ElasticSanScaleUpProperties DeserializeElasticSanScaleUpProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,59 +100,60 @@ namespace Azure.ResourceManager.ElasticSan.Models
             long? increaseCapacityUnitByTiB = default;
             long? capacityUnitScaleUpLimitTiB = default;
             AutoScalePolicyEnforcement? autoScalePolicyEnforcement = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("unusedSizeTiB"u8))
+                if (prop.NameEquals("unusedSizeTiB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unusedSizeTiB = property.Value.GetInt64();
+                    unusedSizeTiB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("increaseCapacityUnitByTiB"u8))
+                if (prop.NameEquals("increaseCapacityUnitByTiB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    increaseCapacityUnitByTiB = property.Value.GetInt64();
+                    increaseCapacityUnitByTiB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("capacityUnitScaleUpLimitTiB"u8))
+                if (prop.NameEquals("capacityUnitScaleUpLimitTiB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capacityUnitScaleUpLimitTiB = property.Value.GetInt64();
+                    capacityUnitScaleUpLimitTiB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("autoScalePolicyEnforcement"u8))
+                if (prop.NameEquals("autoScalePolicyEnforcement"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoScalePolicyEnforcement = new AutoScalePolicyEnforcement(property.Value.GetString());
+                    autoScalePolicyEnforcement = new AutoScalePolicyEnforcement(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticSanScaleUpProperties(unusedSizeTiB, increaseCapacityUnitByTiB, capacityUnitScaleUpLimitTiB, autoScalePolicyEnforcement, serializedAdditionalRawData);
+            return new ElasticSanScaleUpProperties(unusedSizeTiB, increaseCapacityUnitByTiB, capacityUnitScaleUpLimitTiB, autoScalePolicyEnforcement, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ElasticSanScaleUpProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ElasticSanScaleUpProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -157,15 +163,20 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
-        ElasticSanScaleUpProperties IPersistableModel<ElasticSanScaleUpProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticSanScaleUpProperties IPersistableModel<ElasticSanScaleUpProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticSanScaleUpProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticSanScaleUpProperties(document.RootElement, options);
                     }
                 default:
@@ -173,6 +184,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticSanScaleUpProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

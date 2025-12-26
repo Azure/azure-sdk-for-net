@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    internal class ElasticSanSnapshotOperationSource : IOperationSource<ElasticSanSnapshotResource>
+    /// <summary></summary>
+    internal partial class ElasticSanSnapshotOperationSource : IOperationSource<ElasticSanSnapshotResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ElasticSanSnapshotOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ElasticSanSnapshotResource IOperationSource<ElasticSanSnapshotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSanSnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ElasticSanSnapshotData data = ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ElasticSanSnapshotResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ElasticSanSnapshotResource> IOperationSource<ElasticSanSnapshotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSanSnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
-            return await Task.FromResult(new ElasticSanSnapshotResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ElasticSanSnapshotData data = ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ElasticSanSnapshotResource(_client, data);
         }
     }
 }

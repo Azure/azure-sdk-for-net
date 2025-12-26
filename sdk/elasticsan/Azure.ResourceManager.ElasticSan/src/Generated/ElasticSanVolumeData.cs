@@ -13,102 +13,112 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary>
-    /// A class representing the ElasticSanVolume data model.
-    /// Response for Volume request.
-    /// </summary>
+    /// <summary> Response for Volume request. </summary>
     public partial class ElasticSanVolumeData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/>. </summary>
         /// <param name="sizeGiB"> Volume size. </param>
         public ElasticSanVolumeData(long sizeGiB)
         {
-            SizeGiB = sizeGiB;
+
+            Properties = new VolumeProperties(sizeGiB);
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="volumeId"> Unique Id of the volume in GUID format. </param>
-        /// <param name="creationData"> State of the operation on the resource. </param>
-        /// <param name="sizeGiB"> Volume size. </param>
-        /// <param name="storageTarget"> Storage target information. </param>
-        /// <param name="managedBy"> Parent resource information. </param>
-        /// <param name="provisioningState"> State of the operation on the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, ManagedByInfo managedBy, ElasticSanProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of Volume. </param>
+        internal ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VolumeProperties properties) : base(id, name, resourceType, systemData)
         {
-            VolumeId = volumeId;
-            CreationData = creationData;
-            SizeGiB = sizeGiB;
-            StorageTarget = storageTarget;
-            ManagedBy = managedBy;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/> for deserialization. </summary>
-        internal ElasticSanVolumeData()
-        {
-        }
+        /// <summary> Properties of Volume. </summary>
+        internal VolumeProperties Properties { get; set; }
 
         /// <summary> Unique Id of the volume in GUID format. </summary>
-        public Guid? VolumeId { get; }
-        /// <summary> State of the operation on the resource. </summary>
-        public ElasticSanVolumeDataSourceInfo CreationData { get; set; }
-        /// <summary> Volume size. </summary>
-        public long SizeGiB { get; set; }
-        /// <summary> Storage target information. </summary>
-        public IscsiTargetInfo StorageTarget { get; }
-        /// <summary> Parent resource information. </summary>
-        internal ManagedByInfo ManagedBy { get; set; }
-        /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
-        public ResourceIdentifier ManagedByResourceId
+        public Guid? VolumeId
         {
-            get => ManagedBy is null ? default : ManagedBy.ResourceId;
-            set
+            get
             {
-                if (ManagedBy is null)
-                    ManagedBy = new ManagedByInfo();
-                ManagedBy.ResourceId = value;
+                return Properties is null ? default : Properties.VolumeId;
             }
         }
 
         /// <summary> State of the operation on the resource. </summary>
-        public ElasticSanProvisioningState? ProvisioningState { get; }
+        public ElasticSanVolumeDataSourceInfo CreationData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreationData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                Properties.CreationData = value;
+            }
+        }
+
+        /// <summary> Volume size. </summary>
+        public long SizeGiB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SizeGiB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                Properties.SizeGiB = value;
+            }
+        }
+
+        /// <summary> Storage target information. </summary>
+        public IscsiTargetInfo StorageTarget
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageTarget;
+            }
+        }
+
+        /// <summary> State of the operation on the resource. </summary>
+        public ElasticSanProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
+        public ResourceIdentifier ManagedByResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedByResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                Properties.ManagedByResourceId = value;
+            }
+        }
     }
 }
