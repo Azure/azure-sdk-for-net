@@ -105,8 +105,12 @@ interface Employees {
 
     // Create emitter context with the flag enabled
     const emitterContext = createEmitterContext(program);
-    const optionsWithFlag = emitterContext.options as AzureMgmtEmitterOptions;
-    optionsWithFlag["use-resolve-arm-resources"] = true;
+    // Add the management-specific option (AzureMgmtEmitterOptions extends AzureEmitterOptions)
+    const optionsWithFlag: AzureMgmtEmitterOptions = {
+      ...emitterContext.options,
+      "use-resolve-arm-resources": true
+    };
+    emitterContext.options = optionsWithFlag;
 
     const sdkContext = await createCSharpSdkContext(emitterContext);
     const codeModel = await createModel(sdkContext);
@@ -181,8 +185,12 @@ interface Employees {
 
     // Test with flag enabled
     const emitterContextEnabled = createEmitterContext(program);
-    const optionsEnabled = emitterContextEnabled.options as AzureMgmtEmitterOptions;
-    optionsEnabled["use-resolve-arm-resources"] = true;
+    // Add the management-specific option (AzureMgmtEmitterOptions extends AzureEmitterOptions)
+    const optionsEnabled: AzureMgmtEmitterOptions = {
+      ...emitterContextEnabled.options,
+      "use-resolve-arm-resources": true
+    };
+    emitterContextEnabled.options = optionsEnabled;
     const sdkContextEnabled = await createCSharpSdkContext(emitterContextEnabled);
     const codeModelEnabled = await createModel(sdkContextEnabled);
     const schemaEnabled = buildArmProviderSchema(sdkContextEnabled, codeModelEnabled, optionsEnabled);
