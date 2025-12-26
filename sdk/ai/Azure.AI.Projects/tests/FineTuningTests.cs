@@ -1029,10 +1029,6 @@ public class FineTuningTests : ProjectsClientTestBase
         // This test demonstrates deploying a fine-tuned model using Azure Resource Manager.
         // It requires a completed fine-tuning job and takes approximately 30 minutes to complete.
         // Skip in playback mode since ARM operations are not recorded via the test proxy.
-        if (Mode == Microsoft.ClientModel.TestFramework.RecordedTestMode.Playback)
-        {
-            Assert.Ignore("Skipping Test_FineTuning_Deploy_Model in playback mode - ARM operations not supported.");
-        }
 
         // Override the default 10 second timeout for this long-running deployment test
         TestTimeoutInSeconds = 300; // 5 minutes for deployment operations in playback mode
