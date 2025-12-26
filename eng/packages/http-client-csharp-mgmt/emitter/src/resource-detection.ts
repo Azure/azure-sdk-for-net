@@ -83,13 +83,13 @@ export function buildArmProviderSchema(
   codeModel: CodeModel,
   options?: AzureMgmtEmitterOptions
 ): ArmProviderSchema {
-  // Check if the use-resolve-arm-resources flag is enabled
-  if (options?.["use-resolve-arm-resources"] === true) {
+  // Check if the use-legacy-resource-detection flag is disabled (i.e., use new resolveArmResources API)
+  if (options?.["use-legacy-resource-detection"] === false) {
     // Use the standardized resolveArmResources API
     return resolveArmResources(sdkContext.program, sdkContext);
   }
 
-  // Otherwise, use the existing custom resource detection logic
+  // Otherwise, use the existing custom resource detection logic (default behavior)
   const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
     getAllSdkClients(sdkContext)
       .flatMap((c) => c.methods)

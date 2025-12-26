@@ -23,7 +23,7 @@ describe("Feature Flag Tests", () => {
     runner = await createEmitterTestHost();
   });
 
-  it("use-resolve-arm-resources flag disabled by default", async () => {
+  it("use-legacy-resource-detection flag enabled by default", async () => {
     const program = await typeSpecCompile(
       `
 /** An Employee resource */
@@ -55,7 +55,7 @@ interface Employees {
       runner
     );
 
-    // Create emitter context without the flag
+    // Create emitter context without the flag (uses default = true, legacy behavior)
     const emitterContext = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(emitterContext);
     const codeModel = await createModel(sdkContext);
@@ -71,7 +71,7 @@ interface Employees {
     strictEqual(schema.resources[0].metadata.resourceType, "Microsoft.ContosoProviderHub/employees");
   });
 
-  it("use-resolve-arm-resources flag enabled uses resolveArmResources API", async () => {
+  it("use-legacy-resource-detection flag disabled uses resolveArmResources API", async () => {
     const program = await typeSpecCompile(
       `
 /** An Employee resource */
@@ -103,12 +103,12 @@ interface Employees {
       runner
     );
 
-    // Create emitter context with the flag enabled
+    // Create emitter context with the flag disabled (opt-in to new resolveArmResources API)
     const emitterContext = createEmitterContext(program);
     // Add the management-specific option (AzureMgmtEmitterOptions extends AzureEmitterOptions)
     const optionsWithFlag: AzureMgmtEmitterOptions = {
       ...emitterContext.options,
-      "use-resolve-arm-resources": true
+      "use-legacy-resource-detection": false
     };
     emitterContext.options = optionsWithFlag;
 
@@ -128,7 +128,7 @@ interface Employees {
     deepStrictEqual(normalizedSchemaWithFlag, normalizedDirectResolve);
   });
 
-  it("use-resolve-arm-resources flag produces equivalent results to custom logic", async () => {
+  it("use-legacy-resource-detection flag produces equivalent results", async () => {
     const program = await typeSpecCompile(
       `
 /** An Employee parent resource */
@@ -177,18 +177,18 @@ interface Employees {
       runner
     );
 
-    // Test with flag disabled (default)
+    // Test with flag enabled (default = true, uses legacy)
     const emitterContextDefault = createEmitterContext(program);
     const sdkContextDefault = await createCSharpSdkContext(emitterContextDefault);
     const codeModelDefault = await createModel(sdkContextDefault);
     const schemaDefault = buildArmProviderSchema(sdkContextDefault, codeModelDefault);
 
-    // Test with flag enabled
+    // Test with flag disabled (opt-in to new resolveArmResources API)
     const emitterContextEnabled = createEmitterContext(program);
     // Add the management-specific option (AzureMgmtEmitterOptions extends AzureEmitterOptions)
     const optionsEnabled: AzureMgmtEmitterOptions = {
       ...emitterContextEnabled.options,
-      "use-resolve-arm-resources": true
+      "use-legacy-resource-detection": false
     };
     emitterContextEnabled.options = optionsEnabled;
     const sdkContextEnabled = await createCSharpSdkContext(emitterContextEnabled);

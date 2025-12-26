@@ -36,13 +36,13 @@ The migration is being done incrementally:
 
 ### Step 2: Add Feature Flag (✅ Complete)
 
-- Added a configuration option `use-resolve-arm-resources` as a feature flag to enable/disable the use of `resolveArmResources`
-- By default, the flag is **off** (disabled), maintaining current behavior for backward compatibility
-- When enabled, `buildArmProviderSchema` calls the converter to use `resolveArmResources` instead of custom logic
+- Added a configuration option `use-legacy-resource-detection` as a feature flag to control resource detection behavior
+- By default, the flag is **on** (true), maintaining current legacy behavior for backward compatibility
+- When disabled (false), `buildArmProviderSchema` calls the converter to use `resolveArmResources` instead of custom logic
 - This allows controlled testing and gradual rollout to specific services or scenarios
-- Each service can opt-in by enabling the flag in their TypeSpec configuration file (`tspconfig.yaml`)
+- Each service can opt-in to the new API by disabling the flag in their TypeSpec configuration file (`tspconfig.yaml`)
 
-**How to enable the flag:**
+**How to opt-in to the new resolveArmResources API:**
 
 Add the following to your `tspconfig.yaml` or emitter options:
 
@@ -51,20 +51,20 @@ emit:
   - "@azure-typespec/http-client-csharp-mgmt"
 options:
   "@azure-typespec/http-client-csharp-mgmt":
-    use-resolve-arm-resources: true
+    use-legacy-resource-detection: false
 ```
 
 **Testing:**
 
 - Added comprehensive test suite in `feature-flag.test.ts` with 3 tests covering:
-  - Default behavior (flag disabled)
-  - Flag enabled behavior (uses resolveArmResources API)
-  - Equivalence between flag enabled and disabled results
+  - Default behavior (flag enabled, uses legacy logic)
+  - Flag disabled behavior (uses resolveArmResources API)
+  - Equivalence between both approaches
 - All 101 tests pass (71 .NET + 30 TypeScript), confirming backward compatibility
 
 ### Step 3: Enable by Default and Remove Flag (Next)
 
-- After sufficient validation with the feature flag enabled in various services, make `resolveArmResources` the default
+- After sufficient validation with the feature flag disabled in various services, flip the default to `false` (making resolveArmResources the default)
 - Remove the feature flag and always use `resolveArmResources`
 - The conversion function will remain to translate from `Provider` format to our `ArmProviderSchema` format
 - Eventually consider updating downstream code to work directly with `Provider` format if beneficial
@@ -159,7 +159,7 @@ This confirms the converter is production-ready and has been successfully integr
 ## Files
 
 - `src/resolve-arm-resources-converter.ts` - The wrapper and conversion function
-- `src/options.ts` - Emitter options including the `use-resolve-arm-resources` feature flag
+- `src/options.ts` - Emitter options including the `use-legacy-resource-detection` feature flag
 - `src/emitter.ts` - Main emitter entry point that passes options to `updateClients`
 - `src/resource-detection.ts` - Current implementation with feature flag support
 - `src/resource-metadata.ts` - Shared data structures
@@ -171,8 +171,8 @@ This confirms the converter is production-ready and has been successfully integr
 
 ## Next Steps
 
-1. **Controlled rollout** - Enable the `use-resolve-arm-resources` flag for select services to validate in real-world scenarios
+1. **Controlled rollout** - Disable the `use-legacy-resource-detection` flag for select services to validate in real-world scenarios
 2. **Monitor and iterate** - Collect feedback and address any edge cases discovered during rollout
-3. **Make default** - After successful validation, flip the default to enabled (`default: true`)
+3. **Make default** - After successful validation, flip the default to `false` (making resolveArmResources the default behavior)
 4. **Remove flag** - Remove the feature flag configuration, always use `resolveArmResources`
 5. **Long-term** - Consider updating downstream code to work directly with `Provider` format if beneficial
