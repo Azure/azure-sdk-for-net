@@ -29,6 +29,11 @@ namespace Azure.AI.Projects.Tests;
 /// </summary>
 public class FineTuningTests : ProjectsClientTestBase
 {
+    /// <summary>
+    /// The default authorization scope for Azure AI Foundry APIs.
+    /// </summary>
+    private const string AzureAIScope = "https://ai.azure.com/.default";
+
     public FineTuningTests(bool isAsync) : base(isAsync)
     {
     }
@@ -787,6 +792,237 @@ public class FineTuningTests : ProjectsClientTestBase
         Console.WriteLine($"Response: {messageItem.Content[0].Text}");
     }
 
+    /// <summary>
+    /// Creates a fine-tuning job with auto-deployment enabled.
+    /// When the job completes successfully, Azure OpenAI will automatically deploy the fine-tuned model.
+    /// </summary>
+    private async Task<FineTuningJob> CreateFineTuningJobWithAutoDeploymentAsync(
+        FineTuningClient fineTuningClient,
+        string modelName,
+        string trainFileId,
+        string validationFileId,
+        string trainingType = null,
+        bool autoDeploymentEnabled = true,
+        int deploymentSku = 0, // 0 = Developer, 2 = GlobalStandard
+        bool waitUntilCompleted = false,
+        int epochCount = 1,
+        int batchSize = 4,
+        double learningRate = 0.0001)
+    {
+        var methodObject = new
+        {
+            type = "supervised",
+            supervised = new
+            {
+                hyperparameters = new
+                {
+                    n_epochs = epochCount,
+                    batch_size = batchSize,
+                    learning_rate_multiplier = learningRate
+                }
+            }
+        };
+
+        var requestJson = new Dictionary<string, object>
+        {
+            ["model"] = modelName,
+            ["training_file"] = trainFileId,
+            ["validation_file"] = validationFileId,
+            ["method"] = methodObject
+        };
+
+        if (!string.IsNullOrEmpty(trainingType))
+        {
+            requestJson["trainingType"] = trainingType;
+        }
+
+        // Add auto-deployment configuration
+        if (autoDeploymentEnabled)
+        {
+            requestJson["inference_configs"] = new
+            {
+                auto_inference_enabled = autoDeploymentEnabled,
+                inference_sku = deploymentSku // 0 = Developer, 2 = GlobalStandard
+            };
+        }
+
+        string jsonString = JsonSerializer.Serialize(requestJson);
+        Console.WriteLine($"Request JSON: {jsonString}");
+        BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
+        return await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: waitUntilCompleted, options: null);
+    }
+
+    private async Task RunAutoDeploymentTestAsync(string trainingType, int deploymentSku)
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
+
+        // Create job with auto-deployment enabled - service will deploy automatically when job completes
+        FineTuningJob fineTuningJob = await CreateFineTuningJobWithAutoDeploymentAsync(
+            fineTuningClient,
+            "gpt-4.1-mini",
+            trainFile.Id,
+            validationFile.Id,
+            trainingType: trainingType,
+            autoDeploymentEnabled: true,
+            deploymentSku: deploymentSku);
+
+        string skuName = deploymentSku == 0 ? "Developer" : "GlobalStandard";
+        Console.WriteLine($"Created fine-tuning job with auto-deployment ({skuName} tier): {fineTuningJob.JobId}");
+        Console.WriteLine($"Status: {fineTuningJob.Status}");
+        ValidateFineTuningJob(fineTuningJob);
+
+        // Job submitted successfully - auto-deployment will occur when job completes
+        Console.WriteLine("Job submitted. Auto-deployment will occur automatically when training completes.");
+    }
+
+    [RecordedTest]
+    public async Task Test_FineTuning_Create_Job_With_AutoDeployment_Developer()
+    {
+        await RunAutoDeploymentTestAsync("developerTier", deploymentSku: 0);
+    }
+
+    [RecordedTest]
+    public async Task Test_FineTuning_Create_Job_With_AutoDeployment_GlobalStandard()
+    {
+        await RunAutoDeploymentTestAsync("GlobalStandard", deploymentSku: 2);
+    }
+
+    /// <summary>
+    /// Imports a file from a URL (e.g., Azure Blob with SAS token) for fine-tuning.
+    /// Uses the POST /openai/files/import endpoint which is an Azure-specific extension.
+    /// </summary>
+    private async Task<string> ImportFileFromUrlAsync(string filename, string contentUrl)
+    {
+        string importUrl = $"{TestEnvironment.PROJECTENDPOINT}/openai/files/import?api-version=2025-11-15-preview";
+
+        var importRequest = new { filename, purpose = "fine-tune", content_url = contentUrl };
+        string jsonBody = JsonSerializer.Serialize(importRequest);
+
+        // Use DefaultAzureCredential directly since this test is LiveOnly
+        var credential = new DefaultAzureCredential();
+        var token = await credential.GetTokenAsync(new Azure.Core.TokenRequestContext(new[] { AzureAIScope }));
+
+        using var httpClient = new System.Net.Http.HttpClient();
+        httpClient.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Token);
+
+        var response = await httpClient.PostAsync(importUrl,
+            new System.Net.Http.StringContent(jsonBody, System.Text.Encoding.UTF8, "application/json"));
+        response.EnsureSuccessStatusCode();
+
+        using JsonDocument doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        string fileId = doc.RootElement.GetProperty("id").GetString();
+        Console.WriteLine($"Imported file {filename}: {fileId}");
+        return fileId;
+    }
+
+    /// <summary>
+    /// Helper method to run an import file from URL test.
+    /// Imports training and validation files from URLs, creates a fine-tuning job, then cleans up.
+    /// </summary>
+    private async Task RunImportFileFromUrlTestAsync(
+        string trainingFileUrl,
+        string trainingFileName,
+        string validationFileUrl,
+        string validationFileName,
+        string modelName = "gpt-4.1-mini",
+        string trainingType = "developerTier")
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        string trainFileId = null;
+        string validationFileId = null;
+
+        try
+        {
+            // Import files from URLs
+            Console.WriteLine($"Importing training file from URL: {trainingFileUrl}");
+            trainFileId = await ImportFileFromUrlAsync(trainingFileName, trainingFileUrl);
+
+            Console.WriteLine($"Importing validation file from URL: {validationFileUrl}");
+            validationFileId = await ImportFileFromUrlAsync(validationFileName, validationFileUrl);
+
+            // Wait for files to be processed
+            Console.WriteLine("Waiting for imported files to complete processing...");
+            await WaitForFileProcessingAsync(fileClient, trainFileId, pollIntervalSeconds: 2);
+            await WaitForFileProcessingAsync(fileClient, validationFileId, pollIntervalSeconds: 2);
+
+            // Create a fine-tuning job with the imported files
+            FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobAsync(
+                fineTuningClient,
+                modelName,
+                trainFileId,
+                validationFileId,
+                trainingType: trainingType);
+
+            Console.WriteLine($"Created fine-tuning job with imported files: {fineTuningJob.JobId}");
+            Console.WriteLine($"Status: {fineTuningJob.Status}");
+            ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job (we just want to verify the import + job creation works)
+            await fineTuningJob.CancelAndUpdateAsync();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
+        }
+        finally
+        {
+            // Cleanup imported files
+            if (trainFileId != null)
+            {
+                try
+                {
+                    await fileClient.DeleteFileAsync(trainFileId);
+                    Console.WriteLine($"Deleted training file: {trainFileId}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Failed to delete training file {trainFileId}: {ex.Message}");
+                }
+            }
+            if (validationFileId != null)
+            {
+                try
+                {
+                    await fileClient.DeleteFileAsync(validationFileId);
+                    Console.WriteLine($"Deleted validation file: {validationFileId}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Failed to delete validation file {validationFileId}: {ex.Message}");
+                }
+            }
+        }
+    }
+
+    [Test]
+    [LiveOnly(Reason = "Test uses raw HttpClient which bypasses test proxy")]
+    public async Task Test_FineTuning_Import_File_From_Blob_Url_And_Create_Job()
+    {
+        // This test demonstrates importing files from Azure Blob URLs (with SAS tokens) for fine-tuning.
+        // NOTE: Update these URLs with valid SAS tokens when running.
+        string trainingFileUrl = Environment.GetEnvironmentVariable("FT_TRAINING_FILE_URL")
+            ?? "https://yourstorageaccount.blob.core.windows.net/container/sft_training_set.jsonl?sv=...";
+        string validationFileUrl = Environment.GetEnvironmentVariable("FT_VALIDATION_FILE_URL")
+            ?? "https://yourstorageaccount.blob.core.windows.net/container/sft_validation_set.jsonl?sv=...";
+
+        await RunImportFileFromUrlTestAsync(
+            trainingFileUrl, "sft_training_set.jsonl",
+            validationFileUrl, "sft_validation_set.jsonl");
+    }
+    
+    [Test]
+    [LiveOnly(Reason = "Test uses raw HttpClient which bypasses test proxy")]
+    public async Task Test_FineTuning_Import_File_From_Public_Url_And_Create_Job()
+    {
+        // This test demonstrates importing files from publicly accessible URLs (e.g., GitHub raw files).
+        const string baseUrl = "https://raw.githubusercontent.com/azure-ai-foundry/fine-tuning/refs/heads/main/Sample_Datasets/Supervised_Fine_Tuning/Tool-Calling";
+        string trainingFileUrl = $"{baseUrl}/stock_toolcall_training.jsonl";
+        string validationFileUrl = $"{baseUrl}/stock_toolcall_validation.jsonl";
+
+        await RunImportFileFromUrlTestAsync(
+            trainingFileUrl, "stock_toolcall_training.jsonl",
+            validationFileUrl, "stock_toolcall_validation.jsonl");
+    }
+
     [Test]
     // Skip recording since ARM operations are not recorded via the test proxy.
     [LiveOnly]
@@ -794,6 +1030,12 @@ public class FineTuningTests : ProjectsClientTestBase
     {
         // This test demonstrates deploying a fine-tuned model using Azure Resource Manager.
         // It requires a completed fine-tuning job and takes approximately 30 minutes to complete.
+        // Skip in playback mode since ARM operations are not recorded via the test proxy.
+        if (Mode == Microsoft.ClientModel.TestFramework.RecordedTestMode.Playback)
+        {
+            Assert.Ignore("Skipping Test_FineTuning_Deploy_Model in playback mode - ARM operations not supported.");
+        }
+
         // Override the default 10 second timeout for this long-running deployment test
         TestTimeoutInSeconds = 300; // 5 minutes for deployment operations in playback mode
 
