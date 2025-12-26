@@ -34,15 +34,35 @@ The migration is being done incrementally:
 - All 27 tests pass, validating the converter produces identical results to the existing implementation
 - The converter maintains full compatibility with existing code while using the standardized API internally
 
-### Step 2: Add Feature Flag (Next)
+### Step 2: Add Feature Flag (✅ Complete)
 
-- Add a configuration option as a feature flag to enable/disable the use of `resolveArmResources`
-- By default, the flag will be **off** (disabled), maintaining current behavior
-- When enabled, `buildArmProviderSchema` will call the converter to use `resolveArmResources` instead of custom logic
+- Added a configuration option `use-resolve-arm-resources` as a feature flag to enable/disable the use of `resolveArmResources`
+- By default, the flag is **off** (disabled), maintaining current behavior for backward compatibility
+- When enabled, `buildArmProviderSchema` calls the converter to use `resolveArmResources` instead of custom logic
 - This allows controlled testing and gradual rollout to specific services or scenarios
-- Each service can opt-in by enabling the flag in their configuration
+- Each service can opt-in by enabling the flag in their TypeSpec configuration file (`tspconfig.yaml`)
 
-### Step 3: Enable by Default and Remove Flag (Final)
+**How to enable the flag:**
+
+Add the following to your `tspconfig.yaml` or emitter options:
+
+```yaml
+emit:
+  - "@azure-typespec/http-client-csharp-mgmt"
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    use-resolve-arm-resources: true
+```
+
+**Testing:**
+
+- Added comprehensive test suite in `feature-flag.test.ts` with 3 tests covering:
+  - Default behavior (flag disabled)
+  - Flag enabled behavior (uses resolveArmResources API)
+  - Equivalence between flag enabled and disabled results
+- All 101 tests pass (71 .NET + 30 TypeScript), confirming backward compatibility
+
+### Step 3: Enable by Default and Remove Flag (Next)
 
 - After sufficient validation with the feature flag enabled in various services, make `resolveArmResources` the default
 - Remove the feature flag and always use `resolveArmResources`
@@ -123,7 +143,7 @@ The test suite validates that the converter produces results consistent with the
 
 ## Test Results
 
-**All 27 tests pass successfully** ✓
+**All 30 tests pass successfully** ✓
 
 The comprehensive test coverage validates that `resolveArmResources` produces identical results to `buildArmProviderSchema` across:
 - Various resource scopes (ResourceGroup, Subscription, Tenant, ManagementGroup)
@@ -132,23 +152,27 @@ The comprehensive test coverage validates that `resolveArmResources` produces id
 - Complex operation paths with parameters
 - Action-only resources
 - Mixed resource and non-resource method scenarios
+- Feature flag enabled/disabled states
 
-This confirms the converter is production-ready and can be safely integrated via feature flag.
+This confirms the converter is production-ready and has been successfully integrated via feature flag.
 
 ## Files
 
 - `src/resolve-arm-resources-converter.ts` - The wrapper and conversion function
+- `src/options.ts` - Emitter options including the `use-resolve-arm-resources` feature flag
+- `src/emitter.ts` - Main emitter entry point that passes options to `updateClients`
+- `src/resource-detection.ts` - Current implementation with feature flag support
+- `src/resource-metadata.ts` - Shared data structures
 - `test/resource-detection.test.ts` - Resource detection validation tests (9 tests)
 - `test/non-resource-methods.test.ts` - Non-resource methods validation tests (7 tests)
+- `test/feature-flag.test.ts` - Feature flag validation tests (3 tests)
+- `test/resource-type.test.ts` - Resource type validation tests (11 tests)
 - `test/test-util.ts` - Shared test utilities including `normalizeSchemaForComparison`
-- `src/resource-detection.ts` - Current implementation (will remain, called based on feature flag)
-- `src/resource-metadata.ts` - Shared data structures
 
 ## Next Steps
 
-1. **Implement feature flag** - Add configuration option to enable/disable `resolveArmResources` (default: disabled)
-2. **Controlled rollout** - Enable the flag for select services to validate in real-world scenarios
-3. **Monitor and iterate** - Collect feedback and address any edge cases discovered during rollout
-4. **Make default** - After successful validation, flip the default to enabled
-5. **Remove flag** - Remove the feature flag configuration, always use `resolveArmResources`
-6. **Long-term** - Consider updating downstream code to work directly with `Provider` format if beneficial
+1. **Controlled rollout** - Enable the `use-resolve-arm-resources` flag for select services to validate in real-world scenarios
+2. **Monitor and iterate** - Collect feedback and address any edge cases discovered during rollout
+3. **Make default** - After successful validation, flip the default to enabled (`default: true`)
+4. **Remove flag** - Remove the feature flag configuration, always use `resolveArmResources`
+5. **Long-term** - Consider updating downstream code to work directly with `Provider` format if beneficial
