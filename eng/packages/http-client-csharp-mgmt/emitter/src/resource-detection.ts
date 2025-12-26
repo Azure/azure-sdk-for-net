@@ -52,6 +52,8 @@ import {
 } from "./sdk-context-options.js";
 import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
 import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
+import { resolveArmResources } from "./resolve-arm-resources-converter.js";
+import { AzureMgmtEmitterOptions } from "./options.js";
 
 export async function updateClients(
   codeModel: CodeModel,
@@ -78,6 +80,14 @@ export function buildArmProviderSchema(
   sdkContext: CSharpEmitterContext,
   codeModel: CodeModel
 ): ArmProviderSchema {
+  // Check if the use-resolve-arm-resources flag is enabled
+  const options = sdkContext.options as AzureMgmtEmitterOptions;
+  if (options?.["use-resolve-arm-resources"] === true) {
+    // Use the standardized resolveArmResources API
+    return resolveArmResources(sdkContext.program, sdkContext);
+  }
+
+  // Otherwise, use the existing custom resource detection logic
   const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
     getAllSdkClients(sdkContext)
       .flatMap((c) => c.methods)
