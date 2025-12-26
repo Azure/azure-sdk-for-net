@@ -114,7 +114,7 @@ export enum ResourceOperationKind {
   Action = "Action",
   Create = "Create",
   Delete = "Delete",
-  Get = "Get",
+  Read = "Read",
   List = "List",
   Update = "Update"
 }
