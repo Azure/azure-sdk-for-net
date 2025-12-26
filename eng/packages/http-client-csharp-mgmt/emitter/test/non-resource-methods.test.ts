@@ -3,12 +3,14 @@ import {
   createCSharpSdkContext,
   createEmitterContext,
   createEmitterTestHost,
-  typeSpecCompile
+  typeSpecCompile,
+  normalizeSchemaForComparison
 } from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
-import { ok, strictEqual } from "assert";
+import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
+import { ok, strictEqual, deepStrictEqual } from "assert";
 import { ResourceScope } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
@@ -75,6 +77,16 @@ model ValidationResponse {
     );
     strictEqual(method.operationScope, ResourceScope.Subscription);
     ok(method.methodId, "Method should have an ID");
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should detect non-resource methods on tenant scope", async () => {
@@ -164,6 +176,16 @@ model GlobalSettings {
         "/providers/Microsoft.ContosoProviderHub/updateGlobalSettings"
     );
     ok(globalSettingsMethod, "Should find globalSettings method");
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should not detect ARM resource operations as non-resource methods", async () => {
@@ -212,6 +234,16 @@ interface Employees {
       nonResourceMethods.length,
       0,
       "Should have no non-resource methods for standard ARM operations"
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
     );
   });
 
@@ -328,6 +360,16 @@ model MigrationResponse {
     );
     ok(migrateMethod, "Should find migrate method");
     strictEqual(migrateMethod.operationScope, ResourceScope.Tenant);
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should handle complex operation paths correctly", async () => {
@@ -391,6 +433,16 @@ model WorkspaceValidationResponse {
     );
     strictEqual(method.operationScope, ResourceScope.Subscription);
     ok(method.methodId, "Method should have an ID");
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should handle methods with query parameters correctly", async () => {
@@ -462,6 +514,16 @@ model SearchResult {
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/search/{action}/searchResources"
     );
     strictEqual(method.operationScope, ResourceScope.Subscription);
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should detect ARM provider actions with location parameters", async () => {
@@ -517,5 +579,15 @@ model FooPreviewAction {
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/previewActions"
     );
     strictEqual(method.operationScope, ResourceScope.Subscription);
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 });
