@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     [PersistableModelProxy(typeof(UnknownScalingTrigger))]
     public abstract partial class ManagedServiceScalingTrigger : IJsonModel<ManagedServiceScalingTrigger>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingTrigger"/> for deserialization. </summary>
-        internal ManagedServiceScalingTrigger()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedServiceScalingTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

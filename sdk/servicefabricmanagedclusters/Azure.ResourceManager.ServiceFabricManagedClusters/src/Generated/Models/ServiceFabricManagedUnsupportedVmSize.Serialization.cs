@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            VMSize properties = default;
+            VmSize properties = default;
             string name = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    properties = Models.VMSize.DeserializeVMSize(prop.Value, options);
+                    properties = Models.VmSize.DeserializeVmSize(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

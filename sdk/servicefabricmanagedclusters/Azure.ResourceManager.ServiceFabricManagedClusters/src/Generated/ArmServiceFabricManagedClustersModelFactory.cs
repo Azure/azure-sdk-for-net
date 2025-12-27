@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/> instance for mocking. </returns>
-        public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = default, string provisioningState = default, string version = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, IDictionary<string, string> tags = default, ManagedIdentity identity = default, string location = default)
+        public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = default, string provisioningState = default, string version = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, string location = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -74,31 +74,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             serviceTypeHealthPolicyMap ??= new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>();
 
             return new ApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Describes the managed identities for an Azure resource. </summary>
-        /// <param name="principalId"> The principal id of the managed identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant id of the managed identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of managed identity for the resource. </param>
-        /// <param name="userAssignedIdentities">
-        /// The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-        /// </param>
-        /// <returns> A new <see cref="Models.ManagedIdentity"/> instance for mocking. </returns>
-        public static ManagedIdentity ManagedIdentity(string principalId = default, string tenantId = default, ManagedIdentityType? @type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
-
-            return new ManagedIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> User assigned identity. </summary>
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentity"/> instance for mocking. </returns>
-        public static UserAssignedIdentity UserAssignedIdentity(string principalId = default, string clientId = default)
-        {
-            return new UserAssignedIdentity(principalId, clientId, additionalBinaryDataProperties: null);
         }
 
         /// <param name="tags"> Application update parameters. </param>
@@ -549,7 +524,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                vmSize is null ? default : new VMSize(vmSize, null),
+                vmSize is null ? default : new VmSize(vmSize, null),
                 name);
         }
 
@@ -982,14 +957,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 sku);
         }
 
-        /// <param name="sourceVaultId"> Azure resource identifier. </param>
+        /// <summary> Specifies set of certificates that should be installed onto the virtual machines. </summary>
+        /// <param name="sourceVault"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         /// <returns> A new <see cref="Models.NodeTypeVaultSecretGroup"/> instance for mocking. </returns>
-        public static NodeTypeVaultSecretGroup NodeTypeVaultSecretGroup(ResourceIdentifier sourceVaultId = default, IEnumerable<NodeTypeVaultCertificate> vaultCertificates = default)
+        public static NodeTypeVaultSecretGroup NodeTypeVaultSecretGroup(WritableSubResource sourceVault = default, IEnumerable<NodeTypeVaultCertificate> vaultCertificates = default)
         {
             vaultCertificates ??= new ChangeTrackingList<NodeTypeVaultCertificate>();
 
-            return new NodeTypeVaultSecretGroup(sourceVaultId is null ? default : new SubResource(sourceVaultId, null), vaultCertificates.ToList(), additionalBinaryDataProperties: null);
+            return new NodeTypeVaultSecretGroup(sourceVault, vaultCertificates.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="name"> Name of the network interface. </param>

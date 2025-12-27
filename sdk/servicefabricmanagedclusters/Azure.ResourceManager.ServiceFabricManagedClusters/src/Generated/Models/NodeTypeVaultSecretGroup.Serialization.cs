@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 throw new FormatException($"The model {nameof(NodeTypeVaultSecretGroup)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("sourceVault"u8);
-            writer.WriteObjectValue(SourceVault, options);
+            ((IJsonModel<WritableSubResource>)SourceVault).Write(writer, options);
             writer.WritePropertyName("vaultCertificates"u8);
             writer.WriteStartArray();
             foreach (NodeTypeVaultCertificate item in VaultCertificates)
@@ -90,14 +92,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            SubResource sourceVault = default;
+            WritableSubResource sourceVault = default;
             IList<NodeTypeVaultCertificate> vaultCertificates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceVault"u8))
                 {
-                    sourceVault = SubResource.DeserializeSubResource(prop.Value, options);
+                    sourceVault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("vaultCertificates"u8))

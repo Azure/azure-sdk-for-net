@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             string clusterId = default;
             string operationId = default;
-            IList<NodeTypeFaultSimulation> nodeTypeFaultSimulation = default;
+            IReadOnlyList<NodeTypeFaultSimulation> nodeTypeFaultSimulation = default;
             FaultSimulationContent parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

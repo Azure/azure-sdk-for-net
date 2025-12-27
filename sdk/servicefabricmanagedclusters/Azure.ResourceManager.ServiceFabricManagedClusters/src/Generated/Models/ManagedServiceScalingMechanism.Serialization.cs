@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     [PersistableModelProxy(typeof(UnknownScalingMechanism))]
     public abstract partial class ManagedServiceScalingMechanism : IJsonModel<ManagedServiceScalingMechanism>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingMechanism"/> for deserialization. </summary>
-        internal ManagedServiceScalingMechanism()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedServiceScalingMechanism>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

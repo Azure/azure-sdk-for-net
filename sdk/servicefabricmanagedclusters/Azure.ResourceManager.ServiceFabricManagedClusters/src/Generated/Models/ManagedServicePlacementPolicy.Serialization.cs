@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     [PersistableModelProxy(typeof(UnknownServicePlacementPolicy))]
     public abstract partial class ManagedServicePlacementPolicy : IJsonModel<ManagedServicePlacementPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedServicePlacementPolicy"/> for deserialization. </summary>
-        internal ManagedServicePlacementPolicy()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedServicePlacementPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

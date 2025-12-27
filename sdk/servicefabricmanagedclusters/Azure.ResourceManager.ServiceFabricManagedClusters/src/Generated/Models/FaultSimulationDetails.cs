@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="nodeTypeFaultSimulation"> List of node type simulations associated with the cluster fault simulation. </param>
         /// <param name="parameters"> Fault simulation parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FaultSimulationDetails(string clusterId, string operationId, IList<NodeTypeFaultSimulation> nodeTypeFaultSimulation, FaultSimulationContent parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FaultSimulationDetails(string clusterId, string operationId, IReadOnlyList<NodeTypeFaultSimulation> nodeTypeFaultSimulation, FaultSimulationContent parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterId = clusterId;
             OperationId = operationId;
@@ -43,9 +43,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> unique identifier for the operation associated with the fault simulation. </summary>
         public string OperationId { get; }
-
-        /// <summary> List of node type simulations associated with the cluster fault simulation. </summary>
-        public IList<NodeTypeFaultSimulation> NodeTypeFaultSimulation { get; }
 
         /// <summary> Fault simulation parameters. </summary>
         public FaultSimulationContent Parameters { get; }

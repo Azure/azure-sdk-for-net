@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Azure resource identifier. </summary>
-    public partial class SubResource
+    internal partial class SubResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

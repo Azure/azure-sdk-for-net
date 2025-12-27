@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ServiceFabricManagedApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationResourceProperties properties, IDictionary<string, string> tags, ManagedIdentity identity, string location) : base(id, name, resourceType, systemData)
+        internal ServiceFabricManagedApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationResourceProperties properties, IDictionary<string, string> tags, ManagedServiceIdentity identity, string location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Describes the managed identities for an Azure resource. </summary>
-        public ManagedIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         public string Location { get; set; }

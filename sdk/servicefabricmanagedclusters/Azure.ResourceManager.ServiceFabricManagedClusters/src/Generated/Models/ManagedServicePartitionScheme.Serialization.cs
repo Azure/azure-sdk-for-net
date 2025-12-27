@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     [PersistableModelProxy(typeof(UnknownPartition))]
     public abstract partial class ManagedServicePartitionScheme : IJsonModel<ManagedServicePartitionScheme>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedServicePartitionScheme"/> for deserialization. </summary>
-        internal ManagedServicePartitionScheme()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedServicePartitionScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

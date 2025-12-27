@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="sourceVault"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="vaultCertificates"/> is null. </exception>
-        public NodeTypeVaultSecretGroup(SubResource sourceVault, IEnumerable<NodeTypeVaultCertificate> vaultCertificates)
+        public NodeTypeVaultSecretGroup(WritableSubResource sourceVault, IEnumerable<NodeTypeVaultCertificate> vaultCertificates)
         {
             Argument.AssertNotNull(sourceVault, nameof(sourceVault));
             Argument.AssertNotNull(vaultCertificates, nameof(vaultCertificates));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="sourceVault"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodeTypeVaultSecretGroup(SubResource sourceVault, IList<NodeTypeVaultCertificate> vaultCertificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NodeTypeVaultSecretGroup(WritableSubResource sourceVault, IList<NodeTypeVaultCertificate> vaultCertificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVault = sourceVault;
             VaultCertificates = vaultCertificates;
@@ -44,26 +44,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </summary>
-        internal SubResource SourceVault { get; set; }
+        public WritableSubResource SourceVault { get; set; }
 
         /// <summary> The list of key vault references in SourceVault which contain certificates. </summary>
         public IList<NodeTypeVaultCertificate> VaultCertificates { get; }
-
-        /// <summary> Azure resource identifier. </summary>
-        public ResourceIdentifier SourceVaultId
-        {
-            get
-            {
-                return SourceVault is null ? default : SourceVault.Id;
-            }
-            set
-            {
-                if (SourceVault is null)
-                {
-                    SourceVault = new SubResource();
-                }
-                SourceVault.Id = value;
-            }
-        }
     }
 }

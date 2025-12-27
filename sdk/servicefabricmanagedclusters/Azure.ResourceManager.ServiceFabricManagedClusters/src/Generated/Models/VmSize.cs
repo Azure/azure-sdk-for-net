@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> VM Sizes properties. </summary>
-    internal partial class VMSize
+    internal partial class VmSize
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMSize"/>. </summary>
-        internal VMSize()
+        /// <summary> Initializes a new instance of <see cref="VmSize"/>. </summary>
+        internal VmSize()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSize"/>. </summary>
         /// <param name="size"> VM Size name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMSize(string size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmSize(string size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Size = size;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

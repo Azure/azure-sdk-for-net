@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-/*
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Model factory for models. </summary>
@@ -33,27 +33,43 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
         /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
         /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/> instance for mocking. </returns>
-        public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, string version = null, IDictionary<string, string> parameters = null, ApplicationUpgradePolicy upgradePolicy = null, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            managedIdentities ??= new List<ApplicationUserAssignedIdentityInfo>();
-            parameters ??= new Dictionary<string, string>();
+        public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, string version = null, IDictionary<string, string> parameters = null, ApplicationUpgradePolicy upgradePolicy = null, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = null)
+            => ServiceFabricManagedApplicationData(id, name, resourceType, systemData, managedIdentities, provisioningState, version, parameters, upgradePolicy, tags, identity, location);
 
-            return new ServiceFabricManagedApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                managedIdentities?.ToList(),
-                provisioningState,
-                version,
-                parameters,
-                upgradePolicy,
-                identity,
-                serializedAdditionalRawData: null);
+        /// <summary> Initializes a new instance of <see cref="Models.NodeTypeVmssExtension"/>. </summary>
+        /// <param name="name"> The name of the extension. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="setupOrder"> Indicates the setup order for the extension. </param>
+        /// <returns> A new <see cref="Models.NodeTypeVmssExtension"/> instance for mocking. </returns>
+        public static NodeTypeVmssExtension NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IEnumerable<string> provisionAfterExtensions, string provisioningState, bool? isAutomaticUpgradeEnabled, IEnumerable<VmssExtensionSetupOrder> setupOrder)
+        {
+            provisionAfterExtensions ??= new List<string>();
+            setupOrder ??= new List<VmssExtensionSetupOrder>();
+
+            return new NodeTypeVmssExtension(
+                        name,
+                        new VmssExtensionProperties(publisher,
+                                vmssExtensionPropertiesType,
+                                typeHandlerVersion,
+                                autoUpgradeMinorVersion,
+                                settings,
+                                protectedSettings,
+                                forceUpdateTag,
+                                provisionAfterExtensions?.ToList(),
+                                provisioningState,
+                                isAutomaticUpgradeEnabled,
+                                setupOrder?.ToList(),
+                                null),
+                        null);
         }
     }
 }
-*/

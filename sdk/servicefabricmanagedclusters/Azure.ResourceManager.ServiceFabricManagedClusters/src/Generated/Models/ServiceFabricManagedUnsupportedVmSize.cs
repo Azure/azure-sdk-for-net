@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> VM Size properties. </param>
         /// <param name="name"> VM Size name. </param>
-        internal ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VMSize properties, string name) : base(id, name, resourceType, systemData)
+        internal ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VmSize properties, string name) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> VM Size properties. </summary>
-        internal VMSize Properties { get; }
+        internal VmSize Properties { get; }
 
         /// <summary> VM Size name. </summary>
-        public string VMSize
+        public string VmSize
         {
             get
             {

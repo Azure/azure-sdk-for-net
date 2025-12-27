@@ -15,7 +15,7 @@ using Azure.ResourceManager.ServiceFabricManagedClusters;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Azure resource identifier. </summary>
-    public partial class SubResource : IJsonModel<SubResource>
+    internal partial class SubResource : IJsonModel<SubResource>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

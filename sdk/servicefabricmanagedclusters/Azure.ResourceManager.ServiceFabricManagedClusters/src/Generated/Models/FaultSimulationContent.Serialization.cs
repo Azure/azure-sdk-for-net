@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     [PersistableModelProxy(typeof(UnknownFaultSimulationContent))]
     public abstract partial class FaultSimulationContent : IJsonModel<FaultSimulationContent>
     {
-        /// <summary> Initializes a new instance of <see cref="FaultSimulationContent"/> for deserialization. </summary>
-        internal FaultSimulationContent()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FaultSimulationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
