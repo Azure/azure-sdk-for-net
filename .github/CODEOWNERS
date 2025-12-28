@@ -218,13 +218,13 @@
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @leareai @Han-msft
 
 # PRLabel: %Cognitive - Content Understanding
-/sdk/contentunderstanding/                                         @yungshinlintw @bojunehsu @changjian-wang
+/sdk/contentunderstanding/                                         @bojunehsu @changjian-wang
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/documentintelligence/                                         @yungshinlintw @bojunehsu
+/sdk/documentintelligence/                                         @changjian-wang @bojunehsu
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                                               @yungshinlintw @bojunehsu
+/sdk/formrecognizer/                                               @changjian-wang @bojunehsu
 
 # ServiceLabel: %Cognitive - Form Recognizer
 # ServiceOwners:                                                   @vkurpad
