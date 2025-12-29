@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed the `Name` property of `SlotConfigNames` not settable and without default value. ([#54675](https://github.com/Azure/azure-sdk-for-net/issues/54675))
+- Fixed the `Name` property of `SlotConfigNames` to include a default value of `slotConfigNames`. ([#54675](https://github.com/Azure/azure-sdk-for-net/issues/54675))
 
 ### Other Changes
 
