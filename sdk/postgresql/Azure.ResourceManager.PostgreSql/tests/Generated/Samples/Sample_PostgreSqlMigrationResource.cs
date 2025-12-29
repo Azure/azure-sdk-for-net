@@ -193,14 +193,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlMigrationResource postgreSqlMigration = client.GetPostgreSqlMigrationResource(postgreSqlMigrationResourceId);
 
             // invoke the operation
-            ArmOperation<PostgreSqlMigrationResource> lro = await postgreSqlMigration.DeleteAsync(WaitUntil.Completed);
-            PostgreSqlMigrationResource result = lro.Value;
+            await postgreSqlMigration.DeleteAsync(WaitUntil.Completed);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlMigrationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]

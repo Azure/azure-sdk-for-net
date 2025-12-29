@@ -260,4 +260,10 @@ directive:
     transform: >
       $.properties.primaryEncryptionKeyStatus['readOnly'] = false;
       $.properties.geoBackupEncryptionKeyStatus['readOnly'] = false;
+  - from: openapi.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/migrations/{migrationName}"].delete
+    transform: >
+      $.responses['200'] = {
+            "description": "OK"
+          };
 ```
