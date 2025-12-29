@@ -93,7 +93,11 @@ namespace Azure.Generator.Management.Utilities
                 }
                 else
                 {
-                    var methodParam = methodParameters.SingleOrDefault(p => p.WireInfo?.SerializedName == parameter.WireInfo?.SerializedName);
+                    // Try to find a matching parameter by SerializedName, but only if both have valid WireInfo
+                    var paramSerializedName = parameter.WireInfo?.SerializedName;
+                    var methodParam = paramSerializedName != null
+                        ? methodParameters.SingleOrDefault(p => p.WireInfo?.SerializedName == paramSerializedName)
+                        : null;
                     if (methodParam != null)
                     {
                         arguments.Add(Convert(methodParam, methodParam.Type, parameter.Type));
@@ -168,15 +172,9 @@ namespace Azure.Generator.Management.Utilities
             didAddMatchConditions = false;
 
             // Check if the request parameter is a conditional header
-            // Try both SerializedName and Name as the key
-            var serializedName = requestParameter.WireInfo?.SerializedName ?? requestParameter.Name;
-            if (!_conditionalHeaderToPropertyName.TryGetValue(serializedName, out _))
+            if (!IsConditionalHeaderParameter(requestParameter))
             {
-                // Also try the parameter name directly
-                if (!_conditionalHeaderToPropertyName.TryGetValue(requestParameter.Name, out _))
-                {
-                    return false;
-                }
+                return false;
             }
 
             // This is a conditional header parameter
@@ -201,6 +199,17 @@ namespace Azure.Generator.Management.Utilities
             }
             // If we've already added MatchConditions, skip this parameter (return true to indicate we handled it)
             return true;
+        }
+
+        /// <summary>
+        /// Checks if a parameter is a conditional header (If-Match, If-None-Match, etc.).
+        /// </summary>
+        private static bool IsConditionalHeaderParameter(ParameterProvider parameter)
+        {
+            // Try the SerializedName first (e.g., "If-Match"), then fall back to parameter name (e.g., "ifMatch")
+            var serializedName = parameter.WireInfo?.SerializedName ?? parameter.Name;
+            return _conditionalHeaderToPropertyName.ContainsKey(serializedName) ||
+                   _conditionalHeaderToPropertyName.ContainsKey(parameter.Name);
         }
     }
 }

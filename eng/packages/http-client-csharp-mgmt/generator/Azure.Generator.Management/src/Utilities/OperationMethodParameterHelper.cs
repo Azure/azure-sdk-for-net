@@ -163,8 +163,10 @@ namespace Azure.Generator.Management.Utilities
                 return param;
             }
 
-            // If both IfMatch and IfNoneMatch, use MatchConditions
-            // Do NOT pass wireInfo to avoid SerializedName matching issues
+            // If both IfMatch and IfNoneMatch, use MatchConditions.
+            // We do NOT pass wireInfo because the original header's SerializedName (e.g., "If-Match")
+            // would cause PopulateArguments to incorrectly match this parameter when looking for
+            // REST method parameters by SerializedName, leading to incorrect argument generation.
             if (hasIfMatch && hasIfNoneMatch && !hasIfModifiedSince && !hasIfUnmodifiedSince)
             {
                 return new ParameterProvider(
