@@ -64,7 +64,7 @@ export async function updateClients(
   const armProviderSchema = options?.["use-legacy-resource-detection"] === false
     ? resolveArmResources(sdkContext.program, sdkContext)
     : buildArmProviderSchema(sdkContext, codeModel);
-  
+
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
 }
 

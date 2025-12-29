@@ -156,7 +156,7 @@ The test suite validates that the converter produces results consistent with the
 
 ## Test Results
 
-**All 30 tests pass successfully** ✓
+**All 27 tests pass successfully** ✓
 
 The comprehensive test coverage validates that `resolveArmResources` produces identical results to `buildArmProviderSchema` across:
 - Various resource scopes (ResourceGroup, Subscription, Tenant, ManagementGroup)
@@ -165,7 +165,6 @@ The comprehensive test coverage validates that `resolveArmResources` produces id
 - Complex operation paths with parameters
 - Action-only resources
 - Mixed resource and non-resource method scenarios
-- Feature flag enabled/disabled states
 
 This confirms the converter is production-ready and has been successfully integrated via feature flag.
 
