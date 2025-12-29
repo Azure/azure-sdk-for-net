@@ -14,34 +14,31 @@ using Azure.ResourceManager.DevOpsInfrastructure.Models;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure
 {
-    internal partial class ImageVersionsGetByImageCollectionResultOfT : Pageable<DevOpsImageVersion>
+    internal partial class SkuGetSkusByLocationCollectionResultOfT : Pageable<DevOpsResourceSku>
     {
-        private readonly ImageVersions _client;
+        private readonly Sku _client;
         private readonly Guid _subscriptionId;
-        private readonly string _resourceGroupName;
-        private readonly string _imageName;
+        private readonly string _locationName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ImageVersionsGetByImageCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ImageVersions client used to send requests. </param>
+        /// <summary> Initializes a new instance of SkuGetSkusByLocationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Sku client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="imageName"> Name of the image. </param>
+        /// <param name="locationName"> Name of the location. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ImageVersionsGetByImageCollectionResultOfT(ImageVersions client, Guid subscriptionId, string resourceGroupName, string imageName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public SkuGetSkusByLocationCollectionResultOfT(Sku client, Guid subscriptionId, string locationName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
-            _imageName = imageName;
+            _locationName = locationName;
             _context = context;
         }
 
-        /// <summary> Gets the pages of ImageVersionsGetByImageCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SkuGetSkusByLocationCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ImageVersionsGetByImageCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DevOpsImageVersion>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of SkuGetSkusByLocationCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<DevOpsResourceSku>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -51,8 +48,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 {
                     yield break;
                 }
-                ImageVersionListResult result = ImageVersionListResult.FromResponse(response);
-                yield return Page<DevOpsImageVersion>.FromValues((IReadOnlyList<DevOpsImageVersion>)result.Value, nextPage?.AbsoluteUri, response);
+                ResourceSkuListResult result = ResourceSkuListResult.FromResponse(response);
+                yield return Page<DevOpsResourceSku>.FromValues((IReadOnlyList<DevOpsResourceSku>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -66,8 +63,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByImageRequest(nextLink, _subscriptionId, _resourceGroupName, _imageName, _context) : _client.CreateGetByImageRequest(_subscriptionId, _resourceGroupName, _imageName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDevOpsInfrastructureResourceGroupResource.GetByImage");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetSkusByLocationRequest(nextLink, _subscriptionId, _locationName, _context) : _client.CreateGetSkusByLocationRequest(_subscriptionId, _locationName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDevOpsInfrastructureSubscriptionResource.GetSkusByLocation");
             scope.Start();
             try
             {

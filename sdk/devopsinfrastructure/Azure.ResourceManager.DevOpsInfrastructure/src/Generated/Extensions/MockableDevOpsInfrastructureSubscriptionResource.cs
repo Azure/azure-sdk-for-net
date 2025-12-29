@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DevOpsResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevOpsResourceSku> GetByLocationAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevOpsResourceSku> GetSkusByLocationAsync(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkuGetByLocationAsyncCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new SkuGetSkusByLocationAsyncCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DevOpsResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevOpsResourceSku> GetByLocation(string locationName, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevOpsResourceSku> GetSkusByLocation(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkuGetByLocationCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new SkuGetSkusByLocationCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
         }
     }
 }

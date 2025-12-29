@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// List ImageVersion resources by Image
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevOpsInfrastructureResourceGroupResource.GetByImageAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevOpsInfrastructureResourceGroupResource.GetImageVersionsByImageAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -123,18 +123,18 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DevOpsImageVersion"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevOpsImageVersion> GetByImageAsync(this ResourceGroupResource resourceGroupResource, string imageName, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DevOpsImageVersion> GetImageVersionsByImageAsync(this ResourceGroupResource resourceGroupResource, string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevOpsInfrastructureResourceGroupResource(resourceGroupResource).GetByImageAsync(imageName, cancellationToken);
+            return GetMockableDevOpsInfrastructureResourceGroupResource(resourceGroupResource).GetImageVersionsByImageAsync(imageName, cancellationToken);
         }
 
         /// <summary>
         /// List ImageVersion resources by Image
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevOpsInfrastructureResourceGroupResource.GetByImage(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevOpsInfrastructureResourceGroupResource.GetImageVersionsByImage(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DevOpsImageVersion"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevOpsImageVersion> GetByImage(this ResourceGroupResource resourceGroupResource, string imageName, CancellationToken cancellationToken = default)
+        public static Pageable<DevOpsImageVersion> GetImageVersionsByImage(this ResourceGroupResource resourceGroupResource, string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevOpsInfrastructureResourceGroupResource(resourceGroupResource).GetByImage(imageName, cancellationToken);
+            return GetMockableDevOpsInfrastructureResourceGroupResource(resourceGroupResource).GetImageVersionsByImage(imageName, cancellationToken);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// List ResourceSku resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetByLocationAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetSkusByLocationAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -271,18 +271,18 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DevOpsResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevOpsResourceSku> GetByLocationAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DevOpsResourceSku> GetSkusByLocationAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetByLocationAsync(locationName, cancellationToken);
+            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetSkusByLocationAsync(locationName, cancellationToken);
         }
 
         /// <summary>
         /// List ResourceSku resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetByLocation(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetSkusByLocation(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -290,11 +290,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DevOpsResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevOpsResourceSku> GetByLocation(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        public static Pageable<DevOpsResourceSku> GetSkusByLocation(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetByLocation(locationName, cancellationToken);
+            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetSkusByLocation(locationName, cancellationToken);
         }
     }
 }

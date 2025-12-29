@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateGetSkusByLocationRequest(Guid subscriptionId, string locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             return message;
         }
 
-        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateNextGetSkusByLocationRequest(Uri nextPage, Guid subscriptionId, string locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

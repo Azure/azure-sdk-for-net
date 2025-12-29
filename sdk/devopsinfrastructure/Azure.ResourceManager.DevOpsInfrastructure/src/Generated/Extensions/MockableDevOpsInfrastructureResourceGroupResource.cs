@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DevOpsImageVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevOpsImageVersion> GetByImageAsync(string imageName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevOpsImageVersion> GetImageVersionsByImageAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ImageVersionsGetByImageAsyncCollectionResultOfT(ImageVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, imageName, context);
+            return new ImageVersionsGetImageVersionsByImageAsyncCollectionResultOfT(ImageVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, imageName, context);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DevOpsImageVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevOpsImageVersion> GetByImage(string imageName, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevOpsImageVersion> GetImageVersionsByImage(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ImageVersionsGetByImageCollectionResultOfT(ImageVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, imageName, context);
+            return new ImageVersionsGetImageVersionsByImageCollectionResultOfT(ImageVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, imageName, context);
         }
     }
 }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.DevOpsInfrastructure.Models;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure
 {
-    internal partial class ImageVersionsGetByImageAsyncCollectionResultOfT : AsyncPageable<DevOpsImageVersion>
+    internal partial class ImageVersionsGetImageVersionsByImageAsyncCollectionResultOfT : AsyncPageable<DevOpsImageVersion>
     {
         private readonly ImageVersions _client;
         private readonly Guid _subscriptionId;
@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         private readonly string _imageName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ImageVersionsGetByImageAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ImageVersionsGetImageVersionsByImageAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ImageVersions client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="imageName"> Name of the image. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ImageVersionsGetByImageAsyncCollectionResultOfT(ImageVersions client, Guid subscriptionId, string resourceGroupName, string imageName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ImageVersionsGetImageVersionsByImageAsyncCollectionResultOfT(ImageVersions client, Guid subscriptionId, string resourceGroupName, string imageName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             _context = context;
         }
 
-        /// <summary> Gets the pages of ImageVersionsGetByImageAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ImageVersionsGetImageVersionsByImageAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ImageVersionsGetByImageAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ImageVersionsGetImageVersionsByImageAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DevOpsImageVersion>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByImageRequest(nextLink, _subscriptionId, _resourceGroupName, _imageName, _context) : _client.CreateGetByImageRequest(_subscriptionId, _resourceGroupName, _imageName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDevOpsInfrastructureResourceGroupResource.GetByImage");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetImageVersionsByImageRequest(nextLink, _subscriptionId, _resourceGroupName, _imageName, _context) : _client.CreateGetImageVersionsByImageRequest(_subscriptionId, _resourceGroupName, _imageName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDevOpsInfrastructureResourceGroupResource.GetImageVersionsByImage");
             scope.Start();
             try
             {
