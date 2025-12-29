@@ -52,13 +52,19 @@ import {
 } from "./sdk-context-options.js";
 import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
 import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
+import { resolveArmResources } from "./resolve-arm-resources-converter.js";
+import { AzureMgmtEmitterOptions } from "./options.js";
 
 export async function updateClients(
   codeModel: CodeModel,
-  sdkContext: CSharpEmitterContext
+  sdkContext: CSharpEmitterContext,
+  options: AzureMgmtEmitterOptions
 ) {
-  // Build the unified ARM provider schema and apply it to the root client
-  const armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
+  // Check if the use-legacy-resource-detection flag is disabled (i.e., use new resolveArmResources API)
+  const armProviderSchema = options?.["use-legacy-resource-detection"] === false
+    ? resolveArmResources(sdkContext.program, sdkContext)
+    : buildArmProviderSchema(sdkContext, codeModel);
+
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
 }
 
@@ -68,7 +74,7 @@ export async function updateClients(
  * and consolidates it into a unified ArmProviderSchema structure.
  *
  * This function is exported for testing purposes and can be called directly from tests
- * to validate the schema structure.
+ * to validate the schema structure using the legacy custom resource detection logic.
  *
  * @param sdkContext - The emitter context
  * @param codeModel - The code model to analyze
@@ -78,6 +84,7 @@ export function buildArmProviderSchema(
   sdkContext: CSharpEmitterContext,
   codeModel: CodeModel
 ): ArmProviderSchema {
+  // Use the existing custom resource detection logic
   const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
     getAllSdkClients(sdkContext)
       .flatMap((c) => c.methods)
