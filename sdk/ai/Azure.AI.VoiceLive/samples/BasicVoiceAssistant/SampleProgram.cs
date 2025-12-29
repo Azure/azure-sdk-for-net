@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.CommandLine;
+using System.CommandLine.Parsing;
 using Azure.AI.VoiceLive.Samples;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,80 +46,76 @@ namespace Azure.AI.VoiceLive.Samples
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static async Task<int> Main(string[] args)
+    public static async Task<int> Main(string[] args)
+    {
+        var rootCommand = new RootCommand("Basic Voice Assistant using Azure VoiceLive SDK");
+
+        var apiKeyOption = new Option<string?>("--api-key")
         {
-            // Create command line interface
-            var rootCommand = CreateRootCommand();
-            return await rootCommand.InvokeAsync(args).ConfigureAwait(false);
-        }
+            Description = "Azure VoiceLive API key. If not provided, will use AZURE_VOICELIVE_API_KEY environment variable."
+        };
 
-        private static RootCommand CreateRootCommand()
+        var endpointOption = new Option<string>("--endpoint")
         {
-            var rootCommand = new RootCommand("Basic Voice Assistant using Azure VoiceLive SDK");
+            Description = "Azure VoiceLive endpoint"
+        };
 
-            var apiKeyOption = new Option<string?>(
-                "--api-key",
-                "Azure VoiceLive API key. If not provided, will use AZURE_VOICELIVE_API_KEY environment variable.");
+        var modelOption = new Option<string>("--model")
+        {
+            Description = "VoiceLive model to use"
+        };
 
-            var endpointOption = new Option<string>(
-                "--endpoint",
-                () => "wss://api.voicelive.com/v1",
-                "Azure VoiceLive endpoint");
+        var voiceOption = new Option<string>("--voice")
+        {
+            Description = "Voice to use for the assistant"
+        };
 
-            var modelOption = new Option<string>(
-                "--model",
-                () => "gpt-4o",
-                "VoiceLive model to use");
+        var instructionsOption = new Option<string>("--instructions")
+        {
+            Description = "System instructions for the AI assistant"
+        };
 
-            var voiceOption = new Option<string>(
-                "--voice",
-                () => "en-US-AvaNeural",
-                "Voice to use for the assistant");
+        var useTokenCredentialOption = new Option<bool>("--use-token-credential")
+        {
+            Description = "Use Azure token credential instead of API key"
+        };
 
-            var instructionsOption = new Option<string>(
-                "--instructions",
-                () => "You are a helpful AI assistant. Respond naturally and conversationally. Keep your responses concise but engaging.",
-                "System instructions for the AI assistant");
+        var verboseOption = new Option<bool>("--verbose")
+        {
+            Description = "Enable verbose logging"
+        };
 
-            var useTokenCredentialOption = new Option<bool>(
-                "--use-token-credential",
-                "Use Azure token credential instead of API key");
+        rootCommand.Add(apiKeyOption);
+        rootCommand.Add(endpointOption);
+        rootCommand.Add(modelOption);
+        rootCommand.Add(voiceOption);
+        rootCommand.Add(instructionsOption);
+        rootCommand.Add(useTokenCredentialOption);
+        rootCommand.Add(verboseOption);
 
-            var verboseOption = new Option<bool>(
-                "--verbose",
-                "Enable verbose logging");
-
-            rootCommand.AddOption(apiKeyOption);
-            rootCommand.AddOption(endpointOption);
-            rootCommand.AddOption(modelOption);
-            rootCommand.AddOption(voiceOption);
-            rootCommand.AddOption(instructionsOption);
-            rootCommand.AddOption(useTokenCredentialOption);
-            rootCommand.AddOption(verboseOption);
-
-            rootCommand.SetHandler(async (
-                string? apiKey,
-                string endpoint,
-                string model,
-                string voice,
-                string instructions,
-                bool useTokenCredential,
-                bool verbose) =>
+        var parseResult = rootCommand.Parse(args);
+        if (parseResult.Errors.Count > 0)
+        {
+            foreach (var error in parseResult.Errors)
             {
-                await RunVoiceAssistantAsync(apiKey, endpoint, model, voice, instructions, useTokenCredential, verbose).ConfigureAwait(false);
-            },
-            apiKeyOption,
-            endpointOption,
-            modelOption,
-            voiceOption,
-            instructionsOption,
-            useTokenCredentialOption,
-            verboseOption);
-
-            return rootCommand;
+                Console.WriteLine(error.Message);
+            }
+            return 1;
         }
 
-        private static async Task RunVoiceAssistantAsync(
+        var apiKey = parseResult.GetValue(apiKeyOption);
+        var endpoint = parseResult.GetValue(endpointOption) ?? "wss://api.voicelive.com/v1";
+        var model = parseResult.GetValue(modelOption) ?? "gpt-4o";
+        var voice = parseResult.GetValue(voiceOption) ?? "en-US-AvaNeural";
+        var instructions = parseResult.GetValue(instructionsOption) ?? "You are a helpful AI assistant. Respond naturally and conversationally. Keep your responses concise but engaging.";
+        var useTokenCredential = parseResult.GetValue(useTokenCredentialOption);
+        var verbose = parseResult.GetValue(verboseOption);
+
+        await RunVoiceAssistantAsync(apiKey, endpoint, model, voice, instructions, useTokenCredential, verbose).ConfigureAwait(false);
+        return 0;
+    }
+
+    private static async Task RunVoiceAssistantAsync(
             string? apiKey,
             string endpoint,
             string model,
