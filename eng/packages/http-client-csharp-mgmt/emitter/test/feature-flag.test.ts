@@ -6,16 +6,13 @@ import {
   createCSharpSdkContext,
   createEmitterContext,
   createEmitterTestHost,
-  typeSpecCompile,
-  normalizeSchemaForComparison
+  typeSpecCompile
 } from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
-import { ok, strictEqual, deepStrictEqual } from "assert";
-import { AzureMgmtEmitterOptions } from "../src/options.js";
-import { EmitContext } from "@typespec/compiler";
+import { ok, strictEqual } from "assert";
 
 describe("Feature Flag Tests", () => {
   let runner: TestHost;
