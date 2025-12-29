@@ -15,37 +15,8 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when creating a server endpoint. </summary>
     public partial class StorageSyncServerEndpointCreateOrUpdateContent : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointCreateOrUpdateContent"/>. </summary>
         public StorageSyncServerEndpointCreateOrUpdateContent()
@@ -53,59 +24,206 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="serverLocalPath"> Server Local path. </param>
-        /// <param name="cloudTiering"> Cloud Tiering. </param>
-        /// <param name="volumeFreeSpacePercent"> Level of free space to be maintained by Cloud Tiering if it is enabled. </param>
-        /// <param name="tierFilesOlderThanDays"> Tier files older than days. </param>
-        /// <param name="friendlyName"> Friendly Name. </param>
-        /// <param name="serverResourceId"> Server Resource Id. </param>
-        /// <param name="offlineDataTransfer"> Offline data transfer. </param>
-        /// <param name="offlineDataTransferShareName"> Offline data transfer share name. </param>
-        /// <param name="initialDownloadPolicy"> Policy for how namespace and files are recalled during FastDr. </param>
-        /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
-        /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncServerEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, StorageSyncFeatureStatus? offlineDataTransfer, string offlineDataTransferShareName, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The parameters used to create the server endpoint. </param>
+        internal StorageSyncServerEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerEndpointCreateParametersProperties properties) : base(id, name, resourceType, systemData)
         {
-            ServerLocalPath = serverLocalPath;
-            CloudTiering = cloudTiering;
-            VolumeFreeSpacePercent = volumeFreeSpacePercent;
-            TierFilesOlderThanDays = tierFilesOlderThanDays;
-            FriendlyName = friendlyName;
-            ServerResourceId = serverResourceId;
-            OfflineDataTransfer = offlineDataTransfer;
-            OfflineDataTransferShareName = offlineDataTransferShareName;
-            InitialDownloadPolicy = initialDownloadPolicy;
-            LocalCacheMode = localCacheMode;
-            InitialUploadPolicy = initialUploadPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The parameters used to create the server endpoint. </summary>
+        internal ServerEndpointCreateParametersProperties Properties { get; set; }
+
         /// <summary> Server Local path. </summary>
-        public string ServerLocalPath { get; set; }
+        public string ServerLocalPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerLocalPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointCreateParametersProperties();
+                }
+                Properties.ServerLocalPath = value;
+            }
+        }
+
         /// <summary> Cloud Tiering. </summary>
-        public StorageSyncFeatureStatus? CloudTiering { get; set; }
+        public StorageSyncFeatureStatus? CloudTiering
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CloudTiering;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointCreateParametersProperties();
+                }
+                Properties.CloudTiering = value.Value;
+            }
+        }
+
         /// <summary> Level of free space to be maintained by Cloud Tiering if it is enabled. </summary>
-        public int? VolumeFreeSpacePercent { get; set; }
+        public int? VolumeFreeSpacePercent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VolumeFreeSpacePercent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointCreateParametersProperties();
+                }
+                Properties.VolumeFreeSpacePercent = value.Value;
+            }
+        }
+
         /// <summary> Tier files older than days. </summary>
-        public int? TierFilesOlderThanDays { get; set; }
+        public int? TierFilesOlderThanDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TierFilesOlderThanDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointCreateParametersProperties();
+                }
+                Properties.TierFilesOlderThanDays = value.Value;
+            }
+        }
+
         /// <summary> Friendly Name. </summary>
-        public string FriendlyName { get; set; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointCreateParametersProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
         /// <summary> Server Resource Id. </summary>
-        public ResourceIdentifier ServerResourceId { get; set; }
+        public ResourceIdentifier ServerResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointCreateParametersProperties();
+                }
+                Properties.ServerResourceId = value;
+            }
+        }
+
         /// <summary> Offline data transfer. </summary>
-        public StorageSyncFeatureStatus? OfflineDataTransfer { get; set; }
+        public StorageSyncFeatureStatus? OfflineDataTransfer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OfflineDataTransfer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointCreateParametersProperties();
+                }
+                Properties.OfflineDataTransfer = value.Value;
+            }
+        }
+
         /// <summary> Offline data transfer share name. </summary>
-        public string OfflineDataTransferShareName { get; set; }
+        public string OfflineDataTransferShareName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OfflineDataTransferShareName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointCreateParametersProperties();
+                }
+                Properties.OfflineDataTransferShareName = value;
+            }
+        }
+
         /// <summary> Policy for how namespace and files are recalled during FastDr. </summary>
-        public InitialDownloadPolicy? InitialDownloadPolicy { get; set; }
+        public InitialDownloadPolicy? InitialDownloadPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InitialDownloadPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointCreateParametersProperties();
+                }
+                Properties.InitialDownloadPolicy = value.Value;
+            }
+        }
+
         /// <summary> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </summary>
-        public LocalCacheMode? LocalCacheMode { get; set; }
+        public LocalCacheMode? LocalCacheMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalCacheMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointCreateParametersProperties();
+                }
+                Properties.LocalCacheMode = value.Value;
+            }
+        }
+
         /// <summary> Policy for how the initial upload sync session is performed. </summary>
-        public InitialUploadPolicy? InitialUploadPolicy { get; set; }
+        public InitialUploadPolicy? InitialUploadPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InitialUploadPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointCreateParametersProperties();
+                }
+                Properties.InitialUploadPolicy = value.Value;
+            }
+        }
     }
 }

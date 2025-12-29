@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary> The ApprovalCallbackRequestApprovalStatus. </summary>
+    /// <summary></summary>
     public readonly partial struct PostActionCallbackApprovalStatus : IEquatable<PostActionCallbackApprovalStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostActionCallbackApprovalStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostActionCallbackApprovalStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Approved. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostActionCallbackApprovalStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostActionCallbackApprovalStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Approved. </summary>
         public static PostActionCallbackApprovalStatus Approved { get; } = new PostActionCallbackApprovalStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+
+        /// <summary> Gets the Rejected. </summary>
         public static PostActionCallbackApprovalStatus Rejected { get; } = new PostActionCallbackApprovalStatus(RejectedValue);
+
         /// <summary> Determines if two <see cref="PostActionCallbackApprovalStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostActionCallbackApprovalStatus left, PostActionCallbackApprovalStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostActionCallbackApprovalStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostActionCallbackApprovalStatus left, PostActionCallbackApprovalStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostActionCallbackApprovalStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostActionCallbackApprovalStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostActionCallbackApprovalStatus(string value) => new PostActionCallbackApprovalStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostActionCallbackApprovalStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostActionCallbackApprovalStatus?(string value) => value == null ? null : new PostActionCallbackApprovalStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostActionCallbackApprovalStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostActionCallbackApprovalStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

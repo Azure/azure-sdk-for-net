@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Istio components configuration. </summary>
+    /// <summary>
+    /// Istio components configuration.
+    /// Serialized Name: IstioComponents
+    /// </summary>
     public partial class IstioComponents
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IstioComponents"/>. </summary>
-        /// <param name="ingressGateways"> Istio ingress gateways. </param>
-        /// <param name="egressGateways"> Istio egress gateways. </param>
+        /// <param name="ingressGateways">
+        /// Istio ingress gateways.
+        /// Serialized Name: IstioComponents.ingressGateways
+        /// </param>
+        /// <param name="egressGateways">
+        /// Istio egress gateways.
+        /// Serialized Name: IstioComponents.egressGateways
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IstioComponents(IList<IstioIngressGateway> ingressGateways, IList<IstioEgressGateway> egressGateways, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,10 +72,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Istio ingress gateways. </summary>
+        /// <summary>
+        /// Istio ingress gateways.
+        /// Serialized Name: IstioComponents.ingressGateways
+        /// </summary>
         [WirePath("ingressGateways")]
         public IList<IstioIngressGateway> IngressGateways { get; }
-        /// <summary> Istio egress gateways. </summary>
+        /// <summary>
+        /// Istio egress gateways.
+        /// Serialized Name: IstioComponents.egressGateways
+        /// </summary>
         [WirePath("egressGateways")]
         public IList<IstioEgressGateway> EgressGateways { get; }
     }
