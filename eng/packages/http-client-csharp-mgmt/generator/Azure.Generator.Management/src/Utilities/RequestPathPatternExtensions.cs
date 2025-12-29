@@ -44,6 +44,8 @@ namespace Azure.Generator.Management.Utilities
             TypeProvider? enclosingType = null)
         {
             var arguments = new List<ValueExpression>();
+            var addedMatchConditions = false;
+
             // here we always assume that the parameter name matches the parameter name in the request path.
             foreach (var parameter in requestParameters)
             {
@@ -74,17 +76,37 @@ namespace Azure.Generator.Management.Utilities
                 {
                     arguments.Add(requestContext);
                 }
+                // Check if the REST method itself takes MatchConditions/RequestConditions
+                else if (parameter.Type.Name == nameof(MatchConditions) || parameter.Type.Name == nameof(RequestConditions))
+                {
+                    // Find the matching MatchConditions/RequestConditions parameter in method parameters
+                    var matchConditionsMethodParam = methodParameters.FirstOrDefault(p =>
+                        p.Type.Name == nameof(MatchConditions) || p.Type.Name == nameof(RequestConditions));
+                    if (matchConditionsMethodParam != null)
+                    {
+                        arguments.Add(matchConditionsMethodParam);
+                    }
+                    else
+                    {
+                        arguments.Add(Null);
+                    }
+                }
                 else
                 {
-                    var methodParam = methodParameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName);
+                    var methodParam = methodParameters.SingleOrDefault(p => p.WireInfo?.SerializedName == parameter.WireInfo?.SerializedName);
                     if (methodParam != null)
                     {
                         arguments.Add(Convert(methodParam, methodParam.Type, parameter.Type));
                     }
-                    else if (TryGetMatchConditionsArgument(parameter, methodParameters, out var matchConditionsArgument))
+                    else if (TryGetMatchConditionsArgument(parameter, methodParameters, addedMatchConditions, out var matchConditionsArgument, out var didAddMatchConditions))
                     {
                         // Handle unwrapping MatchConditions/RequestConditions to individual header parameters
-                        arguments.Add(matchConditionsArgument);
+                        // Only add the argument if we haven't already added MatchConditions for this group
+                        if (matchConditionsArgument != null)
+                        {
+                            arguments.Add(matchConditionsArgument);
+                        }
+                        addedMatchConditions = didAddMatchConditions;
                     }
                     else
                     {
@@ -125,39 +147,59 @@ namespace Azure.Generator.Management.Utilities
 
         /// <summary>
         /// Tries to get an argument expression for a conditional header parameter from a MatchConditions/RequestConditions parameter.
+        /// When the REST method has individual header params but the method signature has MatchConditions,
+        /// we need to pass the MatchConditions parameter directly (not unwrapped properties) because
+        /// the REST client method has been transformed by the MatchConditionsHeadersVisitor.
         /// </summary>
         /// <param name="requestParameter">The request parameter (e.g., ifMatch, ifNoneMatch).</param>
         /// <param name="methodParameters">The method parameters to search for MatchConditions/RequestConditions.</param>
-        /// <param name="argument">The output argument expression.</param>
-        /// <returns>True if the parameter was found and unwrapped; otherwise, false.</returns>
+        /// <param name="alreadyAddedMatchConditions">Whether we've already added the MatchConditions argument.</param>
+        /// <param name="argument">The output argument expression (null if this is a subsequent conditional header).</param>
+        /// <param name="didAddMatchConditions">Whether this call added the MatchConditions argument.</param>
+        /// <returns>True if the parameter is a conditional header; otherwise, false.</returns>
         private static bool TryGetMatchConditionsArgument(
             ParameterProvider requestParameter,
             IReadOnlyList<ParameterProvider> methodParameters,
-            out ValueExpression argument)
+            bool alreadyAddedMatchConditions,
+            out ValueExpression? argument,
+            out bool didAddMatchConditions)
         {
-            argument = Null;
+            argument = null;
+            didAddMatchConditions = false;
 
             // Check if the request parameter is a conditional header
-            var serializedName = requestParameter.WireInfo.SerializedName;
-            if (!_conditionalHeaderToPropertyName.TryGetValue(serializedName, out var propertyName))
+            // Try both SerializedName and Name as the key
+            var serializedName = requestParameter.WireInfo?.SerializedName ?? requestParameter.Name;
+            if (!_conditionalHeaderToPropertyName.TryGetValue(serializedName, out _))
             {
-                return false;
+                // Also try the parameter name directly
+                if (!_conditionalHeaderToPropertyName.TryGetValue(requestParameter.Name, out _))
+                {
+                    return false;
+                }
             }
 
-            // Find MatchConditions or RequestConditions parameter in method parameters
-            var matchConditionsParam = methodParameters.FirstOrDefault(p =>
-                p.Type.Equals(typeof(MatchConditions)) ||
-                p.Type.Equals(new CSharpType(typeof(MatchConditions), true)) ||
-                p.Type.Equals(typeof(RequestConditions)) ||
-                p.Type.Equals(new CSharpType(typeof(RequestConditions), true)));
-
-            if (matchConditionsParam == null)
+            // This is a conditional header parameter
+            // If we haven't added MatchConditions yet, add it now
+            if (!alreadyAddedMatchConditions)
             {
-                return false;
-            }
+                // Find MatchConditions or RequestConditions parameter in method parameters
+                var matchConditionsParam = methodParameters.FirstOrDefault(p =>
+                    p.Type.Name == nameof(MatchConditions) || p.Type.Name == nameof(RequestConditions));
 
-            // Generate: matchConditions?.IfMatch or matchConditions?.IfNoneMatch, etc.
-            argument = Snippet.NullConditional(matchConditionsParam).Property(propertyName);
+                if (matchConditionsParam != null)
+                {
+                    // Pass the MatchConditions parameter directly (not unwrapped)
+                    // because the REST client method expects MatchConditions, not individual headers
+                    argument = matchConditionsParam;
+                    didAddMatchConditions = true;
+                }
+                else
+                {
+                    argument = Null;
+                }
+            }
+            // If we've already added MatchConditions, skip this parameter (return true to indicate we handled it)
             return true;
         }
     }

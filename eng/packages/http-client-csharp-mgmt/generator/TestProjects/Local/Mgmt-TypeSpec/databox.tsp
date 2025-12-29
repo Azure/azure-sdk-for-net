@@ -54,6 +54,27 @@ interface JobResources {
       `If-Match`?: string;
     }
   >;
+
+  /**
+   * Creates or updates the specified job with MatchConditions (both If-Match and If-None-Match headers).
+   */
+  #suppress "@azure-tools/typespec-azure-resource-manager/arm-put-operation-response-codes" "FIXME: Update justification"
+  createOrUpdate is ArmResourceCreateOrUpdateAsync<
+    JobResource,
+    Parameters = {
+      /**
+       * Defines the If-Match condition. The operation will be performed only if the ETag of the resource on the server matches this value.
+       */
+      @header("If-Match")
+      `If-Match`?: string;
+
+      /**
+       * Defines the If-None-Match condition. The operation will be performed only if the ETag of the resource on the server does not match this value.
+       */
+      @header("If-None-Match")
+      `If-None-Match`?: string;
+    }
+  >;
 }
 
 model JobResourceUpdateParameter {
