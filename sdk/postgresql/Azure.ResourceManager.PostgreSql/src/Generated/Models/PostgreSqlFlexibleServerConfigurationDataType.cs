@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Data type of the configuration (also known as server parameter).
-    /// Serialized Name: ConfigurationDataType
-    /// </summary>
+    /// <summary> Data type of the configuration (also known as server parameter). </summary>
     public readonly partial struct PostgreSqlFlexibleServerConfigurationDataType : IEquatable<PostgreSqlFlexibleServerConfigurationDataType>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string StringValue = "String";
         private const string SetValue = "Set";
 
-        /// <summary>
-        /// Boolean
-        /// Serialized Name: ConfigurationDataType.Boolean
-        /// </summary>
+        /// <summary> Boolean. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Boolean { get; } = new PostgreSqlFlexibleServerConfigurationDataType(BooleanValue);
-        /// <summary>
-        /// Numeric
-        /// Serialized Name: ConfigurationDataType.Numeric
-        /// </summary>
+        /// <summary> Numeric. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Numeric { get; } = new PostgreSqlFlexibleServerConfigurationDataType(NumericValue);
-        /// <summary>
-        /// Integer
-        /// Serialized Name: ConfigurationDataType.Integer
-        /// </summary>
+        /// <summary> Integer. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Integer { get; } = new PostgreSqlFlexibleServerConfigurationDataType(IntegerValue);
-        /// <summary>
-        /// Enumeration
-        /// Serialized Name: ConfigurationDataType.Enumeration
-        /// </summary>
+        /// <summary> Enumeration. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Enumeration { get; } = new PostgreSqlFlexibleServerConfigurationDataType(EnumerationValue);
-        /// <summary>
-        /// String
-        /// Serialized Name: ConfigurationDataType.String
-        /// </summary>
+        /// <summary> String. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType String { get; } = new PostgreSqlFlexibleServerConfigurationDataType(StringValue);
-        /// <summary>
-        /// Set
-        /// Serialized Name: ConfigurationDataType.Set
-        /// </summary>
+        /// <summary> Set. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Set { get; } = new PostgreSqlFlexibleServerConfigurationDataType(SetValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerConfigurationDataType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerConfigurationDataType left, PostgreSqlFlexibleServerConfigurationDataType right) => left.Equals(right);

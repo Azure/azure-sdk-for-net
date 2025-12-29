@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Quota usage for servers
-    /// Serialized Name: QuotaUsage
-    /// </summary>
+    /// <summary> Quota usage for servers. </summary>
     public partial class QuotaUsage
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaUsage"/>. </summary>
-        /// <param name="name">
-        /// Name of quota usage for servers
-        /// Serialized Name: QuotaUsage.name
-        /// </param>
-        /// <param name="limit">
-        /// Quota limit
-        /// Serialized Name: QuotaUsage.limit
-        /// </param>
-        /// <param name="unit">
-        /// Quota unit
-        /// Serialized Name: QuotaUsage.unit
-        /// </param>
-        /// <param name="currentValue">
-        /// Current Quota usage value
-        /// Serialized Name: QuotaUsage.currentValue
-        /// </param>
-        /// <param name="id">
-        /// Fully qualified ARM resource Id
-        /// Serialized Name: QuotaUsage.id
-        /// </param>
+        /// <param name="name"> Name of quota usage for servers. </param>
+        /// <param name="limit"> Quota limit. </param>
+        /// <param name="unit"> Quota unit. </param>
+        /// <param name="currentValue"> Current Quota usage value. </param>
+        /// <param name="id"> Fully qualified ARM resource Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QuotaUsage(NameProperty name, long? limit, string unit, long? currentValue, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,34 +67,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of quota usage for servers
-        /// Serialized Name: QuotaUsage.name
-        /// </summary>
+        /// <summary> Name of quota usage for servers. </summary>
         [WirePath("name")]
         public NameProperty Name { get; }
-        /// <summary>
-        /// Quota limit
-        /// Serialized Name: QuotaUsage.limit
-        /// </summary>
+        /// <summary> Quota limit. </summary>
         [WirePath("limit")]
         public long? Limit { get; }
-        /// <summary>
-        /// Quota unit
-        /// Serialized Name: QuotaUsage.unit
-        /// </summary>
+        /// <summary> Quota unit. </summary>
         [WirePath("unit")]
         public string Unit { get; }
-        /// <summary>
-        /// Current Quota usage value
-        /// Serialized Name: QuotaUsage.currentValue
-        /// </summary>
+        /// <summary> Current Quota usage value. </summary>
         [WirePath("currentValue")]
         public long? CurrentValue { get; }
-        /// <summary>
-        /// Fully qualified ARM resource Id
-        /// Serialized Name: QuotaUsage.id
-        /// </summary>
+        /// <summary> Fully qualified ARM resource Id. </summary>
         [WirePath("id")]
         public string Id { get; }
     }

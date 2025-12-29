@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Indicates if this location is restricted. 'Enabled' means location is restricted. 'Disabled' stands for location is not restricted. Will be deprecated in the future. Look to Supported Features for 'Restricted'.
-    /// Serialized Name: LocationRestricted
-    /// </summary>
+    /// <summary> Indicates if this location is restricted. 'Enabled' means location is restricted. 'Disabled' stands for location is not restricted. Will be deprecated in the future. Look to Supported Features for 'Restricted'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerZoneRedundantRestricted : IEquatable<PostgreSqlFlexibleServerZoneRedundantRestricted>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: LocationRestricted.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantRestricted Enabled { get; } = new PostgreSqlFlexibleServerZoneRedundantRestricted(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: LocationRestricted.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantRestricted Disabled { get; } = new PostgreSqlFlexibleServerZoneRedundantRestricted(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerZoneRedundantRestricted left, PostgreSqlFlexibleServerZoneRedundantRestricted right) => left.Equals(right);

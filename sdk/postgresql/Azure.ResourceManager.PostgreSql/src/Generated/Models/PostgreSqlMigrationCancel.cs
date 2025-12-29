@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Indicates if cancel must be triggered for the entire migration.
-    /// Serialized Name: Cancel
-    /// </summary>
+    /// <summary> Indicates if cancel must be triggered for the entire migration. </summary>
     public readonly partial struct PostgreSqlMigrationCancel : IEquatable<PostgreSqlMigrationCancel>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary>
-        /// True
-        /// Serialized Name: Cancel.True
-        /// </summary>
+        /// <summary> True. </summary>
         public static PostgreSqlMigrationCancel True { get; } = new PostgreSqlMigrationCancel(TrueValue);
-        /// <summary>
-        /// False
-        /// Serialized Name: Cancel.False
-        /// </summary>
+        /// <summary> False. </summary>
         public static PostgreSqlMigrationCancel False { get; } = new PostgreSqlMigrationCancel(FalseValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationCancel"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationCancel left, PostgreSqlMigrationCancel right) => left.Equals(right);

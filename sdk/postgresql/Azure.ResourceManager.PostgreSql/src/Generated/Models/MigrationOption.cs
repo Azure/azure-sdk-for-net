@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Supported option for a migration
-    /// Serialized Name: MigrationOption
-    /// </summary>
+    /// <summary> Supported option for a migration. </summary>
     public readonly partial struct MigrationOption : IEquatable<MigrationOption>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string MigrateValue = "Migrate";
         private const string ValidateAndMigrateValue = "ValidateAndMigrate";
 
-        /// <summary>
-        /// Validate
-        /// Serialized Name: MigrationOption.Validate
-        /// </summary>
+        /// <summary> Validate. </summary>
         public static MigrationOption Validate { get; } = new MigrationOption(ValidateValue);
-        /// <summary>
-        /// Migrate
-        /// Serialized Name: MigrationOption.Migrate
-        /// </summary>
+        /// <summary> Migrate. </summary>
         public static MigrationOption Migrate { get; } = new MigrationOption(MigrateValue);
-        /// <summary>
-        /// ValidateAndMigrate
-        /// Serialized Name: MigrationOption.ValidateAndMigrate
-        /// </summary>
+        /// <summary> ValidateAndMigrate. </summary>
         public static MigrationOption ValidateAndMigrate { get; } = new MigrationOption(ValidateAndMigrateValue);
         /// <summary> Determines if two <see cref="MigrationOption"/> values are the same. </summary>
         public static bool operator ==(MigrationOption left, MigrationOption right) => left.Equals(right);

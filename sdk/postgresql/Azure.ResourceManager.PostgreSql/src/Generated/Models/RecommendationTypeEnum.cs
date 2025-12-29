@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Type for this recommendation.
-    /// Serialized Name: RecommendationTypeEnum
-    /// </summary>
+    /// <summary> Type for this recommendation. </summary>
     public readonly partial struct RecommendationTypeEnum : IEquatable<RecommendationTypeEnum>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ReIndexValue = "ReIndex";
         private const string AnalyzeTableValue = "AnalyzeTable";
 
-        /// <summary>
-        /// CreateIndex
-        /// Serialized Name: RecommendationTypeEnum.CreateIndex
-        /// </summary>
+        /// <summary> CreateIndex. </summary>
         public static RecommendationTypeEnum CreateIndex { get; } = new RecommendationTypeEnum(CreateIndexValue);
-        /// <summary>
-        /// DropIndex
-        /// Serialized Name: RecommendationTypeEnum.DropIndex
-        /// </summary>
+        /// <summary> DropIndex. </summary>
         public static RecommendationTypeEnum DropIndex { get; } = new RecommendationTypeEnum(DropIndexValue);
-        /// <summary>
-        /// ReIndex
-        /// Serialized Name: RecommendationTypeEnum.ReIndex
-        /// </summary>
+        /// <summary> ReIndex. </summary>
         public static RecommendationTypeEnum ReIndex { get; } = new RecommendationTypeEnum(ReIndexValue);
-        /// <summary>
-        /// AnalyzeTable
-        /// Serialized Name: RecommendationTypeEnum.AnalyzeTable
-        /// </summary>
+        /// <summary> AnalyzeTable. </summary>
         public static RecommendationTypeEnum AnalyzeTable { get; } = new RecommendationTypeEnum(AnalyzeTableValue);
         /// <summary> Determines if two <see cref="RecommendationTypeEnum"/> values are the same. </summary>
         public static bool operator ==(RecommendationTypeEnum left, RecommendationTypeEnum right) => left.Equals(right);

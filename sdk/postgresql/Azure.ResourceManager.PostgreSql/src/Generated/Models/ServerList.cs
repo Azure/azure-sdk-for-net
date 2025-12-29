@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// A list of servers.
-    /// Serialized Name: ServerList
-    /// </summary>
+    /// <summary> A list of servers. </summary>
     internal partial class ServerList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServerList"/>. </summary>
-        /// <param name="value">
-        /// The Server items on this page
-        /// Serialized Name: ServerList.value
-        /// </param>
+        /// <param name="value"> The Server items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ServerList(IEnumerable<PostgreSqlFlexibleServerData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerList"/>. </summary>
-        /// <param name="value">
-        /// The Server items on this page
-        /// Serialized Name: ServerList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: ServerList.nextLink
-        /// </param>
+        /// <param name="value"> The Server items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServerList(IReadOnlyList<PostgreSqlFlexibleServerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary>
-        /// The Server items on this page
-        /// Serialized Name: ServerList.value
-        /// </summary>
+        /// <summary> The Server items on this page. </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: ServerList.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary>
     /// A class representing the TuningOption data model.
     /// Impact on some metric if this recommended action is applied.
-    /// Serialized Name: TuningOptions
     /// </summary>
     public partial class TuningOptionData : ResourceData
     {

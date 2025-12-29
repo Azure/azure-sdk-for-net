@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Response for the LTR pre-backup API call
-    /// Serialized Name: LtrPreBackupResponse
-    /// </summary>
+    /// <summary> Response for the LTR pre-backup API call. </summary>
     public partial class PostgreSqlFlexibleServerLtrPreBackupResult
     {
         /// <summary>
@@ -49,20 +46,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupResult"/>. </summary>
-        /// <param name="numberOfContainers">
-        /// Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc.
-        /// Serialized Name: LtrPreBackupResponse.properties.numberOfContainers
-        /// </param>
+        /// <param name="numberOfContainers"> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </param>
         internal PostgreSqlFlexibleServerLtrPreBackupResult(int numberOfContainers)
         {
             NumberOfContainers = numberOfContainers;
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupResult"/>. </summary>
-        /// <param name="numberOfContainers">
-        /// Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc.
-        /// Serialized Name: LtrPreBackupResponse.properties.numberOfContainers
-        /// </param>
+        /// <param name="numberOfContainers"> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerLtrPreBackupResult(int numberOfContainers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,10 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary>
-        /// Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc.
-        /// Serialized Name: LtrPreBackupResponse.properties.numberOfContainers
-        /// </summary>
+        /// <summary> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </summary>
         [WirePath("properties.numberOfContainers")]
         public int NumberOfContainers { get; }
     }

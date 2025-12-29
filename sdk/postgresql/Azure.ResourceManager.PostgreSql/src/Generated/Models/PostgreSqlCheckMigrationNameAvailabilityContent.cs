@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Availability of a migration name.
-    /// Serialized Name: MigrationNameAvailability
-    /// </summary>
+    /// <summary> Availability of a migration name. </summary>
     public partial class PostgreSqlCheckMigrationNameAvailabilityContent
     {
         /// <summary>
@@ -50,14 +47,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlCheckMigrationNameAvailabilityContent"/>. </summary>
-        /// <param name="name">
-        /// Name of the migration to check for validity and availability.
-        /// Serialized Name: MigrationNameAvailability.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Type of resource.
-        /// Serialized Name: MigrationNameAvailability.type
-        /// </param>
+        /// <param name="name"> Name of the migration to check for validity and availability. </param>
+        /// <param name="resourceType"> Type of resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PostgreSqlCheckMigrationNameAvailabilityContent(string name, ResourceType resourceType)
         {
@@ -68,26 +59,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlCheckMigrationNameAvailabilityContent"/>. </summary>
-        /// <param name="name">
-        /// Name of the migration to check for validity and availability.
-        /// Serialized Name: MigrationNameAvailability.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Type of resource.
-        /// Serialized Name: MigrationNameAvailability.type
-        /// </param>
-        /// <param name="isNameAvailable">
-        /// Indicates if the migration name is available.
-        /// Serialized Name: MigrationNameAvailability.nameAvailable
-        /// </param>
-        /// <param name="reason">
-        /// Migration name availability reason.
-        /// Serialized Name: MigrationNameAvailability.reason
-        /// </param>
-        /// <param name="message">
-        /// Migration name availability message.
-        /// Serialized Name: MigrationNameAvailability.message
-        /// </param>
+        /// <param name="name"> Name of the migration to check for validity and availability. </param>
+        /// <param name="resourceType"> Type of resource. </param>
+        /// <param name="isNameAvailable"> Indicates if the migration name is available. </param>
+        /// <param name="reason"> Migration name availability reason. </param>
+        /// <param name="message"> Migration name availability message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlCheckMigrationNameAvailabilityContent(string name, ResourceType resourceType, bool? isNameAvailable, PostgreSqlMigrationNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -104,34 +80,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary>
-        /// Name of the migration to check for validity and availability.
-        /// Serialized Name: MigrationNameAvailability.name
-        /// </summary>
+        /// <summary> Name of the migration to check for validity and availability. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Type of resource.
-        /// Serialized Name: MigrationNameAvailability.type
-        /// </summary>
+        /// <summary> Type of resource. </summary>
         [WirePath("type")]
         public ResourceType ResourceType { get; set; }
-        /// <summary>
-        /// Indicates if the migration name is available.
-        /// Serialized Name: MigrationNameAvailability.nameAvailable
-        /// </summary>
+        /// <summary> Indicates if the migration name is available. </summary>
         [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
-        /// <summary>
-        /// Migration name availability reason.
-        /// Serialized Name: MigrationNameAvailability.reason
-        /// </summary>
+        /// <summary> Migration name availability reason. </summary>
         [WirePath("reason")]
         public PostgreSqlMigrationNameUnavailableReason? Reason { get; }
-        /// <summary>
-        /// Migration name availability message.
-        /// Serialized Name: MigrationNameAvailability.message
-        /// </summary>
+        /// <summary> Migration name availability message. </summary>
         [WirePath("message")]
         public string Message { get; }
     }

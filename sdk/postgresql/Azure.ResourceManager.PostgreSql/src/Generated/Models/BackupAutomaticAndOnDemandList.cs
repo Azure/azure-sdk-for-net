@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// List of backups.
-    /// Serialized Name: BackupAutomaticAndOnDemandList
-    /// </summary>
+    /// <summary> List of backups. </summary>
     internal partial class BackupAutomaticAndOnDemandList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackupAutomaticAndOnDemandList"/>. </summary>
-        /// <param name="value">
-        /// The BackupAutomaticAndOnDemand items on this page
-        /// Serialized Name: BackupAutomaticAndOnDemandList.value
-        /// </param>
+        /// <param name="value"> The BackupAutomaticAndOnDemand items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal BackupAutomaticAndOnDemandList(IEnumerable<PostgreSqlFlexibleServerBackupData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupAutomaticAndOnDemandList"/>. </summary>
-        /// <param name="value">
-        /// The BackupAutomaticAndOnDemand items on this page
-        /// Serialized Name: BackupAutomaticAndOnDemandList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: BackupAutomaticAndOnDemandList.nextLink
-        /// </param>
+        /// <param name="value"> The BackupAutomaticAndOnDemand items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackupAutomaticAndOnDemandList(IReadOnlyList<PostgreSqlFlexibleServerBackupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary>
-        /// The BackupAutomaticAndOnDemand items on this page
-        /// Serialized Name: BackupAutomaticAndOnDemandList.value
-        /// </summary>
+        /// <summary> The BackupAutomaticAndOnDemand items on this page. </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerBackupData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: BackupAutomaticAndOnDemandList.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

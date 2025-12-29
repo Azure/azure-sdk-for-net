@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Capabilities in terms of storage tier.
-    /// Serialized Name: StorageEditionCapability
-    /// </summary>
+    /// <summary> Capabilities in terms of storage tier. </summary>
     public partial class PostgreSqlFlexibleServerStorageEditionCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
@@ -23,27 +20,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
-        /// <param name="capabilityStatus">
-        /// The status of the capability.
-        /// Serialized Name: CapabilityBase.status
-        /// </param>
-        /// <param name="reason">
-        /// The reason for the capability not being available.
-        /// Serialized Name: CapabilityBase.reason
-        /// </param>
+        /// <param name="capabilityStatus"> The status of the capability. </param>
+        /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name">
-        /// Name of storage tier.
-        /// Serialized Name: StorageEditionCapability.name
-        /// </param>
-        /// <param name="defaultStorageSizeMb">
-        /// Default storage size (in MB) for this storage tier.
-        /// Serialized Name: StorageEditionCapability.defaultStorageSizeMb
-        /// </param>
-        /// <param name="supportedStorageCapabilities">
-        /// Configurations of storage supported for this storage tier.
-        /// Serialized Name: StorageEditionCapability.supportedStorageMb
-        /// </param>
+        /// <param name="name"> Name of storage tier. </param>
+        /// <param name="defaultStorageSizeMb"> Default storage size (in MB) for this storage tier. </param>
+        /// <param name="supportedStorageCapabilities"> Configurations of storage supported for this storage tier. </param>
         internal PostgreSqlFlexibleServerStorageEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, long? defaultStorageSizeMb, IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             Name = name;
@@ -51,22 +33,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             SupportedStorageCapabilities = supportedStorageCapabilities;
         }
 
-        /// <summary>
-        /// Name of storage tier.
-        /// Serialized Name: StorageEditionCapability.name
-        /// </summary>
+        /// <summary> Name of storage tier. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Default storage size (in MB) for this storage tier.
-        /// Serialized Name: StorageEditionCapability.defaultStorageSizeMb
-        /// </summary>
+        /// <summary> Default storage size (in MB) for this storage tier. </summary>
         [WirePath("defaultStorageSizeMb")]
         public long? DefaultStorageSizeMb { get; }
-        /// <summary>
-        /// Configurations of storage supported for this storage tier.
-        /// Serialized Name: StorageEditionCapability.supportedStorageMb
-        /// </summary>
+        /// <summary> Configurations of storage supported for this storage tier. </summary>
         [WirePath("supportedStorageMb")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> SupportedStorageCapabilities { get; }
     }
