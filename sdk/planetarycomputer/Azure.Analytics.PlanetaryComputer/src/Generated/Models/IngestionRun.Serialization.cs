@@ -147,7 +147,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    sourceCatalogUrl = new Uri(prop.Value.GetString());
+                    sourceCatalogUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("skipExistingItems"u8))

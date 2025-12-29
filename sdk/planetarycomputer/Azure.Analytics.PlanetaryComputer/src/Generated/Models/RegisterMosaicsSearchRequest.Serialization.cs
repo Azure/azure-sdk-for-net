@@ -74,7 +74,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("intersects"u8);
                 writer.WriteObjectValue(Intersects, options);
             }
-            if (Optional.IsCollectionDefined(Query) && Query != null)
+            if (Optional.IsCollectionDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStartObject();
@@ -97,7 +97,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Filter) && Filter != null)
+            if (Optional.IsCollectionDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStartObject();

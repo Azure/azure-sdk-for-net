@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
 
@@ -13,9 +14,11 @@ namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AgentList))]
+    [ModelReaderWriterBuildable(typeof(AgentProperties))]
+    [ModelReaderWriterBuildable(typeof(AgentUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(AzureKeyVaultSmbCredentials))]
     [ModelReaderWriterBuildable(typeof(AzureMultiCloudConnectorEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(AzureMultiCloudConnectorEndpointUpdateProperties))]
@@ -25,23 +28,30 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(AzureStorageNfsFileShareEndpointUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(AzureStorageSmbFileShareEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(AzureStorageSmbFileShareEndpointUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ConnectionList))]
     [ModelReaderWriterBuildable(typeof(EndpointBaseProperties))]
     [ModelReaderWriterBuildable(typeof(EndpointBaseUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(EndpointList))]
     [ModelReaderWriterBuildable(typeof(JobDefinitionData))]
     [ModelReaderWriterBuildable(typeof(JobDefinitionList))]
     [ModelReaderWriterBuildable(typeof(JobDefinitionPatch))]
+    [ModelReaderWriterBuildable(typeof(JobDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(JobDefinitionPropertiesSourceTargetMap))]
     [ModelReaderWriterBuildable(typeof(JobDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(JobDefinitionUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(JobRunData))]
     [ModelReaderWriterBuildable(typeof(JobRunError))]
     [ModelReaderWriterBuildable(typeof(JobRunList))]
+    [ModelReaderWriterBuildable(typeof(JobRunProperties))]
     [ModelReaderWriterBuildable(typeof(JobRunResource))]
     [ModelReaderWriterBuildable(typeof(JobRunResourceId))]
+    [ModelReaderWriterBuildable(typeof(JobRunWarning))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NfsMountEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(NfsMountEndpointUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ProjectList))]
+    [ModelReaderWriterBuildable(typeof(ProjectProperties))]
+    [ModelReaderWriterBuildable(typeof(ProjectUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScheduleRecurrence))]
     [ModelReaderWriterBuildable(typeof(ScheduleTime))]
@@ -55,6 +65,9 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(StorageMoverAgentPatch))]
     [ModelReaderWriterBuildable(typeof(StorageMoverAgentPropertiesErrorDetails))]
     [ModelReaderWriterBuildable(typeof(StorageMoverAgentResource))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverConnectionData))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverConnectionResource))]
     [ModelReaderWriterBuildable(typeof(StorageMoverCredentials))]
     [ModelReaderWriterBuildable(typeof(StorageMoverData))]
     [ModelReaderWriterBuildable(typeof(StorageMoverEndpointData))]
@@ -65,7 +78,9 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(StorageMoverProjectData))]
     [ModelReaderWriterBuildable(typeof(StorageMoverProjectPatch))]
     [ModelReaderWriterBuildable(typeof(StorageMoverProjectResource))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverProperties))]
     [ModelReaderWriterBuildable(typeof(StorageMoverResource))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetEndpoint))]
     [ModelReaderWriterBuildable(typeof(TargetEndpointProperties))]

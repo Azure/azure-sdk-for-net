@@ -6,6 +6,5 @@
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>azure;management;arm;resource manager;mongodbatlas</PackageTags>
     <PackageId>Azure.ResourceManager.MongoDBAtlas</PackageId>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

@@ -244,7 +244,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    wellKnownScaleSet = new Uri(prop.Value.GetString());
+                    wellKnownScaleSet = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("boundingBox"u8))

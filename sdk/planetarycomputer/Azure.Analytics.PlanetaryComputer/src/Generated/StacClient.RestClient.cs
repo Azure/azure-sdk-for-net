@@ -671,12 +671,20 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateSearchRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateSearchRequest(RequestContent content, string sign, int? durationInMinutes, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/search", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (sign != null)
+            {
+                uri.AppendQuery("sign", sign, true);
+            }
+            if (durationInMinutes != null)
+            {
+                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

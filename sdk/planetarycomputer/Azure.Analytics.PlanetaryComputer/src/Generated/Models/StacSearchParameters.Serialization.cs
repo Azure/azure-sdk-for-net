@@ -116,16 +116,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sign))
-            {
-                writer.WritePropertyName("sign"u8);
-                writer.WriteStringValue(Sign.Value.ToString());
-            }
-            if (Optional.IsDefined(DurationInMinutes))
-            {
-                writer.WritePropertyName("duration"u8);
-                writer.WriteNumberValue(DurationInMinutes.Value);
-            }
             if (Optional.IsCollectionDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
@@ -256,8 +246,6 @@ namespace Azure.Analytics.PlanetaryComputer
             string datetime = default;
             int? limit = default;
             IDictionary<string, BinaryData> conformanceClass = default;
-            StacAssetUrlSigningMode? sign = default;
-            int? durationInMinutes = default;
             IDictionary<string, BinaryData> query = default;
             IList<StacSortExtension> sortBy = default;
             IList<SearchOptionsFields> fields = default;
@@ -368,24 +356,6 @@ namespace Azure.Analytics.PlanetaryComputer
                     conformanceClass = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("sign"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sign = new StacAssetUrlSigningMode(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("duration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    durationInMinutes = prop.Value.GetInt32();
-                    continue;
-                }
                 if (prop.NameEquals("query"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -488,8 +458,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 datetime,
                 limit,
                 conformanceClass ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                sign,
-                durationInMinutes,
                 query ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 sortBy ?? new ChangeTrackingList<StacSortExtension>(),
                 fields ?? new ChangeTrackingList<SearchOptionsFields>(),

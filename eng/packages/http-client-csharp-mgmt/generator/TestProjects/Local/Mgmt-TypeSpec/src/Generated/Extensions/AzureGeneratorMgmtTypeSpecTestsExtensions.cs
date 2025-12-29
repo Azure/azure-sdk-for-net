@@ -600,6 +600,44 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// CheckNameAvailability
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailabilityAsync(ResourceIdentifier, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityRequest content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).CheckNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// CheckNameAvailability
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailability(ResourceIdentifier, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response<CheckNameAvailabilityResponse> CheckNameAvailability(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityRequest content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).CheckNameAvailability(scope, content, cancellationToken);
+        }
+
+        /// <summary>
         /// List ScheduledActionResources resources by parent
         /// <item>
         /// <term> Mocking. </term>
