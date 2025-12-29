@@ -54,12 +54,6 @@ options:
     use-legacy-resource-detection: false
 ```
 
-**Testing:**
-
-- No dedicated test file needed - feature flag behavior is validated through the production code path
-- Existing tests in `resource-detection.test.ts` (9 tests) and `non-resource-methods.test.ts` (7 tests) already validate equivalence between implementations
-- All 98 tests pass (71 .NET + 27 TypeScript), confirming backward compatibility
-
 ### Step 3: Enable Flag in Test Projects (Next)
 
 - Enable the `use-legacy-resource-detection: false` flag in our internal test projects
@@ -128,57 +122,6 @@ interface ResourceMetadata {
   resourceName: string;
 }
 ```
-
-## Testing Strategy
-
-The test suite validates that the converter produces results consistent with the current `buildArmProviderSchema` implementation. Tests are integrated into existing test files for better maintainability:
-
-### Resource Detection Tests (`resource-detection.test.ts`)
-9 test cases covering:
-
-1. Resource group resources - Basic tracked resources with CRUD operations
-2. Singleton resources - Resources with fixed names using @singleton decorator
-3. Resources with grandparents - Multi-level parent-child hierarchies under different scopes
-4. Scope detection - Resources with scope determined from Read method
-5. Parent-child with list operations - List operation resource scope handling
-6. ManagementGroup scope - Resources scoped to management groups
-7. Action-only interfaces - Resources with only action operations, no CRUD
-
-### Non-Resource Methods Tests (`non-resource-methods.test.ts`)
-7 test cases covering:
-
-1. Subscription scope operations - Non-resource methods at subscription level
-2. Tenant scope operations - Non-resource methods at tenant level
-3. Mixed scenarios - Resources and non-resource methods in same spec
-4. Complex operation paths - Nested path segments and parameters
-5. Query parameters - Methods with query string parameters
-6. Location parameters - ARM provider actions with location parameters
-
-## Test Results
-
-**All 27 tests pass successfully** ✓
-
-The comprehensive test coverage validates that `resolveArmResources` produces identical results to `buildArmProviderSchema` across:
-- Various resource scopes (ResourceGroup, Subscription, Tenant, ManagementGroup)
-- Different resource patterns (singleton, hierarchical, parent-child)
-- Both resource operations and non-resource methods
-- Complex operation paths with parameters
-- Action-only resources
-- Mixed resource and non-resource method scenarios
-
-This confirms the converter is production-ready and has been successfully integrated via feature flag.
-
-## Files
-
-- `src/resolve-arm-resources-converter.ts` - The wrapper and conversion function
-- `src/options.ts` - Emitter options including the `use-legacy-resource-detection` feature flag
-- `src/emitter.ts` - Main emitter entry point that passes options to `updateClients`
-- `src/resource-detection.ts` - Current implementation with feature flag support
-- `src/resource-metadata.ts` - Shared data structures
-- `test/resource-detection.test.ts` - Resource detection validation tests (9 tests)
-- `test/non-resource-methods.test.ts` - Non-resource methods validation tests (7 tests)
-- `test/resource-type.test.ts` - Resource type validation tests (11 tests)
-- `test/test-util.ts` - Shared test utilities including `normalizeSchemaForComparison`
 
 ## Next Steps
 
