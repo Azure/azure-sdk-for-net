@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     [PersistableModelProxy(typeof(UnknownDevOpsOrganizationProfile))]
     public abstract partial class DevOpsOrganizationProfile : IJsonModel<DevOpsOrganizationProfile>
     {
+        /// <summary> Initializes a new instance of <see cref="DevOpsOrganizationProfile"/> for deserialization. </summary>
+        internal DevOpsOrganizationProfile()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevOpsOrganizationProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

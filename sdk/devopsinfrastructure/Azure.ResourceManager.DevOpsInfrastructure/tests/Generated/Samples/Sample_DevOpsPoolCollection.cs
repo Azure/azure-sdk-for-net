@@ -65,8 +65,9 @@ EphemeralType = DevOpsEphemeralType.Automatic,
                         CertificateStoreName = CertificateStoreNameOption.Root,
                     },
                 },
-                NetworkProfile = new DevOpsNetworkProfile("/subscriptions/a2e95d27-c161-4b61-bda4-11512c14c2c2/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet")
+                NetworkProfile = new DevOpsNetworkProfile()
                 {
+                    SubnetId = "/subscriptions/a2e95d27-c161-4b61-bda4-11512c14c2c2/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet",
                     StaticIPAddressCount = 2,
                 },
             }, "/subscriptions/222e81d0-cf38-4dab-baa5-289bf16baaa4/resourceGroups/rg-1es-devcenter/providers/Microsoft.DevCenter/projects/1ES")

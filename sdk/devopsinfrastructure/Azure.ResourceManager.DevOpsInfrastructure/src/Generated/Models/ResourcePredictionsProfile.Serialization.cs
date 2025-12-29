@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     [PersistableModelProxy(typeof(UnknownResourcePredictionsProfile))]
     public abstract partial class ResourcePredictionsProfile : IJsonModel<ResourcePredictionsProfile>
     {
+        /// <summary> Initializes a new instance of <see cref="ResourcePredictionsProfile"/> for deserialization. </summary>
+        internal ResourcePredictionsProfile()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourcePredictionsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
