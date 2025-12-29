@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { EmitContext } from "@typespec/compiler";
+import { Diagnostic, EmitContext, Program } from "@typespec/compiler";
 
 import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
 
@@ -14,7 +14,16 @@ import { updateClients } from "./resource-detection.js";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 import { AzureMgmtEmitterOptions } from "./options.js";
 
+// Diagnostic codes to suppress as they are not meaningful for management plane generation
+const SUPPRESSED_DIAGNOSTICS = [
+  "@azure-tools/typespec-client-generator-core/unsupported-generic-decorator-arg-type",
+  "@typespec/http-client-csharp/unsupported-patch-convenience-method"
+];
+
 export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
+  // Filter out meaningless upstream diagnostics by overriding the diagnostics property
+  filterProgramDiagnostics(context.program);
+
   context.options["generator-name"] ??= "ManagementClientGenerator";
   context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
@@ -30,6 +39,27 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
     setFlattenProperty(codeModel, sdkContext);
     return codeModel;
   }
+}
+
+/**
+ * Filters out suppressed diagnostics from the program by replacing the diagnostics property.
+ * This allows us to hide meaningless upstream diagnostic warnings that don't affect
+ * management plane code generation.
+ */
+function filterProgramDiagnostics(program: Program): void {
+  const originalDiagnostics = program.diagnostics;
+  const filteredDiagnostics = originalDiagnostics.filter(
+    (d: Diagnostic) => !SUPPRESSED_DIAGNOSTICS.includes(d.code)
+  );
+
+  // Replace the readonly diagnostics property with a filtered version
+  Object.defineProperty(program, "diagnostics", {
+    get() {
+      return filteredDiagnostics;
+    },
+    enumerable: true,
+    configurable: true
+  });
 }
 
 function setFlattenProperty(
