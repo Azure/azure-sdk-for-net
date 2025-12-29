@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public readonly partial struct ContainerServiceFleetGateState : IEquatable<ContainerServiceFleetGateState>
     {
         private readonly string _value;
+        /// <summary> A Pending Gate will continue to block the staged rollout process it is controlling. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> A Skipped Gate means that the staged rollout process it is controlling was skipped. </summary>
+        private const string SkippedValue = "Skipped";
+        /// <summary> An Completed Gate allows the staged rollout process to continue. </summary>
+        private const string CompletedValue = "Completed";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceFleetGateState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string SkippedValue = "Skipped";
-        private const string CompletedValue = "Completed";
+            _value = value;
+        }
 
         /// <summary> A Pending Gate will continue to block the staged rollout process it is controlling. </summary>
         public static ContainerServiceFleetGateState Pending { get; } = new ContainerServiceFleetGateState(PendingValue);
+
         /// <summary> A Skipped Gate means that the staged rollout process it is controlling was skipped. </summary>
         public static ContainerServiceFleetGateState Skipped { get; } = new ContainerServiceFleetGateState(SkippedValue);
+
         /// <summary> An Completed Gate allows the staged rollout process to continue. </summary>
         public static ContainerServiceFleetGateState Completed { get; } = new ContainerServiceFleetGateState(CompletedValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetGateState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceFleetGateState left, ContainerServiceFleetGateState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetGateState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceFleetGateState left, ContainerServiceFleetGateState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceFleetGateState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetGateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceFleetGateState(string value) => new ContainerServiceFleetGateState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetGateState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceFleetGateState?(string value) => value == null ? null : new ContainerServiceFleetGateState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceFleetGateState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceFleetGateState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

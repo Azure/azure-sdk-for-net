@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The status of a UpdateGroup. </summary>
     public partial class ContainerServiceFleetUpdateGroupStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroupStatus"/>. </summary>
         internal ContainerServiceFleetUpdateGroupStatus()
@@ -59,25 +31,29 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="members"> The list of member this UpdateGroup updates. </param>
         /// <param name="beforeGates"> The list of Gates that will run before this UpdateGroup. </param>
         /// <param name="afterGates"> The list of Gates that will run after this UpdateGroup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<MemberUpdateStatus> members, IReadOnlyList<UpdateRunGateStatus> beforeGates, IReadOnlyList<UpdateRunGateStatus> afterGates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<MemberUpdateStatus> members, IReadOnlyList<UpdateRunGateStatus> beforeGates, IReadOnlyList<UpdateRunGateStatus> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Name = name;
             Members = members;
             BeforeGates = beforeGates;
             AfterGates = afterGates;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the UpdateGroup. </summary>
         public ContainerServiceFleetUpdateStatus Status { get; }
+
         /// <summary> The name of the UpdateGroup. </summary>
         public string Name { get; }
+
         /// <summary> The list of member this UpdateGroup updates. </summary>
         public IReadOnlyList<MemberUpdateStatus> Members { get; }
+
         /// <summary> The list of Gates that will run before this UpdateGroup. </summary>
         public IReadOnlyList<UpdateRunGateStatus> BeforeGates { get; }
+
         /// <summary> The list of Gates that will run after this UpdateGroup. </summary>
         public IReadOnlyList<UpdateRunGateStatus> AfterGates { get; }
     }

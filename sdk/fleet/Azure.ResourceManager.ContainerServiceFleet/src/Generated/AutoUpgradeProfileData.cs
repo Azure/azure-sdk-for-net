@@ -7,49 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    /// <summary>
-    /// A class representing the AutoUpgradeProfile data model.
-    /// The AutoUpgradeProfile resource.
-    /// </summary>
+    /// <summary> The AutoUpgradeProfile resource. </summary>
     public partial class AutoUpgradeProfileData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileData"/>. </summary>
         public AutoUpgradeProfileData()
@@ -57,67 +26,49 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="provisioningState"> The provisioning state of the AutoUpgradeProfile resource. </param>
-        /// <param name="updateStrategyId"> The resource id of the UpdateStrategy resource to reference. If not specified, the auto upgrade will run on all clusters which are members of the fleet. </param>
-        /// <param name="channel"> Configures how auto-upgrade will be run. </param>
-        /// <param name="nodeImageSelection"> The node image upgrade to be applied to the target clusters in auto upgrade. </param>
-        /// <param name="disabled">
-        /// If set to False: the auto upgrade has effect - target managed clusters will be upgraded on schedule.
-        /// If set to True: the auto upgrade has no effect - no upgrade will be run on the target managed clusters.
-        /// This is a boolean and not an enum because enabled/disabled are all available states of the auto upgrade profile.
-        /// By default, this is set to False.
-        /// </param>
-        /// <param name="autoUpgradeProfileStatus"> The status of the auto upgrade profile. </param>
-        /// <param name="targetKubernetesVersion">
-        ///   This is the target Kubernetes version for auto-upgrade. The format must be `{major version}.{minor version}`. For example, "1.30".
-        ///   By default, this is empty.
-        ///   If upgrade channel is set to TargetKubernetesVersion, this field must not be empty.
-        ///   If upgrade channel is Rapid, Stable or NodeImage, this field must be empty.
-        /// </param>
-        /// <param name="longTermSupport">
-        ///   If upgrade channel is not TargetKubernetesVersion, this field must be False.
-        ///   If set to True: Fleet auto upgrade will continue generate update runs for patches of minor versions earlier than N-2
-        ///   (where N is the latest supported minor version) if those minor versions support Long-Term Support (LTS).
-        ///   By default, this is set to False.
-        ///   For more information on AKS LTS, please see https://learn.microsoft.com/en-us/azure/aks/long-term-support
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AutoUpgradeProfileProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpgradeChannel? channel, AutoUpgradeNodeImageSelection nodeImageSelection, bool? disabled, AutoUpgradeProfileStatus autoUpgradeProfileStatus, string targetKubernetesVersion, bool? longTermSupport, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AutoUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AutoUpgradeProfileProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             ETag = eTag;
-            ProvisioningState = provisioningState;
-            UpdateStrategyId = updateStrategyId;
-            Channel = channel;
-            NodeImageSelection = nodeImageSelection;
-            Disabled = disabled;
-            AutoUpgradeProfileStatus = autoUpgradeProfileStatus;
-            TargetKubernetesVersion = targetKubernetesVersion;
-            LongTermSupport = longTermSupport;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal AutoUpgradeProfileProperties Properties { get; set; }
 
         /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
         public ETag? ETag { get; }
+
         /// <summary> The provisioning state of the AutoUpgradeProfile resource. </summary>
-        public AutoUpgradeProfileProvisioningState? ProvisioningState { get; }
-        /// <summary> The resource id of the UpdateStrategy resource to reference. If not specified, the auto upgrade will run on all clusters which are members of the fleet. </summary>
-        public ResourceIdentifier UpdateStrategyId { get; set; }
-        /// <summary> Configures how auto-upgrade will be run. </summary>
-        public ContainerServiceFleetUpgradeChannel? Channel { get; set; }
-        /// <summary> The node image upgrade to be applied to the target clusters in auto upgrade. </summary>
-        internal AutoUpgradeNodeImageSelection NodeImageSelection { get; set; }
-        /// <summary> The node image upgrade type. </summary>
-        public AutoUpgradeNodeImageSelectionType? SelectionType
+        public AutoUpgradeProfileProvisioningState? ProvisioningState
         {
-            get => NodeImageSelection is null ? default(AutoUpgradeNodeImageSelectionType?) : NodeImageSelection.SelectionType;
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The resource id of the UpdateStrategy resource to reference. If not specified, the auto upgrade will run on all clusters which are members of the fleet. </summary>
+        public ResourceIdentifier UpdateStrategyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdateStrategyId;
+            }
             set
             {
-                NodeImageSelection = value.HasValue ? new AutoUpgradeNodeImageSelection(value.Value) : null;
+                if (Properties is null)
+                {
+                    Properties = new AutoUpgradeProfileProperties();
+                }
+                Properties.UpdateStrategyId = value;
             }
         }
 
@@ -127,23 +78,116 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// This is a boolean and not an enum because enabled/disabled are all available states of the auto upgrade profile.
         /// By default, this is set to False.
         /// </summary>
-        public bool? Disabled { get; set; }
+        public bool? Disabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Disabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoUpgradeProfileProperties();
+                }
+                Properties.Disabled = value.Value;
+            }
+        }
+
         /// <summary> The status of the auto upgrade profile. </summary>
-        public AutoUpgradeProfileStatus AutoUpgradeProfileStatus { get; set; }
+        public AutoUpgradeProfileStatus AutoUpgradeProfileStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoUpgradeProfileStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoUpgradeProfileProperties();
+                }
+                Properties.AutoUpgradeProfileStatus = value;
+            }
+        }
+
         /// <summary>
         ///   This is the target Kubernetes version for auto-upgrade. The format must be `{major version}.{minor version}`. For example, "1.30".
         ///   By default, this is empty.
         ///   If upgrade channel is set to TargetKubernetesVersion, this field must not be empty.
         ///   If upgrade channel is Rapid, Stable or NodeImage, this field must be empty.
         /// </summary>
-        public string TargetKubernetesVersion { get; set; }
+        public string TargetKubernetesVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetKubernetesVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoUpgradeProfileProperties();
+                }
+                Properties.TargetKubernetesVersion = value;
+            }
+        }
+
         /// <summary>
         ///   If upgrade channel is not TargetKubernetesVersion, this field must be False.
-        ///   If set to True: Fleet auto upgrade will continue generate update runs for patches of minor versions earlier than N-2
+        ///   If set to True: Fleet auto upgrade will continue generate update runs for patches of minor versions earlier than N-2 
         ///   (where N is the latest supported minor version) if those minor versions support Long-Term Support (LTS).
         ///   By default, this is set to False.
         ///   For more information on AKS LTS, please see https://learn.microsoft.com/en-us/azure/aks/long-term-support
         /// </summary>
-        public bool? LongTermSupport { get; set; }
+        public bool? LongTermSupport
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LongTermSupport;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoUpgradeProfileProperties();
+                }
+                Properties.LongTermSupport = value.Value;
+            }
+        }
+
+        /// <summary> The node image upgrade type. </summary>
+        public AutoUpgradeNodeImageSelectionType? SelectionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SelectionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoUpgradeProfileProperties();
+                }
+                Properties.SelectionType = value.Value;
+            }
+        }
+
+        /// <summary> Configures how auto-upgrade will be run. </summary>
+        public ContainerServiceFleetUpgradeChannel? Channel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Channel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoUpgradeProfileProperties();
+                }
+                Properties.Channel = value.Value;
+            }
+        }
     }
 }

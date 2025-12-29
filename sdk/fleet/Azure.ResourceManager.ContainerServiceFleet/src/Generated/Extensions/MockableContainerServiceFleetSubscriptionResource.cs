@@ -5,98 +5,97 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerServiceFleet;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableContainerServiceFleetSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _containerServiceFleetFleetsClientDiagnostics;
-        private FleetsRestOperations _containerServiceFleetFleetsRestClient;
+        private ClientDiagnostics _fleetsClientDiagnostics;
+        private Fleets _fleetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableContainerServiceFleetSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableContainerServiceFleetSubscriptionResource for mocking. </summary>
         protected MockableContainerServiceFleetSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableContainerServiceFleetSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableContainerServiceFleetSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableContainerServiceFleetSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ContainerServiceFleetFleetsClientDiagnostics => _containerServiceFleetFleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetResource.ResourceType.Namespace, Diagnostics);
-        private FleetsRestOperations ContainerServiceFleetFleetsRestClient => _containerServiceFleetFleetsRestClient ??= new FleetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerServiceFleetResource.ResourceType));
+        private ClientDiagnostics FleetsClientDiagnostics => _fleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
 
         /// <summary>
         /// Lists fleets in the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/fleets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/fleets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleets_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Fleets_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceFleetFleetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceFleetFleetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), ContainerServiceFleetFleetsClientDiagnostics, Pipeline, "MockableContainerServiceFleetSubscriptionResource.GetContainerServiceFleets", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists fleets in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/fleets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleets_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerServiceFleetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceFleetFleetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceFleetFleetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), ContainerServiceFleetFleetsClientDiagnostics, Pipeline, "MockableContainerServiceFleetSubscriptionResource.GetContainerServiceFleets", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new ContainerServiceFleetResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists fleets in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/fleets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Fleets_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new ContainerServiceFleetResource(Client, data));
         }
     }
 }

@@ -13,44 +13,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The properties of the Update Run that the Gate is targeting. </summary>
     public partial class UpdateRunGateTargetProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UpdateRunGateTargetProperties"/>. </summary>
-        /// <param name="name"> The name of the Update Run. </param>
         /// <param name="timing"> Whether the Gate is placed before or after the update itself. </param>
-        public UpdateRunGateTargetProperties(string name, ContainerServiceFleetGateTiming timing)
+        public UpdateRunGateTargetProperties(ContainerServiceFleetGateTiming timing)
         {
-            Name = name;
             Timing = timing;
         }
 
@@ -59,27 +28,25 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="stage"> The Update Stage of the Update Run. </param>
         /// <param name="group"> The Update Group of the Update Run. </param>
         /// <param name="timing"> Whether the Gate is placed before or after the update itself. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateRunGateTargetProperties(string name, string stage, string group, ContainerServiceFleetGateTiming timing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateRunGateTargetProperties(string name, string stage, string @group, ContainerServiceFleetGateTiming timing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Stage = stage;
-            Group = group;
+            Group = @group;
             Timing = timing;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UpdateRunGateTargetProperties"/> for deserialization. </summary>
-        internal UpdateRunGateTargetProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the Update Run. </summary>
         public string Name { get; }
+
         /// <summary> The Update Stage of the Update Run. </summary>
         public string Stage { get; }
+
         /// <summary> The Update Group of the Update Run. </summary>
         public string Group { get; }
+
         /// <summary> Whether the Gate is placed before or after the update itself. </summary>
         public ContainerServiceFleetGateTiming Timing { get; set; }
     }
