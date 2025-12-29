@@ -11,7 +11,7 @@
 ### Other Changes
 
 
-## 1.0.0 (2025-12-29)
+## 1.0.0 (2025-12-30)
 
 This is the first stable release of the Dell Storage Management client library.
 
