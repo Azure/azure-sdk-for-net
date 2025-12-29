@@ -123,7 +123,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("targetClassifierLocation"u8))
                 {
-                    targetClassifierLocation = new Uri(prop.Value.GetString());
+                    targetClassifierLocation = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("accessToken"u8))
