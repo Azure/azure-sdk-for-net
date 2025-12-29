@@ -250,7 +250,6 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     public partial class DisconnectedOperationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationProperties>
     {
         public DisconnectedOperationProperties(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent connectionIntent) { }
-        public DisconnectedOperationProperties(string stampId, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel billingModel, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent connectionIntent) { }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel BillingModel { get { throw null; } }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent ConnectionIntent { get { throw null; } set { } }
         public Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus? ConnectionStatus { get { throw null; } }
