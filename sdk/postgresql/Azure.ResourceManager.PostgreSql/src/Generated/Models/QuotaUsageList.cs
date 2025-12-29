@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Capability for the PostgreSQL server
-    /// Serialized Name: QuotaUsageList
-    /// </summary>
+    /// <summary> Capability for the PostgreSQL server. </summary>
     internal partial class QuotaUsageList
     {
         /// <summary>
@@ -50,24 +47,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="QuotaUsageList"/>. </summary>
-        /// <param name="value">
-        /// The QuotaUsage items on this page
-        /// Serialized Name: QuotaUsageList.value
-        /// </param>
+        /// <param name="value"> The QuotaUsage items on this page. </param>
         internal QuotaUsageList(IEnumerable<QuotaUsage> value)
         {
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaUsageList"/>. </summary>
-        /// <param name="value">
-        /// The QuotaUsage items on this page
-        /// Serialized Name: QuotaUsageList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: QuotaUsageList.nextLink
-        /// </param>
+        /// <param name="value"> The QuotaUsage items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QuotaUsageList(IReadOnlyList<QuotaUsage> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,15 +69,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary>
-        /// The QuotaUsage items on this page
-        /// Serialized Name: QuotaUsageList.value
-        /// </summary>
+        /// <summary> The QuotaUsage items on this page. </summary>
         public IReadOnlyList<QuotaUsage> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: QuotaUsageList.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

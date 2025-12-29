@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Maintenance window properties of a server.
-    /// Serialized Name: MaintenanceWindow
-    /// </summary>
+    /// <summary> Maintenance window properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerMaintenanceWindow
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMaintenanceWindow"/>. </summary>
-        /// <param name="customWindow">
-        /// Indicates whether custom window is enabled or disabled.
-        /// Serialized Name: MaintenanceWindow.customWindow
-        /// </param>
-        /// <param name="startHour">
-        /// Start hour to be used for maintenance window.
-        /// Serialized Name: MaintenanceWindow.startHour
-        /// </param>
-        /// <param name="startMinute">
-        /// Start minute to be used for maintenance window.
-        /// Serialized Name: MaintenanceWindow.startMinute
-        /// </param>
-        /// <param name="dayOfWeek">
-        /// Day of the week to be used for maintenance window.
-        /// Serialized Name: MaintenanceWindow.dayOfWeek
-        /// </param>
+        /// <param name="customWindow"> Indicates whether custom window is enabled or disabled. </param>
+        /// <param name="startHour"> Start hour to be used for maintenance window. </param>
+        /// <param name="startMinute"> Start minute to be used for maintenance window. </param>
+        /// <param name="dayOfWeek"> Day of the week to be used for maintenance window. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerMaintenanceWindow(string customWindow, int? startHour, int? startMinute, int? dayOfWeek, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,28 +65,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Indicates whether custom window is enabled or disabled.
-        /// Serialized Name: MaintenanceWindow.customWindow
-        /// </summary>
+        /// <summary> Indicates whether custom window is enabled or disabled. </summary>
         [WirePath("customWindow")]
         public string CustomWindow { get; set; }
-        /// <summary>
-        /// Start hour to be used for maintenance window.
-        /// Serialized Name: MaintenanceWindow.startHour
-        /// </summary>
+        /// <summary> Start hour to be used for maintenance window. </summary>
         [WirePath("startHour")]
         public int? StartHour { get; set; }
-        /// <summary>
-        /// Start minute to be used for maintenance window.
-        /// Serialized Name: MaintenanceWindow.startMinute
-        /// </summary>
+        /// <summary> Start minute to be used for maintenance window. </summary>
         [WirePath("startMinute")]
         public int? StartMinute { get; set; }
-        /// <summary>
-        /// Day of the week to be used for maintenance window.
-        /// Serialized Name: MaintenanceWindow.dayOfWeek
-        /// </summary>
+        /// <summary> Day of the week to be used for maintenance window. </summary>
         [WirePath("dayOfWeek")]
         public int? DayOfWeek { get; set; }
     }

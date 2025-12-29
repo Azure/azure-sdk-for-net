@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Possible states of a server.
-    /// Serialized Name: ServerState
-    /// </summary>
+    /// <summary> Possible states of a server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerState : IEquatable<PostgreSqlFlexibleServerState>
     {
         private readonly string _value;
@@ -36,55 +33,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string InaccessibleValue = "Inaccessible";
         private const string ProvisioningValue = "Provisioning";
 
-        /// <summary>
-        /// Ready
-        /// Serialized Name: ServerState.Ready
-        /// </summary>
+        /// <summary> Ready. </summary>
         public static PostgreSqlFlexibleServerState Ready { get; } = new PostgreSqlFlexibleServerState(ReadyValue);
-        /// <summary>
-        /// Dropping
-        /// Serialized Name: ServerState.Dropping
-        /// </summary>
+        /// <summary> Dropping. </summary>
         public static PostgreSqlFlexibleServerState Dropping { get; } = new PostgreSqlFlexibleServerState(DroppingValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: ServerState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerState Disabled { get; } = new PostgreSqlFlexibleServerState(DisabledValue);
-        /// <summary>
-        /// Starting
-        /// Serialized Name: ServerState.Starting
-        /// </summary>
+        /// <summary> Starting. </summary>
         public static PostgreSqlFlexibleServerState Starting { get; } = new PostgreSqlFlexibleServerState(StartingValue);
-        /// <summary>
-        /// Stopping
-        /// Serialized Name: ServerState.Stopping
-        /// </summary>
+        /// <summary> Stopping. </summary>
         public static PostgreSqlFlexibleServerState Stopping { get; } = new PostgreSqlFlexibleServerState(StoppingValue);
-        /// <summary>
-        /// Stopped
-        /// Serialized Name: ServerState.Stopped
-        /// </summary>
+        /// <summary> Stopped. </summary>
         public static PostgreSqlFlexibleServerState Stopped { get; } = new PostgreSqlFlexibleServerState(StoppedValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ServerState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static PostgreSqlFlexibleServerState Updating { get; } = new PostgreSqlFlexibleServerState(UpdatingValue);
-        /// <summary>
-        /// Restarting
-        /// Serialized Name: ServerState.Restarting
-        /// </summary>
+        /// <summary> Restarting. </summary>
         public static PostgreSqlFlexibleServerState Restarting { get; } = new PostgreSqlFlexibleServerState(RestartingValue);
-        /// <summary>
-        /// Inaccessible
-        /// Serialized Name: ServerState.Inaccessible
-        /// </summary>
+        /// <summary> Inaccessible. </summary>
         public static PostgreSqlFlexibleServerState Inaccessible { get; } = new PostgreSqlFlexibleServerState(InaccessibleValue);
-        /// <summary>
-        /// Provisioning
-        /// Serialized Name: ServerState.Provisioning
-        /// </summary>
+        /// <summary> Provisioning. </summary>
         public static PostgreSqlFlexibleServerState Provisioning { get; } = new PostgreSqlFlexibleServerState(ProvisioningValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerState left, PostgreSqlFlexibleServerState right) => left.Equals(right);

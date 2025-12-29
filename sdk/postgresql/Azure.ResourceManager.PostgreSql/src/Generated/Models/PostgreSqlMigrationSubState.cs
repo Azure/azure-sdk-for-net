@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Substate of migration.
-    /// Serialized Name: MigrationSubstate
-    /// </summary>
+    /// <summary> Substate of migration. </summary>
     public readonly partial struct PostgreSqlMigrationSubState : IEquatable<PostgreSqlMigrationSubState>
     {
         private readonly string _value;
@@ -38,65 +35,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string CancelingRequestedDBMigrationsValue = "CancelingRequestedDBMigrations";
         private const string ValidationInProgressValue = "ValidationInProgress";
 
-        /// <summary>
-        /// PerformingPreRequisiteSteps
-        /// Serialized Name: MigrationSubstate.PerformingPreRequisiteSteps
-        /// </summary>
+        /// <summary> PerformingPreRequisiteSteps. </summary>
         public static PostgreSqlMigrationSubState PerformingPreRequisiteSteps { get; } = new PostgreSqlMigrationSubState(PerformingPreRequisiteStepsValue);
-        /// <summary>
-        /// WaitingForLogicalReplicationSetupRequestOnSourceDB
-        /// Serialized Name: MigrationSubstate.WaitingForLogicalReplicationSetupRequestOnSourceDB
-        /// </summary>
+        /// <summary> WaitingForLogicalReplicationSetupRequestOnSourceDB. </summary>
         public static PostgreSqlMigrationSubState WaitingForLogicalReplicationSetupRequestOnSourceDB { get; } = new PostgreSqlMigrationSubState(WaitingForLogicalReplicationSetupRequestOnSourceDBValue);
-        /// <summary>
-        /// WaitingForDBsToMigrateSpecification
-        /// Serialized Name: MigrationSubstate.WaitingForDBsToMigrateSpecification
-        /// </summary>
+        /// <summary> WaitingForDBsToMigrateSpecification. </summary>
         public static PostgreSqlMigrationSubState WaitingForDBsToMigrateSpecification { get; } = new PostgreSqlMigrationSubState(WaitingForDBsToMigrateSpecificationValue);
-        /// <summary>
-        /// WaitingForTargetDBOverwriteConfirmation
-        /// Serialized Name: MigrationSubstate.WaitingForTargetDBOverwriteConfirmation
-        /// </summary>
+        /// <summary> WaitingForTargetDBOverwriteConfirmation. </summary>
         public static PostgreSqlMigrationSubState WaitingForTargetDBOverwriteConfirmation { get; } = new PostgreSqlMigrationSubState(WaitingForTargetDBOverwriteConfirmationValue);
-        /// <summary>
-        /// WaitingForDataMigrationScheduling
-        /// Serialized Name: MigrationSubstate.WaitingForDataMigrationScheduling
-        /// </summary>
+        /// <summary> WaitingForDataMigrationScheduling. </summary>
         public static PostgreSqlMigrationSubState WaitingForDataMigrationScheduling { get; } = new PostgreSqlMigrationSubState(WaitingForDataMigrationSchedulingValue);
-        /// <summary>
-        /// WaitingForDataMigrationWindow
-        /// Serialized Name: MigrationSubstate.WaitingForDataMigrationWindow
-        /// </summary>
+        /// <summary> WaitingForDataMigrationWindow. </summary>
         public static PostgreSqlMigrationSubState WaitingForDataMigrationWindow { get; } = new PostgreSqlMigrationSubState(WaitingForDataMigrationWindowValue);
-        /// <summary>
-        /// MigratingData
-        /// Serialized Name: MigrationSubstate.MigratingData
-        /// </summary>
+        /// <summary> MigratingData. </summary>
         public static PostgreSqlMigrationSubState MigratingData { get; } = new PostgreSqlMigrationSubState(MigratingDataValue);
-        /// <summary>
-        /// WaitingForCutoverTrigger
-        /// Serialized Name: MigrationSubstate.WaitingForCutoverTrigger
-        /// </summary>
+        /// <summary> WaitingForCutoverTrigger. </summary>
         public static PostgreSqlMigrationSubState WaitingForCutoverTrigger { get; } = new PostgreSqlMigrationSubState(WaitingForCutoverTriggerValue);
-        /// <summary>
-        /// CompletingMigration
-        /// Serialized Name: MigrationSubstate.CompletingMigration
-        /// </summary>
+        /// <summary> CompletingMigration. </summary>
         public static PostgreSqlMigrationSubState CompletingMigration { get; } = new PostgreSqlMigrationSubState(CompletingMigrationValue);
-        /// <summary>
-        /// Completed
-        /// Serialized Name: MigrationSubstate.Completed
-        /// </summary>
+        /// <summary> Completed. </summary>
         public static PostgreSqlMigrationSubState Completed { get; } = new PostgreSqlMigrationSubState(CompletedValue);
-        /// <summary>
-        /// CancelingRequestedDBMigrations
-        /// Serialized Name: MigrationSubstate.CancelingRequestedDBMigrations
-        /// </summary>
+        /// <summary> CancelingRequestedDBMigrations. </summary>
         public static PostgreSqlMigrationSubState CancelingRequestedDBMigrations { get; } = new PostgreSqlMigrationSubState(CancelingRequestedDBMigrationsValue);
-        /// <summary>
-        /// ValidationInProgress
-        /// Serialized Name: MigrationSubstate.ValidationInProgress
-        /// </summary>
+        /// <summary> ValidationInProgress. </summary>
         public static PostgreSqlMigrationSubState ValidationInProgress { get; } = new PostgreSqlMigrationSubState(ValidationInProgressValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationSubState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationSubState left, PostgreSqlMigrationSubState right) => left.Equals(right);

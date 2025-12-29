@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Virtual network subnet usage data.
-    /// Serialized Name: VirtualNetworkSubnetUsageModel
-    /// </summary>
+    /// <summary> Virtual network subnet usage data. </summary>
     public partial class PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
     {
         /// <summary>
@@ -56,15 +53,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult"/>. </summary>
-        /// <param name="delegatedSubnetsUsage"> Serialized Name: VirtualNetworkSubnetUsageModel.delegatedSubnetsUsage. </param>
-        /// <param name="location">
-        /// location of the delegated subnet usage
-        /// Serialized Name: VirtualNetworkSubnetUsageModel.location
-        /// </param>
-        /// <param name="subscriptionId">
-        /// subscriptionId of the delegated subnet usage
-        /// Serialized Name: VirtualNetworkSubnetUsageModel.subscriptionId
-        /// </param>
+        /// <param name="delegatedSubnetsUsage"></param>
+        /// <param name="location"> location of the delegated subnet usage. </param>
+        /// <param name="subscriptionId"> subscriptionId of the delegated subnet usage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage, AzureLocation? location, string subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,19 +65,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: VirtualNetworkSubnetUsageModel.delegatedSubnetsUsage. </summary>
+        /// <summary> Gets the delegated subnets usage. </summary>
         [WirePath("delegatedSubnetsUsage")]
         public IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage> DelegatedSubnetsUsage { get; }
-        /// <summary>
-        /// location of the delegated subnet usage
-        /// Serialized Name: VirtualNetworkSubnetUsageModel.location
-        /// </summary>
+        /// <summary> location of the delegated subnet usage. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// subscriptionId of the delegated subnet usage
-        /// Serialized Name: VirtualNetworkSubnetUsageModel.subscriptionId
-        /// </summary>
+        /// <summary> subscriptionId of the delegated subnet usage. </summary>
         [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Features supported.
-    /// Serialized Name: SupportedFeature
-    /// </summary>
+    /// <summary> Features supported. </summary>
     public partial class SupportedFeature
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportedFeature"/>. </summary>
-        /// <param name="name">
-        /// Name of the feature.
-        /// Serialized Name: SupportedFeature.name
-        /// </param>
-        /// <param name="status">
-        /// Status of the feature. Indicates if the feature is enabled or not.
-        /// Serialized Name: SupportedFeature.status
-        /// </param>
+        /// <param name="name"> Name of the feature. </param>
+        /// <param name="status"> Status of the feature. Indicates if the feature is enabled or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SupportedFeature(string name, FeatureStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the feature.
-        /// Serialized Name: SupportedFeature.name
-        /// </summary>
+        /// <summary> Name of the feature. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Status of the feature. Indicates if the feature is enabled or not.
-        /// Serialized Name: SupportedFeature.status
-        /// </summary>
+        /// <summary> Status of the feature. Indicates if the feature is enabled or not. </summary>
         [WirePath("status")]
         public FeatureStatus? Status { get; }
     }

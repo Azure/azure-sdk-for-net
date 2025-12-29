@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Indicates if the server is configured to create geographically redundant backups.
-    /// Serialized Name: GeographicallyRedundantBackup
-    /// </summary>
+    /// <summary> Indicates if the server is configured to create geographically redundant backups. </summary>
     public readonly partial struct PostgreSqlFlexibleServerGeoRedundantBackupEnum : IEquatable<PostgreSqlFlexibleServerGeoRedundantBackupEnum>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: GeographicallyRedundantBackup.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static PostgreSqlFlexibleServerGeoRedundantBackupEnum Enabled { get; } = new PostgreSqlFlexibleServerGeoRedundantBackupEnum(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: GeographicallyRedundantBackup.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerGeoRedundantBackupEnum Disabled { get; } = new PostgreSqlFlexibleServerGeoRedundantBackupEnum(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerGeoRedundantBackupEnum"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerGeoRedundantBackupEnum left, PostgreSqlFlexibleServerGeoRedundantBackupEnum right) => left.Equals(right);

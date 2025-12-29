@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Data synchronization option to use when processing the operation specified in the promoteMode property. This property is write only.
-    /// Serialized Name: ReadReplicaPromoteOption
-    /// </summary>
+    /// <summary> Data synchronization option to use when processing the operation specified in the promoteMode property. This property is write only. </summary>
     public readonly partial struct ReplicationPromoteOption : IEquatable<ReplicationPromoteOption>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string PlannedValue = "Planned";
         private const string ForcedValue = "Forced";
 
-        /// <summary>
-        /// The operation will wait for data in the read replica to be fully synchronized with its source server, before it initiates the operation.
-        /// Serialized Name: ReadReplicaPromoteOption.Planned
-        /// </summary>
+        /// <summary> The operation will wait for data in the read replica to be fully synchronized with its source server, before it initiates the operation. </summary>
         public static ReplicationPromoteOption Planned { get; } = new ReplicationPromoteOption(PlannedValue);
-        /// <summary>
-        /// The operation will not wait for data in the read replica to be synchronized with its source server, before it initiates the operation.
-        /// Serialized Name: ReadReplicaPromoteOption.Forced
-        /// </summary>
+        /// <summary> The operation will not wait for data in the read replica to be synchronized with its source server, before it initiates the operation. </summary>
         public static ReplicationPromoteOption Forced { get; } = new ReplicationPromoteOption(ForcedValue);
         /// <summary> Determines if two <see cref="ReplicationPromoteOption"/> values are the same. </summary>
         public static bool operator ==(ReplicationPromoteOption left, ReplicationPromoteOption right) => left.Equals(right);
