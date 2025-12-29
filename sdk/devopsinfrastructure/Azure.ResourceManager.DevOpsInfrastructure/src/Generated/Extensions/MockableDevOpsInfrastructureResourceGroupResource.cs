@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DevOpsInfrastructure;
+using Azure.ResourceManager.DevOpsInfrastructure.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDevOpsInfrastructureResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _imageVersionsClientDiagnostics;
+        private ImageVersions _imageVersionsRestClient;
+
         /// <summary> Initializes a new instance of MockableDevOpsInfrastructureResourceGroupResource for mocking. </summary>
         protected MockableDevOpsInfrastructureResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         internal MockableDevOpsInfrastructureResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ImageVersionsClientDiagnostics => _imageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ImageVersions ImageVersionsRestClient => _imageVersionsRestClient ??= new ImageVersions(ImageVersionsClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
 
         /// <summary> Gets a collection of DevOpsPools in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DevOpsPools and their operations over a DevOpsPoolResource. </returns>
@@ -94,6 +103,72 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             return GetDevOpsPools().Get(poolName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List ImageVersion resources by Image
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/images/{imageName}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersions_ListByImage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="imageName"> Name of the image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DevOpsImageVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevOpsImageVersion> GetByImageAsync(string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ImageVersionsGetByImageAsyncCollectionResultOfT(ImageVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, imageName, context);
+        }
+
+        /// <summary>
+        /// List ImageVersion resources by Image
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/images/{imageName}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersions_ListByImage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="imageName"> Name of the image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DevOpsImageVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevOpsImageVersion> GetByImage(string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ImageVersionsGetByImageCollectionResultOfT(ImageVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, imageName, context);
         }
     }
 }

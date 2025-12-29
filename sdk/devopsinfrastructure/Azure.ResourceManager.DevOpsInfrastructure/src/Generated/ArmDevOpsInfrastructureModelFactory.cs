@@ -259,6 +259,112 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             return new DevOpsResourceDetailsProperties(status, image, imageVersion, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A ResourceSku. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceSku"/> instance for mocking. </returns>
+        public static DevOpsResourceSku DevOpsResourceSku(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevOpsResourceSkuProperties properties = default)
+        {
+            return new DevOpsResourceSku(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of a ResourceSku. </summary>
+        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
+        /// <param name="tier"> The tier of virtual machines in a scale set. </param>
+        /// <param name="size"> The size of the SKU. </param>
+        /// <param name="family"> The family of the SKU. </param>
+        /// <param name="locations"> The set of locations that the SKU is available. </param>
+        /// <param name="locationInfo"> A list of locations and availability zones in those locations where the SKU is available. </param>
+        /// <param name="capabilities"> Name value pairs to describe the capability. </param>
+        /// <param name="restrictions"> The restrictions of the SKU. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceSkuProperties"/> instance for mocking. </returns>
+        public static DevOpsResourceSkuProperties DevOpsResourceSkuProperties(string resourceType = default, string tier = default, string size = default, string family = default, IEnumerable<AzureLocation> locations = default, IEnumerable<ResourceSkuLocationInfo> locationInfo = default, IEnumerable<ResourceSkuCapabilities> capabilities = default, IEnumerable<ResourceSkuRestrictions> restrictions = default)
+        {
+            locations ??= new ChangeTrackingList<AzureLocation>();
+            locationInfo ??= new ChangeTrackingList<ResourceSkuLocationInfo>();
+            capabilities ??= new ChangeTrackingList<ResourceSkuCapabilities>();
+            restrictions ??= new ChangeTrackingList<ResourceSkuRestrictions>();
+
+            return new DevOpsResourceSkuProperties(
+                resourceType,
+                tier,
+                size,
+                family,
+                locations.ToList(),
+                locationInfo.ToList(),
+                capabilities.ToList(),
+                restrictions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes an available Compute SKU Location Information. </summary>
+        /// <param name="location"> Location of the SKU. </param>
+        /// <param name="zones"> List of availability zones where the SKU is supported. </param>
+        /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
+        /// <returns> A new <see cref="Models.ResourceSkuLocationInfo"/> instance for mocking. </returns>
+        public static ResourceSkuLocationInfo ResourceSkuLocationInfo(AzureLocation location = default, IEnumerable<string> zones = default, IEnumerable<ResourceSkuZoneDetails> zoneDetails = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+            zoneDetails ??= new ChangeTrackingList<ResourceSkuZoneDetails>();
+
+            return new ResourceSkuLocationInfo(location, zones.ToList(), zoneDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes The zonal capabilities of a SKU. </summary>
+        /// <param name="name"> Gets the set of zones that the SKU is available in with the specified capabilities. </param>
+        /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
+        /// <returns> A new <see cref="Models.ResourceSkuZoneDetails"/> instance for mocking. </returns>
+        public static ResourceSkuZoneDetails ResourceSkuZoneDetails(IEnumerable<string> name = default, IEnumerable<ResourceSkuCapabilities> capabilities = default)
+        {
+            name ??= new ChangeTrackingList<string>();
+            capabilities ??= new ChangeTrackingList<ResourceSkuCapabilities>();
+
+            return new ResourceSkuZoneDetails(name.ToList(), capabilities.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes The SKU capabilities object. </summary>
+        /// <param name="name"> The name of the SKU capability. </param>
+        /// <param name="value"> The value of the SKU capability. </param>
+        /// <returns> A new <see cref="Models.ResourceSkuCapabilities"/> instance for mocking. </returns>
+        public static ResourceSkuCapabilities ResourceSkuCapabilities(string name = default, string value = default)
+        {
+            return new ResourceSkuCapabilities(name, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The restrictions of the SKU. </summary>
+        /// <param name="restrictionsType"> the type of restrictions. </param>
+        /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
+        /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
+        /// <param name="reasonCode"> the reason for restriction. </param>
+        /// <returns> A new <see cref="Models.ResourceSkuRestrictions"/> instance for mocking. </returns>
+        public static ResourceSkuRestrictions ResourceSkuRestrictions(ResourceSkuRestrictionsType? restrictionsType = default, IEnumerable<string> values = default, ResourceSkuRestrictionInfo restrictionInfo = default, ResourceSkuRestrictionsReasonCode? reasonCode = default)
+        {
+            values ??= new ChangeTrackingList<string>();
+
+            return new ResourceSkuRestrictions(restrictionsType, values.ToList(), restrictionInfo, reasonCode, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes an available Compute SKU Restriction Information. </summary>
+        /// <param name="locations"> Locations where the SKU is restricted. </param>
+        /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
+        /// <returns> A new <see cref="Models.ResourceSkuRestrictionInfo"/> instance for mocking. </returns>
+        public static ResourceSkuRestrictionInfo ResourceSkuRestrictionInfo(IEnumerable<AzureLocation> locations = default, IEnumerable<string> zones = default)
+        {
+            locations ??= new ChangeTrackingList<AzureLocation>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new ResourceSkuRestrictionInfo(locations.ToList(), zones.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Describes Resource Quota. </summary>
         /// <param name="name"> The name of the quota. </param>
         /// <param name="id"> Fully qualified ARM resource id. </param>
@@ -284,6 +390,23 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static DevOpsResourceQuotaName DevOpsResourceQuotaName(string value = default, string localizedValue = default)
         {
             return new DevOpsResourceQuotaName(value, localizedValue, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="imageVersion"> Version of the image. </param>
+        /// <returns> A new <see cref="Models.DevOpsImageVersion"/> instance for mocking. </returns>
+        public static DevOpsImageVersion DevOpsImageVersion(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string imageVersion = default)
+        {
+            return new DevOpsImageVersion(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                imageVersion is null ? default : new ImageVersionProperties(imageVersion, null));
         }
     }
 }
