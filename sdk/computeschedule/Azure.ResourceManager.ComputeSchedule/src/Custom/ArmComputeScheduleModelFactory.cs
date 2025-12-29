@@ -32,24 +32,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ResourceOperationDetails"/> instance for mocking. </returns>
-        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadline = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timezone = default, string operationTimezone = default, ResourceOperationError resourceOperationError = default, DateTimeOffset? completedOn = default, UserRequestRetryPolicy retryPolicy = default)
+        public static ResourceOperationDetails ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadline, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timezone, string operationTimezone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy = default)
         {
-            return new ResourceOperationDetails(
-                operationId,
-                resourceId,
-                opType,
-                subscriptionId,
-                deadline,
-                deadlineType,
-                state,
-                timezone,
-                operationTimezone,
-                resourceOperationError,
-                null,
-                completedOn,
-                retryPolicy,
-                additionalBinaryDataProperties: null);
+            return ResourceOperationDetails(
+                operationId, resourceId, opType, subscriptionId, deadline, deadlineType, state, timezone, operationTimezone, resourceOperationError, null, completedOn, retryPolicy);
         }
-
     }
 }
