@@ -60,8 +60,11 @@ export async function updateClients(
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
 ) {
-  // Build the unified ARM provider schema and apply it to the root client
-  const armProviderSchema = buildArmProviderSchema(sdkContext, codeModel, options);
+  // Check if the use-legacy-resource-detection flag is disabled (i.e., use new resolveArmResources API)
+  const armProviderSchema = options?.["use-legacy-resource-detection"] === false
+    ? resolveArmResources(sdkContext.program, sdkContext)
+    : buildArmProviderSchema(sdkContext, codeModel);
+  
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
 }
 
@@ -71,25 +74,17 @@ export async function updateClients(
  * and consolidates it into a unified ArmProviderSchema structure.
  *
  * This function is exported for testing purposes and can be called directly from tests
- * to validate the schema structure.
+ * to validate the schema structure using the legacy custom resource detection logic.
  *
  * @param sdkContext - The emitter context
  * @param codeModel - The code model to analyze
- * @param options - The emitter options (optional, for testing without options)
  * @returns The unified ARM provider schema containing all resources and non-resource methods
  */
 export function buildArmProviderSchema(
   sdkContext: CSharpEmitterContext,
-  codeModel: CodeModel,
-  options?: AzureMgmtEmitterOptions
+  codeModel: CodeModel
 ): ArmProviderSchema {
-  // Check if the use-legacy-resource-detection flag is disabled (i.e., use new resolveArmResources API)
-  if (options?.["use-legacy-resource-detection"] === false) {
-    // Use the standardized resolveArmResources API
-    return resolveArmResources(sdkContext.program, sdkContext);
-  }
-
-  // Otherwise, use the existing custom resource detection logic (default behavior)
+  // Use the existing custom resource detection logic
   const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
     getAllSdkClients(sdkContext)
       .flatMap((c) => c.methods)
