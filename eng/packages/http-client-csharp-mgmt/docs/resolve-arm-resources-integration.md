@@ -56,15 +56,28 @@ options:
 
 **Testing:**
 
-- Added comprehensive test suite in `feature-flag.test.ts` with 3 tests covering:
-  - Default behavior (flag enabled, uses legacy logic)
-  - Flag disabled behavior (uses resolveArmResources API)
-  - Equivalence between both approaches
-- All 101 tests pass (71 .NET + 30 TypeScript), confirming backward compatibility
+- No dedicated test file needed - feature flag behavior is validated through the production code path
+- Existing tests in `resource-detection.test.ts` (9 tests) and `non-resource-methods.test.ts` (7 tests) already validate equivalence between implementations
+- All 98 tests pass (71 .NET + 27 TypeScript), confirming backward compatibility
 
-### Step 3: Enable by Default and Remove Flag (Next)
+### Step 3: Enable Flag in Test Projects (Next)
 
-- After sufficient validation with the feature flag disabled in various services, flip the default to `false` (making resolveArmResources the default)
+- Enable the `use-legacy-resource-detection: false` flag in our internal test projects
+- Validate that all test projects generate correctly with the new resolveArmResources API
+- Identify and fix any issues found during test project generation
+- Ensure comprehensive coverage of different TypeSpec patterns and scenarios
+
+### Step 4: Validate with Real Resource Providers (Next)
+
+- Enable the `use-legacy-resource-detection: false` flag in a selected set of real RPs
+- Start with a few representative RPs that cover common patterns
+- Monitor generation and validate SDK output quality
+- Gather feedback and address any issues discovered
+- Gradually expand to more RPs as confidence increases
+
+### Step 5: Enable by Default and Remove Flag (Final)
+
+- After sufficient validation with test projects and real RPs, flip the default to `false` (making resolveArmResources the default)
 - Remove the feature flag and always use `resolveArmResources`
 - The conversion function will remain to translate from `Provider` format to our `ArmProviderSchema` format
 - Eventually consider updating downstream code to work directly with `Provider` format if beneficial
@@ -165,14 +178,14 @@ This confirms the converter is production-ready and has been successfully integr
 - `src/resource-metadata.ts` - Shared data structures
 - `test/resource-detection.test.ts` - Resource detection validation tests (9 tests)
 - `test/non-resource-methods.test.ts` - Non-resource methods validation tests (7 tests)
-- `test/feature-flag.test.ts` - Feature flag validation tests (3 tests)
 - `test/resource-type.test.ts` - Resource type validation tests (11 tests)
 - `test/test-util.ts` - Shared test utilities including `normalizeSchemaForComparison`
 
 ## Next Steps
 
-1. **Controlled rollout** - Disable the `use-legacy-resource-detection` flag for select services to validate in real-world scenarios
-2. **Monitor and iterate** - Collect feedback and address any edge cases discovered during rollout
-3. **Make default** - After successful validation, flip the default to `false` (making resolveArmResources the default behavior)
-4. **Remove flag** - Remove the feature flag configuration, always use `resolveArmResources`
-5. **Long-term** - Consider updating downstream code to work directly with `Provider` format if beneficial
+1. **Enable in test projects** - Enable the `use-legacy-resource-detection: false` flag in internal test projects to validate generation
+2. **Validate with real RPs** - Enable the flag in a few representative real RPs to ensure stability and gather feedback
+3. **Monitor and iterate** - Collect feedback and address any edge cases discovered during rollout
+4. **Make default** - After successful validation, flip the default to `false` (making resolveArmResources the default behavior)
+5. **Remove flag** - Remove the feature flag configuration, always use `resolveArmResources`
+6. **Long-term** - Consider updating downstream code to work directly with `Provider` format if beneficial
