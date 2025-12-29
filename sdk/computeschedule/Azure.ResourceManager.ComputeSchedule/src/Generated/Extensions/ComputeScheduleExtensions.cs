@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// [PRIVATE PREVIEW]: VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateOperationAsync(AzureLocation, ExecuteCreateContent, CancellationToken)"/> instead. </description>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// [PRIVATE PREVIEW]: VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateOperation(AzureLocation, ExecuteCreateContent, CancellationToken)"/> instead. </description>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// [PRIVATE PREVIEW]: VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeleteOperationAsync(AzureLocation, ExecuteDeleteContent, CancellationToken)"/> instead. </description>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// [PRIVATE PREVIEW]: VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeleteOperation(AzureLocation, ExecuteDeleteContent, CancellationToken)"/> instead. </description>
