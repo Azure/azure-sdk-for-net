@@ -48,15 +48,16 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
  */
 function filterProgramDiagnostics(program: Program): void {
   const originalDiagnostics = program.diagnostics;
-  const filteredDiagnostics = originalDiagnostics.filter(
-    (d: Diagnostic) => !SUPPRESSED_DIAGNOSTICS.includes(d.code)
-  );
 
-  // Replace the readonly diagnostics property with a filtered version
+  // Replace the readonly diagnostics property with a dynamically filtered version
   Object.defineProperty(program, "diagnostics", {
     get() {
-      return filteredDiagnostics;
+      // Filter dynamically to ensure any diagnostic changes after filtering are reflected
+      return originalDiagnostics.filter(
+        (d: Diagnostic) => !SUPPRESSED_DIAGNOSTICS.includes(d.code)
+      );
     },
+    set: undefined, // Explicitly mark as read-only
     enumerable: true,
     configurable: true
   });
