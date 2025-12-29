@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// List of migrations.
-    /// Serialized Name: MigrationList
-    /// </summary>
+    /// <summary> List of migrations. </summary>
     internal partial class MigrationList
     {
         /// <summary>
@@ -50,24 +47,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MigrationList"/>. </summary>
-        /// <param name="value">
-        /// The Migration items on this page
-        /// Serialized Name: MigrationList.value
-        /// </param>
+        /// <param name="value"> The Migration items on this page. </param>
         internal MigrationList(IEnumerable<PostgreSqlMigrationData> value)
         {
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationList"/>. </summary>
-        /// <param name="value">
-        /// The Migration items on this page
-        /// Serialized Name: MigrationList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: MigrationList.nextLink
-        /// </param>
+        /// <param name="value"> The Migration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MigrationList(IReadOnlyList<PostgreSqlMigrationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,15 +69,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary>
-        /// The Migration items on this page
-        /// Serialized Name: MigrationList.value
-        /// </summary>
+        /// <summary> The Migration items on this page. </summary>
         public IReadOnlyList<PostgreSqlMigrationData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: MigrationList.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

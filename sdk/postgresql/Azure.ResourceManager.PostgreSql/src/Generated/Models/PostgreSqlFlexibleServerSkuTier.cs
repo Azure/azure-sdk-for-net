@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Tier of the compute assigned to a server.
-    /// Serialized Name: SkuTier
-    /// </summary>
+    /// <summary> Tier of the compute assigned to a server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerSkuTier : IEquatable<PostgreSqlFlexibleServerSkuTier>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string GeneralPurposeValue = "GeneralPurpose";
         private const string MemoryOptimizedValue = "MemoryOptimized";
 
-        /// <summary>
-        /// Burstable
-        /// Serialized Name: SkuTier.Burstable
-        /// </summary>
+        /// <summary> Burstable. </summary>
         public static PostgreSqlFlexibleServerSkuTier Burstable { get; } = new PostgreSqlFlexibleServerSkuTier(BurstableValue);
-        /// <summary>
-        /// GeneralPurpose
-        /// Serialized Name: SkuTier.GeneralPurpose
-        /// </summary>
+        /// <summary> GeneralPurpose. </summary>
         public static PostgreSqlFlexibleServerSkuTier GeneralPurpose { get; } = new PostgreSqlFlexibleServerSkuTier(GeneralPurposeValue);
-        /// <summary>
-        /// MemoryOptimized
-        /// Serialized Name: SkuTier.MemoryOptimized
-        /// </summary>
+        /// <summary> MemoryOptimized. </summary>
         public static PostgreSqlFlexibleServerSkuTier MemoryOptimized { get; } = new PostgreSqlFlexibleServerSkuTier(MemoryOptimizedValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerSkuTier"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerSkuTier left, PostgreSqlFlexibleServerSkuTier right) => left.Equals(right);

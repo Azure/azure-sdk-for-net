@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// A list of long term retention backup operations for server.
-    /// Serialized Name: LtrServerBackupOperationList
-    /// </summary>
+    /// <summary> A list of long term retention backup operations for server. </summary>
     internal partial class PostgreSqlLtrServerBackupOperationList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationList"/>. </summary>
-        /// <param name="value">
-        /// The BackupsLongTermRetentionOperation items on this page
-        /// Serialized Name: LtrServerBackupOperationList.value
-        /// </param>
+        /// <param name="value"> The BackupsLongTermRetentionOperation items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PostgreSqlLtrServerBackupOperationList(IEnumerable<PostgreSqlLtrServerBackupOperationData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationList"/>. </summary>
-        /// <param name="value">
-        /// The BackupsLongTermRetentionOperation items on this page
-        /// Serialized Name: LtrServerBackupOperationList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: LtrServerBackupOperationList.nextLink
-        /// </param>
+        /// <param name="value"> The BackupsLongTermRetentionOperation items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlLtrServerBackupOperationList(IReadOnlyList<PostgreSqlLtrServerBackupOperationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary>
-        /// The BackupsLongTermRetentionOperation items on this page
-        /// Serialized Name: LtrServerBackupOperationList.value
-        /// </summary>
+        /// <summary> The BackupsLongTermRetentionOperation items on this page. </summary>
         public IReadOnlyList<PostgreSqlLtrServerBackupOperationData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: LtrServerBackupOperationList.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

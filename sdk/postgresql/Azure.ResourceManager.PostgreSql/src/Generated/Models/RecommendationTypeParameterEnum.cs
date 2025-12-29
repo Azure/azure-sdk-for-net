@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// The RecommendationTypeParameterEnum.
-    /// Serialized Name: RecommendationTypeParameterEnum
-    /// </summary>
+    /// <summary> The RecommendationTypeParameterEnum. </summary>
     public readonly partial struct RecommendationTypeParameterEnum : IEquatable<RecommendationTypeParameterEnum>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ReIndexValue = "ReIndex";
         private const string AnalyzeTableValue = "AnalyzeTable";
 
-        /// <summary>
-        /// CreateIndex
-        /// Serialized Name: RecommendationTypeParameterEnum.CreateIndex
-        /// </summary>
+        /// <summary> CreateIndex. </summary>
         public static RecommendationTypeParameterEnum CreateIndex { get; } = new RecommendationTypeParameterEnum(CreateIndexValue);
-        /// <summary>
-        /// DropIndex
-        /// Serialized Name: RecommendationTypeParameterEnum.DropIndex
-        /// </summary>
+        /// <summary> DropIndex. </summary>
         public static RecommendationTypeParameterEnum DropIndex { get; } = new RecommendationTypeParameterEnum(DropIndexValue);
-        /// <summary>
-        /// ReIndex
-        /// Serialized Name: RecommendationTypeParameterEnum.ReIndex
-        /// </summary>
+        /// <summary> ReIndex. </summary>
         public static RecommendationTypeParameterEnum ReIndex { get; } = new RecommendationTypeParameterEnum(ReIndexValue);
-        /// <summary>
-        /// AnalyzeTable
-        /// Serialized Name: RecommendationTypeParameterEnum.AnalyzeTable
-        /// </summary>
+        /// <summary> AnalyzeTable. </summary>
         public static RecommendationTypeParameterEnum AnalyzeTable { get; } = new RecommendationTypeParameterEnum(AnalyzeTableValue);
         /// <summary> Determines if two <see cref="RecommendationTypeParameterEnum"/> values are the same. </summary>
         public static bool operator ==(RecommendationTypeParameterEnum left, RecommendationTypeParameterEnum right) => left.Equals(right);
