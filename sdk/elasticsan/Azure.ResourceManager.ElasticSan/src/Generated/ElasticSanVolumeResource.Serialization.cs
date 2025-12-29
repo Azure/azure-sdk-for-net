@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary></summary>
-    public partial class ElasticSanVolumeResource : IJsonModel<ElasticSanVolumeData>
+    public partial class ElasticSanVolumeResource : ArmResource, IJsonModel<ElasticSanVolumeData>
     {
         private static IJsonModel<ElasticSanVolumeData> s_dataDeserializationInstance;
 

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ElasticSan
             return message;
         }
 
-        internal HttpMessage CreatePreBackupRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreatePreBackupVolumeRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ElasticSan
             return message;
         }
 
-        internal HttpMessage CreatePreRestoreRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreatePreRestoreVolumeRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

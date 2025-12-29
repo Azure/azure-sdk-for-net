@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByElasticSanRequest(string subscriptionId, string resourceGroupName, string elasticSanName, RequestContext context)
+        internal HttpMessage CreateGetPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string elasticSanName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

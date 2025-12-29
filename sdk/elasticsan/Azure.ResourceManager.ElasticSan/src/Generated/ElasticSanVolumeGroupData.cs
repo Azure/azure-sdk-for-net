@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="properties"> Properties of VolumeGroup. </param>
-        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, Identity identity, VolumeGroupProperties properties) : base(id, name, resourceType, systemData)
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedServiceIdentity identity, VolumeGroupProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Identity = identity;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> The identity of the resource. </summary>
-        public Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Properties of VolumeGroup. </summary>
         internal VolumeGroupProperties Properties { get; set; }

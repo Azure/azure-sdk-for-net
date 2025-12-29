@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="properties"> Properties of VolumeGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanVolumeGroupPatch(Identity identity, VolumeGroupUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticSanVolumeGroupPatch(ManagedServiceIdentity identity, VolumeGroupUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Properties = properties;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         /// <summary> The identity of the resource. </summary>
-        public Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Properties of VolumeGroup. </summary>
         internal VolumeGroupUpdateProperties Properties { get; set; }

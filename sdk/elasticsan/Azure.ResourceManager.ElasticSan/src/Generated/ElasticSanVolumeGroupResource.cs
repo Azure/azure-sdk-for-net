@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="elasticSanVolumeGroupPatch"> Volume Group object. </param>
+        /// <param name="patch"> Volume Group object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanVolumeGroupPatch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ElasticSanVolumeGroupResource>> UpdateAsync(WaitUntil waitUntil, ElasticSanVolumeGroupPatch elasticSanVolumeGroupPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ElasticSanVolumeGroupResource>> UpdateAsync(WaitUntil waitUntil, ElasticSanVolumeGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(elasticSanVolumeGroupPatch, nameof(elasticSanVolumeGroupPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.Update");
             scope.Start();
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeGroupPatch.ToRequestContent(elasticSanVolumeGroupPatch), context);
+                HttpMessage message = _volumeGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeGroupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanVolumeGroupResource> operation = new ElasticSanArmOperation<ElasticSanVolumeGroupResource>(
                     new ElasticSanVolumeGroupOperationSource(Client),
@@ -273,12 +273,12 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="elasticSanVolumeGroupPatch"> Volume Group object. </param>
+        /// <param name="patch"> Volume Group object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanVolumeGroupPatch"/> is null. </exception>
-        public virtual ArmOperation<ElasticSanVolumeGroupResource> Update(WaitUntil waitUntil, ElasticSanVolumeGroupPatch elasticSanVolumeGroupPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<ElasticSanVolumeGroupResource> Update(WaitUntil waitUntil, ElasticSanVolumeGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(elasticSanVolumeGroupPatch, nameof(elasticSanVolumeGroupPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.Update");
             scope.Start();
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeGroupPatch.ToRequestContent(elasticSanVolumeGroupPatch), context);
+                HttpMessage message = _volumeGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeGroupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanVolumeGroupResource> operation = new ElasticSanArmOperation<ElasticSanVolumeGroupResource>(
                     new ElasticSanVolumeGroupOperationSource(Client),
@@ -430,14 +430,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="elasticSanVolumeNameListContent"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
+        /// <param name="content"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanVolumeNameListContent"/> is null. </exception>
-        public virtual async Task<ArmOperation<ElasticSanPreValidationResult>> PreBackupAsync(WaitUntil waitUntil, ElasticSanVolumeNameListContent elasticSanVolumeNameListContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ElasticSanPreValidationResult>> PreBackupVolumeAsync(WaitUntil waitUntil, ElasticSanVolumeNameListContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(elasticSanVolumeNameListContent, nameof(elasticSanVolumeNameListContent));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreBackup");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreBackupVolume");
             scope.Start();
             try
             {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeNameListContent.ToRequestContent(elasticSanVolumeNameListContent), context);
+                HttpMessage message = _volumesRestClient.CreatePreBackupVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeNameListContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
                     new ElasticSanPreValidationResultOperationSource(),
@@ -489,14 +489,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="elasticSanVolumeNameListContent"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
+        /// <param name="content"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanVolumeNameListContent"/> is null. </exception>
-        public virtual ArmOperation<ElasticSanPreValidationResult> PreBackup(WaitUntil waitUntil, ElasticSanVolumeNameListContent elasticSanVolumeNameListContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ElasticSanPreValidationResult> PreBackupVolume(WaitUntil waitUntil, ElasticSanVolumeNameListContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(elasticSanVolumeNameListContent, nameof(elasticSanVolumeNameListContent));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreBackup");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreBackupVolume");
             scope.Start();
             try
             {
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeNameListContent.ToRequestContent(elasticSanVolumeNameListContent), context);
+                HttpMessage message = _volumesRestClient.CreatePreBackupVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeNameListContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
                     new ElasticSanPreValidationResultOperationSource(),
@@ -551,11 +551,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="diskSnapshotListContent"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskSnapshotListContent"/> is null. </exception>
-        public virtual async Task<ArmOperation<ElasticSanPreValidationResult>> PreRestoreAsync(WaitUntil waitUntil, DiskSnapshotListContent diskSnapshotListContent, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ElasticSanPreValidationResult>> PreRestoreVolumeAsync(WaitUntil waitUntil, DiskSnapshotListContent diskSnapshotListContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(diskSnapshotListContent, nameof(diskSnapshotListContent));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreRestore");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreRestoreVolume");
             scope.Start();
             try
             {
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreatePreRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiskSnapshotListContent.ToRequestContent(diskSnapshotListContent), context);
+                HttpMessage message = _volumesRestClient.CreatePreRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiskSnapshotListContent.ToRequestContent(diskSnapshotListContent), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
                     new ElasticSanPreValidationResultOperationSource(),
@@ -610,11 +610,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="diskSnapshotListContent"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskSnapshotListContent"/> is null. </exception>
-        public virtual ArmOperation<ElasticSanPreValidationResult> PreRestore(WaitUntil waitUntil, DiskSnapshotListContent diskSnapshotListContent, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ElasticSanPreValidationResult> PreRestoreVolume(WaitUntil waitUntil, DiskSnapshotListContent diskSnapshotListContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(diskSnapshotListContent, nameof(diskSnapshotListContent));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreRestore");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreRestoreVolume");
             scope.Start();
             try
             {
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreatePreRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiskSnapshotListContent.ToRequestContent(diskSnapshotListContent), context);
+                HttpMessage message = _volumesRestClient.CreatePreRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiskSnapshotListContent.ToRequestContent(diskSnapshotListContent), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
                     new ElasticSanPreValidationResultOperationSource(),

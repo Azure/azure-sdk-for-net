@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ElasticSan
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Identity identity = default;
+            ManagedServiceIdentity identity = default;
             VolumeGroupProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerElasticSanContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
