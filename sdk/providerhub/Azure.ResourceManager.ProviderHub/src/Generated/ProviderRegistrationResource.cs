@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly ProviderRegistrationsRestOperations _providerRegistrationRestClient;
         private readonly ClientDiagnostics _defaultClientDiagnostics;
         private readonly ProviderHubRestOperations _defaultRestClient;
-        private readonly ClientDiagnostics _resourceActionsClientDiagnostics;
-        private readonly ResourceActionsRestOperations _resourceActionsRestClient;
         private readonly ClientDiagnostics _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics;
         private readonly NewRegionFrontloadReleaseRestOperations _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient;
+        private readonly ClientDiagnostics _resourceActionsClientDiagnostics;
+        private readonly ResourceActionsRestOperations _resourceActionsRestClient;
         private readonly ProviderRegistrationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.ProviderHub
             _providerRegistrationRestClient = new ProviderRegistrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerRegistrationApiVersion);
             _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _defaultRestClient = new ProviderHubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _resourceActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _resourceActionsRestClient = new ResourceActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", RegistrationNewRegionFrontloadReleaseResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RegistrationNewRegionFrontloadReleaseResource.ResourceType, out string registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseApiVersion);
             _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient = new NewRegionFrontloadReleaseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseApiVersion);
+            _resourceActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _resourceActionsRestClient = new ResourceActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,6 +99,71 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets a collection of ProviderAuthorizedApplicationResources in the ProviderRegistration. </summary>
+        /// <returns> An object representing collection of ProviderAuthorizedApplicationResources and their operations over a ProviderAuthorizedApplicationResource. </returns>
+        public virtual ProviderAuthorizedApplicationCollection GetProviderAuthorizedApplications()
+        {
+            return GetCachedClient(client => new ProviderAuthorizedApplicationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the authorized application details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizedApplications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationId"> The application ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ProviderAuthorizedApplicationResource>> GetProviderAuthorizedApplicationAsync(Guid applicationId, CancellationToken cancellationToken = default)
+        {
+            return await GetProviderAuthorizedApplications().GetAsync(applicationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the authorized application details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizedApplications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationId"> The application ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ProviderAuthorizedApplicationResource> GetProviderAuthorizedApplication(Guid applicationId, CancellationToken cancellationToken = default)
+        {
+            return GetProviderAuthorizedApplications().Get(applicationId, cancellationToken);
         }
 
         /// <summary> Gets a collection of CustomRolloutResources in the ProviderRegistration. </summary>
@@ -446,71 +511,6 @@ namespace Azure.ResourceManager.ProviderHub
             return GetResourceTypeRegistrations().Get(resourceType, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProviderAuthorizedApplicationResources in the ProviderRegistration. </summary>
-        /// <returns> An object representing collection of ProviderAuthorizedApplicationResources and their operations over a ProviderAuthorizedApplicationResource. </returns>
-        public virtual ProviderAuthorizedApplicationCollection GetProviderAuthorizedApplications()
-        {
-            return GetCachedClient(client => new ProviderAuthorizedApplicationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the authorized application details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizedApplications_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationId"> The application ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ProviderAuthorizedApplicationResource>> GetProviderAuthorizedApplicationAsync(Guid applicationId, CancellationToken cancellationToken = default)
-        {
-            return await GetProviderAuthorizedApplications().GetAsync(applicationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the authorized application details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizedApplications_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationId"> The application ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ProviderAuthorizedApplicationResource> GetProviderAuthorizedApplication(Guid applicationId, CancellationToken cancellationToken = default)
-        {
-            return GetProviderAuthorizedApplications().Get(applicationId, cancellationToken);
-        }
-
         /// <summary>
         /// Gets the provider registration details.
         /// <list type="bullet">
@@ -772,6 +772,82 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
+        /// Checkin the manifest.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/checkinManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckinManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The required body parameters supplied to the checkin manifest operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CheckinManifestInfo>> CheckinManifestAsync(CheckinManifestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _defaultClientDiagnostics.CreateScope("ProviderRegistrationResource.CheckinManifest");
+            scope.Start();
+            try
+            {
+                var response = await _defaultRestClient.CheckinManifestAsync(Id.SubscriptionId, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checkin the manifest.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/checkinManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckinManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The required body parameters supplied to the checkin manifest operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CheckinManifestInfo> CheckinManifest(CheckinManifestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _defaultClientDiagnostics.CreateScope("ProviderRegistrationResource.CheckinManifest");
+            scope.Start();
+            try
+            {
+                var response = _defaultRestClient.CheckinManifest(Id.SubscriptionId, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Generates the manifest for the given provider.
         /// <list type="bullet">
         /// <item>
@@ -840,34 +916,38 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Checkin the manifest.
+        /// Generates the new region frontload manifest.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/checkinManifest</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateNewRegionFrontloadManifest</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckinManifest</description>
+        /// <description>NewRegionFrontloadRelease_GenerateManifest</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2024-09-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The required body parameters supplied to the checkin manifest operation. </param>
+        /// <param name="properties"> The <see cref="ProviderFrontloadPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckinManifestInfo>> CheckinManifestAsync(CheckinManifestContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual async Task<Response<ResourceProviderManifest>> GenerateManifestNewRegionFrontloadReleaseAsync(ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("ProviderRegistrationResource.CheckinManifest");
+            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateManifestNewRegionFrontloadRelease");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.CheckinManifestAsync(Id.SubscriptionId, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.GenerateManifestAsync(Id.SubscriptionId, Id.Name, properties, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -878,34 +958,38 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Checkin the manifest.
+        /// Generates the new region frontload manifest.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/checkinManifest</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateNewRegionFrontloadManifest</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckinManifest</description>
+        /// <description>NewRegionFrontloadRelease_GenerateManifest</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2024-09-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The required body parameters supplied to the checkin manifest operation. </param>
+        /// <param name="properties"> The <see cref="ProviderFrontloadPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckinManifestInfo> CheckinManifest(CheckinManifestContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual Response<ResourceProviderManifest> GenerateManifestNewRegionFrontloadRelease(ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("ProviderRegistrationResource.CheckinManifest");
+            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateManifestNewRegionFrontloadRelease");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.CheckinManifest(Id.SubscriptionId, Id.Name, content, cancellationToken);
+                var response = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.GenerateManifest(Id.SubscriptionId, Id.Name, properties, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -997,90 +1081,6 @@ namespace Azure.ResourceManager.ProviderHub
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generates the new region frontload manifest.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateNewRegionFrontloadManifest</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NewRegionFrontloadRelease_GenerateManifest</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="properties"> The <see cref="ProviderFrontloadPayload"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<ResourceProviderManifest>> GenerateManifestNewRegionFrontloadReleaseAsync(ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateManifestNewRegionFrontloadRelease");
-            scope.Start();
-            try
-            {
-                var response = await _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.GenerateManifestAsync(Id.SubscriptionId, Id.Name, properties, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generates the new region frontload manifest.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateNewRegionFrontloadManifest</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NewRegionFrontloadRelease_GenerateManifest</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="properties"> The <see cref="ProviderFrontloadPayload"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<ResourceProviderManifest> GenerateManifestNewRegionFrontloadRelease(ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateManifestNewRegionFrontloadRelease");
-            scope.Start();
-            try
-            {
-                var response = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.GenerateManifest(Id.SubscriptionId, Id.Name, properties, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

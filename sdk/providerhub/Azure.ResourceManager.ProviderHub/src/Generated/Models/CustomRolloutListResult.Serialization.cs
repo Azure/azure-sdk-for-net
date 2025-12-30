@@ -34,20 +34,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 throw new FormatException($"The model {nameof(CustomRolloutListResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,17 +84,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             IReadOnlyList<CustomRolloutData> value = default;
-            string nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<CustomRolloutData> array = new List<CustomRolloutData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -108,7 +101,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -117,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomRolloutListResult(value ?? new ChangeTrackingList<CustomRolloutData>(), nextLink, serializedAdditionalRawData);
+            return new CustomRolloutListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRolloutListResult>.Write(ModelReaderWriterOptions options)

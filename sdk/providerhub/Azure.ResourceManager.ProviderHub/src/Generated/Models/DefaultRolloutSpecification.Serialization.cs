@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            DefaultRolloutSpecificationExpeditedRollout expeditedRollout = default;
+            ExpeditedRolloutDefinition expeditedRollout = default;
             CanaryTrafficRegionRolloutConfiguration canary = default;
             TrafficRegionRolloutConfiguration lowTraffic = default;
             TrafficRegionRolloutConfiguration mediumTraffic = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    expeditedRollout = DefaultRolloutSpecificationExpeditedRollout.DeserializeDefaultRolloutSpecificationExpeditedRollout(property.Value, options);
+                    expeditedRollout = ExpeditedRolloutDefinition.DeserializeExpeditedRolloutDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("canary"u8))

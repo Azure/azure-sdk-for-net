@@ -17,32 +17,28 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmProviderHubModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ProviderHub.CustomRolloutData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderHub.ProviderMonitorSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the rollout. </param>
-        /// <returns> A new <see cref="ProviderHub.CustomRolloutData"/> instance for mocking. </returns>
-        public static CustomRolloutData CustomRolloutData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CustomRolloutProperties properties = null)
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="providerMonitorSettingProvisioningState"></param>
+        /// <returns> A new <see cref="ProviderHub.ProviderMonitorSettingData"/> instance for mocking. </returns>
+        public static ProviderMonitorSettingData ProviderMonitorSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProviderHubProvisioningState? providerMonitorSettingProvisioningState = null)
         {
-            return new CustomRolloutData(
+            tags ??= new Dictionary<string, string>();
+
+            return new ProviderMonitorSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                tags,
+                location,
+                providerMonitorSettingProvisioningState != null ? new ProviderMonitorSettingProperties(providerMonitorSettingProvisioningState, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CustomRolloutProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="specification"> The specification. </param>
-        /// <param name="status"> The status. </param>
-        /// <returns> A new <see cref="Models.CustomRolloutProperties"/> instance for mocking. </returns>
-        public static CustomRolloutProperties CustomRolloutProperties(ProviderHubProvisioningState? provisioningState = null, CustomRolloutSpecification specification = null, CustomRolloutStatus status = null)
-        {
-            return new CustomRolloutProperties(provisioningState, specification, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ProviderRegistrationData"/>. </summary>
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 providerHubMetadata,
                 provisioningState,
                 subscriptionLifecycleNotificationSpecifications,
-                privateResourceProviderAllowedSubscriptions != null ? new ProviderRegistrationPropertiesPrivateResourceProviderConfiguration(privateResourceProviderAllowedSubscriptions?.ToList(), serializedAdditionalRawData: null) : null,
+                privateResourceProviderAllowedSubscriptions != null ? new PrivateResourceProviderConfiguration(privateResourceProviderAllowedSubscriptions?.ToList(), serializedAdditionalRawData: null) : null,
                 tokenAuthConfiguration);
         }
 
@@ -188,6 +184,64 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 endpointType,
                 skuLink,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProviderHub.ProviderAuthorizedApplicationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="ProviderHub.ProviderAuthorizedApplicationData"/> instance for mocking. </returns>
+        public static ProviderAuthorizedApplicationData ProviderAuthorizedApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProviderAuthorizedApplicationProperties properties = null)
+        {
+            return new ProviderAuthorizedApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderAuthorizedApplicationProperties"/>. </summary>
+        /// <param name="providerAuthorization"></param>
+        /// <param name="dataAuthorizations"> The authorizations that determine the level of data access permissions on the specified resource types. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <returns> A new <see cref="Models.ProviderAuthorizedApplicationProperties"/> instance for mocking. </returns>
+        public static ProviderAuthorizedApplicationProperties ProviderAuthorizedApplicationProperties(ApplicationProviderAuthorization providerAuthorization = null, IEnumerable<ApplicationDataAuthorization> dataAuthorizations = null, ProviderHubProvisioningState? provisioningState = null)
+        {
+            dataAuthorizations ??= new List<ApplicationDataAuthorization>();
+
+            return new ProviderAuthorizedApplicationProperties(providerAuthorization, dataAuthorizations?.ToList(), provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProviderHub.CustomRolloutData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Properties of the rollout. </param>
+        /// <returns> A new <see cref="ProviderHub.CustomRolloutData"/> instance for mocking. </returns>
+        public static CustomRolloutData CustomRolloutData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CustomRolloutProperties properties = null)
+        {
+            return new CustomRolloutData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CustomRolloutProperties"/>. </summary>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="specification"> The specification. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.CustomRolloutProperties"/> instance for mocking. </returns>
+        public static CustomRolloutProperties CustomRolloutProperties(ProviderHubProvisioningState? provisioningState = null, CustomRolloutSpecification specification = null, CustomRolloutStatus status = null)
+        {
+            return new CustomRolloutProperties(provisioningState, specification, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ResourceTypeRegistrationData"/>. </summary>
@@ -625,6 +679,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceManagementEntity"/>. </summary>
+        /// <param name="resourceId"> The resource id. </param>
+        /// <param name="homeTenantId"> The home tenant id. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="status"> The operation status. </param>
+        /// <returns> A new <see cref="Models.ResourceManagementEntity"/> instance for mocking. </returns>
+        public static ResourceManagementEntity ResourceManagementEntity(ResourceIdentifier resourceId = null, string homeTenantId = null, AzureLocation? location = null, string status = null)
+        {
+            return new ResourceManagementEntity(resourceId, homeTenantId, location, status, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ResourceTypeSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -652,71 +717,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             skuSettings ??= new List<ResourceTypeSkuSetting>();
 
             return new ResourceTypeSkuProperties(skuSettings?.ToList(), provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceManagementEntity"/>. </summary>
-        /// <param name="resourceId"> The resource id. </param>
-        /// <param name="homeTenantId"> The home tenant id. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="status"> The operation status. </param>
-        /// <returns> A new <see cref="Models.ResourceManagementEntity"/> instance for mocking. </returns>
-        public static ResourceManagementEntity ResourceManagementEntity(ResourceIdentifier resourceId = null, string homeTenantId = null, AzureLocation? location = null, string status = null)
-        {
-            return new ResourceManagementEntity(resourceId, homeTenantId, location, status, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProviderHub.ProviderAuthorizedApplicationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="ProviderHub.ProviderAuthorizedApplicationData"/> instance for mocking. </returns>
-        public static ProviderAuthorizedApplicationData ProviderAuthorizedApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProviderAuthorizedApplicationProperties properties = null)
-        {
-            return new ProviderAuthorizedApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderAuthorizedApplicationProperties"/>. </summary>
-        /// <param name="providerAuthorization"></param>
-        /// <param name="dataAuthorizations"> The authorizations that determine the level of data access permissions on the specified resource types. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="Models.ProviderAuthorizedApplicationProperties"/> instance for mocking. </returns>
-        public static ProviderAuthorizedApplicationProperties ProviderAuthorizedApplicationProperties(ApplicationProviderAuthorization providerAuthorization = null, IEnumerable<ApplicationDataAuthorization> dataAuthorizations = null, ProviderHubProvisioningState? provisioningState = null)
-        {
-            dataAuthorizations ??= new List<ApplicationDataAuthorization>();
-
-            return new ProviderAuthorizedApplicationProperties(providerAuthorization, dataAuthorizations?.ToList(), provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProviderHub.ProviderMonitorSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="providerMonitorSettingProvisioningState"></param>
-        /// <returns> A new <see cref="ProviderHub.ProviderMonitorSettingData"/> instance for mocking. </returns>
-        public static ProviderMonitorSettingData ProviderMonitorSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProviderHubProvisioningState? providerMonitorSettingProvisioningState = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ProviderMonitorSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                providerMonitorSettingProvisioningState != null ? new ProviderMonitorSettingProperties(providerMonitorSettingProvisioningState, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ProviderHub.ProviderRegistrationData" />. </summary>

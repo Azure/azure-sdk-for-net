@@ -13,7 +13,10 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    /// <summary> A class representing the ResourceTypeRegistration data model. </summary>
+    /// <summary>
+    /// A class representing the ResourceTypeRegistration data model.
+    /// Concrete proxy resource types can be created by aliasing this type using a specific property type.
+    /// </summary>
     public partial class ResourceTypeRegistrationData : ResourceData
     {
         /// <summary>

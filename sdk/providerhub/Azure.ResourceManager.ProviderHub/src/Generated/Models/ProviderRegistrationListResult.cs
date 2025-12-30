@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderRegistrationListResult. </summary>
+    /// <summary> Paged collection of ProviderRegistration items. </summary>
     internal partial class ProviderRegistrationListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProviderRegistrationListResult"/>. </summary>
-        internal ProviderRegistrationListResult()
+        /// <param name="value"> The ProviderRegistration items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ProviderRegistrationListResult(IEnumerable<ProviderRegistrationData> value)
         {
-            Value = new ChangeTrackingList<ProviderRegistrationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderRegistrationListResult"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
+        /// <param name="value"> The ProviderRegistration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderRegistrationListResult(IReadOnlyList<ProviderRegistrationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProviderRegistrationListResult(IReadOnlyList<ProviderRegistrationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The value. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationListResult"/> for deserialization. </summary>
+        internal ProviderRegistrationListResult()
+        {
+        }
+
+        /// <summary> The ProviderRegistration items on this page. </summary>
         public IReadOnlyList<ProviderRegistrationData> Value { get; }
-        /// <summary> The URL to get to the next set of results, if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

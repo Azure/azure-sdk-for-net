@@ -87,83 +87,16 @@ namespace Azure.ResourceManager.ProviderHub
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ResourceTypeSkuResources in the ResourceTypeRegistration. </summary>
-        /// <returns> An object representing collection of ResourceTypeSkuResources and their operations over a ResourceTypeSkuResource. </returns>
-        public virtual ResourceTypeSkuCollection GetResourceTypeSkus()
-        {
-            return GetCachedClient(client => new ResourceTypeSkuCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the sku details for the given resource type and sku name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceTypeSkuResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ResourceTypeSkuResource>> GetResourceTypeSkuAsync(string sku, CancellationToken cancellationToken = default)
-        {
-            return await GetResourceTypeSkus().GetAsync(sku, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the sku details for the given resource type and sku name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceTypeSkuResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ResourceTypeSkuResource> GetResourceTypeSku(string sku, CancellationToken cancellationToken = default)
-        {
-            return GetResourceTypeSkus().Get(sku, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NestedResourceTypeFirstSkuResources in the ResourceTypeRegistration. </summary>
+        /// <summary> Gets a collection of NestedResourceTypeThirdSkuResources in the ResourceTypeRegistration. </summary>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of NestedResourceTypeFirstSkuResources and their operations over a NestedResourceTypeFirstSkuResource. </returns>
-        public virtual NestedResourceTypeFirstSkuCollection GetNestedResourceTypeFirstSkus(string nestedResourceTypeFirst)
+        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
+        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of NestedResourceTypeThirdSkuResources and their operations over a NestedResourceTypeThirdSkuResource. </returns>
+        public virtual NestedResourceTypeThirdSkuCollection GetNestedResourceTypeThirdSkus(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
         {
-            return new NestedResourceTypeFirstSkuCollection(Client, Id, nestedResourceTypeFirst);
+            return new NestedResourceTypeThirdSkuCollection(Client, Id, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
         }
 
         /// <summary>
@@ -171,11 +104,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Skus_GetNestedResourceTypeFirst</description>
+        /// <description>Skus_GetNestedResourceTypeThird</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -183,19 +116,21 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NestedResourceTypeFirstSkuResource"/></description>
+        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
+        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="sku"> The SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NestedResourceTypeFirstSkuResource>> GetNestedResourceTypeFirstSkuAsync(string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NestedResourceTypeThirdSkuResource>> GetNestedResourceTypeThirdSkuAsync(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, CancellationToken cancellationToken = default)
         {
-            return await GetNestedResourceTypeFirstSkus(nestedResourceTypeFirst).GetAsync(sku, cancellationToken).ConfigureAwait(false);
+            return await GetNestedResourceTypeThirdSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird).GetAsync(sku, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -203,11 +138,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Skus_GetNestedResourceTypeFirst</description>
+        /// <description>Skus_GetNestedResourceTypeThird</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -215,19 +150,21 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NestedResourceTypeFirstSkuResource"/></description>
+        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
+        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="sku"> The SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NestedResourceTypeFirstSkuResource> GetNestedResourceTypeFirstSku(string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
+        public virtual Response<NestedResourceTypeThirdSkuResource> GetNestedResourceTypeThirdSku(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, CancellationToken cancellationToken = default)
         {
-            return GetNestedResourceTypeFirstSkus(nestedResourceTypeFirst).Get(sku, cancellationToken);
+            return GetNestedResourceTypeThirdSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird).Get(sku, cancellationToken);
         }
 
         /// <summary> Gets a collection of NestedResourceTypeSecondSkuResources in the ResourceTypeRegistration. </summary>
@@ -307,16 +244,14 @@ namespace Azure.ResourceManager.ProviderHub
             return GetNestedResourceTypeSecondSkus(nestedResourceTypeFirst, nestedResourceTypeSecond).Get(sku, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NestedResourceTypeThirdSkuResources in the ResourceTypeRegistration. </summary>
+        /// <summary> Gets a collection of NestedResourceTypeFirstSkuResources in the ResourceTypeRegistration. </summary>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of NestedResourceTypeThirdSkuResources and their operations over a NestedResourceTypeThirdSkuResource. </returns>
-        public virtual NestedResourceTypeThirdSkuCollection GetNestedResourceTypeThirdSkus(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
+        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of NestedResourceTypeFirstSkuResources and their operations over a NestedResourceTypeFirstSkuResource. </returns>
+        public virtual NestedResourceTypeFirstSkuCollection GetNestedResourceTypeFirstSkus(string nestedResourceTypeFirst)
         {
-            return new NestedResourceTypeThirdSkuCollection(Client, Id, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
+            return new NestedResourceTypeFirstSkuCollection(Client, Id, nestedResourceTypeFirst);
         }
 
         /// <summary>
@@ -324,11 +259,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Skus_GetNestedResourceTypeThird</description>
+        /// <description>Skus_GetNestedResourceTypeFirst</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -336,21 +271,19 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
+        /// <description><see cref="NestedResourceTypeFirstSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="sku"> The SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NestedResourceTypeThirdSkuResource>> GetNestedResourceTypeThirdSkuAsync(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NestedResourceTypeFirstSkuResource>> GetNestedResourceTypeFirstSkuAsync(string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
         {
-            return await GetNestedResourceTypeThirdSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird).GetAsync(sku, cancellationToken).ConfigureAwait(false);
+            return await GetNestedResourceTypeFirstSkus(nestedResourceTypeFirst).GetAsync(sku, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -358,11 +291,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Skus_GetNestedResourceTypeThird</description>
+        /// <description>Skus_GetNestedResourceTypeFirst</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -370,21 +303,88 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
+        /// <description><see cref="NestedResourceTypeFirstSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="sku"> The SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NestedResourceTypeThirdSkuResource> GetNestedResourceTypeThirdSku(string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, CancellationToken cancellationToken = default)
+        public virtual Response<NestedResourceTypeFirstSkuResource> GetNestedResourceTypeFirstSku(string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
         {
-            return GetNestedResourceTypeThirdSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird).Get(sku, cancellationToken);
+            return GetNestedResourceTypeFirstSkus(nestedResourceTypeFirst).Get(sku, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ResourceTypeSkuResources in the ResourceTypeRegistration. </summary>
+        /// <returns> An object representing collection of ResourceTypeSkuResources and their operations over a ResourceTypeSkuResource. </returns>
+        public virtual ResourceTypeSkuCollection GetResourceTypeSkus()
+        {
+            return GetCachedClient(client => new ResourceTypeSkuCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the sku details for the given resource type and sku name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ResourceTypeSkuResource>> GetResourceTypeSkuAsync(string sku, CancellationToken cancellationToken = default)
+        {
+            return await GetResourceTypeSkus().GetAsync(sku, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the sku details for the given resource type and sku name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ResourceTypeSkuResource> GetResourceTypeSku(string sku, CancellationToken cancellationToken = default)
+        {
+            return GetResourceTypeSkus().Get(sku, cancellationToken);
         }
 
         /// <summary>

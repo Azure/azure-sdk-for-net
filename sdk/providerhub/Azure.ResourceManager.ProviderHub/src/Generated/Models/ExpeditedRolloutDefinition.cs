@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExpeditedRolloutDefinition"/>. </summary>
         public ExpeditedRolloutDefinition()

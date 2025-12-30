@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The NotificationRegistrationListResult. </summary>
+    /// <summary> Paged collection of NotificationRegistration items. </summary>
     internal partial class NotificationRegistrationListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationRegistrationListResult"/>. </summary>
-        internal NotificationRegistrationListResult()
+        /// <param name="value"> The NotificationRegistration items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NotificationRegistrationListResult(IEnumerable<NotificationRegistrationData> value)
         {
-            Value = new ChangeTrackingList<NotificationRegistrationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationRegistrationListResult"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
+        /// <param name="value"> The NotificationRegistration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationRegistrationListResult(IReadOnlyList<NotificationRegistrationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationRegistrationListResult(IReadOnlyList<NotificationRegistrationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The value. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRegistrationListResult"/> for deserialization. </summary>
+        internal NotificationRegistrationListResult()
+        {
+        }
+
+        /// <summary> The NotificationRegistration items on this page. </summary>
         public IReadOnlyList<NotificationRegistrationData> Value { get; }
-        /// <summary> The URL to get to the next set of results, if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

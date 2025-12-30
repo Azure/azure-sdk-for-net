@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The AuthorizedApplicationArrayResponseWithContinuation. </summary>
+    /// <summary> Paged collection of AuthorizedApplication items. </summary>
     internal partial class AuthorizedApplicationArrayResponseWithContinuation
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AuthorizedApplicationArrayResponseWithContinuation"/>. </summary>
-        internal AuthorizedApplicationArrayResponseWithContinuation()
+        /// <param name="value"> The AuthorizedApplication items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AuthorizedApplicationArrayResponseWithContinuation(IEnumerable<ProviderAuthorizedApplicationData> value)
         {
-            Value = new ChangeTrackingList<ProviderAuthorizedApplicationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizedApplicationArrayResponseWithContinuation"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
+        /// <param name="value"> The AuthorizedApplication items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizedApplicationArrayResponseWithContinuation(IReadOnlyList<ProviderAuthorizedApplicationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthorizedApplicationArrayResponseWithContinuation(IReadOnlyList<ProviderAuthorizedApplicationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The value. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizedApplicationArrayResponseWithContinuation"/> for deserialization. </summary>
+        internal AuthorizedApplicationArrayResponseWithContinuation()
+        {
+        }
+
+        /// <summary> The AuthorizedApplication items on this page. </summary>
         public IReadOnlyList<ProviderAuthorizedApplicationData> Value { get; }
-        /// <summary> The URL to get to the next set of results, if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -13,7 +13,10 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    /// <summary> A class representing the ProviderMonitorSetting data model. </summary>
+    /// <summary>
+    /// A class representing the ProviderMonitorSetting data model.
+    /// Concrete tracked resource types can be created by aliasing this type using a specific property type.
+    /// </summary>
     public partial class ProviderMonitorSettingData : TrackedResourceData
     {
         /// <summary>

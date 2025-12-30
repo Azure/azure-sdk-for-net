@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
         /// <param name="autoProvisionConfig"> The auto provisioning config. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultRolloutSpecification(DefaultRolloutSpecificationExpeditedRollout expeditedRollout, CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, DefaultRolloutAutoProvisionConfig autoProvisionConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefaultRolloutSpecification(ExpeditedRolloutDefinition expeditedRollout, CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, DefaultRolloutAutoProvisionConfig autoProvisionConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExpeditedRollout = expeditedRollout;
             Canary = canary;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> The expedited rollout definition. </summary>
-        internal DefaultRolloutSpecificationExpeditedRollout ExpeditedRollout { get; set; }
+        internal ExpeditedRolloutDefinition ExpeditedRollout { get; set; }
         /// <summary> Indicates whether expedited rollout is enabled/disabled. </summary>
         public bool? IsExpeditedRolloutEnabled
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             set
             {
                 if (ExpeditedRollout is null)
-                    ExpeditedRollout = new DefaultRolloutSpecificationExpeditedRollout();
+                    ExpeditedRollout = new ExpeditedRolloutDefinition();
                 ExpeditedRollout.IsExpeditedRolloutEnabled = value;
             }
         }

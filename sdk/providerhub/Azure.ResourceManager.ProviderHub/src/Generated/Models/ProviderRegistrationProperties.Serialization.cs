@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProviderHubMetadata providerHubMetadata = default;
             ProviderHubProvisioningState? provisioningState = default;
             SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = default;
-            ProviderRegistrationPropertiesPrivateResourceProviderConfiguration privateResourceProviderConfiguration = default;
+            PrivateResourceProviderConfiguration privateResourceProviderConfiguration = default;
             TokenAuthConfiguration tokenAuthConfiguration = default;
             ResourceProviderAuthentication providerAuthentication = default;
             IList<ResourceProviderAuthorization> providerAuthorizations = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    privateResourceProviderConfiguration = ProviderRegistrationPropertiesPrivateResourceProviderConfiguration.DeserializeProviderRegistrationPropertiesPrivateResourceProviderConfiguration(property.Value, options);
+                    privateResourceProviderConfiguration = PrivateResourceProviderConfiguration.DeserializePrivateResourceProviderConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tokenAuthConfiguration"u8))

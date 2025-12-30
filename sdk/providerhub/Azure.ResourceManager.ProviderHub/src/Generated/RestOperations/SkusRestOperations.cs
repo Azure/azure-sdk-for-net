@@ -36,639 +36,7 @@ namespace Azure.ResourceManager.ProviderHub
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string providerNamespace, string resourceType, string sku)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string providerNamespace, string resourceType, string sku)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuData>> GetAsync(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-
-            using var message = CreateGetRequest(subscriptionId, providerNamespace, resourceType, sku);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuData> Get(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-
-            using var message = CreateGetRequest(subscriptionId, providerNamespace, resourceType, sku);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuData>> CreateOrUpdateAsync(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, providerNamespace, resourceType, sku, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuData> CreateOrUpdate(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, providerNamespace, resourceType, sku, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string providerNamespace, string resourceType, string sku)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string providerNamespace, string resourceType, string sku)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes a resource type sku. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-
-            using var message = CreateDeleteRequest(subscriptionId, providerNamespace, resourceType, sku);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a resource type sku. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-
-            using var message = CreateDeleteRequest(subscriptionId, providerNamespace, resourceType, sku);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuData>> GetNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-
-            using var message = CreateGetNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuData> GetNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-
-            using var message = CreateGetNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuData>> CreateOrUpdateNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuData> CreateOrUpdateNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes a resource type sku. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-
-            using var message = CreateDeleteNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a resource type sku. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-
-            using var message = CreateDeleteNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetNestedResourceTypeSecondRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -682,13 +50,14 @@ namespace Azure.ResourceManager.ProviderHub
             uri.AppendPath(nestedResourceTypeFirst, true);
             uri.AppendPath("/resourcetypeRegistrations/", false);
             uri.AppendPath(nestedResourceTypeSecond, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeThird, true);
+            uri.AppendPath("/skus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetNestedResourceTypeSecondRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
+        internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -705,8 +74,9 @@ namespace Azure.ResourceManager.ProviderHub
             uri.AppendPath(nestedResourceTypeFirst, true);
             uri.AppendPath("/resourcetypeRegistrations/", false);
             uri.AppendPath(nestedResourceTypeSecond, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeThird, true);
+            uri.AppendPath("/skus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -714,307 +84,71 @@ namespace Azure.ResourceManager.ProviderHub
             return message;
         }
 
-        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
+        /// <summary> Gets the list of skus for the given resource type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
         /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
+        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuData>> GetNestedResourceTypeSecondAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeThirdAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
             Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
 
-            using var message = CreateGetNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
+            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ResourceTypeSkuData value = default;
+                        ResourceTypeSkuListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
+        /// <summary> Gets the list of skus for the given resource type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
         /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
+        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuData> GetNestedResourceTypeSecond(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeThird(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
             Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
 
-            using var message = CreateGetNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
+            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ResourceTypeSkuData value = default;
+                        ResourceTypeSkuListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateNestedResourceTypeSecondRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeSecond, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateNestedResourceTypeSecondRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeSecond, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuData>> CreateOrUpdateNestedResourceTypeSecondAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuData> CreateOrUpdateNestedResourceTypeSecond(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteNestedResourceTypeSecondRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeSecond, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteNestedResourceTypeSecondRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeSecond, true);
-            uri.AppendPath("/skus/", false);
-            uri.AppendPath(sku, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes a resource type sku. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteNestedResourceTypeSecondAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-
-            using var message = CreateDeleteNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a resource type sku. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="sku"> The SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteNestedResourceTypeSecond(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-
-            using var message = CreateDeleteNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1396,202 +530,6 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
-        internal RequestUriBuilder CreateListByResourceTypeRegistrationsRequestUri(string subscriptionId, string providerNamespace, string resourceType)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/skus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByResourceTypeRegistrationsRequest(string subscriptionId, string providerNamespace, string resourceType)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/skus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the list of skus for the given resource type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsAsync(string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-
-            using var message = CreateListByResourceTypeRegistrationsRequest(subscriptionId, providerNamespace, resourceType);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the list of skus for the given resource type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrations(string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-
-            using var message = CreateListByResourceTypeRegistrationsRequest(subscriptionId, providerNamespace, resourceType);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/skus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeFirst, true);
-            uri.AppendPath("/skus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the list of skus for the given resource type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-
-            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the list of skus for the given resource type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-
-            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeSecondRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond)
         {
             var uri = new RawRequestUriBuilder();
@@ -1702,7 +640,7 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
-        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
+        internal RequestUriBuilder CreateGetNestedResourceTypeSecondRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1716,14 +654,13 @@ namespace Azure.ResourceManager.ProviderHub
             uri.AppendPath(nestedResourceTypeFirst, true);
             uri.AppendPath("/resourcetypeRegistrations/", false);
             uri.AppendPath(nestedResourceTypeSecond, true);
-            uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeThird, true);
-            uri.AppendPath("/skus", false);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
+        internal HttpMessage CreateGetNestedResourceTypeSecondRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1740,8 +677,353 @@ namespace Azure.ResourceManager.ProviderHub
             uri.AppendPath(nestedResourceTypeFirst, true);
             uri.AppendPath("/resourcetypeRegistrations/", false);
             uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceTypeSkuData>> GetNestedResourceTypeSecondAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateGetNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceTypeSkuData> GetNestedResourceTypeSecond(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateGetNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateNestedResourceTypeSecondRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
             uri.AppendPath("/resourcetypeRegistrations/", false);
-            uri.AppendPath(nestedResourceTypeThird, true);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateNestedResourceTypeSecondRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceTypeSkuData>> CreateOrUpdateNestedResourceTypeSecondAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceTypeSkuData> CreateOrUpdateNestedResourceTypeSecond(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteNestedResourceTypeSecondRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteNestedResourceTypeSecondRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes a resource type sku. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteNestedResourceTypeSecondAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateDeleteNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes a resource type sku. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteNestedResourceTypeSecond(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateDeleteNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
             uri.AppendPath("/skus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1755,21 +1037,17 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeThirdAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
 
-            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
+            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1790,21 +1068,17 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeThird(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
 
-            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
+            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1820,22 +1094,364 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
-        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace, string resourceType)
+        internal RequestUriBuilder CreateGetNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceTypeRegistrationsNextPageRequest(string nextLink, string subscriptionId, string providerNamespace, string resourceType)
+        internal HttpMessage CreateGetNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceTypeSkuData>> GetNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateGetNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceTypeSkuData> GetNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateGetNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceTypeSkuData>> CreateOrUpdateNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceTypeSkuData> CreateOrUpdateNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes a resource type sku. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateDeleteNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes a resource type sku. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateDeleteNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsRequestUri(string subscriptionId, string providerNamespace, string resourceType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByResourceTypeRegistrationsRequest(string subscriptionId, string providerNamespace, string resourceType)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1843,21 +1459,19 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Gets the list of skus for the given resource type. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsAsync(string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
-            using var message = CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType);
+            using var message = CreateListByResourceTypeRegistrationsRequest(subscriptionId, providerNamespace, resourceType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1874,21 +1488,19 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Gets the list of skus for the given resource type. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNextPage(string nextLink, string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
+        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrations(string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
-            using var message = CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType);
+            using var message = CreateListByResourceTypeRegistrationsRequest(subscriptionId, providerNamespace, resourceType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1904,7 +1516,311 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
-        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string providerNamespace, string resourceType, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string providerNamespace, string resourceType, string sku)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceTypeSkuData>> GetAsync(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateGetRequest(subscriptionId, providerNamespace, resourceType, sku);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the sku details for the given resource type and sku name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceTypeSkuData> Get(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateGetRequest(subscriptionId, providerNamespace, resourceType, sku);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ResourceTypeSkuData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceTypeSkuData>> CreateOrUpdateAsync(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, providerNamespace, resourceType, sku, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates or updates the resource type skus in the given resource type. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceTypeSkuData> CreateOrUpdate(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, providerNamespace, resourceType, sku, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string providerNamespace, string resourceType, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string providerNamespace, string resourceType, string sku)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes a resource type sku. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateDeleteRequest(subscriptionId, providerNamespace, resourceType, sku);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes a resource type sku. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var message = CreateDeleteRequest(subscriptionId, providerNamespace, resourceType, sku);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1912,7 +1828,7 @@ namespace Azure.ResourceManager.ProviderHub
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
+        internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1932,18 +1848,22 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
+        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
 
-            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
+            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1965,18 +1885,22 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
+        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
+        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeFirstNextPage(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeThirdNextPage(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
 
-            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
+            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2084,7 +2008,7 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
-        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2092,7 +2016,7 @@ namespace Azure.ResourceManager.ProviderHub
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
+        internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2112,22 +2036,18 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
 
-            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
+            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2149,22 +2069,102 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
-        /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
-        /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeThirdNextPage(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeFirstNextPage(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
 
-            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
+            using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace, string resourceType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByResourceTypeRegistrationsNextPageRequest(string nextLink, string subscriptionId, string providerNamespace, string resourceType)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the list of skus for the given resource type. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+
+            using var message = CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceTypeSkuListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the list of skus for the given resource type. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNextPage(string nextLink, string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+
+            using var message = CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

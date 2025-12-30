@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: ProviderHub
 namespace: Azure.ResourceManager.ProviderHub
-require: https://github.com/Azure/azure-rest-api-specs/blob/247a38a5fea02ac50132f591f3b53fec06e9377b/specification/providerhub/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/65f2dcf753bf3f0a974d6b44ccbcc7edec864a22/specification/providerhub/resource-manager/readme.md
 #tag: package-2024-09-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
