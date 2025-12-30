@@ -12,6 +12,7 @@ namespace Azure.AI.AgentServer.Core.Tools;
 /// Asynchronous client for aggregating tools from Azure AI MCP and Tools APIs.
 /// This is the primary client for production use.
 /// </summary>
+#pragma warning disable AZC0015
 public class AzureAIToolClient : IAsyncDisposable, IDisposable
 {
     private readonly AzureAIToolClientOptions _options;
@@ -66,54 +67,50 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
     /// Lists all available tools from configured sources synchronously.
     /// </summary>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Response containing the list of available tools.</returns>
+    /// <returns>The list of available tools.</returns>
     /// <exception cref="Exceptions.OAuthConsentRequiredException">OAuth consent required.</exception>
     /// <exception cref="Exceptions.MCPToolApprovalRequiredException">Tool approval required.</exception>
-    public virtual Response<IReadOnlyList<FoundryTool>> ListTools(CancellationToken cancellationToken = default)
+    public virtual IReadOnlyList<FoundryTool> ListTools(CancellationToken cancellationToken = default)
     {
         var existingNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var tools = new List<FoundryTool>();
-        Response? lastResponse = null;
 
         if (_options.ToolConfig.NamedMcpTools.Count > 0)
         {
             var response = _mcpTools.ListTools(existingNames, cancellationToken);
             tools.AddRange(response.Value);
-            lastResponse = response.GetRawResponse();
         }
 
         if (_options.ToolConfig.RemoteTools.Count > 0)
         {
             var response = _remoteTools.ResolveTools(existingNames, cancellationToken);
             tools.AddRange(response.Value);
-            lastResponse = response.GetRawResponse();
         }
         else if (_options.ToolConfig.NamedMcpTools.Count == 0)
         {
             var response = _mcpTools.ListTools(existingNames, cancellationToken);
             tools.AddRange(response.Value);
-            lastResponse = response.GetRawResponse();
         }
 
         // Attach sync + async invokers
         foreach (var tool in tools)
         {
-            tool.Invoker = args => InvokeTool(tool, args, cancellationToken).Value;
+            tool.Invoker = args => InvokeTool(tool, args, cancellationToken);
             tool.AsyncInvoker = async args =>
-                (await InvokeToolAsync(tool, args, cancellationToken).ConfigureAwait(false)).Value;
+                await InvokeToolAsync(tool, args, cancellationToken).ConfigureAwait(false);
         }
 
-        return Response.FromValue<IReadOnlyList<FoundryTool>>(tools, lastResponse!);
+        return tools;
     }
 
     /// <summary>
     /// Lists all available tools from configured sources asynchronously.
     /// </summary>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Task returning response with list of available tools.</returns>
+    /// <returns>Task returning list of available tools.</returns>
     /// <exception cref="Exceptions.OAuthConsentRequiredException">OAuth consent required.</exception>
     /// <exception cref="Exceptions.MCPToolApprovalRequiredException">Tool approval required.</exception>
-    public virtual async Task<Response<IReadOnlyList<FoundryTool>>> ListToolsAsync(CancellationToken cancellationToken = default)
+    public virtual async Task<IReadOnlyList<FoundryTool>> ListToolsAsync(CancellationToken cancellationToken = default)
     {
         var existingNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var tools = new List<FoundryTool>();
@@ -135,7 +132,6 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
             tasks.Add(_mcpTools.ListToolsAsync(existingNames, cancellationToken));
         }
 
-        Response? lastResponse = null;
         if (tasks.Count > 0)
         {
             var results = await Task.WhenAll(tasks).ConfigureAwait(false);
@@ -143,19 +139,18 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
             foreach (var result in results)
             {
                 tools.AddRange(result.Value);
-                lastResponse = result.GetRawResponse();
             }
         }
 
         // Attach async invokers
         foreach (var tool in tools)
         {
-            tool.Invoker = args => InvokeTool(tool, args, cancellationToken).Value;
+            tool.Invoker = args => InvokeTool(tool, args, cancellationToken);
             tool.AsyncInvoker = async args =>
-                (await InvokeToolAsync(tool, args, cancellationToken).ConfigureAwait(false)).Value;
+                await InvokeToolAsync(tool, args, cancellationToken).ConfigureAwait(false);
         }
 
-        return Response.FromValue<IReadOnlyList<FoundryTool>>(tools, lastResponse!);
+        return tools;
     }
 
     /// <summary>
@@ -164,8 +159,8 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
     /// <param name="toolName">The tool name.</param>
     /// <param name="arguments">Optional tool arguments.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Response containing the tool invocation result.</returns>
-    public virtual Response<object?> InvokeTool(
+    /// <returns>The tool invocation result.</returns>
+    public virtual object? InvokeTool(
         string toolName,
         IDictionary<string, object?>? arguments = null,
         CancellationToken cancellationToken = default)
@@ -180,8 +175,8 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
     /// <param name="toolName">The tool name.</param>
     /// <param name="arguments">Optional tool arguments.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Task returning response with the tool invocation result.</returns>
-    public virtual async Task<Response<object?>> InvokeToolAsync(
+    /// <returns>Task returning the tool invocation result.</returns>
+    public virtual async Task<object?> InvokeToolAsync(
         string toolName,
         IDictionary<string, object?>? arguments = null,
         CancellationToken cancellationToken = default)
@@ -196,8 +191,8 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
     /// <param name="tool">The tool descriptor.</param>
     /// <param name="arguments">Optional tool arguments.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Response containing the tool invocation result.</returns>
-    public virtual Response<object?> InvokeTool(
+    /// <returns>The tool invocation result.</returns>
+    public virtual object? InvokeTool(
         FoundryTool tool,
         IDictionary<string, object?>? arguments = null,
         CancellationToken cancellationToken = default)
@@ -213,7 +208,7 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
             _ => throw new InvalidOperationException($"Unsupported tool source: {tool.Source}")
         };
 
-        return response;
+        return response.Value;
     }
 
     /// <summary>
@@ -222,8 +217,8 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
     /// <param name="tool">The tool descriptor.</param>
     /// <param name="arguments">Optional tool arguments.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Task returning response with the tool invocation result.</returns>
-    public virtual async Task<Response<object?>> InvokeToolAsync(
+    /// <returns>Task returning the tool invocation result.</returns>
+    public virtual async Task<object?> InvokeToolAsync(
         FoundryTool tool,
         IDictionary<string, object?>? arguments = null,
         CancellationToken cancellationToken = default)
@@ -241,12 +236,12 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
             _ => throw new InvalidOperationException($"Unsupported tool source: {tool.Source}")
         };
 
-        return response;
+        return response.Value;
     }
 
     private FoundryTool ResolveToolDescriptor(string toolName, CancellationToken cancellationToken)
     {
-        var tools = ListTools(cancellationToken).Value;
+        var tools = ListTools(cancellationToken);
         return tools.FirstOrDefault(t =>
             string.Equals(t.Name, toolName, StringComparison.OrdinalIgnoreCase) ||
             string.Equals(t.Key, toolName, StringComparison.OrdinalIgnoreCase))
@@ -255,7 +250,7 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
 
     private async Task<FoundryTool> ResolveToolDescriptorAsync(string toolName, CancellationToken cancellationToken)
     {
-        var tools = (await ListToolsAsync(cancellationToken).ConfigureAwait(false)).Value;
+        var tools = await ListToolsAsync(cancellationToken).ConfigureAwait(false);
         return tools.FirstOrDefault(t =>
             string.Equals(t.Name, toolName, StringComparison.OrdinalIgnoreCase) ||
             string.Equals(t.Key, toolName, StringComparison.OrdinalIgnoreCase))
