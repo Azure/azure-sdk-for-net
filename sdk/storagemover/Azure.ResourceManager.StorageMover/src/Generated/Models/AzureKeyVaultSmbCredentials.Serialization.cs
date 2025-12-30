@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class AzureKeyVaultSmbCredentials : IUtf8JsonSerializable, IJsonModel<AzureKeyVaultSmbCredentials>
+    /// <summary> The Azure Key Vault secret URIs which store the credentials. </summary>
+    public partial class AzureKeyVaultSmbCredentials : StorageMoverCredentials, IJsonModel<AzureKeyVaultSmbCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureKeyVaultSmbCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureKeyVaultSmbCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(UsernameUriString))
             {
@@ -47,61 +47,67 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
         }
 
-        AzureKeyVaultSmbCredentials IJsonModel<AzureKeyVaultSmbCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureKeyVaultSmbCredentials IJsonModel<AzureKeyVaultSmbCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureKeyVaultSmbCredentials)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override StorageMoverCredentials JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureKeyVaultSmbCredentials(document.RootElement, options);
         }
 
-        internal static AzureKeyVaultSmbCredentials DeserializeAzureKeyVaultSmbCredentials(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureKeyVaultSmbCredentials DeserializeAzureKeyVaultSmbCredentials(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string usernameUri = default;
-            string passwordUri = default;
-            CredentialType type = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            CredentialType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string usernameUriString = default;
+            string passwordUriString = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("usernameUri"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    usernameUri = property.Value.GetString();
+                    @type = new CredentialType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("passwordUri"u8))
+                if (prop.NameEquals("usernameUri"u8))
                 {
-                    passwordUri = property.Value.GetString();
+                    usernameUriString = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("passwordUri"u8))
                 {
-                    type = new CredentialType(property.Value.GetString());
+                    passwordUriString = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AzureKeyVaultSmbCredentials(type, serializedAdditionalRawData, usernameUri, passwordUri);
+            return new AzureKeyVaultSmbCredentials(@type, additionalBinaryDataProperties, usernameUriString, passwordUriString);
         }
 
-        BinaryData IPersistableModel<AzureKeyVaultSmbCredentials>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureKeyVaultSmbCredentials>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -111,15 +117,20 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
         }
 
-        AzureKeyVaultSmbCredentials IPersistableModel<AzureKeyVaultSmbCredentials>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureKeyVaultSmbCredentials IPersistableModel<AzureKeyVaultSmbCredentials>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureKeyVaultSmbCredentials)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override StorageMoverCredentials PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureKeyVaultSmbCredentials(document.RootElement, options);
                     }
                 default:
@@ -127,6 +138,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureKeyVaultSmbCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
