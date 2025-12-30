@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Grafana
     [ModelReaderWriterBuildable(typeof(EnterpriseConfigurations))]
     [ModelReaderWriterBuildable(typeof(EnterpriseDetails))]
     [ModelReaderWriterBuildable(typeof(GrafanaAvailablePlugin))]
-    [ModelReaderWriterBuildable(typeof(GrafanaAvailablePluginListResponse))]
+    [ModelReaderWriterBuildable(typeof(GrafanaAvailablePluginListResult))]
     [ModelReaderWriterBuildable(typeof(GrafanaConfigurations))]
     [ModelReaderWriterBuildable(typeof(GrafanaIntegrationFabricData))]
     [ModelReaderWriterBuildable(typeof(GrafanaIntegrationFabricPatch))]

@@ -18,8 +18,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Grafana
 {
     /// <summary> The grafana resource type. </summary>
-    public partial class ManagedGrafanaData : ResourceData, IJsonModel<ManagedGrafanaData>
+    public partial class ManagedGrafanaData : TrackedResourceData, IJsonModel<ManagedGrafanaData>
     {
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaData"/> for deserialization. </summary>
+        internal ManagedGrafanaData()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedGrafanaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -65,11 +70,6 @@ namespace Azure.ResourceManager.Grafana
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Grafana
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             ManagedGrafanaProperties properties = default;
             ManagedGrafanaSku sku = default;
             IDictionary<string, string> tags = default;
-            string location = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,6 +144,11 @@ namespace Azure.ResourceManager.Grafana
                         continue;
                     }
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGrafanaContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -185,11 +190,6 @@ namespace Azure.ResourceManager.Grafana
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("identity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.Grafana
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                location,
                 properties,
                 sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 identity);
         }
 

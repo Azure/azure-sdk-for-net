@@ -14,15 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Grafana
 {
     /// <summary> The grafana resource type. </summary>
-    public partial class ManagedGrafanaData : ResourceData
+    public partial class ManagedGrafanaData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedGrafanaData"/>. </summary>
-        public ManagedGrafanaData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public ManagedGrafanaData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedGrafanaData"/>. </summary>
@@ -31,18 +31,16 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties specific to the grafana resource. </param>
         /// <param name="sku"> The Sku of the grafana resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedGrafanaProperties properties, ManagedGrafanaSku sku, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ManagedGrafanaProperties properties, ManagedGrafanaSku sku, IDictionary<string, string> tags, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
-            Tags = tags;
-            Location = location;
             Identity = identity;
         }
 
@@ -51,12 +49,6 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary> The Sku of the grafana resource. </summary>
         public ManagedGrafanaSku Sku { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }

@@ -14,12 +14,12 @@ using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> The GrafanaAvailablePluginListResponse. </summary>
-    internal partial class GrafanaAvailablePluginListResponse : IJsonModel<GrafanaAvailablePluginListResponse>
+    /// <summary> The GrafanaAvailablePluginListResult. </summary>
+    internal partial class GrafanaAvailablePluginListResult : IJsonModel<GrafanaAvailablePluginListResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GrafanaAvailablePluginListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GrafanaAvailablePluginListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GrafanaAvailablePluginListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GrafanaAvailablePluginListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GrafanaAvailablePluginListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GrafanaAvailablePluginListResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -69,24 +69,24 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GrafanaAvailablePluginListResponse IJsonModel<GrafanaAvailablePluginListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GrafanaAvailablePluginListResult IJsonModel<GrafanaAvailablePluginListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GrafanaAvailablePluginListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GrafanaAvailablePluginListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GrafanaAvailablePluginListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GrafanaAvailablePluginListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GrafanaAvailablePluginListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GrafanaAvailablePluginListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGrafanaAvailablePluginListResponse(document.RootElement, options);
+            return DeserializeGrafanaAvailablePluginListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GrafanaAvailablePluginListResponse DeserializeGrafanaAvailablePluginListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static GrafanaAvailablePluginListResult DeserializeGrafanaAvailablePluginListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,54 +121,54 @@ namespace Azure.ResourceManager.Grafana.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GrafanaAvailablePluginListResponse(value ?? new ChangeTrackingList<GrafanaAvailablePlugin>(), nextLink, additionalBinaryDataProperties);
+            return new GrafanaAvailablePluginListResult(value ?? new ChangeTrackingList<GrafanaAvailablePlugin>(), nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GrafanaAvailablePluginListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GrafanaAvailablePluginListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GrafanaAvailablePluginListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GrafanaAvailablePluginListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GrafanaAvailablePluginListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GrafanaAvailablePluginListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GrafanaAvailablePluginListResponse IPersistableModel<GrafanaAvailablePluginListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GrafanaAvailablePluginListResult IPersistableModel<GrafanaAvailablePluginListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GrafanaAvailablePluginListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GrafanaAvailablePluginListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GrafanaAvailablePluginListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GrafanaAvailablePluginListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGrafanaAvailablePluginListResponse(document.RootElement, options);
+                        return DeserializeGrafanaAvailablePluginListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GrafanaAvailablePluginListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GrafanaAvailablePluginListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GrafanaAvailablePluginListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GrafanaAvailablePluginListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GrafanaAvailablePluginListResponse"/> from. </param>
-        internal static GrafanaAvailablePluginListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GrafanaAvailablePluginListResult"/> from. </param>
+        internal static GrafanaAvailablePluginListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGrafanaAvailablePluginListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeGrafanaAvailablePluginListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

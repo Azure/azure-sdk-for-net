@@ -11,23 +11,23 @@ using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> The GrafanaAvailablePluginListResponse. </summary>
-    internal partial class GrafanaAvailablePluginListResponse
+    /// <summary> The GrafanaAvailablePluginListResult. </summary>
+    internal partial class GrafanaAvailablePluginListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GrafanaAvailablePluginListResponse"/>. </summary>
-        internal GrafanaAvailablePluginListResponse()
+        /// <summary> Initializes a new instance of <see cref="GrafanaAvailablePluginListResult"/>. </summary>
+        internal GrafanaAvailablePluginListResult()
         {
             Value = new ChangeTrackingList<GrafanaAvailablePlugin>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GrafanaAvailablePluginListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaAvailablePluginListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaAvailablePluginListResponse(IList<GrafanaAvailablePlugin> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GrafanaAvailablePluginListResult(IList<GrafanaAvailablePlugin> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

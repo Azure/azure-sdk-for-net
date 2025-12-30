@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties specific to the grafana resource. </param>
         /// <param name="sku"> The Sku of the grafana resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Grafana.ManagedGrafanaData"/> instance for mocking. </returns>
-        public static ManagedGrafanaData ManagedGrafanaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedGrafanaProperties properties = default, ManagedGrafanaSku sku = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        public static ManagedGrafanaData ManagedGrafanaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ManagedGrafanaProperties properties = default, ManagedGrafanaSku sku = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Grafana.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                location,
                 properties,
                 sku,
                 tags,
-                location,
                 identity);
         }
 

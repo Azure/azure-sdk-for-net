@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Grafana
 {
     /// <summary></summary>
-    public partial class ManagedGrafanaResource : ArmResource, IJsonModel<ManagedGrafanaData>
+    public partial class ManagedGrafanaResource : IJsonModel<ManagedGrafanaData>
     {
         private static IJsonModel<ManagedGrafanaData> s_dataDeserializationInstance;
 

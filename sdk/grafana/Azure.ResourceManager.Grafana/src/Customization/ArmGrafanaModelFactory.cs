@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="skuName"> The Sku name of the grafana resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Grafana.ManagedGrafanaData"/> instance for mocking. </returns>
-        public static ManagedGrafanaData ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string skuName, ManagedGrafanaProperties properties = default, ManagedServiceIdentity identity = default)
+        public static ManagedGrafanaData ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, string skuName = default, ManagedGrafanaProperties properties = default, ManagedServiceIdentity identity = default)
         {
             ManagedGrafanaSku sku = new ManagedGrafanaSku(skuName);
-            return ManagedGrafanaData(id, name, resourceType, systemData, tags, location, properties, sku, identity);
+            return ManagedGrafanaData(id, name, resourceType, systemData, location, properties, sku, tags, identity);
         }
     }
 }
