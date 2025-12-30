@@ -95,6 +95,92 @@ OpenAIFile validationFile = fileClient.UploadFile(
 Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 ```
 
+## Import Files from URL (Alternative)
+
+Instead of uploading files directly, you can import files from URLs such as Azure Blob Storage (with SAS token) or publicly accessible URLs. This is useful when your training data is already stored in cloud storage. This uses the Azure-specific `/openai/files/import` endpoint.
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_ImportFileFromUrlAsync
+// Alternative: Import files from URLs (Azure Blob with SAS token or public URLs)
+// This uses the Azure-specific /openai/files/import endpoint.
+// Useful when files are stored in Azure Blob Storage or publicly accessible locations.
+string importUrl = $"{endpoint}/openai/files/import?api-version=2025-11-15-preview";
+
+// Example: Import from Azure Blob URL with SAS token
+string blobUrlWithSas = Environment.GetEnvironmentVariable("TRAINING_FILE_BLOB_URL");
+// Or from a public URL (e.g., GitHub raw file)
+// string publicUrl = "https://raw.githubusercontent.com/.../training_data.jsonl";
+
+var importRequest = new
+{
+    filename = "imported_training_set.jsonl",
+    purpose = "fine-tune",
+    content_url = blobUrlWithSas  // or publicUrl
+};
+
+string importJson = JsonSerializer.Serialize(importRequest);
+var credential = new DefaultAzureCredential();
+var token = await credential.GetTokenAsync(
+    new Azure.Core.TokenRequestContext(new[] { "https://ai.azure.com/.default" }));
+
+using var httpClient = new System.Net.Http.HttpClient();
+httpClient.DefaultRequestHeaders.Authorization =
+    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Token);
+
+var response = await httpClient.PostAsync(importUrl,
+    new System.Net.Http.StringContent(importJson, System.Text.Encoding.UTF8, "application/json"));
+response.EnsureSuccessStatusCode();
+
+using JsonDocument doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+string importedFileId = doc.RootElement.GetProperty("id").GetString();
+Console.WriteLine($"Imported file ID: {importedFileId}");
+
+// Wait for imported file to process, then use in fine-tuning job
+await FineTuningHelpers.WaitForFileProcessingAsync(fileClient, importedFileId, pollIntervalSeconds: 2);
+```
+
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_ImportFileFromUrl
+// Alternative: Import files from URLs (Azure Blob with SAS token or public URLs)
+// This uses the Azure-specific /openai/files/import endpoint.
+// Useful when files are stored in Azure Blob Storage or publicly accessible locations.
+string importUrl = $"{endpoint}/openai/files/import?api-version=2025-11-15-preview";
+
+// Example: Import from Azure Blob URL with SAS token
+string blobUrlWithSas = Environment.GetEnvironmentVariable("TRAINING_FILE_BLOB_URL");
+// Or from a public URL (e.g., GitHub raw file)
+// string publicUrl = "https://raw.githubusercontent.com/.../training_data.jsonl";
+
+var importRequest = new
+{
+    filename = "imported_training_set.jsonl",
+    purpose = "fine-tune",
+    content_url = blobUrlWithSas  // or publicUrl
+};
+
+string importJson = JsonSerializer.Serialize(importRequest);
+var credential = new DefaultAzureCredential();
+var token = credential.GetToken(
+    new Azure.Core.TokenRequestContext(new[] { "https://ai.azure.com/.default" }));
+
+using var httpClient = new System.Net.Http.HttpClient();
+httpClient.DefaultRequestHeaders.Authorization =
+    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Token);
+
+var response = httpClient.PostAsync(importUrl,
+    new System.Net.Http.StringContent(importJson, System.Text.Encoding.UTF8, "application/json")).Result;
+response.EnsureSuccessStatusCode();
+
+using JsonDocument doc = JsonDocument.Parse(response.Content.ReadAsStringAsync().Result);
+string importedFileId = doc.RootElement.GetProperty("id").GetString();
+Console.WriteLine($"Imported file ID: {importedFileId}");
+
+// Wait for imported file to process, then use in fine-tuning job
+FineTuningHelpers.WaitForFileProcessing(fileClient, importedFileId, pollIntervalSeconds: 2);
+```
+
 ## Wait for File Processing Helper
 
 After uploading files, they need to be processed before they can be used for fine-tuning. In production, you should wait for files to complete processing before creating a fine-tuning job. The helper methods below poll the file status until it reaches `Processed` or `Error` state. This ensures your training data is ready before starting the fine-tuning job.
@@ -189,9 +275,14 @@ Once the files are processed, we can create a fine-tuning job. The `FineTune` me
 
 ```C# Snippet:AI_Projects_FineTuning_CreateJobAsync
 // Create supervised fine-tuning job
+// Model name can be:
+//   - A base model deployment name (e.g., "gpt-4o-mini", "gpt-4.1")
+//   - A previously fine-tuned model for continual/iterative fine-tuning
+//     (e.g., "gpt-4.1-mini-2025-04-14.ftjob-ay584758785749")
+// Note: For continual fine-tuning, the trainingType must match the original model's training type
 Console.WriteLine("Creating supervised fine-tuning job...");
 FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(
-    modelDeploymentName,
+    modelDeploymentName,  // Base model or fine-tuned model name for continual fine-tuning
     trainFile.Id,
     waitUntilCompleted: false,
     new()
@@ -200,9 +291,13 @@ FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(
             epochCount: 3,
             batchSize: 1,
             learningRate: 1.0),
-        ValidationFile = validationFile.Id
+        ValidationFile = validationFile.Id,
+        Suffix = "my-custom-model",  // Optional: up to 64 chars, appended to the fine-tuned model name
+        Seed = 42                     // Optional: for reproducibility, same seed + params = same results
     });
 Console.WriteLine($"Created fine-tuning job: {fineTuningJob.JobId}");
+Console.WriteLine($"Suffix: {fineTuningJob.UserProvidedSuffix}");
+Console.WriteLine($"Seed: {fineTuningJob.Seed}");
 Console.WriteLine($"Status: {fineTuningJob.Status}");
 ```
 
@@ -210,9 +305,14 @@ Console.WriteLine($"Status: {fineTuningJob.Status}");
 
 ```C# Snippet:AI_Projects_FineTuning_CreateJob
 // Create supervised fine-tuning job
+// Model name can be:
+//   - A base model deployment name (e.g., "gpt-4o-mini", "gpt-4.1")
+//   - A previously fine-tuned model for continual/iterative fine-tuning
+//     (e.g., "gpt-4.1-mini-2025-04-14.ftjob-ay584758785749")
+// Note: For continual fine-tuning, the trainingType must match the original model's training type
 Console.WriteLine("Creating supervised fine-tuning job...");
 FineTuningJob fineTuningJob = fineTuningClient.FineTune(
-    modelDeploymentName,
+    modelDeploymentName,  // Base model or fine-tuned model name for continual fine-tuning
     trainFile.Id,
     waitUntilCompleted: false,
     new()
@@ -221,10 +321,130 @@ FineTuningJob fineTuningJob = fineTuningClient.FineTune(
             epochCount: 3,
             batchSize: 1,
             learningRate: 1.0),
-        ValidationFile = validationFile.Id
+        ValidationFile = validationFile.Id,
+        Suffix = "my-custom-model",  // Optional: up to 64 chars, appended to the fine-tuned model name
+        Seed = 42                     // Optional: for reproducibility, same seed + params = same results
     });
 Console.WriteLine($"Created fine-tuning job: {fineTuningJob.JobId}");
+Console.WriteLine($"Suffix: {fineTuningJob.UserProvidedSuffix}");
+Console.WriteLine($"Seed: {fineTuningJob.Seed}");
 Console.WriteLine($"Status: {fineTuningJob.Status}");
+```
+
+## Create Fine-Tuning Job with Raw JSON (Advanced)
+
+For Azure-specific options not available in the typed API, you can create fine-tuning jobs using raw JSON. This approach allows you to set:
+- **trainingType**: Training tier (`"Standard"`, `"developerTier"`, `"GlobalStandard"`)
+- **Auto-deployment**: Automatically deploy the model when training completes
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_CreateJobWithRawJsonAsync
+// Alternative: Create fine-tuning job using raw JSON for Azure-specific options
+// This approach allows setting trainingType and auto-deployment configuration
+// that are not available in the typed API.
+//
+// TrainingType options:
+//   - "Standard": Standard training tier (default)
+//   - "developerTier": Developer tier - lower cost, suitable for testing
+//   - "GlobalStandard": Global standard tier - highest priority
+//
+// Auto-deployment: Automatically deploys the fine-tuned model when training completes
+//   - inference_sku: 0 = Developer tier, 2 = GlobalStandard tier
+Console.WriteLine("Creating fine-tuning job with raw JSON (advanced options)...");
+var methodObject = new
+{
+    type = "supervised",
+    supervised = new
+    {
+        hyperparameters = new
+        {
+            n_epochs = 3,
+            batch_size = 1,
+            learning_rate_multiplier = 1.0
+        }
+    }
+};
+
+var requestJson = new Dictionary<string, object>
+{
+    ["model"] = modelDeploymentName,
+    ["training_file"] = trainFile.Id,
+    ["validation_file"] = validationFile.Id,
+    ["method"] = methodObject,
+    ["suffix"] = "my-auto-deploy-model",
+    ["seed"] = 42,
+    // Azure-specific: Set training type ("Standard", "developerTier", "GlobalStandard")
+    ["trainingType"] = "Standard",
+    // Azure-specific: Enable auto-deployment when training completes
+    ["inference_configs"] = new
+    {
+        auto_inference_enabled = true,
+        inference_sku = 2  // 0 = Developer, 2 = GlobalStandard
+    }
+};
+
+string jsonString = JsonSerializer.Serialize(requestJson);
+BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
+FineTuningJob rawJsonJob = await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
+Console.WriteLine($"Created fine-tuning job with auto-deployment: {rawJsonJob.JobId}");
+Console.WriteLine($"Status: {rawJsonJob.Status}");
+Console.WriteLine("Model will be automatically deployed when training completes.");
+```
+
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_CreateJobWithRawJson
+// Alternative: Create fine-tuning job using raw JSON for Azure-specific options
+// This approach allows setting trainingType and auto-deployment configuration
+// that are not available in the typed API.
+//
+// TrainingType options:
+//   - "Standard": Standard training tier (default)
+//   - "developerTier": Developer tier - lower cost, suitable for testing
+//   - "GlobalStandard": Global standard tier - highest priority
+//
+// Auto-deployment: Automatically deploys the fine-tuned model when training completes
+//   - inference_sku: 0 = Developer tier, 2 = GlobalStandard tier
+Console.WriteLine("Creating fine-tuning job with raw JSON (advanced options)...");
+var methodObject = new
+{
+    type = "supervised",
+    supervised = new
+    {
+        hyperparameters = new
+        {
+            n_epochs = 3,
+            batch_size = 1,
+            learning_rate_multiplier = 1.0
+        }
+    }
+};
+
+var requestJson = new Dictionary<string, object>
+{
+    ["model"] = modelDeploymentName,
+    ["training_file"] = trainFile.Id,
+    ["validation_file"] = validationFile.Id,
+    ["method"] = methodObject,
+    ["suffix"] = "my-auto-deploy-model",
+    ["seed"] = 42,
+    // Azure-specific: Set training type ("Standard", "developerTier", "GlobalStandard")
+    ["trainingType"] = "Standard",
+    // Azure-specific: Enable auto-deployment when training completes
+    ["inference_configs"] = new
+    {
+        auto_inference_enabled = true,
+        inference_sku = 2  // 0 = Developer, 2 = GlobalStandard
+    }
+};
+
+string jsonString = JsonSerializer.Serialize(requestJson);
+BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
+FineTuningJob rawJsonJob = fineTuningClient.FineTune(content, waitUntilCompleted: false, options: null);
+Console.WriteLine($"Created fine-tuning job with auto-deployment: {rawJsonJob.JobId}");
+Console.WriteLine($"Status: {rawJsonJob.Status}");
+Console.WriteLine("Model will be automatically deployed when training completes.");
 ```
 
 ## Retrieve Job

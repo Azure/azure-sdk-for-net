@@ -32,6 +32,7 @@ namespace Azure.AI.Projects.Tests
         public string SAMPLEFOLDERPATH => GetRecordedVariable("SAMPLE_FOLDER_PATH");
         // The Fine tuning environment variables
         public string FINE_TUNING_COMPLETED_JOB => GetRecordedVariable(nameof(FINE_TUNING_COMPLETED_JOB));
+        public string FINE_TUNING_FINE_TUNED_MODEL => GetRecordedVariable(nameof(FINE_TUNING_FINE_TUNED_MODEL));
         public string FINE_TUNING_AZURE_SUBSCRIPTION_ID => GetRecordedVariable(nameof(FINE_TUNING_AZURE_SUBSCRIPTION_ID));
         public string FINE_TUNING_AZURE_RESOURCE_GROUP => GetRecordedVariable(nameof(FINE_TUNING_AZURE_RESOURCE_GROUP));
         public string FINE_TUNING_AZURE_FOUNDRY_NAME => GetRecordedVariable(nameof(FINE_TUNING_AZURE_FOUNDRY_NAME));

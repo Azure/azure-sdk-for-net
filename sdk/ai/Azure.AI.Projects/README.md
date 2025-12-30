@@ -526,9 +526,14 @@ Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 Now we will use the uploaded training and validation set to fine-tue the model. In our experiment we will train the model for three epochs batch size of one and the constant [learning rate](https://en.wikipedia.org/wiki/Learning_rate) of 1.0.
 ```C# Snippet:AI_Projects_FineTuning_CreateJob
 // Create supervised fine-tuning job
+// Model name can be:
+//   - A base model deployment name (e.g., "gpt-4o-mini", "gpt-4.1")
+//   - A previously fine-tuned model for continual/iterative fine-tuning
+//     (e.g., "gpt-4.1-mini-2025-04-14.ftjob-ay584758785749")
+// Note: For continual fine-tuning, the trainingType must match the original model's training type
 Console.WriteLine("Creating supervised fine-tuning job...");
 FineTuningJob fineTuningJob = fineTuningClient.FineTune(
-    modelDeploymentName,
+    modelDeploymentName,  // Base model or fine-tuned model name for continual fine-tuning
     trainFile.Id,
     waitUntilCompleted: false,
     new()
@@ -537,9 +542,13 @@ FineTuningJob fineTuningJob = fineTuningClient.FineTune(
             epochCount: 3,
             batchSize: 1,
             learningRate: 1.0),
-        ValidationFile = validationFile.Id
+        ValidationFile = validationFile.Id,
+        Suffix = "my-custom-model",  // Optional: up to 64 chars, appended to the fine-tuned model name
+        Seed = 42                     // Optional: for reproducibility, same seed + params = same results
     });
 Console.WriteLine($"Created fine-tuning job: {fineTuningJob.JobId}");
+Console.WriteLine($"Suffix: {fineTuningJob.UserProvidedSuffix}");
+Console.WriteLine($"Seed: {fineTuningJob.Seed}");
 Console.WriteLine($"Status: {fineTuningJob.Status}");
 ```
 

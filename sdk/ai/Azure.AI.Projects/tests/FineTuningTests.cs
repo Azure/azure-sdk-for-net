@@ -111,7 +111,9 @@ public class FineTuningTests : ProjectsClientTestBase
         string trainingType = null,
         int epochCount = 1,
         int batchSize = 4,
-        double learningRate = 0.0001)
+        double learningRate = 0.0001,
+        string suffix = null,
+        int? seed = null)
     {
         object methodObject = jobType.ToLowerInvariant() switch
         {
@@ -157,6 +159,17 @@ public class FineTuningTests : ProjectsClientTestBase
             requestJson["trainingType"] = trainingType;
         }
 
+        // Add optional suffix and seed for reproducibility
+        if (!string.IsNullOrEmpty(suffix))
+        {
+            requestJson["suffix"] = suffix;
+        }
+
+        if (seed.HasValue)
+        {
+            requestJson["seed"] = seed.Value;
+        }
+
         string jsonString = JsonSerializer.Serialize(requestJson);
         BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
         return await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
@@ -170,7 +183,9 @@ public class FineTuningTests : ProjectsClientTestBase
         string trainingType = null,
         int epochCount = 1,
         int batchSize = 4,
-        double learningRate = 0.0001)
+        double learningRate = 0.0001,
+        string suffix = null,
+        int? seed = null)
     {
         // Use raw JSON if trainingType is specified (required for Azure-specific field and OSS models)
         if (!string.IsNullOrEmpty(trainingType))
@@ -178,10 +193,11 @@ public class FineTuningTests : ProjectsClientTestBase
             return await CreateFineTuningJobWithRawJsonAsync(
                 fineTuningClient, modelName, trainFileId, validationFileId,
                 jobType: "sft", trainingType: trainingType,
-                epochCount: epochCount, batchSize: batchSize, learningRate: learningRate);
+                epochCount: epochCount, batchSize: batchSize, learningRate: learningRate,
+                suffix: suffix, seed: seed);
         }
 
-        // Default: use the SDK's typed API
+        // Default: use the SDK's typed API with optional suffix and seed
         return await fineTuningClient.FineTuneAsync(
             modelName,
             trainFileId,
@@ -192,7 +208,9 @@ public class FineTuningTests : ProjectsClientTestBase
                     epochCount: epochCount,
                     batchSize: batchSize,
                     learningRate: learningRate),
-                ValidationFile = validationFileId
+                ValidationFile = validationFileId,
+                Suffix = suffix,
+                Seed = seed
             });
     }
 
@@ -301,6 +319,7 @@ public class FineTuningTests : ProjectsClientTestBase
 
         try
         {
+            // Demonstrates using suffix and seed with raw JSON (via trainingType path)
             FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobAsync(
                 fineTuningClient,
                 "gpt-4.1",
@@ -309,9 +328,13 @@ public class FineTuningTests : ProjectsClientTestBase
                 trainingType: trainingType,
                 epochCount: 1,
                 batchSize: 4,
-                learningRate: 0.0001);
+                learningRate: 0.0001,
+                suffix: $"sdk-{trainingType}",  // Custom suffix includes training type
+                seed: 12345);                    // Seed for reproducibility
 
             Console.WriteLine($"Created SFT job with {trainingType} training type: {fineTuningJob.JobId}");
+            Console.WriteLine($"Suffix: {fineTuningJob.UserProvidedSuffix}");
+            Console.WriteLine($"Seed: {fineTuningJob.Seed}");
             ValidateFineTuningJob(fineTuningJob);
 
             // Cancel the job
@@ -391,6 +414,7 @@ public class FineTuningTests : ProjectsClientTestBase
 
         try
         {
+            // Demonstrates using suffix and seed with the typed API
             FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobAsync(
                 fineTuningClient,
                 "gpt-4.1",
@@ -398,9 +422,13 @@ public class FineTuningTests : ProjectsClientTestBase
                 validationFile.Id,
                 epochCount: 1,
                 batchSize: 4,
-                learningRate: 0.0001);
+                learningRate: 0.0001,
+                suffix: "sdk-test-job",  // Custom suffix for model name (up to 64 chars)
+                seed: 42);                // Seed for reproducibility
 
             Console.WriteLine($"Created SFT job: {fineTuningJob.JobId}");
+            Console.WriteLine($"Suffix: {fineTuningJob.UserProvidedSuffix}");
+            Console.WriteLine($"Seed: {fineTuningJob.Seed}");
             ValidateFineTuningJob(fineTuningJob);
 
             // Cancel the job
@@ -888,13 +916,54 @@ public class FineTuningTests : ProjectsClientTestBase
         await RunAutoDeploymentTestAsync("GlobalStandard", deploymentSku: 2);
     }
 
+    [RecordedTest]
+    public async Task Test_FineTuning_FineTune_A_FineTuned_Model()
+    {
+        // This test demonstrates fine-tuning a model that was already fine-tuned (iterative fine-tuning).
+        // This is useful for incrementally improving a fine-tuned model with additional data.
+        // The FINE_TUNING_FINE_TUNED_MODEL environment variable should contain a previously fine-tuned model name
+        // (e.g., "gpt-4.1-mini-2025-04-14.ftjob-ay584758785749" or similar format).
+        string fineTunedModelName = TestEnvironment.FINE_TUNING_FINE_TUNED_MODEL;
+        Console.WriteLine($"Fine-tuning an already fine-tuned model: {fineTunedModelName}");
+
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
+
+        try
+        {
+            // Create a fine-tuning job using the previously fine-tuned model as the base
+            FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobAsync(
+                fineTuningClient,
+                fineTunedModelName,
+                trainFile.Id,
+                validationFile.Id,
+                trainingType: "globalStandard",
+                epochCount: 1,
+                batchSize: 4,
+                learningRate: 0.0001);
+
+            Console.WriteLine($"Created iterative fine-tuning job: {fineTuningJob.JobId}");
+            Console.WriteLine($"Base model: {fineTuningJob.BaseModel}");
+            Console.WriteLine($"Status: {fineTuningJob.Status}");
+            ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job (we just want to verify the job creation works with a fine-tuned model)
+            await fineTuningJob.CancelAndUpdateAsync();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
+        }
+        finally
+        {
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
+        }
+    }
+
     /// <summary>
     /// Imports a file from a URL (e.g., Azure Blob with SAS token) for fine-tuning.
     /// Uses the POST /openai/files/import endpoint which is an Azure-specific extension.
     /// </summary>
     private async Task<string> ImportFileFromUrlAsync(string filename, string contentUrl)
     {
-        string importUrl = $"{TestEnvironment.PROJECTENDPOINT}/openai/files/import?api-version=2025-11-15-preview";
+        string importUrl = $"{TestEnvironment.PROJECT_ENDPOINT}/openai/files/import?api-version=2025-11-15-preview";
 
         var importRequest = new { filename, purpose = "fine-tune", content_url = contentUrl };
         string jsonBody = JsonSerializer.Serialize(importRequest);
@@ -1006,7 +1075,7 @@ public class FineTuningTests : ProjectsClientTestBase
             trainingFileUrl, "sft_training_set.jsonl",
             validationFileUrl, "sft_validation_set.jsonl");
     }
-    
+
     [Test]
     [LiveOnly(Reason = "Test uses raw HttpClient which bypasses test proxy")]
     public async Task Test_FineTuning_Import_File_From_Public_Url_And_Create_Job()
