@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// Action to validate preflight checks.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.PreflightAsync(string, string, string, PreflightCheckParameters, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.PreflightAsync(string, string, string, PreflightCheckContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="content"> Parameters for preflight checks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<PreflightCheckResult>> PreflightAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, PreflightCheckParameters content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PreflightCheckResult>> PreflightAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, PreflightCheckContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// Action to validate preflight checks.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.Preflight(string, string, string, PreflightCheckParameters, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.Preflight(string, string, string, PreflightCheckContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="content"> Parameters for preflight checks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<PreflightCheckResult> Preflight(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, PreflightCheckParameters content, CancellationToken cancellationToken = default)
+        public static Response<PreflightCheckResult> Preflight(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, PreflightCheckContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

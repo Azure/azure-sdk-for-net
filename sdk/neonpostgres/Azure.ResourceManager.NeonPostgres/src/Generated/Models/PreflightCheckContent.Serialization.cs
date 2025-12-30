@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     /// - When entityType is "database", provide only databaseProperties
     /// - When entityType is "endpoint", provide only endpointProperties
     /// </summary>
-    public partial class PreflightCheckParameters : IJsonModel<PreflightCheckParameters>
+    public partial class PreflightCheckContent : IJsonModel<PreflightCheckContent>
     {
-        /// <summary> Initializes a new instance of <see cref="PreflightCheckParameters"/> for deserialization. </summary>
-        internal PreflightCheckParameters()
+        /// <summary> Initializes a new instance of <see cref="PreflightCheckContent"/> for deserialization. </summary>
+        internal PreflightCheckContent()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PreflightCheckParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PreflightCheckContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreflightCheckParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PreflightCheckContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("projectId"u8);
             writer.WriteStringValue(ProjectId);
@@ -94,24 +94,24 @@ namespace Azure.ResourceManager.NeonPostgres.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PreflightCheckParameters IJsonModel<PreflightCheckParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PreflightCheckContent IJsonModel<PreflightCheckContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PreflightCheckParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PreflightCheckContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreflightCheckParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PreflightCheckContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePreflightCheckParameters(document.RootElement, options);
+            return DeserializePreflightCheckContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PreflightCheckParameters DeserializePreflightCheckParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static PreflightCheckContent DeserializePreflightCheckContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PreflightCheckParameters(
+            return new PreflightCheckContent(
                 projectId,
                 branchId,
                 entityType,
@@ -195,54 +195,54 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PreflightCheckParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PreflightCheckContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNeonPostgresContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PreflightCheckParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreflightCheckContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PreflightCheckParameters IPersistableModel<PreflightCheckParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PreflightCheckContent IPersistableModel<PreflightCheckContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PreflightCheckParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PreflightCheckContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePreflightCheckParameters(document.RootElement, options);
+                        return DeserializePreflightCheckContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PreflightCheckParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreflightCheckContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PreflightCheckParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PreflightCheckContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="preflightCheckParameters"> The <see cref="PreflightCheckParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PreflightCheckParameters preflightCheckParameters)
+        /// <param name="preflightCheckContent"> The <see cref="PreflightCheckContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PreflightCheckContent preflightCheckContent)
         {
-            if (preflightCheckParameters == null)
+            if (preflightCheckContent == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(preflightCheckParameters, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(preflightCheckContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

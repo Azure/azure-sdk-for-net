@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,7 +14,7 @@ using Azure.ResourceManager.NeonPostgres.Models;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    internal partial class ComputesGetAllAsyncCollectionResultOfT : AsyncPageable<NeonCompute>
+    internal partial class ComputesGetComputesCollectionResultOfT : Pageable<NeonCompute>
     {
         private readonly Computes _client;
         private readonly Guid _subscriptionId;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.NeonPostgres
         private readonly string _branchName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ComputesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ComputesGetComputesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Computes client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="projectName"> The name of the Project. </param>
         /// <param name="branchName"> The name of the Branch. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ComputesGetAllAsyncCollectionResultOfT(Computes client, Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ComputesGetComputesCollectionResultOfT(Computes client, Guid subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,16 +43,16 @@ namespace Azure.ResourceManager.NeonPostgres
             _context = context;
         }
 
-        /// <summary> Gets the pages of ComputesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ComputesGetComputesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComputesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<NeonCompute>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ComputesGetComputesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<NeonCompute>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -71,14 +70,14 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NeonBranchResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetComputesRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context) : _client.CreateGetComputesRequest(_subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NeonBranchResource.GetComputes");
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

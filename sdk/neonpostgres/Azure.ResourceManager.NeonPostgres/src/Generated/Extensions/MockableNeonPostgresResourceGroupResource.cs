@@ -221,16 +221,16 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
         /// <param name="projectName"> The name of the Project. </param>
         /// <param name="branchName"> The name of the Branch. </param>
-        /// <param name="preflightCheckParameters"> Parameters for preflight checks. </param>
+        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="preflightCheckParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="preflightCheckContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PreflightCheckResult>> PreflightAsync(string organizationName, string projectName, string branchName, PreflightCheckParameters preflightCheckParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PreflightCheckResult>> PreflightAsync(string organizationName, string projectName, string branchName, PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
-            Argument.AssertNotNull(preflightCheckParameters, nameof(preflightCheckParameters));
+            Argument.AssertNotNull(preflightCheckContent, nameof(preflightCheckContent));
 
             using DiagnosticScope scope = BranchesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.Preflight");
             scope.Start();
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BranchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, PreflightCheckParameters.ToRequestContent(preflightCheckParameters), context);
+                HttpMessage message = BranchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, PreflightCheckContent.ToRequestContent(preflightCheckContent), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PreflightCheckResult> response = Response.FromValue(PreflightCheckResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -260,16 +260,16 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
         /// <param name="projectName"> The name of the Project. </param>
         /// <param name="branchName"> The name of the Branch. </param>
-        /// <param name="preflightCheckParameters"> Parameters for preflight checks. </param>
+        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="preflightCheckParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="preflightCheckContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PreflightCheckResult> Preflight(string organizationName, string projectName, string branchName, PreflightCheckParameters preflightCheckParameters, CancellationToken cancellationToken = default)
+        public virtual Response<PreflightCheckResult> Preflight(string organizationName, string projectName, string branchName, PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
-            Argument.AssertNotNull(preflightCheckParameters, nameof(preflightCheckParameters));
+            Argument.AssertNotNull(preflightCheckContent, nameof(preflightCheckContent));
 
             using DiagnosticScope scope = BranchesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.Preflight");
             scope.Start();
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BranchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, PreflightCheckParameters.ToRequestContent(preflightCheckParameters), context);
+                HttpMessage message = BranchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, PreflightCheckContent.ToRequestContent(preflightCheckContent), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PreflightCheckResult> response = Response.FromValue(PreflightCheckResult.FromResponse(result), result);
                 if (response.Value == null)

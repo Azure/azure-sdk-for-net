@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     /// - When entityType is "database", provide only databaseProperties
     /// - When entityType is "endpoint", provide only endpointProperties
     /// </summary>
-    public partial class PreflightCheckParameters
+    public partial class PreflightCheckContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PreflightCheckParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreflightCheckContent"/>. </summary>
         /// <param name="projectId"> Project Id associated with this connection. </param>
         /// <param name="branchId"> Branch Id associated with this connection. </param>
         /// <param name="entityType"> Entity type to be validated for deletion. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectId"/> or <paramref name="branchId"/> is null. </exception>
-        public PreflightCheckParameters(string projectId, string branchId, PreflightCheckEntityType entityType)
+        public PreflightCheckContent(string projectId, string branchId, PreflightCheckEntityType entityType)
         {
             Argument.AssertNotNull(projectId, nameof(projectId));
             Argument.AssertNotNull(branchId, nameof(branchId));
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             EntityType = entityType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PreflightCheckParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreflightCheckContent"/>. </summary>
         /// <param name="projectId"> Project Id associated with this connection. </param>
         /// <param name="branchId"> Branch Id associated with this connection. </param>
         /// <param name="entityType"> Entity type to be validated for deletion. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="databaseProperties"> The database properties - ONLY provided when entityType is 'database'. </param>
         /// <param name="endpointProperties"> The endpoint properties - ONLY provided when entityType is 'endpoint'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PreflightCheckParameters(string projectId, string branchId, PreflightCheckEntityType entityType, NeonBranchProperties branchProperties, NeonRoleProperties roleProperties, NeonDatabaseProperties databaseProperties, NeonEndpointProperties endpointProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PreflightCheckContent(string projectId, string branchId, PreflightCheckEntityType entityType, NeonBranchProperties branchProperties, NeonRoleProperties roleProperties, NeonDatabaseProperties databaseProperties, NeonEndpointProperties endpointProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectId = projectId;
             BranchId = branchId;

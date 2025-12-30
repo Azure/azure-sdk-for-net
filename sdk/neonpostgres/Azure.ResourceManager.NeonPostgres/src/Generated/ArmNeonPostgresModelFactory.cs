@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.NeonOrganizationPatch"/> instance for mocking. </returns>
-        public static NeonOrganizationPatch NeonOrganizationPatch(IDictionary<string, string> tags = default, OrganizationResourceUpdateProperties properties = default)
+        public static NeonOrganizationPatch NeonOrganizationPatch(IDictionary<string, string> tags = default, NeonOrganizationPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -361,10 +361,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="roleProperties"> The role properties - ONLY provided when entityType is 'role'. </param>
         /// <param name="databaseProperties"> The database properties - ONLY provided when entityType is 'database'. </param>
         /// <param name="endpointProperties"> The endpoint properties - ONLY provided when entityType is 'endpoint'. </param>
-        /// <returns> A new <see cref="Models.PreflightCheckParameters"/> instance for mocking. </returns>
-        public static PreflightCheckParameters PreflightCheckParameters(string projectId = default, string branchId = default, PreflightCheckEntityType entityType = default, NeonBranchProperties branchProperties = default, NeonRoleProperties roleProperties = default, NeonDatabaseProperties databaseProperties = default, NeonEndpointProperties endpointProperties = default)
+        /// <returns> A new <see cref="Models.PreflightCheckContent"/> instance for mocking. </returns>
+        public static PreflightCheckContent PreflightCheckContent(string projectId = default, string branchId = default, PreflightCheckEntityType entityType = default, NeonBranchProperties branchProperties = default, NeonRoleProperties roleProperties = default, NeonDatabaseProperties databaseProperties = default, NeonEndpointProperties endpointProperties = default)
         {
-            return new PreflightCheckParameters(
+            return new PreflightCheckContent(
                 projectId,
                 branchId,
                 entityType,

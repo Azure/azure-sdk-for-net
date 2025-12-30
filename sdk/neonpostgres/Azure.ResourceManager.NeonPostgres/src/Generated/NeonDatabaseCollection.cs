@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.NeonPostgres
     /// Each <see cref="NeonDatabaseResource"/> in the collection will belong to the same instance of <see cref="NeonBranchResource"/>.
     /// To get a <see cref="NeonDatabaseCollection"/> instance call the GetNeonDatabases method from an instance of <see cref="NeonBranchResource"/>.
     /// </summary>
-    public partial class NeonDatabaseCollection : ArmCollection
+    public partial class NeonDatabaseCollection : ArmCollection, IEnumerable<NeonDatabaseResource>, IAsyncEnumerable<NeonDatabaseResource>
     {
         private readonly ClientDiagnostics _neonDatabasesClientDiagnostics;
         private readonly NeonDatabases _neonDatabasesRestClient;
@@ -166,6 +168,92 @@ namespace Azure.ResourceManager.NeonPostgres
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List NeonDatabase resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NeonDatabaseData, NeonDatabaseResource>(new NeonDatabasesGetAllAsyncCollectionResultOfT(
+                _neonDatabasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new NeonDatabaseResource(Client, data));
+        }
+
+        /// <summary>
+        /// List NeonDatabase resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonDatabaseResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NeonDatabaseData, NeonDatabaseResource>(new NeonDatabasesGetAllCollectionResultOfT(
+                _neonDatabasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new NeonDatabaseResource(Client, data));
+        }
+
+        IEnumerator<NeonDatabaseResource> IEnumerable<NeonDatabaseResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<NeonDatabaseResource> IAsyncEnumerable<NeonDatabaseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
