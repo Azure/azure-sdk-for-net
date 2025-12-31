@@ -40,7 +40,7 @@ namespace Azure.Generator.Visitors
 
         protected override TypeProvider? VisitType(TypeProvider type)
         {
-            if (type is EnumProvider && type.Name == "ServiceVersion")
+            if (type is EnumProvider)
             {
                 return type;
             }
@@ -50,7 +50,7 @@ namespace Azure.Generator.Visitors
                 return type;
             }
 
-            if (type is ModelProvider || type is EnumProvider || type is ModelFactoryProvider
+            if (type is ModelProvider || type is ModelFactoryProvider
                 || type is MrwSerializationTypeDefinition || type is FixedEnumSerializationProvider || type is ExtensibleEnumSerializationProvider)
             {
                 UpdateModelsNamespace(type);

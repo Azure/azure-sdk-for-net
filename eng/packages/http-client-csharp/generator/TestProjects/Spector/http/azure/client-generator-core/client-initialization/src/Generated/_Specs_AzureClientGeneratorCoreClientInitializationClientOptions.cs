@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace Specs.Azure.ClientGeneratorCore.ClientInitialization._ParentClient
+namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._ParentClient
 {
     public partial class _Specs_AzureClientGeneratorCoreClientInitializationClientOptions : ClientOptions
     {

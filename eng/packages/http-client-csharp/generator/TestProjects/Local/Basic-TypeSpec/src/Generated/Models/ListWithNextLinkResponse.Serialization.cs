@@ -114,7 +114,7 @@ namespace BasicTypeSpec
                     {
                         continue;
                     }
-                    next = new Uri(prop.Value.GetString());
+                    next = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
