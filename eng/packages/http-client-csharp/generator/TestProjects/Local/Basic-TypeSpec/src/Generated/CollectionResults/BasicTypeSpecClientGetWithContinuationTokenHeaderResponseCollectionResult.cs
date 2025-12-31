@@ -52,7 +52,7 @@ namespace BasicTypeSpec
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage, response);
-                if (response.Headers.TryGetValue("next-token", out string value))
+                if (response.Headers.TryGetValue("next-token", out string value) && !string.IsNullOrEmpty(value))
                 {
                     nextPage = value;
                 }

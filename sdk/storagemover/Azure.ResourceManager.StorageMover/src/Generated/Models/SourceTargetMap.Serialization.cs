@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class SourceTargetMap : IUtf8JsonSerializable, IJsonModel<SourceTargetMap>
+    /// <summary> The properties of cloud endpoints to migrate. </summary>
+    public partial class SourceTargetMap : IJsonModel<SourceTargetMap>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceTargetMap>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SourceTargetMap"/> for deserialization. </summary>
+        internal SourceTargetMap()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SourceTargetMap>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,25 +34,24 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceTargetMap>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SourceTargetMap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SourceTargetMap)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("sourceEndpoint"u8);
             writer.WriteObjectValue(SourceEndpoint, options);
             writer.WritePropertyName("targetEndpoint"u8);
             writer.WriteObjectValue(TargetEndpoint, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -55,55 +60,61 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
         }
 
-        SourceTargetMap IJsonModel<SourceTargetMap>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SourceTargetMap IJsonModel<SourceTargetMap>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SourceTargetMap JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceTargetMap>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SourceTargetMap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SourceTargetMap)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSourceTargetMap(document.RootElement, options);
         }
 
-        internal static SourceTargetMap DeserializeSourceTargetMap(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SourceTargetMap DeserializeSourceTargetMap(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SourceEndpoint sourceEndpoint = default;
             TargetEndpoint targetEndpoint = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceEndpoint"u8))
+                if (prop.NameEquals("sourceEndpoint"u8))
                 {
-                    sourceEndpoint = SourceEndpoint.DeserializeSourceEndpoint(property.Value, options);
+                    sourceEndpoint = SourceEndpoint.DeserializeSourceEndpoint(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetEndpoint"u8))
+                if (prop.NameEquals("targetEndpoint"u8))
                 {
-                    targetEndpoint = TargetEndpoint.DeserializeTargetEndpoint(property.Value, options);
+                    targetEndpoint = TargetEndpoint.DeserializeTargetEndpoint(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SourceTargetMap(sourceEndpoint, targetEndpoint, serializedAdditionalRawData);
+            return new SourceTargetMap(sourceEndpoint, targetEndpoint, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SourceTargetMap>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceTargetMap>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SourceTargetMap>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SourceTargetMap>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -113,15 +124,20 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
         }
 
-        SourceTargetMap IPersistableModel<SourceTargetMap>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceTargetMap>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SourceTargetMap IPersistableModel<SourceTargetMap>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SourceTargetMap PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SourceTargetMap>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSourceTargetMap(document.RootElement, options);
                     }
                 default:
@@ -129,6 +145,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SourceTargetMap>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

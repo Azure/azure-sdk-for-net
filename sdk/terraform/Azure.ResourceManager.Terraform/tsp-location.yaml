@@ -1,4 +1,4 @@
 directory: specification/terraform/Microsoft.AzureTerraform.Management
-commit: 52fc376d009c4d96b89cfc410c11a38358a18f5b
+commit: 3fde27c10f35fdb038ae45126a23d27d8653ba77
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: eng/legacy-emitter-package.json
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

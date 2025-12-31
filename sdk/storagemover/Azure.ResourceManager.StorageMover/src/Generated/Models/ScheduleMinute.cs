@@ -15,40 +15,48 @@ namespace Azure.ResourceManager.StorageMover.Models
     public readonly partial struct ScheduleMinute : IEquatable<ScheduleMinute>
     {
         private readonly int _value;
+        private const int ZeroValue = 0;
+        private const int ThirtyValue = 30;
 
         /// <summary> Initializes a new instance of <see cref="ScheduleMinute"/>. </summary>
+        /// <param name="value"> The value. </param>
         public ScheduleMinute(int value)
         {
             _value = value;
         }
 
-        private const int ZeroValue = 0;
-        private const int ThirtyValue = 30;
-
-        /// <summary> 0. </summary>
+        /// <summary> Gets the Zero. </summary>
         public static ScheduleMinute Zero { get; } = new ScheduleMinute(ZeroValue);
-        /// <summary> 30. </summary>
+
+        /// <summary> Gets the Thirty. </summary>
         public static ScheduleMinute Thirty { get; } = new ScheduleMinute(ThirtyValue);
 
-        internal int ToSerialInt32() => _value;
-
         /// <summary> Determines if two <see cref="ScheduleMinute"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduleMinute left, ScheduleMinute right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduleMinute"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduleMinute left, ScheduleMinute right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="int"/> to a <see cref="ScheduleMinute"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduleMinute"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduleMinute(int value) => new ScheduleMinute(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduleMinute other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduleMinute other) => Equals(_value, other._value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value.ToString(CultureInfo.InvariantCulture);
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </summary>
+    /// <summary>
+    /// GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU.
+    /// Serialized Name: GPUInstanceProfile
+    /// </summary>
     public readonly partial struct GpuInstanceProfile : IEquatable<GpuInstanceProfile>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string Mig4GValue = "MIG4g";
         private const string Mig7GValue = "MIG7g";
 
-        /// <summary> MIG1g. </summary>
+        /// <summary>
+        /// MIG1g
+        /// Serialized Name: GPUInstanceProfile.MIG1g
+        /// </summary>
         public static GpuInstanceProfile Mig1G { get; } = new GpuInstanceProfile(Mig1GValue);
-        /// <summary> MIG2g. </summary>
+        /// <summary>
+        /// MIG2g
+        /// Serialized Name: GPUInstanceProfile.MIG2g
+        /// </summary>
         public static GpuInstanceProfile Mig2G { get; } = new GpuInstanceProfile(Mig2GValue);
-        /// <summary> MIG3g. </summary>
+        /// <summary>
+        /// MIG3g
+        /// Serialized Name: GPUInstanceProfile.MIG3g
+        /// </summary>
         public static GpuInstanceProfile Mig3G { get; } = new GpuInstanceProfile(Mig3GValue);
-        /// <summary> MIG4g. </summary>
+        /// <summary>
+        /// MIG4g
+        /// Serialized Name: GPUInstanceProfile.MIG4g
+        /// </summary>
         public static GpuInstanceProfile Mig4G { get; } = new GpuInstanceProfile(Mig4GValue);
-        /// <summary> MIG7g. </summary>
+        /// <summary>
+        /// MIG7g
+        /// Serialized Name: GPUInstanceProfile.MIG7g
+        /// </summary>
         public static GpuInstanceProfile Mig7G { get; } = new GpuInstanceProfile(Mig7GValue);
         /// <summary> Determines if two <see cref="GpuInstanceProfile"/> values are the same. </summary>
         public static bool operator ==(GpuInstanceProfile left, GpuInstanceProfile right) => left.Equals(right);
