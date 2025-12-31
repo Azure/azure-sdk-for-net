@@ -14,7 +14,7 @@ using Azure.ResourceManager.RecoveryServices;
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> DNSZone information for Microsoft.RecoveryServices. </summary>
-    public partial class DnsZoneResult : DNSZone, IJsonModel<DnsZoneResult>
+    public partial class DnsZoneResult : DnsZone, IJsonModel<DnsZoneResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DNSZone JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DnsZone JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DNSZone PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DnsZone PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

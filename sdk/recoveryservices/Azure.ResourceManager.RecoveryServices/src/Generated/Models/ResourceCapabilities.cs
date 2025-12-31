@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         internal CapabilitiesProperties Properties { get; set; }
 
         /// <summary> Gets the DnsZones. </summary>
-        public IList<DNSZone> CapabilitiesDnsZones
+        public IList<DnsZone> CapabilitiesDnsZones
         {
             get
             {

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -22,28 +24,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VaultCertificateResult"/>. </summary>
-        /// <param name="name"> Resource name associated with the resource. </param>
-        /// <param name="type"> Resource type represents the complete path of the form Namespace/ResourceType/ResourceType/... </param>
-        /// <param name="id"> Resource Id represents the complete path to the resource. </param>
-        /// <param name="properties"> Certificate details representing the Vault credentials. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VaultCertificateResult(string name, string @type, string id, ResourceCertificateDetails properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> Resource name associated with the resource. </param>
+        /// <param name="properties"> Certificate details representing the Vault credentials. </param>
+        internal VaultCertificateResult(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceCertificateDetails properties) : base(id, name, resourceType, systemData)
         {
-            Name = name;
-            Type = @type;
-            Id = id;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
-
-        /// <summary> Resource name associated with the resource. </summary>
-        public string Name { get; }
-
-        /// <summary> Resource type represents the complete path of the form Namespace/ResourceType/ResourceType/... </summary>
-        public string Type { get; }
-
-        /// <summary> Resource Id represents the complete path to the resource. </summary>
-        public string Id { get; }
 
         /// <summary> Certificate details representing the Vault credentials. </summary>
         public ResourceCertificateDetails Properties { get; }

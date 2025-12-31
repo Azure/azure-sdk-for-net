@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public IReadOnlyList<VaultSubResourceType> GroupIds { get; }
 
         /// <summary> Gets or sets id. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

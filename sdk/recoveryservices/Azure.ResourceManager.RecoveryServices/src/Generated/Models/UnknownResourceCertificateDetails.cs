@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="validStartOn"> Certificate Validity start Date time. </param>
         /// <param name="validEndOn"> Certificate Validity End Date time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownResourceCertificateDetails(string authType, BinaryData certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(authType ?? "unknown", certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, additionalBinaryDataProperties)
+        internal UnknownResourceCertificateDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(authType ?? "unknown", certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, additionalBinaryDataProperties)
         {
         }
     }

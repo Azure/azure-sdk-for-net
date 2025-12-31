@@ -14,21 +14,21 @@ using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    internal partial class ReplicationUsagesGetAllCollectionResultOfT : Pageable<ReplicationUsage>
+    internal partial class VaultsGetReplicationUsagesCollectionResultOfT : Pageable<ReplicationUsage>
     {
-        private readonly ReplicationUsages _client;
+        private readonly Vaults _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _vaultName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ReplicationUsagesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ReplicationUsages client used to send requests. </param>
+        /// <summary> Initializes a new instance of VaultsGetReplicationUsagesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Vaults client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the Vault. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ReplicationUsagesGetAllCollectionResultOfT(ReplicationUsages client, string subscriptionId, string resourceGroupName, string vaultName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public VaultsGetReplicationUsagesCollectionResultOfT(Vaults client, string subscriptionId, string resourceGroupName, string vaultName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.RecoveryServices
             _context = context;
         }
 
-        /// <summary> Gets the pages of ReplicationUsagesGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of VaultsGetReplicationUsagesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ReplicationUsagesGetAllCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of VaultsGetReplicationUsagesCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ReplicationUsage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vaultName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RecoveryServicesVaultResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetReplicationUsagesRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _context) : _client.CreateGetReplicationUsagesRequest(_subscriptionId, _resourceGroupName, _vaultName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RecoveryServicesVaultResource.GetReplicationUsages");
             scope.Start();
             try
             {

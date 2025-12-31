@@ -42,7 +42,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteBase64StringValue(Certificate.ToArray(), "D");
+                writer.WriteStartArray();
+                foreach (byte item in Certificate)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -87,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             RecoveryServicesAuthType? authType = default;
-            BinaryData certificate = default;
+            byte[] certificate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -106,7 +111,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    certificate = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    List<byte> array = new List<byte>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetByte());
+                    }
+                    certificate = array.ToArray();
                     continue;
                 }
                 if (options.Format != "W")

@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServices;
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> DNSZone information for Microsoft.RecoveryServices. </summary>
-    public partial class DnsZoneResult : DNSZone
+    public partial class DnsZoneResult : DnsZone
     {
         /// <summary> Initializes a new instance of <see cref="DnsZoneResult"/>. </summary>
         public DnsZoneResult()

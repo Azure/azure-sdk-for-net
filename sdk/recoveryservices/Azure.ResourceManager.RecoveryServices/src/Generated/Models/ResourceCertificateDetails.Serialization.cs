@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     [PersistableModelProxy(typeof(UnknownResourceCertificateDetails))]
     public abstract partial class ResourceCertificateDetails : IJsonModel<ResourceCertificateDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceCertificateDetails"/> for deserialization. </summary>
-        internal ResourceCertificateDetails()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceCertificateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -47,7 +42,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteBase64StringValue(Certificate.ToArray(), "D");
+                writer.WriteStartArray();
+                foreach (byte item in Certificate)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(FriendlyName))
             {
