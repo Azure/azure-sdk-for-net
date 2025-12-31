@@ -63,7 +63,7 @@ public class Program
                 - microsoft_docs_search: Searches Microsoft/Azure documentation
                 - microsoft_code_sample_search: Searches for code examples")
               .AsBuilder()
-              .UseFoundryTools(ToolDefinition.Mcp(toolConnectionId))
+              .UseFoundryTools(FoundryTool.Mcp(toolConnectionId))
               .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
               .Build();
 
