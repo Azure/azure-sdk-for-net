@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct TransformationSerializationFormat : IEquatable<TransformationSerializationFormat>
     {
         private readonly string _value;
+        /// <summary> Delta Format. </summary>
+        private const string DeltaValue = "Delta";
+        /// <summary> JSON Format. </summary>
+        private const string JsonValue = "Json";
+        /// <summary> Parquet Format. </summary>
+        private const string ParquetValue = "Parquet";
 
         /// <summary> Initializes a new instance of <see cref="TransformationSerializationFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TransformationSerializationFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeltaValue = "Delta";
-        private const string JsonValue = "Json";
-        private const string ParquetValue = "Parquet";
+            _value = value;
+        }
 
         /// <summary> Delta Format. </summary>
         public static TransformationSerializationFormat Delta { get; } = new TransformationSerializationFormat(DeltaValue);
+
         /// <summary> JSON Format. </summary>
         public static TransformationSerializationFormat Json { get; } = new TransformationSerializationFormat(JsonValue);
+
         /// <summary> Parquet Format. </summary>
         public static TransformationSerializationFormat Parquet { get; } = new TransformationSerializationFormat(ParquetValue);
+
         /// <summary> Determines if two <see cref="TransformationSerializationFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TransformationSerializationFormat left, TransformationSerializationFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TransformationSerializationFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TransformationSerializationFormat left, TransformationSerializationFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TransformationSerializationFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TransformationSerializationFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TransformationSerializationFormat(string value) => new TransformationSerializationFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TransformationSerializationFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TransformationSerializationFormat?(string value) => value == null ? null : new TransformationSerializationFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TransformationSerializationFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TransformationSerializationFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

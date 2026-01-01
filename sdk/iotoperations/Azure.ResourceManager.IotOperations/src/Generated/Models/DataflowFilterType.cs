@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct DataflowFilterType : IEquatable<DataflowFilterType>
     {
         private readonly string _value;
+        /// <summary> Filter type. </summary>
+        private const string FilterValue = "Filter";
 
         /// <summary> Initializes a new instance of <see cref="DataflowFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataflowFilterType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FilterValue = "Filter";
+            _value = value;
+        }
 
         /// <summary> Filter type. </summary>
         public static DataflowFilterType Filter { get; } = new DataflowFilterType(FilterValue);
+
         /// <summary> Determines if two <see cref="DataflowFilterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataflowFilterType left, DataflowFilterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataflowFilterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataflowFilterType left, DataflowFilterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataflowFilterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataflowFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataflowFilterType(string value) => new DataflowFilterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataflowFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataflowFilterType?(string value) => value == null ? null : new DataflowFilterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataflowFilterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataflowFilterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
