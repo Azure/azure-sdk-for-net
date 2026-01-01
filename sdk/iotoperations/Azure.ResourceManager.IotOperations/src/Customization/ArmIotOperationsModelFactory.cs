@@ -52,8 +52,9 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.IotOperationsBrokerListenerProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release")]
         public static IotOperationsBrokerListenerProperties IotOperationsBrokerListenerProperties(string serviceName, IEnumerable<BrokerListenerPort> ports, BlockerListenerServiceType? serviceType, IotOperationsProvisioningState? provisioningState)
-            => IotOperationsBrokerListenerProperties(serviceName, ports, serviceType, provisioningState, null);
+            => IotOperationsBrokerListenerProperties(serviceName, ports, serviceType.ToString(), provisioningState, null);
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowEndpointProperties" />. </summary>
         /// <param name="endpointType"> Endpoint Type. </param>

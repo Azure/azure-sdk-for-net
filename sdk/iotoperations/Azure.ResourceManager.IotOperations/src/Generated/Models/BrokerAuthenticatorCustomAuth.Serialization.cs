@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return null;
             }
-            ListenerPortTlsX509ManualCertificate x509 = default;
+            BrokerX509ManualCertificate x509 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("x509"u8))
                 {
-                    x509 = ListenerPortTlsX509ManualCertificate.DeserializeListenerPortTlsX509ManualCertificate(prop.Value, options);
+                    x509 = BrokerX509ManualCertificate.DeserializeBrokerX509ManualCertificate(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

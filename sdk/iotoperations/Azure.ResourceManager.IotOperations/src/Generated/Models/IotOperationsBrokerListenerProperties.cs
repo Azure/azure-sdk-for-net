@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="IotOperationsBrokerListenerProperties"/>. </summary>
         /// <param name="serviceName"> Kubernetes Service name of this listener. </param>
         /// <param name="ports"> Ports on which this listener accepts client connections. </param>
-        /// <param name="serviceType"> Kubernetes Service type of this listener. </param>
+        /// <param name="listenerServiceType"> Kubernetes Service type of this listener. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsBrokerListenerProperties(string serviceName, IList<BrokerListenerPort> ports, BlockerListenerServiceType? serviceType, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotOperationsBrokerListenerProperties(string serviceName, IList<BrokerListenerPort> ports, BrokerListenerServiceType? listenerServiceType, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceName = serviceName;
             Ports = ports;
-            ServiceType = serviceType;
+            ListenerServiceType = listenerServiceType;
             ProvisioningState = provisioningState;
             HealthState = healthState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public IList<BrokerListenerPort> Ports { get; }
 
         /// <summary> Kubernetes Service type of this listener. </summary>
-        public BlockerListenerServiceType? ServiceType { get; set; }
+        public BrokerListenerServiceType? ListenerServiceType { get; set; }
 
         /// <summary> The status of the last operation. </summary>
         public IotOperationsProvisioningState? ProvisioningState { get; }

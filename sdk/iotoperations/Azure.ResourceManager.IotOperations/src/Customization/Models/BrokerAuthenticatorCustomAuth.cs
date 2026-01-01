@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
             Argument.AssertNotNull(secretRef, nameof(secretRef));
 
-            X509 = new ListenerPortTlsX509ManualCertificate(secretRef);
+            X509 = new BrokerX509ManualCertificate(secretRef);
         }
     }
 }

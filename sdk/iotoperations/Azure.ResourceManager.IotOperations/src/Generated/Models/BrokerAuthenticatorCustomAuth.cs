@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/>. </summary>
         /// <param name="x509"> X509 Custom Auth type details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="x509"/> is null. </exception>
-        public BrokerAuthenticatorCustomAuth(ListenerPortTlsX509ManualCertificate x509)
+        public BrokerAuthenticatorCustomAuth(BrokerX509ManualCertificate x509)
         {
             Argument.AssertNotNull(x509, nameof(x509));
 
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/>. </summary>
         /// <param name="x509"> X509 Custom Auth type details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerAuthenticatorCustomAuth(ListenerPortTlsX509ManualCertificate x509, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BrokerAuthenticatorCustomAuth(BrokerX509ManualCertificate x509, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             X509 = x509;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> X509 Custom Auth type details. </summary>
-        internal ListenerPortTlsX509ManualCertificate X509 { get; set; }
+        internal BrokerX509ManualCertificate X509 { get; set; }
 
         /// <summary> Kubernetes secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself. </summary>
         public string X509SecretRef
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                X509 = new ListenerPortTlsX509ManualCertificate(value);
+                X509 = new BrokerX509ManualCertificate(value);
             }
         }
     }

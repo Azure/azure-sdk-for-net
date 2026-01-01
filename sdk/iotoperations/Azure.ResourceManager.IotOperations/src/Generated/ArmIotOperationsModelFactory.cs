@@ -273,18 +273,18 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Defines a Broker listener. A listener is a collection of ports on which the broker accepts connections from clients. </summary>
         /// <param name="serviceName"> Kubernetes Service name of this listener. </param>
         /// <param name="ports"> Ports on which this listener accepts client connections. </param>
-        /// <param name="serviceType"> Kubernetes Service type of this listener. </param>
+        /// <param name="listenerServiceType"> Kubernetes Service type of this listener. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsBrokerListenerProperties"/> instance for mocking. </returns>
-        public static IotOperationsBrokerListenerProperties IotOperationsBrokerListenerProperties(string serviceName = default, IEnumerable<BrokerListenerPort> ports = default, BlockerListenerServiceType? serviceType = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthState? healthState = default)
+        public static IotOperationsBrokerListenerProperties IotOperationsBrokerListenerProperties(string serviceName = default, IEnumerable<BrokerListenerPort> ports = default, BrokerListenerServiceType? listenerServiceType = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthState? healthState = default)
         {
             ports ??= new ChangeTrackingList<BrokerListenerPort>();
 
             return new IotOperationsBrokerListenerProperties(
                 serviceName,
                 ports.ToList(),
-                serviceType,
+                listenerServiceType,
                 provisioningState,
                 healthState,
                 additionalBinaryDataProperties: null);

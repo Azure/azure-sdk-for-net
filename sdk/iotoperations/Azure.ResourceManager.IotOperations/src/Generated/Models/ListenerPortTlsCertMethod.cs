@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="certManagerCertificateSpec"> Option 1 - Automatic TLS server certificate management with cert-manager. </param>
         /// <param name="manual"> Option 2 - Manual TLS server certificate management through a defined secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListenerPortTlsCertMethod(TlsCertMethodMode mode, CertManagerCertificateSpec certManagerCertificateSpec, ListenerPortTlsX509ManualCertificate manual, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListenerPortTlsCertMethod(TlsCertMethodMode mode, CertManagerCertificateSpec certManagerCertificateSpec, BrokerX509ManualCertificate manual, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             CertManagerCertificateSpec = certManagerCertificateSpec;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public CertManagerCertificateSpec CertManagerCertificateSpec { get; set; }
 
         /// <summary> Option 2 - Manual TLS server certificate management through a defined secret. </summary>
-        internal ListenerPortTlsX509ManualCertificate Manual { get; set; }
+        internal BrokerX509ManualCertificate Manual { get; set; }
 
         /// <summary> Kubernetes secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself. </summary>
         public string ManualSecretRef
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                Manual = new ListenerPortTlsX509ManualCertificate(value);
+                Manual = new BrokerX509ManualCertificate(value);
             }
         }
     }

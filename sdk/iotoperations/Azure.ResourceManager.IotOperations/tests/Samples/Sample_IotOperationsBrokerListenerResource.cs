@@ -131,7 +131,7 @@ ManualSecretRef = "example-secret",
 }
             })
                 {
-                    ServiceType = BlockerListenerServiceType.LoadBalancer,
+                    ListenerServiceType = BrokerListenerServiceType.LoadBalancer,
                 },
                 ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
@@ -194,7 +194,7 @@ ManualSecretRef = "secret-name",
             })
                 {
                     ServiceName = "tpfiszlapdpxktx",
-                    ServiceType = BlockerListenerServiceType.ClusterIP,
+                    ListenerServiceType = BrokerListenerServiceType.ClusterIP,
                 },
                 ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };

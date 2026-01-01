@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ServiceType))
+            if (Optional.IsDefined(ListenerServiceType))
             {
                 writer.WritePropertyName("serviceType"u8);
-                writer.WriteStringValue(ServiceType.Value.ToString());
+                writer.WriteStringValue(ListenerServiceType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             string serviceName = default;
             IList<BrokerListenerPort> ports = default;
-            BlockerListenerServiceType? serviceType = default;
+            BrokerListenerServiceType? listenerServiceType = default;
             IotOperationsProvisioningState? provisioningState = default;
             ResourceHealthState? healthState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    serviceType = new BlockerListenerServiceType(prop.Value.GetString());
+                    listenerServiceType = new BrokerListenerServiceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsBrokerListenerProperties(
                 serviceName,
                 ports,
-                serviceType,
+                listenerServiceType,
                 provisioningState,
                 healthState,
                 additionalBinaryDataProperties);

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             TlsCertMethodMode mode = default;
             CertManagerCertificateSpec certManagerCertificateSpec = default;
-            ListenerPortTlsX509ManualCertificate manual = default;
+            BrokerX509ManualCertificate manual = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    manual = ListenerPortTlsX509ManualCertificate.DeserializeListenerPortTlsX509ManualCertificate(prop.Value, options);
+                    manual = BrokerX509ManualCertificate.DeserializeBrokerX509ManualCertificate(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -12,25 +12,25 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> X509 Certificate Authentication properties. </summary>
-    public partial class ListenerPortTlsX509ManualCertificate
+    public partial class BrokerX509ManualCertificate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ListenerPortTlsX509ManualCertificate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BrokerX509ManualCertificate"/>. </summary>
         /// <param name="secretRef"> Kubernetes secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretRef"/> is null. </exception>
-        public ListenerPortTlsX509ManualCertificate(string secretRef)
+        public BrokerX509ManualCertificate(string secretRef)
         {
             Argument.AssertNotNull(secretRef, nameof(secretRef));
 
             SecretRef = secretRef;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListenerPortTlsX509ManualCertificate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BrokerX509ManualCertificate"/>. </summary>
         /// <param name="secretRef"> Kubernetes secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListenerPortTlsX509ManualCertificate(string secretRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BrokerX509ManualCertificate(string secretRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretRef = secretRef;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
