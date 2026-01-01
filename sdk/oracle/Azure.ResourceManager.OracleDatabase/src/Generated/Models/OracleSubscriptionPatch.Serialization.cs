@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                SerializationPlan(writer, options);
+                SerializePlan(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {

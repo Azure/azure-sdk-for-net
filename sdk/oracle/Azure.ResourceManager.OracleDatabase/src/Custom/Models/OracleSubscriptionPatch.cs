@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Plan), SerializationValueHook = nameof(SerializationPlan), DeserializationValueHook = nameof(DeserializePlan))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Plan), SerializationValueHook = nameof(SerializePlan), DeserializationValueHook = nameof(DeserializePlan))]
     public partial class OracleSubscriptionPatch
     {
         /// <summary> Details of the resource plan. </summary>
         public ArmPlan Plan { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void SerializationPlan(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal void SerializePlan(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
         }
