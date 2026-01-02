@@ -11,38 +11,38 @@ namespace Azure.AI.AgentServer.Core.Tools.Utilities;
 internal class ToolConfigurationParser
 {
     /// <summary>
-    /// Gets the list of named MCP tools.
+    /// Gets the list of hosted MCP tools.
     /// </summary>
-    public IReadOnlyList<ToolDefinition> NamedMcpTools { get; }
+    public IReadOnlyList<FoundryTool> HostedMcpTools { get; }
 
     /// <summary>
-    /// Gets the list of remote tools (MCP and A2A).
+    /// Gets the list of connected tools (MCP and A2A).
     /// </summary>
-    public IReadOnlyList<ToolDefinition> RemoteTools { get; }
+    public IReadOnlyList<FoundryTool> ConnectedTools { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ToolConfigurationParser"/> class.
     /// </summary>
-    /// <param name="toolDefinitions">The list of tool definitions to parse.</param>
-    public ToolConfigurationParser(IList<ToolDefinition> toolDefinitions)
+    /// <param name="foundryTools">The list of tool definitions to parse.</param>
+    public ToolConfigurationParser(IList<FoundryTool> foundryTools)
     {
-        var namedMcp = new List<ToolDefinition>();
-        var remote = new List<ToolDefinition>();
+        var hostedMcp = new List<FoundryTool>();
+        var connected = new List<FoundryTool>();
 
-        foreach (var toolDef in toolDefinitions)
+        foreach (var tool in foundryTools)
         {
-            var type = toolDef.Type.ToLowerInvariant();
+            var type = tool.Type.ToLowerInvariant();
             if (type == "mcp" || type == "a2a")
             {
-                remote.Add(toolDef);
+                connected.Add(tool);
             }
             else
             {
-                namedMcp.Add(toolDef);
+                hostedMcp.Add(tool);
             }
         }
 
-        NamedMcpTools = namedMcp;
-        RemoteTools = remote;
+        HostedMcpTools = hostedMcp;
+        ConnectedTools = connected;
     }
 }

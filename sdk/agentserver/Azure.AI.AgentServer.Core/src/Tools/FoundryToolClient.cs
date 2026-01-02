@@ -13,40 +13,40 @@ namespace Azure.AI.AgentServer.Core.Tools;
 /// This is the primary client for production use.
 /// </summary>
 #pragma warning disable AZC0015
-public class AzureAIToolClient : IAsyncDisposable, IDisposable
+public class FoundryToolClient : IAsyncDisposable, IDisposable
 {
-    private readonly AzureAIToolClientOptions _options;
+    private readonly FoundryToolClientOptions _options;
     private readonly TokenCredential _credential;
-    private readonly MCPToolsOperations _mcpTools;
-    private readonly RemoteToolsOperations _remoteTools;
+    private readonly FoundryMcpToolsOperations _hostedMcpTools;
+    private readonly FoundryConnectedToolsOperations _connectedTools;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AzureAIToolClient"/> class for mocking.
+    /// Initializes a new instance of the <see cref="FoundryToolClient"/> class for mocking.
     /// </summary>
-    protected AzureAIToolClient()
+    protected FoundryToolClient()
     {
         _options = null!;
         _credential = null!;
-        _mcpTools = null!;
-        _remoteTools = null!;
+        _hostedMcpTools = null!;
+        _connectedTools = null!;
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AzureAIToolClient"/> class.
+    /// Initializes a new instance of the <see cref="FoundryToolClient"/> class.
     /// </summary>
     /// <param name="endpoint">The Azure AI endpoint URL.</param>
     /// <param name="credential">The token credential for authentication.</param>
     /// <param name="options">Optional client options.</param>
-    public AzureAIToolClient(
+    public FoundryToolClient(
         Uri endpoint,
         TokenCredential credential,
-        AzureAIToolClientOptions? options = null)
+        FoundryToolClientOptions? options = null)
     {
         ArgumentNullException.ThrowIfNull(endpoint);
         ArgumentNullException.ThrowIfNull(credential);
 
         _credential = credential;
-        _options = options ?? new AzureAIToolClientOptions();
+        _options = options ?? new FoundryToolClientOptions();
         _options.ValidateAndParse();
 
         var endpointWithSlash = EnsureTrailingSlash(endpoint);
@@ -59,8 +59,8 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
             },
             new ResponseClassifier());
         var invoker = new ToolOperationsInvoker(pipeline, endpointWithSlash);
-        _mcpTools = new MCPToolsOperations(invoker, _options);
-        _remoteTools = new RemoteToolsOperations(invoker, _options);
+        _hostedMcpTools = new FoundryMcpToolsOperations(invoker, _options);
+        _connectedTools = new FoundryConnectedToolsOperations(invoker, _options);
     }
 
     /// <summary>
@@ -70,25 +70,20 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
     /// <returns>The list of available tools.</returns>
     /// <exception cref="Exceptions.OAuthConsentRequiredException">OAuth consent required.</exception>
     /// <exception cref="Exceptions.MCPToolApprovalRequiredException">Tool approval required.</exception>
-    public virtual IReadOnlyList<FoundryTool> ListTools(CancellationToken cancellationToken = default)
+    public virtual IReadOnlyList<ResolvedFoundryTool> ListTools(CancellationToken cancellationToken = default)
     {
         var existingNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var tools = new List<FoundryTool>();
+        var tools = new List<ResolvedFoundryTool>();
 
-        if (_options.ToolConfig.NamedMcpTools.Count > 0)
+        if (_options.ToolConfig.HostedMcpTools.Count > 0)
         {
-            var response = _mcpTools.ListTools(existingNames, cancellationToken);
+            var response = _hostedMcpTools.ListTools(existingNames, cancellationToken);
             tools.AddRange(response.Value);
         }
 
-        if (_options.ToolConfig.RemoteTools.Count > 0)
+        if (_options.ToolConfig.ConnectedTools.Count > 0)
         {
-            var response = _remoteTools.ResolveTools(existingNames, cancellationToken);
-            tools.AddRange(response.Value);
-        }
-        else if (_options.ToolConfig.NamedMcpTools.Count == 0)
-        {
-            var response = _mcpTools.ListTools(existingNames, cancellationToken);
+            var response = _connectedTools.ResolveTools(existingNames, cancellationToken);
             tools.AddRange(response.Value);
         }
 
@@ -110,26 +105,22 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
     /// <returns>Task returning list of available tools.</returns>
     /// <exception cref="Exceptions.OAuthConsentRequiredException">OAuth consent required.</exception>
     /// <exception cref="Exceptions.MCPToolApprovalRequiredException">Tool approval required.</exception>
-    public virtual async Task<IReadOnlyList<FoundryTool>> ListToolsAsync(CancellationToken cancellationToken = default)
+    public virtual async Task<IReadOnlyList<ResolvedFoundryTool>> ListToolsAsync(CancellationToken cancellationToken = default)
     {
         var existingNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var tools = new List<FoundryTool>();
+        var tools = new List<ResolvedFoundryTool>();
 
         // Parallel execution for better performance
-        var tasks = new List<Task<Response<IReadOnlyList<FoundryTool>>>>();
+        var tasks = new List<Task<Response<IReadOnlyList<ResolvedFoundryTool>>>>();
 
-        if (_options.ToolConfig.NamedMcpTools.Count > 0)
+        if (_options.ToolConfig.HostedMcpTools.Count > 0)
         {
-            tasks.Add(_mcpTools.ListToolsAsync(existingNames, cancellationToken));
+            tasks.Add(_hostedMcpTools.ListToolsAsync(existingNames, cancellationToken));
         }
 
-        if (_options.ToolConfig.RemoteTools.Count > 0)
+        if (_options.ToolConfig.ConnectedTools.Count > 0)
         {
-            tasks.Add(_remoteTools.ResolveToolsAsync(existingNames, cancellationToken));
-        }
-        else if (_options.ToolConfig.NamedMcpTools.Count == 0)
-        {
-            tasks.Add(_mcpTools.ListToolsAsync(existingNames, cancellationToken));
+            tasks.Add(_connectedTools.ResolveToolsAsync(existingNames, cancellationToken));
         }
 
         if (tasks.Count > 0)
@@ -193,7 +184,7 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The tool invocation result.</returns>
     public virtual object? InvokeTool(
-        FoundryTool tool,
+        ResolvedFoundryTool tool,
         IDictionary<string, object?>? arguments = null,
         CancellationToken cancellationToken = default)
     {
@@ -203,8 +194,8 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
 
         var response = tool.Source switch
         {
-            ToolSource.McpTools => _mcpTools.InvokeTool(tool, payload, cancellationToken),
-            ToolSource.RemoteTools => _remoteTools.InvokeTool(tool, payload, cancellationToken),
+            FoundryToolSource.HOSTED_MCP => _hostedMcpTools.InvokeTool(tool, payload, cancellationToken),
+            FoundryToolSource.CONNECTED => _connectedTools.InvokeTool(tool, payload, cancellationToken),
             _ => throw new InvalidOperationException($"Unsupported tool source: {tool.Source}")
         };
 
@@ -219,7 +210,7 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task returning the tool invocation result.</returns>
     public virtual async Task<object?> InvokeToolAsync(
-        FoundryTool tool,
+        ResolvedFoundryTool tool,
         IDictionary<string, object?>? arguments = null,
         CancellationToken cancellationToken = default)
     {
@@ -229,9 +220,9 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
 
         var response = tool.Source switch
         {
-            ToolSource.McpTools => await _mcpTools.InvokeToolAsync(tool, payload, cancellationToken)
+            FoundryToolSource.HOSTED_MCP => await _hostedMcpTools.InvokeToolAsync(tool, payload, cancellationToken)
                 .ConfigureAwait(false),
-            ToolSource.RemoteTools => await _remoteTools.InvokeToolAsync(tool, payload, cancellationToken)
+            FoundryToolSource.CONNECTED => await _connectedTools.InvokeToolAsync(tool, payload, cancellationToken)
                 .ConfigureAwait(false),
             _ => throw new InvalidOperationException($"Unsupported tool source: {tool.Source}")
         };
@@ -239,7 +230,7 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
         return response.Value;
     }
 
-    private FoundryTool ResolveToolDescriptor(string toolName, CancellationToken cancellationToken)
+    private ResolvedFoundryTool ResolveToolDescriptor(string toolName, CancellationToken cancellationToken)
     {
         var tools = ListTools(cancellationToken);
         return tools.FirstOrDefault(t =>
@@ -248,7 +239,7 @@ public class AzureAIToolClient : IAsyncDisposable, IDisposable
             ?? throw new KeyNotFoundException($"Unknown tool: {toolName}");
     }
 
-    private async Task<FoundryTool> ResolveToolDescriptorAsync(string toolName, CancellationToken cancellationToken)
+    private async Task<ResolvedFoundryTool> ResolveToolDescriptorAsync(string toolName, CancellationToken cancellationToken)
     {
         var tools = await ListToolsAsync(cancellationToken).ConfigureAwait(false);
         return tools.FirstOrDefault(t =>
