@@ -13,7 +13,6 @@ using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> Association Properties. </summary>
     internal partial class AssociationProperties : IJsonModel<AssociationProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AssociationProperties"/> for deserialization. </summary>
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 throw new FormatException($"The model {nameof(AssociationProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("associationType"u8);
-            writer.WriteStringValue(AssociationType.ToString());
+            writer.WriteStringValue(AssociationType.Value.ToString());
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 return null;
             }
-            TrafficControllerAssociationType associationType = default;
+            TrafficControllerAssociationType? associationType = default;
             AssociationSubnet subnet = default;
             ServiceNetworkingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

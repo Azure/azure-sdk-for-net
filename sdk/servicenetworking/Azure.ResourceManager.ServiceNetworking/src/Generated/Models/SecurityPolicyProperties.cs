@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ServiceNetworking;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public ServiceNetworkingProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource ID of the WAF. </summary>
-        public string WafPolicyId
+        public ResourceIdentifier WafPolicyId
         {
             get
             {
@@ -63,6 +63,16 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         }
 
         /// <summary> Ip Access Policy Rules List. </summary>
-        public IList<ServiceNetworkingIPAccessRule> Rules { get; } = new ChangeTrackingList<ServiceNetworkingIPAccessRule>();
+        public IList<ServiceNetworkingIPAccessRule> Rules
+        {
+            get
+            {
+                if (IpAccessRulesPolicy is null)
+                {
+                    IpAccessRulesPolicy = new IpAccessRulesPolicy();
+                }
+                return IpAccessRulesPolicy.Rules;
+            }
+        }
     }
 }

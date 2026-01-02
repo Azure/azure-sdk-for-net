@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         internal SecurityPolicyConfigurations(WafSecurityPolicy wafSecurityPolicy, IpAccessRulesSecurityPolicy ipAccessRulesSecurityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WafSecurityPolicy = wafSecurityPolicy;
-            IpAccessRulesSecurityPolicy = ipAccessRulesSecurityPolicy;
+            IPAccessRulesSecurityPolicy = ipAccessRulesSecurityPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,10 +37,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         internal WafSecurityPolicy WafSecurityPolicy { get; set; }
 
         /// <summary> Contains reference to a IpAccessRules-type security policy. </summary>
-        internal IpAccessRulesSecurityPolicy IpAccessRulesSecurityPolicy { get; set; }
+        internal IpAccessRulesSecurityPolicy IPAccessRulesSecurityPolicy { get; set; }
 
         /// <summary> Resource ID of the Waf Security Policy. </summary>
-        public string WafSecurityPolicyId
+        public ResourceIdentifier WafSecurityPolicyId
         {
             get
             {
@@ -52,15 +53,15 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         }
 
         /// <summary> Resource ID of the Ip Access Rules Security Policy. </summary>
-        public string IpAccessRulesSecurityPolicyId
+        public ResourceIdentifier IPAccessRulesSecurityPolicyId
         {
             get
             {
-                return IpAccessRulesSecurityPolicy is null ? default : IpAccessRulesSecurityPolicy.Id;
+                return IPAccessRulesSecurityPolicy is null ? default : IPAccessRulesSecurityPolicy.Id;
             }
             set
             {
-                IpAccessRulesSecurityPolicy = new IpAccessRulesSecurityPolicy(value);
+                IPAccessRulesSecurityPolicy = new IpAccessRulesSecurityPolicy(value);
             }
         }
     }

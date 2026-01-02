@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Initializes a new instance of <see cref="AssociationSubnet"/>. </summary>
         /// <param name="id"> Association ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public AssociationSubnet(string id)
+        public AssociationSubnet(ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -30,13 +31,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Initializes a new instance of <see cref="AssociationSubnet"/>. </summary>
         /// <param name="id"> Association ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssociationSubnet(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssociationSubnet(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Association ID. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

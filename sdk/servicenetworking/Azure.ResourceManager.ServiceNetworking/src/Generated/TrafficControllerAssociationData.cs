@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal TrafficControllerAssociationData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AssociationProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal TrafficControllerAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AssociationProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -42,23 +42,6 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         /// <summary> The resource-specific properties for this resource. </summary>
         internal AssociationProperties Properties { get; set; }
-
-        /// <summary> Association Type. </summary>
-        public TrafficControllerAssociationType AssociationType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AssociationType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AssociationProperties();
-                }
-                Properties.AssociationType = value;
-            }
-        }
 
         /// <summary> Provisioning State of Traffic Controller Association Resource. </summary>
         public ServiceNetworkingProvisioningState? ProvisioningState
@@ -70,7 +53,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary> Association ID. </summary>
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {
@@ -83,6 +66,23 @@ namespace Azure.ResourceManager.ServiceNetworking
                     Properties = new AssociationProperties();
                 }
                 Properties.SubnetId = value;
+            }
+        }
+
+        /// <summary> Association Type. </summary>
+        public TrafficControllerAssociationType? AssociationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssociationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AssociationProperties();
+                }
+                Properties.AssociationType = value.Value;
             }
         }
     }

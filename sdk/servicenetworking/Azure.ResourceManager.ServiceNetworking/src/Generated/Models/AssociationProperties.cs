@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> Association Properties. </summary>
     internal partial class AssociationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> Initializes a new instance of <see cref="AssociationProperties"/>. </summary>
         /// <param name="associationType"> Association Type. </param>
-        public AssociationProperties(TrafficControllerAssociationType associationType)
+        public AssociationProperties(TrafficControllerAssociationType? associationType)
         {
             AssociationType = associationType;
         }
@@ -28,16 +28,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="subnet"> Association Subnet. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssociationProperties(TrafficControllerAssociationType associationType, AssociationSubnet subnet, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssociationProperties(TrafficControllerAssociationType? associationType, AssociationSubnet subnet, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssociationType = associationType;
             Subnet = subnet;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Association Type. </summary>
-        public TrafficControllerAssociationType AssociationType { get; set; }
 
         /// <summary> Association Subnet. </summary>
         internal AssociationSubnet Subnet { get; set; }
@@ -46,7 +43,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public ServiceNetworkingProvisioningState? ProvisioningState { get; }
 
         /// <summary> Association ID. </summary>
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {

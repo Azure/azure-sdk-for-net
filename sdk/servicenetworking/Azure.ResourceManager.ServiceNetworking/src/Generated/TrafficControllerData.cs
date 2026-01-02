@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal TrafficControllerData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, TrafficControllerProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal TrafficControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, TrafficControllerProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary> Frontends References List. </summary>
-        public IReadOnlyList<ResourceId> Frontends
+        public IReadOnlyList<SubResource> Frontends
         {
             get
             {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary> Associations References List. </summary>
-        public IReadOnlyList<ResourceId> Associations
+        public IReadOnlyList<SubResource> Associations
         {
             get
             {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary> Security Policies References List. </summary>
-        public IReadOnlyList<ResourceId> SecurityPolicies
+        public IReadOnlyList<SubResource> SecurityPolicies
         {
             get
             {
