@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
-    internal class EdgeSchemaVersionOperationSource : IOperationSource<EdgeSchemaVersionResource>
+    /// <summary></summary>
+    internal partial class EdgeSchemaVersionOperationSource : IOperationSource<EdgeSchemaVersionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal EdgeSchemaVersionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         EdgeSchemaVersionResource IOperationSource<EdgeSchemaVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeSchemaVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            EdgeSchemaVersionData data = EdgeSchemaVersionData.DeserializeEdgeSchemaVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new EdgeSchemaVersionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<EdgeSchemaVersionResource> IOperationSource<EdgeSchemaVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeSchemaVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
-            return await Task.FromResult(new EdgeSchemaVersionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            EdgeSchemaVersionData data = EdgeSchemaVersionData.DeserializeEdgeSchemaVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EdgeSchemaVersionResource(_client, data);
         }
     }
 }

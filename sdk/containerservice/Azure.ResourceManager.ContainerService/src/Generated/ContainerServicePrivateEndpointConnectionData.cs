@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary>
     /// A class representing the ContainerServicePrivateEndpointConnection data model.
     /// A private endpoint connection
+    /// Serialized Name: PrivateEndpointConnection
     /// </summary>
     public partial class ContainerServicePrivateEndpointConnectionData : ResourceData
     {
@@ -62,9 +63,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The current provisioning state. </param>
-        /// <param name="privateEndpoint"> The resource of private endpoint. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState">
+        /// The current provisioning state.
+        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
+        /// </param>
+        /// <param name="privateEndpoint">
+        /// The resource of private endpoint.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
+        /// </param>
+        /// <param name="connectionState">
+        /// A collection of information about the state of the connection between service consumer and provider.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServicePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState, WritableSubResource privateEndpoint, ContainerServicePrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -74,10 +84,16 @@ namespace Azure.ResourceManager.ContainerService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The current provisioning state. </summary>
+        /// <summary>
+        /// The current provisioning state.
+        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public ContainerServicePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
-        /// <summary> The resource of private endpoint. </summary>
+        /// <summary>
+        /// The resource of private endpoint.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
+        /// </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("properties.privateEndpoint.id")]
@@ -92,7 +108,10 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <summary>
+        /// A collection of information about the state of the connection between service consumer and provider.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
         public ContainerServicePrivateLinkServiceConnectionState ConnectionState { get; set; }
     }

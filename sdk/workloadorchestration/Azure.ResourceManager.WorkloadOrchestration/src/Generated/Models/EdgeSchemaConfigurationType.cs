@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public readonly partial struct EdgeSchemaConfigurationType : IEquatable<EdgeSchemaConfigurationType>
     {
         private readonly string _value;
+        /// <summary> Configuration type Shared. </summary>
+        private const string SharedValue = "Shared";
+        /// <summary> Configuration type Hierarchy. </summary>
+        private const string HierarchyValue = "Hierarchy";
 
         /// <summary> Initializes a new instance of <see cref="EdgeSchemaConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeSchemaConfigurationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SharedValue = "Shared";
-        private const string HierarchyValue = "Hierarchy";
+            _value = value;
+        }
 
         /// <summary> Configuration type Shared. </summary>
         public static EdgeSchemaConfigurationType Shared { get; } = new EdgeSchemaConfigurationType(SharedValue);
+
         /// <summary> Configuration type Hierarchy. </summary>
         public static EdgeSchemaConfigurationType Hierarchy { get; } = new EdgeSchemaConfigurationType(HierarchyValue);
+
         /// <summary> Determines if two <see cref="EdgeSchemaConfigurationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeSchemaConfigurationType left, EdgeSchemaConfigurationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeSchemaConfigurationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeSchemaConfigurationType left, EdgeSchemaConfigurationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeSchemaConfigurationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeSchemaConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeSchemaConfigurationType(string value) => new EdgeSchemaConfigurationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeSchemaConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeSchemaConfigurationType?(string value) => value == null ? null : new EdgeSchemaConfigurationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeSchemaConfigurationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeSchemaConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

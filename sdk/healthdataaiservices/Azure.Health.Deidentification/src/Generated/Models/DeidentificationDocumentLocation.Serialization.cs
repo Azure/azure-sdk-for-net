@@ -95,7 +95,7 @@ namespace Azure.Health.Deidentification
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = new Uri(prop.Value.GetString());
+                    location = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))

@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Associates existing subscription with the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -104,7 +103,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Associates existing subscription with the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -116,7 +114,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -155,7 +153,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Retrieves details about given subscription which is associated with the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -167,7 +164,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -202,7 +199,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Retrieves details about given subscription which is associated with the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -214,7 +210,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -249,7 +245,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Retrieves details about all subscriptions which are associated with the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -261,7 +256,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +267,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagementGroupSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
@@ -285,7 +279,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Retrieves details about all subscriptions which are associated with the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -297,7 +290,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -308,7 +301,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagementGroupSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
@@ -332,7 +324,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -376,7 +368,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,7 +412,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,7 +458,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

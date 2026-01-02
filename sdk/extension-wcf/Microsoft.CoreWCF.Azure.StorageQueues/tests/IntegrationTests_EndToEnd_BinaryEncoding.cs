@@ -7,6 +7,7 @@ using Microsoft.CoreWCF.Azure.StorageQueues.Tests;
 using Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.WCF.Azure.StorageQueues;
 using NUnit.Framework;
 using System;
@@ -16,12 +17,12 @@ namespace CoreWCF
 {
     public class IntegrationTests_EndToEnd_BinaryEncoding
     {
-        private IWebHost host;
+        private IHost host;
 
         [SetUp]
         public void Setup()
         {
-            host = ServiceHelper.CreateWebHostBuilder<Startup_EndToEnd_BinaryEncoding>().Build();
+            host = ServiceHelper.CreateHost<Startup_EndToEnd_BinaryEncoding>();
             host.Start();
         }
 
