@@ -1,87 +1,81 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.AgentServer.Core.Tools.Models;
 
 /// <summary>
-/// Represents a tool that can be invoked.
+/// Supported tool protocols.
+/// </summary>
+public enum FoundryToolProtocol
+{
+    /// <summary>
+    /// Model Context Protocol tools.
+    /// </summary>
+    MCP,
+
+    /// <summary>
+    /// Agent-to-agent tools.
+    /// </summary>
+    A2A
+}
+
+/// <summary>
+/// Represents a tool configuration definition.
 /// </summary>
 public record FoundryTool
 {
     /// <summary>
-    /// Gets or initializes the unique key for the tool.
+    /// Creates a typed tool definition.
     /// </summary>
-    required public string Key { get; init; }
-
-    /// <summary>
-    /// Gets or initializes the display name of the tool.
-    /// </summary>
-    required public string Name { get; init; }
-
-    /// <summary>
-    /// Gets or initializes the description of the tool.
-    /// </summary>
-    required public string Description { get; init; }
-
-    /// <summary>
-    /// Gets or initializes the source of the tool.
-    /// </summary>
-    required public ToolSource Source { get; init; }
-
-    /// <summary>
-    /// Gets or initializes the raw metadata from the tool API.
-    /// </summary>
-    required public IReadOnlyDictionary<string, object?> Metadata { get; init; }
-
-    /// <summary>
-    /// Gets or initializes the JSON schema describing the tool's input parameters.
-    /// </summary>
-    public IReadOnlyDictionary<string, object?>? InputSchema { get; init; }
-
-    /// <summary>
-    /// Gets or initializes the tool definition configuration.
-    /// </summary>
-    public ToolDefinition? ToolDefinition { get; init; }
-
-    /// <summary>
-    /// Gets or sets the synchronous invoker function for this tool.
-    /// </summary>
-    public Func<IDictionary<string, object?>, object?>? Invoker { get; set; }
-
-    /// <summary>
-    /// Gets or sets the asynchronous invoker function for this tool.
-    /// </summary>
-    public Func<IDictionary<string, object?>, Task<object?>>? AsyncInvoker { get; set; }
-
-    /// <summary>
-    /// Invokes the tool synchronously.
-    /// </summary>
-    /// <param name="arguments">The arguments to pass to the tool.</param>
-    /// <returns>The result of the tool invocation.</returns>
-    /// <exception cref="NotSupportedException">Thrown when no synchronous invoker is configured.</exception>
-    public object? Invoke(IDictionary<string, object?>? arguments = null)
+    /// <param name="protocol">The tool protocol.</param>
+    /// <param name="projectConnectionId">The project connection ID for the tool.</param>
+    /// <param name="additionalProperties">Optional additional properties for the tool configuration.</param>
+    [SetsRequiredMembers]
+    public FoundryTool(
+        FoundryToolProtocol protocol,
+        string projectConnectionId,
+        IReadOnlyDictionary<string, object?>? additionalProperties = null)
     {
-        if (Invoker == null)
+        Type = protocol switch
         {
-            throw new NotSupportedException("No synchronous invoker configured for this tool.");
-        }
-
-        return Invoker(arguments ?? new Dictionary<string, object?>());
+            FoundryToolProtocol.MCP => "mcp",
+            FoundryToolProtocol.A2A => "a2a",
+            _ => throw new ArgumentOutOfRangeException(nameof(protocol))
+        };
+        ProjectConnectionId = projectConnectionId ?? throw new ArgumentNullException(nameof(projectConnectionId));
+        AdditionalProperties = additionalProperties;
     }
 
     /// <summary>
-    /// Invokes the tool asynchronously.
+    /// Creates an MCP tool definition.
     /// </summary>
-    /// <param name="arguments">The arguments to pass to the tool.</param>
-    /// <returns>A task that represents the asynchronous operation and contains the tool invocation result.</returns>
-    /// <exception cref="NotSupportedException">Thrown when no asynchronous invoker is configured.</exception>
-    public async Task<object?> InvokeAsync(IDictionary<string, object?>? arguments = null)
-    {
-        if (AsyncInvoker == null)
-        {
-            throw new NotSupportedException("No asynchronous invoker configured for this tool.");
-        }
+    public static FoundryTool Mcp(
+        string projectConnectionId,
+        IReadOnlyDictionary<string, object?>? additionalProperties = null)
+        => new(FoundryToolProtocol.MCP, projectConnectionId, additionalProperties);
 
-        return await AsyncInvoker(arguments ?? new Dictionary<string, object?>()).ConfigureAwait(false);
-    }
+    /// <summary>
+    /// Creates an A2A tool definition.
+    /// </summary>
+    public static FoundryTool A2a(
+        string projectConnectionId,
+        IReadOnlyDictionary<string, object?>? additionalProperties = null)
+        => new(FoundryToolProtocol.A2A, projectConnectionId, additionalProperties);
+
+    /// <summary>
+    /// Gets or initializes the type of the tool (e.g., "mcp", "a2a").
+    /// </summary>
+    required public string Type { get; init; }
+
+    /// <summary>
+    /// Gets or initializes the project connection ID for the tool.
+    /// </summary>
+    required public string ProjectConnectionId { get; init; }
+
+    /// <summary>
+    /// Gets or initializes additional properties for the tool configuration.
+    /// </summary>
+    public IReadOnlyDictionary<string, object?>? AdditionalProperties { get; init; }
 }

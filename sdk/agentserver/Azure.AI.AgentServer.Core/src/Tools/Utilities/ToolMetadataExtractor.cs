@@ -31,7 +31,7 @@ internal static class ToolMetadataExtractor
     /// <param name="raw">The raw tool data.</param>
     /// <param name="source">The tool source.</param>
     /// <returns>A unique tool key.</returns>
-    public static string DeriveToolKey(IReadOnlyDictionary<string, object?> raw, ToolSource source)
+    public static string DeriveToolKey(IReadOnlyDictionary<string, object?> raw, FoundryToolSource source)
     {
         var candidate = TryGetValue(raw, "id", "name", "tool_name");
         return candidate != null

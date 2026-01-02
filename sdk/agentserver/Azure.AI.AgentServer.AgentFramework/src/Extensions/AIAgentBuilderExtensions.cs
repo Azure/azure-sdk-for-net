@@ -18,26 +18,26 @@ public static class AIAgentBuilderExtensions
     /// Adds Foundry tool discovery to the agent pipeline and enables tool calling using the resolved tools.
     /// </summary>
     /// <param name="builder">The <see cref="AIAgentBuilder"/> to augment.</param>
-    /// <param name="toolDefinitions">The Foundry tool definitions to resolve.</param>
+    /// <param name="foundryTools">The Foundry tool definitions to resolve.</param>
     /// <returns>The <see cref="AIAgentBuilder"/> instance with tool discovery added.</returns>
     public static AIAgentBuilder UseFoundryTools(
         this AIAgentBuilder builder,
-        params ToolDefinition[] toolDefinitions)
+        params FoundryTool[] foundryTools)
     {
         ArgumentNullException.ThrowIfNull(builder);
-        ArgumentNullException.ThrowIfNull(toolDefinitions);
+        ArgumentNullException.ThrowIfNull(foundryTools);
 
         return builder.Use((innerAgent, services) =>
         {
             var endpoint = ResolveProjectEndpoint();
             var toolCredential = (services.GetService(typeof(TokenCredential)) as TokenCredential) ?? new DefaultAzureCredential();
 
-            var options = new AzureAIToolClientOptions
+            var options = new FoundryToolClientOptions
             {
-                Tools = new List<ToolDefinition>(toolDefinitions)
+                Tools = new List<FoundryTool>(foundryTools)
             };
 
-            var toolClient = new ToolClient(new AzureAIToolClient(endpoint, toolCredential, options));
+            var toolClient = new ToolClient(new FoundryToolClient(endpoint, toolCredential, options));
             return new FoundryToolAgent(innerAgent, toolClient);
         });
     }

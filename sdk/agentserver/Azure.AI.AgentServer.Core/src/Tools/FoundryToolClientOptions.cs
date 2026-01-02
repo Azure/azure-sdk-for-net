@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Core.Tools;
 /// <summary>
 /// Options for configuring the Azure AI Tool Client.
 /// </summary>
-public class AzureAIToolClientOptions : ClientOptions
+public class FoundryToolClientOptions : ClientOptions
 {
     /// <summary>
     /// Gets or sets the name of the agent. Defaults to "$default".
@@ -31,7 +31,7 @@ public class AzureAIToolClientOptions : ClientOptions
     /// <summary>
     /// Gets or sets the list of tool definitions.
     /// </summary>
-    public IList<ToolDefinition> Tools { get; set; } = new List<ToolDefinition>();
+    public IList<FoundryTool> Tools { get; set; } = new List<FoundryTool>();
 
     /// <summary>
     /// Gets or sets the user information for tool invocations.
@@ -57,9 +57,9 @@ public class AzureAIToolClientOptions : ClientOptions
     internal ToolConfigurationParser ToolConfig { get; private set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AzureAIToolClientOptions"/> class.
+    /// Initializes a new instance of the <see cref="FoundryToolClientOptions"/> class.
     /// </summary>
-    public AzureAIToolClientOptions(ServiceVersion version = ServiceVersion.V1)
+    public FoundryToolClientOptions(ServiceVersion version = ServiceVersion.V1)
     {
         ToolConfig = new ToolConfigurationParser(Tools);
     }
