@@ -13,12 +13,12 @@ internal class ToolConfigurationParser
     /// <summary>
     /// Gets the list of hosted MCP tools.
     /// </summary>
-    public IReadOnlyList<FoundryTool> HostedMcpTools { get; }
+    public IReadOnlyList<FoundryHostedMcpTool> HostedMcpTools { get; }
 
     /// <summary>
     /// Gets the list of connected tools (MCP and A2A).
     /// </summary>
-    public IReadOnlyList<FoundryTool> ConnectedTools { get; }
+    public IReadOnlyList<FoundryConnectedTool> ConnectedTools { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ToolConfigurationParser"/> class.
@@ -26,19 +26,21 @@ internal class ToolConfigurationParser
     /// <param name="foundryTools">The list of tool definitions to parse.</param>
     public ToolConfigurationParser(IList<FoundryTool> foundryTools)
     {
-        var hostedMcp = new List<FoundryTool>();
-        var connected = new List<FoundryTool>();
+        var hostedMcp = new List<FoundryHostedMcpTool>();
+        var connected = new List<FoundryConnectedTool>();
 
         foreach (var tool in foundryTools)
         {
-            var type = tool.Type.ToLowerInvariant();
-            if (type == "mcp" || type == "a2a")
+            switch (tool.Source)
             {
-                connected.Add(tool);
-            }
-            else
-            {
-                hostedMcp.Add(tool);
+                case FoundryToolSource.CONNECTED when tool is FoundryConnectedTool connectedTool:
+                    connected.Add(connectedTool);
+                    break;
+                case FoundryToolSource.HOSTED_MCP when tool is FoundryHostedMcpTool hostedTool:
+                    hostedMcp.Add(hostedTool);
+                    break;
+                default:
+                    throw new InvalidOperationException($"Unsupported tool configuration type: {tool.GetType().Name}");
             }
         }
 

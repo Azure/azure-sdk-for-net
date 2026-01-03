@@ -111,7 +111,7 @@ internal class FoundryConnectedToolsOperations
             .Select(td => new
             {
                 projectConnectionId = td.ProjectConnectionId,
-                protocol = td.Type.ToLowerInvariant()
+                protocol = td.Type
             })
             .ToList();
 
@@ -139,14 +139,16 @@ internal class FoundryConnectedToolsOperations
         IDictionary<string, object?> arguments,
         CancellationToken cancellationToken)
     {
+        var connectedTool = tool.FoundryTool as FoundryConnectedTool;
+
         var content = new Dictionary<string, object?>
         {
             ["toolName"] = tool.Name,
             ["arguments"] = arguments,
             ["remoteServer"] = new
             {
-                projectConnectionId = tool.FoundryTool?.ProjectConnectionId,
-                protocol = tool.FoundryTool?.Type.ToLowerInvariant()
+                projectConnectionId = connectedTool?.ProjectConnectionId,
+                protocol = connectedTool?.Type
             }
         };
 
@@ -288,7 +290,7 @@ internal class FoundryConnectedToolsOperations
 
     private List<Dictionary<string, object?>> ParseEnrichedTools(
         JsonElement toolsElement,
-        IReadOnlyList<FoundryTool> foundryTools)
+        IReadOnlyList<FoundryConnectedTool> foundryTools)
     {
         var enrichedTools = new List<Dictionary<string, object?>>();
 
