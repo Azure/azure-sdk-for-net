@@ -13,19 +13,19 @@ namespace Azure.AI.AgentServer.Core.Tools.Operations;
 /// <summary>
 /// Handles operations for MCP (Model Context Protocol) tools.
 /// </summary>
-internal class MCPToolsOperations
+internal class FoundryMcpToolsOperations
 {
     // Use relative path (without leading /) so it's appended to BaseAddress correctly
     private const string McpEndpointPath = "mcp_tools";
     private readonly IToolOperationsInvoker _invoker;
-    private readonly AzureAIToolClientOptions _options;
+    private readonly FoundryToolClientOptions _options;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MCPToolsOperations"/> class.
+    /// Initializes a new instance of the <see cref="FoundryMcpToolsOperations"/> class.
     /// </summary>
     /// <param name="invoker">The service invoker.</param>
     /// <param name="options">The client options.</param>
-    public MCPToolsOperations(IToolOperationsInvoker invoker, AzureAIToolClientOptions options)
+    public FoundryMcpToolsOperations(IToolOperationsInvoker invoker, FoundryToolClientOptions options)
     {
         _invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
         _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -37,14 +37,14 @@ internal class MCPToolsOperations
     /// <param name="existingNames">Set of existing tool names to avoid conflicts.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>List of MCP tools.</returns>
-    public Response<IReadOnlyList<FoundryTool>> ListTools(
+    public Response<IReadOnlyList<ResolvedFoundryTool>> ListTools(
         HashSet<string> existingNames,
         CancellationToken cancellationToken = default)
     {
         using HttpMessage message = CreateListToolsMessage(cancellationToken);
         var response = _invoker.SendRequest(message, cancellationToken);
         var tools = ProcessListToolsResponse(response, existingNames);
-        return Response.FromValue<IReadOnlyList<FoundryTool>>(tools, response);
+        return Response.FromValue<IReadOnlyList<ResolvedFoundryTool>>(tools, response);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ internal class MCPToolsOperations
     /// <param name="existingNames">Set of existing tool names to avoid conflicts.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task returning list of MCP tools.</returns>
-    public async Task<Response<IReadOnlyList<FoundryTool>>> ListToolsAsync(
+    public async Task<Response<IReadOnlyList<ResolvedFoundryTool>>> ListToolsAsync(
         HashSet<string> existingNames,
         CancellationToken cancellationToken = default)
     {
@@ -61,7 +61,7 @@ internal class MCPToolsOperations
         var response = await _invoker.SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
         var tools = await ProcessListToolsResponseAsync(response, existingNames, cancellationToken)
             .ConfigureAwait(false);
-        return Response.FromValue<IReadOnlyList<FoundryTool>>(tools, response);
+        return Response.FromValue<IReadOnlyList<ResolvedFoundryTool>>(tools, response);
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ internal class MCPToolsOperations
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The tool invocation result.</returns>
     public Response<object?> InvokeTool(
-        FoundryTool tool,
+        ResolvedFoundryTool tool,
         IDictionary<string, object?> arguments,
         CancellationToken cancellationToken = default)
     {
@@ -90,7 +90,7 @@ internal class MCPToolsOperations
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task returning the tool invocation result.</returns>
     public async Task<Response<object?>> InvokeToolAsync(
-        FoundryTool tool,
+        ResolvedFoundryTool tool,
         IDictionary<string, object?> arguments,
         CancellationToken cancellationToken = default)
     {
@@ -118,7 +118,7 @@ internal class MCPToolsOperations
     }
 
     private HttpMessage CreateInvokeToolMessage(
-        FoundryTool tool,
+        ResolvedFoundryTool tool,
         IDictionary<string, object?> arguments,
         CancellationToken cancellationToken)
     {
@@ -129,14 +129,14 @@ internal class MCPToolsOperations
         };
 
         // Add _meta if tool definition exists and metadata schema is present
-        if (tool.ToolDefinition != null)
+        if (tool.FoundryTool != null)
         {
             var metaSchema = ToolMetadataExtractor.ExtractMetadataSchema(tool.Metadata);
             if (metaSchema != null)
             {
                 var metaConfig = MetadataMapper.PrepareMetadataDict(
                     tool.Metadata,
-                    tool.ToolDefinition,
+                    tool.FoundryTool,
                     GetToolPropertyOverrides(tool.Name));
 
                 if (metaConfig.Count > 0)
@@ -174,13 +174,13 @@ internal class MCPToolsOperations
         };
     }
 
-    private IReadOnlyList<FoundryTool> ProcessListToolsResponse(
+    private IReadOnlyList<ResolvedFoundryTool> ProcessListToolsResponse(
         Response response,
         HashSet<string> existingNames)
     {
         if (response.ContentStream == null)
         {
-            return Array.Empty<FoundryTool>();
+            return Array.Empty<ResolvedFoundryTool>();
         }
 
         using var document = JsonDocument.Parse(response.ContentStream);
@@ -189,7 +189,7 @@ internal class MCPToolsOperations
         if (!jsonResponse.TryGetProperty("result", out var resultElement) ||
             !resultElement.TryGetProperty("tools", out var toolsElement))
         {
-            return Array.Empty<FoundryTool>();
+            return Array.Empty<ResolvedFoundryTool>();
         }
 
         var rawTools = JsonSerializer.Deserialize<List<Dictionary<string, object?>>>(
@@ -198,18 +198,18 @@ internal class MCPToolsOperations
 
         return ToolDescriptorBuilder.BuildDescriptors(
             rawTools,
-            ToolSource.McpTools,
+            FoundryToolSource.HOSTED_MCP,
             existingNames);
     }
 
-    private async Task<IReadOnlyList<FoundryTool>> ProcessListToolsResponseAsync(
+    private async Task<IReadOnlyList<ResolvedFoundryTool>> ProcessListToolsResponseAsync(
         Response response,
         HashSet<string> existingNames,
         CancellationToken cancellationToken)
     {
         if (response.ContentStream == null)
         {
-            return Array.Empty<FoundryTool>();
+            return Array.Empty<ResolvedFoundryTool>();
         }
 
         using var document = await JsonDocument.ParseAsync(response.ContentStream, cancellationToken: cancellationToken)
@@ -219,7 +219,7 @@ internal class MCPToolsOperations
         if (!jsonResponse.TryGetProperty("result", out var resultElement) ||
             !resultElement.TryGetProperty("tools", out var toolsElement))
         {
-            return Array.Empty<FoundryTool>();
+            return Array.Empty<ResolvedFoundryTool>();
         }
 
         var rawTools = JsonSerializer.Deserialize<List<Dictionary<string, object?>>>(
@@ -228,7 +228,7 @@ internal class MCPToolsOperations
 
         return ToolDescriptorBuilder.BuildDescriptors(
             rawTools,
-            ToolSource.McpTools,
+            FoundryToolSource.HOSTED_MCP,
             existingNames);
     }
 

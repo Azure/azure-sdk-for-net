@@ -6,7 +6,7 @@ using Azure.AI.AgentServer.Core.Tools.Models;
 namespace Azure.AI.AgentServer.Core.Tools.Utilities;
 
 /// <summary>
-/// Builds FoundryTool objects from raw tool data.
+/// Builds ResolvedFoundryTool objects from raw tool data.
 /// </summary>
 internal static class ToolDescriptorBuilder
 {
@@ -17,12 +17,12 @@ internal static class ToolDescriptorBuilder
     /// <param name="source">Source of the tools.</param>
     /// <param name="existingNames">Set of existing tool names to avoid conflicts.</param>
     /// <returns>List of built tool descriptors.</returns>
-    public static IReadOnlyList<FoundryTool> BuildDescriptors(
+    public static IReadOnlyList<ResolvedFoundryTool> BuildDescriptors(
         IEnumerable<Dictionary<string, object?>> rawTools,
-        ToolSource source,
+        FoundryToolSource source,
         HashSet<string> existingNames)
     {
-        var descriptors = new List<FoundryTool>();
+        var descriptors = new List<ResolvedFoundryTool>();
 
         foreach (var raw in rawTools)
         {
@@ -32,22 +32,19 @@ internal static class ToolDescriptorBuilder
                 continue;
             }
 
-            var key = ToolMetadataExtractor.DeriveToolKey(raw, source);
             var resolvedName = NameResolver.EnsureUniqueName(name, existingNames);
             var inputSchema = ToolMetadataExtractor.ExtractInputSchema(raw);
-            var toolDefinition = raw.TryGetValue("tool_definition", out var td) && td is ToolDefinition tDef
+            var foundryTool = raw.TryGetValue("foundry_tool", out var td) && td is FoundryTool tDef
                 ? tDef
                 : null;
 
-            var descriptor = new FoundryTool
+            var descriptor = new ResolvedFoundryTool
             {
-                Key = key,
                 Name = resolvedName,
                 Description = description ?? string.Empty,
-                Source = source,
                 Metadata = raw,
                 InputSchema = inputSchema,
-                ToolDefinition = toolDefinition
+                FoundryTool = foundryTool
             };
 
             descriptors.Add(descriptor);

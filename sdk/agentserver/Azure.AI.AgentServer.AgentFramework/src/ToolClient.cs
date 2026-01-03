@@ -9,17 +9,17 @@ using Microsoft.Extensions.AI;
 namespace Azure.AI.AgentServer.AgentFramework;
 
 /// <summary>
-/// Client that integrates AzureAIToolClient with Agent Framework.
+/// Client that integrates FoundryToolClient with Agent Framework.
 /// </summary>
 internal sealed class ToolClient : IAsyncDisposable
 {
-    private readonly AzureAIToolClient _toolClient;
+    private readonly FoundryToolClient _toolClient;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ToolClient"/> class.
     /// </summary>
     /// <param name="toolClient">The Azure AI tool client.</param>
-    public ToolClient(AzureAIToolClient toolClient)
+    public ToolClient(FoundryToolClient toolClient)
     {
         _toolClient = toolClient ?? throw new ArgumentNullException(nameof(toolClient));
     }
@@ -43,7 +43,7 @@ internal sealed class ToolClient : IAsyncDisposable
         return aiFunctions;
     }
 
-    private AIFunction ConvertToAgentFrameworkTool(FoundryTool azureTool)
+    private AIFunction ConvertToAgentFrameworkTool(ResolvedFoundryTool azureTool)
     {
         // Create wrapper function that invokes the Azure tool
         var toolName = azureTool.Name;

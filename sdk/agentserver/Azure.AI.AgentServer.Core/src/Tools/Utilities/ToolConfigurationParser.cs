@@ -11,38 +11,40 @@ namespace Azure.AI.AgentServer.Core.Tools.Utilities;
 internal class ToolConfigurationParser
 {
     /// <summary>
-    /// Gets the list of named MCP tools.
+    /// Gets the list of hosted MCP tools.
     /// </summary>
-    public IReadOnlyList<ToolDefinition> NamedMcpTools { get; }
+    public IReadOnlyList<FoundryHostedMcpTool> HostedMcpTools { get; }
 
     /// <summary>
-    /// Gets the list of remote tools (MCP and A2A).
+    /// Gets the list of connected tools (MCP and A2A).
     /// </summary>
-    public IReadOnlyList<ToolDefinition> RemoteTools { get; }
+    public IReadOnlyList<FoundryConnectedTool> ConnectedTools { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ToolConfigurationParser"/> class.
     /// </summary>
-    /// <param name="toolDefinitions">The list of tool definitions to parse.</param>
-    public ToolConfigurationParser(IList<ToolDefinition> toolDefinitions)
+    /// <param name="foundryTools">The list of tool definitions to parse.</param>
+    public ToolConfigurationParser(IList<FoundryTool> foundryTools)
     {
-        var namedMcp = new List<ToolDefinition>();
-        var remote = new List<ToolDefinition>();
+        var hostedMcp = new List<FoundryHostedMcpTool>();
+        var connected = new List<FoundryConnectedTool>();
 
-        foreach (var toolDef in toolDefinitions)
+        foreach (var tool in foundryTools)
         {
-            var type = toolDef.Type.ToLowerInvariant();
-            if (type == "mcp" || type == "a2a")
+            switch (tool.Source)
             {
-                remote.Add(toolDef);
-            }
-            else
-            {
-                namedMcp.Add(toolDef);
+                case FoundryToolSource.CONNECTED when tool is FoundryConnectedTool connectedTool:
+                    connected.Add(connectedTool);
+                    break;
+                case FoundryToolSource.HOSTED_MCP when tool is FoundryHostedMcpTool hostedTool:
+                    hostedMcp.Add(hostedTool);
+                    break;
+                default:
+                    throw new InvalidOperationException($"Unsupported tool configuration type: {tool.GetType().Name}");
             }
         }
 
-        NamedMcpTools = namedMcp;
-        RemoteTools = remote;
+        HostedMcpTools = hostedMcp;
+        ConnectedTools = connected;
     }
 }

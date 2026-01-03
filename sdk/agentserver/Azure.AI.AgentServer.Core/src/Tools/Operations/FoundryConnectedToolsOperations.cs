@@ -14,17 +14,17 @@ namespace Azure.AI.AgentServer.Core.Tools.Operations;
 /// <summary>
 /// Handles operations for remote Azure AI Tools API.
 /// </summary>
-internal class RemoteToolsOperations
+internal class FoundryConnectedToolsOperations
 {
     private readonly IToolOperationsInvoker _invoker;
-    private readonly AzureAIToolClientOptions _options;
+    private readonly FoundryToolClientOptions _options;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="RemoteToolsOperations"/> class.
+    /// Initializes a new instance of the <see cref="FoundryConnectedToolsOperations"/> class.
     /// </summary>
     /// <param name="invoker">The service invoker.</param>
     /// <param name="options">The client options.</param>
-    public RemoteToolsOperations(IToolOperationsInvoker invoker, AzureAIToolClientOptions options)
+    public FoundryConnectedToolsOperations(IToolOperationsInvoker invoker, FoundryToolClientOptions options)
     {
         _invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
         _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -36,7 +36,7 @@ internal class RemoteToolsOperations
     /// <param name="existingNames">Set of existing tool names to avoid conflicts.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>List of remote tools.</returns>
-    public Response<IReadOnlyList<FoundryTool>> ResolveTools(
+    public Response<IReadOnlyList<ResolvedFoundryTool>> ResolveTools(
         HashSet<string> existingNames,
         CancellationToken cancellationToken = default)
     {
@@ -45,7 +45,7 @@ internal class RemoteToolsOperations
         {
             var response = _invoker.SendRequest(message, cancellationToken);
             var tools = ProcessResolveToolsResponse(response, existingNames);
-            return Response.FromValue<IReadOnlyList<FoundryTool>>(tools, response);
+            return Response.FromValue<IReadOnlyList<ResolvedFoundryTool>>(tools, response);
         }
     }
 
@@ -55,7 +55,7 @@ internal class RemoteToolsOperations
     /// <param name="existingNames">Set of existing tool names to avoid conflicts.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task returning list of remote tools.</returns>
-    public async Task<Response<IReadOnlyList<FoundryTool>>> ResolveToolsAsync(
+    public async Task<Response<IReadOnlyList<ResolvedFoundryTool>>> ResolveToolsAsync(
         HashSet<string> existingNames,
         CancellationToken cancellationToken = default)
     {
@@ -65,7 +65,7 @@ internal class RemoteToolsOperations
             var response = await _invoker.SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
             var tools = await ProcessResolveToolsResponseAsync(response, existingNames, cancellationToken)
                 .ConfigureAwait(false);
-            return Response.FromValue<IReadOnlyList<FoundryTool>>(tools, response);
+            return Response.FromValue<IReadOnlyList<ResolvedFoundryTool>>(tools, response);
         }
     }
 
@@ -77,7 +77,7 @@ internal class RemoteToolsOperations
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The tool invocation result.</returns>
     public Response<object?> InvokeTool(
-        FoundryTool tool,
+        ResolvedFoundryTool tool,
         IDictionary<string, object?> arguments,
         CancellationToken cancellationToken = default)
     {
@@ -95,7 +95,7 @@ internal class RemoteToolsOperations
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task returning the tool invocation result.</returns>
     public async Task<Response<object?>> InvokeToolAsync(
-        FoundryTool tool,
+        ResolvedFoundryTool tool,
         IDictionary<string, object?> arguments,
         CancellationToken cancellationToken = default)
     {
@@ -107,11 +107,11 @@ internal class RemoteToolsOperations
 
     private HttpMessage CreateResolveToolsMessage(CancellationToken cancellationToken)
     {
-        var remoteServers = _options.ToolConfig.RemoteTools
+        var remoteServers = _options.ToolConfig.ConnectedTools
             .Select(td => new
             {
                 projectConnectionId = td.ProjectConnectionId,
-                protocol = td.Type.ToLowerInvariant()
+                protocol = td.Type
             })
             .ToList();
 
@@ -135,18 +135,20 @@ internal class RemoteToolsOperations
     }
 
     private HttpMessage CreateInvokeToolMessage(
-        FoundryTool tool,
+        ResolvedFoundryTool tool,
         IDictionary<string, object?> arguments,
         CancellationToken cancellationToken)
     {
+        var connectedTool = tool.FoundryTool as FoundryConnectedTool;
+
         var content = new Dictionary<string, object?>
         {
             ["toolName"] = tool.Name,
             ["arguments"] = arguments,
             ["remoteServer"] = new
             {
-                projectConnectionId = tool.ToolDefinition?.ProjectConnectionId,
-                protocol = tool.ToolDefinition?.Type.ToLowerInvariant()
+                projectConnectionId = connectedTool?.ProjectConnectionId,
+                protocol = connectedTool?.Type
             }
         };
 
@@ -164,13 +166,13 @@ internal class RemoteToolsOperations
             cancellationToken);
     }
 
-    private IReadOnlyList<FoundryTool> ProcessResolveToolsResponse(
+    private IReadOnlyList<ResolvedFoundryTool> ProcessResolveToolsResponse(
         Response response,
         HashSet<string> existingNames)
     {
         if (response.ContentStream == null)
         {
-            return Array.Empty<FoundryTool>();
+            return Array.Empty<ResolvedFoundryTool>();
         }
 
         using var document = JsonDocument.Parse(response.ContentStream);
@@ -181,25 +183,25 @@ internal class RemoteToolsOperations
 
         if (!jsonResponse.TryGetProperty("tools", out var toolsElement))
         {
-            return Array.Empty<FoundryTool>();
+            return Array.Empty<ResolvedFoundryTool>();
         }
 
-        var enrichedTools = ParseEnrichedTools(toolsElement, _options.ToolConfig.RemoteTools);
+        var enrichedTools = ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
 
         return ToolDescriptorBuilder.BuildDescriptors(
             enrichedTools,
-            ToolSource.RemoteTools,
+            FoundryToolSource.CONNECTED,
             existingNames);
     }
 
-    private async Task<IReadOnlyList<FoundryTool>> ProcessResolveToolsResponseAsync(
+    private async Task<IReadOnlyList<ResolvedFoundryTool>> ProcessResolveToolsResponseAsync(
         Response response,
         HashSet<string> existingNames,
         CancellationToken cancellationToken)
     {
         if (response.ContentStream == null)
         {
-            return Array.Empty<FoundryTool>();
+            return Array.Empty<ResolvedFoundryTool>();
         }
 
         using var document = await JsonDocument.ParseAsync(response.ContentStream, cancellationToken: cancellationToken)
@@ -211,14 +213,14 @@ internal class RemoteToolsOperations
 
         if (!jsonResponse.TryGetProperty("tools", out var toolsElement))
         {
-            return Array.Empty<FoundryTool>();
+            return Array.Empty<ResolvedFoundryTool>();
         }
 
-        var enrichedTools = ParseEnrichedTools(toolsElement, _options.ToolConfig.RemoteTools);
+        var enrichedTools = ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
 
         return ToolDescriptorBuilder.BuildDescriptors(
             enrichedTools,
-            ToolSource.RemoteTools,
+            FoundryToolSource.CONNECTED,
             existingNames);
     }
 
@@ -288,7 +290,7 @@ internal class RemoteToolsOperations
 
     private List<Dictionary<string, object?>> ParseEnrichedTools(
         JsonElement toolsElement,
-        IReadOnlyList<ToolDefinition> toolDefinitions)
+        IReadOnlyList<FoundryConnectedTool> foundryTools)
     {
         var enrichedTools = new List<Dictionary<string, object?>>();
 
@@ -302,7 +304,7 @@ internal class RemoteToolsOperations
             var projectConnectionId = remoteServer.GetProperty("projectConnectionId").GetString();
             var protocol = remoteServer.GetProperty("protocol").GetString();
 
-            var toolDefinition = toolDefinitions.FirstOrDefault(td =>
+            var foundryTool = foundryTools.FirstOrDefault(td =>
                 string.Equals(td.Type, protocol, StringComparison.OrdinalIgnoreCase) &&
                 string.Equals(td.ProjectConnectionId, projectConnectionId, StringComparison.OrdinalIgnoreCase));
 
@@ -317,7 +319,7 @@ internal class RemoteToolsOperations
                 {
                     ["name"] = manifest.TryGetProperty("name", out var nameEl) ? nameEl.GetString() : null,
                     ["description"] = manifest.TryGetProperty("description", out var descEl) ? descEl.GetString() : null,
-                    ["tool_definition"] = toolDefinition,
+                    ["foundry_tool"] = foundryTool,
                     ["projectConnectionId"] = projectConnectionId,
                     ["protocol"] = protocol
                 };

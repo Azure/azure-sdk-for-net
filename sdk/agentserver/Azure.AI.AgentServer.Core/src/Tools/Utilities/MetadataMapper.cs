@@ -24,12 +24,12 @@ internal static class MetadataMapper
     /// Prepares metadata dictionary from tool metadata and definition.
     /// </summary>
     /// <param name="toolMetadataRaw">The raw tool metadata.</param>
-    /// <param name="toolDefinition">The tool definition.</param>
+    /// <param name="foundryTool">The tool definition.</param>
     /// <param name="keyOverrides">Optional key overrides for mapping.</param>
     /// <returns>A dictionary with mapped metadata configuration.</returns>
     public static IReadOnlyDictionary<string, object?> PrepareMetadataDict(
         IReadOnlyDictionary<string, object?> toolMetadataRaw,
-        ToolDefinition? toolDefinition,
+        FoundryTool? foundryTool,
         IReadOnlyDictionary<string, string>? keyOverrides = null)
     {
         var metaSchema = ToolMetadataExtractor.ExtractMetadataSchema(toolMetadataRaw);
@@ -38,24 +38,24 @@ internal static class MetadataMapper
             return new Dictionary<string, object?>();
         }
 
-        return ExtractMetadataConfig(metaSchema, toolDefinition, keyOverrides);
+        return ExtractMetadataConfig(metaSchema, foundryTool, keyOverrides);
     }
 
     /// <summary>
     /// Extracts metadata configuration from _meta schema and tool definition.
     /// </summary>
     /// <param name="metaSchema">The _meta schema containing property definitions.</param>
-    /// <param name="toolDefinition">The tool definition containing actual values.</param>
+    /// <param name="foundryTool">The tool definition containing actual values.</param>
     /// <param name="keyOverrides">Mapping from tool definition keys to _meta schema keys.</param>
     /// <returns>Dictionary with mapped metadata configuration.</returns>
     private static IReadOnlyDictionary<string, object?> ExtractMetadataConfig(
         IReadOnlyDictionary<string, object?> metaSchema,
-        ToolDefinition? toolDefinition,
+        FoundryTool? foundryTool,
         IReadOnlyDictionary<string, string>? keyOverrides)
     {
         var result = new Dictionary<string, object?>();
 
-        // Build reverse mapping: tool_definition_key -> meta_property_name
+        // Build reverse mapping: foundry_tool_key -> meta_property_name
         var toolToMetaMapping = DefaultKeyMapping.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
         if (keyOverrides != null)
         {
@@ -88,9 +88,9 @@ internal static class MetadataMapper
             var valueFromDefinition = false;
 
             // Try to find value in tool definition
-            if (toolDefinition != null)
+            if (foundryTool != null)
             {
-                var toolDefDict = ConvertToDict(toolDefinition);
+                var toolDefDict = ConvertToDict(foundryTool);
 
                 // Check exact match first
                 if (toolDefDict.TryGetValue(metaPropName, out value))
@@ -127,17 +127,24 @@ internal static class MetadataMapper
         return result;
     }
 
-    private static Dictionary<string, object?> ConvertToDict(ToolDefinition toolDefinition)
+    private static Dictionary<string, object?> ConvertToDict(FoundryTool foundryTool)
     {
-        var dict = new Dictionary<string, object?>
-        {
-            ["type"] = toolDefinition.Type,
-            ["project_connection_id"] = toolDefinition.ProjectConnectionId
-        };
+        var dict = new Dictionary<string, object?>();
 
-        if (toolDefinition.AdditionalProperties != null)
+        switch (foundryTool)
         {
-            foreach (var kvp in toolDefinition.AdditionalProperties)
+            case FoundryConnectedTool connectedTool:
+                dict["type"] = connectedTool.Type;
+                dict["project_connection_id"] = connectedTool.ProjectConnectionId;
+                break;
+            case FoundryHostedMcpTool hostedTool:
+                dict["name"] = hostedTool.Name;
+                break;
+        }
+
+        if (foundryTool.AdditionalProperties != null)
+        {
+            foreach (var kvp in foundryTool.AdditionalProperties)
             {
                 dict[kvp.Key] = kvp.Value;
             }

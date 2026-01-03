@@ -4,84 +4,42 @@
 namespace Azure.AI.AgentServer.Core.Tools.Models;
 
 /// <summary>
-/// Represents a tool that can be invoked.
+/// Supported tool protocols.
 /// </summary>
-public record FoundryTool
+public enum FoundryToolProtocol
 {
     /// <summary>
-    /// Gets or initializes the unique key for the tool.
+    /// Model Context Protocol tools.
     /// </summary>
-    required public string Key { get; init; }
+    MCP,
 
     /// <summary>
-    /// Gets or initializes the display name of the tool.
+    /// Agent-to-agent tools.
     /// </summary>
-    required public string Name { get; init; }
+    A2A
+}
 
+/// <summary>
+/// Represents a tool configuration definition.
+/// </summary>
+public abstract record FoundryTool
+{
     /// <summary>
-    /// Gets or initializes the description of the tool.
+    /// Initializes a new instance of the <see cref="FoundryTool"/> class.
     /// </summary>
-    required public string Description { get; init; }
-
-    /// <summary>
-    /// Gets or initializes the source of the tool.
-    /// </summary>
-    required public ToolSource Source { get; init; }
-
-    /// <summary>
-    /// Gets or initializes the raw metadata from the tool API.
-    /// </summary>
-    required public IReadOnlyDictionary<string, object?> Metadata { get; init; }
-
-    /// <summary>
-    /// Gets or initializes the JSON schema describing the tool's input parameters.
-    /// </summary>
-    public IReadOnlyDictionary<string, object?>? InputSchema { get; init; }
-
-    /// <summary>
-    /// Gets or initializes the tool definition configuration.
-    /// </summary>
-    public ToolDefinition? ToolDefinition { get; init; }
-
-    /// <summary>
-    /// Gets or sets the synchronous invoker function for this tool.
-    /// </summary>
-    public Func<IDictionary<string, object?>, object?>? Invoker { get; set; }
-
-    /// <summary>
-    /// Gets or sets the asynchronous invoker function for this tool.
-    /// </summary>
-    public Func<IDictionary<string, object?>, Task<object?>>? AsyncInvoker { get; set; }
-
-    /// <summary>
-    /// Invokes the tool synchronously.
-    /// </summary>
-    /// <param name="arguments">The arguments to pass to the tool.</param>
-    /// <returns>The result of the tool invocation.</returns>
-    /// <exception cref="NotSupportedException">Thrown when no synchronous invoker is configured.</exception>
-    public object? Invoke(IDictionary<string, object?>? arguments = null)
+    /// <param name="additionalProperties">Optional additional properties for the tool configuration.</param>
+    protected FoundryTool(IReadOnlyDictionary<string, object?>? additionalProperties = null)
     {
-        if (Invoker == null)
-        {
-            throw new NotSupportedException("No synchronous invoker configured for this tool.");
-        }
-
-        return Invoker(arguments ?? new Dictionary<string, object?>());
+        AdditionalProperties = additionalProperties;
     }
 
     /// <summary>
-    /// Invokes the tool asynchronously.
+    /// Gets the source of the tool.
     /// </summary>
-    /// <param name="arguments">The arguments to pass to the tool.</param>
-    /// <returns>A task that represents the asynchronous operation and contains the tool invocation result.</returns>
-    /// <exception cref="NotSupportedException">Thrown when no asynchronous invoker is configured.</exception>
-    public async Task<object?> InvokeAsync(IDictionary<string, object?>? arguments = null)
-    {
-        if (AsyncInvoker == null)
-        {
-            throw new NotSupportedException("No asynchronous invoker configured for this tool.");
-        }
+    public abstract FoundryToolSource Source { get; }
 
-        return await AsyncInvoker(arguments ?? new Dictionary<string, object?>()).ConfigureAwait(false);
-    }
+    /// <summary>
+    /// Gets or initializes additional properties for the tool configuration.
+    /// </summary>
+    public IReadOnlyDictionary<string, object?>? AdditionalProperties { get; init; }
 }
