@@ -234,8 +234,7 @@ public class FoundryToolClient : IAsyncDisposable, IDisposable
     {
         var tools = ListTools(cancellationToken);
         return tools.FirstOrDefault(t =>
-            string.Equals(t.Name, toolName, StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(t.Key, toolName, StringComparison.OrdinalIgnoreCase))
+            string.Equals(t.Name, toolName, StringComparison.OrdinalIgnoreCase))
             ?? throw new KeyNotFoundException($"Unknown tool: {toolName}");
     }
 
@@ -243,8 +242,7 @@ public class FoundryToolClient : IAsyncDisposable, IDisposable
     {
         var tools = await ListToolsAsync(cancellationToken).ConfigureAwait(false);
         return tools.FirstOrDefault(t =>
-            string.Equals(t.Name, toolName, StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(t.Key, toolName, StringComparison.OrdinalIgnoreCase))
+            string.Equals(t.Name, toolName, StringComparison.OrdinalIgnoreCase))
             ?? throw new KeyNotFoundException($"Unknown tool: {toolName}");
     }
 

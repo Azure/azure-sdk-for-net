@@ -32,7 +32,6 @@ internal static class ToolDescriptorBuilder
                 continue;
             }
 
-            var key = ToolMetadataExtractor.DeriveToolKey(raw, source);
             var resolvedName = NameResolver.EnsureUniqueName(name, existingNames);
             var inputSchema = ToolMetadataExtractor.ExtractInputSchema(raw);
             var foundryTool = raw.TryGetValue("foundry_tool", out var td) && td is FoundryTool tDef
@@ -41,7 +40,6 @@ internal static class ToolDescriptorBuilder
 
             var descriptor = new ResolvedFoundryTool
             {
-                Key = key,
                 Name = resolvedName,
                 Description = description ?? string.Empty,
                 Source = source,
