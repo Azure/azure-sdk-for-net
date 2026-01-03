@@ -42,7 +42,6 @@ internal static class ToolDescriptorBuilder
             {
                 Name = resolvedName,
                 Description = description ?? string.Empty,
-                Source = source,
                 Metadata = raw,
                 InputSchema = inputSchema,
                 FoundryTool = foundryTool

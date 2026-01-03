@@ -196,7 +196,7 @@ public class FoundryToolClient : IAsyncDisposable, IDisposable
         {
             FoundryToolSource.HOSTED_MCP => _hostedMcpTools.InvokeTool(tool, payload, cancellationToken),
             FoundryToolSource.CONNECTED => _connectedTools.InvokeTool(tool, payload, cancellationToken),
-            _ => throw new InvalidOperationException($"Unsupported tool source: {tool.Source}")
+            _ => throw new InvalidOperationException("Unsupported tool source.")
         };
 
         return response.Value;
@@ -224,7 +224,7 @@ public class FoundryToolClient : IAsyncDisposable, IDisposable
                 .ConfigureAwait(false),
             FoundryToolSource.CONNECTED => await _connectedTools.InvokeToolAsync(tool, payload, cancellationToken)
                 .ConfigureAwait(false),
-            _ => throw new InvalidOperationException($"Unsupported tool source: {tool.Source}")
+            _ => throw new InvalidOperationException("Unsupported tool source.")
         };
 
         return response.Value;

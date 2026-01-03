@@ -19,9 +19,11 @@ public record ResolvedFoundryTool
     required public string Description { get; init; }
 
     /// <summary>
-    /// Gets or initializes the source of the tool.
+    /// Gets the source of the tool.
     /// </summary>
-    required public FoundryToolSource Source { get; init; }
+    /// <exception cref="InvalidOperationException">Thrown when no tool definition is configured.</exception>
+    public FoundryToolSource Source =>
+        FoundryTool?.Source ?? throw new InvalidOperationException("Tool definition is missing.");
 
     /// <summary>
     /// Gets or initializes the raw metadata from the tool API.

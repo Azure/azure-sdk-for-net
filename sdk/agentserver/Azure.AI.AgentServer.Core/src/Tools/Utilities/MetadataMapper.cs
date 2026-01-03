@@ -129,11 +129,18 @@ internal static class MetadataMapper
 
     private static Dictionary<string, object?> ConvertToDict(FoundryTool foundryTool)
     {
-        var dict = new Dictionary<string, object?>
+        var dict = new Dictionary<string, object?>();
+
+        switch (foundryTool)
         {
-            ["type"] = foundryTool.Type,
-            ["project_connection_id"] = foundryTool.ProjectConnectionId
-        };
+            case FoundryConnectedTool connectedTool:
+                dict["type"] = connectedTool.Type;
+                dict["project_connection_id"] = connectedTool.ProjectConnectionId;
+                break;
+            case FoundryHostedMcpTool hostedTool:
+                dict["name"] = hostedTool.Name;
+                break;
+        }
 
         if (foundryTool.AdditionalProperties != null)
         {
