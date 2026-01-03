@@ -9,11 +9,6 @@ namespace Azure.AI.AgentServer.Core.Tools.Models;
 public record ResolvedFoundryTool
 {
     /// <summary>
-    /// Gets or initializes the unique key for the tool.
-    /// </summary>
-    required public string Key { get; init; }
-
-    /// <summary>
     /// Gets or initializes the display name of the tool.
     /// </summary>
     required public string Name { get; init; }
