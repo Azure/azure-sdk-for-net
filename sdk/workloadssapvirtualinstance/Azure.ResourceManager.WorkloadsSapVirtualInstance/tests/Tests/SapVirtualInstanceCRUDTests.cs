@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             // Create SAP VIS
             JsonDocument jsonElement = GetJsonElement(filePath);
             var sviData = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(jsonElement.RootElement, ModelReaderWriterOptions.Json);
-            // sviData.ManagedResourceGroupConfiguration = new ManagedRGConfiguration
-            // {
-            //     Name = Recording.GenerateAssetName(resourceName + "mrg-")
-            // };
+            sviData.Properties.ManagedResourceGroupConfiguration = new ManagedRGConfiguration
+            {
+                Name = Recording.GenerateAssetName(resourceName + "mrg-")
+            };
 
             string appRgName = Recording.GenerateAssetName(resourceName + "appRg-");
             DeploymentWithOSConfiguration deploymentWithOSConfiguration =
