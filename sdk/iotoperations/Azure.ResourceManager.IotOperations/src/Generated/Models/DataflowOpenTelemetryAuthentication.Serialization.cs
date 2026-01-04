@@ -8,15 +8,19 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
+    /// <summary>
+    /// Dataflow OpenTelemetry authentication properties.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/>, <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>, and <see cref="DataflowOpenTelemetryAnonymousAuthentication"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownDataflowOpenTelemetryAuthentication))]
-    public partial class DataflowOpenTelemetryAuthentication : IUtf8JsonSerializable, IJsonModel<DataflowOpenTelemetryAuthentication>
+    public abstract partial class DataflowOpenTelemetryAuthentication : IJsonModel<DataflowOpenTelemetryAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowOpenTelemetryAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowOpenTelemetryAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +32,22 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowOpenTelemetryAuthentication)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,42 +56,53 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowOpenTelemetryAuthentication IJsonModel<DataflowOpenTelemetryAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowOpenTelemetryAuthentication IJsonModel<DataflowOpenTelemetryAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowOpenTelemetryAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowOpenTelemetryAuthentication)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataflowOpenTelemetryAuthentication(document.RootElement, options);
         }
 
-        internal static DataflowOpenTelemetryAuthentication DeserializeDataflowOpenTelemetryAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataflowOpenTelemetryAuthentication DeserializeDataflowOpenTelemetryAuthentication(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("method", out JsonElement discriminator))
+            if (element.TryGetProperty("method"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Anonymous": return DataflowOpenTelemetryAnonymousAuthentication.DeserializeDataflowOpenTelemetryAnonymousAuthentication(element, options);
-                    case "ServiceAccountToken": return DataflowOpenTelemetryServiceAccountAuthentication.DeserializeDataflowOpenTelemetryServiceAccountAuthentication(element, options);
-                    case "X509Certificate": return DataflowOpenTelemetryX509CertificateAuthentication.DeserializeDataflowOpenTelemetryX509CertificateAuthentication(element, options);
+                    case "ServiceAccountToken":
+                        return DataflowOpenTelemetryServiceAccountAuthentication.DeserializeDataflowOpenTelemetryServiceAccountAuthentication(element, options);
+                    case "X509Certificate":
+                        return DataflowOpenTelemetryX509CertificateAuthentication.DeserializeDataflowOpenTelemetryX509CertificateAuthentication(element, options);
+                    case "Anonymous":
+                        return DataflowOpenTelemetryAnonymousAuthentication.DeserializeDataflowOpenTelemetryAnonymousAuthentication(element, options);
                 }
             }
             return UnknownDataflowOpenTelemetryAuthentication.DeserializeUnknownDataflowOpenTelemetryAuthentication(element, options);
         }
 
-        BinaryData IPersistableModel<DataflowOpenTelemetryAuthentication>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataflowOpenTelemetryAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -98,15 +112,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowOpenTelemetryAuthentication IPersistableModel<DataflowOpenTelemetryAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowOpenTelemetryAuthentication IPersistableModel<DataflowOpenTelemetryAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowOpenTelemetryAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataflowOpenTelemetryAuthentication(document.RootElement, options);
                     }
                 default:
@@ -114,6 +133,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataflowOpenTelemetryAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
