@@ -8,18 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Qumulo;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    /// <summary> The updatable properties of the FileSystemResource. </summary>
-    public partial class FileSystemResourceUpdateProperties : IJsonModel<FileSystemResourceUpdateProperties>
+    /// <summary> Properties specific to the Qumulo File System resource. </summary>
+    internal partial class FileSystemResourceProperties : IJsonModel<FileSystemResourceProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="FileSystemResourceProperties"/> for deserialization. </summary>
+        internal FileSystemResourceProperties()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FileSystemResourceUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FileSystemResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,45 +35,50 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemResourceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MarketplaceDetails))
+            writer.WritePropertyName("marketplaceDetails"u8);
+            writer.WriteObjectValue(MarketplaceDetails, options);
+            if (options.Format != "W" && Optional.IsDefined(ArmProvisioningState))
             {
-                writer.WritePropertyName("marketplaceDetails"u8);
-                writer.WriteObjectValue(MarketplaceDetails, options);
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ArmProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(UserDetails))
-            {
-                writer.WritePropertyName("userDetails"u8);
-                writer.WriteObjectValue(UserDetails, options);
-            }
-            if (Optional.IsDefined(DelegatedSubnetId))
-            {
-                writer.WritePropertyName("delegatedSubnetId"u8);
-                writer.WriteStringValue(DelegatedSubnetId);
-            }
+            writer.WritePropertyName("storageSku"u8);
+            writer.WriteStringValue(StorageSkuName);
+            writer.WritePropertyName("userDetails"u8);
+            writer.WriteObjectValue(UserDetails, options);
+            writer.WritePropertyName("delegatedSubnetId"u8);
+            writer.WriteStringValue(DelegatedSubnetId);
             if (Optional.IsDefined(ClusterLoginUri))
             {
-                writer.WritePropertyName("clusterLoginUri"u8);
+                writer.WritePropertyName("clusterLoginUrl"u8);
                 writer.WriteStringValue(ClusterLoginUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateIPs))
+            if (Optional.IsCollectionDefined(PrivateIPs))
             {
                 writer.WritePropertyName("privateIPs"u8);
                 writer.WriteStartArray();
-                foreach (string item in PrivateIPs)
+                foreach (IPAddress item in PrivateIPs)
                 {
                     if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
+            }
+            writer.WritePropertyName("adminPassword"u8);
+            writer.WriteStringValue(AdminPassword);
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                writer.WritePropertyName("availabilityZone"u8);
+                writer.WriteStringValue(AvailabilityZone);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -89,65 +99,71 @@ namespace Azure.ResourceManager.Qumulo.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FileSystemResourceUpdateProperties IJsonModel<FileSystemResourceUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FileSystemResourceProperties IJsonModel<FileSystemResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FileSystemResourceUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FileSystemResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemResourceProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFileSystemResourceUpdateProperties(document.RootElement, options);
+            return DeserializeFileSystemResourceProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FileSystemResourceUpdateProperties DeserializeFileSystemResourceUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static FileSystemResourceProperties DeserializeFileSystemResourceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MarketplaceDetails marketplaceDetails = default;
+            QumuloArmProvisioningState? armProvisioningState = default;
+            string storageSkuName = default;
             QumuloUserDetails userDetails = default;
-            ResourceIdentifier delegatedSubnetId = default;
+            string delegatedSubnetId = default;
             Uri clusterLoginUri = default;
-            IList<string> privateIPs = default;
+            IList<IPAddress> privateIPs = default;
+            string adminPassword = default;
+            string availabilityZone = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("marketplaceDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("userDetails"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
+                    armProvisioningState = new QumuloArmProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("storageSku"u8))
+                {
+                    storageSkuName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("userDetails"u8))
+                {
                     userDetails = QumuloUserDetails.DeserializeQumuloUserDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("delegatedSubnetId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    delegatedSubnetId = new ResourceIdentifier(prop.Value.GetString());
+                    delegatedSubnetId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("clusterLoginUri"u8))
+                if (prop.NameEquals("clusterLoginUrl"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +178,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -171,10 +187,20 @@ namespace Azure.ResourceManager.Qumulo.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(IPAddress.Parse(item.GetString()));
                         }
                     }
                     privateIPs = array;
+                    continue;
+                }
+                if (prop.NameEquals("adminPassword"u8))
+                {
+                    adminPassword = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("availabilityZone"u8))
+                {
+                    availabilityZone = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -182,53 +208,57 @@ namespace Azure.ResourceManager.Qumulo.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileSystemResourceUpdateProperties(
+            return new FileSystemResourceProperties(
                 marketplaceDetails,
+                armProvisioningState,
+                storageSkuName,
                 userDetails,
                 delegatedSubnetId,
                 clusterLoginUri,
-                privateIPs ?? new ChangeTrackingList<string>(),
+                privateIPs ?? new ChangeTrackingList<IPAddress>(),
+                adminPassword,
+                availabilityZone,
                 additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FileSystemResourceUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FileSystemResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQumuloContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FileSystemResourceUpdateProperties IPersistableModel<FileSystemResourceUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FileSystemResourceProperties IPersistableModel<FileSystemResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FileSystemResourceUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FileSystemResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFileSystemResourceUpdateProperties(document.RootElement, options);
+                        return DeserializeFileSystemResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FileSystemResourceUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FileSystemResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
