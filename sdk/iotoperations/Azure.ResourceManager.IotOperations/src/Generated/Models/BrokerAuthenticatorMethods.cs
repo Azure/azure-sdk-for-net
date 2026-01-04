@@ -57,10 +57,6 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return ServiceAccountTokenSettings is null ? default : ServiceAccountTokenSettings.Audiences;
             }
-            set
-            {
-                ServiceAccountTokenSettings = new BrokerAuthenticatorMethodSat(value);
-            }
         }
     }
 }
