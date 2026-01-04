@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
             string name = "demo-resource";
             DisconnectedOperationData data = new DisconnectedOperationData(new AzureLocation("eastus"))
             {
-                Properties = new DisconnectedOperationProperties(null, DisconnectedOperationsBillingModel.Capacity, DisconnectedOperationsConnectionIntent.Disconnected),
+                Properties = new DisconnectedOperationProperties(DisconnectedOperationsConnectionIntent.Disconnected),
                 Tags =
 {
 ["key1"] = "value1"
