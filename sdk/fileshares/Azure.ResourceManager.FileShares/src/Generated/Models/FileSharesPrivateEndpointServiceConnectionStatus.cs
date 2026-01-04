@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> The private endpoint connection status. </summary>
     public readonly partial struct FileSharesPrivateEndpointServiceConnectionStatus : IEquatable<FileSharesPrivateEndpointServiceConnectionStatus>

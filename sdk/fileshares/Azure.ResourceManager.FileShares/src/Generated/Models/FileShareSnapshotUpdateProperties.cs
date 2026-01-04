@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> The updatable properties of the FileShareSnapshot. </summary>
     internal partial class FileShareSnapshotUpdateProperties

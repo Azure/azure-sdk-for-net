@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.FileShares.Mocking;
+using Azure.ResourceManager.FileShares.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager._FileShares.Mocking;
-using Azure.ResourceManager._FileShares.Models;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager._FileShares. </summary>
+    /// <summary> A class to add extension methods to Azure.ResourceManager.FileShares. </summary>
     public static partial class FileSharesExtensions
     {
         /// <param name="client"></param>
@@ -36,12 +36,6 @@ namespace Azure.ResourceManager._FileShares
         private static MockableFileSharesSubscriptionResource GetMockableFileSharesSubscriptionResource(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient(client => new MockableFileSharesSubscriptionResource(client, subscriptionResource.Id));
-        }
-
-        /// <param name="tenantResource"></param>
-        private static MockableFileSharesTenantResource GetMockableFileSharesTenantResource(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient(client => new MockableFileSharesTenantResource(client, tenantResource.Id));
         }
 
         /// <summary>
@@ -175,7 +169,7 @@ namespace Azure.ResourceManager._FileShares
         /// Implements local CheckNameAvailability operations
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.CheckNameAvailabilityAsync(AzureLocation, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.CheckFileShareNameAvailabilityAsync(AzureLocation, FileShareNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -183,18 +177,18 @@ namespace Azure.ResourceManager._FileShares
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<FileShareNameAvailabilityResult>> CheckFileShareNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FileShareNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableFileSharesSubscriptionResource(subscriptionResource).CheckNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableFileSharesSubscriptionResource(subscriptionResource).CheckFileShareNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Implements local CheckNameAvailability operations
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.CheckNameAvailability(AzureLocation, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.CheckFileShareNameAvailability(AzureLocation, FileShareNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -202,11 +196,11 @@ namespace Azure.ResourceManager._FileShares
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<FileShareNameAvailabilityResult> CheckFileShareNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, FileShareNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableFileSharesSubscriptionResource(subscriptionResource).CheckNameAvailability(location, content, cancellationToken);
+            return GetMockableFileSharesSubscriptionResource(subscriptionResource).CheckFileShareNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -285,7 +279,7 @@ namespace Azure.ResourceManager._FileShares
         /// Get file shares provisioning parameters recommendation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.GetProvisioningRecommendationAsync(AzureLocation, FileShareProvisioningRecommendationRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.GetProvisioningRecommendationAsync(AzureLocation, FileShareProvisioningRecommendationContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -293,7 +287,7 @@ namespace Azure.ResourceManager._FileShares
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<FileShareProvisioningRecommendationResult>> GetProvisioningRecommendationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FileShareProvisioningRecommendationRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<FileShareProvisioningRecommendationResult>> GetProvisioningRecommendationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FileShareProvisioningRecommendationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -304,7 +298,7 @@ namespace Azure.ResourceManager._FileShares
         /// Get file shares provisioning parameters recommendation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.GetProvisioningRecommendation(AzureLocation, FileShareProvisioningRecommendationRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.GetProvisioningRecommendation(AzureLocation, FileShareProvisioningRecommendationContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -312,47 +306,11 @@ namespace Azure.ResourceManager._FileShares
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<FileShareProvisioningRecommendationResult> GetProvisioningRecommendation(this SubscriptionResource subscriptionResource, AzureLocation location, FileShareProvisioningRecommendationRequest content, CancellationToken cancellationToken = default)
+        public static Response<FileShareProvisioningRecommendationResult> GetProvisioningRecommendation(this SubscriptionResource subscriptionResource, AzureLocation location, FileShareProvisioningRecommendationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableFileSharesSubscriptionResource(subscriptionResource).GetProvisioningRecommendation(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// List the operations for the provider
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableFileSharesTenantResource.GetAllAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Info"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Info> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableFileSharesTenantResource(tenantResource).GetAllAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List the operations for the provider
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableFileSharesTenantResource.GetAll(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Info"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Info> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableFileSharesTenantResource(tenantResource).GetAll(cancellationToken);
         }
     }
 }

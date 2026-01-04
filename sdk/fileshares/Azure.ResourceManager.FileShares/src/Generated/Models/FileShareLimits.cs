@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> File share-related limits in the specified subscription/location. </summary>
     public partial class FileShareLimits

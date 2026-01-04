@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     /// <summary></summary>
     public partial class FileShareResource : IJsonModel<FileShareData>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager._FileShares
         FileShareData IJsonModel<FileShareData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FileShareData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FileShareData>(Data, options, AzureResourceManager_FileSharesContext.Default);
+        BinaryData IPersistableModel<FileShareData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FileShareData>(Data, options, AzureResourceManagerFileSharesContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FileShareData IPersistableModel<FileShareData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FileShareData>(data, options, AzureResourceManager_FileSharesContext.Default);
+        FileShareData IPersistableModel<FileShareData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FileShareData>(data, options, AzureResourceManagerFileSharesContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FileShareData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

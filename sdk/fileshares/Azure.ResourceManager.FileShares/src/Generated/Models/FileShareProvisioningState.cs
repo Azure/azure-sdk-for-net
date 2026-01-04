@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> The status of file share's ProvisioningState. </summary>
     public readonly partial struct FileShareProvisioningState : IEquatable<FileShareProvisioningState>

@@ -7,9 +7,9 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Mocking
+namespace Azure.ResourceManager.FileShares.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableFileSharesArmClient : ArmResource

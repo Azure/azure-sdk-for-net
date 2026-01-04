@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Response structure for file shares usage in the specified subscription/location. </summary>
     public partial class FileShareUsageDataResult
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager._FileShares.Models
 
         /// <summary> Initializes a new instance of <see cref="FileShareUsageDataResult"/>. </summary>
         /// <param name="properties"> The properties of the file share usage data. </param>
-        internal FileShareUsageDataResult(FileShareUsageDataOutput properties)
+        internal FileShareUsageDataResult(FileShareUsageDataProperties properties)
         {
             Properties = properties;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager._FileShares.Models
         /// <summary> Initializes a new instance of <see cref="FileShareUsageDataResult"/>. </summary>
         /// <param name="properties"> The properties of the file share usage data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareUsageDataResult(FileShareUsageDataOutput properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareUsageDataResult(FileShareUsageDataProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the file share usage data. </summary>
-        public FileShareUsageDataOutput Properties { get; }
+        public FileShareUsageDataProperties Properties { get; }
     }
 }

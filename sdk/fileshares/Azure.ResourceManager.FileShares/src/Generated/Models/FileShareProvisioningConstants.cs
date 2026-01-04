@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Constants used for calculating recommended values of file share provisioning properties. </summary>
     public partial class FileShareProvisioningConstants

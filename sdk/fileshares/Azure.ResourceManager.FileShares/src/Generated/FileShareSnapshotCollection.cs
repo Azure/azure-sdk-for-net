@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     /// <summary>
     /// A class representing a collection of <see cref="FileShareSnapshotResource"/> and their operations.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager._FileShares
         internal FileShareSnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(FileShareSnapshotResource.ResourceType, out string fileShareSnapshotApiVersion);
-            _fileShareSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager._FileShares", FileShareSnapshotResource.ResourceType.Namespace, Diagnostics);
+            _fileShareSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", FileShareSnapshotResource.ResourceType.Namespace, Diagnostics);
             _fileShareSnapshotsRestClient = new FileShareSnapshots(_fileShareSnapshotsClientDiagnostics, Pipeline, Endpoint, fileShareSnapshotApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }

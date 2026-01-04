@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> The private endpoint resource. </summary>
     internal partial class PrivateEndpoint : IJsonModel<PrivateEndpoint>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager._FileShares.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManager_FileSharesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateEndpoint)} does not support writing '{options.Format}' format.");
             }

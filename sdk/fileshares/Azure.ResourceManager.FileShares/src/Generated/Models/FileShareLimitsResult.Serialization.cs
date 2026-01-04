@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Response structure for file share limits API. </summary>
     public partial class FileShareLimitsResult : IJsonModel<FileShareLimitsResult>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager._FileShares.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManager_FileSharesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FileShareLimitsResult)} does not support writing '{options.Format}' format.");
             }

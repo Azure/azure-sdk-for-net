@@ -12,17 +12,17 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.FileShares;
+using Azure.ResourceManager.FileShares.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager._FileShares;
-using Azure.ResourceManager._FileShares.Models;
 
-namespace Azure.ResourceManager._FileShares.Mocking
+namespace Azure.ResourceManager.FileShares.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableFileSharesSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _fileSharesClientDiagnostics;
-        private FileShares _fileSharesRestClient;
+        private ClientDiagnostics _fileSharesInterfaceClientDiagnostics;
+        private FileSharesInterface _fileSharesInterfaceRestClient;
         private ClientDiagnostics _informationalOperationsClientDiagnostics;
         private InformationalOperations _informationalOperationsRestClient;
 
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager._FileShares.Mocking
         {
         }
 
-        private ClientDiagnostics FileSharesClientDiagnostics => _fileSharesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager._FileShares.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics FileSharesInterfaceClientDiagnostics => _fileSharesInterfaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FileShares.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FileShares FileSharesRestClient => _fileSharesRestClient ??= new FileShares(FileSharesClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private FileSharesInterface FileSharesInterfaceRestClient => _fileSharesInterfaceRestClient ??= new FileSharesInterface(FileSharesInterfaceClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
 
-        private ClientDiagnostics InformationalOperationsClientDiagnostics => _informationalOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager._FileShares.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics InformationalOperationsClientDiagnostics => _informationalOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FileShares.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private InformationalOperations InformationalOperationsRestClient => _informationalOperationsRestClient ??= new InformationalOperations(InformationalOperationsClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager._FileShares.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileSharesGetBySubscriptionAsyncCollectionResultOfT(FileSharesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FileShareResource(Client, data));
+            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetBySubscriptionAsyncCollectionResultOfT(FileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FileShareResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager._FileShares.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileShareData, FileShareResource>(new FileSharesGetBySubscriptionCollectionResultOfT(FileSharesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FileShareResource(Client, data));
+            return new PageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetBySubscriptionCollectionResultOfT(FileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FileShareResource(Client, data));
         }
 
         /// <summary> Implements local CheckNameAvailability operations. </summary>
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager._FileShares.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileShareNameAvailabilityResult>> CheckFileShareNameAvailabilityAsync(AzureLocation location, FileShareNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FileSharesClientDiagnostics.CreateScope("MockableFileSharesSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = FileSharesInterfaceClientDiagnostics.CreateScope("MockableFileSharesSubscriptionResource.CheckFileShareNameAvailability");
             scope.Start();
             try
             {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager._FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FileSharesRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = FileSharesInterfaceRestClient.CreateCheckFileShareNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FileShareNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
+                Response<FileShareNameAvailabilityResult> response = Response.FromValue(FileShareNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager._FileShares.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<FileShareNameAvailabilityResult> CheckFileShareNameAvailability(AzureLocation location, FileShareNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FileSharesClientDiagnostics.CreateScope("MockableFileSharesSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = FileSharesInterfaceClientDiagnostics.CreateScope("MockableFileSharesSubscriptionResource.CheckFileShareNameAvailability");
             scope.Start();
             try
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager._FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FileSharesRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = FileSharesInterfaceRestClient.CreateCheckFileShareNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FileShareNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
+                Response<FileShareNameAvailabilityResult> response = Response.FromValue(FileShareNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager._FileShares.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<FileShareProvisioningRecommendationResult>> GetProvisioningRecommendationAsync(AzureLocation location, FileShareProvisioningRecommendationRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileShareProvisioningRecommendationResult>> GetProvisioningRecommendationAsync(AzureLocation location, FileShareProvisioningRecommendationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager._FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InformationalOperationsRestClient.CreateGetProvisioningRecommendationRequest(Guid.Parse(Id.SubscriptionId), location, FileShareProvisioningRecommendationRequest.ToRequestContent(content), context);
+                HttpMessage message = InformationalOperationsRestClient.CreateGetProvisioningRecommendationRequest(Guid.Parse(Id.SubscriptionId), location, FileShareProvisioningRecommendationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileShareProvisioningRecommendationResult> response = Response.FromValue(FileShareProvisioningRecommendationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager._FileShares.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<FileShareProvisioningRecommendationResult> GetProvisioningRecommendation(AzureLocation location, FileShareProvisioningRecommendationRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<FileShareProvisioningRecommendationResult> GetProvisioningRecommendation(AzureLocation location, FileShareProvisioningRecommendationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager._FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InformationalOperationsRestClient.CreateGetProvisioningRecommendationRequest(Guid.Parse(Id.SubscriptionId), location, FileShareProvisioningRecommendationRequest.ToRequestContent(content), context);
+                HttpMessage message = InformationalOperationsRestClient.CreateGetProvisioningRecommendationRequest(Guid.Parse(Id.SubscriptionId), location, FileShareProvisioningRecommendationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileShareProvisioningRecommendationResult> response = Response.FromValue(FileShareProvisioningRecommendationResult.FromResponse(result), result);
                 if (response.Value == null)

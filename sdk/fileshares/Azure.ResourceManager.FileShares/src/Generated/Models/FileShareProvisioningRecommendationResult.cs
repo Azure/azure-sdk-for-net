@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Response structure for file share provisioning parameters recommendation API. </summary>
     public partial class FileShareProvisioningRecommendationResult
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager._FileShares.Models
 
         /// <summary> Initializes a new instance of <see cref="FileShareProvisioningRecommendationResult"/>. </summary>
         /// <param name="properties"> The properties of the file share provisioning recommendation output. </param>
-        internal FileShareProvisioningRecommendationResult(FileShareProvisioningRecommendationOutput properties)
+        internal FileShareProvisioningRecommendationResult(FileShareProvisioningRecommendationOutputProperties properties)
         {
             Properties = properties;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager._FileShares.Models
         /// <summary> Initializes a new instance of <see cref="FileShareProvisioningRecommendationResult"/>. </summary>
         /// <param name="properties"> The properties of the file share provisioning recommendation output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareProvisioningRecommendationResult(FileShareProvisioningRecommendationOutput properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareProvisioningRecommendationResult(FileShareProvisioningRecommendationOutputProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the file share provisioning recommendation output. </summary>
-        public FileShareProvisioningRecommendationOutput Properties { get; }
+        public FileShareProvisioningRecommendationOutputProperties Properties { get; }
     }
 }

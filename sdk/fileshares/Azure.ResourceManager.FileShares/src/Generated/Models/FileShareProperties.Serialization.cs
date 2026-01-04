@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> File share properties. </summary>
     public partial class FileShareProperties : IJsonModel<FileShareProperties>
@@ -59,35 +59,35 @@ namespace Azure.ResourceManager._FileShares.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(ProvisionedStorageGiB))
+            if (Optional.IsDefined(ProvisionedStorageInGiB))
             {
                 writer.WritePropertyName("provisionedStorageGiB"u8);
-                writer.WriteNumberValue(ProvisionedStorageGiB.Value);
+                writer.WriteNumberValue(ProvisionedStorageInGiB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisionedStorageNextAllowedDowngrade))
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedStorageNextAllowedDowngradeOn))
             {
                 writer.WritePropertyName("provisionedStorageNextAllowedDowngrade"u8);
-                writer.WriteStringValue(ProvisionedStorageNextAllowedDowngrade.Value, "O");
+                writer.WriteStringValue(ProvisionedStorageNextAllowedDowngradeOn.Value, "O");
             }
             if (Optional.IsDefined(ProvisionedIOPerSec))
             {
                 writer.WritePropertyName("provisionedIOPerSec"u8);
                 writer.WriteNumberValue(ProvisionedIOPerSec.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisionedIOPerSecNextAllowedDowngrade))
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedIOPerSecNextAllowedDowngradeOn))
             {
                 writer.WritePropertyName("provisionedIOPerSecNextAllowedDowngrade"u8);
-                writer.WriteStringValue(ProvisionedIOPerSecNextAllowedDowngrade.Value, "O");
+                writer.WriteStringValue(ProvisionedIOPerSecNextAllowedDowngradeOn.Value, "O");
             }
             if (Optional.IsDefined(ProvisionedThroughputMiBPerSec))
             {
                 writer.WritePropertyName("provisionedThroughputMiBPerSec"u8);
                 writer.WriteNumberValue(ProvisionedThroughputMiBPerSec.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisionedThroughputNextAllowedDowngrade))
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedThroughputNextAllowedDowngradeOn))
             {
                 writer.WritePropertyName("provisionedThroughputNextAllowedDowngrade"u8);
-                writer.WriteStringValue(ProvisionedThroughputNextAllowedDowngrade.Value, "O");
+                writer.WriteStringValue(ProvisionedThroughputNextAllowedDowngradeOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IncludedBurstIOPerSec))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager._FileShares.Models
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (FileSharesPrivateEndpointConnection item in PrivateEndpointConnections)
+                foreach (FileSharePrivateEndpointConnection item in PrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -173,22 +173,22 @@ namespace Azure.ResourceManager._FileShares.Models
             }
             string mountName = default;
             string hostName = default;
-            MediaTier? mediaTier = default;
-            Redundancy? redundancy = default;
-            Protocol? protocol = default;
-            int? provisionedStorageGiB = default;
-            DateTimeOffset? provisionedStorageNextAllowedDowngrade = default;
+            FileShareMediaTier? mediaTier = default;
+            FileShareRedundancyLevel? redundancy = default;
+            FileShareProtocol? protocol = default;
+            int? provisionedStorageInGiB = default;
+            DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default;
             int? provisionedIOPerSec = default;
-            DateTimeOffset? provisionedIOPerSecNextAllowedDowngrade = default;
+            DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn = default;
             int? provisionedThroughputMiBPerSec = default;
-            DateTimeOffset? provisionedThroughputNextAllowedDowngrade = default;
+            DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn = default;
             int? includedBurstIOPerSec = default;
             long? maxBurstIOPerSecCredits = default;
             NfsProtocolProperties nfsProtocolProperties = default;
             PublicAccessProperties publicAccessProperties = default;
             FileShareProvisioningState? provisioningState = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
-            IReadOnlyList<FileSharesPrivateEndpointConnection> privateEndpointConnections = default;
+            FileSharePublicNetworkAccess? publicNetworkAccess = default;
+            IReadOnlyList<FileSharePrivateEndpointConnection> privateEndpointConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager._FileShares.Models
                     {
                         continue;
                     }
-                    mediaTier = new MediaTier(prop.Value.GetString());
+                    mediaTier = new FileShareMediaTier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("redundancy"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager._FileShares.Models
                     {
                         continue;
                     }
-                    redundancy = new Redundancy(prop.Value.GetString());
+                    redundancy = new FileShareRedundancyLevel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("protocol"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager._FileShares.Models
                     {
                         continue;
                     }
-                    protocol = new Protocol(prop.Value.GetString());
+                    protocol = new FileShareProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisionedStorageGiB"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager._FileShares.Models
                     {
                         continue;
                     }
-                    provisionedStorageGiB = prop.Value.GetInt32();
+                    provisionedStorageInGiB = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("provisionedStorageNextAllowedDowngrade"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager._FileShares.Models
                     {
                         continue;
                     }
-                    provisionedStorageNextAllowedDowngrade = prop.Value.GetDateTimeOffset("O");
+                    provisionedStorageNextAllowedDowngradeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisionedIOPerSec"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager._FileShares.Models
                     {
                         continue;
                     }
-                    provisionedIOPerSecNextAllowedDowngrade = prop.Value.GetDateTimeOffset("O");
+                    provisionedIOPerSecNextAllowedDowngradeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisionedThroughputMiBPerSec"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager._FileShares.Models
                     {
                         continue;
                     }
-                    provisionedThroughputNextAllowedDowngrade = prop.Value.GetDateTimeOffset("O");
+                    provisionedThroughputNextAllowedDowngradeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("includedBurstIOPerSec"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager._FileShares.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new FileSharePublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateEndpointConnections"u8))
@@ -343,10 +343,10 @@ namespace Azure.ResourceManager._FileShares.Models
                     {
                         continue;
                     }
-                    List<FileSharesPrivateEndpointConnection> array = new List<FileSharesPrivateEndpointConnection>();
+                    List<FileSharePrivateEndpointConnection> array = new List<FileSharePrivateEndpointConnection>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FileSharesPrivateEndpointConnection.DeserializeFileSharesPrivateEndpointConnection(item, options));
+                        array.Add(FileSharePrivateEndpointConnection.DeserializeFileSharePrivateEndpointConnection(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -362,19 +362,19 @@ namespace Azure.ResourceManager._FileShares.Models
                 mediaTier,
                 redundancy,
                 protocol,
-                provisionedStorageGiB,
-                provisionedStorageNextAllowedDowngrade,
+                provisionedStorageInGiB,
+                provisionedStorageNextAllowedDowngradeOn,
                 provisionedIOPerSec,
-                provisionedIOPerSecNextAllowedDowngrade,
+                provisionedIOPerSecNextAllowedDowngradeOn,
                 provisionedThroughputMiBPerSec,
-                provisionedThroughputNextAllowedDowngrade,
+                provisionedThroughputNextAllowedDowngradeOn,
                 includedBurstIOPerSec,
                 maxBurstIOPerSecCredits,
                 nfsProtocolProperties,
                 publicAccessProperties,
                 provisioningState,
                 publicNetworkAccess,
-                privateEndpointConnections ?? new ChangeTrackingList<FileSharesPrivateEndpointConnection>(),
+                privateEndpointConnections ?? new ChangeTrackingList<FileSharePrivateEndpointConnection>(),
                 additionalBinaryDataProperties);
         }
 
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager._FileShares.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManager_FileSharesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FileShareProperties)} does not support writing '{options.Format}' format.");
             }

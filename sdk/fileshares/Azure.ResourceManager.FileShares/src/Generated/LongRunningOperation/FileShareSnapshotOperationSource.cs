@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     /// <summary></summary>
     internal partial class FileShareSnapshotOperationSource : IOperationSource<FileShareSnapshotResource>

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     internal enum SerializationFormat
     {

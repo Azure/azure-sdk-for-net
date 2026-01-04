@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     internal partial class ErrorResult<T> : Response<T>
     {

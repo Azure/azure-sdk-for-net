@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> File share properties. </summary>
     public partial class FileShareProperties
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager._FileShares.Models
         /// <summary> Initializes a new instance of <see cref="FileShareProperties"/>. </summary>
         public FileShareProperties()
         {
-            PrivateEndpointConnections = new ChangeTrackingList<FileSharesPrivateEndpointConnection>();
+            PrivateEndpointConnections = new ChangeTrackingList<FileSharePrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FileShareProperties"/>. </summary>
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager._FileShares.Models
         /// <param name="mediaTier"> The storage media tier of the file share. </param>
         /// <param name="redundancy"> The chosen redundancy level of the file share. </param>
         /// <param name="protocol"> The file sharing protocol for this file share. </param>
-        /// <param name="provisionedStorageGiB"> The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage. </param>
-        /// <param name="provisionedStorageNextAllowedDowngrade"> A date/time value that specifies when the provisioned storage for the file share is permitted to be reduced. </param>
+        /// <param name="provisionedStorageInGiB"> The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage. </param>
+        /// <param name="provisionedStorageNextAllowedDowngradeOn"> A date/time value that specifies when the provisioned storage for the file share is permitted to be reduced. </param>
         /// <param name="provisionedIOPerSec"> The provisioned IO / sec of the share. </param>
-        /// <param name="provisionedIOPerSecNextAllowedDowngrade"> A date/time value that specifies when the provisioned IOPS for the file share is permitted to be reduced. </param>
+        /// <param name="provisionedIOPerSecNextAllowedDowngradeOn"> A date/time value that specifies when the provisioned IOPS for the file share is permitted to be reduced. </param>
         /// <param name="provisionedThroughputMiBPerSec"> The provisioned throughput / sec of the share. </param>
-        /// <param name="provisionedThroughputNextAllowedDowngrade"> A date/time value that specifies when the provisioned throughput for the file share is permitted to be reduced. </param>
+        /// <param name="provisionedThroughputNextAllowedDowngradeOn"> A date/time value that specifies when the provisioned throughput for the file share is permitted to be reduced. </param>
         /// <param name="includedBurstIOPerSec"> Burst IOPS are extra buffer IOPS enabling you to consume more than your provisioned IOPS for a short period of time, depending on the burst credits available for your share. </param>
         /// <param name="maxBurstIOPerSecCredits"> Max burst IOPS credits shows the maximum number of burst credits the share can have at the current IOPS provisioning level. </param>
         /// <param name="nfsProtocolProperties"> Protocol settings specific NFS. </param>
@@ -43,19 +43,19 @@ namespace Azure.ResourceManager._FileShares.Models
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to azure managed file share. </param>
         /// <param name="privateEndpointConnections"> The list of associated private endpoint connections. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareProperties(string mountName, string hostName, MediaTier? mediaTier, Redundancy? redundancy, Protocol? protocol, int? provisionedStorageGiB, DateTimeOffset? provisionedStorageNextAllowedDowngrade, int? provisionedIOPerSec, DateTimeOffset? provisionedIOPerSecNextAllowedDowngrade, int? provisionedThroughputMiBPerSec, DateTimeOffset? provisionedThroughputNextAllowedDowngrade, int? includedBurstIOPerSec, long? maxBurstIOPerSecCredits, NfsProtocolProperties nfsProtocolProperties, PublicAccessProperties publicAccessProperties, FileShareProvisioningState? provisioningState, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<FileSharesPrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareProperties(string mountName, string hostName, FileShareMediaTier? mediaTier, FileShareRedundancyLevel? redundancy, FileShareProtocol? protocol, int? provisionedStorageInGiB, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn, int? provisionedIOPerSec, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn, int? provisionedThroughputMiBPerSec, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn, int? includedBurstIOPerSec, long? maxBurstIOPerSecCredits, NfsProtocolProperties nfsProtocolProperties, PublicAccessProperties publicAccessProperties, FileShareProvisioningState? provisioningState, FileSharePublicNetworkAccess? publicNetworkAccess, IReadOnlyList<FileSharePrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MountName = mountName;
             HostName = hostName;
             MediaTier = mediaTier;
             Redundancy = redundancy;
             Protocol = protocol;
-            ProvisionedStorageGiB = provisionedStorageGiB;
-            ProvisionedStorageNextAllowedDowngrade = provisionedStorageNextAllowedDowngrade;
+            ProvisionedStorageInGiB = provisionedStorageInGiB;
+            ProvisionedStorageNextAllowedDowngradeOn = provisionedStorageNextAllowedDowngradeOn;
             ProvisionedIOPerSec = provisionedIOPerSec;
-            ProvisionedIOPerSecNextAllowedDowngrade = provisionedIOPerSecNextAllowedDowngrade;
+            ProvisionedIOPerSecNextAllowedDowngradeOn = provisionedIOPerSecNextAllowedDowngradeOn;
             ProvisionedThroughputMiBPerSec = provisionedThroughputMiBPerSec;
-            ProvisionedThroughputNextAllowedDowngrade = provisionedThroughputNextAllowedDowngrade;
+            ProvisionedThroughputNextAllowedDowngradeOn = provisionedThroughputNextAllowedDowngradeOn;
             IncludedBurstIOPerSec = includedBurstIOPerSec;
             MaxBurstIOPerSecCredits = maxBurstIOPerSecCredits;
             NfsProtocolProperties = nfsProtocolProperties;
@@ -73,31 +73,31 @@ namespace Azure.ResourceManager._FileShares.Models
         public string HostName { get; }
 
         /// <summary> The storage media tier of the file share. </summary>
-        public MediaTier? MediaTier { get; set; }
+        public FileShareMediaTier? MediaTier { get; set; }
 
         /// <summary> The chosen redundancy level of the file share. </summary>
-        public Redundancy? Redundancy { get; set; }
+        public FileShareRedundancyLevel? Redundancy { get; set; }
 
         /// <summary> The file sharing protocol for this file share. </summary>
-        public Protocol? Protocol { get; set; }
+        public FileShareProtocol? Protocol { get; set; }
 
         /// <summary> The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage. </summary>
-        public int? ProvisionedStorageGiB { get; set; }
+        public int? ProvisionedStorageInGiB { get; set; }
 
         /// <summary> A date/time value that specifies when the provisioned storage for the file share is permitted to be reduced. </summary>
-        public DateTimeOffset? ProvisionedStorageNextAllowedDowngrade { get; }
+        public DateTimeOffset? ProvisionedStorageNextAllowedDowngradeOn { get; }
 
         /// <summary> The provisioned IO / sec of the share. </summary>
         public int? ProvisionedIOPerSec { get; set; }
 
         /// <summary> A date/time value that specifies when the provisioned IOPS for the file share is permitted to be reduced. </summary>
-        public DateTimeOffset? ProvisionedIOPerSecNextAllowedDowngrade { get; }
+        public DateTimeOffset? ProvisionedIOPerSecNextAllowedDowngradeOn { get; }
 
         /// <summary> The provisioned throughput / sec of the share. </summary>
         public int? ProvisionedThroughputMiBPerSec { get; set; }
 
         /// <summary> A date/time value that specifies when the provisioned throughput for the file share is permitted to be reduced. </summary>
-        public DateTimeOffset? ProvisionedThroughputNextAllowedDowngrade { get; }
+        public DateTimeOffset? ProvisionedThroughputNextAllowedDowngradeOn { get; }
 
         /// <summary> Burst IOPS are extra buffer IOPS enabling you to consume more than your provisioned IOPS for a short period of time, depending on the burst credits available for your share. </summary>
         public int? IncludedBurstIOPerSec { get; }
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager._FileShares.Models
         public FileShareProvisioningState? ProvisioningState { get; }
 
         /// <summary> Gets or sets allow or disallow public network access to azure managed file share. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public FileSharePublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> The list of associated private endpoint connections. </summary>
-        public IReadOnlyList<FileSharesPrivateEndpointConnection> PrivateEndpointConnections { get; }
+        public IReadOnlyList<FileSharePrivateEndpointConnection> PrivateEndpointConnections { get; }
 
         /// <summary> Root squash defines how root users on clients are mapped to the NFS share. </summary>
         public ShareRootSquash? NfsProtocolRootSquash

@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Response structure for file share provisioning parameters recommendation API. </summary>
     public partial class FileShareProvisioningRecommendationResult : IJsonModel<FileShareProvisioningRecommendationResult>
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager._FileShares.Models
             {
                 return null;
             }
-            FileShareProvisioningRecommendationOutput properties = default;
+            FileShareProvisioningRecommendationOutputProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = FileShareProvisioningRecommendationOutput.DeserializeFileShareProvisioningRecommendationOutput(prop.Value, options);
+                    properties = FileShareProvisioningRecommendationOutputProperties.DeserializeFileShareProvisioningRecommendationOutputProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager._FileShares.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManager_FileSharesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FileShareProvisioningRecommendationResult)} does not support writing '{options.Format}' format.");
             }

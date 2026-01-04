@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Constants used for calculating recommended values of file share provisioning properties. </summary>
     public partial class FileShareProvisioningConstants : IJsonModel<FileShareProvisioningConstants>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager._FileShares.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManager_FileSharesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FileShareProvisioningConstants)} does not support writing '{options.Format}' format.");
             }

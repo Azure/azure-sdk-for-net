@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using Azure;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     internal static partial class RequestContextExtensions
     {

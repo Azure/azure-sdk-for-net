@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.FileShares.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager._FileShares.Models;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     /// <summary> FileShareSnapshot resource. </summary>
     public partial class FileShareSnapshotData : ResourceData

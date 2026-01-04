@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> The type used for update operations of the FileShare. </summary>
     public partial class FileSharePatch
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager._FileShares.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSharePatch(IDictionary<string, string> tags, FileShareUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSharePatch(IDictionary<string, string> tags, FileSharePatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager._FileShares.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public FileShareUpdateProperties Properties { get; set; }
+        public FileSharePatchProperties Properties { get; set; }
     }
 }

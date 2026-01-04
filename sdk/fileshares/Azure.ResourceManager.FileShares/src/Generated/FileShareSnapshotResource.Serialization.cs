@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     /// <summary></summary>
     public partial class FileShareSnapshotResource : IJsonModel<FileShareSnapshotData>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager._FileShares
         FileShareSnapshotData IJsonModel<FileShareSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FileShareSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FileShareSnapshotData>(Data, options, AzureResourceManager_FileSharesContext.Default);
+        BinaryData IPersistableModel<FileShareSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FileShareSnapshotData>(Data, options, AzureResourceManagerFileSharesContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FileShareSnapshotData IPersistableModel<FileShareSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FileShareSnapshotData>(data, options, AzureResourceManager_FileSharesContext.Default);
+        FileShareSnapshotData IPersistableModel<FileShareSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FileShareSnapshotData>(data, options, AzureResourceManagerFileSharesContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FileShareSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

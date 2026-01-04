@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.FileShares.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager._FileShares.Models;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     /// <summary> FileShareSnapshot resource. </summary>
     public partial class FileShareSnapshotData : ResourceData, IJsonModel<FileShareSnapshotData>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager._FileShares
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManager_FileSharesContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerFileSharesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager._FileShares
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManager_FileSharesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FileShareSnapshotData)} does not support writing '{options.Format}' format.");
             }

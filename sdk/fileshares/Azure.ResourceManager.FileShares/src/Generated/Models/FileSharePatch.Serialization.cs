@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager._FileShares;
+using Azure.ResourceManager.FileShares;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> The type used for update operations of the FileShare. </summary>
     public partial class FileSharePatch : IJsonModel<FileSharePatch>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager._FileShares.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            FileShareUpdateProperties properties = default;
+            FileSharePatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager._FileShares.Models
                     {
                         continue;
                     }
-                    properties = FileShareUpdateProperties.DeserializeFileShareUpdateProperties(prop.Value, options);
+                    properties = FileSharePatchProperties.DeserializeFileSharePatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager._FileShares.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManager_FileSharesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FileSharePatch)} does not support writing '{options.Format}' format.");
             }

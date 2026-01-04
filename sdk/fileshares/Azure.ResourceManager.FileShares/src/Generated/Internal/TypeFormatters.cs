@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     internal static partial class TypeFormatters
     {

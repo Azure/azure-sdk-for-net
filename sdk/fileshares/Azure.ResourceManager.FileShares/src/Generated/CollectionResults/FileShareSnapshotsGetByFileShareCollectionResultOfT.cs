@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager._FileShares.Models;
+using Azure.ResourceManager.FileShares.Models;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     internal partial class FileShareSnapshotsGetByFileShareCollectionResultOfT : Pageable<FileShareSnapshotData>
     {

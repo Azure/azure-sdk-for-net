@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager._FileShares.Models
+namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> The type used for update operations of the FileShareSnapshot. </summary>
     public partial class FileShareSnapshotPatch

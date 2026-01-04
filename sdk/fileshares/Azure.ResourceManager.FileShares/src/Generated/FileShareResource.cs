@@ -14,10 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.FileShares.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager._FileShares.Models;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     /// <summary>
     /// A class representing a FileShare along with the instance operations that can be performed on it.
@@ -26,8 +26,8 @@ namespace Azure.ResourceManager._FileShares
     /// </summary>
     public partial class FileShareResource : ArmResource
     {
-        private readonly ClientDiagnostics _fileSharesClientDiagnostics;
-        private readonly FileShares _fileSharesRestClient;
+        private readonly ClientDiagnostics _fileSharesInterfaceClientDiagnostics;
+        private readonly FileSharesInterface _fileSharesInterfaceRestClient;
         private readonly FileShareData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.FileShares/fileShares";
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager._FileShares
         internal FileShareResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string fileShareApiVersion);
-            _fileSharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager._FileShares", ResourceType.Namespace, Diagnostics);
-            _fileSharesRestClient = new FileShares(_fileSharesClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-06-01-preview");
+            _fileSharesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", ResourceType.Namespace, Diagnostics);
+            _fileSharesInterfaceRestClient = new FileSharesInterface(_fileSharesInterfaceClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager._FileShares
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FileShareResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.Get");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.Get");
             scope.Start();
             try
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager._FileShares
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _fileSharesInterfaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager._FileShares
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FileShareResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.Get");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.Get");
             scope.Start();
             try
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager._FileShares
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _fileSharesInterfaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                 if (response.Value == null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager._FileShares
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.Update");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.Update");
             scope.Start();
             try
             {
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager._FileShares
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FileSharePatch.ToRequestContent(patch), context);
+                HttpMessage message = _fileSharesInterfaceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FileSharePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FileSharesArmOperation<FileShareResource> operation = new FileSharesArmOperation<FileShareResource>(
                     new FileShareOperationSource(Client),
-                    _fileSharesClientDiagnostics,
+                    _fileSharesInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager._FileShares
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.Update");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.Update");
             scope.Start();
             try
             {
@@ -285,11 +285,11 @@ namespace Azure.ResourceManager._FileShares
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FileSharePatch.ToRequestContent(patch), context);
+                HttpMessage message = _fileSharesInterfaceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FileSharePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FileSharesArmOperation<FileShareResource> operation = new FileSharesArmOperation<FileShareResource>(
                     new FileShareOperationSource(Client),
-                    _fileSharesClientDiagnostics,
+                    _fileSharesInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager._FileShares
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.Delete");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.Delete");
             scope.Start();
             try
             {
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager._FileShares
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _fileSharesInterfaceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FileSharesArmOperation operation = new FileSharesArmOperation(_fileSharesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                FileSharesArmOperation operation = new FileSharesArmOperation(_fileSharesInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager._FileShares
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.Delete");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.Delete");
             scope.Start();
             try
             {
@@ -389,9 +389,9 @@ namespace Azure.ResourceManager._FileShares
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _fileSharesInterfaceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                FileSharesArmOperation operation = new FileSharesArmOperation(_fileSharesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                FileSharesArmOperation operation = new FileSharesArmOperation(_fileSharesInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager._FileShares
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.AddTag");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.AddTag");
             scope.Start();
             try
             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager._FileShares
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _fileSharesInterfaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                     return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager._FileShares
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.AddTag");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.AddTag");
             scope.Start();
             try
             {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager._FileShares
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _fileSharesInterfaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                     return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager._FileShares
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.SetTags");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.SetTags");
             scope.Start();
             try
             {
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager._FileShares
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _fileSharesInterfaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                     return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager._FileShares
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.SetTags");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.SetTags");
             scope.Start();
             try
             {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager._FileShares
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _fileSharesInterfaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                     return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager._FileShares
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.RemoveTag");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.RemoveTag");
             scope.Start();
             try
             {
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager._FileShares
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _fileSharesInterfaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                     return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager._FileShares
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _fileSharesClientDiagnostics.CreateScope("FileShareResource.RemoveTag");
+            using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.RemoveTag");
             scope.Start();
             try
             {
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager._FileShares
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _fileSharesInterfaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                     return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());

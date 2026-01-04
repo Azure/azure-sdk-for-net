@@ -13,7 +13,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
-namespace Azure.ResourceManager._FileShares
+namespace Azure.ResourceManager.FileShares
 {
     internal static partial class ModelSerializationExtensions
     {

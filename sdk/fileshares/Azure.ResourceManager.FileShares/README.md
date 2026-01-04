@@ -17,7 +17,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure File management management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.FileShares
+dotnet add package Azure.ResourceManager.FileShares --prerelease
 ```
 
 ### Prerequisites
