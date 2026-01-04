@@ -13627,7 +13627,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.Operations.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -13892,7 +13892,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.PrivateLinks.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -14691,7 +14691,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.PrivateEndpointConnections.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -14995,7 +14995,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.StorageSyncServices.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -16915,7 +16915,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.Foos.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -17896,7 +17896,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.FooSettingsOperations.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -18917,7 +18917,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -19682,7 +19682,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettingsOperations.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -20517,7 +20517,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.BarQuotaOperations.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -20882,7 +20882,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.Employees.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -22580,7 +22580,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.Bazs.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -24522,7 +24522,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.Zoos.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -25732,7 +25732,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.EndpointResources.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -25997,7 +25997,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.SolutionResources.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -26290,7 +26290,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.CheckNameAvailabilityOperationGroup.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -27158,7 +27158,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.PlaywrightQuotas.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -27911,7 +27911,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.JobResources.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -28138,7 +28138,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.HciVmInstances.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -28403,7 +28403,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaSubscriptionRequestStatuses.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -29754,7 +29754,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaLimitLists.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -30156,7 +30156,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.SubscriptionQuotaAllocationsLists.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -30490,7 +30490,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.NetworkProviderActions.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -31360,7 +31360,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.Joos.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -32321,7 +32321,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.SAPVirtualInstances.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -33159,7 +33159,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.BestPractices.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -34178,7 +34178,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -34812,7 +34812,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.ResourceTypeTests.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -35939,7 +35939,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.SampleDatas.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
@@ -36181,7 +36181,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.ScheduledActionExtension.endpoint"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint"
             },
             {
               "$ref": "970"
