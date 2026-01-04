@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServices
     /// <summary>
     /// A class representing a RecoveryServicesVaultExtendedInfo along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoveryServicesVaultExtendedInfoResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RecoveryServicesVaultResource"/> using the GetRecoveryServicesVaultExtendedInfo method.
+    /// Otherwise you can get one from its parent resource <see cref="VaultResource"/> using the GetRecoveryServicesVaultExtendedInfo method.
     /// </summary>
     public partial class RecoveryServicesVaultExtendedInfoResource : ArmResource
     {

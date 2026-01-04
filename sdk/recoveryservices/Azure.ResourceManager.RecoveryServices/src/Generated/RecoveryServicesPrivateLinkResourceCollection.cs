@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RecoveryServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="RecoveryServicesPrivateLinkResource"/> and their operations.
-    /// Each <see cref="RecoveryServicesPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="RecoveryServicesVaultResource"/>.
-    /// To get a <see cref="RecoveryServicesPrivateLinkResourceCollection"/> instance call the GetRecoveryServicesPrivateLinkResources method from an instance of <see cref="RecoveryServicesVaultResource"/>.
+    /// Each <see cref="RecoveryServicesPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="VaultResource"/>.
+    /// To get a <see cref="RecoveryServicesPrivateLinkResourceCollection"/> instance call the GetRecoveryServicesPrivateLinkResources method from an instance of <see cref="VaultResource"/>.
     /// </summary>
     public partial class RecoveryServicesPrivateLinkResourceCollection : ArmCollection, IEnumerable<RecoveryServicesPrivateLinkResource>, IAsyncEnumerable<RecoveryServicesPrivateLinkResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.RecoveryServices
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != RecoveryServicesVaultResource.ResourceType)
+            if (id.ResourceType != VaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RecoveryServicesVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VaultResource.ResourceType), id);
             }
         }
 

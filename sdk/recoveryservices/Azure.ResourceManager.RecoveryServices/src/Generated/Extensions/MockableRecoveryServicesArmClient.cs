@@ -35,13 +35,22 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
             return new RecoveryServicesPrivateLinkResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RecoveryServicesVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryServicesVaultResource"/> object. </returns>
-        public virtual RecoveryServicesVaultResource GetRecoveryServicesVaultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VaultResource"/> object. </returns>
+        public virtual VaultResource GetVaultResource(ResourceIdentifier id)
         {
-            RecoveryServicesVaultResource.ValidateResourceId(id);
-            return new RecoveryServicesVaultResource(Client, id);
+            VaultResource.ValidateResourceId(id);
+            return new VaultResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="VaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VaultResource"/> object. </returns>
+        public virtual VaultResource GetVaultResource(ResourceIdentifier id)
+        {
+            VaultResource.ValidateResourceId(id);
+            return new VaultResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="RecoveryServicesVaultExtendedInfoResource"/> along with the instance operations that can be performed on it but with no data. </summary>

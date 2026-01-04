@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RecoveryServices
 {
     /// <summary></summary>
-    internal partial class RecoveryServicesVaultOperationSource : IOperationSource<RecoveryServicesVaultResource>
+    internal partial class VaultOperationSource : IOperationSource<VaultResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal RecoveryServicesVaultOperationSource(ArmClient client)
+        internal VaultOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        RecoveryServicesVaultResource IOperationSource<RecoveryServicesVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VaultResource IOperationSource<VaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             RecoveryServicesVaultData data = RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RecoveryServicesVaultResource(_client, data);
+            return new VaultResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<RecoveryServicesVaultResource> IOperationSource<RecoveryServicesVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VaultResource> IOperationSource<VaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             RecoveryServicesVaultData data = RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RecoveryServicesVaultResource(_client, data);
+            return new VaultResource(_client, data);
         }
     }
 }

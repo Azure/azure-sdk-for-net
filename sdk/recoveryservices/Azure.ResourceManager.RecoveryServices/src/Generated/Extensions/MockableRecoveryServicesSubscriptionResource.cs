@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecoveryServicesVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VaultResource> GetVaultsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetBySubscriptionIdAsyncCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context), data => new RecoveryServicesVaultResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryServicesVaultData, VaultResource>(new VaultsGetBySubscriptionIdAsyncCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context), data => new VaultResource(Client, data));
         }
 
         /// <summary>
@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecoveryServicesVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecoveryServicesVaultResource> GetRecoveryServicesVaults(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VaultResource> GetVaults(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetBySubscriptionIdCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context), data => new RecoveryServicesVaultResource(Client, data));
+            return new PageableWrapper<RecoveryServicesVaultData, VaultResource>(new VaultsGetBySubscriptionIdCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context), data => new VaultResource(Client, data));
         }
 
         /// <summary>

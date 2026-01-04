@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
 
         private RecoveryServicesOperationGroup RecoveryServicesOperationGroupRestClient => _recoveryServicesOperationGroupRestClient ??= new RecoveryServicesOperationGroup(RecoveryServicesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
 
-        /// <summary> Gets a collection of RecoveryServicesVaults in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of RecoveryServicesVaults and their operations over a RecoveryServicesVaultResource. </returns>
-        public virtual RecoveryServicesVaultCollection GetRecoveryServicesVaults()
+        /// <summary> Gets a collection of Vaults in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Vaults and their operations over a VaultResource. </returns>
+        public virtual VaultCollection GetVaults()
         {
-            return GetCachedClient(client => new RecoveryServicesVaultCollection(client, Id));
+            return this.GetCachedClient(client => new VaultCollection(client, Id));
         }
 
         /// <summary>
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RecoveryServicesVaultResource>> GetRecoveryServicesVaultAsync(string vaultName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultResource>> GetVaultAsync(string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return await GetRecoveryServicesVaults().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
+            return await GetVaults().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RecoveryServicesVaultResource> GetRecoveryServicesVault(string vaultName, CancellationToken cancellationToken = default)
+        public virtual Response<VaultResource> GetVault(string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetRecoveryServicesVaults().Get(vaultName, cancellationToken);
+            return GetVaults().Get(vaultName, cancellationToken);
         }
 
         /// <summary> Uploads a certificate for a resource. </summary>

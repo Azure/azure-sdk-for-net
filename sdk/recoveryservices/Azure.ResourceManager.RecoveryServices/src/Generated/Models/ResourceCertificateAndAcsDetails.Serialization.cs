@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         array.Add(item.GetByte());
                     }
-                    certificate = array.ToArray();
+                    certificate = array;
                     continue;
                 }
                 if (prop.NameEquals("friendlyName"u8))

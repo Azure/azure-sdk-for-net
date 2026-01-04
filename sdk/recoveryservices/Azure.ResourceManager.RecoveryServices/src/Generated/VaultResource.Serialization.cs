@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.RecoveryServices
 {
     /// <summary></summary>
-    public partial class RecoveryServicesVaultResource : IJsonModel<RecoveryServicesVaultData>
+    public partial class VaultResource : IJsonModel<RecoveryServicesVaultData>
     {
         private static IJsonModel<RecoveryServicesVaultData> s_dataDeserializationInstance;
 

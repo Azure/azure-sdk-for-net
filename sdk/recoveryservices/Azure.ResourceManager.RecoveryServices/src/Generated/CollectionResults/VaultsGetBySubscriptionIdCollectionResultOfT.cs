@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServices
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionIdRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionIdRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesVaults");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableRecoveryServicesSubscriptionResource.GetVaults");
             scope.Start();
             try
             {
