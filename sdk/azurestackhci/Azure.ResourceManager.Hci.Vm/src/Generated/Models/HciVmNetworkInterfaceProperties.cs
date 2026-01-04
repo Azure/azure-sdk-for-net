@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="networkSecurityGroup"> NetworkSecurityGroup - Network Security Group attached to the network interface. </param>
         /// <param name="isSdnPoliciesBypassed"> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkInterfaceProperties(IList<HciVmIPConfiguration> ipConfigurations, string macAddress, InterfaceDNSSettings dnsSettings, bool? createFromLocal, HciVmProvisioningState? provisioningState, HciVmNetworkInterfaceStatus status, NetworkSecurityGroupArmReference networkSecurityGroup, bool? isSdnPoliciesBypassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmNetworkInterfaceProperties(IList<HciVmIPConfiguration> ipConfigurations, string macAddress, HciVmInterfaceDnsSettings dnsSettings, bool? createFromLocal, HciVmProvisioningState? provisioningState, HciVmNetworkInterfaceStatus status, NetworkSecurityGroupArmReference networkSecurityGroup, bool? isSdnPoliciesBypassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPConfigurations = ipConfigurations;
             MacAddress = macAddress;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string MacAddress { get; set; }
 
         /// <summary> DNS Settings for the interface. </summary>
-        internal InterfaceDNSSettings DnsSettings { get; set; }
+        internal HciVmInterfaceDnsSettings DnsSettings { get; set; }
 
         /// <summary> Boolean indicating whether this is a existing local network interface or if one should be created. </summary>
         public bool? CreateFromLocal { get; set; }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (DnsSettings is null)
                 {
-                    DnsSettings = new InterfaceDNSSettings();
+                    DnsSettings = new HciVmInterfaceDnsSettings();
                 }
                 return DnsSettings.DnsServers;
             }

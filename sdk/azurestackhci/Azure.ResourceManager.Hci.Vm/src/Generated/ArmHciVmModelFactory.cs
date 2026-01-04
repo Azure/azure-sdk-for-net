@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmNetworkInterfaceProperties(
                 ipConfigurations.ToList(),
                 macAddress,
-                dnsServers is null ? default : new InterfaceDNSSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
+                dnsServers is null ? default : new HciVmInterfaceDnsSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
                 createFromLocal,
                 provisioningState,
                 status,

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="dnsSettings"> DNS Settings for the interface. </param>
         /// <param name="isSdnPoliciesBypassed"> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkInterfacePatchProperties(NetworkSecurityGroupArmReference networkSecurityGroup, InterfaceDNSSettings dnsSettings, bool? isSdnPoliciesBypassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmNetworkInterfacePatchProperties(NetworkSecurityGroupArmReference networkSecurityGroup, HciVmInterfaceDnsSettings dnsSettings, bool? isSdnPoliciesBypassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal NetworkSecurityGroupArmReference NetworkSecurityGroup { get; set; }
 
         /// <summary> DNS Settings for the interface. </summary>
-        internal InterfaceDNSSettings DnsSettings { get; set; }
+        internal HciVmInterfaceDnsSettings DnsSettings { get; set; }
 
         /// <summary> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </summary>
         public bool? IsSdnPoliciesBypassed { get; set; }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (DnsSettings is null)
                 {
-                    DnsSettings = new InterfaceDNSSettings();
+                    DnsSettings = new HciVmInterfaceDnsSettings();
                 }
                 return DnsSettings.DnsServers;
             }

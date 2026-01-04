@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Specifies the security profile settings for the managed disk. NOTE: It can only be set for Confidential VMs. </summary>
-    internal partial class VMDiskSecurityProfile
+    internal partial class HciVmDiskSecurityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMDiskSecurityProfile"/>. </summary>
-        public VMDiskSecurityProfile()
+        /// <summary> Initializes a new instance of <see cref="HciVmDiskSecurityProfile"/>. </summary>
+        public HciVmDiskSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMDiskSecurityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmDiskSecurityProfile"/>. </summary>
         /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. NOTE: It can be set for only Confidential VMs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMDiskSecurityProfile(HciVmSecurityEncryptionType? securityEncryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmDiskSecurityProfile(HciVmSecurityEncryptionType? securityEncryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityEncryptionType = securityEncryptionType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

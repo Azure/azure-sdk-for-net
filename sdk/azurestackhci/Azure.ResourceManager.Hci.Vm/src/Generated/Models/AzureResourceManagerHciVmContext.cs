@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Hci.Vm
     [ModelReaderWriterBuildable(typeof(HciVmBackendAddressPool))]
     [ModelReaderWriterBuildable(typeof(HciVmBackendAddressPoolProperties))]
     [ModelReaderWriterBuildable(typeof(HciVmConfigAgentInstanceView))]
+    [ModelReaderWriterBuildable(typeof(HciVmDiskSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(HciVmExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(HciVmFrontendIPConfiguration))]
     [ModelReaderWriterBuildable(typeof(HciVmFrontendIPConfigurationProperties))]
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.Hci.Vm
     [ModelReaderWriterBuildable(typeof(HciVmInstanceStorageProfile))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceStorageProfileOSDisk))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceViewStatus))]
+    [ModelReaderWriterBuildable(typeof(HciVmInterfaceDnsSettings))]
     [ModelReaderWriterBuildable(typeof(HciVmIPConfiguration))]
     [ModelReaderWriterBuildable(typeof(HciVmIPConfigurationArmReference))]
     [ModelReaderWriterBuildable(typeof(HciVmIPConfigurationProperties))]
@@ -174,7 +176,6 @@ namespace Azure.ResourceManager.Hci.Vm
     [ModelReaderWriterBuildable(typeof(HciVmVirtualNetworkSubnetStatus))]
     [ModelReaderWriterBuildable(typeof(HciVmVirtualNetworkSubnetStatusProvisioningStatus))]
     [ModelReaderWriterBuildable(typeof(ImageArmReference))]
-    [ModelReaderWriterBuildable(typeof(InterfaceDNSSettings))]
     [ModelReaderWriterBuildable(typeof(LoadBalancerListResult))]
     [ModelReaderWriterBuildable(typeof(LoadBalancerProbeReference))]
     [ModelReaderWriterBuildable(typeof(LogicalNetworkListResult))]
@@ -208,7 +209,6 @@ namespace Azure.ResourceManager.Hci.Vm
     [ModelReaderWriterBuildable(typeof(VirtualNetworkListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkSubnetListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkSubnetUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(VMDiskSecurityProfile))]
     public partial class AzureResourceManagerHciVmContext : ModelReaderWriterContext
     {
     }

@@ -13,12 +13,12 @@ using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    /// <summary> Specifies the security profile settings for the managed disk. NOTE: It can only be set for Confidential VMs. </summary>
-    internal partial class VMDiskSecurityProfile : IJsonModel<VMDiskSecurityProfile>
+    /// <summary> DNS Settings of the interface. </summary>
+    internal partial class HciVmInterfaceDnsSettings : IJsonModel<HciVmInterfaceDnsSettings>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VMDiskSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HciVmInterfaceDnsSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,15 +29,25 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInterfaceDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMDiskSecurityProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmInterfaceDnsSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SecurityEncryptionType))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
-                writer.WritePropertyName("securityEncryptionType"u8);
-                writer.WriteStringValue(SecurityEncryptionType.Value.ToString());
+                writer.WritePropertyName("dnsServers"u8);
+                writer.WriteStartArray();
+                foreach (string item in DnsServers)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -58,40 +68,52 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMDiskSecurityProfile IJsonModel<VMDiskSecurityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HciVmInterfaceDnsSettings IJsonModel<HciVmInterfaceDnsSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMDiskSecurityProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HciVmInterfaceDnsSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInterfaceDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMDiskSecurityProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmInterfaceDnsSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVMDiskSecurityProfile(document.RootElement, options);
+            return DeserializeHciVmInterfaceDnsSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VMDiskSecurityProfile DeserializeVMDiskSecurityProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciVmInterfaceDnsSettings DeserializeHciVmInterfaceDnsSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            HciVmSecurityEncryptionType? securityEncryptionType = default;
+            IList<string> dnsServers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("securityEncryptionType"u8))
+                if (prop.NameEquals("dnsServers"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securityEncryptionType = new HciVmSecurityEncryptionType(prop.Value.GetString());
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    dnsServers = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,47 +121,47 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VMDiskSecurityProfile(securityEncryptionType, additionalBinaryDataProperties);
+            return new HciVmInterfaceDnsSettings(dnsServers ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VMDiskSecurityProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HciVmInterfaceDnsSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInterfaceDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VMDiskSecurityProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmInterfaceDnsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMDiskSecurityProfile IPersistableModel<VMDiskSecurityProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HciVmInterfaceDnsSettings IPersistableModel<HciVmInterfaceDnsSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMDiskSecurityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HciVmInterfaceDnsSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInterfaceDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVMDiskSecurityProfile(document.RootElement, options);
+                        return DeserializeHciVmInterfaceDnsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMDiskSecurityProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmInterfaceDnsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VMDiskSecurityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HciVmInterfaceDnsSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

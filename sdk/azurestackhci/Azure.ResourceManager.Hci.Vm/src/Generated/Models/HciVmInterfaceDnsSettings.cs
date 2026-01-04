@@ -12,21 +12,21 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> DNS Settings of the interface. </summary>
-    internal partial class InterfaceDNSSettings
+    internal partial class HciVmInterfaceDnsSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InterfaceDNSSettings"/>. </summary>
-        public InterfaceDNSSettings()
+        /// <summary> Initializes a new instance of <see cref="HciVmInterfaceDnsSettings"/>. </summary>
+        public HciVmInterfaceDnsSettings()
         {
             DnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InterfaceDNSSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmInterfaceDnsSettings"/>. </summary>
         /// <param name="dnsServers"> List of DNS server IP Addresses for the interface. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InterfaceDNSSettings(IList<string> dnsServers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInterfaceDnsSettings(IList<string> dnsServers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DnsServers = dnsServers;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

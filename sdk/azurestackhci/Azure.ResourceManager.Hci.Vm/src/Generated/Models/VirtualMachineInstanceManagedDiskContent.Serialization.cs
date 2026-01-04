@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            VMDiskSecurityProfile securityProfile = default;
+            HciVmDiskSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    securityProfile = VMDiskSecurityProfile.DeserializeVMDiskSecurityProfile(prop.Value, options);
+                    securityProfile = HciVmDiskSecurityProfile.DeserializeHciVmDiskSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             NetworkSecurityGroupArmReference networkSecurityGroup = default;
-            InterfaceDNSSettings dnsSettings = default;
+            HciVmInterfaceDnsSettings dnsSettings = default;
             bool? isSdnPoliciesBypassed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    dnsSettings = InterfaceDNSSettings.DeserializeInterfaceDNSSettings(prop.Value, options);
+                    dnsSettings = HciVmInterfaceDnsSettings.DeserializeHciVmInterfaceDnsSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("bypassSdnPolicies"u8))

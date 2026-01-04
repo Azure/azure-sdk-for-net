@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             IList<HciVmIPConfiguration> ipConfigurations = default;
             string macAddress = default;
-            InterfaceDNSSettings dnsSettings = default;
+            HciVmInterfaceDnsSettings dnsSettings = default;
             bool? createFromLocal = default;
             HciVmProvisioningState? provisioningState = default;
             HciVmNetworkInterfaceStatus status = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    dnsSettings = InterfaceDNSSettings.DeserializeInterfaceDNSSettings(prop.Value, options);
+                    dnsSettings = HciVmInterfaceDnsSettings.DeserializeHciVmInterfaceDnsSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("createFromLocal"u8))
