@@ -165,5 +165,50 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         {
             return new HciVmGuestAgentResource(Client, scope.AppendProviderResource("Microsoft.AzureStackHCI", "virtualMachineInstances", "default"));
         }
+
+        /// <summary> Gets an object representing a <see cref="HciVmVirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciVmVirtualNetworkResource"/> object. </returns>
+        public virtual HciVmVirtualNetworkResource GetHciVmVirtualNetworkResource(ResourceIdentifier id)
+        {
+            HciVmVirtualNetworkResource.ValidateResourceId(id);
+            return new HciVmVirtualNetworkResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmVirtualNetworkSubnetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciVmVirtualNetworkSubnetResource"/> object. </returns>
+        public virtual HciVmVirtualNetworkSubnetResource GetHciVmVirtualNetworkSubnetResource(ResourceIdentifier id)
+        {
+            HciVmVirtualNetworkSubnetResource.ValidateResourceId(id);
+            return new HciVmVirtualNetworkSubnetResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmPublicIPAddressResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciVmPublicIPAddressResource"/> object. </returns>
+        public virtual HciVmPublicIPAddressResource GetHciVmPublicIPAddressResource(ResourceIdentifier id)
+        {
+            HciVmPublicIPAddressResource.ValidateResourceId(id);
+            return new HciVmPublicIPAddressResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmNatGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciVmNatGatewayResource"/> object. </returns>
+        public virtual HciVmNatGatewayResource GetHciVmNatGatewayResource(ResourceIdentifier id)
+        {
+            HciVmNatGatewayResource.ValidateResourceId(id);
+            return new HciVmNatGatewayResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmLoadBalancerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciVmLoadBalancerResource"/> object. </returns>
+        public virtual HciVmLoadBalancerResource GetHciVmLoadBalancerResource(ResourceIdentifier id)
+        {
+            HciVmLoadBalancerResource.ValidateResourceId(id);
+            return new HciVmLoadBalancerResource(Client, id);
+        }
     }
 }

@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("createFromLocal"u8);
                 writer.WriteBooleanValue(IsCreatingFromLocal.Value);
             }
+            if (Optional.IsDefined(LocalVmName))
+            {
+                writer.WritePropertyName("localVmName"u8);
+                writer.WriteStringValue(LocalVmName);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -169,6 +174,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             HciVmInstanceStorageProfile storageProfile = default;
             HciVmHttpProxyConfiguration httpProxyConfig = default;
             bool? isCreatingFromLocal = default;
+            string localVmName = default;
             HciVmProvisioningState? provisioningState = default;
             VirtualMachineInstanceView instanceView = default;
             HciVmInstanceStatus status = default;
@@ -253,6 +259,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     isCreatingFromLocal = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("localVmName"u8))
+                {
+                    localVmName = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -328,6 +339,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 storageProfile,
                 httpProxyConfig,
                 isCreatingFromLocal,
+                localVmName,
                 provisioningState,
                 instanceView,
                 status,

@@ -25,11 +25,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="HciVmNetworkInterfacePatchProperties"/>. </summary>
         /// <param name="networkSecurityGroup"> NetworkSecurityGroup - Network Security Group attached to the network interface. </param>
         /// <param name="dnsSettings"> DNS Settings for the interface. </param>
+        /// <param name="isSdnPoliciesBypassed"> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkInterfacePatchProperties(NetworkSecurityGroupArmReference networkSecurityGroup, InterfaceDNSSettings dnsSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmNetworkInterfacePatchProperties(NetworkSecurityGroupArmReference networkSecurityGroup, InterfaceDNSSettings dnsSettings, bool? isSdnPoliciesBypassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
+            IsSdnPoliciesBypassed = isSdnPoliciesBypassed;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +40,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> DNS Settings for the interface. </summary>
         internal InterfaceDNSSettings DnsSettings { get; set; }
+
+        /// <summary> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </summary>
+        public bool? IsSdnPoliciesBypassed { get; set; }
 
         /// <summary> The Azure Resource ID for a Network Security Group. </summary>
         public ResourceIdentifier NetworkSecurityGroupId

@@ -32,12 +32,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
         /// <param name="diskFileFormat"> The format of the actual VHD file [vhd, vhdx]. </param>
         /// <param name="isCreatingFromLocal"> Boolean indicating whether it is an existing local hard disk or if one should be created. </param>
+        /// <param name="localVhdPath"> Absolute path of the VHD. This is only applicable when createFromLocal is true. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual hard disk. </param>
         /// <param name="containerId"> Storage ContainerID of the storage container to be used for VHD. </param>
         /// <param name="status"> The observed state of virtual hard disks. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmVirtualHardDiskProperties(int? blockSizeInBytes, long? diskSizeInGB, bool? dynamic, int? logicalSectorInBytes, int? physicalSectorInBytes, Uri downloadUri, HciVmHyperVGeneration? hyperVGeneration, HciVmDiskFileFormat? diskFileFormat, bool? isCreatingFromLocal, HciVmProvisioningState? provisioningState, ResourceIdentifier containerId, HciVmVirtualHardDiskStatus status, long? maxShares, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmVirtualHardDiskProperties(int? blockSizeInBytes, long? diskSizeInGB, bool? dynamic, int? logicalSectorInBytes, int? physicalSectorInBytes, Uri downloadUri, HciVmHyperVGeneration? hyperVGeneration, HciVmDiskFileFormat? diskFileFormat, bool? isCreatingFromLocal, string localVhdPath, HciVmProvisioningState? provisioningState, ResourceIdentifier containerId, HciVmVirtualHardDiskStatus status, long? maxShares, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlockSizeInBytes = blockSizeInBytes;
             DiskSizeInGB = diskSizeInGB;
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             HyperVGeneration = hyperVGeneration;
             DiskFileFormat = diskFileFormat;
             IsCreatingFromLocal = isCreatingFromLocal;
+            LocalVhdPath = localVhdPath;
             ProvisioningState = provisioningState;
             ContainerId = containerId;
             Status = status;
@@ -81,6 +83,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Boolean indicating whether it is an existing local hard disk or if one should be created. </summary>
         public bool? IsCreatingFromLocal { get; set; }
+
+        /// <summary> Absolute path of the VHD. This is only applicable when createFromLocal is true. </summary>
+        public string LocalVhdPath { get; set; }
 
         /// <summary> Provisioning state of the virtual hard disk. </summary>
         public HciVmProvisioningState? ProvisioningState { get; }

@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> Provisioning state of the network interface. </param>
         /// <param name="status"> The observed state of network interfaces. </param>
         /// <param name="networkSecurityGroup"> NetworkSecurityGroup - Network Security Group attached to the network interface. </param>
+        /// <param name="isSdnPoliciesBypassed"> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkInterfaceProperties(IList<HciVmIPConfiguration> ipConfigurations, string macAddress, InterfaceDNSSettings dnsSettings, bool? createFromLocal, HciVmProvisioningState? provisioningState, HciVmNetworkInterfaceStatus status, NetworkSecurityGroupArmReference networkSecurityGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmNetworkInterfaceProperties(IList<HciVmIPConfiguration> ipConfigurations, string macAddress, InterfaceDNSSettings dnsSettings, bool? createFromLocal, HciVmProvisioningState? provisioningState, HciVmNetworkInterfaceStatus status, NetworkSecurityGroupArmReference networkSecurityGroup, bool? isSdnPoliciesBypassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPConfigurations = ipConfigurations;
             MacAddress = macAddress;
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             ProvisioningState = provisioningState;
             Status = status;
             NetworkSecurityGroup = networkSecurityGroup;
+            IsSdnPoliciesBypassed = isSdnPoliciesBypassed;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -65,6 +67,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> NetworkSecurityGroup - Network Security Group attached to the network interface. </summary>
         internal NetworkSecurityGroupArmReference NetworkSecurityGroup { get; set; }
+
+        /// <summary> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </summary>
+        public bool? IsSdnPoliciesBypassed { get; set; }
 
         /// <summary> List of DNS server IP Addresses for the interface. </summary>
         public IList<string> DnsServers

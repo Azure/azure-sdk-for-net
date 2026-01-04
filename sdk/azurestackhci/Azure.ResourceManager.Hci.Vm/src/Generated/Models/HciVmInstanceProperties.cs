@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="storageProfile"> StorageProfile - contains information about the disks and storage information for the virtual machine instance. </param>
         /// <param name="httpProxyConfig"> HTTP Proxy configuration for the VM. </param>
         /// <param name="isCreatingFromLocal"> Boolean indicating whether this is an existing local virtual machine or if one should be created. </param>
+        /// <param name="localVmName"> HyperV name of the VM. This is only applicable when createFromLocal is true. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual machine instance. </param>
         /// <param name="instanceView"> The virtual machine instance view. </param>
         /// <param name="status"> The observed state of virtual machine instances. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="hostNodeName"> Name of the host node that the VM is on. </param>
         /// <param name="hostNodeIPAddress"> Name of the host node that the VM is on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile, HciVmInstancePlacementProfile placementProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, HciVmInstanceOSProfile osProfile, HciVmInstanceSecurityProfile securityProfile, HciVmInstanceStorageProfile storageProfile, HciVmHttpProxyConfiguration httpProxyConfig, bool? isCreatingFromLocal, HciVmProvisioningState? provisioningState, VirtualMachineInstanceView instanceView, HciVmInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid, string hyperVVmId, string hostNodeName, string hostNodeIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile, HciVmInstancePlacementProfile placementProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, HciVmInstanceOSProfile osProfile, HciVmInstanceSecurityProfile securityProfile, HciVmInstanceStorageProfile storageProfile, HciVmHttpProxyConfiguration httpProxyConfig, bool? isCreatingFromLocal, string localVmName, HciVmProvisioningState? provisioningState, VirtualMachineInstanceView instanceView, HciVmInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid, string hyperVVmId, string hostNodeName, string hostNodeIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             PlacementProfile = placementProfile;
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             StorageProfile = storageProfile;
             HttpProxyConfig = httpProxyConfig;
             IsCreatingFromLocal = isCreatingFromLocal;
+            LocalVmName = localVmName;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
             Status = status;
@@ -85,6 +87,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Boolean indicating whether this is an existing local virtual machine or if one should be created. </summary>
         public bool? IsCreatingFromLocal { get; set; }
+
+        /// <summary> HyperV name of the VM. This is only applicable when createFromLocal is true. </summary>
+        public string LocalVmName { get; set; }
 
         /// <summary> Provisioning state of the virtual machine instance. </summary>
         public HciVmProvisioningState? ProvisioningState { get; }

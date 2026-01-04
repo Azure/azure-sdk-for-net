@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("createFromLocal"u8);
                 writer.WriteBooleanValue(IsCreatingFromLocal.Value);
             }
+            if (Optional.IsDefined(LocalVhdPath))
+            {
+                writer.WritePropertyName("localVhdPath"u8);
+                writer.WriteStringValue(LocalVhdPath);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -151,6 +156,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             HciVmHyperVGeneration? hyperVGeneration = default;
             HciVmDiskFileFormat? diskFileFormat = default;
             bool? isCreatingFromLocal = default;
+            string localVhdPath = default;
             HciVmProvisioningState? provisioningState = default;
             ResourceIdentifier containerId = default;
             HciVmVirtualHardDiskStatus status = default;
@@ -239,6 +245,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     isCreatingFromLocal = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("localVhdPath"u8))
+                {
+                    localVhdPath = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -290,6 +301,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 hyperVGeneration,
                 diskFileFormat,
                 isCreatingFromLocal,
+                localVhdPath,
                 provisioningState,
                 containerId,
                 status,

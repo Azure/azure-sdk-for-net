@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus, options);
             }
+            if (Optional.IsDefined(FabricIntegration))
+            {
+                writer.WritePropertyName("fabricIntegration"u8);
+                writer.WriteObjectValue(FabricIntegration, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -94,6 +99,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             string errorCode = default;
             string errorMessage = default;
             HciVmLogicalNetworkProvisioningStatus provisioningStatus = default;
+            FabricIntegrationStatus fabricIntegration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -116,12 +122,21 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     provisioningStatus = HciVmLogicalNetworkProvisioningStatus.DeserializeHciVmLogicalNetworkProvisioningStatus(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("fabricIntegration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricIntegration = FabricIntegrationStatus.DeserializeFabricIntegrationStatus(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciVmLogicalNetworkStatus(errorCode, errorMessage, provisioningStatus, additionalBinaryDataProperties);
+            return new HciVmLogicalNetworkStatus(errorCode, errorMessage, provisioningStatus, fabricIntegration, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
