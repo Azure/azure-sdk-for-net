@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> DiskBackedMessageBuffer properties. </summary>
     public partial class DiskBackedMessageBuffer
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiskBackedMessageBuffer"/>. </summary>
         /// <param name="maxSize"> The max size of the message buffer on disk. If a PVC template is specified using one of ephemeralVolumeClaimSpec or persistentVolumeClaimSpec, then this size is used as the request and limit sizes of that template. If neither ephemeralVolumeClaimSpec nor persistentVolumeClaimSpec are specified, then an emptyDir volume is mounted with this size as its limit. See &lt;https://kubernetes.io/docs/concepts/storage/volumes/#emptydir&gt; for details. </param>
@@ -59,24 +31,21 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="maxSize"> The max size of the message buffer on disk. If a PVC template is specified using one of ephemeralVolumeClaimSpec or persistentVolumeClaimSpec, then this size is used as the request and limit sizes of that template. If neither ephemeralVolumeClaimSpec nor persistentVolumeClaimSpec are specified, then an emptyDir volume is mounted with this size as its limit. See &lt;https://kubernetes.io/docs/concepts/storage/volumes/#emptydir&gt; for details. </param>
         /// <param name="ephemeralVolumeClaimSpec"> Use the specified persistent volume claim template to mount a "generic ephemeral volume" for the message buffer. See &lt;https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/#generic-ephemeral-volumes&gt; for details. </param>
         /// <param name="persistentVolumeClaimSpec"> Use the specified persistent volume claim template to mount a persistent volume for the message buffer. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskBackedMessageBuffer(string maxSize, VolumeClaimSpec ephemeralVolumeClaimSpec, VolumeClaimSpec persistentVolumeClaimSpec, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiskBackedMessageBuffer(string maxSize, VolumeClaimSpec ephemeralVolumeClaimSpec, VolumeClaimSpec persistentVolumeClaimSpec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxSize = maxSize;
             EphemeralVolumeClaimSpec = ephemeralVolumeClaimSpec;
             PersistentVolumeClaimSpec = persistentVolumeClaimSpec;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DiskBackedMessageBuffer"/> for deserialization. </summary>
-        internal DiskBackedMessageBuffer()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The max size of the message buffer on disk. If a PVC template is specified using one of ephemeralVolumeClaimSpec or persistentVolumeClaimSpec, then this size is used as the request and limit sizes of that template. If neither ephemeralVolumeClaimSpec nor persistentVolumeClaimSpec are specified, then an emptyDir volume is mounted with this size as its limit. See &lt;https://kubernetes.io/docs/concepts/storage/volumes/#emptydir&gt; for details. </summary>
         public string MaxSize { get; set; }
+
         /// <summary> Use the specified persistent volume claim template to mount a "generic ephemeral volume" for the message buffer. See &lt;https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/#generic-ephemeral-volumes&gt; for details. </summary>
         public VolumeClaimSpec EphemeralVolumeClaimSpec { get; set; }
+
         /// <summary> Use the specified persistent volume claim template to mount a persistent volume for the message buffer. </summary>
         public VolumeClaimSpec PersistentVolumeClaimSpec { get; set; }
     }
