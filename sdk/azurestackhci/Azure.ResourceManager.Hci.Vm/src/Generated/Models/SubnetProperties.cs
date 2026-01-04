@@ -35,8 +35,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="routeTable"> Route table resource. </param>
         /// <param name="ipPools"> network associated pool of IP Addresses. </param>
         /// <param name="vlan"> Vlan to use for the subnet. </param>
+        /// <param name="provisioningState"> Provisioning state of the subnet resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubnetProperties(string addressPrefix, IList<string> addressPrefixes, HciVmIPAllocationMethod? ipAllocationMethod, IList<HciVmSubnetIPConfigurationReference> ipConfigurationReferences, NetworkSecurityGroupArmReference networkSecurityGroup, HciVmNetworkingRouteTable routeTable, IList<HciVmNetworkingIPPool> ipPools, int? vlan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubnetProperties(string addressPrefix, IList<string> addressPrefixes, HciVmIPAllocationMethod? ipAllocationMethod, IList<HciVmSubnetIPConfigurationReference> ipConfigurationReferences, NetworkSecurityGroupArmReference networkSecurityGroup, HciVmNetworkingRouteTable routeTable, IList<HciVmNetworkingIPPool> ipPools, int? vlan, HciVmProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressPrefix = addressPrefix;
             AddressPrefixes = addressPrefixes;
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             RouteTable = routeTable;
             IPPools = ipPools;
             Vlan = vlan;
+            ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -72,6 +74,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Vlan to use for the subnet. </summary>
         public int? Vlan { get; set; }
+
+        /// <summary> Provisioning state of the subnet resource. </summary>
+        public HciVmProvisioningState? ProvisioningState { get; }
 
         /// <summary> The Azure Resource ID for a Network Security Group. </summary>
         public ResourceIdentifier NetworkSecurityGroupId

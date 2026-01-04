@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings, options);
             }
+            if (Optional.IsDefined(IsSdnPoliciesBypassed))
+            {
+                writer.WritePropertyName("bypassSdnPolicies"u8);
+                writer.WriteBooleanValue(IsSdnPoliciesBypassed.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             NetworkSecurityGroupArmReference networkSecurityGroup = default;
             InterfaceDNSSettings dnsSettings = default;
+            bool? isSdnPoliciesBypassed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -109,12 +115,21 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     dnsSettings = InterfaceDNSSettings.DeserializeInterfaceDNSSettings(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("bypassSdnPolicies"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isSdnPoliciesBypassed = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciVmNetworkInterfacePatchProperties(networkSecurityGroup, dnsSettings, additionalBinaryDataProperties);
+            return new HciVmNetworkInterfacePatchProperties(networkSecurityGroup, dnsSettings, isSdnPoliciesBypassed, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

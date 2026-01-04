@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("networkSecurityGroup"u8);
                 writer.WriteObjectValue(NetworkSecurityGroup, options);
             }
+            if (Optional.IsDefined(IsSdnPoliciesBypassed))
+            {
+                writer.WritePropertyName("bypassSdnPolicies"u8);
+                writer.WriteBooleanValue(IsSdnPoliciesBypassed.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             HciVmProvisioningState? provisioningState = default;
             HciVmNetworkInterfaceStatus status = default;
             NetworkSecurityGroupArmReference networkSecurityGroup = default;
+            bool? isSdnPoliciesBypassed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -190,6 +196,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     networkSecurityGroup = NetworkSecurityGroupArmReference.DeserializeNetworkSecurityGroupArmReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("bypassSdnPolicies"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isSdnPoliciesBypassed = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -203,6 +218,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 provisioningState,
                 status,
                 networkSecurityGroup,
+                isSdnPoliciesBypassed,
                 additionalBinaryDataProperties);
         }
 

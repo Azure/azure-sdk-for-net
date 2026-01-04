@@ -135,18 +135,20 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <param name="dhcpOptionsDnsServers"> The list of DNS servers IP addresses. </param>
+        /// <param name="fabricNetworkResourceId"> The Azure Resource ID for a Managed Network Fabric L2ISD or L3ISD internal network. </param>
         /// <param name="subnets"> Subnet - list of subnets under the logical network. </param>
         /// <param name="provisioningState"> Provisioning state of the logical network. </param>
         /// <param name="vmSwitchName"> name of the network switch to be used for VMs. </param>
         /// <param name="status"> The observed state of logical networks. </param>
         /// <param name="networkType"> Type of the Logical Network. </param>
         /// <returns> A new <see cref="Models.HciVmLogicalNetworkProperties"/> instance for mocking. </returns>
-        public static HciVmLogicalNetworkProperties HciVmLogicalNetworkProperties(IEnumerable<string> dhcpOptionsDnsServers = default, IEnumerable<HciVmNetworkingSubnet> subnets = default, HciVmProvisioningState? provisioningState = default, string vmSwitchName = default, HciVmLogicalNetworkStatus status = default, HciVmLogicalNetworkType? networkType = default)
+        public static HciVmLogicalNetworkProperties HciVmLogicalNetworkProperties(IEnumerable<string> dhcpOptionsDnsServers = default, ResourceIdentifier fabricNetworkResourceId = default, IEnumerable<HciVmNetworkingSubnet> subnets = default, HciVmProvisioningState? provisioningState = default, string vmSwitchName = default, HciVmLogicalNetworkStatus status = default, HciVmLogicalNetworkType? networkType = default)
         {
             subnets ??= new ChangeTrackingList<HciVmNetworkingSubnet>();
 
             return new HciVmLogicalNetworkProperties(
                 dhcpOptionsDnsServers is null ? default : new HciVmLogicalNetworkDhcpOptions((dhcpOptionsDnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
+                fabricNetworkResourceId is null ? default : new ManagedNetworkFabricArmReference(fabricNetworkResourceId, null),
                 subnets.ToList(),
                 provisioningState,
                 vmSwitchName,
@@ -178,10 +180,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="errorCode"> LogicalNetwork provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="provisioningStatus"> Logical network provisioning status. </param>
+        /// <param name="fabricIntegration"> Enhanced fabric integration status with detailed health monitoring and connectivity state. </param>
         /// <returns> A new <see cref="Models.HciVmLogicalNetworkStatus"/> instance for mocking. </returns>
-        public static HciVmLogicalNetworkStatus HciVmLogicalNetworkStatus(string errorCode = default, string errorMessage = default, HciVmLogicalNetworkProvisioningStatus provisioningStatus = default)
+        public static HciVmLogicalNetworkStatus HciVmLogicalNetworkStatus(string errorCode = default, string errorMessage = default, HciVmLogicalNetworkProvisioningStatus provisioningStatus = default, FabricIntegrationStatus fabricIntegration = default)
         {
-            return new HciVmLogicalNetworkStatus(errorCode, errorMessage, provisioningStatus, additionalBinaryDataProperties: null);
+            return new HciVmLogicalNetworkStatus(errorCode, errorMessage, provisioningStatus, fabricIntegration, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes the status of the provisioning. </summary>
@@ -191,6 +194,44 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static HciVmLogicalNetworkProvisioningStatus HciVmLogicalNetworkProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
         {
             return new HciVmLogicalNetworkProvisioningStatus(operationId, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Enhanced fabric integration status with detailed health monitoring and connectivity state. </summary>
+        /// <param name="state"> Current fabric integration state. </param>
+        /// <param name="health"> Health status of the fabric connection. </param>
+        /// <param name="lastCheckedOn"> Timestamp of the last fabric health check as ISO 8601 string. </param>
+        /// <param name="resourceType"> Type of fabric resource referenced. </param>
+        /// <param name="issues"> Issues raised by fabric. </param>
+        /// <returns> A new <see cref="Models.FabricIntegrationStatus"/> instance for mocking. </returns>
+        public static FabricIntegrationStatus FabricIntegrationStatus(FabricIntegrationStateType? state = default, FabricConnectionHealthStateType? health = default, DateTimeOffset? lastCheckedOn = default, FabricResourceType? resourceType = default, IEnumerable<ManagedNetworkFabricIssue> issues = default)
+        {
+            issues ??= new ChangeTrackingList<ManagedNetworkFabricIssue>();
+
+            return new FabricIntegrationStatus(
+                state,
+                health,
+                lastCheckedOn,
+                resourceType,
+                issues.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Issues exposed by managed network fabric. </summary>
+        /// <param name="code"> Specific error/warning code. </param>
+        /// <param name="severity"> issue severity. </param>
+        /// <param name="message"> Description of the issue. </param>
+        /// <param name="target"> specific property or resource that has the issue. </param>
+        /// <param name="timestamp"> Timestamp of the issue as ISO 8601 string. </param>
+        /// <returns> A new <see cref="Models.ManagedNetworkFabricIssue"/> instance for mocking. </returns>
+        public static ManagedNetworkFabricIssue ManagedNetworkFabricIssue(string code = default, string severity = default, string message = default, string target = default, DateTimeOffset? timestamp = default)
+        {
+            return new ManagedNetworkFabricIssue(
+                code,
+                severity,
+                message,
+                target,
+                timestamp,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The logical network resource patch definition. </summary>
@@ -322,8 +363,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> Provisioning state of the network interface. </param>
         /// <param name="status"> The observed state of network interfaces. </param>
         /// <param name="networkSecurityGroupId"> The Azure Resource ID for a Network Security Group. </param>
+        /// <param name="isSdnPoliciesBypassed"> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkInterfaceProperties"/> instance for mocking. </returns>
-        public static HciVmNetworkInterfaceProperties HciVmNetworkInterfaceProperties(IEnumerable<HciVmIPConfiguration> ipConfigurations = default, string macAddress = default, IEnumerable<string> dnsServers = default, bool? createFromLocal = default, HciVmProvisioningState? provisioningState = default, HciVmNetworkInterfaceStatus status = default, ResourceIdentifier networkSecurityGroupId = default)
+        public static HciVmNetworkInterfaceProperties HciVmNetworkInterfaceProperties(IEnumerable<HciVmIPConfiguration> ipConfigurations = default, string macAddress = default, IEnumerable<string> dnsServers = default, bool? createFromLocal = default, HciVmProvisioningState? provisioningState = default, HciVmNetworkInterfaceStatus status = default, ResourceIdentifier networkSecurityGroupId = default, bool? isSdnPoliciesBypassed = default)
         {
             ipConfigurations ??= new ChangeTrackingList<HciVmIPConfiguration>();
 
@@ -335,6 +377,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 provisioningState,
                 status,
                 networkSecurityGroupId is null ? default : new NetworkSecurityGroupArmReference(networkSecurityGroupId, null),
+                isSdnPoliciesBypassed,
                 additionalBinaryDataProperties: null);
         }
 
@@ -610,12 +653,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
         /// <param name="diskFileFormat"> The format of the actual VHD file [vhd, vhdx]. </param>
         /// <param name="isCreatingFromLocal"> Boolean indicating whether it is an existing local hard disk or if one should be created. </param>
+        /// <param name="localVhdPath"> Absolute path of the VHD. This is only applicable when createFromLocal is true. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual hard disk. </param>
         /// <param name="containerId"> Storage ContainerID of the storage container to be used for VHD. </param>
         /// <param name="status"> The observed state of virtual hard disks. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualHardDiskProperties"/> instance for mocking. </returns>
-        public static HciVmVirtualHardDiskProperties HciVmVirtualHardDiskProperties(int? blockSizeInBytes = default, long? diskSizeInGB = default, bool? dynamic = default, int? logicalSectorInBytes = default, int? physicalSectorInBytes = default, Uri downloadUri = default, HciVmHyperVGeneration? hyperVGeneration = default, HciVmDiskFileFormat? diskFileFormat = default, bool? isCreatingFromLocal = default, HciVmProvisioningState? provisioningState = default, ResourceIdentifier containerId = default, HciVmVirtualHardDiskStatus status = default, long? maxShares = default)
+        public static HciVmVirtualHardDiskProperties HciVmVirtualHardDiskProperties(int? blockSizeInBytes = default, long? diskSizeInGB = default, bool? dynamic = default, int? logicalSectorInBytes = default, int? physicalSectorInBytes = default, Uri downloadUri = default, HciVmHyperVGeneration? hyperVGeneration = default, HciVmDiskFileFormat? diskFileFormat = default, bool? isCreatingFromLocal = default, string localVhdPath = default, HciVmProvisioningState? provisioningState = default, ResourceIdentifier containerId = default, HciVmVirtualHardDiskStatus status = default, long? maxShares = default)
         {
             return new HciVmVirtualHardDiskProperties(
                 blockSizeInBytes,
@@ -627,6 +671,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 hyperVGeneration,
                 diskFileFormat,
                 isCreatingFromLocal,
+                localVhdPath,
                 provisioningState,
                 containerId,
                 status,
@@ -752,6 +797,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="storageProfile"> StorageProfile - contains information about the disks and storage information for the virtual machine instance. </param>
         /// <param name="httpProxyConfig"> HTTP Proxy configuration for the VM. </param>
         /// <param name="isCreatingFromLocal"> Boolean indicating whether this is an existing local virtual machine or if one should be created. </param>
+        /// <param name="localVmName"> HyperV name of the VM. This is only applicable when createFromLocal is true. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual machine instance. </param>
         /// <param name="instanceViewVmAgent"> The VM Config Agent running on the virtual machine. </param>
         /// <param name="status"> The observed state of virtual machine instances. </param>
@@ -762,7 +808,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="hostNodeName"> Name of the host node that the VM is on. </param>
         /// <param name="hostNodeIPAddress"> Name of the host node that the VM is on. </param>
         /// <returns> A new <see cref="Models.HciVmInstanceProperties"/> instance for mocking. </returns>
-        public static HciVmInstanceProperties HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile = default, HciVmInstancePlacementProfile placementProfile = default, IEnumerable<HciVmNetworkInterfaceArmReference> networkInterfaces = default, HciVmInstanceOSProfile osProfile = default, HciVmInstanceSecurityProfile securityProfile = default, HciVmInstanceStorageProfile storageProfile = default, HciVmHttpProxyConfiguration httpProxyConfig = default, bool? isCreatingFromLocal = default, HciVmProvisioningState? provisioningState = default, HciVmConfigAgentInstanceView instanceViewVmAgent = default, HciVmInstanceStatus status = default, GuestAgentInstallStatus guestAgentInstallStatus = default, string vmId = default, string resourceUid = default, string hyperVVmId = default, string hostNodeName = default, string hostNodeIPAddress = default)
+        public static HciVmInstanceProperties HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile = default, HciVmInstancePlacementProfile placementProfile = default, IEnumerable<HciVmNetworkInterfaceArmReference> networkInterfaces = default, HciVmInstanceOSProfile osProfile = default, HciVmInstanceSecurityProfile securityProfile = default, HciVmInstanceStorageProfile storageProfile = default, HciVmHttpProxyConfiguration httpProxyConfig = default, bool? isCreatingFromLocal = default, string localVmName = default, HciVmProvisioningState? provisioningState = default, HciVmConfigAgentInstanceView instanceViewVmAgent = default, HciVmInstanceStatus status = default, GuestAgentInstallStatus guestAgentInstallStatus = default, string vmId = default, string resourceUid = default, string hyperVVmId = default, string hostNodeName = default, string hostNodeIPAddress = default)
         {
             return new HciVmInstanceProperties(
                 hardwareProfile,
@@ -773,6 +819,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 storageProfile,
                 httpProxyConfig,
                 isCreatingFromLocal,
+                localVmName,
                 provisioningState,
                 instanceViewVmAgent is null ? default : new VirtualMachineInstanceView(instanceViewVmAgent, null),
                 status,
@@ -1014,6 +1061,384 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static HciVmGuestAgentProperties HciVmGuestAgentProperties(HciVmGuestCredential credentials = default, GuestAgentProvisioningAction? provisioningAction = default, string status = default, HciVmProvisioningState? provisioningState = default)
         {
             return new HciVmGuestAgentProperties(credentials, provisioningAction, status, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The virtual network resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmVirtualNetworkData"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkData HciVmVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmVirtualNetworkProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmVirtualNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                extendedLocation);
+        }
+
+        /// <param name="addressPrefixes"> A list of one or more CIDR blocks that define the address space. </param>
+        /// <param name="dhcpOptionsDnsServers"> An array of DNS server IP addresses that VMs or wokloads in the vnet can inherit. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network resource. </param>
+        /// <param name="status"> The observed status of Virtual Network. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkProperties"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkProperties HciVmVirtualNetworkProperties(IEnumerable<string> addressPrefixes = default, IEnumerable<string> dhcpOptionsDnsServers = default, HciVmProvisioningState? provisioningState = default, HciVmVirtualNetworkStatus status = default)
+        {
+            return new HciVmVirtualNetworkProperties(addressPrefixes is null ? default : new HciVmVirtualNetworkAddressSpace((addressPrefixes ?? new ChangeTrackingList<string>()).ToList(), null), dhcpOptionsDnsServers is null ? default : new HciVmVirtualNetworkDhcpOptions((dhcpOptionsDnsServers ?? new ChangeTrackingList<string>()).ToList(), null), provisioningState, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Address Space Information. </summary>
+        /// <param name="addressPrefixes"> A list of one or more CIDR blocks that define the address space. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkAddressSpace"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkAddressSpace HciVmVirtualNetworkAddressSpace(IEnumerable<string> addressPrefixes = default)
+        {
+            addressPrefixes ??= new ChangeTrackingList<string>();
+
+            return new HciVmVirtualNetworkAddressSpace(addressPrefixes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> DHCP options for virtual networks. </summary>
+        /// <param name="dnsServers"> An array of DNS server IP addresses that VMs or wokloads in the vnet can inherit. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkDhcpOptions"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkDhcpOptions HciVmVirtualNetworkDhcpOptions(IEnumerable<string> dnsServers = default)
+        {
+            dnsServers ??= new ChangeTrackingList<string>();
+
+            return new HciVmVirtualNetworkDhcpOptions(dnsServers.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for updating tags in VirtualNetwork resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkPatch"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkPatch HciVmVirtualNetworkPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmVirtualNetworkPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The virtual network resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmVirtualNetworkSubnetData"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetData HciVmVirtualNetworkSubnetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmVirtualNetworkSubnetProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            return new HciVmVirtualNetworkSubnetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                extendedLocation);
+        }
+
+        /// <param name="addressPrefix"> Subnet CIDR. </param>
+        /// <param name="networkSecurityGroupId"> The Azure Resource ID for a Network Security Group. </param>
+        /// <param name="natGatewayResourceId"> The ARM ID for a Network Security Group. </param>
+        /// <param name="routeTable"> RouteTable defining custom routes for the subnet. </param>
+        /// <param name="ipConfigurations"> List of ip configurations for the subnet. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network subnet resource. </param>
+        /// <param name="status"> The observed status of the virtual network subnet resource. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkSubnetProperties"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetProperties HciVmVirtualNetworkSubnetProperties(string addressPrefix = default, ResourceIdentifier networkSecurityGroupId = default, ResourceIdentifier natGatewayResourceId = default, HciVmNetworkingRouteTable routeTable = default, IEnumerable<HciVmVirtualNetworkSubnetIPConfigurationReference> ipConfigurations = default, HciVmProvisioningState? provisioningState = default, HciVmVirtualNetworkSubnetStatus status = default)
+        {
+            ipConfigurations ??= new ChangeTrackingList<HciVmVirtualNetworkSubnetIPConfigurationReference>();
+
+            return new HciVmVirtualNetworkSubnetProperties(
+                addressPrefix,
+                networkSecurityGroupId is null ? default : new NetworkSecurityGroupArmReference(networkSecurityGroupId, null),
+                natGatewayResourceId is null ? default : new NatGatewayArmReference(natGatewayResourceId, null),
+                routeTable,
+                ipConfigurations.ToList(),
+                provisioningState,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Azure Resource ID for a resource consuming IP on a subnet. </summary>
+        /// <param name="id"> The Azure Resource ID for a Network Interface. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkSubnetIPConfigurationReference"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetIPConfigurationReference HciVmVirtualNetworkSubnetIPConfigurationReference(ResourceIdentifier id = default)
+        {
+            return new HciVmVirtualNetworkSubnetIPConfigurationReference(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Status of virtual network subnet operations. </summary>
+        /// <param name="errorCode"> VirtualNetworkSubnet provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"> Public IP provisioning status. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkSubnetStatus"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetStatus HciVmVirtualNetworkSubnetStatus(string errorCode = default, string errorMessage = default, HciVmVirtualNetworkSubnetStatusProvisioningStatus provisioningStatus = default)
+        {
+            return new HciVmVirtualNetworkSubnetStatus(errorCode, errorMessage, provisioningStatus, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Status of virtual network subnet operations. </summary>
+        /// <param name="operationId"> The ID of the operation performed on the virtual network subnet. </param>
+        /// <param name="status"> The status of the operation performed on the virtual network subnet [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkSubnetStatusProvisioningStatus"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetStatusProvisioningStatus HciVmVirtualNetworkSubnetStatusProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
+        {
+            return new HciVmVirtualNetworkSubnetStatusProvisioningStatus(operationId, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The publicIP resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmPublicIPAddressData"/> instance for mocking. </returns>
+        public static HciVmPublicIPAddressData HciVmPublicIPAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmPublicIPAddressProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmPublicIPAddressData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                extendedLocation);
+        }
+
+        /// <param name="publicIPAddressVersion"> Whether the public IP is v4 or v6. Defaults to IPv4. </param>
+        /// <param name="ipAllocationScope"> ipAllocationScope: Azure Reference to a particular IP Pool (ALM) or a LogicalNetwork (ALL) for allocating public IP. </param>
+        /// <param name="ipAddress"> IP Address. This is static. If the user specifies, we allocate that otherwise allocate from logical network address space. </param>
+        /// <param name="ipResourceId"> The Azure Resource ID of an IPConfiguration resource. </param>
+        /// <param name="natGatewayResourceId"> The ARM ID for a Network Security Group. </param>
+        /// <param name="provisioningState"> Provisioning state of the public IP. </param>
+        /// <returns> A new <see cref="Models.HciVmPublicIPAddressProperties"/> instance for mocking. </returns>
+        public static HciVmPublicIPAddressProperties HciVmPublicIPAddressProperties(HciVmPublicIPAddressType? publicIPAddressVersion = default, ResourceIdentifier ipAllocationScope = default, string ipAddress = default, ResourceIdentifier ipResourceId = default, ResourceIdentifier natGatewayResourceId = default, HciVmProvisioningState? provisioningState = default)
+        {
+            return new HciVmPublicIPAddressProperties(
+                publicIPAddressVersion,
+                ipAllocationScope,
+                ipAddress,
+                ipResourceId is null ? default : new HciVmIPConfigurationArmReference(ipResourceId, null),
+                natGatewayResourceId is null ? default : new NatGatewayArmReference(natGatewayResourceId, null),
+                provisioningState,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for updating tags in PublicIPAddress resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmPublicIPAddressPatch"/> instance for mocking. </returns>
+        public static HciVmPublicIPAddressPatch HciVmPublicIPAddressPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmPublicIPAddressPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The NatGateway resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmNatGatewayData"/> instance for mocking. </returns>
+        public static HciVmNatGatewayData HciVmNatGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNatGatewayProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmNatGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                extendedLocation);
+        }
+
+        /// <summary> Nat Gateway resource properties. </summary>
+        /// <param name="publicIPAddresses"> List of public ip addresses that the gateway can use for NAT. </param>
+        /// <param name="subnets"> List of subnets associated with the nat gateway. These can only be vnet subnets and must be from the same vnet. </param>
+        /// <param name="inboundNatRules"> List of inbound NAT rules. InboundNATRules can only be set after the NAT Gateway has been associated with a vnet. </param>
+        /// <param name="provisioningState"> Provisioning state of the public IP. </param>
+        /// <param name="status"> The observed state of Nat Gateway. </param>
+        /// <returns> A new <see cref="Models.HciVmNatGatewayProperties"/> instance for mocking. </returns>
+        public static HciVmNatGatewayProperties HciVmNatGatewayProperties(IEnumerable<HciVmPublicIPAddressArmReference> publicIPAddresses = default, IEnumerable<HciVmVirtualNetworkSubnetArmReference> subnets = default, IEnumerable<HciVmInboundNatRule> inboundNatRules = default, HciVmProvisioningState? provisioningState = default, HciVmNatGatewayStatus status = default)
+        {
+            publicIPAddresses ??= new ChangeTrackingList<HciVmPublicIPAddressArmReference>();
+            subnets ??= new ChangeTrackingList<HciVmVirtualNetworkSubnetArmReference>();
+            inboundNatRules ??= new ChangeTrackingList<HciVmInboundNatRule>();
+
+            return new HciVmNatGatewayProperties(
+                publicIPAddresses.ToList(),
+                subnets.ToList(),
+                inboundNatRules.ToList(),
+                provisioningState,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Nat Gateway resource status. </summary>
+        /// <param name="errorCode"> NatGateway provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"> NatGateway provisioning status. </param>
+        /// <returns> A new <see cref="Models.HciVmNatGatewayStatus"/> instance for mocking. </returns>
+        public static HciVmNatGatewayStatus HciVmNatGatewayStatus(string errorCode = default, string errorMessage = default, HciVmNatGatewayStatusProvisioningStatus provisioningStatus = default)
+        {
+            return new HciVmNatGatewayStatus(errorCode, errorMessage, provisioningStatus, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Provisioning status of Nat Gateway . </summary>
+        /// <param name="operationId"> The ID of the operation performed on the nat gateway. </param>
+        /// <param name="status"> The status of the operation performed on the nat gateway [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciVmNatGatewayStatusProvisioningStatus"/> instance for mocking. </returns>
+        public static HciVmNatGatewayStatusProvisioningStatus HciVmNatGatewayStatusProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
+        {
+            return new HciVmNatGatewayStatusProvisioningStatus(operationId, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for updating tags in NatGateway resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmNatGatewayPatch"/> instance for mocking. </returns>
+        public static HciVmNatGatewayPatch HciVmNatGatewayPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmNatGatewayPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LoadBalancer resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmLoadBalancerData"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerData HciVmLoadBalancerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmLoadBalancerProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmLoadBalancerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                extendedLocation);
+        }
+
+        /// <summary> Load Balancer resource properties. </summary>
+        /// <param name="frontendIPConfigurations"> Frontend IPs for the loadbalancer. </param>
+        /// <param name="backendAddressPools"> backendAddressPools for the loadbalancer. </param>
+        /// <param name="loadBalancingRules"> load balancer rules. </param>
+        /// <param name="probes"> load balancer health probes. </param>
+        /// <param name="provisioningState"> Provisioning state of the Load Balancer. </param>
+        /// <param name="status"> observed state of the load balancer. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerProperties"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerProperties HciVmLoadBalancerProperties(IEnumerable<HciVmFrontendIPConfiguration> frontendIPConfigurations = default, IEnumerable<HciVmBackendAddressPool> backendAddressPools = default, IEnumerable<HciVmLoadBalancerRule> loadBalancingRules = default, IEnumerable<HciVmLoadBalancerHealthProbe> probes = default, HciVmProvisioningState? provisioningState = default, HciVmLoadBalancerStatus status = default)
+        {
+            frontendIPConfigurations ??= new ChangeTrackingList<HciVmFrontendIPConfiguration>();
+            backendAddressPools ??= new ChangeTrackingList<HciVmBackendAddressPool>();
+            loadBalancingRules ??= new ChangeTrackingList<HciVmLoadBalancerRule>();
+            probes ??= new ChangeTrackingList<HciVmLoadBalancerHealthProbe>();
+
+            return new HciVmLoadBalancerProperties(
+                frontendIPConfigurations.ToList(),
+                backendAddressPools.ToList(),
+                loadBalancingRules.ToList(),
+                probes.ToList(),
+                provisioningState,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="loadBalancerBackendAddresses"> List of backend addresses for the backend pool. </param>
+        /// <param name="virtualNetworkResourceId"> The Azure Resource ID for a Virtual Network. </param>
+        /// <param name="logicalNetworkId"> The Azure Resource ID for a Logical Network. </param>
+        /// <returns> A new <see cref="Models.HciVmBackendAddressPoolProperties"/> instance for mocking. </returns>
+        public static HciVmBackendAddressPoolProperties HciVmBackendAddressPoolProperties(IEnumerable<HciVmLoadBalancerBackendAddress> loadBalancerBackendAddresses = default, ResourceIdentifier virtualNetworkResourceId = default, ResourceIdentifier logicalNetworkId = default)
+        {
+            loadBalancerBackendAddresses ??= new ChangeTrackingList<HciVmLoadBalancerBackendAddress>();
+
+            return new HciVmBackendAddressPoolProperties(loadBalancerBackendAddresses.ToList(), virtualNetworkResourceId is null ? default : new VirtualNetworkArmReference(virtualNetworkResourceId, null), logicalNetworkId is null ? default : new HciVmLogicalNetworkArmReference(logicalNetworkId, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="adminState"> admin state - if set to false, the address is removed from the pool. </param>
+        /// <param name="ipAddress"> IP address of the backend target. Populated automatically from the referenced IP configuration. </param>
+        /// <param name="subnetResourceId"> The Azure Resource ID for a Virtual Network subnet. </param>
+        /// <param name="virtualNetworkResourceId"> The Azure Resource ID for a Virtual Network. </param>
+        /// <param name="logicalNetworkId"> The Azure Resource ID for a Logical Network. </param>
+        /// <param name="networkInterfaceIPResourceId"> The Azure Resource ID of an IPConfiguration resource. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerBackendAddressProperties"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerBackendAddressProperties HciVmLoadBalancerBackendAddressProperties(HciVmLoadBalancerBackendAddressAdminState? adminState = default, string ipAddress = default, ResourceIdentifier subnetResourceId = default, ResourceIdentifier virtualNetworkResourceId = default, ResourceIdentifier logicalNetworkId = default, ResourceIdentifier networkInterfaceIPResourceId = default)
+        {
+            return new HciVmLoadBalancerBackendAddressProperties(
+                adminState,
+                ipAddress,
+                subnetResourceId is null ? default : new HciVmVirtualNetworkSubnetArmReference(subnetResourceId, null),
+                virtualNetworkResourceId is null ? default : new VirtualNetworkArmReference(virtualNetworkResourceId, null),
+                logicalNetworkId is null ? default : new HciVmLogicalNetworkArmReference(logicalNetworkId, null),
+                networkInterfaceIPResourceId is null ? default : new HciVmIPConfigurationArmReference(networkInterfaceIPResourceId, null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The observed status of the virtual network. </summary>
+        /// <param name="errorCode"> LoadBalancer provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"> virtual network provisioning status. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerStatus"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerStatus HciVmLoadBalancerStatus(string errorCode = default, string errorMessage = default, HciVmLoadBalancerStatusProvisioningStatus provisioningStatus = default)
+        {
+            return new HciVmLoadBalancerStatus(errorCode, errorMessage, provisioningStatus, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Status of load balancer operations. </summary>
+        /// <param name="operationId"> The ID of the operation performed on the load balancer. </param>
+        /// <param name="status"> The status of the operation performed on the loadbalancer [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerStatusProvisioningStatus"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerStatusProvisioningStatus HciVmLoadBalancerStatusProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
+        {
+            return new HciVmLoadBalancerStatusProvisioningStatus(operationId, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for updating tags in LoadBalancer resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerPatch"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerPatch HciVmLoadBalancerPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmLoadBalancerPatch(tags, additionalBinaryDataProperties: null);
         }
     }
 }

@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("dhcpOptions"u8);
                 writer.WriteObjectValue(DhcpOptions, options);
             }
+            if (Optional.IsDefined(FabricNetworkConfiguration))
+            {
+                writer.WritePropertyName("fabricNetworkConfiguration"u8);
+                writer.WriteObjectValue(FabricNetworkConfiguration, options);
+            }
             if (Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
@@ -112,6 +117,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             HciVmLogicalNetworkDhcpOptions dhcpOptions = default;
+            ManagedNetworkFabricArmReference fabricNetworkConfiguration = default;
             IList<HciVmNetworkingSubnet> subnets = default;
             HciVmProvisioningState? provisioningState = default;
             string vmSwitchName = default;
@@ -127,6 +133,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                         continue;
                     }
                     dhcpOptions = HciVmLogicalNetworkDhcpOptions.DeserializeHciVmLogicalNetworkDhcpOptions(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("fabricNetworkConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricNetworkConfiguration = ManagedNetworkFabricArmReference.DeserializeManagedNetworkFabricArmReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("subnets"u8))
@@ -182,6 +197,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             return new HciVmLogicalNetworkProperties(
                 dhcpOptions,
+                fabricNetworkConfiguration,
                 subnets ?? new ChangeTrackingList<HciVmNetworkingSubnet>(),
                 provisioningState,
                 vmSwitchName,

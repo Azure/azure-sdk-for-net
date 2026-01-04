@@ -146,6 +146,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
+        /// <summary> Provisioning state of the subnet resource. </summary>
+        public HciVmProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The Azure Resource ID for a Network Security Group. </summary>
         public ResourceIdentifier NetworkSecurityGroupId
         {

@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         private const string V1Value = "V1";
         /// <summary> Generation 2 (V2) hypervisor. </summary>
         private const string V2Value = "V2";
+        /// <summary> Not applicable/determined by platform. </summary>
+        private const string NAValue = "NA";
 
         /// <summary> Initializes a new instance of <see cref="HciVmHyperVGeneration"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Generation 2 (V2) hypervisor. </summary>
         public static HciVmHyperVGeneration V2 { get; } = new HciVmHyperVGeneration(V2Value);
+
+        /// <summary> Not applicable/determined by platform. </summary>
+        public static HciVmHyperVGeneration NA { get; } = new HciVmHyperVGeneration(NAValue);
 
         /// <summary> Determines if two <see cref="HciVmHyperVGeneration"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

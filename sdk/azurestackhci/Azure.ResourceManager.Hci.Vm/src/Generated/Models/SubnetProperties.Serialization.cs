@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("vlan"u8);
                 writer.WriteNumberValue(Vlan.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -144,6 +149,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             HciVmNetworkingRouteTable routeTable = default;
             IList<HciVmNetworkingIPPool> ipPools = default;
             int? vlan = default;
+            HciVmProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -237,6 +243,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     vlan = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new HciVmProvisioningState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -251,6 +266,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 routeTable,
                 ipPools ?? new ChangeTrackingList<HciVmNetworkingIPPool>(),
                 vlan,
+                provisioningState,
                 additionalBinaryDataProperties);
         }
 
