@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> The observed state of gallery images. </summary>
     public partial class HciVmGalleryImageStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageStatus"/>. </summary>
         internal HciVmGalleryImageStatus()
@@ -56,32 +27,39 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningStatus"> provisioning status of the gallery image. </param>
         /// <param name="downloadStatus"> The download status of the gallery image. </param>
         /// <param name="progressPercentage"> The progress of the operation in percentage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmGalleryImageStatus(string errorCode, string errorMessage, HciVmGalleryImageProvisioningStatus provisioningStatus, GalleryImageStatusDownloadStatus downloadStatus, long? progressPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmGalleryImageStatus(string errorCode, string errorMessage, HciVmGalleryImageProvisioningStatus provisioningStatus, GalleryImageStatusDownloadStatus downloadStatus, long? progressPercentage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
             ProvisioningStatus = provisioningStatus;
             DownloadStatus = downloadStatus;
             ProgressPercentage = progressPercentage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> GalleryImage provisioning error code. </summary>
         public string ErrorCode { get; }
+
         /// <summary> Descriptive error message. </summary>
         public string ErrorMessage { get; }
+
         /// <summary> provisioning status of the gallery image. </summary>
         public HciVmGalleryImageProvisioningStatus ProvisioningStatus { get; }
+
         /// <summary> The download status of the gallery image. </summary>
         internal GalleryImageStatusDownloadStatus DownloadStatus { get; }
-        /// <summary> The downloaded sized of the image in MB. </summary>
-        public long? DownloadSizeInMB
-        {
-            get => DownloadStatus?.DownloadSizeInMB;
-        }
 
         /// <summary> The progress of the operation in percentage. </summary>
         public long? ProgressPercentage { get; }
+
+        /// <summary> The downloaded sized of the image in MB. </summary>
+        public long? DownloadSizeInMB
+        {
+            get
+            {
+                return DownloadStatus.DownloadSizeInMB;
+            }
+        }
     }
 }

@@ -6,46 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableHciVmArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHciVmArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHciVmArmClient for mocking. </summary>
         protected MockableHciVmArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHciVmArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHciVmArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHciVmArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableHciVmArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets an object representing a HciVmInstanceResource along with the instance operations that can be performed on it in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
-        public virtual HciVmInstanceResource GetHciVmInstance(ResourceIdentifier scope)
-        {
-            return new HciVmInstanceResource(Client, scope.AppendProviderResource("Microsoft.AzureStackHCI", "virtualMachineInstances", "default"));
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmGalleryImageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="HciVmGalleryImageResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmGalleryImageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmGalleryImageResource"/> object. </returns>
         public virtual HciVmGalleryImageResource GetHciVmGalleryImageResource(ResourceIdentifier id)
@@ -54,10 +35,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmGalleryImageResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmLogicalNetworkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmLogicalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HciVmLogicalNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmLogicalNetworkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmLogicalNetworkResource"/> object. </returns>
         public virtual HciVmLogicalNetworkResource GetHciVmLogicalNetworkResource(ResourceIdentifier id)
@@ -66,10 +44,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmLogicalNetworkResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmMarketplaceGalleryImageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmMarketplaceGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="HciVmMarketplaceGalleryImageResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmMarketplaceGalleryImageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmMarketplaceGalleryImageResource"/> object. </returns>
         public virtual HciVmMarketplaceGalleryImageResource GetHciVmMarketplaceGalleryImageResource(ResourceIdentifier id)
@@ -78,10 +53,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmMarketplaceGalleryImageResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmNetworkInterfaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmNetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="HciVmNetworkInterfaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmNetworkInterfaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmNetworkInterfaceResource"/> object. </returns>
         public virtual HciVmNetworkInterfaceResource GetHciVmNetworkInterfaceResource(ResourceIdentifier id)
@@ -90,10 +62,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmNetworkInterfaceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmNetworkSecurityGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmNetworkSecurityGroupResource.CreateResourceIdentifier" /> to create a <see cref="HciVmNetworkSecurityGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmNetworkSecurityGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmNetworkSecurityGroupResource"/> object. </returns>
         public virtual HciVmNetworkSecurityGroupResource GetHciVmNetworkSecurityGroupResource(ResourceIdentifier id)
@@ -102,10 +71,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmNetworkSecurityGroupResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmSecurityRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmSecurityRuleResource.CreateResourceIdentifier" /> to create a <see cref="HciVmSecurityRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmSecurityRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmSecurityRuleResource"/> object. </returns>
         public virtual HciVmSecurityRuleResource GetHciVmSecurityRuleResource(ResourceIdentifier id)
@@ -114,10 +80,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmSecurityRuleResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmStorageContainerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="HciVmStorageContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmStorageContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmStorageContainerResource"/> object. </returns>
         public virtual HciVmStorageContainerResource GetHciVmStorageContainerResource(ResourceIdentifier id)
@@ -126,10 +89,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmStorageContainerResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmVirtualHardDiskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmVirtualHardDiskResource.CreateResourceIdentifier" /> to create a <see cref="HciVmVirtualHardDiskResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmVirtualHardDiskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmVirtualHardDiskResource"/> object. </returns>
         public virtual HciVmVirtualHardDiskResource GetHciVmVirtualHardDiskResource(ResourceIdentifier id)
@@ -138,10 +98,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmVirtualHardDiskResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmInstanceResource.CreateResourceIdentifier" /> to create a <see cref="HciVmInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
         public virtual HciVmInstanceResource GetHciVmInstanceResource(ResourceIdentifier id)
@@ -150,10 +107,15 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmInstanceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmHybridIdentityMetadataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmHybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HciVmHybridIdentityMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
+        public virtual HciVmInstanceResource GetHciVmInstance(ResourceIdentifier scope)
+        {
+            return new HciVmInstanceResource(Client, scope.AppendProviderResource("Microsoft.AzureStackHCI", "virtualMachineInstances", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmHybridIdentityMetadataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmHybridIdentityMetadataResource"/> object. </returns>
         public virtual HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadataResource(ResourceIdentifier id)
@@ -162,10 +124,15 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmHybridIdentityMetadataResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmAttestationStatusResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmAttestationStatusResource.CreateResourceIdentifier" /> to create a <see cref="HciVmAttestationStatusResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmHybridIdentityMetadataResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="HciVmHybridIdentityMetadataResource"/> object. </returns>
+        public virtual HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadata(ResourceIdentifier scope)
+        {
+            return new HciVmHybridIdentityMetadataResource(Client, scope.AppendProviderResource("Microsoft.AzureStackHCI", "virtualMachineInstances", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmAttestationStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmAttestationStatusResource"/> object. </returns>
         public virtual HciVmAttestationStatusResource GetHciVmAttestationStatusResource(ResourceIdentifier id)
@@ -174,16 +141,29 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmAttestationStatusResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HciVmGuestAgentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciVmGuestAgentResource.CreateResourceIdentifier" /> to create a <see cref="HciVmGuestAgentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmAttestationStatusResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="HciVmAttestationStatusResource"/> object. </returns>
+        public virtual HciVmAttestationStatusResource GetHciVmAttestationStatus(ResourceIdentifier scope)
+        {
+            return new HciVmAttestationStatusResource(Client, scope.AppendProviderResource("Microsoft.AzureStackHCI", "virtualMachineInstances", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmGuestAgentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmGuestAgentResource"/> object. </returns>
         public virtual HciVmGuestAgentResource GetHciVmGuestAgentResource(ResourceIdentifier id)
         {
             HciVmGuestAgentResource.ValidateResourceId(id);
             return new HciVmGuestAgentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmGuestAgentResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="HciVmGuestAgentResource"/> object. </returns>
+        public virtual HciVmGuestAgentResource GetHciVmGuestAgent(ResourceIdentifier scope)
+        {
+            return new HciVmGuestAgentResource(Client, scope.AppendProviderResource("Microsoft.AzureStackHCI", "virtualMachineInstances", "default"));
         }
     }
 }
