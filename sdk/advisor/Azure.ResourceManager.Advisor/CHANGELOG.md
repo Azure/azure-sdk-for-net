@@ -4,7 +4,7 @@
 
 ### Features Added
 
-Upgraded api-verion to 2025-05-01-preview.
+Upgraded api-version to 2025-05-01-preview.
 
 ### Breaking Changes
 
