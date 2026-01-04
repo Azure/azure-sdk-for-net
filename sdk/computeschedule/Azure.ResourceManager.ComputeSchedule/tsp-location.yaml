@@ -1,4 +1,4 @@
 directory: specification/computeschedule/ComputeSchedule.Management
-commit: 46c51b03d99b113ecc3b38883e3cb2d395fe94a4
+commit: 3e5a767cd854ecb2559595228f8b34256cb99b46
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
