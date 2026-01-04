@@ -43,6 +43,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="something"> something. </param>
         /// <param name="boolValue"> boolean value. </param>
         /// <param name="floatValue"> float value. </param>
+        /// <param name="bytesValue"></param>
         /// <param name="doubleValue"> double value. </param>
         /// <param name="prop1"></param>
         /// <param name="prop2"></param>
@@ -51,12 +52,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, ETag? eTag, WritableSubResource writableSubResourceProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, BinaryData bytesValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, ETag? eTag, WritableSubResource writableSubResourceProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             Something = something;
             BoolValue = boolValue;
             FloatValue = floatValue;
+            BytesValue = bytesValue;
             DoubleValue = doubleValue;
             Prop1 = prop1;
             Prop2 = prop2;
@@ -82,6 +84,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> float value. </summary>
         [WirePath("floatValue")]
         public float? FloatValue { get; set; }
+
+        /// <summary>
+        /// Gets or sets the BytesValue.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        [WirePath("bytesValue")]
+        public BinaryData BytesValue { get; set; }
 
         /// <summary> double value. </summary>
         [WirePath("doubleValue")]

@@ -62,6 +62,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("floatValue"u8);
                 writer.WriteNumberValue(FloatValue.Value);
             }
+            if (Optional.IsDefined(BytesValue))
+            {
+                writer.WritePropertyName("bytesValue"u8);
+                writer.WriteBase64StringValue(BytesValue.ToArray(), "D");
+            }
             if (Optional.IsDefined(DoubleValue))
             {
                 writer.WritePropertyName("doubleValue"u8);
@@ -152,6 +157,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             ManagedServiceIdentity something = default;
             bool? boolValue = default;
             float? floatValue = default;
+            BinaryData bytesValue = default;
             double? doubleValue = default;
             IList<string> prop1 = default;
             IList<int> prop2 = default;
@@ -192,6 +198,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                         continue;
                     }
                     floatValue = prop.Value.GetSingle();
+                    continue;
+                }
+                if (prop.NameEquals("bytesValue"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bytesValue = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (prop.NameEquals("doubleValue"u8))
@@ -276,6 +291,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 something,
                 boolValue,
                 floatValue,
+                bytesValue,
                 doubleValue,
                 prop1,
                 prop2 ?? new ChangeTrackingList<int>(),

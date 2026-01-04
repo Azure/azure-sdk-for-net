@@ -139,6 +139,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
+        /// <summary> Gets or sets the BytesValue. </summary>
+        [WirePath("properties.bytesValue")]
+        public BinaryData BytesValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BytesValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.BytesValue = value;
+            }
+        }
+
         /// <summary> double value. </summary>
         [WirePath("properties.doubleValue")]
         public double? DoubleValue
