@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
+    /// <summary></summary>
     public partial class ScheduledActionResource : IJsonModel<ScheduledActionData>
     {
-        private static ScheduledActionData s_dataDeserializationInstance;
-        private static ScheduledActionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ScheduledActionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ScheduledActionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ScheduledActionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScheduledActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScheduledActionData>)Data).Write(writer, options);
 
-        ScheduledActionData IJsonModel<ScheduledActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScheduledActionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduledActionData IJsonModel<ScheduledActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ScheduledActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScheduledActionData>(Data, options, AzureResourceManagerComputeScheduleContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ScheduledActionData IPersistableModel<ScheduledActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScheduledActionData>(data, options, AzureResourceManagerComputeScheduleContext.Default);
 
-        string IPersistableModel<ScheduledActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScheduledActionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScheduledActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
