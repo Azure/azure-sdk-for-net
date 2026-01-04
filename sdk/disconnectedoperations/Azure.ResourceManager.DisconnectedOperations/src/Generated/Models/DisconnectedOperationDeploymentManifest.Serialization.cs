@@ -9,14 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DisconnectedOperations;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Models
 {
-    public partial class DisconnectedOperationDeploymentManifest : IUtf8JsonSerializable, IJsonModel<DisconnectedOperationDeploymentManifest>
+    /// <summary> The disconnected operation manifest. </summary>
+    public partial class DisconnectedOperationDeploymentManifest : IJsonModel<DisconnectedOperationDeploymentManifest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DisconnectedOperationDeploymentManifest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DisconnectedOperationDeploymentManifest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +31,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationDeploymentManifest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationDeploymentManifest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DisconnectedOperationDeploymentManifest)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W")
             {
                 writer.WritePropertyName("resourceId"u8);
@@ -69,15 +71,15 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +88,27 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             }
         }
 
-        DisconnectedOperationDeploymentManifest IJsonModel<DisconnectedOperationDeploymentManifest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DisconnectedOperationDeploymentManifest IJsonModel<DisconnectedOperationDeploymentManifest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DisconnectedOperationDeploymentManifest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationDeploymentManifest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationDeploymentManifest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DisconnectedOperationDeploymentManifest)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDisconnectedOperationDeploymentManifest(document.RootElement, options);
         }
 
-        internal static DisconnectedOperationDeploymentManifest DeserializeDisconnectedOperationDeploymentManifest(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DisconnectedOperationDeploymentManifest DeserializeDisconnectedOperationDeploymentManifest(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,51 +120,49 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             DisconnectedOperationsBillingModel billingModel = default;
             DisconnectedOperationsConnectionIntent connectionIntent = default;
             string cloud = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceName"u8))
+                if (prop.NameEquals("resourceName"u8))
                 {
-                    resourceName = property.Value.GetString();
+                    resourceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stampId"u8))
+                if (prop.NameEquals("stampId"u8))
                 {
-                    stampId = property.Value.GetString();
+                    stampId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("billingModel"u8))
+                if (prop.NameEquals("billingModel"u8))
                 {
-                    billingModel = new DisconnectedOperationsBillingModel(property.Value.GetString());
+                    billingModel = new DisconnectedOperationsBillingModel(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("connectionIntent"u8))
+                if (prop.NameEquals("connectionIntent"u8))
                 {
-                    connectionIntent = new DisconnectedOperationsConnectionIntent(property.Value.GetString());
+                    connectionIntent = new DisconnectedOperationsConnectionIntent(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cloud"u8))
+                if (prop.NameEquals("cloud"u8))
                 {
-                    cloud = property.Value.GetString();
+                    cloud = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DisconnectedOperationDeploymentManifest(
                 resourceId,
                 resourceName,
@@ -166,13 +171,16 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 billingModel,
                 connectionIntent,
                 cloud,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DisconnectedOperationDeploymentManifest>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationDeploymentManifest>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DisconnectedOperationDeploymentManifest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationDeploymentManifest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -182,15 +190,20 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             }
         }
 
-        DisconnectedOperationDeploymentManifest IPersistableModel<DisconnectedOperationDeploymentManifest>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationDeploymentManifest>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DisconnectedOperationDeploymentManifest IPersistableModel<DisconnectedOperationDeploymentManifest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DisconnectedOperationDeploymentManifest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationDeploymentManifest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDisconnectedOperationDeploymentManifest(document.RootElement, options);
                     }
                 default:
@@ -198,6 +211,14 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DisconnectedOperationDeploymentManifest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DisconnectedOperationDeploymentManifest"/> from. </param>
+        internal static DisconnectedOperationDeploymentManifest FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDisconnectedOperationDeploymentManifest(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }
