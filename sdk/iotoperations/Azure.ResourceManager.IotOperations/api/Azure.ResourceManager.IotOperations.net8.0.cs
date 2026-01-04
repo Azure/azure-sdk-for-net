@@ -3190,7 +3190,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public string ServiceName { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is deprecated. Please use ServiceType of type BrokerListenerServiceType instead.")]
-        public Azure.ResourceManager.IotOperations.Models.BrokerListenerServiceType? ServiceType { get { throw null; } set { } }
+        public Azure.ResourceManager.IotOperations.Models.BlockerListenerServiceType? ServiceType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerListenerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerListenerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

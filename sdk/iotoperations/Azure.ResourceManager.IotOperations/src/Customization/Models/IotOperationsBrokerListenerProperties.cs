@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Kubernetes Service type of this listener. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated. Please use ServiceType of type BrokerListenerServiceType instead.")]
-        public BrokerListenerServiceType? ServiceType { get => ListenerServiceType; set => ListenerServiceType = value; }
+        public BlockerListenerServiceType? ServiceType { get => ListenerServiceType?.ToString(); set => ListenerServiceType = value.ToString(); }
     }
 }
