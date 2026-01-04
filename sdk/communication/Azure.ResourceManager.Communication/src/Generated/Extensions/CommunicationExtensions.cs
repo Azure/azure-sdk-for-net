@@ -110,6 +110,63 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="CommunicationSmtpUsernameResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CommunicationSmtpUsernameResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationSmtpUsernameResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetCommunicationSmtpUsernameResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CommunicationSmtpUsernameResource"/> object. </returns>
+        public static CommunicationSmtpUsernameResource GetCommunicationSmtpUsernameResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCommunicationArmClient(client).GetCommunicationSmtpUsernameResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EmailSuppressionListResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EmailSuppressionListResource.CreateResourceIdentifier" /> to create an <see cref="EmailSuppressionListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetEmailSuppressionListResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EmailSuppressionListResource"/> object. </returns>
+        public static EmailSuppressionListResource GetEmailSuppressionListResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCommunicationArmClient(client).GetEmailSuppressionListResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EmailSuppressionListAddressResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EmailSuppressionListAddressResource.CreateResourceIdentifier" /> to create an <see cref="EmailSuppressionListAddressResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetEmailSuppressionListAddressResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EmailSuppressionListAddressResource"/> object. </returns>
+        public static EmailSuppressionListAddressResource GetEmailSuppressionListAddressResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCommunicationArmClient(client).GetEmailSuppressionListAddressResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of CommunicationServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -139,7 +196,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,7 +234,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,7 +289,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -270,7 +327,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -308,7 +365,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,7 +401,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -380,7 +437,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -416,7 +473,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -452,7 +509,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -488,7 +545,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -524,7 +581,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -560,7 +617,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

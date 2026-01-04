@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class CertManagerCertConfig : IUtf8JsonSerializable, IJsonModel<CertManagerCertConfig>
+    /// <summary> Cert Manager Cert properties. </summary>
+    public partial class CertManagerCertConfig : IJsonModel<CertManagerCertConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertManagerCertConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CertManagerCertConfig"/> for deserialization. </summary>
+        internal CertManagerCertConfig()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CertManagerCertConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,27 +34,26 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CertManagerCertConfig)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("duration"u8);
             writer.WriteStringValue(Duration);
             writer.WritePropertyName("renewBefore"u8);
             writer.WriteStringValue(RenewBefore);
             writer.WritePropertyName("privateKey"u8);
             writer.WriteObjectValue(PrivateKey, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -57,22 +62,27 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        CertManagerCertConfig IJsonModel<CertManagerCertConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CertManagerCertConfig IJsonModel<CertManagerCertConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CertManagerCertConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CertManagerCertConfig)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCertManagerCertConfig(document.RootElement, options);
         }
 
-        internal static CertManagerCertConfig DeserializeCertManagerCertConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CertManagerCertConfig DeserializeCertManagerCertConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,38 +90,39 @@ namespace Azure.ResourceManager.IotOperations.Models
             string duration = default;
             string renewBefore = default;
             CertManagerPrivateKey privateKey = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("duration"u8))
+                if (prop.NameEquals("duration"u8))
                 {
-                    duration = property.Value.GetString();
+                    duration = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("renewBefore"u8))
+                if (prop.NameEquals("renewBefore"u8))
                 {
-                    renewBefore = property.Value.GetString();
+                    renewBefore = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateKey"u8))
+                if (prop.NameEquals("privateKey"u8))
                 {
-                    privateKey = CertManagerPrivateKey.DeserializeCertManagerPrivateKey(property.Value, options);
+                    privateKey = CertManagerPrivateKey.DeserializeCertManagerPrivateKey(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CertManagerCertConfig(duration, renewBefore, privateKey, serializedAdditionalRawData);
+            return new CertManagerCertConfig(duration, renewBefore, privateKey, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<CertManagerCertConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CertManagerCertConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -121,15 +132,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        CertManagerCertConfig IPersistableModel<CertManagerCertConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CertManagerCertConfig IPersistableModel<CertManagerCertConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CertManagerCertConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCertManagerCertConfig(document.RootElement, options);
                     }
                 default:
@@ -137,6 +153,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CertManagerCertConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
