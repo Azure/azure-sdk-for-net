@@ -31,10 +31,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <exception cref="ArgumentNullException"> <paramref name="propertyLeft"/>, <paramref name="anotherPropertyLeft"/>, <paramref name="innerProp2"/>, <paramref name="middleProp2"/>, <paramref name="prop1"/> or <paramref name="discriminatorProperty"/> is null. </exception>
         public BarSettingsResourceData(string propertyLeft, string anotherPropertyLeft, string innerProp2, int middleProp1, IDictionary<string, string> middleProp2, IEnumerable<string> prop1, int prop2, LimitJsonObject discriminatorProperty)
         {
+            Argument.AssertNotNull(propertyLeft, nameof(propertyLeft));
             Argument.AssertNotNull(anotherPropertyLeft, nameof(anotherPropertyLeft));
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
             Argument.AssertNotNull(middleProp2, nameof(middleProp2));
             Argument.AssertNotNull(prop1, nameof(prop1));
+            Argument.AssertNotNull(discriminatorProperty, nameof(discriminatorProperty));
 
             StringArray = new ChangeTrackingList<string>();
             Property = new BarQuotaProperties(propertyLeft);
@@ -241,10 +243,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             get
             {
                 return OptionalFlattenProperty is null ? default : OptionalFlattenProperty.RandomCollectionProp;
-            }
-            set
-            {
-                OptionalFlattenProperty = new OptionalFlattenPropertyType(value);
             }
         }
     }

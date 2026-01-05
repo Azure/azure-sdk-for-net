@@ -114,7 +114,7 @@ namespace Azure.AI.ContentUnderstanding
                     {
                         continue;
                     }
-                    url = new Uri(prop.Value.GetString());
+                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("data"u8))

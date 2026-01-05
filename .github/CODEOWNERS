@@ -359,10 +359,10 @@
 # ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @vimauro @ryazhang-microsoft @msftsettiy @weirenlai @Azure/azure-sdk-write-acl
+/sdk/confidentialledger/                                           @christothes @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @ryazhang-microsoft @msftsettiy @weirenlai @Azure/azure-sdk-write-acl
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @vimauro @ryazhang-microsoft @msftsettiy @weirenlai @Azure/azure-sdk-write-acl
+# ServiceOwners:                                                   @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @ryazhang-microsoft @msftsettiy @weirenlai @Azure/azure-sdk-write-acl
 
 # ServiceLabel: %Connected Kubernetes
 # ServiceOwners:                                                   @akashkeshari
@@ -747,6 +747,12 @@
 # ServiceLabel: %OpenAI
 # ServiceOwners:                                                   @jpalvarezl @trrwilson
 
+# PRLabel: %Planetary Computer
+/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @chahibi @mandarinamdar
+
+# ServiceLabel: %Planetary Computer
+# ServiceOwners:                                                   @chahibi @mandarinamdar
+
 # ServiceLabel: %Policy
 # ServiceOwners:                                                   @aperezcloud @kenieva
 
@@ -1005,6 +1011,12 @@
 # ServiceLabel: %Elastic %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
+# PRLabel: %File Shares
+/sdk/fileshares/Azure.ResourceManager.FileShares/                  @ankushbindlish2
+
+# ServiceLabel: %File Shares %Mgmt
+# ServiceOwners:                                                   @ankushbindlish2
+
 # PRLabel: %Grafana
 /sdk/grafana/Azure.ResourceManager.*/                              @qingquanzhao
 
@@ -1108,7 +1120,10 @@
 /sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.ResourceManager.*/                    @ArcturusZhang @ArthurMa1978
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @chahibi @mandarinamdar
+
+# ServiceLabel: %Planetary Computer %Mgmt
+# ServiceOwners:                                                   @chahibi @mandarinamdar
 
 # PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @ArthurMa1978 @ArcturusZhang

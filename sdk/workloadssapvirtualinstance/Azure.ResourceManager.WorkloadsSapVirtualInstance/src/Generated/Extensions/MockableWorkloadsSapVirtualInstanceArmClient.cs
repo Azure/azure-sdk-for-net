@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableWorkloadsSapVirtualInstanceArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableWorkloadsSapVirtualInstanceArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableWorkloadsSapVirtualInstanceArmClient for mocking. </summary>
         protected MockableWorkloadsSapVirtualInstanceArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableWorkloadsSapVirtualInstanceArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableWorkloadsSapVirtualInstanceArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableWorkloadsSapVirtualInstanceArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableWorkloadsSapVirtualInstanceArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SapVirtualInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapVirtualInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapVirtualInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="SapVirtualInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SapVirtualInstanceResource"/> object. </returns>
         public virtual SapVirtualInstanceResource GetSapVirtualInstanceResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             return new SapVirtualInstanceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SapCentralServerInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapCentralServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapCentralServerInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="SapCentralServerInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SapCentralServerInstanceResource"/> object. </returns>
         public virtual SapCentralServerInstanceResource GetSapCentralServerInstanceResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             return new SapCentralServerInstanceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SapDatabaseInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapDatabaseInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapDatabaseInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="SapDatabaseInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SapDatabaseInstanceResource"/> object. </returns>
         public virtual SapDatabaseInstanceResource GetSapDatabaseInstanceResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             return new SapDatabaseInstanceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SapApplicationServerInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapApplicationServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapApplicationServerInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="SapApplicationServerInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SapApplicationServerInstanceResource"/> object. </returns>
         public virtual SapApplicationServerInstanceResource GetSapApplicationServerInstanceResource(ResourceIdentifier id)

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.IotOperations.Models
     internal readonly partial struct AkriConnectorTemplateAllocationPolicy : IEquatable<AkriConnectorTemplateAllocationPolicy>
     {
         private readonly string _value;
+        /// <summary> Bucketized allocation policy. </summary>
+        private const string BucketizedValue = "Bucketized";
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateAllocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AkriConnectorTemplateAllocationPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BucketizedValue = "Bucketized";
+            _value = value;
+        }
 
         /// <summary> Bucketized allocation policy. </summary>
         public static AkriConnectorTemplateAllocationPolicy Bucketized { get; } = new AkriConnectorTemplateAllocationPolicy(BucketizedValue);
+
         /// <summary> Determines if two <see cref="AkriConnectorTemplateAllocationPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AkriConnectorTemplateAllocationPolicy left, AkriConnectorTemplateAllocationPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AkriConnectorTemplateAllocationPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AkriConnectorTemplateAllocationPolicy left, AkriConnectorTemplateAllocationPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AkriConnectorTemplateAllocationPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AkriConnectorTemplateAllocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AkriConnectorTemplateAllocationPolicy(string value) => new AkriConnectorTemplateAllocationPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AkriConnectorTemplateAllocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AkriConnectorTemplateAllocationPolicy?(string value) => value == null ? null : new AkriConnectorTemplateAllocationPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AkriConnectorTemplateAllocationPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AkriConnectorTemplateAllocationPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

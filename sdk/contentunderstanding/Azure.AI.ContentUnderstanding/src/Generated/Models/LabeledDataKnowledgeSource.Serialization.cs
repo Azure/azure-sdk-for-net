@@ -89,7 +89,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("containerUrl"u8))
                 {
-                    containerUrl = new Uri(prop.Value.GetString());
+                    containerUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("prefix"u8))

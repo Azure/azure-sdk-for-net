@@ -7,55 +7,27 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The information about notifications to be send to about upcoming operations. </summary>
     public partial class NotificationSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationSettings"/>. </summary>
         /// <param name="destination"> Where the notification should be sent. For email, it should follow email format. </param>
         /// <param name="type"> Type of notification to be sent. </param>
         /// <param name="language"> The language the notification should be sent on. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="destination"/> is null. </exception>
-        public NotificationSettings(string destination, NotificationType type, NotificationLanguage language)
+        public NotificationSettings(string destination, NotificationType @type, NotificationLanguage language)
         {
             Argument.AssertNotNull(destination, nameof(destination));
 
             Destination = destination;
-            Type = type;
+            Type = @type;
             Language = language;
         }
 
@@ -64,27 +36,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="type"> Type of notification to be sent. </param>
         /// <param name="language"> The language the notification should be sent on. </param>
         /// <param name="isDisabled"> Tells if the notification is enabled or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationSettings(string destination, NotificationType type, NotificationLanguage language, bool? isDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationSettings(string destination, NotificationType @type, NotificationLanguage language, bool? isDisabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Destination = destination;
-            Type = type;
+            Type = @type;
             Language = language;
             IsDisabled = isDisabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NotificationSettings"/> for deserialization. </summary>
-        internal NotificationSettings()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Where the notification should be sent. For email, it should follow email format. </summary>
         public string Destination { get; set; }
+
         /// <summary> Type of notification to be sent. </summary>
         public NotificationType Type { get; set; }
+
         /// <summary> The language the notification should be sent on. </summary>
         public NotificationLanguage Language { get; set; }
+
         /// <summary> Tells if the notification is enabled or not. </summary>
         public bool? IsDisabled { get; set; }
     }

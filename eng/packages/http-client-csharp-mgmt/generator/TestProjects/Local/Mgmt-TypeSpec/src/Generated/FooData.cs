@@ -33,7 +33,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(prop1, nameof(prop1));
             Argument.AssertNotNull(nestedPropertyProperties, nameof(nestedPropertyProperties));
 
-            Properties = new FooProperties(something, prop1, new NestedFooModel(nestedPropertyProperties, null));
+            Properties = new FooProperties(something, prop1, nestedPropertyProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
@@ -239,21 +239,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Gets or sets the FlattenedProperty. </summary>
+        /// <summary> Gets the FlattenedProperty. </summary>
         [WirePath("properties.optionalProperty.flattenedProperty")]
-        public string FlattenedProperty
+        public IList<string> FlattenedProperty
         {
             get
-            {
-                return Properties is null ? default : Properties.FlattenedProperty;
-            }
-            set
             {
                 if (Properties is null)
                 {
                     Properties = new FooProperties();
                 }
-                Properties.FlattenedProperty = value;
+                return Properties.FlattenedProperty;
             }
         }
     }
