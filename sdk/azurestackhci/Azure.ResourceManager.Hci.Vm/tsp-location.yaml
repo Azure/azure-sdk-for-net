@@ -1,4 +1,4 @@
 directory: specification/azurestackhci/AzureStackHCI.StackHCIVM.Management
-commit: 9bae8f5e345eb3118ad14f0d3a0c836d357e50cf
+commit: 7f97f2cb2d32350cee3d268d7b36ff58365440b2
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
