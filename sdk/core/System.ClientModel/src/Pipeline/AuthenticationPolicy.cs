@@ -37,7 +37,7 @@ public abstract class AuthenticationPolicy : PipelinePolicy
         {
             GetTokenOptions options = new GetTokenOptions(new Dictionary<string, object>
             {
-                { GetTokenOptions.ScopesPropertyName, scope }
+                { GetTokenOptions.ScopesPropertyName, new string[] { scope } }
             });
             apiKey = apiKeyProvider.GetToken(options, default).TokenValue;
         }

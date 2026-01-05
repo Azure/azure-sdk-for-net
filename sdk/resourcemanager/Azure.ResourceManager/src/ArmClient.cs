@@ -90,21 +90,6 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArmClient"/> class.
-        /// </summary>
-        /// <param name="clientConnection">The <see cref="ClientConnection"/> to construct the client from.</param>
-        /// <param name="configureOptions">Optional callback to confiure the <see cref="ArmClientOptions"/>.</param>
-#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        public ArmClient(ClientConnection clientConnection, Action<ArmClientOptions> configureOptions = default)
-#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-            : this(
-                  (TokenCredential)clientConnection.Credential,
-                  clientConnection.Configuration["DefaultSubscriptionId"],
-                  ArmClientOptions.Create(clientConnection, configureOptions))
-        {
-        }
-
-        /// <summary>
         /// .
         /// </summary>
         /// <param name="settings"></param>

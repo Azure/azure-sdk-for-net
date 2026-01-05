@@ -84,20 +84,6 @@ namespace Azure.ResourceManager
             }
         }
 
-        internal static ArmClientOptions Create(ClientConnection clientConnection, Action<ArmClientOptions> configureOptions = default)
-        {
-            ArmClientOptions options = new();
-            if (clientConnection.Configuration is not null)
-            {
-                if (clientConnection.Configuration.GetSection("Environment").Exists())
-                {
-                    options.Environment = new ArmEnvironment(new Uri(clientConnection.Configuration["Environment:Endpoint"]), clientConnection.Configuration["Environment:Audience"]);
-                }
-            }
-            configureOptions?.Invoke(options);
-            return options;
-        }
-
         internal ArmClientOptions(IConfigurationSection section)
         {
             if (section is null)

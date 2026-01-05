@@ -10,10 +10,7 @@ using Microsoft.Extensions.Primitives;
 
 namespace Azure.Identity
 {
-    /// <summary>
-    /// .
-    /// </summary>
-    public class ConfigurableCredential : TokenCredential
+    internal class ConfigurableCredential : TokenCredential
     {
         private TokenCredential _tokenCredential;
         private AccessToken _apiKeyToken;
@@ -21,18 +18,11 @@ namespace Azure.Identity
         private IChangeToken _changeToken;
         private readonly IConfigurationSection _config;
 
-        /// <summary>
-        /// .
-        /// </summary>
         public ConfigurableCredential()
             : this(new DefaultAzureCredentialOptions())
         {
         }
 
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="configurationSection"></param>
         public ConfigurableCredential(IConfigurationSection configurationSection)
             : this(new DefaultAzureCredentialOptions(configurationSection.GetSection("Credential")))
         {
@@ -42,7 +32,7 @@ namespace Azure.Identity
             _config = configurationSection;
             _changeToken = configurationSection.GetReloadToken();
 
-            // register for changes
+            //TODO: register for changes
         }
 
         private ConfigurableCredential(DefaultAzureCredentialOptions options)
