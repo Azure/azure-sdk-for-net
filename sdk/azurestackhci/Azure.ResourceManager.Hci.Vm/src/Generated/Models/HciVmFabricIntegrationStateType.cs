@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Fabric integration state type. </summary>
-    public readonly partial struct FabricIntegrationStateType : IEquatable<FabricIntegrationStateType>
+    public readonly partial struct HciVmFabricIntegrationStateType : IEquatable<HciVmFabricIntegrationStateType>
     {
         private readonly string _value;
         /// <summary> Fabric integration state - connected type. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Fabric integration state - connecting type. </summary>
         private const string ConnectingValue = "Connecting";
 
-        /// <summary> Initializes a new instance of <see cref="FabricIntegrationStateType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmFabricIntegrationStateType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FabricIntegrationStateType(string value)
+        public HciVmFabricIntegrationStateType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> Fabric integration state - connected type. </summary>
-        public static FabricIntegrationStateType Connected { get; } = new FabricIntegrationStateType(ConnectedValue);
+        public static HciVmFabricIntegrationStateType Connected { get; } = new HciVmFabricIntegrationStateType(ConnectedValue);
 
         /// <summary> Fabric integration state - disconnected type. </summary>
-        public static FabricIntegrationStateType Disconnected { get; } = new FabricIntegrationStateType(DisconnectedValue);
+        public static HciVmFabricIntegrationStateType Disconnected { get; } = new HciVmFabricIntegrationStateType(DisconnectedValue);
 
         /// <summary> Fabric integration state - misconfigured type. </summary>
-        public static FabricIntegrationStateType Misconfigured { get; } = new FabricIntegrationStateType(MisconfiguredValue);
+        public static HciVmFabricIntegrationStateType Misconfigured { get; } = new HciVmFabricIntegrationStateType(MisconfiguredValue);
 
         /// <summary> Fabric integration state - notapplicable type. </summary>
-        public static FabricIntegrationStateType NotApplicable { get; } = new FabricIntegrationStateType(NotApplicableValue);
+        public static HciVmFabricIntegrationStateType NotApplicable { get; } = new HciVmFabricIntegrationStateType(NotApplicableValue);
 
         /// <summary> Fabric integration state - connecting type. </summary>
-        public static FabricIntegrationStateType Connecting { get; } = new FabricIntegrationStateType(ConnectingValue);
+        public static HciVmFabricIntegrationStateType Connecting { get; } = new HciVmFabricIntegrationStateType(ConnectingValue);
 
-        /// <summary> Determines if two <see cref="FabricIntegrationStateType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HciVmFabricIntegrationStateType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(FabricIntegrationStateType left, FabricIntegrationStateType right) => left.Equals(right);
+        public static bool operator ==(HciVmFabricIntegrationStateType left, HciVmFabricIntegrationStateType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="FabricIntegrationStateType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HciVmFabricIntegrationStateType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(FabricIntegrationStateType left, FabricIntegrationStateType right) => !left.Equals(right);
+        public static bool operator !=(HciVmFabricIntegrationStateType left, HciVmFabricIntegrationStateType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="FabricIntegrationStateType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HciVmFabricIntegrationStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricIntegrationStateType(string value) => new FabricIntegrationStateType(value);
+        public static implicit operator HciVmFabricIntegrationStateType(string value) => new HciVmFabricIntegrationStateType(value);
 
-        /// <summary> Converts a string to a <see cref="FabricIntegrationStateType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HciVmFabricIntegrationStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricIntegrationStateType?(string value) => value == null ? null : new FabricIntegrationStateType(value);
+        public static implicit operator HciVmFabricIntegrationStateType?(string value) => value == null ? null : new HciVmFabricIntegrationStateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FabricIntegrationStateType other && Equals(other);
+        public override bool Equals(object obj) => obj is HciVmFabricIntegrationStateType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(FabricIntegrationStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HciVmFabricIntegrationStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

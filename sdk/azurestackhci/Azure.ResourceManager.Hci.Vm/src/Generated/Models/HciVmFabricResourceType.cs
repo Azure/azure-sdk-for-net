@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Fabric resource type. </summary>
-    public readonly partial struct FabricResourceType : IEquatable<FabricResourceType>
+    public readonly partial struct HciVmFabricResourceType : IEquatable<HciVmFabricResourceType>
     {
         private readonly string _value;
         /// <summary> Fabric resource of L2IsolationDomain type. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Fabric resource of L3InternalNetwork type. </summary>
         private const string L3InternalNetworkValue = "L3InternalNetwork";
 
-        /// <summary> Initializes a new instance of <see cref="FabricResourceType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmFabricResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FabricResourceType(string value)
+        public HciVmFabricResourceType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> Fabric resource of L2IsolationDomain type. </summary>
-        public static FabricResourceType L2IsolationDomain { get; } = new FabricResourceType(L2IsolationDomainValue);
+        public static HciVmFabricResourceType L2IsolationDomain { get; } = new HciVmFabricResourceType(L2IsolationDomainValue);
 
         /// <summary> Fabric resource of L3InternalNetwork type. </summary>
-        public static FabricResourceType L3InternalNetwork { get; } = new FabricResourceType(L3InternalNetworkValue);
+        public static HciVmFabricResourceType L3InternalNetwork { get; } = new HciVmFabricResourceType(L3InternalNetworkValue);
 
-        /// <summary> Determines if two <see cref="FabricResourceType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HciVmFabricResourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(FabricResourceType left, FabricResourceType right) => left.Equals(right);
+        public static bool operator ==(HciVmFabricResourceType left, HciVmFabricResourceType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="FabricResourceType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HciVmFabricResourceType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(FabricResourceType left, FabricResourceType right) => !left.Equals(right);
+        public static bool operator !=(HciVmFabricResourceType left, HciVmFabricResourceType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="FabricResourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HciVmFabricResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricResourceType(string value) => new FabricResourceType(value);
+        public static implicit operator HciVmFabricResourceType(string value) => new HciVmFabricResourceType(value);
 
-        /// <summary> Converts a string to a <see cref="FabricResourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HciVmFabricResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricResourceType?(string value) => value == null ? null : new FabricResourceType(value);
+        public static implicit operator HciVmFabricResourceType?(string value) => value == null ? null : new HciVmFabricResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FabricResourceType other && Equals(other);
+        public override bool Equals(object obj) => obj is HciVmFabricResourceType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(FabricResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HciVmFabricResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

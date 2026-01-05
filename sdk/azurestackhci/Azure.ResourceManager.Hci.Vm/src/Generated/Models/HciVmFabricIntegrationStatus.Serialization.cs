@@ -14,11 +14,11 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Enhanced fabric integration status with detailed health monitoring and connectivity state. </summary>
-    public partial class FabricIntegrationStatus : IJsonModel<FabricIntegrationStatus>
+    public partial class HciVmFabricIntegrationStatus : IJsonModel<HciVmFabricIntegrationStatus>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FabricIntegrationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HciVmFabricIntegrationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricIntegrationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmFabricIntegrationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricIntegrationStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmFabricIntegrationStatus)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
-                foreach (ManagedNetworkFabricIssue item in Issues)
+                foreach (HciVmFabricIssue item in Issues)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -83,34 +83,34 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricIntegrationStatus IJsonModel<FabricIntegrationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HciVmFabricIntegrationStatus IJsonModel<HciVmFabricIntegrationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FabricIntegrationStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HciVmFabricIntegrationStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricIntegrationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmFabricIntegrationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricIntegrationStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmFabricIntegrationStatus)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFabricIntegrationStatus(document.RootElement, options);
+            return DeserializeHciVmFabricIntegrationStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FabricIntegrationStatus DeserializeFabricIntegrationStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciVmFabricIntegrationStatus DeserializeHciVmFabricIntegrationStatus(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            FabricIntegrationStateType? state = default;
-            FabricConnectionHealthStateType? health = default;
+            HciVmFabricIntegrationStateType? state = default;
+            HciVmFabricConnectionHealthStateType? health = default;
             DateTimeOffset? lastCheckedOn = default;
-            FabricResourceType? resourceType = default;
-            IReadOnlyList<ManagedNetworkFabricIssue> issues = default;
+            HciVmFabricResourceType? resourceType = default;
+            IReadOnlyList<HciVmFabricIssue> issues = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    state = new FabricIntegrationStateType(prop.Value.GetString());
+                    state = new HciVmFabricIntegrationStateType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("health"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    health = new FabricConnectionHealthStateType(prop.Value.GetString());
+                    health = new HciVmFabricConnectionHealthStateType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastChecked"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    resourceType = new FabricResourceType(prop.Value.GetString());
+                    resourceType = new HciVmFabricResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("issues"u8))
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    List<ManagedNetworkFabricIssue> array = new List<ManagedNetworkFabricIssue>();
+                    List<HciVmFabricIssue> array = new List<HciVmFabricIssue>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkFabricIssue.DeserializeManagedNetworkFabricIssue(item, options));
+                        array.Add(HciVmFabricIssue.DeserializeHciVmFabricIssue(item, options));
                     }
                     issues = array;
                     continue;
@@ -169,53 +169,53 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FabricIntegrationStatus(
+            return new HciVmFabricIntegrationStatus(
                 state,
                 health,
                 lastCheckedOn,
                 resourceType,
-                issues ?? new ChangeTrackingList<ManagedNetworkFabricIssue>(),
+                issues ?? new ChangeTrackingList<HciVmFabricIssue>(),
                 additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FabricIntegrationStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HciVmFabricIntegrationStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricIntegrationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmFabricIntegrationStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FabricIntegrationStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmFabricIntegrationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricIntegrationStatus IPersistableModel<FabricIntegrationStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HciVmFabricIntegrationStatus IPersistableModel<HciVmFabricIntegrationStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FabricIntegrationStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HciVmFabricIntegrationStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricIntegrationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmFabricIntegrationStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFabricIntegrationStatus(document.RootElement, options);
+                        return DeserializeHciVmFabricIntegrationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricIntegrationStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmFabricIntegrationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FabricIntegrationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HciVmFabricIntegrationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

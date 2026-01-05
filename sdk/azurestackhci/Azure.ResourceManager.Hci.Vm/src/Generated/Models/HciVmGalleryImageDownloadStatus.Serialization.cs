@@ -14,11 +14,11 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> The download status of the gallery image. </summary>
-    internal partial class GalleryImageStatusDownloadStatus : IJsonModel<GalleryImageStatusDownloadStatus>
+    internal partial class HciVmGalleryImageDownloadStatus : IJsonModel<HciVmGalleryImageDownloadStatus>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GalleryImageStatusDownloadStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HciVmGalleryImageDownloadStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageStatusDownloadStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageDownloadStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageStatusDownloadStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmGalleryImageDownloadStatus)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(DownloadSizeInMB))
             {
@@ -58,24 +58,24 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GalleryImageStatusDownloadStatus IJsonModel<GalleryImageStatusDownloadStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HciVmGalleryImageDownloadStatus IJsonModel<HciVmGalleryImageDownloadStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GalleryImageStatusDownloadStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HciVmGalleryImageDownloadStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageStatusDownloadStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageDownloadStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageStatusDownloadStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmGalleryImageDownloadStatus)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGalleryImageStatusDownloadStatus(document.RootElement, options);
+            return DeserializeHciVmGalleryImageDownloadStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GalleryImageStatusDownloadStatus DeserializeGalleryImageStatusDownloadStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciVmGalleryImageDownloadStatus DeserializeHciVmGalleryImageDownloadStatus(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -99,47 +99,47 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryImageStatusDownloadStatus(downloadSizeInMB, additionalBinaryDataProperties);
+            return new HciVmGalleryImageDownloadStatus(downloadSizeInMB, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GalleryImageStatusDownloadStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HciVmGalleryImageDownloadStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageStatusDownloadStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageDownloadStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageStatusDownloadStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmGalleryImageDownloadStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GalleryImageStatusDownloadStatus IPersistableModel<GalleryImageStatusDownloadStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HciVmGalleryImageDownloadStatus IPersistableModel<HciVmGalleryImageDownloadStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GalleryImageStatusDownloadStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HciVmGalleryImageDownloadStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageStatusDownloadStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageDownloadStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGalleryImageStatusDownloadStatus(document.RootElement, options);
+                        return DeserializeHciVmGalleryImageDownloadStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageStatusDownloadStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmGalleryImageDownloadStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GalleryImageStatusDownloadStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HciVmGalleryImageDownloadStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

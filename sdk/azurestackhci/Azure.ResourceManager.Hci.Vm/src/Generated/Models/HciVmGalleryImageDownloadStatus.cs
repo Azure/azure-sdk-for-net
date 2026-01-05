@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> The download status of the gallery image. </summary>
-    internal partial class GalleryImageStatusDownloadStatus
+    internal partial class HciVmGalleryImageDownloadStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GalleryImageStatusDownloadStatus"/>. </summary>
-        internal GalleryImageStatusDownloadStatus()
+        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageDownloadStatus"/>. </summary>
+        internal HciVmGalleryImageDownloadStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryImageStatusDownloadStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageDownloadStatus"/>. </summary>
         /// <param name="downloadSizeInMB"> The downloaded sized of the image in MB. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageStatusDownloadStatus(long? downloadSizeInMB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmGalleryImageDownloadStatus(long? downloadSizeInMB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DownloadSizeInMB = downloadSizeInMB;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

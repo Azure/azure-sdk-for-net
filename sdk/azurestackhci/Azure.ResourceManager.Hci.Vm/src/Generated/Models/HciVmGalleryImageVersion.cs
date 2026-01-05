@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="name"> This is the version of the gallery image. </param>
         /// <param name="properties"> Describes the properties of a gallery image version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmGalleryImageVersion(string name, GalleryImageVersionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmGalleryImageVersion(string name, HciVmGalleryImageVersionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string Name { get; set; }
 
         /// <summary> Describes the properties of a gallery image version. </summary>
-        internal GalleryImageVersionProperties Properties { get; set; }
+        internal HciVmGalleryImageVersionProperties Properties { get; set; }
 
         /// <summary> This is the storage profile of a Gallery Image Version. </summary>
-        public GalleryImageVersionStorageProfile StorageProfile
+        public HciVmGalleryImageVersionStorageProfile StorageProfile
         {
             get
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new GalleryImageVersionProperties();
+                    Properties = new HciVmGalleryImageVersionProperties();
                 }
                 Properties.StorageProfile = value;
             }

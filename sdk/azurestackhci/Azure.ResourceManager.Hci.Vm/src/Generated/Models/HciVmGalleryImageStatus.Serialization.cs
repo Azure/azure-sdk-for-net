@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             string errorCode = default;
             string errorMessage = default;
             HciVmGalleryImageProvisioningStatus provisioningStatus = default;
-            GalleryImageStatusDownloadStatus downloadStatus = default;
+            HciVmGalleryImageDownloadStatus downloadStatus = default;
             long? progressPercentage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    downloadStatus = GalleryImageStatusDownloadStatus.DeserializeGalleryImageStatusDownloadStatus(prop.Value, options);
+                    downloadStatus = HciVmGalleryImageDownloadStatus.DeserializeHciVmGalleryImageDownloadStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("progressPercentage"u8))

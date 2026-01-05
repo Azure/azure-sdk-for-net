@@ -11,27 +11,27 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
-    public partial class GalleryImageVersionStorageProfile
+    public partial class HciVmGalleryImageVersionStorageProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionStorageProfile"/>. </summary>
-        public GalleryImageVersionStorageProfile()
+        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageVersionStorageProfile"/>. </summary>
+        public HciVmGalleryImageVersionStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionStorageProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageVersionStorageProfile"/>. </summary>
         /// <param name="osDiskImage"> This is the OS disk image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionStorageProfile(GalleryOSDiskImage osDiskImage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmGalleryImageVersionStorageProfile(HciVmGalleryOSDiskImage osDiskImage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSDiskImage = osDiskImage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This is the OS disk image. </summary>
-        internal GalleryOSDiskImage OSDiskImage { get; set; }
+        internal HciVmGalleryOSDiskImage OSDiskImage { get; set; }
 
         /// <summary> This property indicates the size of the VHD to be created. </summary>
         public long? OSDiskImageSizeInMB

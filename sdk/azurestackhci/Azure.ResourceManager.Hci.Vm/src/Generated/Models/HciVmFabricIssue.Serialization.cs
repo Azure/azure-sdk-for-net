@@ -14,11 +14,11 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Issues exposed by managed network fabric. </summary>
-    public partial class ManagedNetworkFabricIssue : IJsonModel<ManagedNetworkFabricIssue>
+    public partial class HciVmFabricIssue : IJsonModel<HciVmFabricIssue>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedNetworkFabricIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HciVmFabricIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkFabricIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmFabricIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkFabricIssue)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmFabricIssue)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Code))
             {
@@ -78,24 +78,24 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkFabricIssue IJsonModel<ManagedNetworkFabricIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HciVmFabricIssue IJsonModel<HciVmFabricIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedNetworkFabricIssue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HciVmFabricIssue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkFabricIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmFabricIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkFabricIssue)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmFabricIssue)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedNetworkFabricIssue(document.RootElement, options);
+            return DeserializeHciVmFabricIssue(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedNetworkFabricIssue DeserializeManagedNetworkFabricIssue(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciVmFabricIssue DeserializeHciVmFabricIssue(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedNetworkFabricIssue(
+            return new HciVmFabricIssue(
                 code,
                 severity,
                 message,
@@ -153,43 +153,43 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedNetworkFabricIssue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HciVmFabricIssue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkFabricIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmFabricIssue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkFabricIssue)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmFabricIssue)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkFabricIssue IPersistableModel<ManagedNetworkFabricIssue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HciVmFabricIssue IPersistableModel<HciVmFabricIssue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedNetworkFabricIssue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HciVmFabricIssue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkFabricIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmFabricIssue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedNetworkFabricIssue(document.RootElement, options);
+                        return DeserializeHciVmFabricIssue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkFabricIssue)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmFabricIssue)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedNetworkFabricIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HciVmFabricIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

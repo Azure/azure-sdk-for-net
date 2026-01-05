@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    downloadUri = new Uri(prop.Value.GetString());
+                    downloadUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("hyperVGeneration"u8))

@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> This is the OS disk image. </summary>
-    internal partial class GalleryOSDiskImage
+    internal partial class HciVmGalleryOSDiskImage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GalleryOSDiskImage"/>. </summary>
-        public GalleryOSDiskImage()
+        /// <summary> Initializes a new instance of <see cref="HciVmGalleryOSDiskImage"/>. </summary>
+        public HciVmGalleryOSDiskImage()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryOSDiskImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmGalleryOSDiskImage"/>. </summary>
         /// <param name="sizeInMB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryOSDiskImage(long? sizeInMB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmGalleryOSDiskImage(long? sizeInMB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SizeInMB = sizeInMB;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

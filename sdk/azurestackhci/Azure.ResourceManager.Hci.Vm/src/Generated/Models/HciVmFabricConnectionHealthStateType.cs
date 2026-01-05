@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Fabric connection health state type. </summary>
-    public readonly partial struct FabricConnectionHealthStateType : IEquatable<FabricConnectionHealthStateType>
+    public readonly partial struct HciVmFabricConnectionHealthStateType : IEquatable<HciVmFabricConnectionHealthStateType>
     {
         private readonly string _value;
         /// <summary> Fabric connection health state - healthy type. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Fabric connection health state - unknown type. </summary>
         private const string UnknownValue = "Unknown";
 
-        /// <summary> Initializes a new instance of <see cref="FabricConnectionHealthStateType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmFabricConnectionHealthStateType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FabricConnectionHealthStateType(string value)
+        public HciVmFabricConnectionHealthStateType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> Fabric connection health state - healthy type. </summary>
-        public static FabricConnectionHealthStateType Healthy { get; } = new FabricConnectionHealthStateType(HealthyValue);
+        public static HciVmFabricConnectionHealthStateType Healthy { get; } = new HciVmFabricConnectionHealthStateType(HealthyValue);
 
         /// <summary> Fabric connection health state - warning type. </summary>
-        public static FabricConnectionHealthStateType Warning { get; } = new FabricConnectionHealthStateType(WarningValue);
+        public static HciVmFabricConnectionHealthStateType Warning { get; } = new HciVmFabricConnectionHealthStateType(WarningValue);
 
         /// <summary> Fabric connection health state - error type. </summary>
-        public static FabricConnectionHealthStateType Error { get; } = new FabricConnectionHealthStateType(ErrorValue);
+        public static HciVmFabricConnectionHealthStateType Error { get; } = new HciVmFabricConnectionHealthStateType(ErrorValue);
 
         /// <summary> Fabric connection health state - unknown type. </summary>
-        public static FabricConnectionHealthStateType Unknown { get; } = new FabricConnectionHealthStateType(UnknownValue);
+        public static HciVmFabricConnectionHealthStateType Unknown { get; } = new HciVmFabricConnectionHealthStateType(UnknownValue);
 
-        /// <summary> Determines if two <see cref="FabricConnectionHealthStateType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HciVmFabricConnectionHealthStateType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(FabricConnectionHealthStateType left, FabricConnectionHealthStateType right) => left.Equals(right);
+        public static bool operator ==(HciVmFabricConnectionHealthStateType left, HciVmFabricConnectionHealthStateType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="FabricConnectionHealthStateType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HciVmFabricConnectionHealthStateType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(FabricConnectionHealthStateType left, FabricConnectionHealthStateType right) => !left.Equals(right);
+        public static bool operator !=(HciVmFabricConnectionHealthStateType left, HciVmFabricConnectionHealthStateType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="FabricConnectionHealthStateType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HciVmFabricConnectionHealthStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricConnectionHealthStateType(string value) => new FabricConnectionHealthStateType(value);
+        public static implicit operator HciVmFabricConnectionHealthStateType(string value) => new HciVmFabricConnectionHealthStateType(value);
 
-        /// <summary> Converts a string to a <see cref="FabricConnectionHealthStateType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HciVmFabricConnectionHealthStateType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FabricConnectionHealthStateType?(string value) => value == null ? null : new FabricConnectionHealthStateType(value);
+        public static implicit operator HciVmFabricConnectionHealthStateType?(string value) => value == null ? null : new HciVmFabricConnectionHealthStateType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FabricConnectionHealthStateType other && Equals(other);
+        public override bool Equals(object obj) => obj is HciVmFabricConnectionHealthStateType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(FabricConnectionHealthStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HciVmFabricConnectionHealthStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

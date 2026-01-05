@@ -12,25 +12,25 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Enhanced fabric integration status with detailed health monitoring and connectivity state. </summary>
-    public partial class FabricIntegrationStatus
+    public partial class HciVmFabricIntegrationStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FabricIntegrationStatus"/>. </summary>
-        internal FabricIntegrationStatus()
+        /// <summary> Initializes a new instance of <see cref="HciVmFabricIntegrationStatus"/>. </summary>
+        internal HciVmFabricIntegrationStatus()
         {
-            Issues = new ChangeTrackingList<ManagedNetworkFabricIssue>();
+            Issues = new ChangeTrackingList<HciVmFabricIssue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricIntegrationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmFabricIntegrationStatus"/>. </summary>
         /// <param name="state"> Current fabric integration state. </param>
         /// <param name="health"> Health status of the fabric connection. </param>
         /// <param name="lastCheckedOn"> Timestamp of the last fabric health check as ISO 8601 string. </param>
         /// <param name="resourceType"> Type of fabric resource referenced. </param>
         /// <param name="issues"> Issues raised by fabric. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricIntegrationStatus(FabricIntegrationStateType? state, FabricConnectionHealthStateType? health, DateTimeOffset? lastCheckedOn, FabricResourceType? resourceType, IReadOnlyList<ManagedNetworkFabricIssue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmFabricIntegrationStatus(HciVmFabricIntegrationStateType? state, HciVmFabricConnectionHealthStateType? health, DateTimeOffset? lastCheckedOn, HciVmFabricResourceType? resourceType, IReadOnlyList<HciVmFabricIssue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Health = health;
@@ -41,18 +41,18 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> Current fabric integration state. </summary>
-        public FabricIntegrationStateType? State { get; }
+        public HciVmFabricIntegrationStateType? State { get; }
 
         /// <summary> Health status of the fabric connection. </summary>
-        public FabricConnectionHealthStateType? Health { get; }
+        public HciVmFabricConnectionHealthStateType? Health { get; }
 
         /// <summary> Timestamp of the last fabric health check as ISO 8601 string. </summary>
         public DateTimeOffset? LastCheckedOn { get; }
 
         /// <summary> Type of fabric resource referenced. </summary>
-        public FabricResourceType? ResourceType { get; }
+        public HciVmFabricResourceType? ResourceType { get; }
 
         /// <summary> Issues raised by fabric. </summary>
-        public IReadOnlyList<ManagedNetworkFabricIssue> Issues { get; }
+        public IReadOnlyList<HciVmFabricIssue> Issues { get; }
     }
 }

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             string name = default;
-            GalleryImageVersionProperties properties = default;
+            HciVmGalleryImageVersionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    properties = GalleryImageVersionProperties.DeserializeGalleryImageVersionProperties(prop.Value, options);
+                    properties = HciVmGalleryImageVersionProperties.DeserializeHciVmGalleryImageVersionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

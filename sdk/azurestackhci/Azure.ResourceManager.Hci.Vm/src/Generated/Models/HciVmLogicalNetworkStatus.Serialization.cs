@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             string errorCode = default;
             string errorMessage = default;
             HciVmLogicalNetworkProvisioningStatus provisioningStatus = default;
-            FabricIntegrationStatus fabricIntegration = default;
+            HciVmFabricIntegrationStatus fabricIntegration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    fabricIntegration = FabricIntegrationStatus.DeserializeFabricIntegrationStatus(prop.Value, options);
+                    fabricIntegration = HciVmFabricIntegrationStatus.DeserializeHciVmFabricIntegrationStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Issues exposed by managed network fabric. </summary>
-    public partial class ManagedNetworkFabricIssue
+    public partial class HciVmFabricIssue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabricIssue"/>. </summary>
-        internal ManagedNetworkFabricIssue()
+        /// <summary> Initializes a new instance of <see cref="HciVmFabricIssue"/>. </summary>
+        internal HciVmFabricIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabricIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmFabricIssue"/>. </summary>
         /// <param name="code"> Specific error/warning code. </param>
         /// <param name="severity"> issue severity. </param>
         /// <param name="message"> Description of the issue. </param>
         /// <param name="target"> specific property or resource that has the issue. </param>
         /// <param name="timestamp"> Timestamp of the issue as ISO 8601 string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedNetworkFabricIssue(string code, string severity, string message, string target, DateTimeOffset? timestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmFabricIssue(string code, string severity, string message, string target, DateTimeOffset? timestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Severity = severity;

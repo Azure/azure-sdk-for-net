@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (prop.NameEquals("azureManagedDiskUploadUrl"u8))
                 {
-                    managedDiskUploadUri = new Uri(prop.Value.GetString());
+                    managedDiskUploadUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

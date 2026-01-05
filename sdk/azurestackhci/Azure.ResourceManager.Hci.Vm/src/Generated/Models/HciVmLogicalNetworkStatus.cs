@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningStatus"> Logical network provisioning status. </param>
         /// <param name="fabricIntegration"> Enhanced fabric integration status with detailed health monitoring and connectivity state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmLogicalNetworkStatus(string errorCode, string errorMessage, HciVmLogicalNetworkProvisioningStatus provisioningStatus, FabricIntegrationStatus fabricIntegration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmLogicalNetworkStatus(string errorCode, string errorMessage, HciVmLogicalNetworkProvisioningStatus provisioningStatus, HciVmFabricIntegrationStatus fabricIntegration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmLogicalNetworkProvisioningStatus ProvisioningStatus { get; }
 
         /// <summary> Enhanced fabric integration status with detailed health monitoring and connectivity state. </summary>
-        public FabricIntegrationStatus FabricIntegration { get; }
+        public HciVmFabricIntegrationStatus FabricIntegration { get; }
     }
 }

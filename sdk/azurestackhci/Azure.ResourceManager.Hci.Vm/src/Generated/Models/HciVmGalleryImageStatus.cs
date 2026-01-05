@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="downloadStatus"> The download status of the gallery image. </param>
         /// <param name="progressPercentage"> The progress of the operation in percentage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmGalleryImageStatus(string errorCode, string errorMessage, HciVmGalleryImageProvisioningStatus provisioningStatus, GalleryImageStatusDownloadStatus downloadStatus, long? progressPercentage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmGalleryImageStatus(string errorCode, string errorMessage, HciVmGalleryImageProvisioningStatus provisioningStatus, HciVmGalleryImageDownloadStatus downloadStatus, long? progressPercentage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmGalleryImageProvisioningStatus ProvisioningStatus { get; }
 
         /// <summary> The download status of the gallery image. </summary>
-        internal GalleryImageStatusDownloadStatus DownloadStatus { get; }
+        internal HciVmGalleryImageDownloadStatus DownloadStatus { get; }
 
         /// <summary> The progress of the operation in percentage. </summary>
         public long? ProgressPercentage { get; }

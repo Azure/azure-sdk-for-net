@@ -14,11 +14,11 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
-    public partial class GalleryImageVersionStorageProfile : IJsonModel<GalleryImageVersionStorageProfile>
+    public partial class HciVmGalleryImageVersionStorageProfile : IJsonModel<HciVmGalleryImageVersionStorageProfile>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GalleryImageVersionStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HciVmGalleryImageVersionStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmGalleryImageVersionStorageProfile)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(OSDiskImage))
             {
@@ -58,30 +58,30 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GalleryImageVersionStorageProfile IJsonModel<GalleryImageVersionStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HciVmGalleryImageVersionStorageProfile IJsonModel<HciVmGalleryImageVersionStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GalleryImageVersionStorageProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HciVmGalleryImageVersionStorageProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmGalleryImageVersionStorageProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGalleryImageVersionStorageProfile(document.RootElement, options);
+            return DeserializeHciVmGalleryImageVersionStorageProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GalleryImageVersionStorageProfile DeserializeGalleryImageVersionStorageProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciVmGalleryImageVersionStorageProfile DeserializeHciVmGalleryImageVersionStorageProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            GalleryOSDiskImage osDiskImage = default;
+            HciVmGalleryOSDiskImage osDiskImage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(prop.Value, options);
+                    osDiskImage = HciVmGalleryOSDiskImage.DeserializeHciVmGalleryOSDiskImage(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,47 +99,47 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryImageVersionStorageProfile(osDiskImage, additionalBinaryDataProperties);
+            return new HciVmGalleryImageVersionStorageProfile(osDiskImage, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GalleryImageVersionStorageProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HciVmGalleryImageVersionStorageProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmGalleryImageVersionStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GalleryImageVersionStorageProfile IPersistableModel<GalleryImageVersionStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HciVmGalleryImageVersionStorageProfile IPersistableModel<HciVmGalleryImageVersionStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GalleryImageVersionStorageProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HciVmGalleryImageVersionStorageProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGalleryImageVersionStorageProfile(document.RootElement, options);
+                        return DeserializeHciVmGalleryImageVersionStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmGalleryImageVersionStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GalleryImageVersionStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HciVmGalleryImageVersionStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

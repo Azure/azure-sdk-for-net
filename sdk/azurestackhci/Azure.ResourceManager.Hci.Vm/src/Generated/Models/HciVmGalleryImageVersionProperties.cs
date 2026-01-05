@@ -12,31 +12,31 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Describes the properties of a gallery image version. </summary>
-    internal partial class GalleryImageVersionProperties
+    internal partial class HciVmGalleryImageVersionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageVersionProperties"/>. </summary>
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageProfile"/> is null. </exception>
-        public GalleryImageVersionProperties(GalleryImageVersionStorageProfile storageProfile)
+        public HciVmGalleryImageVersionProperties(HciVmGalleryImageVersionStorageProfile storageProfile)
         {
             Argument.AssertNotNull(storageProfile, nameof(storageProfile));
 
             StorageProfile = storageProfile;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageVersionProperties"/>. </summary>
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionProperties(GalleryImageVersionStorageProfile storageProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmGalleryImageVersionProperties(HciVmGalleryImageVersionStorageProfile storageProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageProfile = storageProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This is the storage profile of a Gallery Image Version. </summary>
-        public GalleryImageVersionStorageProfile StorageProfile { get; set; }
+        public HciVmGalleryImageVersionStorageProfile StorageProfile { get; set; }
     }
 }

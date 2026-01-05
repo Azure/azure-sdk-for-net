@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 errorCode,
                 errorMessage,
                 provisioningStatus,
-                downloadSizeInMB is null ? default : new GalleryImageStatusDownloadStatus(downloadSizeInMB, null),
+                downloadSizeInMB is null ? default : new HciVmGalleryImageDownloadStatus(downloadSizeInMB, null),
                 progressPercentage,
                 additionalBinaryDataProperties: null);
         }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningStatus"> Logical network provisioning status. </param>
         /// <param name="fabricIntegration"> Enhanced fabric integration status with detailed health monitoring and connectivity state. </param>
         /// <returns> A new <see cref="Models.HciVmLogicalNetworkStatus"/> instance for mocking. </returns>
-        public static HciVmLogicalNetworkStatus HciVmLogicalNetworkStatus(string errorCode = default, string errorMessage = default, HciVmLogicalNetworkProvisioningStatus provisioningStatus = default, FabricIntegrationStatus fabricIntegration = default)
+        public static HciVmLogicalNetworkStatus HciVmLogicalNetworkStatus(string errorCode = default, string errorMessage = default, HciVmLogicalNetworkProvisioningStatus provisioningStatus = default, HciVmFabricIntegrationStatus fabricIntegration = default)
         {
             return new HciVmLogicalNetworkStatus(errorCode, errorMessage, provisioningStatus, fabricIntegration, additionalBinaryDataProperties: null);
         }
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="lastCheckedOn"> Timestamp of the last fabric health check as ISO 8601 string. </param>
         /// <param name="resourceType"> Type of fabric resource referenced. </param>
         /// <param name="issues"> Issues raised by fabric. </param>
-        /// <returns> A new <see cref="Models.FabricIntegrationStatus"/> instance for mocking. </returns>
-        public static FabricIntegrationStatus FabricIntegrationStatus(FabricIntegrationStateType? state = default, FabricConnectionHealthStateType? health = default, DateTimeOffset? lastCheckedOn = default, FabricResourceType? resourceType = default, IEnumerable<ManagedNetworkFabricIssue> issues = default)
+        /// <returns> A new <see cref="Models.HciVmFabricIntegrationStatus"/> instance for mocking. </returns>
+        public static HciVmFabricIntegrationStatus HciVmFabricIntegrationStatus(HciVmFabricIntegrationStateType? state = default, HciVmFabricConnectionHealthStateType? health = default, DateTimeOffset? lastCheckedOn = default, HciVmFabricResourceType? resourceType = default, IEnumerable<HciVmFabricIssue> issues = default)
         {
-            issues ??= new ChangeTrackingList<ManagedNetworkFabricIssue>();
+            issues ??= new ChangeTrackingList<HciVmFabricIssue>();
 
-            return new FabricIntegrationStatus(
+            return new HciVmFabricIntegrationStatus(
                 state,
                 health,
                 lastCheckedOn,
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="message"> Description of the issue. </param>
         /// <param name="target"> specific property or resource that has the issue. </param>
         /// <param name="timestamp"> Timestamp of the issue as ISO 8601 string. </param>
-        /// <returns> A new <see cref="Models.ManagedNetworkFabricIssue"/> instance for mocking. </returns>
-        public static ManagedNetworkFabricIssue ManagedNetworkFabricIssue(string code = default, string severity = default, string message = default, string target = default, DateTimeOffset? timestamp = default)
+        /// <returns> A new <see cref="Models.HciVmFabricIssue"/> instance for mocking. </returns>
+        public static HciVmFabricIssue HciVmFabricIssue(string code = default, string severity = default, string message = default, string target = default, DateTimeOffset? timestamp = default)
         {
-            return new ManagedNetworkFabricIssue(
+            return new HciVmFabricIssue(
                 code,
                 severity,
                 message,
