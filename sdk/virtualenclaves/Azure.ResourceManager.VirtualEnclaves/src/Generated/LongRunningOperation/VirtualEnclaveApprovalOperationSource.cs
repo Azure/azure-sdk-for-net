@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.VirtualEnclaves
 {
-    internal class VirtualEnclaveApprovalOperationSource : IOperationSource<VirtualEnclaveApprovalResource>
+    /// <summary></summary>
+    internal partial class VirtualEnclaveApprovalOperationSource : IOperationSource<VirtualEnclaveApprovalResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal VirtualEnclaveApprovalOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         VirtualEnclaveApprovalResource IOperationSource<VirtualEnclaveApprovalResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualEnclaveApprovalData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVirtualEnclavesContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            VirtualEnclaveApprovalData data = VirtualEnclaveApprovalData.DeserializeVirtualEnclaveApprovalData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new VirtualEnclaveApprovalResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<VirtualEnclaveApprovalResource> IOperationSource<VirtualEnclaveApprovalResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualEnclaveApprovalData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVirtualEnclavesContext.Default);
-            return await Task.FromResult(new VirtualEnclaveApprovalResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            VirtualEnclaveApprovalData data = VirtualEnclaveApprovalData.DeserializeVirtualEnclaveApprovalData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualEnclaveApprovalResource(_client, data);
         }
     }
 }

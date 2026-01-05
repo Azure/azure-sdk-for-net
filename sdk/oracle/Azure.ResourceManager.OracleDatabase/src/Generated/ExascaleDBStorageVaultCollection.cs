@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing a collection of <see cref="ExascaleDBStorageVaultResource"/> and their operations.
     /// Each <see cref="ExascaleDBStorageVaultResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="ExascaleDBStorageVaultCollection"/> instance call the GetExascaleDBStorageVaults method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ExascaleDBStorageVaultCollection"/> instance call the GetExascaleDBStorageVaults method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ExascaleDBStorageVaultCollection : ArmCollection, IEnumerable<ExascaleDBStorageVaultResource>, IAsyncEnumerable<ExascaleDBStorageVaultResource>
     {
-        private readonly ClientDiagnostics _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics;
-        private readonly ExascaleDbStorageVaultsRestOperations _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient;
+        private readonly ClientDiagnostics _exascaleDbStorageVaultsClientDiagnostics;
+        private readonly ExascaleDbStorageVaults _exascaleDbStorageVaultsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ExascaleDBStorageVaultCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ExascaleDBStorageVaultCollection for mocking. </summary>
         protected ExascaleDBStorageVaultCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ExascaleDBStorageVaultCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExascaleDBStorageVaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExascaleDBStorageVaultResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ExascaleDBStorageVaultResource.ResourceType, out string exascaleDBStorageVaultExascaleDbStorageVaultsApiVersion);
-            _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient = new ExascaleDbStorageVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, exascaleDBStorageVaultExascaleDbStorageVaultsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ExascaleDBStorageVaultResource.ResourceType, out string exascaleDBStorageVaultApiVersion);
+            _exascaleDbStorageVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExascaleDBStorageVaultResource.ResourceType.Namespace, Diagnostics);
+            _exascaleDbStorageVaultsRestClient = new ExascaleDbStorageVaults(_exascaleDbStorageVaultsClientDiagnostics, Pipeline, Endpoint, exascaleDBStorageVaultApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a ExascaleDbStorageVault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="exascaleDbStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ExascaleDBStorageVaultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string exascaleDbStorageVaultName, ExascaleDBStorageVaultData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, exascaleDbStorageVaultName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(new ExascaleDBStorageVaultOperationSource(Client), _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics, Pipeline, _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, exascaleDbStorageVaultName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OracleDatabaseArmOperation<ExascaleDBStorageVaultResource> operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(
+                    new ExascaleDBStorageVaultOperationSource(Client),
+                    _exascaleDbStorageVaultsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Create a ExascaleDbStorageVault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="exascaleDbStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ExascaleDBStorageVaultResource> CreateOrUpdate(WaitUntil waitUntil, string exascaleDbStorageVaultName, ExascaleDBStorageVaultData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, exascaleDbStorageVaultName, data, cancellationToken);
-                var operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(new ExascaleDBStorageVaultOperationSource(Client), _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics, Pipeline, _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, exascaleDbStorageVaultName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OracleDatabaseArmOperation<ExascaleDBStorageVaultResource> operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(
+                    new ExascaleDBStorageVaultOperationSource(Client),
+                    _exascaleDbStorageVaultsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a ExascaleDbStorageVault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exascaleDbStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ExascaleDBStorageVaultResource>> GetAsync(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using var scope = _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Get");
+            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Get");
             scope.Start();
             try
             {
-                var response = await _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, exascaleDbStorageVaultName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExascaleDBStorageVaultData> response = Response.FromValue(ExascaleDBStorageVaultData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExascaleDBStorageVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a ExascaleDbStorageVault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exascaleDbStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ExascaleDBStorageVaultResource> Get(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using var scope = _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Get");
+            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Get");
             scope.Start();
             try
             {
-                var response = _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, exascaleDbStorageVaultName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExascaleDBStorageVaultData> response = Response.FromValue(ExascaleDBStorageVaultData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExascaleDBStorageVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.OracleDatabase
         /// List ExascaleDbStorageVault resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExascaleDBStorageVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExascaleDBStorageVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExascaleDBStorageVaultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExascaleDBStorageVaultResource(Client, ExascaleDBStorageVaultData.DeserializeExascaleDBStorageVaultData(e)), _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics, Pipeline, "ExascaleDBStorageVaultCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetByResourceGroupAsyncCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>
         /// List ExascaleDbStorageVault resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> A collection of <see cref="ExascaleDBStorageVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExascaleDBStorageVaultResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExascaleDBStorageVaultResource(Client, ExascaleDBStorageVaultData.DeserializeExascaleDBStorageVaultData(e)), _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics, Pipeline, "ExascaleDBStorageVaultCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetByResourceGroupCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exascaleDbStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using var scope = _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Exists");
+            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, exascaleDbStorageVaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ExascaleDBStorageVaultData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExascaleDBStorageVaultData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExascaleDBStorageVaultData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exascaleDbStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using var scope = _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Exists");
+            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Exists");
             scope.Start();
             try
             {
-                var response = _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, exascaleDbStorageVaultName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ExascaleDBStorageVaultData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExascaleDBStorageVaultData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExascaleDBStorageVaultData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exascaleDbStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ExascaleDBStorageVaultResource>> GetIfExistsAsync(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using var scope = _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.GetIfExists");
+            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, exascaleDbStorageVaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ExascaleDBStorageVaultData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExascaleDBStorageVaultData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExascaleDBStorageVaultData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ExascaleDBStorageVaultResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExascaleDBStorageVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exascaleDbStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ExascaleDBStorageVaultResource> GetIfExists(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using var scope = _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.GetIfExists");
+            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, exascaleDbStorageVaultName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ExascaleDBStorageVaultData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExascaleDBStorageVaultData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExascaleDBStorageVaultData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ExascaleDBStorageVaultResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExascaleDBStorageVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ExascaleDBStorageVaultResource> IAsyncEnumerable<ExascaleDBStorageVaultResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

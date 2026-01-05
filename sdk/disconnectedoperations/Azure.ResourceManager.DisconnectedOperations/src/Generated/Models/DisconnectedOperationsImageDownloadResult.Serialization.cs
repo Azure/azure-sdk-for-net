@@ -9,14 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.DisconnectedOperations;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Models
 {
-    public partial class DisconnectedOperationsImageDownloadResult : IUtf8JsonSerializable, IJsonModel<DisconnectedOperationsImageDownloadResult>
+    /// <summary> The image download properties. </summary>
+    public partial class DisconnectedOperationsImageDownloadResult : IJsonModel<DisconnectedOperationsImageDownloadResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DisconnectedOperationsImageDownloadResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DisconnectedOperationsImageDownloadResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DisconnectedOperationsImageDownloadResult)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -68,8 +69,13 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             {
                 writer.WritePropertyName("compatibleVersions"u8);
                 writer.WriteStartArray();
-                foreach (var item in CompatibleVersions)
+                foreach (string item in CompatibleVersions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -89,15 +95,15 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 writer.WritePropertyName("linkExpiry"u8);
                 writer.WriteStringValue(LinkExpiry, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,22 +112,27 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             }
         }
 
-        DisconnectedOperationsImageDownloadResult IJsonModel<DisconnectedOperationsImageDownloadResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DisconnectedOperationsImageDownloadResult IJsonModel<DisconnectedOperationsImageDownloadResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DisconnectedOperationsImageDownloadResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DisconnectedOperationsImageDownloadResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDisconnectedOperationsImageDownloadResult(document.RootElement, options);
         }
 
-        internal static DisconnectedOperationsImageDownloadResult DeserializeDisconnectedOperationsImageDownloadResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DisconnectedOperationsImageDownloadResult DeserializeDisconnectedOperationsImageDownloadResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -130,103 +141,111 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             string releaseVersion = default;
             string releaseDisplayName = default;
             string releaseNotes = default;
-            DateTimeOffset releaseDate = default;
+            DateTimeOffset releaseOn = default;
             DisconnectedOperationsReleaseType releaseType = default;
             IReadOnlyList<string> compatibleVersions = default;
             string transactionId = default;
             Uri downloadLink = default;
             DateTimeOffset linkExpiry = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new DisconnectedOperationsResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new DisconnectedOperationsResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("releaseVersion"u8))
+                if (prop.NameEquals("releaseVersion"u8))
                 {
-                    releaseVersion = property.Value.GetString();
+                    releaseVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("releaseDisplayName"u8))
+                if (prop.NameEquals("releaseDisplayName"u8))
                 {
-                    releaseDisplayName = property.Value.GetString();
+                    releaseDisplayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("releaseNotes"u8))
+                if (prop.NameEquals("releaseNotes"u8))
                 {
-                    releaseNotes = property.Value.GetString();
+                    releaseNotes = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("releaseDate"u8))
+                if (prop.NameEquals("releaseDate"u8))
                 {
-                    releaseDate = property.Value.GetDateTimeOffset("D");
+                    releaseOn = prop.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("releaseType"u8))
+                if (prop.NameEquals("releaseType"u8))
                 {
-                    releaseType = new DisconnectedOperationsReleaseType(property.Value.GetString());
+                    releaseType = new DisconnectedOperationsReleaseType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("compatibleVersions"u8))
+                if (prop.NameEquals("compatibleVersions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     compatibleVersions = array;
                     continue;
                 }
-                if (property.NameEquals("transactionId"u8))
+                if (prop.NameEquals("transactionId"u8))
                 {
-                    transactionId = property.Value.GetString();
+                    transactionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("downloadLink"u8))
+                if (prop.NameEquals("downloadLink"u8))
                 {
-                    downloadLink = new Uri(property.Value.GetString());
+                    downloadLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("linkExpiry"u8))
+                if (prop.NameEquals("linkExpiry"u8))
                 {
-                    linkExpiry = property.Value.GetDateTimeOffset("O");
+                    linkExpiry = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DisconnectedOperationsImageDownloadResult(
                 provisioningState,
                 releaseVersion,
                 releaseDisplayName,
                 releaseNotes,
-                releaseDate,
+                releaseOn,
                 releaseType,
                 compatibleVersions ?? new ChangeTrackingList<string>(),
                 transactionId,
                 downloadLink,
                 linkExpiry,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DisconnectedOperationsImageDownloadResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DisconnectedOperationsImageDownloadResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -236,15 +255,20 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             }
         }
 
-        DisconnectedOperationsImageDownloadResult IPersistableModel<DisconnectedOperationsImageDownloadResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DisconnectedOperationsImageDownloadResult IPersistableModel<DisconnectedOperationsImageDownloadResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DisconnectedOperationsImageDownloadResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDisconnectedOperationsImageDownloadResult(document.RootElement, options);
                     }
                 default:
@@ -252,6 +276,14 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DisconnectedOperationsImageDownloadResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DisconnectedOperationsImageDownloadResult"/> from. </param>
+        internal static DisconnectedOperationsImageDownloadResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDisconnectedOperationsImageDownloadResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }
