@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 throw new FormatException($"The model {nameof(FileShareNameAvailabilityResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(NameAvailable))
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(NameAvailable.Value);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
             }
             if (Optional.IsDefined(Reason))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 return null;
             }
-            bool? nameAvailable = default;
+            bool? isNameAvailable = default;
             FileShareNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     {
                         continue;
                     }
-                    nameAvailable = prop.Value.GetBoolean();
+                    isNameAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileShareNameAvailabilityResult(nameAvailable, reason, message, additionalBinaryDataProperties);
+            return new FileShareNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> The check availability result. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.FileShareNameAvailabilityResult"/> instance for mocking. </returns>
-        public static FileShareNameAvailabilityResult FileShareNameAvailabilityResult(bool? nameAvailable = default, FileShareNameUnavailableReason? reason = default, string message = default)
+        public static FileShareNameAvailabilityResult FileShareNameAvailabilityResult(bool? isNameAvailable = default, FileShareNameUnavailableReason? reason = default, string message = default)
         {
-            return new FileShareNameAvailabilityResult(nameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new FileShareNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
 
         /// <summary> FileShareSnapshot resource. </summary>
