@@ -287,8 +287,6 @@ if ($relatedTypeSpecProjectFolder) {
             -specRepoRoot $swaggerDir
         }
 
-        Write-Host "@@@@@@@@@@@@sdkPath: $sdkPath, relativeSdkPath: $relativeSdkPath, sdkProjectFolder: $sdkProjectFolder"
-
         if ((IsMgmtSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder) -or $serviceType -eq "data-plane") {
             $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
         }
