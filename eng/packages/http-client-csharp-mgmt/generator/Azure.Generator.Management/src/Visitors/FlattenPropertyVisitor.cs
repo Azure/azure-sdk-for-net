@@ -556,7 +556,7 @@ namespace Azure.Generator.Management.Visitors
             return flattenedProperty.WireInfo?.IsRequired == true;
         }
 
-        private void UpdatePublicConstructorBody(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> map, ConstructorProvider publicConstructor)
+        private void UpdatePublicConstructorBody(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> flattenPropertyMap, ConstructorProvider publicConstructor)
         {
             var body = publicConstructor.BodyStatements;
             if (body is not null)
@@ -571,9 +571,7 @@ namespace Azure.Generator.Management.Visitors
                         if (invokeExpression.InstanceReference is TypeReferenceExpression typeReference && typeReference.Type?.Name == "Argument") // get the validation expression
                         {
                             var parameterName = invokeExpression.Arguments[0].ToDisplayString(); // we can ensure the first argument is always the parameter for validation expression
-                            // Remove the @ prefix if present (for C# keywords)
-                            var normalizedParameterName = parameterName.StartsWith("@") ? parameterName[1..] : parameterName;
-                            if (map.TryGetValue(normalizedParameterName, out var value))
+                            if (flattenPropertyMap.TryGetValue(parameterName, out var value))
                             {
                                 foreach (var (flattenProperty, _) in value)
                                 {
@@ -582,10 +580,6 @@ namespace Azure.Generator.Management.Visitors
                                         updatedBodyStatements.Add(ArgumentSnippets.ValidateParameter(flattenProperty.AsParameter));
                                     }
                                 }
-                            }
-                            else
-                            {
-                                updatedBodyStatements.Add(statement);
                             }
                         }
                         else
@@ -598,7 +592,7 @@ namespace Azure.Generator.Management.Visitors
                     {
                         PropertyProvider? currentInternalProperty = null;
                         var flattenedProperties = new HashSet<PropertyProvider>();
-                        if (map.TryGetValue(variable.Declaration.RequestedName, out var value))
+                        if (flattenPropertyMap.TryGetValue(variable.Declaration.RequestedName, out var value))
                         {
                             // collect all internal properties to assign
                             foreach (var (flattenProperty, internalProperty) in value)
