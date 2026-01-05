@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
-        /// <param name="partnerProperties"> partner properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="user"/> or <paramref name="partnerProperties"/> is null. </exception>
-        public ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace, ArizeAIObservabilityEvalUserDetails user, ArizeAIObservabilityEvalOfferPartnerProperties partnerProperties)
+        /// <param name="partnerDescription"> Description of the Organization's purpose. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="user"/> or <paramref name="partnerDescription"/> is null. </exception>
+        public ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace, ArizeAIObservabilityEvalUserDetails user, string partnerDescription)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(user, nameof(user));
-            Argument.AssertNotNull(partnerProperties, nameof(partnerProperties));
+            Argument.AssertNotNull(partnerDescription, nameof(partnerDescription));
 
             Marketplace = marketplace;
             User = user;
-            PartnerProperties = partnerProperties;
+            PartnerProperties = new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription);
         }
 
         /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOrganizationProperties"/>. </summary>
