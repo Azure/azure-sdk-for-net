@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dnsForwardingRulesUri = new Uri(prop.Value.GetString());
+                    dnsForwardingRulesUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dnsListeningEndpointNsgRulesUrl"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dnsListeningEndpointNsgRulesUri = new Uri(prop.Value.GetString());
+                    dnsListeningEndpointNsgRulesUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dnsForwardingEndpointNsgRulesUrl"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dnsForwardingEndpointNsgRulesUri = new Uri(prop.Value.GetString());
+                    dnsForwardingEndpointNsgRulesUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
