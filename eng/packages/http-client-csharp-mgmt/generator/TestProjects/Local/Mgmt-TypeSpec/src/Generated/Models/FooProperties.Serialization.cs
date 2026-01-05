@@ -62,10 +62,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("floatValue"u8);
                 writer.WriteNumberValue(FloatValue.Value);
             }
-            if (Optional.IsDefined(BytesValue))
+            if (Optional.IsCollectionDefined(BytesArrayValue))
             {
-                writer.WritePropertyName("bytesValue"u8);
-                writer.WriteBase64StringValue(BytesValue.ToArray(), "D");
+                writer.WritePropertyName("bytesArrayValue"u8);
+                writer.WriteStartArray();
+                foreach (BinaryData item in BytesArrayValue)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteBase64StringValue(item.ToArray(), "D");
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(DoubleValue))
             {
@@ -157,7 +167,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             ManagedServiceIdentity something = default;
             bool? boolValue = default;
             float? floatValue = default;
-            BinaryData bytesValue = default;
+            IList<BinaryData> bytesArrayValue = default;
             double? doubleValue = default;
             IList<string> prop1 = default;
             IList<int> prop2 = default;
@@ -200,13 +210,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     floatValue = prop.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("bytesValue"u8))
+                if (prop.NameEquals("bytesArrayValue"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bytesValue = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    List<BinaryData> array = new List<BinaryData>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromBytes(item.GetBytesFromBase64("D")));
+                        }
+                    }
+                    bytesArrayValue = array;
                     continue;
                 }
                 if (prop.NameEquals("doubleValue"u8))
@@ -291,7 +313,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 something,
                 boolValue,
                 floatValue,
-                bytesValue,
+                bytesArrayValue ?? new ChangeTrackingList<BinaryData>(),
                 doubleValue,
                 prop1,
                 prop2 ?? new ChangeTrackingList<int>(),

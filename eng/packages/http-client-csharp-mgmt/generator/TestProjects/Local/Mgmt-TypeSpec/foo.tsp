@@ -35,7 +35,7 @@ model FooProperties {
   /** float value */
   floatValue?: float32;
 
-  bytesValue?: bytes;
+  bytesArrayValue?: bytes[];
 
   /** double value */
   doubleValue?: float64;

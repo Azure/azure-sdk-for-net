@@ -127,7 +127,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="something"> something. </param>
         /// <param name="boolValue"> boolean value. </param>
         /// <param name="floatValue"> float value. </param>
-        /// <param name="bytesValue"> Gets or sets the BytesValue. </param>
+        /// <param name="bytesArrayValue"> Gets the BytesArrayValue. </param>
         /// <param name="doubleValue"> double value. </param>
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets the Prop2. </param>
@@ -139,7 +139,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, BinaryData bytesValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, IEnumerable<BinaryData> bytesArrayValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -151,12 +151,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                serviceUri is null && something is null && boolValue is null && floatValue is null && bytesValue is null && doubleValue is null && prop1 is null && prop2 is null && etag is null && writableSubResourceProp is null && nestedPropertyProperties is null && flattenedProperty is null ? default : new FooProperties(
+                serviceUri is null && something is null && boolValue is null && floatValue is null && bytesArrayValue is null && doubleValue is null && prop1 is null && prop2 is null && etag is null && writableSubResourceProp is null && nestedPropertyProperties is null && flattenedProperty is null ? default : new FooProperties(
                     serviceUri,
                     something,
                     boolValue,
                     floatValue,
-                    bytesValue,
+                    (bytesArrayValue ?? new ChangeTrackingList<BinaryData>()).ToList(),
                     doubleValue,
                     (prop1 ?? new ChangeTrackingList<string>()).ToList(),
                     (prop2 ?? new ChangeTrackingList<int>()).ToList(),
@@ -173,7 +173,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="something"> something. </param>
         /// <param name="boolValue"> boolean value. </param>
         /// <param name="floatValue"> float value. </param>
-        /// <param name="bytesValue"></param>
+        /// <param name="bytesArrayValue"></param>
         /// <param name="doubleValue"> double value. </param>
         /// <param name="prop1"></param>
         /// <param name="prop2"></param>
@@ -183,8 +183,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, BinaryData bytesValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, IEnumerable<BinaryData> bytesArrayValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default)
         {
+            bytesArrayValue ??= new ChangeTrackingList<BinaryData>();
             prop1 ??= new ChangeTrackingList<string>();
             prop2 ??= new ChangeTrackingList<int>();
 
@@ -193,7 +194,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 something,
                 boolValue,
                 floatValue,
-                bytesValue,
+                bytesArrayValue.ToList(),
                 doubleValue,
                 prop1.ToList(),
                 prop2.ToList(),
