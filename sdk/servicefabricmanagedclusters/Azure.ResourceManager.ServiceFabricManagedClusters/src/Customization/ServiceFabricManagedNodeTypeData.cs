@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
@@ -18,6 +19,40 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             get
             {
                 return Properties is null ? default : Properties.VmManagedIdentityUserAssignedIdentities;
+            }
+        }
+
+        /// <summary> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </summary>
+        public bool? IsPrimary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPrimary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.IsPrimary = value.Value;
+            }
+        }
+
+        /// <summary> The number of nodes in the node type. **Values:** -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </summary>
+        public int? VmInstanceCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmInstanceCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.VmInstanceCount = value.Value;
             }
         }
     }

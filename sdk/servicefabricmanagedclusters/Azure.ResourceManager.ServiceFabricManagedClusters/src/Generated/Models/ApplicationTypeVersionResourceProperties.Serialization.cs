@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (prop.NameEquals("appPackageUrl"u8))
                 {
-                    appPackageUri = new Uri(prop.Value.GetString());
+                    appPackageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

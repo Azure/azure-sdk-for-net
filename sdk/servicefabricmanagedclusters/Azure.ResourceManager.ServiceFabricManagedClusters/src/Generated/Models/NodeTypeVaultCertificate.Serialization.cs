@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 if (prop.NameEquals("certificateUrl"u8))
                 {
-                    certificateUri = new Uri(prop.Value.GetString());
+                    certificateUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("certificateStore"u8))

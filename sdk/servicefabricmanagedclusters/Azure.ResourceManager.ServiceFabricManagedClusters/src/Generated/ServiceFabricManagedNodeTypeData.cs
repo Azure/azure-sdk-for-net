@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="properties"> The node type properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The node type sku. </param>
-        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NodeTypeProperties properties, IDictionary<string, string> tags, NodeTypeSku sku) : base(id, name, resourceType, systemData)
+        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceFabricManagedNodeTypeProperties properties, IDictionary<string, string> tags, NodeTypeSku sku) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -43,47 +43,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary> The node type properties. </summary>
-        internal NodeTypeProperties Properties { get; set; }
+        internal ServiceFabricManagedNodeTypeProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The node type sku. </summary>
         public NodeTypeSku Sku { get; set; }
-
-        /// <summary> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </summary>
-        public bool IsPrimary
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsPrimary;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NodeTypeProperties();
-                }
-                Properties.IsPrimary = value;
-            }
-        }
-
-        /// <summary> The number of nodes in the node type. **Values:** -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </summary>
-        public int VmInstanceCount
-        {
-            get
-            {
-                return Properties is null ? default : Properties.VmInstanceCount;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NodeTypeProperties();
-                }
-                Properties.VmInstanceCount = value;
-            }
-        }
 
         /// <summary> Disk size for the managed disk attached to the vms on the node type in GBs. </summary>
         public int? DataDiskSizeInGB
@@ -96,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.DataDiskSizeInGB = value.Value;
             }
@@ -113,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.DataDiskType = value.Value;
             }
@@ -130,7 +96,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.DataDiskLetter = value;
             }
@@ -165,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.ApplicationPorts = value;
             }
@@ -182,7 +148,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.EphemeralPorts = value;
             }
@@ -199,7 +165,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.VmSize = value;
             }
@@ -216,7 +182,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.VmImagePublisher = value;
             }
@@ -233,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.VmImageOffer = value;
             }
@@ -250,7 +216,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.VmImageSku = value;
             }
@@ -267,7 +233,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.VmImageVersion = value;
             }
@@ -302,7 +268,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.IsStateless = value.Value;
             }
@@ -319,7 +285,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.HasMultiplePlacementGroups = value.Value;
             }
@@ -363,7 +329,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.IsEncryptionAtHostEnabled = value.Value;
             }
@@ -389,7 +355,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.IsAcceleratedNetworkingEnabled = value.Value;
             }
@@ -406,7 +372,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.UseDefaultPublicLoadBalancer = value.Value;
             }
@@ -423,7 +389,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.UseTempDataDisk = value.Value;
             }
@@ -440,7 +406,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.IsOverProvisioningEnabled = value.Value;
             }
@@ -466,7 +432,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.IsSpotVm = value.Value;
             }
@@ -483,7 +449,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.HostGroupId = value;
             }
@@ -500,7 +466,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.UseEphemeralOSDisk = value.Value;
             }
@@ -517,7 +483,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.SpotRestoreTimeout = value;
             }
@@ -534,7 +500,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.EvictionPolicy = value.Value;
             }
@@ -551,7 +517,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.VmImageResourceId = value;
             }
@@ -568,7 +534,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.SubnetId = value;
             }
@@ -594,7 +560,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.SecurityType = value.Value;
             }
@@ -611,7 +577,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.SecurityEncryptionType = value.Value;
             }
@@ -628,7 +594,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.IsSecureBootEnabled = value.Value;
             }
@@ -645,7 +611,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.IsNodePublicIPEnabled = value.Value;
             }
@@ -662,7 +628,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.IsNodePublicIPv6Enabled = value.Value;
             }
@@ -679,7 +645,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.VmSharedGalleryImageId = value;
             }
@@ -696,7 +662,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.NatGatewayId = value;
             }
@@ -722,7 +688,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.VmImagePlan = value;
             }
@@ -739,7 +705,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.ServiceArtifactReferenceId = value;
             }
@@ -756,7 +722,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.DscpConfigurationId = value;
             }
@@ -782,7 +748,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.ComputerNamePrefix = value;
             }
@@ -808,7 +774,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.IsZoneBalanceEnabled = value.Value;
             }
@@ -825,7 +791,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (Properties is null)
                 {
-                    Properties = new NodeTypeProperties();
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
                 Properties.IsOutboundOnly = value.Value;
             }

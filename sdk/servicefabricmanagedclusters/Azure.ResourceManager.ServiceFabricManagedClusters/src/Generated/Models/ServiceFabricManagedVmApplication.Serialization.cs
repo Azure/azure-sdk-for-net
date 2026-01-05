@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    configurationReference = new Uri(prop.Value.GetString());
+                    configurationReference = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpgrade"u8))

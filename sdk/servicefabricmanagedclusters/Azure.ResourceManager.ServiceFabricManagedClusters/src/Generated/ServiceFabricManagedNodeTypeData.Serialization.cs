@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            NodeTypeProperties properties = default;
+            ServiceFabricManagedNodeTypeProperties properties = default;
             IDictionary<string, string> tags = default;
             NodeTypeSku sku = default;
             foreach (var prop in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         continue;
                     }
-                    properties = NodeTypeProperties.DeserializeNodeTypeProperties(prop.Value, options);
+                    properties = ServiceFabricManagedNodeTypeProperties.DeserializeServiceFabricManagedNodeTypeProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
