@@ -101,7 +101,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    uri = new Uri(prop.Value.GetString());
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

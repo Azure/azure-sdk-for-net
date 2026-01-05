@@ -122,7 +122,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    taskUri = new Uri(prop.Value.GetString());
+                    taskUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))

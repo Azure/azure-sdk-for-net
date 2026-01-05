@@ -164,7 +164,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    taskRootDirectoryUri = new Uri(prop.Value.GetString());
+                    taskRootDirectoryUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("exitCode"u8))

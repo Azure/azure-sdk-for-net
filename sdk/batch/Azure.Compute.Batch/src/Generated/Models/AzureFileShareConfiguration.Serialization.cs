@@ -113,7 +113,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("azureFileUrl"u8))
                 {
-                    azureFileUri = new Uri(prop.Value.GetString());
+                    azureFileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("relativeMountPath"u8))

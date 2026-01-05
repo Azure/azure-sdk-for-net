@@ -125,7 +125,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    nodeUri = new Uri(prop.Value.GetString());
+                    nodeUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("poolId"u8))
@@ -149,7 +149,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    taskRootDirectoryUri = new Uri(prop.Value.GetString());
+                    taskRootDirectoryUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
