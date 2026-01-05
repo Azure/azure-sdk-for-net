@@ -386,10 +386,10 @@
 # ServiceOwners:                                                   @drishtipeshwani09
 
 # PRLabel: %Container Registry
-/sdk/containerregistry/                                            @Azure/azsdk-acr
+/sdk/containerregistry/                                            @Azure/azure-sdk-write-acr
 
 # ServiceLabel: %Container Registry
-# ServiceOwners:                                                   @toddysm @Azure/azsdk-acr
+# ServiceOwners:                                                   @Azure/azure-sdk-write-acr
 
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
