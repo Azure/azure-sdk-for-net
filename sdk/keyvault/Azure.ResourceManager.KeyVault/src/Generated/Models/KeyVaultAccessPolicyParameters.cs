@@ -64,10 +64,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 return Properties.AccessPolicies;
             }
-            set
-            {
-                Properties = new KeyVaultAccessPolicyProperties(value);
-            }
         }
     }
 }

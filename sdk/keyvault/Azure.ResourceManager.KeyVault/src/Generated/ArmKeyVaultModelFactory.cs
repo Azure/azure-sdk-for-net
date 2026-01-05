@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the vault. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="KeyVault.KeyVaultData"/> instance for mocking. </returns>
-        public static KeyVaultData KeyVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KeyVaultProperties properties = default, IDictionary<string, string> tags = default, AzureLocation? location = default)
+        public static KeyVaultData KeyVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, KeyVaultProperties properties = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.KeyVault.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                location,
                 properties,
-                tags,
-                location);
+                tags);
         }
 
         /// <summary> Properties of the vault. </summary>
@@ -323,13 +323,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the managed HSM. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the managed HSM. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="identity"> Managed service identity. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="KeyVault.ManagedHsmData"/> instance for mocking. </returns>
-        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedHsmProperties properties = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default)
+        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ManagedHsmProperties properties = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -339,11 +339,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties,
-                tags,
                 location,
+                properties,
                 sku,
-                identity);
+                identity,
+                tags);
         }
 
         /// <summary> Properties of the managed HSM Pool. </summary>

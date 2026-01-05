@@ -4,9 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
