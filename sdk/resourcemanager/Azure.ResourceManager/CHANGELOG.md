@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Bumped api-version of `ManagementGroup` to `2023-04-01`.
+
 ### Breaking Changes
 
 ### Bugs Fixed

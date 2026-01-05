@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> A Kubernetes add-on profile for a managed cluster. </summary>
+    /// <summary>
+    /// A Kubernetes add-on profile for a managed cluster.
+    /// Serialized Name: ManagedClusterAddonProfile
+    /// </summary>
     public partial class ManagedClusterAddonProfile
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAddonProfile"/>. </summary>
-        /// <param name="isEnabled"> Whether the add-on is enabled or not. </param>
+        /// <param name="isEnabled">
+        /// Whether the add-on is enabled or not.
+        /// Serialized Name: ManagedClusterAddonProfile.enabled
+        /// </param>
         public ManagedClusterAddonProfile(bool isEnabled)
         {
             IsEnabled = isEnabled;
@@ -54,9 +60,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAddonProfile"/>. </summary>
-        /// <param name="isEnabled"> Whether the add-on is enabled or not. </param>
-        /// <param name="config"> Key-value pairs for configuring an add-on. </param>
-        /// <param name="identity"> Information of user assigned identity used by this add-on. </param>
+        /// <param name="isEnabled">
+        /// Whether the add-on is enabled or not.
+        /// Serialized Name: ManagedClusterAddonProfile.enabled
+        /// </param>
+        /// <param name="config">
+        /// Key-value pairs for configuring an add-on.
+        /// Serialized Name: ManagedClusterAddonProfile.config
+        /// </param>
+        /// <param name="identity">
+        /// Information of user assigned identity used by this add-on.
+        /// Serialized Name: ManagedClusterAddonProfile.identity
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterAddonProfile(bool isEnabled, IDictionary<string, string> config, ManagedClusterAddonProfileIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,13 +86,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> Whether the add-on is enabled or not. </summary>
+        /// <summary>
+        /// Whether the add-on is enabled or not.
+        /// Serialized Name: ManagedClusterAddonProfile.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool IsEnabled { get; set; }
-        /// <summary> Key-value pairs for configuring an add-on. </summary>
+        /// <summary>
+        /// Key-value pairs for configuring an add-on.
+        /// Serialized Name: ManagedClusterAddonProfile.config
+        /// </summary>
         [WirePath("config")]
         public IDictionary<string, string> Config { get; }
-        /// <summary> Information of user assigned identity used by this add-on. </summary>
+        /// <summary>
+        /// Information of user assigned identity used by this add-on.
+        /// Serialized Name: ManagedClusterAddonProfile.identity
+        /// </summary>
         [WirePath("identity")]
         public ManagedClusterAddonProfileIdentity Identity { get; }
     }

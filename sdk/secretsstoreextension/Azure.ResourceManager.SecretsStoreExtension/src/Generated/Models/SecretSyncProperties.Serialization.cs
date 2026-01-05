@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecretsStoreExtension;
 
 namespace Azure.ResourceManager.SecretsStoreExtension.Models
 {
-    public partial class SecretSyncProperties : IUtf8JsonSerializable, IJsonModel<SecretSyncProperties>
+    /// <summary> The properties of the SecretSync instance. </summary>
+    public partial class SecretSyncProperties : IJsonModel<SecretSyncProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretSyncProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SecretSyncProperties"/> for deserialization. </summary>
+        internal SecretSyncProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecretSyncProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecretSyncProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecretSyncProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("secretProviderClassName"u8);
             writer.WriteStringValue(SecretProviderClassName);
             writer.WritePropertyName("serviceAccountName"u8);
@@ -47,7 +52,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             }
             writer.WritePropertyName("objectSecretMapping"u8);
             writer.WriteStartArray();
-            foreach (var item in ObjectSecretMapping)
+            foreach (KubernetesSecretObjectMapping item in ObjectSecretMapping)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -62,15 +67,15 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -79,22 +84,27 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             }
         }
 
-        SecretSyncProperties IJsonModel<SecretSyncProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecretSyncProperties IJsonModel<SecretSyncProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SecretSyncProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecretSyncProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecretSyncProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecretSyncProperties(document.RootElement, options);
         }
 
-        internal static SecretSyncProperties DeserializeSecretSyncProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecretSyncProperties DeserializeSecretSyncProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,64 +116,62 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             IList<KubernetesSecretObjectMapping> objectSecretMapping = default;
             SecretSyncStatus status = default;
             SecretsStoreExtensionProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("secretProviderClassName"u8))
+                if (prop.NameEquals("secretProviderClassName"u8))
                 {
-                    secretProviderClassName = property.Value.GetString();
+                    secretProviderClassName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceAccountName"u8))
+                if (prop.NameEquals("serviceAccountName"u8))
                 {
-                    serviceAccountName = property.Value.GetString();
+                    serviceAccountName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kubernetesSecretType"u8))
+                if (prop.NameEquals("kubernetesSecretType"u8))
                 {
-                    kubernetesSecretType = new KubernetesSecretType(property.Value.GetString());
+                    kubernetesSecretType = new KubernetesSecretType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("forceSynchronization"u8))
+                if (prop.NameEquals("forceSynchronization"u8))
                 {
-                    forceSynchronization = property.Value.GetString();
+                    forceSynchronization = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectSecretMapping"u8))
+                if (prop.NameEquals("objectSecretMapping"u8))
                 {
                     List<KubernetesSecretObjectMapping> array = new List<KubernetesSecretObjectMapping>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(KubernetesSecretObjectMapping.DeserializeKubernetesSecretObjectMapping(item, options));
                     }
                     objectSecretMapping = array;
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = SecretSyncStatus.DeserializeSecretSyncStatus(property.Value, options);
+                    status = SecretSyncStatus.DeserializeSecretSyncStatus(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new SecretsStoreExtensionProvisioningState(property.Value.GetString());
+                    provisioningState = new SecretsStoreExtensionProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SecretSyncProperties(
                 secretProviderClassName,
                 serviceAccountName,
@@ -172,13 +180,16 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 objectSecretMapping,
                 status,
                 provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SecretSyncProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecretSyncProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecretSyncProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -188,15 +199,20 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             }
         }
 
-        SecretSyncProperties IPersistableModel<SecretSyncProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecretSyncProperties IPersistableModel<SecretSyncProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SecretSyncProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecretSyncProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecretSyncProperties(document.RootElement, options);
                     }
                 default:
@@ -204,6 +220,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SecretSyncProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

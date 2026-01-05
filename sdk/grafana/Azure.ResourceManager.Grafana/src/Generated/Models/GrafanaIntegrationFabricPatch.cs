@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> The parameters for a PATCH request to a Integration Fabric resource. </summary>
     public partial class GrafanaIntegrationFabricPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GrafanaIntegrationFabricPatch"/>. </summary>
         public GrafanaIntegrationFabricPatch()
@@ -54,25 +26,29 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of <see cref="GrafanaIntegrationFabricPatch"/>. </summary>
         /// <param name="tags"> The new tags of the Integration Fabric resource. </param>
         /// <param name="properties"> The new properties of this Integration Fabric resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaIntegrationFabricPatch(IDictionary<string, string> tags, IntegrationFabricPropertiesUpdateParameters properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaIntegrationFabricPatch(IDictionary<string, string> tags, IntegrationFabricPropertiesUpdateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The new tags of the Integration Fabric resource. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The new properties of this Integration Fabric resource. </summary>
         internal IntegrationFabricPropertiesUpdateParameters Properties { get; set; }
+
         /// <summary> The new integration scenarios covered by this integration fabric. </summary>
         public IList<string> IntegrationFabricPropertiesUpdateParametersScenarios
         {
             get
             {
                 if (Properties is null)
+                {
                     Properties = new IntegrationFabricPropertiesUpdateParameters();
+                }
                 return Properties.Scenarios;
             }
         }

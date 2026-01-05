@@ -90,6 +90,12 @@ namespace Azure.Generator.Management.Utilities
                     return expression.InvokeToString();
                 }
 
+                // Convert ResourceIdentifier to string by calling ToString()
+                if (fromType.Equals(typeof(ResourceIdentifier)) && toType.IsFrameworkType && toType.FrameworkType == typeof(string))
+                {
+                    return expression.InvokeToString();
+                }
+
                 // other unhandled cases, we will add when we need them in the future.
                 return expression;
             }

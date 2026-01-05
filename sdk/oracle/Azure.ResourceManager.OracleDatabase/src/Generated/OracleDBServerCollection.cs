@@ -8,85 +8,92 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
     /// A class representing a collection of <see cref="OracleDBServerResource"/> and their operations.
     /// Each <see cref="OracleDBServerResource"/> in the collection will belong to the same instance of <see cref="CloudExadataInfrastructureResource"/>.
-    /// To get an <see cref="OracleDBServerCollection"/> instance call the GetOracleDBServers method from an instance of <see cref="CloudExadataInfrastructureResource"/>.
+    /// To get a <see cref="OracleDBServerCollection"/> instance call the GetOracleDBServers method from an instance of <see cref="CloudExadataInfrastructureResource"/>.
     /// </summary>
     public partial class OracleDBServerCollection : ArmCollection, IEnumerable<OracleDBServerResource>, IAsyncEnumerable<OracleDBServerResource>
     {
-        private readonly ClientDiagnostics _oracleDBServerDbServersClientDiagnostics;
-        private readonly DbServersRestOperations _oracleDBServerDbServersRestClient;
+        private readonly ClientDiagnostics _dbServersClientDiagnostics;
+        private readonly DbServers _dbServersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="OracleDBServerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OracleDBServerCollection for mocking. </summary>
         protected OracleDBServerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OracleDBServerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleDBServerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OracleDBServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _oracleDBServerDbServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBServerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OracleDBServerResource.ResourceType, out string oracleDBServerDbServersApiVersion);
-            _oracleDBServerDbServersRestClient = new DbServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBServerDbServersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(OracleDBServerResource.ResourceType, out string oracleDBServerApiVersion);
+            _dbServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBServerResource.ResourceType.Namespace, Diagnostics);
+            _dbServersRestClient = new DbServers(_dbServersClientDiagnostics, Pipeline, Endpoint, oracleDBServerApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != CloudExadataInfrastructureResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CloudExadataInfrastructureResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CloudExadataInfrastructureResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a DbServer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbServers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbserverocid"> DbServer OCID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dbserverocid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OracleDBServerResource>> GetAsync(string dbserverocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Get");
+            using DiagnosticScope scope = _dbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _oracleDBServerDbServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dbServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dbserverocid, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleDBServerData> response = Response.FromValue(OracleDBServerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleDBServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a DbServer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbServers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbserverocid"> DbServer OCID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dbserverocid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OracleDBServerResource> Get(string dbserverocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Get");
+            using DiagnosticScope scope = _dbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Get");
             scope.Start();
             try
             {
-                var response = _oracleDBServerDbServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dbServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dbserverocid, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleDBServerData> response = Response.FromValue(OracleDBServerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleDBServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,44 @@ namespace Azure.ResourceManager.OracleDatabase
         /// List DbServer resources by CloudExadataInfrastructure
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbServer_ListByParent</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbServers_ListByParent. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OracleDBServerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OracleDBServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OracleDBServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBServerDbServersRestClient.CreateListByParentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBServerDbServersRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleDBServerResource(Client, OracleDBServerData.DeserializeOracleDBServerData(e)), _oracleDBServerDbServersClientDiagnostics, Pipeline, "OracleDBServerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OracleDBServerData, OracleDBServerResource>(new DbServersGetByParentAsyncCollectionResultOfT(_dbServersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new OracleDBServerResource(Client, data));
         }
 
         /// <summary>
         /// List DbServer resources by CloudExadataInfrastructure
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbServer_ListByParent</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbServers_ListByParent. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +201,61 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> A collection of <see cref="OracleDBServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OracleDBServerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBServerDbServersRestClient.CreateListByParentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBServerDbServersRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleDBServerResource(Client, OracleDBServerData.DeserializeOracleDBServerData(e)), _oracleDBServerDbServersClientDiagnostics, Pipeline, "OracleDBServerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OracleDBServerData, OracleDBServerResource>(new DbServersGetByParentCollectionResultOfT(_dbServersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new OracleDBServerResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbServers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbserverocid"> DbServer OCID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dbserverocid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dbserverocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Exists");
+            using DiagnosticScope scope = _dbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _oracleDBServerDbServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dbServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dbserverocid, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OracleDBServerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleDBServerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleDBServerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +269,50 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbServers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbserverocid"> DbServer OCID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dbserverocid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string dbserverocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Exists");
+            using DiagnosticScope scope = _dbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _oracleDBServerDbServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dbServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dbserverocid, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OracleDBServerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleDBServerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleDBServerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +326,54 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbServers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbserverocid"> DbServer OCID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dbserverocid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<OracleDBServerResource>> GetIfExistsAsync(string dbserverocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.GetIfExists");
+            using DiagnosticScope scope = _dbServersClientDiagnostics.CreateScope("OracleDBServerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _oracleDBServerDbServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dbServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dbserverocid, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OracleDBServerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleDBServerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleDBServerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleDBServerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleDBServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +387,54 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}/dbServers/{dbserverocid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbServers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbserverocid"> DbServer OCID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dbserverocid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<OracleDBServerResource> GetIfExists(string dbserverocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.GetIfExists");
+            using DiagnosticScope scope = _dbServersClientDiagnostics.CreateScope("OracleDBServerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _oracleDBServerDbServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dbServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dbserverocid, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OracleDBServerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleDBServerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleDBServerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleDBServerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleDBServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +454,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OracleDBServerResource> IAsyncEnumerable<OracleDBServerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -22,12 +22,12 @@
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
 
     <!--
-        For API compat checks, libraries that don't release often are likely to not have the new LTS target,
+        For API compat checks, libraries that don't release often are likely to not have newer targets,
         but will always have a baseline.  Since the guidelines require that the API surface be the same accross
         all supported targets, we can use the baseline for API compat checks to avoid breaking builds.
     -->
-    <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND $(RequiredRunnableTargetFrameworks.Contains('$(TargetFramework)')) AND '$(SupportsNetStandard20)' == 'true'">$(ApiCompatStandardTargetFramework)</ApiCompatBaselineTargetFramework>
-    <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(TargetFramework)' == '$(LtsTargetFramework)' AND '$(SupportsNetStandard20)' != 'true'">$(ApiCompatRunnableTargetFramework)</ApiCompatBaselineTargetFramework>
+    <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(SupportsNetStandard20)' == 'true'">$(ApiCompatStandardTargetFramework)</ApiCompatBaselineTargetFramework>
+    <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(SupportsNetStandard20)' != 'true'">$(ApiCompatRunnableTargetFramework)</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' == 'false' and '$(AotAnalyzersOptOut)' == 'false'">
@@ -176,6 +176,7 @@
     <PackageReference Remove="Microsoft.CSharp" />
     <PackageReference Remove="System.Formats.Asn1" />
     <PackageReference Remove="System.Linq.Async" />
+    <PackageReference Remove="System.Linq.AsyncEnumerable" />
     <PackageReference Remove="System.IO.Compression" />
     <PackageReference Remove="System.Net.WebSockets.Client" />
     <PackageReference Remove="System.Reflection.Emit" />

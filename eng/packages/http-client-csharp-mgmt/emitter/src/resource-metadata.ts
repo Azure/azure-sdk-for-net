@@ -114,7 +114,66 @@ export enum ResourceOperationKind {
   Action = "Action",
   Create = "Create",
   Delete = "Delete",
-  Get = "Get",
+  Read = "Read",
   List = "List",
   Update = "Update"
+}
+
+/**
+ * Represents a resource in the ARM provider schema.
+ */
+export interface ArmResourceSchema {
+  /**
+   * The cross-language definition ID of the resource model
+   */
+  resourceModelId: string;
+  /**
+   * The resource metadata containing all information about the resource
+   */
+  metadata: ResourceMetadata;
+}
+
+/**
+ * Represents the complete ARM provider schema containing all resources and non-resource methods.
+ */
+export interface ArmProviderSchema {
+  /**
+   * All resources in the ARM provider
+   */
+  resources: ArmResourceSchema[];
+  /**
+   * All non-resource methods in the ARM provider
+   */
+  nonResourceMethods: NonResourceMethod[];
+}
+
+/**
+ * Converts ArmProviderSchema to decorator arguments.
+ */
+export function convertArmProviderSchemaToArguments(
+  schema: ArmProviderSchema
+): Record<string, any> {
+  return {
+    resources: schema.resources.map((r) => ({
+      resourceModelId: r.resourceModelId,
+      resourceIdPattern: r.metadata.resourceIdPattern,
+      resourceType: r.metadata.resourceType,
+      methods: r.metadata.methods.map((m) => ({
+        methodId: m.methodId,
+        kind: m.kind,
+        operationPath: m.operationPath,
+        operationScope: m.operationScope,
+        resourceScope: m.resourceScope
+      })),
+      resourceScope: r.metadata.resourceScope,
+      parentResourceId: r.metadata.parentResourceId,
+      singletonResourceName: r.metadata.singletonResourceName,
+      resourceName: r.metadata.resourceName
+    })),
+    nonResourceMethods: schema.nonResourceMethods.map((m) => ({
+      methodId: m.methodId,
+      operationPath: m.operationPath,
+      operationScope: m.operationScope
+    }))
+  };
 }
