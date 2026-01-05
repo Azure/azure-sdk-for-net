@@ -72,8 +72,8 @@ namespace System.ClientModel
     }
     public static partial class ConfigurationManagerExtensions
     {
-        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.ClientSettings, new() { throw null; }
-        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfigurationSection section) where T : System.ClientModel.ClientSettings, new() { throw null; }
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettingsBase, new() { throw null; }
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfigurationSection section) where T : System.ClientModel.Primitives.ClientSettingsBase, new() { throw null; }
         public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
         public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName, System.ClientModel.AuthenticationTokenProvider tokenProvider) { throw null; }
     }

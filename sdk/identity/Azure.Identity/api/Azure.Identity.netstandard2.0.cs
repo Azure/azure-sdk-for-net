@@ -185,17 +185,9 @@ namespace Azure.Identity
     {
         public static T WithAzureCredential<T>(this T settings) where T : System.ClientModel.Primitives.ClientSettingsBase { throw null; }
     }
-    public partial class ConfigurableCredential : Azure.Core.TokenCredential
-    {
-        public ConfigurableCredential() { }
-        public ConfigurableCredential(Microsoft.Extensions.Configuration.IConfigurationSection configurationSection) { }
-        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
     public static partial class ConfigurationManagerExtensions
     {
         public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettingsBase, new() { throw null; }
-        public static System.ClientModel.Primitives.ClientConnection GetAzureConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
     {
