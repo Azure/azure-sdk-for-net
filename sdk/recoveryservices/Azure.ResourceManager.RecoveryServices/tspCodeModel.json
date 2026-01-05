@@ -6803,22 +6803,15 @@
               {
                 "$id": "512",
                 "kind": "property",
-                "name": "certificate",
+                "name": "CertificateData",
                 "serializedName": "certificate",
                 "doc": "The base64 encoded certificate raw data string",
                 "type": {
                   "$id": "513",
-                  "kind": "array",
-                  "name": "Array1",
-                  "valueType": {
-                    "$id": "514",
-                    "kind": "bytes",
-                    "name": "bytes",
-                    "encode": "base64",
-                    "crossLanguageDefinitionId": "TypeSpec.bytes",
-                    "decorators": []
-                  },
-                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "kind": "bytes",
+                  "name": "bytes",
+                  "encode": "base64",
+                  "crossLanguageDefinitionId": "TypeSpec.bytes",
                   "decorators": []
                 },
                 "optional": true,
@@ -6855,7 +6848,7 @@
       "$ref": "510"
     },
     {
-      "$id": "515",
+      "$id": "514",
       "kind": "model",
       "name": "VaultCertificateResult",
       "namespace": "Azure.ResourceManager.RecoveryServices",
@@ -6870,13 +6863,13 @@
       ],
       "properties": [
         {
-          "$id": "516",
+          "$id": "515",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "Resource name associated with the resource.",
           "type": {
-            "$id": "517",
+            "$id": "516",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6896,13 +6889,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "518",
+          "$id": "517",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
           "doc": "Resource type represents the complete path of the form Namespace/ResourceType/ResourceType/...",
           "type": {
-            "$id": "519",
+            "$id": "518",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6922,13 +6915,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "520",
+          "$id": "519",
           "kind": "property",
           "name": "id",
           "serializedName": "id",
           "doc": "Resource Id represents the complete path to the resource.",
           "type": {
-            "$id": "521",
+            "$id": "520",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6948,13 +6941,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "522",
+          "$id": "521",
           "kind": "property",
           "name": "properties",
           "serializedName": "properties",
           "doc": "Certificate details representing the Vault credentials.",
           "type": {
-            "$id": "523",
+            "$id": "522",
             "kind": "model",
             "name": "ResourceCertificateDetails",
             "namespace": "Azure.ResourceManager.RecoveryServices",
@@ -6968,13 +6961,13 @@
               }
             ],
             "discriminatorProperty": {
-              "$id": "524",
+              "$id": "523",
               "kind": "property",
               "name": "authType",
               "serializedName": "authType",
               "doc": "This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.",
               "type": {
-                "$id": "525",
+                "$id": "524",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6995,16 +6988,21 @@
             },
             "properties": [
               {
-                "$ref": "524"
+                "$ref": "523"
               },
               {
-                "$id": "526",
+                "$id": "525",
                 "kind": "property",
-                "name": "certificate",
+                "name": "CertificateData",
                 "serializedName": "certificate",
                 "doc": "The base64 encoded certificate raw data string.",
                 "type": {
-                  "$ref": "513"
+                  "$id": "526",
+                  "kind": "bytes",
+                  "name": "bytes",
+                  "encode": "base64",
+                  "crossLanguageDefinitionId": "TypeSpec.bytes",
+                  "decorators": []
                 },
                 "optional": true,
                 "readOnly": false,
@@ -7235,7 +7233,7 @@
                   }
                 ],
                 "baseModel": {
-                  "$ref": "523"
+                  "$ref": "522"
                 },
                 "properties": [
                   {
@@ -7474,7 +7472,7 @@
                   }
                 ],
                 "baseModel": {
-                  "$ref": "523"
+                  "$ref": "522"
                 },
                 "properties": [
                   {
@@ -7597,7 +7595,7 @@
       ]
     },
     {
-      "$ref": "523"
+      "$ref": "522"
     },
     {
       "$ref": "543"
@@ -20203,7 +20201,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "515"
+                      "$ref": "514"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -20347,7 +20345,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "515"
+                  "$ref": "514"
                 }
               },
               "isOverride": false,

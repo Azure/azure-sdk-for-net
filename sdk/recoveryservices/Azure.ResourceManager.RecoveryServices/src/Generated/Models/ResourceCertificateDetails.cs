@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceCertificateDetails"/>. </summary>
         /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
+        /// <param name="certificateData"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="resourceId"> Resource ID of the vault. </param>
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="validStartOn"> Certificate Validity start Date time. </param>
         /// <param name="validEndOn"> Certificate Validity End Date time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceCertificateDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceCertificateDetails(string authType, BinaryData certificateData, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthType = authType;
-            Certificate = certificate;
+            CertificateData = certificateData;
             FriendlyName = friendlyName;
             Issuer = issuer;
             ResourceId = resourceId;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary>
         /// The base64 encoded certificate raw data string.
         /// <para>
-        /// To assign a byte[] to the element of this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
         /// The byte[] will be serialized to a Base64 encoded string.
         /// </para>
         /// <para>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </list>
         /// </para>
         /// </summary>
-        public byte[] Certificate { get; }
+        public BinaryData CertificateData { get; }
 
         /// <summary> Certificate friendly name. </summary>
         public string FriendlyName { get; }

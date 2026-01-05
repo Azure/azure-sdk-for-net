@@ -39,15 +39,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType);
-            if (Optional.IsDefined(Certificate))
+            if (Optional.IsDefined(CertificateData))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteStartArray();
-                foreach (byte item in Certificate)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteBase64StringValue(CertificateData.ToArray(), "D");
             }
             if (Optional.IsDefined(FriendlyName))
             {

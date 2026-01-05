@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             string authType = "AccessControlService";
-            byte[] certificate = default;
+            BinaryData certificateData = default;
             string friendlyName = default;
             string issuer = default;
             long? resourceId = default;
@@ -99,12 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    List<byte> array = new List<byte>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetByte());
-                    }
-                    certificate = array;
+                    certificateData = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (prop.NameEquals("friendlyName"u8))
@@ -180,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             return new ResourceCertificateAndAcsDetails(
                 authType,
-                certificate,
+                certificateData,
                 friendlyName,
                 issuer,
                 resourceId,

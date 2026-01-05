@@ -39,15 +39,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("authType"u8);
                 writer.WriteStringValue(AuthType.Value.ToString());
             }
-            if (Optional.IsDefined(Certificate))
+            if (Optional.IsDefined(CertificateData))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteStartArray();
-                foreach (byte item in Certificate)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteBase64StringValue(CertificateData.ToArray(), "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -92,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             RecoveryServicesAuthType? authType = default;
-            byte[] certificate = default;
+            BinaryData certificateData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -111,12 +106,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    List<byte> array = new List<byte>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetByte());
-                    }
-                    certificate = array;
+                    certificateData = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RawCertificateData(authType, certificate, additionalBinaryDataProperties);
+            return new RawCertificateData(authType, certificateData, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

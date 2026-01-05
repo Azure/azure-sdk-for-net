@@ -259,15 +259,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 etag);
         }
 
-        /// <summary> Raw certificate data. </summary>
-        /// <param name="authType"> Specifies the authentication type. </param>
-        /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
-        /// <returns> A new <see cref="Models.RawCertificateData"/> instance for mocking. </returns>
-        public static RawCertificateData RawCertificateData(RecoveryServicesAuthType? authType = default, byte[] certificate = default)
-        {
-            return new RawCertificateData(authType, certificate, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Certificate corresponding to a vault that can be used by clients to register themselves with the vault. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -291,7 +282,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceCertificateAndAadDetails"/> and <see cref="Models.ResourceCertificateAndAcsDetails"/>.
         /// </summary>
         /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
+        /// <param name="certificateData"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="resourceId"> Resource ID of the vault. </param>
@@ -300,11 +291,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="validStartOn"> Certificate Validity start Date time. </param>
         /// <param name="validEndOn"> Certificate Validity End Date time. </param>
         /// <returns> A new <see cref="Models.ResourceCertificateDetails"/> instance for mocking. </returns>
-        public static ResourceCertificateDetails ResourceCertificateDetails(string authType = default, byte[] certificate = default, string friendlyName = default, string issuer = default, long? resourceId = default, string subject = default, BinaryData thumbprint = default, DateTimeOffset? validStartOn = default, DateTimeOffset? validEndOn = default)
+        public static ResourceCertificateDetails ResourceCertificateDetails(string authType = default, BinaryData certificateData = default, string friendlyName = default, string issuer = default, long? resourceId = default, string subject = default, BinaryData thumbprint = default, DateTimeOffset? validStartOn = default, DateTimeOffset? validEndOn = default)
         {
             return new UnknownResourceCertificateDetails(
                 authType,
-                certificate,
+                certificateData,
                 friendlyName,
                 issuer,
                 resourceId,
@@ -316,7 +307,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Certificate details representing the Vault credentials for AAD. </summary>
-        /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
+        /// <param name="certificateData"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="resourceId"> Resource ID of the vault. </param>
@@ -332,11 +323,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="serviceResourceId"> Service Resource Id. </param>
         /// <param name="aadAudience"> AAD audience for the resource. </param>
         /// <returns> A new <see cref="Models.ResourceCertificateAndAadDetails"/> instance for mocking. </returns>
-        public static ResourceCertificateAndAadDetails ResourceCertificateAndAadDetails(byte[] certificate = default, string friendlyName = default, string issuer = default, long? resourceId = default, string subject = default, BinaryData thumbprint = default, DateTimeOffset? validStartOn = default, DateTimeOffset? validEndOn = default, string aadAuthority = default, Guid aadTenantId = default, string servicePrincipalClientId = default, string servicePrincipalObjectId = default, string azureManagementEndpointAudience = default, ResourceIdentifier serviceResourceId = default, string aadAudience = default)
+        public static ResourceCertificateAndAadDetails ResourceCertificateAndAadDetails(BinaryData certificateData = default, string friendlyName = default, string issuer = default, long? resourceId = default, string subject = default, BinaryData thumbprint = default, DateTimeOffset? validStartOn = default, DateTimeOffset? validEndOn = default, string aadAuthority = default, Guid aadTenantId = default, string servicePrincipalClientId = default, string servicePrincipalObjectId = default, string azureManagementEndpointAudience = default, ResourceIdentifier serviceResourceId = default, string aadAudience = default)
         {
             return new ResourceCertificateAndAadDetails(
                 "AzureActiveDirectory",
-                certificate,
+                certificateData,
                 friendlyName,
                 issuer,
                 resourceId,
@@ -355,7 +346,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Certificate details representing the Vault credentials for ACS. </summary>
-        /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
+        /// <param name="certificateData"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="resourceId"> Resource ID of the vault. </param>
@@ -367,11 +358,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="globalAcsHostName"> Acs mgmt host name to connect to. </param>
         /// <param name="globalAcsRPRealm"> Global ACS namespace RP realm. </param>
         /// <returns> A new <see cref="Models.ResourceCertificateAndAcsDetails"/> instance for mocking. </returns>
-        public static ResourceCertificateAndAcsDetails ResourceCertificateAndAcsDetails(byte[] certificate = default, string friendlyName = default, string issuer = default, long? resourceId = default, string subject = default, BinaryData thumbprint = default, DateTimeOffset? validStartOn = default, DateTimeOffset? validEndOn = default, string globalAcsNamespace = default, string globalAcsHostName = default, string globalAcsRPRealm = default)
+        public static ResourceCertificateAndAcsDetails ResourceCertificateAndAcsDetails(BinaryData certificateData = default, string friendlyName = default, string issuer = default, long? resourceId = default, string subject = default, BinaryData thumbprint = default, DateTimeOffset? validStartOn = default, DateTimeOffset? validEndOn = default, string globalAcsNamespace = default, string globalAcsHostName = default, string globalAcsRPRealm = default)
         {
             return new ResourceCertificateAndAcsDetails(
                 "AccessControlService",
-                certificate,
+                certificateData,
                 friendlyName,
                 issuer,
                 resourceId,
