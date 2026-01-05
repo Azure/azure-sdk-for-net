@@ -14,7 +14,7 @@ using Azure.ResourceManager.LambdaTestHyperExecute;
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
     /// <summary> Partner's specific Properties. </summary>
-    public partial class LambdaTestHyperExecuteOfferPartnerProperties : IJsonModel<LambdaTestHyperExecuteOfferPartnerProperties>
+    internal partial class LambdaTestHyperExecuteOfferPartnerProperties : IJsonModel<LambdaTestHyperExecuteOfferPartnerProperties>
     {
         /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOfferPartnerProperties"/> for deserialization. </summary>
         internal LambdaTestHyperExecuteOfferPartnerProperties()

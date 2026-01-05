@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.IotOperations.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsInstanceProperties"/>. </summary>
-        /// <param name="schemaRegistryRef"> The reference to the Schema Registry for this AIO Instance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryRef"/> is null. </exception>
-        public IotOperationsInstanceProperties(SchemaRegistryRef schemaRegistryRef)
+        /// <param name="schemaRegistryRefResourceId"> The resource ID of the Schema Registry. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryRefResourceId"/> is null. </exception>
+        public IotOperationsInstanceProperties(ResourceIdentifier schemaRegistryRefResourceId)
         {
-            Argument.AssertNotNull(schemaRegistryRef, nameof(schemaRegistryRef));
+            Argument.AssertNotNull(schemaRegistryRefResourceId, nameof(schemaRegistryRefResourceId));
 
-            SchemaRegistryRef = schemaRegistryRef;
+            SchemaRegistryRef = new SchemaRegistryRef(schemaRegistryRefResourceId);
             Features = new ChangeTrackingDictionary<string, IotOperationsInstanceFeature>();
         }
 

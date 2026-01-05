@@ -12,7 +12,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> DataflowEndpoint Authentication X509 properties. </summary>
-    public partial class DataflowEndpointAuthenticationX509
+    internal partial class DataflowEndpointAuthenticationX509
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
