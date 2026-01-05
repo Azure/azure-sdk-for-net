@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Network dataplane used in the Kubernetes cluster. </summary>
+    /// <summary>
+    /// Network dataplane used in the Kubernetes cluster.
+    /// Serialized Name: NetworkDataplane
+    /// </summary>
     public readonly partial struct NetworkDataplane : IEquatable<NetworkDataplane>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string AzureValue = "azure";
         private const string CiliumValue = "cilium";
 
-        /// <summary> Use Azure network dataplane. </summary>
+        /// <summary>
+        /// Use Azure network dataplane.
+        /// Serialized Name: NetworkDataplane.azure
+        /// </summary>
         public static NetworkDataplane Azure { get; } = new NetworkDataplane(AzureValue);
-        /// <summary> Use Cilium network dataplane. See [Azure CNI Powered by Cilium](https://learn.microsoft.com/azure/aks/azure-cni-powered-by-cilium) for more information. </summary>
+        /// <summary>
+        /// Use Cilium network dataplane. See [Azure CNI Powered by Cilium](https://learn.microsoft.com/azure/aks/azure-cni-powered-by-cilium) for more information.
+        /// Serialized Name: NetworkDataplane.cilium
+        /// </summary>
         public static NetworkDataplane Cilium { get; } = new NetworkDataplane(CiliumValue);
         /// <summary> Determines if two <see cref="NetworkDataplane"/> values are the same. </summary>
         public static bool operator ==(NetworkDataplane left, NetworkDataplane right) => left.Equals(right);

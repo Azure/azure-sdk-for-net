@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Enclave Virtual Network Properties. </summary>
     public partial class EnclaveVirtualNetwork
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EnclaveVirtualNetwork"/>. </summary>
         public EnclaveVirtualNetwork()
@@ -57,25 +29,29 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="customCidrRange"> Custom CIDR Range. </param>
         /// <param name="subnetConfigurations"> Subnet Configurations. </param>
         /// <param name="allowSubnetCommunication"> Allow Subnet Communication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnclaveVirtualNetwork(string networkName, string networkSize, string customCidrRange, IList<VirtualEnclaveSubnetConfiguration> subnetConfigurations, bool? allowSubnetCommunication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EnclaveVirtualNetwork(string networkName, string networkSize, string customCidrRange, IList<VirtualEnclaveSubnetConfiguration> subnetConfigurations, bool? allowSubnetCommunication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkName = networkName;
             NetworkSize = networkSize;
             CustomCidrRange = customCidrRange;
             SubnetConfigurations = subnetConfigurations;
             AllowSubnetCommunication = allowSubnetCommunication;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Network Name. </summary>
         public string NetworkName { get; set; }
+
         /// <summary> Network Size. </summary>
         public string NetworkSize { get; set; }
+
         /// <summary> Custom CIDR Range. </summary>
         public string CustomCidrRange { get; set; }
+
         /// <summary> Subnet Configurations. </summary>
         public IList<VirtualEnclaveSubnetConfiguration> SubnetConfigurations { get; }
+
         /// <summary> Allow Subnet Communication. </summary>
         public bool? AllowSubnetCommunication { get; set; }
     }

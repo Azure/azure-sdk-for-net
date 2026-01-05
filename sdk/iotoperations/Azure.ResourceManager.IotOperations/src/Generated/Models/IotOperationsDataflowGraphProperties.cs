@@ -8,50 +8,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> DataflowGraph properties. </summary>
     public partial class IotOperationsDataflowGraphProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsDataflowGraphProperties"/>. </summary>
-        /// <param name="nodes">
-        /// List of nodes in the dataflow graph.
-        /// Please note <see cref="DataflowGraphNode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataflowGraphDestinationNode"/>, <see cref="DataflowGraphGraphNode"/> and <see cref="DataflowGraphSourceNode"/>.
-        /// </param>
+        /// <param name="nodes"> List of nodes in the dataflow graph. </param>
         /// <param name="nodeConnections"> List of connections between nodes in the dataflow graph. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodes"/> or <paramref name="nodeConnections"/> is null. </exception>
         public IotOperationsDataflowGraphProperties(IEnumerable<DataflowGraphNode> nodes, IEnumerable<DataflowGraphNodeConnection> nodeConnections)
@@ -66,42 +34,38 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="IotOperationsDataflowGraphProperties"/>. </summary>
         /// <param name="mode"> The mode of the dataflow graph. </param>
         /// <param name="requestDiskPersistence"> Disk persistence mode. </param>
-        /// <param name="nodes">
-        /// List of nodes in the dataflow graph.
-        /// Please note <see cref="DataflowGraphNode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataflowGraphDestinationNode"/>, <see cref="DataflowGraphGraphNode"/> and <see cref="DataflowGraphSourceNode"/>.
-        /// </param>
+        /// <param name="nodes"> List of nodes in the dataflow graph. </param>
         /// <param name="nodeConnections"> List of connections between nodes in the dataflow graph. </param>
         /// <param name="provisioningState"> The provisioning state of the dataflow graph. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsDataflowGraphProperties(IotOperationsOperationalMode? mode, IotOperationsOperationalMode? requestDiskPersistence, IList<DataflowGraphNode> nodes, IList<DataflowGraphNodeConnection> nodeConnections, IotOperationsProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="healthState"> The health state of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotOperationsDataflowGraphProperties(IotOperationsOperationalMode? mode, IotOperationsOperationalMode? requestDiskPersistence, IList<DataflowGraphNode> nodes, IList<DataflowGraphNodeConnection> nodeConnections, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             RequestDiskPersistence = requestDiskPersistence;
             Nodes = nodes;
             NodeConnections = nodeConnections;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotOperationsDataflowGraphProperties"/> for deserialization. </summary>
-        internal IotOperationsDataflowGraphProperties()
-        {
+            HealthState = healthState;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The mode of the dataflow graph. </summary>
         public IotOperationsOperationalMode? Mode { get; set; }
+
         /// <summary> Disk persistence mode. </summary>
         public IotOperationsOperationalMode? RequestDiskPersistence { get; set; }
-        /// <summary>
-        /// List of nodes in the dataflow graph.
-        /// Please note <see cref="DataflowGraphNode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataflowGraphDestinationNode"/>, <see cref="DataflowGraphGraphNode"/> and <see cref="DataflowGraphSourceNode"/>.
-        /// </summary>
+
+        /// <summary> List of nodes in the dataflow graph. </summary>
         public IList<DataflowGraphNode> Nodes { get; }
+
         /// <summary> List of connections between nodes in the dataflow graph. </summary>
         public IList<DataflowGraphNodeConnection> NodeConnections { get; }
+
         /// <summary> The provisioning state of the dataflow graph. </summary>
         public IotOperationsProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The health state of the resource. </summary>
+        public ResourceHealthState? HealthState { get; }
     }
 }

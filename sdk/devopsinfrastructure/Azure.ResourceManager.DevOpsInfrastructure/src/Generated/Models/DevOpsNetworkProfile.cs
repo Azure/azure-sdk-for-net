@@ -7,52 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> The network profile of the machines in the pool. </summary>
     public partial class DevOpsNetworkProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevOpsNetworkProfile"/>. </summary>
-        /// <param name="subnetId"> The subnet id on which to put all machines created in the pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
-        public DevOpsNetworkProfile(string subnetId)
+        public DevOpsNetworkProfile()
         {
-            Argument.AssertNotNull(subnetId, nameof(subnetId));
-
-            SubnetId = subnetId;
             IPAddresses = new ChangeTrackingList<string>();
         }
 
@@ -60,24 +27,21 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="subnetId"> The subnet id on which to put all machines created in the pool. </param>
         /// <param name="staticIPAddressCount"> The number of static public IP addresses for outgoing connections assigned to the pool. </param>
         /// <param name="ipAddresses"> Read only. The list of static public IP addresses for outgoing connections assigned to the pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsNetworkProfile(string subnetId, int? staticIPAddressCount, IReadOnlyList<string> ipAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevOpsNetworkProfile(string subnetId, int? staticIPAddressCount, IReadOnlyList<string> ipAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetId = subnetId;
             StaticIPAddressCount = staticIPAddressCount;
             IPAddresses = ipAddresses;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevOpsNetworkProfile"/> for deserialization. </summary>
-        internal DevOpsNetworkProfile()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The subnet id on which to put all machines created in the pool. </summary>
         public string SubnetId { get; set; }
+
         /// <summary> The number of static public IP addresses for outgoing connections assigned to the pool. </summary>
         public int? StaticIPAddressCount { get; set; }
+
         /// <summary> Read only. The list of static public IP addresses for outgoing connections assigned to the pool. </summary>
         public IReadOnlyList<string> IPAddresses { get; }
     }

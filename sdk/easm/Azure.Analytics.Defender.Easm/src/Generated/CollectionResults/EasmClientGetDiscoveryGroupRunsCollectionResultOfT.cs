@@ -56,7 +56,7 @@ namespace Azure.Analytics.Defender.Easm
                 DiscoveryRunPageResult result = (DiscoveryRunPageResult)response;
                 yield return Page<DiscoveryRunResult>.FromValues((IReadOnlyList<DiscoveryRunResult>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }

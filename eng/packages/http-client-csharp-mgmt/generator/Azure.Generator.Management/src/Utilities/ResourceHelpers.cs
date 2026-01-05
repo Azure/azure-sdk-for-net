@@ -65,7 +65,7 @@ namespace Azure.Generator.Management.Utilities
                 ResourceOperationKind.Create => isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate",
                 // For List operation, only resource collections have GetAll or GetAllAsync methods.
                 ResourceOperationKind.List => !isResourceCollection ? null : isAsync ? "GetAllAsync" : "GetAll",
-                ResourceOperationKind.Get => isAsync ? "GetAsync" : "Get",
+                ResourceOperationKind.Read => isAsync ? "GetAsync" : "Get",
                 _ => null
             };
         }
