@@ -1336,6 +1336,7 @@ interface BestPracticeVersions {
     strictEqual(bestPracticeVersionsMetadata.methods.length, 3, "Should have 3 methods");
     // Note: parentResourceId is not set for legacy operations as there's no explicit @parentResource decorator
     // The parent-child relationship is inferred from the path structure in the generator
+    strictEqual(bestPracticeVersionsMetadata.parentResourceId, bestPracticesMetadata.resourceIdPattern);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
