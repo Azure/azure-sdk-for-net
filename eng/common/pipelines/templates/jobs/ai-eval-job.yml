@@ -68,7 +68,7 @@ jobs:
         Paths:
           - 'tools/**'
           - 'eng/common/**'
-          - '.github/copilot-instructions.md'
+          - '.github/**'
     
     - task: AzureCLI@2
       displayName: 'Run eval'

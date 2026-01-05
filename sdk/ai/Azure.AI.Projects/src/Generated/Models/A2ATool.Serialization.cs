@@ -92,7 +92,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    baseUrl = new Uri(prop.Value.GetString());
+                    baseUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("agent_card_path"u8))

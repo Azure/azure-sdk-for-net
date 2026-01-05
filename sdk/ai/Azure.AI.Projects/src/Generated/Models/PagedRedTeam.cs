@@ -10,7 +10,7 @@ using Azure.AI.Projects;
 namespace Azure.Core.Foundations
 {
     /// <summary> Paged collection of RedTeam items. </summary>
-    public partial class PagedRedTeam
+    internal partial class PagedRedTeam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

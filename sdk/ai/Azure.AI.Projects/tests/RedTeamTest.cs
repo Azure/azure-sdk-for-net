@@ -4,22 +4,21 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
 
 public class RedTeamTests : ProjectsClientTestBase
 {
-    public RedTeamTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
+    public RedTeamTests(bool isAsync) : base(isAsync)
     {
     }
 
     [RecordedTest]
-    //[Ignore("Pending Microsoft.ClientModel.TestFramework migration")]
-    public async Task RedTeamTest()
+    public async Task TestRedTeamCRUD()
     {
-        AIProjectClient projectClient = GetTestClient();
+        AIProjectClient projectClient = GetTestProjectClient();
 
         AzureOpenAIModelConfiguration config = new(modelDeploymentName: TestEnvironment.MODELDEPLOYMENTNAME);
         RedTeam redTeam = new(target: config)
@@ -33,17 +32,6 @@ public class RedTeamTests : ProjectsClientTestBase
         options.AddHeader("model-endpoint", TestEnvironment.MODEL_ENDPOINT);
         options.AddHeader("model-api-key", TestEnvironment.MODEL_API_KEY);
 
-        if (IsAsync)
-        {
-            await RedTeamTestAsync(projectClient, redTeam, options);
-        }
-        else
-        {
-            RedTeamTestSync(projectClient, redTeam, options);
-        }
-    }
-    private static async Task RedTeamTestAsync(AIProjectClient projectClient, RedTeam redTeam, RequestOptions options)
-    {
         string initialName = redTeam.DisplayName;
         redTeam = await projectClient.RedTeams.CreateAsync(redTeam: redTeam, options: options);
         Assert.That(redTeam.DisplayName, Is.EqualTo(initialName), $"Got unexpected name {redTeam.DisplayName}");
@@ -59,20 +47,27 @@ public class RedTeamTests : ProjectsClientTestBase
         Assert.That(hshStatuses, Contains.Item(initialName), $"The red team names {initialName} was not listed.");
     }
 
-    private static void RedTeamTestSync(AIProjectClient projectClient, RedTeam redTeam, RequestOptions options)
+    [RecordedTest]
+    public async Task TestRedTeamScan()
     {
-        string initialName = redTeam.DisplayName;
-        redTeam = projectClient.RedTeams.Create(redTeam: redTeam, options: options);
-        Assert.That(redTeam.DisplayName, Is.EqualTo(initialName), $"Got unexpected name {redTeam.DisplayName}");
-        // Get
-        redTeam = projectClient.RedTeams.Get(redTeam.Name);
-        Assert.That(redTeam.DisplayName, Is.EqualTo(initialName), $"Got unexpected name {redTeam.DisplayName}");
-        // List
-        HashSet<string> hshStatuses = [];
-        foreach (RedTeam team in projectClient.RedTeams.GetAll())
+        AIProjectClient projectClient = GetTestProjectClient();
+
+        AzureOpenAIModelConfiguration config = new(modelDeploymentName: TestEnvironment.MODELDEPLOYMENTNAME);
+        RedTeam redTeam = new(target: config)
         {
-            hshStatuses.Add(team.DisplayName);
+            AttackStrategies = { AttackStrategy.Base64 },
+            RiskCategories = { RiskCategory.Violence },
+            DisplayName = "redteamtest1"
+        };
+        RequestOptions options = new();
+        options.AddHeader("model-endpoint", TestEnvironment.MODEL_ENDPOINT);
+        options.AddHeader("model-api-key", TestEnvironment.MODEL_API_KEY);
+        redTeam = await projectClient.RedTeams.CreateAsync(redTeam: redTeam, options: options);
+        while (redTeam.Status != "Completed" && redTeam.Status != "Failed")
+        {
+            await Delay();
+            redTeam = await projectClient.RedTeams.GetAsync(redTeam.Name);
         }
-        Assert.That(hshStatuses, Contains.Item(initialName), $"The red team names {initialName} was not listed.");
+        Assert.That(redTeam.Status, Is.EqualTo("Completed"), $"Wrong Red team statu {redTeam.Status}");
     }
 }

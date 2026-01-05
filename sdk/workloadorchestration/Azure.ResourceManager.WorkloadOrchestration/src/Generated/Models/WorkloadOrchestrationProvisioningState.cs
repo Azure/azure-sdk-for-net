@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public readonly partial struct WorkloadOrchestrationProvisioningState : IEquatable<WorkloadOrchestrationProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Resource Provisioning is initialized. </summary>
+        private const string InitializedValue = "Initialized";
+        /// <summary> Resource Provisioning is in progress. </summary>
+        private const string InprogressValue = "InProgress";
+        /// <summary> Resource Provisioning is deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="WorkloadOrchestrationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkloadOrchestrationProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string InitializedValue = "Initialized";
-        private const string InprogressValue = "InProgress";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static WorkloadOrchestrationProvisioningState Succeeded { get; } = new WorkloadOrchestrationProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static WorkloadOrchestrationProvisioningState Failed { get; } = new WorkloadOrchestrationProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static WorkloadOrchestrationProvisioningState Canceled { get; } = new WorkloadOrchestrationProvisioningState(CanceledValue);
+
         /// <summary> Resource Provisioning is initialized. </summary>
         public static WorkloadOrchestrationProvisioningState Initialized { get; } = new WorkloadOrchestrationProvisioningState(InitializedValue);
+
         /// <summary> Resource Provisioning is in progress. </summary>
         public static WorkloadOrchestrationProvisioningState Inprogress { get; } = new WorkloadOrchestrationProvisioningState(InprogressValue);
+
         /// <summary> Resource Provisioning is deleting. </summary>
         public static WorkloadOrchestrationProvisioningState Deleting { get; } = new WorkloadOrchestrationProvisioningState(DeletingValue);
+
         /// <summary> Determines if two <see cref="WorkloadOrchestrationProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkloadOrchestrationProvisioningState left, WorkloadOrchestrationProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkloadOrchestrationProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkloadOrchestrationProvisioningState left, WorkloadOrchestrationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadOrchestrationProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkloadOrchestrationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkloadOrchestrationProvisioningState(string value) => new WorkloadOrchestrationProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkloadOrchestrationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkloadOrchestrationProvisioningState?(string value) => value == null ? null : new WorkloadOrchestrationProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkloadOrchestrationProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkloadOrchestrationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

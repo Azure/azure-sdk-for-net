@@ -5,13 +5,14 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
 
 namespace Azure.Core.Foundations
 {
     /// <summary> Paged collection of RedTeam items. </summary>
-    public partial class PagedRedTeam : IJsonModel<PagedRedTeam>
+    internal partial class PagedRedTeam : IJsonModel<PagedRedTeam>
     {
         /// <summary> Initializes a new instance of <see cref="PagedRedTeam"/> for deserialization. </summary>
         internal PagedRedTeam()
@@ -80,6 +81,47 @@ namespace Azure.Core.Foundations
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePagedRedTeam(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PagedRedTeam DeserializePagedRedTeam(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<RedTeam> value = default;
+            Uri nextLink = default;
+            string clientRequestId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("value"u8))
+                {
+                    List<RedTeam> array = new List<RedTeam>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(RedTeam.DeserializeRedTeam(item, options));
+                    }
+                    value = array;
+                    continue;
+                }
+                if (prop.NameEquals("nextLink"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new PagedRedTeam(value, nextLink, clientRequestId, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

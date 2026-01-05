@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Settings for overrides when upgrading a cluster. </summary>
+    /// <summary>
+    /// Settings for overrides when upgrading a cluster.
+    /// Serialized Name: UpgradeOverrideSettings
+    /// </summary>
     public partial class UpgradeOverrideSettings
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UpgradeOverrideSettings"/>. </summary>
-        /// <param name="forceUpgrade"> Whether to force upgrade the cluster. Note that this option instructs upgrade operation to bypass upgrade protections such as checking for deprecated API usage. Enable this option only with caution. </param>
-        /// <param name="until"> Until when the overrides are effective. Note that this only matches the start time of an upgrade, and the effectiveness won't change once an upgrade starts even if the `until` expires as upgrade proceeds. This field is not set by default. It must be set for the overrides to take effect. </param>
+        /// <param name="forceUpgrade">
+        /// Whether to force upgrade the cluster. Note that this option instructs upgrade operation to bypass upgrade protections such as checking for deprecated API usage. Enable this option only with caution.
+        /// Serialized Name: UpgradeOverrideSettings.forceUpgrade
+        /// </param>
+        /// <param name="until">
+        /// Until when the overrides are effective. Note that this only matches the start time of an upgrade, and the effectiveness won't change once an upgrade starts even if the `until` expires as upgrade proceeds. This field is not set by default. It must be set for the overrides to take effect.
+        /// Serialized Name: UpgradeOverrideSettings.until
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UpgradeOverrideSettings(bool? forceUpgrade, DateTimeOffset? until, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Whether to force upgrade the cluster. Note that this option instructs upgrade operation to bypass upgrade protections such as checking for deprecated API usage. Enable this option only with caution. </summary>
+        /// <summary>
+        /// Whether to force upgrade the cluster. Note that this option instructs upgrade operation to bypass upgrade protections such as checking for deprecated API usage. Enable this option only with caution.
+        /// Serialized Name: UpgradeOverrideSettings.forceUpgrade
+        /// </summary>
         [WirePath("forceUpgrade")]
         public bool? ForceUpgrade { get; set; }
-        /// <summary> Until when the overrides are effective. Note that this only matches the start time of an upgrade, and the effectiveness won't change once an upgrade starts even if the `until` expires as upgrade proceeds. This field is not set by default. It must be set for the overrides to take effect. </summary>
+        /// <summary>
+        /// Until when the overrides are effective. Note that this only matches the start time of an upgrade, and the effectiveness won't change once an upgrade starts even if the `until` expires as upgrade proceeds. This field is not set by default. It must be set for the overrides to take effect.
+        /// Serialized Name: UpgradeOverrideSettings.until
+        /// </summary>
         [WirePath("until")]
         public DateTimeOffset? Until { get; set; }
     }

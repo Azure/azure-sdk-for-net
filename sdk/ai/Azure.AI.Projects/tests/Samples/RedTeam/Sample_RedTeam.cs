@@ -4,12 +4,13 @@
 using System;
 using System.Threading.Tasks;
 using System.ClientModel.Primitives;
-using Azure.Core.TestFramework;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using Azure.Identity;
 
 namespace Azure.AI.Projects.Tests.Samples;
 
-public class Sample_RedTeam : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_RedTeam : SamplesBase
 {
     [Test]
     [AsyncOnly]
@@ -24,7 +25,7 @@ public class Sample_RedTeam : SamplesBase<AIProjectsTestEnvironment>
         var modelApiKey = System.Environment.GetEnvironmentVariable("MODEL_API_KEY");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECTENDPOINT;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelEndpoint = TestEnvironment.MODEL_ENDPOINT;
         var modelApiKey = TestEnvironment.MODEL_API_KEY;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
@@ -75,7 +76,7 @@ public class Sample_RedTeam : SamplesBase<AIProjectsTestEnvironment>
         var modelApiKey = System.Environment.GetEnvironmentVariable("MODEL_API_KEY");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECTENDPOINT;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelEndpoint = TestEnvironment.MODEL_ENDPOINT;
         var modelApiKey = TestEnvironment.MODEL_API_KEY;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
@@ -110,4 +111,7 @@ public class Sample_RedTeam : SamplesBase<AIProjectsTestEnvironment>
         }
         #endregion
     }
+
+    public Sample_RedTeam(bool isAsync) : base(isAsync)
+    { }
 }

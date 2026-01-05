@@ -475,18 +475,6 @@ namespace Azure.AI.Projects
             return new AzureOpenAIModelConfiguration("AzureOpenAIModel", additionalBinaryDataProperties: null, modelDeploymentName);
         }
 
-        /// <summary> Paged collection of RedTeam items. </summary>
-        /// <param name="value"> The RedTeam items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
-        /// <returns> A new <see cref="Core.Foundations.PagedRedTeam"/> instance for mocking. </returns>
-        public static PagedRedTeam PagedRedTeam(IEnumerable<RedTeam> value = default, Uri nextLink = default, string clientRequestId = default)
-        {
-            value ??= new ChangeTrackingList<RedTeam>();
-
-            return new PagedRedTeam(value.ToList(), nextLink, clientRequestId, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Evaluation rule model. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="displayName"> Display Name for the evaluation rule. </param>
