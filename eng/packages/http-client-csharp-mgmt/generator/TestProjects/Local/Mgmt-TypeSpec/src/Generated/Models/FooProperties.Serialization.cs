@@ -168,7 +168,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    serviceUri = new Uri(prop.Value.GetString());
+                    serviceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("something"u8))

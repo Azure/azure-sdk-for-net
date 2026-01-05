@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class PrincipalConfig : IUtf8JsonSerializable, IJsonModel<PrincipalConfig>
+    /// <summary> PrincipalDefinition properties of Rule. </summary>
+    public partial class PrincipalConfig : IJsonModel<PrincipalConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrincipalConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PrincipalConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +29,16 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PrincipalConfig)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartArray();
-                foreach (var item in Attributes)
+                foreach (IDictionary<string, string> item in Attributes)
                 {
                     if (item == null)
                     {
@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.IotOperations.Models
                     foreach (var item0 in item)
                     {
                         writer.WritePropertyName(item0.Key);
+                        if (item0.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteStringValue(item0.Value);
                     }
                     writer.WriteEndObject();
@@ -59,8 +64,13 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 writer.WritePropertyName("clientIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in ClientIds)
+                foreach (string item in ClientIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -69,21 +79,26 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 writer.WritePropertyName("usernames"u8);
                 writer.WriteStartArray();
-                foreach (var item in Usernames)
+                foreach (string item in Usernames)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -92,22 +107,27 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        PrincipalConfig IJsonModel<PrincipalConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PrincipalConfig IJsonModel<PrincipalConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PrincipalConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PrincipalConfig)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePrincipalConfig(document.RootElement, options);
         }
 
-        internal static PrincipalConfig DeserializePrincipalConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PrincipalConfig DeserializePrincipalConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -115,18 +135,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             IList<IDictionary<string, string>> attributes = default;
             IList<string> clientIds = default;
             IList<string> usernames = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("attributes"u8))
+                if (prop.NameEquals("attributes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IDictionary<string, string>> array = new List<IDictionary<string, string>>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -135,9 +154,16 @@ namespace Azure.ResourceManager.IotOperations.Models
                         else
                         {
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property0 in item.EnumerateObject())
+                            foreach (var prop0 in item.EnumerateObject())
                             {
-                                dictionary.Add(property0.Name, property0.Value.GetString());
+                                if (prop0.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(prop0.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(prop0.Name, prop0.Value.GetString());
+                                }
                             }
                             array.Add(dictionary);
                         }
@@ -145,47 +171,63 @@ namespace Azure.ResourceManager.IotOperations.Models
                     attributes = array;
                     continue;
                 }
-                if (property.NameEquals("clientIds"u8))
+                if (prop.NameEquals("clientIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     clientIds = array;
                     continue;
                 }
-                if (property.NameEquals("usernames"u8))
+                if (prop.NameEquals("usernames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     usernames = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PrincipalConfig(attributes ?? new ChangeTrackingList<IDictionary<string, string>>(), clientIds ?? new ChangeTrackingList<string>(), usernames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new PrincipalConfig(attributes ?? new ChangeTrackingList<IDictionary<string, string>>(), clientIds ?? new ChangeTrackingList<string>(), usernames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PrincipalConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PrincipalConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -195,15 +237,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        PrincipalConfig IPersistableModel<PrincipalConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PrincipalConfig IPersistableModel<PrincipalConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PrincipalConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePrincipalConfig(document.RootElement, options);
                     }
                 default:
@@ -211,6 +258,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PrincipalConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

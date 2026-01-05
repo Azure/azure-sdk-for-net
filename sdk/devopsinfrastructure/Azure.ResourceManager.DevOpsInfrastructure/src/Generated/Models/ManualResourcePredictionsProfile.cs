@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public partial class ManualResourcePredictionsProfile : ResourcePredictionsProfile
     {
         /// <summary> Initializes a new instance of <see cref="ManualResourcePredictionsProfile"/>. </summary>
-        public ManualResourcePredictionsProfile()
+        public ManualResourcePredictionsProfile() : base(ResourcePredictionsProfileType.Manual)
         {
-            Kind = ResourcePredictionsProfileType.Manual;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManualResourcePredictionsProfile"/>. </summary>
         /// <param name="kind"> Determines how the stand-by scheme should be provided. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManualResourcePredictionsProfile(ResourcePredictionsProfileType kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManualResourcePredictionsProfile(ResourcePredictionsProfileType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
-            Kind = kind;
         }
     }
 }
