@@ -21,8 +21,6 @@ const SUPPRESSED_DIAGNOSTICS = [
 ];
 
 export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
-  // Filter out meaningless upstream diagnostics by overriding the diagnostics property
-  filterProgramDiagnostics(context.program);
 
   context.options["generator-name"] ??= "ManagementClientGenerator";
   context.options["update-code-model"] = updateCodeModel;
@@ -30,6 +28,11 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
   context.options["model-namespace"] ??= true;
   await $onAzureEmit(context);
+
+  // TODO -- this is hacky, but this is the only way we could do on this side to remove some diagnostics.
+  // the real solution pending on this issue: https://github.com/Azure/azure-sdk-for-net/issues/54788
+  // Filter out meaningless upstream diagnostics by overriding the diagnostics property
+  filterProgramDiagnostics(context.program);
 
   function updateCodeModel(
     codeModel: CodeModel,
