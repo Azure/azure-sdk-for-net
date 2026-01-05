@@ -18,8 +18,13 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary> The application resource. </summary>
-    public partial class ServiceFabricManagedApplicationData : ResourceData, IJsonModel<ServiceFabricManagedApplicationData>
+    public partial class ServiceFabricManagedApplicationData : TrackedResourceData, IJsonModel<ServiceFabricManagedApplicationData>
     {
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationData"/> for deserialization. </summary>
+        internal ServiceFabricManagedApplicationData()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceFabricManagedApplicationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -65,11 +70,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             ApplicationResourceProperties properties = default;
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
-            string location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -138,6 +138,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         continue;
                     }
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -179,11 +184,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                location,
                 properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity,
-                location);
+                identity);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
