@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> Storage Details on the Exadata VM cluster. </summary>
-    public partial class ExadbVmClusterStorageDetails
+    internal partial class ExadbVmClusterStorageDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

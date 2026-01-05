@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="shape"> The shape of the Exadata VM cluster on Exascale Infrastructure resource. </param>
         /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="totalEcpuCount"> The number of Total ECPUs for an Exadata VM cluster on Exascale Infrastructure. </param>
-        /// <param name="vmFileSystemStorage"> Filesystem storage details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vnetId"/>, <paramref name="subnetId"/>, <paramref name="displayName"/>, <paramref name="exascaleDBStorageVaultId"/>, <paramref name="hostname"/>, <paramref name="shape"/>, <paramref name="sshPublicKeys"/> or <paramref name="vmFileSystemStorage"/> is null. </exception>
-        public ExadbVmClusterProperties(ResourceIdentifier vnetId, ResourceIdentifier subnetId, string displayName, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string hostname, int nodeCount, string shape, IEnumerable<string> sshPublicKeys, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage)
+        /// <param name="vmFileSystemStorageTotalSizeInGbs"> Total Capacity. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetId"/>, <paramref name="subnetId"/>, <paramref name="displayName"/>, <paramref name="exascaleDBStorageVaultId"/>, <paramref name="hostname"/>, <paramref name="shape"/> or <paramref name="sshPublicKeys"/> is null. </exception>
+        public ExadbVmClusterProperties(ResourceIdentifier vnetId, ResourceIdentifier subnetId, string displayName, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string hostname, int nodeCount, string shape, IEnumerable<string> sshPublicKeys, int totalEcpuCount, int? vmFileSystemStorageTotalSizeInGbs)
         {
             Argument.AssertNotNull(vnetId, nameof(vnetId));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Argument.AssertNotNull(hostname, nameof(hostname));
             Argument.AssertNotNull(shape, nameof(shape));
             Argument.AssertNotNull(sshPublicKeys, nameof(sshPublicKeys));
-            Argument.AssertNotNull(vmFileSystemStorage, nameof(vmFileSystemStorage));
 
             VnetId = vnetId;
             SubnetId = subnetId;
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Shape = shape;
             SshPublicKeys = sshPublicKeys.ToList();
             TotalEcpuCount = totalEcpuCount;
-            VmFileSystemStorage = vmFileSystemStorage;
+            VmFileSystemStorage = vmFileSystemStorageTotalSizeInGbs is null ? default : new ExadbVmClusterStorageDetails(vmFileSystemStorageTotalSizeInGbs.Value);
             ScanIPIds = new ChangeTrackingList<string>();
             VipIds = new ChangeTrackingList<string>();
         }

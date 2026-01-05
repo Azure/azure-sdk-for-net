@@ -14,7 +14,7 @@ using Azure.ResourceManager.OracleDatabase;
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> Create exadata Database Storage Details model. </summary>
-    public partial class ExascaleDBStorageInputDetails : IJsonModel<ExascaleDBStorageInputDetails>
+    internal partial class ExascaleDBStorageInputDetails : IJsonModel<ExascaleDBStorageInputDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageInputDetails"/> for deserialization. </summary>
         internal ExascaleDBStorageInputDetails()
