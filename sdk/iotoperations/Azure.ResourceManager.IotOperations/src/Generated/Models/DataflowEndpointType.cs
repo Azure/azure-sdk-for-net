@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct DataflowEndpointType : IEquatable<DataflowEndpointType>
     {
         private readonly string _value;
+        /// <summary> Azure Data Explorer Type. </summary>
+        private const string DataExplorerValue = "DataExplorer";
+        /// <summary> Azure Data Lake Type. </summary>
+        private const string DataLakeStorageValue = "DataLakeStorage";
+        /// <summary> Microsoft Fabric Type. </summary>
+        private const string FabricOneLakeValue = "FabricOneLake";
+        /// <summary> Kafka Type. </summary>
+        private const string KafkaValue = "Kafka";
+        /// <summary> Local Storage Type. </summary>
+        private const string LocalStorageValue = "LocalStorage";
+        /// <summary> Broker Type. </summary>
+        private const string MqttValue = "Mqtt";
+        /// <summary> OpenTelemetry Type. </summary>
+        private const string OpenTelemetryValue = "OpenTelemetry";
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataflowEndpointType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DataExplorerValue = "DataExplorer";
-        private const string DataLakeStorageValue = "DataLakeStorage";
-        private const string FabricOneLakeValue = "FabricOneLake";
-        private const string KafkaValue = "Kafka";
-        private const string LocalStorageValue = "LocalStorage";
-        private const string MqttValue = "Mqtt";
-        private const string OpenTelemetryValue = "OpenTelemetry";
+            _value = value;
+        }
 
         /// <summary> Azure Data Explorer Type. </summary>
         public static DataflowEndpointType DataExplorer { get; } = new DataflowEndpointType(DataExplorerValue);
+
         /// <summary> Azure Data Lake Type. </summary>
         public static DataflowEndpointType DataLakeStorage { get; } = new DataflowEndpointType(DataLakeStorageValue);
+
         /// <summary> Microsoft Fabric Type. </summary>
         public static DataflowEndpointType FabricOneLake { get; } = new DataflowEndpointType(FabricOneLakeValue);
+
         /// <summary> Kafka Type. </summary>
         public static DataflowEndpointType Kafka { get; } = new DataflowEndpointType(KafkaValue);
+
         /// <summary> Local Storage Type. </summary>
         public static DataflowEndpointType LocalStorage { get; } = new DataflowEndpointType(LocalStorageValue);
+
         /// <summary> Broker Type. </summary>
         public static DataflowEndpointType Mqtt { get; } = new DataflowEndpointType(MqttValue);
+
         /// <summary> OpenTelemetry Type. </summary>
         public static DataflowEndpointType OpenTelemetry { get; } = new DataflowEndpointType(OpenTelemetryValue);
+
         /// <summary> Determines if two <see cref="DataflowEndpointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataflowEndpointType left, DataflowEndpointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataflowEndpointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataflowEndpointType left, DataflowEndpointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataflowEndpointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataflowEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataflowEndpointType(string value) => new DataflowEndpointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataflowEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataflowEndpointType?(string value) => value == null ? null : new DataflowEndpointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataflowEndpointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataflowEndpointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

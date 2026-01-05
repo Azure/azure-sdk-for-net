@@ -5,26 +5,12 @@
 
 #nullable disable
 
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
-    internal class OperationStatusResultOperationSource : IOperationSource<OperationStatusResult>
+    internal partial class OperationStatusResultOperationSource : IOperationSource<OperationStatusResult>
     {
-        OperationStatusResult IOperationSource<OperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
-        {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return OperationStatusResult.DeserializeOperationStatusResult(document.RootElement);
-        }
-
-        async ValueTask<OperationStatusResult> IOperationSource<OperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return OperationStatusResult.DeserializeOperationStatusResult(document.RootElement);
-        }
     }
 }
