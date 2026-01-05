@@ -8,6 +8,7 @@ using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     public partial class ServiceFabricManagedNodeTypeData : ResourceData

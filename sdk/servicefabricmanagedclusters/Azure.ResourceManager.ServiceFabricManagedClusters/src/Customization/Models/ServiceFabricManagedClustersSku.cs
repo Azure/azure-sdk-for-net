@@ -6,9 +6,9 @@
 using System;
 using System.Collections.Generic;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Service Fabric managed cluster Sku definition. </summary>
     public partial class ServiceFabricManagedClustersSku
     {
     }

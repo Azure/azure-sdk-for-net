@@ -6,6 +6,7 @@
 using System;
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public abstract partial class ManagedServiceProperties : ManagedServiceBaseProperties

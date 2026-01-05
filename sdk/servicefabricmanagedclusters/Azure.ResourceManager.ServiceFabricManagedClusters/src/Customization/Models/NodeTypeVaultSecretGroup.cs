@@ -3,15 +3,17 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Specifies set of certificates that should be installed onto the virtual machines. </summary>
     public partial class NodeTypeVaultSecretGroup
     {
         /// <summary> Gets or sets Id. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier SourceVaultId
         {
             get => SourceVault is null ? default : SourceVault.Id;

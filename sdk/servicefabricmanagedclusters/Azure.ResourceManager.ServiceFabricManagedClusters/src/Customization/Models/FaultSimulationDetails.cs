@@ -5,9 +5,9 @@
 
 using System.Collections.Generic;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Details for Fault Simulation. </summary>
     public partial class FaultSimulationDetails
     {
         /// <summary> List of node type simulations associated with the cluster fault simulation. </summary>

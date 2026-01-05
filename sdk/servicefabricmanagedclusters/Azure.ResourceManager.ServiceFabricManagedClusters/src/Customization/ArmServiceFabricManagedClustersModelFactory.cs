@@ -7,13 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Model factory for models. </summary>
     public static partial class ArmServiceFabricManagedClustersModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/>. </summary>
@@ -33,6 +32,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
         /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
         /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, string version = null, IDictionary<string, string> parameters = null, ApplicationUpgradePolicy upgradePolicy = null, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = null)
             => ServiceFabricManagedApplicationData(id, name, resourceType, systemData, location, managedIdentities, provisioningState, version, parameters, upgradePolicy, tags, identity);
 
@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="setupOrder"> Indicates the setup order for the extension. </param>
         /// <returns> A new <see cref="Models.NodeTypeVmssExtension"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static NodeTypeVmssExtension NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IEnumerable<string> provisionAfterExtensions, string provisioningState, bool? isAutomaticUpgradeEnabled, IEnumerable<VmssExtensionSetupOrder> setupOrder)
         {
             provisionAfterExtensions ??= new List<string>();

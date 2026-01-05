@@ -3,12 +3,9 @@
 
 #nullable disable
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary>
-    /// Parameters for Fault Simulation action.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ZoneFaultSimulationContent"/>.
-    /// </summary>
     public abstract partial class FaultSimulationContent
     {
         /// <summary> Initializes a new instance of <see cref="FaultSimulationContent"/> for deserialization. </summary>

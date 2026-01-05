@@ -3,20 +3,13 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    /// <summary>
-    /// A class representing the ServiceFabricManagedCluster data model.
-    /// The managed cluster resource
-    /// </summary>
     public partial class ServiceFabricManagedClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceFabricManagedClusterData. </summary>

@@ -3,12 +3,9 @@
 
 #nullable disable
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary>
-    /// Describes how the service is partitioned.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UniformInt64RangePartitionScheme"/>, <see cref="SingletonPartitionScheme"/>, and <see cref="NamedPartitionScheme"/>.
-    /// </summary>
     public abstract partial class ManagedServicePartitionScheme
     {
         /// <summary> Initializes a new instance of <see cref="ManagedServicePartitionScheme"/> for deserialization. </summary>

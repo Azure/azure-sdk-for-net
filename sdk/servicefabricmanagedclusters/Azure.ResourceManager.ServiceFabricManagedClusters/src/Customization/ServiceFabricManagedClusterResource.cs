@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 using System.Threading;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    /// <summary>
-    /// A Class representing a ServiceFabricManagedCluster along with the instance operations that can be performed on it.
-    /// </summary>
     public partial class ServiceFabricManagedClusterResource: ArmResource
     {
         /// <summary>
