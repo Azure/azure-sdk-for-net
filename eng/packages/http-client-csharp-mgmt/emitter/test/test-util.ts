@@ -129,6 +129,9 @@ export function normalizeSchemaForComparison(schema: ArmProviderSchema) {
   for (const resource of normalizedSchema.resources) {
     resource.metadata.resourceName = "<normalized>";
     resource.metadata.parentResourceModelId = "<normalized>";
+    
+    // Sort methods by methodId for deterministic ordering
+    resource.metadata.methods.sort((a, b) => a.methodId.localeCompare(b.methodId));
   }
 
   // sort resources by resourceIdPattern

@@ -206,6 +206,13 @@ export function resolveArmResources(
     }
   }
 
+  // Sort methods in all valid resources for deterministic ordering
+  // This is necessary because methods may have been merged from incomplete resources
+  // and list operations may have been processed, so we sort at the end to ensure consistency
+  for (const resource of validResources) {
+    resource.metadata.methods.sort((a, b) => a.methodId.localeCompare(b.methodId));
+  }
+
   return {
     resources: validResources,
     nonResourceMethods
@@ -331,6 +338,9 @@ function convertResolvedResourceToMetadata(
 
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
+
+  // Sort methods by methodId for deterministic ordering
+  methods.sort((a, b) => a.methodId.localeCompare(b.methodId));
 
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
