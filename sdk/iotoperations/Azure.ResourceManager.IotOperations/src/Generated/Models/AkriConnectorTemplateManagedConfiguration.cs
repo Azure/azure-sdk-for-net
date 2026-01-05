@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,44 +15,25 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class AkriConnectorTemplateManagedConfiguration : AkriConnectorTemplateRuntimeConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateManagedConfiguration"/>. </summary>
-        /// <param name="managedConfigurationSettings">
-        /// The managed configuration settings.
-        /// Please note <see cref="AkriConnectorTemplateManagedConfigurationSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorTemplateRuntimeImageConfiguration"/> and <see cref="AkriConnectorTemplateRuntimeStatefulSetConfiguration"/>.
-        /// </param>
+        /// <param name="managedConfigurationSettings"> The managed configuration settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedConfigurationSettings"/> is null. </exception>
-        public AkriConnectorTemplateManagedConfiguration(AkriConnectorTemplateManagedConfigurationSettings managedConfigurationSettings)
+        public AkriConnectorTemplateManagedConfiguration(AkriConnectorTemplateManagedConfigurationSettings managedConfigurationSettings) : base(AkriConnectorTemplateRuntimeConfigurationType.ManagedConfiguration)
         {
             Argument.AssertNotNull(managedConfigurationSettings, nameof(managedConfigurationSettings));
 
             ManagedConfigurationSettings = managedConfigurationSettings;
-            RuntimeConfigurationType = AkriConnectorTemplateRuntimeConfigurationType.ManagedConfiguration;
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateManagedConfiguration"/>. </summary>
         /// <param name="runtimeConfigurationType"> Runtime configuration type for the Connector template. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="managedConfigurationSettings">
-        /// The managed configuration settings.
-        /// Please note <see cref="AkriConnectorTemplateManagedConfigurationSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorTemplateRuntimeImageConfiguration"/> and <see cref="AkriConnectorTemplateRuntimeStatefulSetConfiguration"/>.
-        /// </param>
-        internal AkriConnectorTemplateManagedConfiguration(AkriConnectorTemplateRuntimeConfigurationType runtimeConfigurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, AkriConnectorTemplateManagedConfigurationSettings managedConfigurationSettings) : base(runtimeConfigurationType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="managedConfigurationSettings"> The managed configuration settings. </param>
+        internal AkriConnectorTemplateManagedConfiguration(AkriConnectorTemplateRuntimeConfigurationType runtimeConfigurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AkriConnectorTemplateManagedConfigurationSettings managedConfigurationSettings) : base(runtimeConfigurationType, additionalBinaryDataProperties)
         {
             ManagedConfigurationSettings = managedConfigurationSettings;
-            RuntimeConfigurationType = runtimeConfigurationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateManagedConfiguration"/> for deserialization. </summary>
-        internal AkriConnectorTemplateManagedConfiguration()
-        {
-        }
-
-        /// <summary>
-        /// The managed configuration settings.
-        /// Please note <see cref="AkriConnectorTemplateManagedConfigurationSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorTemplateRuntimeImageConfiguration"/> and <see cref="AkriConnectorTemplateRuntimeStatefulSetConfiguration"/>.
-        /// </summary>
+        /// <summary> The managed configuration settings. </summary>
         public AkriConnectorTemplateManagedConfigurationSettings ManagedConfigurationSettings { get; set; }
     }
 }

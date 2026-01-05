@@ -6,362 +6,112 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal partial class DbVersionsRestOperations
+    internal partial class DbVersions
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DbVersionsRestOperations. </summary>
+        /// <summary> Initializes a new instance of DbVersions for mocking. </summary>
+        protected DbVersions()
+        {
+        }
+
+        /// <summary> Initializes a new instance of DbVersions. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DbVersionsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal DbVersions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-09-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string dbversionsname)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, AzureLocation location, string dbversionsname, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Oracle.Database/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/dbSystemDbVersions/", false);
             uri.AppendPath(dbversionsname, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string dbversionsname)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Oracle.Database/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/dbSystemDbVersions/", false);
-            uri.AppendPath(dbversionsname, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get a DbVersion. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="dbversionsname"> DbVersion name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="dbversionsname"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="dbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OracleDBVersionData>> GetAsync(string subscriptionId, AzureLocation location, string dbversionsname, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, AzureLocation location, string dbSystemShape, ResourceIdentifier dbSystemId, string storageManagement, bool? isUpgradeSupported, bool? isDatabaseSoftwareImageSupported, string shapeFamily, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(dbversionsname, nameof(dbversionsname));
-
-            using var message = CreateGetRequest(subscriptionId, location, dbversionsname);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OracleDBVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OracleDBVersionData.DeserializeOracleDBVersionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((OracleDBVersionData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a DbVersion. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="dbversionsname"> DbVersion name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="dbversionsname"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="dbversionsname"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OracleDBVersionData> Get(string subscriptionId, AzureLocation location, string dbversionsname, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(dbversionsname, nameof(dbversionsname));
-
-            using var message = CreateGetRequest(subscriptionId, location, dbversionsname);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OracleDBVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OracleDBVersionData.DeserializeOracleDBVersionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((OracleDBVersionData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByLocationRequestUri(string subscriptionId, AzureLocation location, OracleBaseDbSystemShape? dbSystemShape, ResourceIdentifier dbSystemId, StorageManagementType? storageManagement, bool? isUpgradeSupported, bool? isDatabaseSoftwareImageSupported, ShapeFamilyType? shapeFamily)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Oracle.Database/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/dbSystemDbVersions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (dbSystemShape != null)
             {
-                uri.AppendQuery("dbSystemShape", dbSystemShape.Value.ToString(), true);
+                uri.AppendQuery("dbSystemShape", dbSystemShape, true);
             }
             if (dbSystemId != null)
             {
-                uri.AppendQuery("dbSystemId", dbSystemId, true);
+                uri.AppendQuery("dbSystemId", TypeFormatters.ConvertToString(dbSystemId), true);
             }
             if (storageManagement != null)
             {
-                uri.AppendQuery("storageManagement", storageManagement.Value.ToString(), true);
+                uri.AppendQuery("storageManagement", storageManagement, true);
             }
             if (isUpgradeSupported != null)
             {
-                uri.AppendQuery("isUpgradeSupported", isUpgradeSupported.Value, true);
+                uri.AppendQuery("isUpgradeSupported", TypeFormatters.ConvertToString(isUpgradeSupported), true);
             }
             if (isDatabaseSoftwareImageSupported != null)
             {
-                uri.AppendQuery("isDatabaseSoftwareImageSupported", isDatabaseSoftwareImageSupported.Value, true);
+                uri.AppendQuery("isDatabaseSoftwareImageSupported", TypeFormatters.ConvertToString(isDatabaseSoftwareImageSupported), true);
             }
             if (shapeFamily != null)
             {
-                uri.AppendQuery("shapeFamily", shapeFamily.Value.ToString(), true);
+                uri.AppendQuery("shapeFamily", shapeFamily, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation location, OracleBaseDbSystemShape? dbSystemShape, ResourceIdentifier dbSystemId, StorageManagementType? storageManagement, bool? isUpgradeSupported, bool? isDatabaseSoftwareImageSupported, ShapeFamilyType? shapeFamily)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Oracle.Database/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/dbSystemDbVersions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (dbSystemShape != null)
-            {
-                uri.AppendQuery("dbSystemShape", dbSystemShape.Value.ToString(), true);
-            }
-            if (dbSystemId != null)
-            {
-                uri.AppendQuery("dbSystemId", dbSystemId, true);
-            }
-            if (storageManagement != null)
-            {
-                uri.AppendQuery("storageManagement", storageManagement.Value.ToString(), true);
-            }
-            if (isUpgradeSupported != null)
-            {
-                uri.AppendQuery("isUpgradeSupported", isUpgradeSupported.Value, true);
-            }
-            if (isDatabaseSoftwareImageSupported != null)
-            {
-                uri.AppendQuery("isDatabaseSoftwareImageSupported", isDatabaseSoftwareImageSupported.Value, true);
-            }
-            if (shapeFamily != null)
-            {
-                uri.AppendQuery("shapeFamily", shapeFamily.Value.ToString(), true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List DbVersion resources by SubscriptionLocationResource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="dbSystemShape"> If provided, filters the results to the set of database versions which are supported for the given shape. e.g., VM.Standard.E5.Flex. </param>
-        /// <param name="dbSystemId"> The DB system AzureId. If provided, filters the results to the set of database versions which are supported for the DB system. </param>
-        /// <param name="storageManagement"> The DB system storage management option. Used to list database versions available for that storage manager. Valid values are ASM and LVM. </param>
-        /// <param name="isUpgradeSupported"> If true, filters the results to the set of database versions which are supported for Upgrade. </param>
-        /// <param name="isDatabaseSoftwareImageSupported"> If true, filters the results to the set of Oracle Database versions that are supported for the database software images. </param>
-        /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DbVersionListResult>> ListByLocationAsync(string subscriptionId, AzureLocation location, OracleBaseDbSystemShape? dbSystemShape = null, ResourceIdentifier dbSystemId = null, StorageManagementType? storageManagement = null, bool? isUpgradeSupported = null, bool? isDatabaseSoftwareImageSupported = null, ShapeFamilyType? shapeFamily = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string dbSystemShape, ResourceIdentifier dbSystemId, string storageManagement, bool? isUpgradeSupported, bool? isDatabaseSoftwareImageSupported, string shapeFamily, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListByLocationRequest(subscriptionId, location, dbSystemShape, dbSystemId, storageManagement, isUpgradeSupported, isDatabaseSoftwareImageSupported, shapeFamily);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DbVersionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DbVersionListResult.DeserializeDbVersionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List DbVersion resources by SubscriptionLocationResource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="dbSystemShape"> If provided, filters the results to the set of database versions which are supported for the given shape. e.g., VM.Standard.E5.Flex. </param>
-        /// <param name="dbSystemId"> The DB system AzureId. If provided, filters the results to the set of database versions which are supported for the DB system. </param>
-        /// <param name="storageManagement"> The DB system storage management option. Used to list database versions available for that storage manager. Valid values are ASM and LVM. </param>
-        /// <param name="isUpgradeSupported"> If true, filters the results to the set of database versions which are supported for Upgrade. </param>
-        /// <param name="isDatabaseSoftwareImageSupported"> If true, filters the results to the set of Oracle Database versions that are supported for the database software images. </param>
-        /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DbVersionListResult> ListByLocation(string subscriptionId, AzureLocation location, OracleBaseDbSystemShape? dbSystemShape = null, ResourceIdentifier dbSystemId = null, StorageManagementType? storageManagement = null, bool? isUpgradeSupported = null, bool? isDatabaseSoftwareImageSupported = null, ShapeFamilyType? shapeFamily = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListByLocationRequest(subscriptionId, location, dbSystemShape, dbSystemId, storageManagement, isUpgradeSupported, isDatabaseSoftwareImageSupported, shapeFamily);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DbVersionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DbVersionListResult.DeserializeDbVersionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByLocationNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, OracleBaseDbSystemShape? dbSystemShape, ResourceIdentifier dbSystemId, StorageManagementType? storageManagement, bool? isUpgradeSupported, bool? isDatabaseSoftwareImageSupported, ShapeFamilyType? shapeFamily)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, OracleBaseDbSystemShape? dbSystemShape, ResourceIdentifier dbSystemId, StorageManagementType? storageManagement, bool? isUpgradeSupported, bool? isDatabaseSoftwareImageSupported, ShapeFamilyType? shapeFamily)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> List DbVersion resources by SubscriptionLocationResource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="dbSystemShape"> If provided, filters the results to the set of database versions which are supported for the given shape. e.g., VM.Standard.E5.Flex. </param>
-        /// <param name="dbSystemId"> The DB system AzureId. If provided, filters the results to the set of database versions which are supported for the DB system. </param>
-        /// <param name="storageManagement"> The DB system storage management option. Used to list database versions available for that storage manager. Valid values are ASM and LVM. </param>
-        /// <param name="isUpgradeSupported"> If true, filters the results to the set of database versions which are supported for Upgrade. </param>
-        /// <param name="isDatabaseSoftwareImageSupported"> If true, filters the results to the set of Oracle Database versions that are supported for the database software images. </param>
-        /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DbVersionListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, OracleBaseDbSystemShape? dbSystemShape = null, ResourceIdentifier dbSystemId = null, StorageManagementType? storageManagement = null, bool? isUpgradeSupported = null, bool? isDatabaseSoftwareImageSupported = null, ShapeFamilyType? shapeFamily = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, location, dbSystemShape, dbSystemId, storageManagement, isUpgradeSupported, isDatabaseSoftwareImageSupported, shapeFamily);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DbVersionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DbVersionListResult.DeserializeDbVersionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List DbVersion resources by SubscriptionLocationResource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="dbSystemShape"> If provided, filters the results to the set of database versions which are supported for the given shape. e.g., VM.Standard.E5.Flex. </param>
-        /// <param name="dbSystemId"> The DB system AzureId. If provided, filters the results to the set of database versions which are supported for the DB system. </param>
-        /// <param name="storageManagement"> The DB system storage management option. Used to list database versions available for that storage manager. Valid values are ASM and LVM. </param>
-        /// <param name="isUpgradeSupported"> If true, filters the results to the set of database versions which are supported for Upgrade. </param>
-        /// <param name="isDatabaseSoftwareImageSupported"> If true, filters the results to the set of Oracle Database versions that are supported for the database software images. </param>
-        /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DbVersionListResult> ListByLocationNextPage(string nextLink, string subscriptionId, AzureLocation location, OracleBaseDbSystemShape? dbSystemShape = null, ResourceIdentifier dbSystemId = null, StorageManagementType? storageManagement = null, bool? isUpgradeSupported = null, bool? isDatabaseSoftwareImageSupported = null, ShapeFamilyType? shapeFamily = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, location, dbSystemShape, dbSystemId, storageManagement, isUpgradeSupported, isDatabaseSoftwareImageSupported, shapeFamily);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DbVersionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DbVersionListResult.DeserializeDbVersionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

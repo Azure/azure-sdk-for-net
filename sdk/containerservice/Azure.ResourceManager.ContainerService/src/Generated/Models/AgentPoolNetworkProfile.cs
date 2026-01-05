@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Network settings of an agent pool. </summary>
+    /// <summary>
+    /// Network settings of an agent pool.
+    /// Serialized Name: AgentPoolNetworkProfile
+    /// </summary>
     public partial class AgentPoolNetworkProfile
     {
         /// <summary>
@@ -55,9 +58,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkProfile"/>. </summary>
-        /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
-        /// <param name="allowedHostPorts"> The port ranges that are allowed to access. The specified ranges are allowed to overlap. </param>
-        /// <param name="applicationSecurityGroups"> The IDs of the application security groups which agent pool will associate when created. </param>
+        /// <param name="nodePublicIPTags">
+        /// IPTags of instance-level public IPs.
+        /// Serialized Name: AgentPoolNetworkProfile.nodePublicIPTags
+        /// </param>
+        /// <param name="allowedHostPorts">
+        /// The port ranges that are allowed to access. The specified ranges are allowed to overlap.
+        /// Serialized Name: AgentPoolNetworkProfile.allowedHostPorts
+        /// </param>
+        /// <param name="applicationSecurityGroups">
+        /// The IDs of the application security groups which agent pool will associate when created.
+        /// Serialized Name: AgentPoolNetworkProfile.applicationSecurityGroups
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolNetworkProfile(IList<ContainerServiceIPTag> nodePublicIPTags, IList<AgentPoolNetworkPortRange> allowedHostPorts, IList<ResourceIdentifier> applicationSecurityGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,13 +79,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> IPTags of instance-level public IPs. </summary>
+        /// <summary>
+        /// IPTags of instance-level public IPs.
+        /// Serialized Name: AgentPoolNetworkProfile.nodePublicIPTags
+        /// </summary>
         [WirePath("nodePublicIPTags")]
         public IList<ContainerServiceIPTag> NodePublicIPTags { get; }
-        /// <summary> The port ranges that are allowed to access. The specified ranges are allowed to overlap. </summary>
+        /// <summary>
+        /// The port ranges that are allowed to access. The specified ranges are allowed to overlap.
+        /// Serialized Name: AgentPoolNetworkProfile.allowedHostPorts
+        /// </summary>
         [WirePath("allowedHostPorts")]
         public IList<AgentPoolNetworkPortRange> AllowedHostPorts { get; }
-        /// <summary> The IDs of the application security groups which agent pool will associate when created. </summary>
+        /// <summary>
+        /// The IDs of the application security groups which agent pool will associate when created.
+        /// Serialized Name: AgentPoolNetworkProfile.applicationSecurityGroups
+        /// </summary>
         [WirePath("applicationSecurityGroups")]
         public IList<ResourceIdentifier> ApplicationSecurityGroups { get; }
     }

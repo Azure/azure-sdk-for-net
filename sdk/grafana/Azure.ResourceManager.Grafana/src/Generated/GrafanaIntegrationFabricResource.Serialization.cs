@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Grafana
 {
+    /// <summary></summary>
     public partial class GrafanaIntegrationFabricResource : IJsonModel<GrafanaIntegrationFabricData>
     {
-        private static GrafanaIntegrationFabricData s_dataDeserializationInstance;
-        private static GrafanaIntegrationFabricData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GrafanaIntegrationFabricData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GrafanaIntegrationFabricData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GrafanaIntegrationFabricData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GrafanaIntegrationFabricData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GrafanaIntegrationFabricData>)Data).Write(writer, options);
 
-        GrafanaIntegrationFabricData IJsonModel<GrafanaIntegrationFabricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GrafanaIntegrationFabricData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GrafanaIntegrationFabricData IJsonModel<GrafanaIntegrationFabricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<GrafanaIntegrationFabricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GrafanaIntegrationFabricData>(Data, options, AzureResourceManagerGrafanaContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         GrafanaIntegrationFabricData IPersistableModel<GrafanaIntegrationFabricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GrafanaIntegrationFabricData>(data, options, AzureResourceManagerGrafanaContext.Default);
 
-        string IPersistableModel<GrafanaIntegrationFabricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GrafanaIntegrationFabricData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GrafanaIntegrationFabricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

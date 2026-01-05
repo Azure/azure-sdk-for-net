@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
+    /// <summary></summary>
     public partial class OracleSystemVersionResource : IJsonModel<OracleSystemVersionData>
     {
-        private static OracleSystemVersionData s_dataDeserializationInstance;
-        private static OracleSystemVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<OracleSystemVersionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<OracleSystemVersionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OracleSystemVersionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleSystemVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OracleSystemVersionData>)Data).Write(writer, options);
 
-        OracleSystemVersionData IJsonModel<OracleSystemVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleSystemVersionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OracleSystemVersionData IJsonModel<OracleSystemVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OracleSystemVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleSystemVersionData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         OracleSystemVersionData IPersistableModel<OracleSystemVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleSystemVersionData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<OracleSystemVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleSystemVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OracleSystemVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

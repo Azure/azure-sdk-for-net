@@ -82,6 +82,7 @@ internal static class ResourceExtensions
                         "Microsoft.ApplicationInsights.AspNetCore" => SdkVersionType.ShimAspNetCore,
                         "Microsoft.ApplicationInsights.WorkerService" => SdkVersionType.ShimWorkerService,
                         "Microsoft.ApplicationInsights.Web" => SdkVersionType.ShimWeb,
+                        "Microsoft.ApplicationInsights.NLogTarget" => SdkVersionType.ShimNLog,
                         _ => SdkVersionUtils.VersionType
                     };
                     break;

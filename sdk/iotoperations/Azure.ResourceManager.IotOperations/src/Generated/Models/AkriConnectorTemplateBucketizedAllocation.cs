@@ -15,25 +15,18 @@ namespace Azure.ResourceManager.IotOperations.Models
     {
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateBucketizedAllocation"/>. </summary>
         /// <param name="bucketSize"> The bucketized allocation of AEPs for connectors. </param>
-        public AkriConnectorTemplateBucketizedAllocation(int bucketSize)
+        public AkriConnectorTemplateBucketizedAllocation(int bucketSize) : base(AkriConnectorTemplateAllocationPolicy.Bucketized)
         {
             BucketSize = bucketSize;
-            Policy = AkriConnectorTemplateAllocationPolicy.Bucketized;
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateBucketizedAllocation"/>. </summary>
         /// <param name="policy"> The allocation policy type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="bucketSize"> The bucketized allocation of AEPs for connectors. </param>
-        internal AkriConnectorTemplateBucketizedAllocation(AkriConnectorTemplateAllocationPolicy policy, IDictionary<string, BinaryData> serializedAdditionalRawData, int bucketSize) : base(policy, serializedAdditionalRawData)
+        internal AkriConnectorTemplateBucketizedAllocation(AkriConnectorTemplateAllocationPolicy policy, IDictionary<string, BinaryData> additionalBinaryDataProperties, int bucketSize) : base(policy, additionalBinaryDataProperties)
         {
             BucketSize = bucketSize;
-            Policy = policy;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateBucketizedAllocation"/> for deserialization. </summary>
-        internal AkriConnectorTemplateBucketizedAllocation()
-        {
         }
 
         /// <summary> The bucketized allocation of AEPs for connectors. </summary>
