@@ -21,7 +21,6 @@ const SUPPRESSED_DIAGNOSTICS = [
 ];
 
 export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
-
   context.options["generator-name"] ??= "ManagementClientGenerator";
   context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
