@@ -10,7 +10,7 @@ using Microsoft.ClientModel.TestFramework.Mocks;
 using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 using NUnit.Framework;
 
-namespace Microsoft.ClientModel.TestFramework.Tests;
+namespace Microsoft.ClientModel.TestFramework.Tests.Samples;
 
 public class RecordedTestsSamples
 {

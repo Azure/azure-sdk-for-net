@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 
-namespace Microsoft.ClientModel.TestFramework.Tests;
+namespace Microsoft.ClientModel.TestFramework.Tests.Samples;
 
 public class SyncAsyncSamples
 {
