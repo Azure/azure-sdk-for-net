@@ -68,10 +68,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
                 return AddressSpace.AddressPrefixes;
             }
-            set
-            {
-                AddressSpace = new HciVmVirtualNetworkAddressSpace(value);
-            }
         }
 
         /// <summary> An array of DNS server IP addresses that VMs or wokloads in the vnet can inherit. </summary>

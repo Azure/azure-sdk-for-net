@@ -3632,7 +3632,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public partial class HciVmVirtualNetworkProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkProperties>
     {
         public HciVmVirtualNetworkProperties(Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace addressSpace, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions dhcpOptions) { }
-        public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
         public System.Collections.Generic.IList<string> DhcpOptionsDnsServers { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkStatus Status { get { throw null; } set { } }
