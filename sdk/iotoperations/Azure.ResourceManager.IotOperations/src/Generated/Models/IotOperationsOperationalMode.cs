@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct IotOperationsOperationalMode : IEquatable<IotOperationsOperationalMode>
     {
         private readonly string _value;
+        /// <summary> Enabled is equivalent to True. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabled is equivalent to False. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsOperationalMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotOperationsOperationalMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Enabled is equivalent to True. </summary>
         public static IotOperationsOperationalMode Enabled { get; } = new IotOperationsOperationalMode(EnabledValue);
+
         /// <summary> Disabled is equivalent to False. </summary>
         public static IotOperationsOperationalMode Disabled { get; } = new IotOperationsOperationalMode(DisabledValue);
+
         /// <summary> Determines if two <see cref="IotOperationsOperationalMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotOperationsOperationalMode left, IotOperationsOperationalMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotOperationsOperationalMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotOperationsOperationalMode left, IotOperationsOperationalMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotOperationsOperationalMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotOperationsOperationalMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotOperationsOperationalMode(string value) => new IotOperationsOperationalMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotOperationsOperationalMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotOperationsOperationalMode?(string value) => value == null ? null : new IotOperationsOperationalMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotOperationsOperationalMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotOperationsOperationalMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
