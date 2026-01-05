@@ -1,14 +1,9 @@
 # Release History
 
-## 12.0.0-preview.59 (Unreleased)
+## 12.0.0-preview.59 (2026-01-06)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- This release contains bug fixes to improve quality.
 
 ## 12.0.0-preview.58 (2025-11-17)
 
