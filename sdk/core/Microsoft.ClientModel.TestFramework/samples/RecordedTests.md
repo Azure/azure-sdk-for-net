@@ -18,7 +18,7 @@ The foundation of recorded testing is the `RecordedTestBase<T>` class and a cust
 ```C# Snippet:TestEnvironmentSetup
 public class MapsTestEnvironment : TestEnvironment
 {
-    // Environment variables for connecting to the demonstrative Azure Maps service (disclaimer: not a real service)
+    // Environment variables for connecting to the demonstrative "Maps" service (disclaimer: not a real service)
     public string Endpoint => GetRecordedVariable("MAPS_ENDPOINT");
 
     // Secret values should be marked as such for sanitization
@@ -71,7 +71,7 @@ public class MapsRecordedTests : RecordedTestBase<MapsTestEnvironment>
 
 ## Test modes
 
-By default tests are run in playback mode. To change the mode use the `SYSTEM_CLIENTMODEL_TEST_MODE` environment variable and set it to one of the following values: `Live`, `Playback`, `Record`.
+By default tests are run in playback mode. To change the mode, use the `SYSTEM_CLIENTMODEL_TEST_MODE` environment variable and set it to one of the following values: `Live`, `Playback`, `Record`.
 
 In development scenarios where it's required to change mode quickly without restarting Visual Studio, use the two-parameter constructor of `RecordedTestBase` to change the mode, or use the `.runsettings` file as described [here](#test-settings).
 
@@ -80,7 +80,7 @@ Tests that are auto-rerecorded will fail with the following error and succeed if
 
 ```text
 Error Message:
-   Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.
+   Test failed playback, but was successfully re-recorded (it should pass if re-run).
 ```
 
 ```C# Snippet:TestModeExample
@@ -93,7 +93,7 @@ public TestModeExamples(bool isAsync) : base(isAsync, RecordedTestMode.Live)
 
 ### Built-in sanitizers
 
-Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record. Do not check in session records containing secrets in. Common headers like Authentication are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, several properties of RecordedTestBase can be used to customize the sanitization process.
+Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record. Do not check in session records containing secrets. Common headers like `"Authentication"` are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, several properties of RecordedTestBase can be used to customize the sanitization process.
 
 ### Standard custom sanitization
 
@@ -171,14 +171,7 @@ Once you have cloned the repo, open the Test Proxy solution in your IDE.
 
 If you are attempting to debug Playback mode, set a breakpoint in the HandlePlaybackRequest method of RecordingHandler. If you are attempting to debug Record mode, set a breakpoint in the HandleRecordRequestAsync method of RecordingHandler. It may also be helpful to put breakpoints in Admin.cs to verify that your sanitizers are being added as expected.
 
-With your breakpoints set, run the Test Proxy project, and then run your test that you are trying to debug. You should see your breakpoints hit.
-
-The key integration points between the Test Framework and the Test Proxy are:
-
-InstrumentClientOptions method of RecordedTestBase - calling this on your client options will set the ClientOptions.Transport property to be ProxyTransport to your client options when in Playback or Record mode. The ProxyTransport will send all requests to the Test Proxy.
-TestProxy.cs - This class is responsible for starting and stopping the Test Proxy process, as well as reporting any errors that occur in the Test Proxy process. The Test Proxy process is started automatically when running tests in Record or Playback mode, and is stopped automatically when the test run is complete. The Test Proxy process is shared between tests and test classes within a process.
-Including Test Proxy Debug Logs
-In order to enable Test Proxy debug logs, you can either set the AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS environment variable or the EnableTestProxyDebugLogs runsetting parameter to true.
+With your breakpoints set, run the test proxy project, and then run your test that you are trying to debug. You should see your breakpoints hit.
 
 ## Live-Only tests
 
@@ -190,4 +183,4 @@ Some tests should never be recorded (e.g., due to size or content). The test fra
 
 1. **Recording Mismatches**: Ensure sanitizers don't over-sanitize and break request matching
 2. **Credential Issues**: Use `TestEnvironment.Credential` for consistent authentication
-3. **Timing Issues**: Use `TestRandom` for deterministic values instead of `Random`
+3. **Issues with random values**: Use `TestRandom` for deterministic values instead of `Random`

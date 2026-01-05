@@ -2,14 +2,6 @@
 
 This sample demonstrates how to use the Test Framework's mock utilities and testing helpers to write comprehensive unit tests for your client libraries.
 
-## Overview
-
-Unit tests with the Test Framework allow you to:
-- Test client behavior without making actual HTTP requests
-- Simulate various service responses and error conditions
-- Validate client-side logic and error handling
-- Test authentication and pipeline behavior
-
 ## Key Mock Components
 
 The Test Framework provides several mock implementations for unit testing:

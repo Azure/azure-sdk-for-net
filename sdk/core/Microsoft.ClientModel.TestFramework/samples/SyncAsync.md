@@ -2,15 +2,7 @@
 
 This sample demonstrates how to write tests that automatically validate both synchronous and asynchronous code paths with a single test implementation using the Test Framework's sync/async testing capabilities.
 
-## Overview
-
-The Test Framework's sync/async testing feature allows you to:
-- Write tests once and run them for both sync and async methods
-- Automatically forward async calls to their sync counterparts 
-- Test client libraries thoroughly with minimal code duplication
-- Ensure consistent behavior between sync and async overloads
-
-### Requirements
+## Requirements
 
 For the sync/async interceptor to work, your client methods must follow these patterns:
 
@@ -21,13 +13,13 @@ For the sync/async interceptor to work, your client methods must follow these pa
   - `ClientResult<T>` ↔ `Task<ClientResult<T>>` or `ValueTask<ClientResult<T>>`
   - `CollectionResult<T>` ↔ `Task<AsyncCollectionResult<T>>`
   - `CollectionResult` ↔ `Task<AsyncCollectionResult>`
-- **Virtual methods**: All intercepted methods must be marked as `virtual` to allow Castle DynamicProxy to intercept them
+- **Virtual methods**: All intercepted async methods and properties must be marked as `virtual` to allow Castle DynamicProxy to intercept them
 
 
 
 ## Basic Sync/Async Test Setup
 
-The foundation is the `ClientTestBase` class with the `[ClientTestFixture]` attribute:
+The foundation is the `ClientTestBase` class:
 
 ```C# Snippet:BasicSyncAsyncSetup
 public class MapsClientTests : ClientTestBase
@@ -161,18 +153,6 @@ public class RecordedSyncAsyncTests : RecordedTestBase<MapsTestEnvironment>
     }
 }
 ```
-
-## Client Requirements
-
-For sync/async testing to work properly, your client must meet these requirements:
-
-### 1. Virtual Methods
-
-All async methods and properties must be marked as `virtual`:
-
-### 2. Consistent Method Pairs
-
-Ensure sync and async methods have consistent signatures:
 
 ## Timeout Configuration
 

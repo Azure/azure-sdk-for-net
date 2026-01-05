@@ -70,7 +70,7 @@ public class RecordedTestsSamples
     #region Snippet:TestEnvironmentSetup
     public class MapsTestEnvironment : TestEnvironment
     {
-        // Environment variables for connecting to the demonstrative Azure Maps service (disclaimer: not a real service)
+        // Environment variables for connecting to the demonstrative "Maps" service (disclaimer: not a real service)
         public string Endpoint => GetRecordedVariable("MAPS_ENDPOINT");
 
         // Secret values should be marked as such for sanitization
