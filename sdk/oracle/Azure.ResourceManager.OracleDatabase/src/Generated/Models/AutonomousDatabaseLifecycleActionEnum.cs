@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct AutonomousDatabaseLifecycleActionEnum : IEquatable<AutonomousDatabaseLifecycleActionEnum>
     {
         private readonly string _value;
+        /// <summary> Start Autonomous Database. </summary>
+        private const string StartValue = "Start";
+        /// <summary> Stop Autonomous Database. </summary>
+        private const string StopValue = "Stop";
+        /// <summary> Restart Autonomous Database. </summary>
+        private const string RestartValue = "Restart";
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseLifecycleActionEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutonomousDatabaseLifecycleActionEnum(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StartValue = "Start";
-        private const string StopValue = "Stop";
-        private const string RestartValue = "Restart";
+            _value = value;
+        }
 
         /// <summary> Start Autonomous Database. </summary>
         public static AutonomousDatabaseLifecycleActionEnum Start { get; } = new AutonomousDatabaseLifecycleActionEnum(StartValue);
+
         /// <summary> Stop Autonomous Database. </summary>
         public static AutonomousDatabaseLifecycleActionEnum Stop { get; } = new AutonomousDatabaseLifecycleActionEnum(StopValue);
+
         /// <summary> Restart Autonomous Database. </summary>
         public static AutonomousDatabaseLifecycleActionEnum Restart { get; } = new AutonomousDatabaseLifecycleActionEnum(RestartValue);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseLifecycleActionEnum"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutonomousDatabaseLifecycleActionEnum left, AutonomousDatabaseLifecycleActionEnum right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseLifecycleActionEnum"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutonomousDatabaseLifecycleActionEnum left, AutonomousDatabaseLifecycleActionEnum right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabaseLifecycleActionEnum"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseLifecycleActionEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutonomousDatabaseLifecycleActionEnum(string value) => new AutonomousDatabaseLifecycleActionEnum(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseLifecycleActionEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutonomousDatabaseLifecycleActionEnum?(string value) => value == null ? null : new AutonomousDatabaseLifecycleActionEnum(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutonomousDatabaseLifecycleActionEnum other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutonomousDatabaseLifecycleActionEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> Dataflow Operation properties. NOTE - One only method is allowed to be used for one entry. </summary>
     public partial class DataflowOperationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataflowOperationProperties"/>. </summary>
         /// <param name="operationType"> Type of operation. </param>
@@ -58,30 +29,29 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="sourceSettings"> Source configuration. </param>
         /// <param name="builtInTransformationSettings"> Built In Transformation configuration. </param>
         /// <param name="destinationSettings"> Destination configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowOperationProperties(DataflowOperationType operationType, string name, DataflowSourceOperationSettings sourceSettings, DataflowBuiltInTransformationSettings builtInTransformationSettings, DataflowDestinationOperationSettings destinationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataflowOperationProperties(DataflowOperationType operationType, string name, DataflowSourceOperationSettings sourceSettings, DataflowBuiltInTransformationSettings builtInTransformationSettings, DataflowDestinationOperationSettings destinationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationType = operationType;
             Name = name;
             SourceSettings = sourceSettings;
             BuiltInTransformationSettings = builtInTransformationSettings;
             DestinationSettings = destinationSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowOperationProperties"/> for deserialization. </summary>
-        internal DataflowOperationProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of operation. </summary>
         public DataflowOperationType OperationType { get; set; }
+
         /// <summary> Optional user provided name of the transformation. </summary>
         public string Name { get; set; }
+
         /// <summary> Source configuration. </summary>
         public DataflowSourceOperationSettings SourceSettings { get; set; }
+
         /// <summary> Built In Transformation configuration. </summary>
         public DataflowBuiltInTransformationSettings BuiltInTransformationSettings { get; set; }
+
         /// <summary> Destination configuration. </summary>
         public DataflowDestinationOperationSettings DestinationSettings { get; set; }
     }

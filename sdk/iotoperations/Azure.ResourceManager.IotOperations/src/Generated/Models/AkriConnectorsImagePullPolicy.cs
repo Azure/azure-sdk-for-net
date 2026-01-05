@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct AkriConnectorsImagePullPolicy : IEquatable<AkriConnectorsImagePullPolicy>
     {
         private readonly string _value;
+        /// <summary> Always pull the image. </summary>
+        private const string AlwaysValue = "Always";
+        /// <summary> IfNotPresent pull the image. </summary>
+        private const string IfNotPresentValue = "IfNotPresent";
+        /// <summary> Never pull the image. </summary>
+        private const string NeverValue = "Never";
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsImagePullPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AkriConnectorsImagePullPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AlwaysValue = "Always";
-        private const string IfNotPresentValue = "IfNotPresent";
-        private const string NeverValue = "Never";
+            _value = value;
+        }
 
         /// <summary> Always pull the image. </summary>
         public static AkriConnectorsImagePullPolicy Always { get; } = new AkriConnectorsImagePullPolicy(AlwaysValue);
+
         /// <summary> IfNotPresent pull the image. </summary>
         public static AkriConnectorsImagePullPolicy IfNotPresent { get; } = new AkriConnectorsImagePullPolicy(IfNotPresentValue);
+
         /// <summary> Never pull the image. </summary>
         public static AkriConnectorsImagePullPolicy Never { get; } = new AkriConnectorsImagePullPolicy(NeverValue);
+
         /// <summary> Determines if two <see cref="AkriConnectorsImagePullPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AkriConnectorsImagePullPolicy left, AkriConnectorsImagePullPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AkriConnectorsImagePullPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AkriConnectorsImagePullPolicy left, AkriConnectorsImagePullPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AkriConnectorsImagePullPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AkriConnectorsImagePullPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AkriConnectorsImagePullPolicy(string value) => new AkriConnectorsImagePullPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AkriConnectorsImagePullPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AkriConnectorsImagePullPolicy?(string value) => value == null ? null : new AkriConnectorsImagePullPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AkriConnectorsImagePullPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AkriConnectorsImagePullPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
