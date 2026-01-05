@@ -14,9 +14,9 @@
 
 - Total libraries: 397
 - Management Plane (MPG): 226
-  - Autorest/Swagger: 158
-  - New Emitter (TypeSpec): 32
-  - Old TypeSpec: 36
+  - Autorest/Swagger: 157
+  - New Emitter (TypeSpec): 34
+  - Old TypeSpec: 35
 - Data Plane (DPG): 171
   - Autorest/Swagger: 86
   - New Emitter (TypeSpec): 19
@@ -168,7 +168,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 32 / 68 (47.1%)
+**Migration Status**: 34 / 69 (49.3%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -198,7 +198,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
-| fabric | Azure.ResourceManager.Fabric |  |
+| fabric | Azure.ResourceManager.Fabric | ✅ |
 | grafana | Azure.ResourceManager.Grafana |  |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
@@ -212,6 +212,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas |  |
 | mysql | Azure.ResourceManager.MySql |  |
 | neonpostgres | Azure.ResourceManager.NeonPostgres |  |
+| nginx | Azure.ResourceManager.Nginx | ✅ |
 | onlineexperimentation | Azure.ResourceManager.OnlineExperimentation |  |
 | oracle | Azure.ResourceManager.OracleDatabase |  |
 | paloaltonetworks.ngfw | Azure.ResourceManager.PaloAltoNetworks.Ngfw | ✅ |
@@ -244,7 +245,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 158
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 157
 
 | Service | Library |
 | ------- | ------- |
@@ -353,7 +354,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | networkcloud | Azure.ResourceManager.NetworkCloud |
 | networkfunction | Azure.ResourceManager.NetworkFunction |
 | newrelicobservability | Azure.ResourceManager.NewRelicObservability |
-| nginx | Azure.ResourceManager.Nginx |
 | notificationhubs | Azure.ResourceManager.NotificationHubs |
 | openenergyplatform | Azure.ResourceManager.EnergyServices |
 | operationalinsights | Azure.ResourceManager.OperationalInsights |
