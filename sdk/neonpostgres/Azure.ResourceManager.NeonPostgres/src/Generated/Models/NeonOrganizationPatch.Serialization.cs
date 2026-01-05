@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            NeonOrganizationPatchProperties properties = default;
+            OrganizationResourceUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     {
                         continue;
                     }
-                    properties = NeonOrganizationPatchProperties.DeserializeNeonOrganizationPatchProperties(prop.Value, options);
+                    properties = OrganizationResourceUpdateProperties.DeserializeOrganizationResourceUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

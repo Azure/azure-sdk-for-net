@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
     /// <summary> The updatable properties of the OrganizationResource. </summary>
-    public partial class NeonOrganizationPatchProperties
+    public partial class OrganizationResourceUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NeonOrganizationPatchProperties"/>. </summary>
-        public NeonOrganizationPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="OrganizationResourceUpdateProperties"/>. </summary>
+        public OrganizationResourceUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonOrganizationPatchProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrganizationResourceUpdateProperties"/>. </summary>
         /// <param name="marketplaceDetails"> Marketplace details of the resource. </param>
         /// <param name="userDetails"> Details of the user. </param>
         /// <param name="companyDetails"> Details of the company. </param>
         /// <param name="partnerOrganizationProperties"> Neon Organization properties. </param>
         /// <param name="projectProperties"> Neon Project Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NeonOrganizationPatchProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, PartnerOrganizationProperties partnerOrganizationProperties, NeonProjectProperties projectProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OrganizationResourceUpdateProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, PartnerOrganizationProperties partnerOrganizationProperties, NeonProjectProperties projectProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MarketplaceDetails = marketplaceDetails;
             UserDetails = userDetails;

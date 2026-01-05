@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.NeonOrganizationPatch"/> instance for mocking. </returns>
-        public static NeonOrganizationPatch NeonOrganizationPatch(IDictionary<string, string> tags = default, NeonOrganizationPatchProperties properties = default)
+        public static NeonOrganizationPatch NeonOrganizationPatch(IDictionary<string, string> tags = default, OrganizationResourceUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
