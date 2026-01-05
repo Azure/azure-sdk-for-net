@@ -16,7 +16,8 @@ import {
   ResourceScope,
   ArmProviderSchema,
   ArmResourceSchema,
-  convertArmProviderSchemaToArguments
+  convertArmProviderSchemaToArguments,
+  sortResourceMethods
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -902,8 +903,8 @@ function buildArmProviderSchemaFromDetectedResources(
           continue;
         }
 
-        // Sort methods by methodId for deterministic ordering
-        metadata.methods.sort((a, b) => a.methodId.localeCompare(b.methodId));
+        // Sort methods by kind (CRUD, List, Action) and then by methodId for deterministic ordering
+        sortResourceMethods(metadata.methods);
 
         resources.push({
           resourceModelId: model.crossLanguageDefinitionId,

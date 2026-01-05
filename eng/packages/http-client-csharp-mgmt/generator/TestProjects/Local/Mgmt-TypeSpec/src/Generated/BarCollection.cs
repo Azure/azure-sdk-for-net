@@ -25,10 +25,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// </summary>
     public partial class BarCollection : ArmCollection, IEnumerable<BarResource>, IAsyncEnumerable<BarResource>
     {
-        private readonly ClientDiagnostics _barsClientDiagnostics;
-        private readonly Bars _barsRestClient;
         private readonly ClientDiagnostics _barClientDiagnostics;
         private readonly Bar _barRestClient;
+        private readonly ClientDiagnostics _barsClientDiagnostics;
+        private readonly Bars _barsRestClient;
         private readonly ClientDiagnostics _employeesClientDiagnostics;
         private readonly Employees _employeesRestClient;
 
@@ -43,10 +43,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal BarCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(BarResource.ResourceType, out string barApiVersion);
-            _barsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
-            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             _barClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
             _barRestClient = new Bar(_barClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
+            _barsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
+            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             _employeesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
             _employeesRestClient = new Employees(_employeesClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
