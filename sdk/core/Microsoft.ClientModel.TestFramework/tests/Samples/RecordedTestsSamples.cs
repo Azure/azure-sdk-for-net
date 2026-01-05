@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -14,6 +15,58 @@ namespace Microsoft.ClientModel.TestFramework.Tests.Samples;
 
 public class RecordedTestsSamples
 {
+    #region Snippet:TestEnvironmentReadme
+    public class SimpleTestEnvironment : TestEnvironment
+    {
+        // Variables retrieved using GetRecordedVariable will be recorded in recorded tests
+        public string Endpoint => GetRecordedVariable("SAMPLE_ENDPOINT");
+        #region Snippet:SecretVariable
+        public string SecretKey => GetRecordedVariable("SAMPLE_SECRET_KEY", options => options.IsSecret());
+        #endregion
+
+        public override Dictionary<string, string> ParseEnvironmentFile()
+        {
+            // Read environment variables or parse and decrypt from an encrypted .env file as needed
+            return new Dictionary<string, string>
+            {
+#if SNIPPET
+                { "SAMPLE_ENDPOINT", Environment.GetEnvironmentVariable("MAPS_ENDPOINT") },
+                { "SAMPLE_SECRET_KEY", Environment.GetEnvironmentVariable("MAPS_SUBSCRIPTION_KEY") }
+#else
+                { "SAMPLE_ENDPOINT", "https://example.com" },
+                { "SAMPLE_SECRET_KEY", "your_subscription_key_here" }
+#endif
+            };
+        }
+
+        public override Task WaitForEnvironmentAsync()
+        {
+            return Task.CompletedTask;
+        }
+    }
+    #endregion
+
+    #region Snippet:RecordedTestReadme
+    public class ConfigurationTests : RecordedTestBase<SimpleTestEnvironment>
+    {
+        public ConfigurationTests(bool isAsync) : base(isAsync)
+        {
+        }
+
+        [RecordedTest]
+        public async Task CreateAndDeleteConfiguration()
+        {
+            MockClientOptions options = InstrumentClientOptions(new MockClientOptions());
+            MockClient client = CreateProxyFromClient(new MockClient(
+                new Uri(TestEnvironment.Endpoint),
+                options
+            ));
+
+            // Test implementation here
+        }
+    }
+    #endregion
+
     #region Snippet:TestEnvironmentSetup
     public class MapsTestEnvironment : TestEnvironment
     {

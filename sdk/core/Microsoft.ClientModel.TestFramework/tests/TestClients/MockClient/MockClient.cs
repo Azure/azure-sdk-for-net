@@ -23,6 +23,14 @@ public class MockClient
         _pipeline = ClientPipeline.Create(options);
     }
 
+    public MockClient(Uri uri, MockClientOptions options) : this(options)
+    {
+    }
+
+    public MockClient(Uri endpoint, AuthenticationTokenProvider credential, MockClientOptions options = null) : this(options)
+    {
+    }
+
     public virtual ClientResult GetResource(string id, RequestOptions options = null)
     {
         Argument.AssertNotNullOrEmpty(id, nameof(id));

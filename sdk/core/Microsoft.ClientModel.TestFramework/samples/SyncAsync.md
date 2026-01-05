@@ -39,10 +39,14 @@ public class MapsClientTests : ClientTestBase
     [Test]
     public async Task CanPerformBasicOperation()
     {
+        MapsClientOptions options = new();
+
+
         // Create and proxy the client
         MapsClient client = CreateProxyFromClient(new MapsClient(
             new Uri("https://atlas.microsoft.com"),
-            new ApiKeyCredential("test-key")));
+            new ApiKeyCredential("test-key"),
+            options));
 
         // Write the test using async methods - the framework will automatically
         // test both sync and async versions
@@ -79,8 +83,10 @@ public async Task AsyncOnlyFeature()
 {
     // No need to proxy since this is async-only, but also works the same way if proxied,
     // so existing helper methods can be used as needed
+    MapsClientOptions options = new();
     MapsClient client = new(new Uri("https://atlas.microsoft.com"),
-        new ApiKeyCredential("test-key"));
+        new ApiKeyCredential("test-key"),
+        options);
 
     // Test async-specific functionality
     string[] ipAddresses = ["8.8.8.8", "1.1.1.1", "208.67.222.222"];
@@ -100,9 +106,11 @@ public void SyncOnlyFeature()
 {
     // No need to proxy since this is sync-only, but also works the same way if proxied,
     // so existing helper methods can be used as needed
+    MapsClientOptions options = new();
     MapsClient client = CreateProxyFromClient(new MapsClient(
         new Uri("https://atlas.microsoft.com"),
-        new ApiKeyCredential("test-key")));
+        new ApiKeyCredential("test-key"),
+        options));
 
     // Test sync-specific behavior
     IPAddressCountryPair result = client.GetCountryCode(IPAddress.Parse("8.8.8.8"));
@@ -114,9 +122,11 @@ public void SyncOnlyFeature()
 Sync/async testing works well with error scenarios:
 
 ```C# Snippet:ErrorScenario
-var client = CreateProxyFromClient(new MapsClient(
+MapsClientOptions options = new();
+MapsClient client = CreateProxyFromClient(new MapsClient(
 new Uri("https://atlas.microsoft.com"),
-new ApiKeyCredential("invalid-key")));
+new ApiKeyCredential("invalid-key"),
+options));
 
 // Test error handling in both sync and async modes
 ClientResultException exception = Assert.ThrowsAsync<ClientResultException>(
@@ -134,15 +144,17 @@ public class RecordedSyncAsyncTests : RecordedTestBase<MapsTestEnvironment>
     {
     }
 
-    [Test]
+
+    [RecordedTest]
     public async Task RecordedSyncAsyncTest()
     {
         // Combine recording with sync/async testing
-        MapsClientOptions options = InstrumentClientOptions(new MapsClientOptions());
+        MapsClientOptions options = new();
+        MapsClientOptions instrumentedOptions = InstrumentClientOptions(options);
         MapsClient client = CreateProxyFromClient(new MapsClient(
             new Uri(TestEnvironment.Endpoint),
             new ApiKeyCredential(TestEnvironment.SubscriptionKey),
-            options));
+            instrumentedOptions));
 
         // This will be recorded for both sync and async modes
         IPAddressCountryPair result = await client.GetCountryCodeAsync(IPAddress.Parse("8.8.8.8"));

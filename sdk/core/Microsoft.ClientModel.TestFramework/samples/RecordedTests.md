@@ -49,11 +49,13 @@ public class MapsRecordedTests : RecordedTestBase<MapsTestEnvironment>
     {
     }
 
+
     [RecordedTest]
     public async Task CanGetCountryCode()
     {
         // Create a client with instrumented options for recording
         MapsClientOptions options = InstrumentClientOptions(new MapsClientOptions());
+
 
         // Proxy the client to enable auto sync forwarding from async calls
         MapsClient client = CreateProxyFromClient(new MapsClient(

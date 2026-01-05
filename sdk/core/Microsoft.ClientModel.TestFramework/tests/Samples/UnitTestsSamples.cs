@@ -19,6 +19,19 @@ public class UnitTestsSamples
         }
 
         [Test]
+        public async Task MockTypesTest()
+        {
+            #region Snippet:MockTypesBasics
+            MockCredential credential = new();
+
+            MockPipelineTransport mockTransport = new(message => new MockPipelineResponse(200));
+
+            MockClientOptions options = new() { Transport = mockTransport };
+            MockClient client = new(new Uri("https://example.com"), credential, options);
+            #endregion
+        }
+
+        [Test]
         public async Task MockTransportReturnsConfiguredResponse()
         {
             #region Snippet:MockTransportBasics
