@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public readonly partial struct ScheduledActionOptimizationPreference : IEquatable<ScheduledActionOptimizationPreference>
     {
         private readonly string _value;
+        /// <summary> Optimize while considering cost savings. </summary>
+        private const string CostValue = "Cost";
+        /// <summary> Optimize while considering availability of resources. </summary>
+        private const string AvailabilityValue = "Availability";
+        /// <summary> Optimize while considering a balance of cost and availability. </summary>
+        private const string CostAvailabilityBalancedValue = "CostAvailabilityBalanced";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionOptimizationPreference"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduledActionOptimizationPreference(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CostValue = "Cost";
-        private const string AvailabilityValue = "Availability";
-        private const string CostAvailabilityBalancedValue = "CostAvailabilityBalanced";
+            _value = value;
+        }
 
         /// <summary> Optimize while considering cost savings. </summary>
         public static ScheduledActionOptimizationPreference Cost { get; } = new ScheduledActionOptimizationPreference(CostValue);
+
         /// <summary> Optimize while considering availability of resources. </summary>
         public static ScheduledActionOptimizationPreference Availability { get; } = new ScheduledActionOptimizationPreference(AvailabilityValue);
+
         /// <summary> Optimize while considering a balance of cost and availability. </summary>
         public static ScheduledActionOptimizationPreference CostAvailabilityBalanced { get; } = new ScheduledActionOptimizationPreference(CostAvailabilityBalancedValue);
+
         /// <summary> Determines if two <see cref="ScheduledActionOptimizationPreference"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionOptimizationPreference left, ScheduledActionOptimizationPreference right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduledActionOptimizationPreference"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionOptimizationPreference left, ScheduledActionOptimizationPreference right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionOptimizationPreference"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduledActionOptimizationPreference"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduledActionOptimizationPreference(string value) => new ScheduledActionOptimizationPreference(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScheduledActionOptimizationPreference"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScheduledActionOptimizationPreference?(string value) => value == null ? null : new ScheduledActionOptimizationPreference(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionOptimizationPreference other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduledActionOptimizationPreference other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

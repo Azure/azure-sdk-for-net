@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDevOpsInfrastructureArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDevOpsInfrastructureArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDevOpsInfrastructureArmClient for mocking. </summary>
         protected MockableDevOpsInfrastructureArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDevOpsInfrastructureArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDevOpsInfrastructureArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDevOpsInfrastructureArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDevOpsInfrastructureArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DevOpsPoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevOpsPoolResource.CreateResourceIdentifier" /> to create a <see cref="DevOpsPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DevOpsPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DevOpsPoolResource"/> object. </returns>
         public virtual DevOpsPoolResource GetDevOpsPoolResource(ResourceIdentifier id)

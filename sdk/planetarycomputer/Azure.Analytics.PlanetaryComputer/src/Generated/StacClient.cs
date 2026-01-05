@@ -3817,11 +3817,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Search(RequestContent content, RequestContext context = null)
+        public virtual Response Search(RequestContent content, string sign = default, int? durationInMinutes = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.Search");
             scope.Start();
@@ -3829,7 +3831,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateSearchRequest(content, context);
+                using HttpMessage message = CreateSearchRequest(content, sign, durationInMinutes, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3848,11 +3850,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SearchAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> SearchAsync(RequestContent content, string sign = default, int? durationInMinutes = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.Search");
             scope.Start();
@@ -3860,7 +3864,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateSearchRequest(content, context);
+                using HttpMessage message = CreateSearchRequest(content, sign, durationInMinutes, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3872,27 +3876,31 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> STAC search operation. </summary>
         /// <param name="body"> Request body. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemCollectionResource> Search(StacSearchParameters body, CancellationToken cancellationToken = default)
+        public virtual Response<StacItemCollectionResource> Search(StacSearchParameters body, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Search(body, cancellationToken.ToRequestContext());
+            Response result = Search(body, sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext());
             return Response.FromValue((StacItemCollectionResource)result, result);
         }
 
         /// <summary> STAC search operation. </summary>
         /// <param name="body"> Request body. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemCollectionResource>> SearchAsync(StacSearchParameters body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacItemCollectionResource>> SearchAsync(StacSearchParameters body, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await SearchAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await SearchAsync(body, sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacItemCollectionResource)result, result);
         }
     }

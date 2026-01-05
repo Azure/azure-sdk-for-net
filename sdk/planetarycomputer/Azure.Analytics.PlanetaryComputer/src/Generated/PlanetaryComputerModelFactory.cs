@@ -1012,8 +1012,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// 
         /// Overrides datetime validation from the base request model.
         /// </param>
-        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
-        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="query">
         /// STAC Query
         /// 
@@ -1038,7 +1036,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLang"> Filter language to use for the filter expression. </param>
         /// <param name="token"> Pagination token for fetching the next set of results. </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacSearchParameters"/> instance for mocking. </returns>
-        public static StacSearchParameters StacSearchParameters(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, string datetime = default, int? limit = default, IDictionary<string, BinaryData> conformanceClass = default, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, IDictionary<string, BinaryData> query = default, IEnumerable<StacSortExtension> sortBy = default, IEnumerable<SearchOptionsFields> fields = default, IDictionary<string, BinaryData> filter = default, string filterCoordinateReferenceSystem = default, FilterLanguage? filterLang = default, string token = default)
+        public static StacSearchParameters StacSearchParameters(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, string datetime = default, int? limit = default, IDictionary<string, BinaryData> conformanceClass = default, IDictionary<string, BinaryData> query = default, IEnumerable<StacSortExtension> sortBy = default, IEnumerable<SearchOptionsFields> fields = default, IDictionary<string, BinaryData> filter = default, string filterCoordinateReferenceSystem = default, FilterLanguage? filterLang = default, string token = default)
         {
             collections ??= new ChangeTrackingList<string>();
             ids ??= new ChangeTrackingList<string>();
@@ -1057,8 +1055,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 datetime,
                 limit,
                 conformanceClass,
-                sign,
-                durationInMinutes,
                 query,
                 sortBy.ToList(),
                 fields.ToList(),

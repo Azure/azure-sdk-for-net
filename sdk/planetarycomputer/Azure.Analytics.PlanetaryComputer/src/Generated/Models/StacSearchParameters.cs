@@ -46,8 +46,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// 
         /// Overrides datetime validation from the base request model.
         /// </param>
-        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
-        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="query">
         /// STAC Query
         /// 
@@ -72,7 +70,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLang"> Filter language to use for the filter expression. </param>
         /// <param name="token"> Pagination token for fetching the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacSearchParameters(IList<string> collections, IList<string> ids, IList<float> boundingBox, GeoJsonGeometry intersects, string datetime, int? limit, IDictionary<string, BinaryData> conformanceClass, StacAssetUrlSigningMode? sign, int? durationInMinutes, IDictionary<string, BinaryData> query, IList<StacSortExtension> sortBy, IList<SearchOptionsFields> fields, IDictionary<string, BinaryData> filter, string filterCoordinateReferenceSystem, FilterLanguage? filterLang, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacSearchParameters(IList<string> collections, IList<string> ids, IList<float> boundingBox, GeoJsonGeometry intersects, string datetime, int? limit, IDictionary<string, BinaryData> conformanceClass, IDictionary<string, BinaryData> query, IList<StacSortExtension> sortBy, IList<SearchOptionsFields> fields, IDictionary<string, BinaryData> filter, string filterCoordinateReferenceSystem, FilterLanguage? filterLang, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collections = collections;
             Ids = ids;
@@ -81,8 +79,6 @@ namespace Azure.Analytics.PlanetaryComputer
             Datetime = datetime;
             Limit = limit;
             ConformanceClass = conformanceClass;
-            Sign = sign;
-            DurationInMinutes = durationInMinutes;
             Query = query;
             SortBy = sortBy;
             Fields = fields;
@@ -140,12 +136,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> ConformanceClass { get; }
-
-        /// <summary> Whether to sign asset URLs in the response. </summary>
-        public StacAssetUrlSigningMode? Sign { get; set; }
-
-        /// <summary> URL signature duration in minutes. </summary>
-        public int? DurationInMinutes { get; set; }
 
         /// <summary>
         /// STAC Query

@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    public partial class OracleDBVersionProperties : IUtf8JsonSerializable, IJsonModel<OracleDBVersionProperties>
+    /// <summary> DbVersion resource model. </summary>
+    public partial class OracleDBVersionProperties : IJsonModel<OracleDBVersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OracleDBVersionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="OracleDBVersionProperties"/> for deserialization. </summary>
+        internal OracleDBVersionProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleDBVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleDBVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OracleDBVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OracleDBVersionProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
             if (Optional.IsDefined(IsLatestForMajorVersion))
@@ -56,15 +61,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("supportsPdb"u8);
                 writer.WriteBooleanValue(DoesSupportPluggableDatabase.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,22 +78,27 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        OracleDBVersionProperties IJsonModel<OracleDBVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OracleDBVersionProperties IJsonModel<OracleDBVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OracleDBVersionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleDBVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OracleDBVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OracleDBVersionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOracleDBVersionProperties(document.RootElement, options);
         }
 
-        internal static OracleDBVersionProperties DeserializeOracleDBVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OracleDBVersionProperties DeserializeOracleDBVersionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,71 +107,72 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             bool? isLatestForMajorVersion = default;
             bool? isPreviewDbVersion = default;
             bool? isUpgradeSupported = default;
-            bool? supportsPdb = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? doesSupportPluggableDatabase = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isLatestForMajorVersion"u8))
+                if (prop.NameEquals("isLatestForMajorVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isLatestForMajorVersion = property.Value.GetBoolean();
+                    isLatestForMajorVersion = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isPreviewDbVersion"u8))
+                if (prop.NameEquals("isPreviewDbVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isPreviewDbVersion = property.Value.GetBoolean();
+                    isPreviewDbVersion = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isUpgradeSupported"u8))
+                if (prop.NameEquals("isUpgradeSupported"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isUpgradeSupported = property.Value.GetBoolean();
+                    isUpgradeSupported = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("supportsPdb"u8))
+                if (prop.NameEquals("supportsPdb"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    supportsPdb = property.Value.GetBoolean();
+                    doesSupportPluggableDatabase = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new OracleDBVersionProperties(
                 version,
                 isLatestForMajorVersion,
                 isPreviewDbVersion,
                 isUpgradeSupported,
-                supportsPdb,
-                serializedAdditionalRawData);
+                doesSupportPluggableDatabase,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<OracleDBVersionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleDBVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OracleDBVersionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleDBVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -171,15 +182,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        OracleDBVersionProperties IPersistableModel<OracleDBVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleDBVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OracleDBVersionProperties IPersistableModel<OracleDBVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OracleDBVersionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleDBVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOracleDBVersionProperties(document.RootElement, options);
                     }
                 default:
@@ -187,6 +203,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OracleDBVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

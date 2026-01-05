@@ -50,8 +50,10 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
+        /// <param name="publicNetworkAccess"> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
+        /// <param name="isLocalAuthDisabled"> Disable local authentication for the CommunicationService. </param>
         /// <returns> A new <see cref="Communication.CommunicationServiceResourceData"/> instance for mocking. </returns>
-        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, CommunicationServicesProvisioningState? provisioningState = null, string hostName = null, string dataLocation = null, ResourceIdentifier notificationHubId = null, string version = null, Guid? immutableResourceId = null, IEnumerable<string> linkedDomains = null)
+        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, CommunicationServicesProvisioningState? provisioningState = null, string hostName = null, string dataLocation = null, ResourceIdentifier notificationHubId = null, string version = null, Guid? immutableResourceId = null, IEnumerable<string> linkedDomains = null, CommunicationPublicNetworkAccess? publicNetworkAccess = null, bool? isLocalAuthDisabled = null)
         {
             tags ??= new Dictionary<string, string>();
             linkedDomains ??= new List<string>();
@@ -71,6 +73,8 @@ namespace Azure.ResourceManager.Communication.Models
                 version,
                 immutableResourceId,
                 linkedDomains?.ToList(),
+                publicNetworkAccess,
+                isLocalAuthDisabled,
                 serializedAdditionalRawData: null);
         }
 
@@ -229,6 +233,102 @@ namespace Azure.ResourceManager.Communication.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Communication.CommunicationSmtpUsernameData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="username"> The SMTP username. Could be free form or in the email address format. </param>
+        /// <param name="entraApplicationId"> The application Id for the linked Entra Application. </param>
+        /// <param name="tenantId"> The tenant of the linked Entra Application. </param>
+        /// <returns> A new <see cref="Communication.CommunicationSmtpUsernameData"/> instance for mocking. </returns>
+        public static CommunicationSmtpUsernameData CommunicationSmtpUsernameData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string username = null, string entraApplicationId = null, Guid? tenantId = null)
+        {
+            return new CommunicationSmtpUsernameData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                username,
+                entraApplicationId,
+                tenantId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Communication.EmailSuppressionListData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="listName"> The name of the suppression list. This value must match one of the valid sender usernames of the sending domain. </param>
+        /// <param name="createdOn"> The date the resource was last updated. </param>
+        /// <param name="lastUpdatedOn"> The date the resource was created. </param>
+        /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
+        /// <returns> A new <see cref="Communication.EmailSuppressionListData"/> instance for mocking. </returns>
+        public static EmailSuppressionListData EmailSuppressionListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string listName = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, string dataLocation = null)
+        {
+            return new EmailSuppressionListData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                listName,
+                createdOn,
+                lastUpdatedOn,
+                dataLocation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Communication.EmailSuppressionListAddressData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="email"> Email address of the recipient. </param>
+        /// <param name="firstName"> The first name of the email recipient. </param>
+        /// <param name="lastName"> The last name of the email recipient. </param>
+        /// <param name="notes"> An optional property to provide contextual notes or a description for an address. </param>
+        /// <param name="lastModified"> The date the address was last updated in a suppression list. </param>
+        /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
+        /// <returns> A new <see cref="Communication.EmailSuppressionListAddressData"/> instance for mocking. </returns>
+        public static EmailSuppressionListAddressData EmailSuppressionListAddressData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string email = null, string firstName = null, string lastName = null, string notes = null, DateTimeOffset? lastModified = null, string dataLocation = null)
+        {
+            return new EmailSuppressionListAddressData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                email,
+                firstName,
+                lastName,
+                notes,
+                lastModified,
+                dataLocation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Communication.CommunicationServiceResourceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
+        /// <param name="dataLocation"> The location where the communication service stores its data at rest. </param>
+        /// <param name="notificationHubId"> Resource ID of an Azure Notification Hub linked to this resource. </param>
+        /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
+        /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
+        /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Communication.CommunicationServiceResourceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IEnumerable<string> linkedDomains)
+        {
+            return CommunicationServiceResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, provisioningState: provisioningState, hostName: hostName, dataLocation: dataLocation, notificationHubId: notificationHubId, version: version, immutableResourceId: immutableResourceId, linkedDomains: linkedDomains, publicNetworkAccess: default, isLocalAuthDisabled: default);
+        }
+
         /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -247,7 +347,7 @@ namespace Azure.ResourceManager.Communication.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IEnumerable<string> linkedDomains)
         {
-            return CommunicationServiceResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, provisioningState: provisioningState, hostName: hostName, dataLocation: dataLocation, notificationHubId: notificationHubId, version: version, immutableResourceId: immutableResourceId, linkedDomains: linkedDomains);
+            return CommunicationServiceResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, provisioningState: provisioningState, hostName: hostName, dataLocation: dataLocation, notificationHubId: notificationHubId, version: version, immutableResourceId: immutableResourceId, linkedDomains: linkedDomains, publicNetworkAccess: default, isLocalAuthDisabled: default);
         }
     }
 }

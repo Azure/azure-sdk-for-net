@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> GovernedServiceItem Properties. </summary>
     public partial class VirtualEnclaveGovernedService
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveGovernedService"/>. </summary>
         /// <param name="serviceId"> Service ID. </param>
@@ -60,8 +32,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="enforcement"> Initiative enforcement (Enabled or Disabled). </param>
         /// <param name="policyAction"> Enforcement mode for policy. AuditOnly, Enforce, or None. </param>
         /// <param name="initiatives"> Initiatives associated with this service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveGovernedService(VirtualEnclaveGovernedServiceIdentifier serviceId, string serviceName, ServiceGovernanceOptionType? option, ServiceInitiativeEnforcement? enforcement, ServiceEnforcementPolicyAction? policyAction, IReadOnlyList<string> initiatives, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualEnclaveGovernedService(VirtualEnclaveGovernedServiceIdentifier serviceId, string serviceName, ServiceGovernanceOptionType? option, ServiceInitiativeEnforcement? enforcement, ServiceEnforcementPolicyActionType? policyAction, IReadOnlyList<string> initiatives, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceId = serviceId;
             ServiceName = serviceName;
@@ -69,24 +41,24 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             Enforcement = enforcement;
             PolicyAction = policyAction;
             Initiatives = initiatives;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveGovernedService"/> for deserialization. </summary>
-        internal VirtualEnclaveGovernedService()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Service ID. </summary>
         public VirtualEnclaveGovernedServiceIdentifier ServiceId { get; set; }
+
         /// <summary> Service name. </summary>
         public string ServiceName { get; }
+
         /// <summary> Governance option for this service (Allow, Deny, ExceptionOnly, or NotApplicable). </summary>
         public ServiceGovernanceOptionType? Option { get; set; }
+
         /// <summary> Initiative enforcement (Enabled or Disabled). </summary>
         public ServiceInitiativeEnforcement? Enforcement { get; set; }
+
         /// <summary> Enforcement mode for policy. AuditOnly, Enforce, or None. </summary>
-        public ServiceEnforcementPolicyAction? PolicyAction { get; set; }
+        public ServiceEnforcementPolicyActionType? PolicyAction { get; set; }
+
         /// <summary> Initiatives associated with this service. </summary>
         public IReadOnlyList<string> Initiatives { get; }
     }

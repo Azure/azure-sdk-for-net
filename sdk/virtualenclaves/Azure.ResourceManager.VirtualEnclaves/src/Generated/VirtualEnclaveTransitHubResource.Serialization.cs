@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.VirtualEnclaves
 {
+    /// <summary></summary>
     public partial class VirtualEnclaveTransitHubResource : IJsonModel<VirtualEnclaveTransitHubData>
     {
-        private static VirtualEnclaveTransitHubData s_dataDeserializationInstance;
-        private static VirtualEnclaveTransitHubData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualEnclaveTransitHubData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VirtualEnclaveTransitHubData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualEnclaveTransitHubData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualEnclaveTransitHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualEnclaveTransitHubData>)Data).Write(writer, options);
 
-        VirtualEnclaveTransitHubData IJsonModel<VirtualEnclaveTransitHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualEnclaveTransitHubData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualEnclaveTransitHubData IJsonModel<VirtualEnclaveTransitHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VirtualEnclaveTransitHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualEnclaveTransitHubData>(Data, options, AzureResourceManagerVirtualEnclavesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VirtualEnclaveTransitHubData IPersistableModel<VirtualEnclaveTransitHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualEnclaveTransitHubData>(data, options, AzureResourceManagerVirtualEnclavesContext.Default);
 
-        string IPersistableModel<VirtualEnclaveTransitHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualEnclaveTransitHubData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualEnclaveTransitHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
