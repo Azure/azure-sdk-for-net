@@ -572,7 +572,7 @@ namespace Azure.Generator.Management.Visitors
                         {
                             var parameterName = invokeExpression.Arguments[0].ToDisplayString(); // we can ensure the first argument is always the parameter for validation expression
                             // Remove the @ prefix if present (for C# keywords)
-                            var normalizedParameterName = parameterName.StartsWith("@") ? parameterName.Substring(1) : parameterName;
+                            var normalizedParameterName = parameterName.StartsWith("@") ? parameterName[1..] : parameterName;
                             if (map.TryGetValue(normalizedParameterName, out var value))
                             {
                                 foreach (var (flattenProperty, _) in value)
