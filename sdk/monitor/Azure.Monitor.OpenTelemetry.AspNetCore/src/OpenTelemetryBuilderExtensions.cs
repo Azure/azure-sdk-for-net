@@ -84,8 +84,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             Action<ResourceBuilder> configureResource = (r) => r
                 .AddAttributes(new[] { new KeyValuePair<string, object>("telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore") })
                 .AddDetector(new AppServiceResourceDetector())
-                .AddDetector(new AzureContainerAppsResourceDetector())
-                .AddDetector(new AzureVMResourceDetector());
+                .AddDetector(new AzureVMResourceDetector())
+                .AddDetector(new AzureContainerAppsResourceDetector());
 
             builder.ConfigureResource(configureResource);
 

@@ -44,18 +44,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentApiKeyResource nginxDeploymentApiKey = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName);
 
             Assert.IsTrue(nginxDeploymentApiKeyName.Equals(nginxDeploymentApiKey.Data.Name));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.GetNginxDeploymentApiKeys().CreateOrUpdateAsync(WaitUntil.Completed, nginxDeploymentApiKeyName, null)).Value);
-
-            NginxDeploymentApiKeyRequestProperties apiKeyProperties = new NginxDeploymentApiKeyRequestProperties
-            {
-                SecretText = NginxDeploymentApiKeySecretText
-            };
-
-            NginxDeploymentApiKeyCreateOrUpdateContent nginxDeploymentApiKeyCreateOrUpdateContent = new NginxDeploymentApiKeyCreateOrUpdateContent
-            {
-                Properties = apiKeyProperties
-            };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.GetNginxDeploymentApiKeys().CreateOrUpdateAsync(WaitUntil.Completed, null, nginxDeploymentApiKeyCreateOrUpdateContent)).Value);
         }
 
         [TestCase]

@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
-    /// A Class representing an EdgeConfigTemplateVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EdgeConfigTemplateVersionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetEdgeConfigTemplateVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EdgeConfigTemplateResource"/> using the GetEdgeConfigTemplateVersion method.
+    /// A class representing a EdgeConfigTemplateVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EdgeConfigTemplateVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EdgeConfigTemplateResource"/> using the GetEdgeConfigTemplateVersions method.
     /// </summary>
     public partial class EdgeConfigTemplateVersionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EdgeConfigTemplateVersionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="configTemplateName"> The configTemplateName. </param>
-        /// <param name="configTemplateVersionName"> The configTemplateVersionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configTemplateName, string configTemplateVersionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics;
-        private readonly ConfigTemplateVersionsRestOperations _edgeConfigTemplateVersionConfigTemplateVersionsRestClient;
+        private readonly ClientDiagnostics _configTemplateVersionsClientDiagnostics;
+        private readonly ConfigTemplateVersions _configTemplateVersionsRestClient;
         private readonly EdgeConfigTemplateVersionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Edge/configTemplates/versions";
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeConfigTemplateVersionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeConfigTemplateVersionResource for mocking. </summary>
         protected EdgeConfigTemplateVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeConfigTemplateVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeConfigTemplateVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EdgeConfigTemplateVersionResource(ArmClient client, EdgeConfigTemplateVersionData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeConfigTemplateVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeConfigTemplateVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeConfigTemplateVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string edgeConfigTemplateVersionConfigTemplateVersionsApiVersion);
-            _edgeConfigTemplateVersionConfigTemplateVersionsRestClient = new ConfigTemplateVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeConfigTemplateVersionConfigTemplateVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string edgeConfigTemplateVersionApiVersion);
+            _configTemplateVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
+            _configTemplateVersionsRestClient = new ConfigTemplateVersions(_configTemplateVersionsClientDiagnostics, Pipeline, Endpoint, edgeConfigTemplateVersionApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual EdgeConfigTemplateVersionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="configTemplateName"> The configTemplateName. </param>
+        /// <param name="configTemplateVersionName"> The configTemplateVersionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configTemplateName, string configTemplateVersionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Config Template Version Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplateVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplateVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeConfigTemplateVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EdgeConfigTemplateVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionResource.Get");
+            using DiagnosticScope scope = _configTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionResource.Get");
             scope.Start();
             try
             {
-                var response = await _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplateVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeConfigTemplateVersionData> response = Response.FromValue(EdgeConfigTemplateVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeConfigTemplateVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Config Template Version Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplateVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigTemplateVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeConfigTemplateVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeConfigTemplateVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EdgeConfigTemplateVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionResource.Get");
+            using DiagnosticScope scope = _configTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionResource.Get");
             scope.Start();
             try
             {
-                var response = _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configTemplateVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeConfigTemplateVersionData> response = Response.FromValue(EdgeConfigTemplateVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeConfigTemplateVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

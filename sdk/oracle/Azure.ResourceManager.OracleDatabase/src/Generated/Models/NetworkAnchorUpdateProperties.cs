@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> The updatable properties of the NetworkAnchor. </summary>
     public partial class NetworkAnchorUpdateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkAnchorUpdateProperties"/>. </summary>
         public NetworkAnchorUpdateProperties()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="isOracleToAzureDnsZoneSyncEnabled"> Indicates whether DNS zone sync from OCI to Azure is enabled. </param>
         /// <param name="isOracleDnsListeningEndpointEnabled"> Indicates whether the Oracle DNS listening endpoint is enabled. </param>
         /// <param name="isOracleDnsForwardingEndpointEnabled"> Indicates whether the Oracle DNS forwarding endpoint is enabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkAnchorUpdateProperties(string ociBackupCidrBlock, bool? isOracleToAzureDnsZoneSyncEnabled, bool? isOracleDnsListeningEndpointEnabled, bool? isOracleDnsForwardingEndpointEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkAnchorUpdateProperties(string ociBackupCidrBlock, bool? isOracleToAzureDnsZoneSyncEnabled, bool? isOracleDnsListeningEndpointEnabled, bool? isOracleDnsForwardingEndpointEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OciBackupCidrBlock = ociBackupCidrBlock;
             IsOracleToAzureDnsZoneSyncEnabled = isOracleToAzureDnsZoneSyncEnabled;
             IsOracleDnsListeningEndpointEnabled = isOracleDnsListeningEndpointEnabled;
             IsOracleDnsForwardingEndpointEnabled = isOracleDnsForwardingEndpointEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> OCI backup subnet cidr block. </summary>
         public string OciBackupCidrBlock { get; set; }
+
         /// <summary> Indicates whether DNS zone sync from OCI to Azure is enabled. </summary>
         public bool? IsOracleToAzureDnsZoneSyncEnabled { get; set; }
+
         /// <summary> Indicates whether the Oracle DNS listening endpoint is enabled. </summary>
         public bool? IsOracleDnsListeningEndpointEnabled { get; set; }
+
         /// <summary> Indicates whether the Oracle DNS forwarding endpoint is enabled. </summary>
         public bool? IsOracleDnsForwardingEndpointEnabled { get; set; }
     }

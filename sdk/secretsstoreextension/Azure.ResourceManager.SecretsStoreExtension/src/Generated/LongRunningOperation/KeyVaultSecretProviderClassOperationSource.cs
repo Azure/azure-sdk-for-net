@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecretsStoreExtension
 {
-    internal class KeyVaultSecretProviderClassOperationSource : IOperationSource<KeyVaultSecretProviderClassResource>
+    /// <summary></summary>
+    internal partial class KeyVaultSecretProviderClassOperationSource : IOperationSource<KeyVaultSecretProviderClassResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal KeyVaultSecretProviderClassOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         KeyVaultSecretProviderClassResource IOperationSource<KeyVaultSecretProviderClassResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KeyVaultSecretProviderClassData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecretsStoreExtensionContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            KeyVaultSecretProviderClassData data = KeyVaultSecretProviderClassData.DeserializeKeyVaultSecretProviderClassData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new KeyVaultSecretProviderClassResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<KeyVaultSecretProviderClassResource> IOperationSource<KeyVaultSecretProviderClassResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KeyVaultSecretProviderClassData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecretsStoreExtensionContext.Default);
-            return await Task.FromResult(new KeyVaultSecretProviderClassResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            KeyVaultSecretProviderClassData data = KeyVaultSecretProviderClassData.DeserializeKeyVaultSecretProviderClassData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new KeyVaultSecretProviderClassResource(_client, data);
         }
     }
 }

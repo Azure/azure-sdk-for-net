@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
-    public partial class PureStorageHealthDetails : IUtf8JsonSerializable, IJsonModel<PureStorageHealthDetails>
+    /// <summary> Health metrics for a storage pool. </summary>
+    public partial class PureStorageHealthDetails : IJsonModel<PureStorageHealthDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PureStorageHealthDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PureStorageHealthDetails"/> for deserialization. </summary>
+        internal PureStorageHealthDetails()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PureStorageHealthDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageHealthDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("usedCapacityPercentage"u8);
             writer.WriteNumberValue(UsedCapacityPercentage);
             writer.WritePropertyName("bandwidthUsage"u8);
@@ -46,15 +51,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             writer.WriteNumberValue(DataReductionRatio);
             writer.WritePropertyName("estimatedMaxCapacity"u8);
             writer.WriteNumberValue(EstimatedMaxCapacity);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,22 +68,27 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStorageHealthDetails IJsonModel<PureStorageHealthDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageHealthDetails IJsonModel<PureStorageHealthDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStorageHealthDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageHealthDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePureStorageHealthDetails(document.RootElement, options);
         }
 
-        internal static PureStorageHealthDetails DeserializePureStorageHealthDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PureStorageHealthDetails DeserializePureStorageHealthDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,46 +99,44 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             PureStorageSpaceUsage space = default;
             double dataReductionRatio = default;
             long estimatedMaxCapacity = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("usedCapacityPercentage"u8))
+                if (prop.NameEquals("usedCapacityPercentage"u8))
                 {
-                    usedCapacityPercentage = property.Value.GetDouble();
+                    usedCapacityPercentage = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("bandwidthUsage"u8))
+                if (prop.NameEquals("bandwidthUsage"u8))
                 {
-                    bandwidthUsage = PureStorageBandwidthUsage.DeserializePureStorageBandwidthUsage(property.Value, options);
+                    bandwidthUsage = PureStorageBandwidthUsage.DeserializePureStorageBandwidthUsage(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("iopsUsage"u8))
+                if (prop.NameEquals("iopsUsage"u8))
                 {
-                    iopsUsage = PureStorageIopsUsage.DeserializePureStorageIopsUsage(property.Value, options);
+                    iopsUsage = PureStorageIopsUsage.DeserializePureStorageIopsUsage(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("space"u8))
+                if (prop.NameEquals("space"u8))
                 {
-                    space = PureStorageSpaceUsage.DeserializePureStorageSpaceUsage(property.Value, options);
+                    space = PureStorageSpaceUsage.DeserializePureStorageSpaceUsage(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataReductionRatio"u8))
+                if (prop.NameEquals("dataReductionRatio"u8))
                 {
-                    dataReductionRatio = property.Value.GetDouble();
+                    dataReductionRatio = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("estimatedMaxCapacity"u8))
+                if (prop.NameEquals("estimatedMaxCapacity"u8))
                 {
-                    estimatedMaxCapacity = property.Value.GetInt64();
+                    estimatedMaxCapacity = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PureStorageHealthDetails(
                 usedCapacityPercentage,
                 bandwidthUsage,
@@ -136,13 +144,16 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 space,
                 dataReductionRatio,
                 estimatedMaxCapacity,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PureStorageHealthDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PureStorageHealthDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -152,15 +163,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStorageHealthDetails IPersistableModel<PureStorageHealthDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageHealthDetails IPersistableModel<PureStorageHealthDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStorageHealthDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePureStorageHealthDetails(document.RootElement, options);
                     }
                 default:
@@ -168,6 +184,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PureStorageHealthDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

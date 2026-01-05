@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public readonly partial struct VirtualEnclaveProvisioningState : IEquatable<VirtualEnclaveProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Provisioning State Type Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Provisioning State Type Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Provisioning State Type Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Provisioning State Type NotSpecified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> Provisioning State Type Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Provisioning State Type Updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualEnclaveProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string AcceptedValue = "Accepted";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string RunningValue = "Running";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static VirtualEnclaveProvisioningState Succeeded { get; } = new VirtualEnclaveProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static VirtualEnclaveProvisioningState Failed { get; } = new VirtualEnclaveProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static VirtualEnclaveProvisioningState Canceled { get; } = new VirtualEnclaveProvisioningState(CanceledValue);
+
         /// <summary> Provisioning State Type Accepted. </summary>
         public static VirtualEnclaveProvisioningState Accepted { get; } = new VirtualEnclaveProvisioningState(AcceptedValue);
+
         /// <summary> Provisioning State Type Creating. </summary>
         public static VirtualEnclaveProvisioningState Creating { get; } = new VirtualEnclaveProvisioningState(CreatingValue);
+
         /// <summary> Provisioning State Type Deleting. </summary>
         public static VirtualEnclaveProvisioningState Deleting { get; } = new VirtualEnclaveProvisioningState(DeletingValue);
+
         /// <summary> Provisioning State Type NotSpecified. </summary>
         public static VirtualEnclaveProvisioningState NotSpecified { get; } = new VirtualEnclaveProvisioningState(NotSpecifiedValue);
+
         /// <summary> Provisioning State Type Running. </summary>
         public static VirtualEnclaveProvisioningState Running { get; } = new VirtualEnclaveProvisioningState(RunningValue);
+
         /// <summary> Provisioning State Type Updating. </summary>
         public static VirtualEnclaveProvisioningState Updating { get; } = new VirtualEnclaveProvisioningState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualEnclaveProvisioningState left, VirtualEnclaveProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualEnclaveProvisioningState left, VirtualEnclaveProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualEnclaveProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualEnclaveProvisioningState(string value) => new VirtualEnclaveProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualEnclaveProvisioningState?(string value) => value == null ? null : new VirtualEnclaveProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualEnclaveProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualEnclaveProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

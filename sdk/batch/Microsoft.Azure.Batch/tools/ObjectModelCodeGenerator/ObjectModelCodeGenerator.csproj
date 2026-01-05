@@ -1,23 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Batch object model code generator</Description>
-    <OutputType>Exe</OutputType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net46</TargetFrameworks>
+    <TargetFrameworks>$(BatchToolsTargetFrameworks)</TargetFrameworks>
+    <OutputType Condition="'$(TargetFramework)' == '$(BatchToolsRunnableFramework)'">Exe</OutputType>
+    <OutputType Condition="'$(TargetFramework)' != '$(BatchToolsRunnableFramework)'">Library</OutputType>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == '$(BatchToolsRunnableFramework)'">
     <PackageReference Include="Microsoft.VisualStudio.TextTemplating.14.0" Version="14.3.25407" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CodeGenerationLibrary\CodeGenerationLibrary.csproj" />
     <ProjectReference Include="..\RoslynParser\ProxyLayerParser.csproj" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != '$(BatchToolsRunnableFramework)'">
+    <Compile Remove="**\*.cs" />
+  </ItemGroup>
+
+  <Target Name="WarnNonNetFrameworkBuild" BeforeTargets="CoreCompile" Condition="'$(TargetFramework)' != '$(BatchToolsRunnableFramework)'">
+    <Message Text="ObjectModelCodeGenerator only works on .NET Framework. This $(TargetFramework) build produces an empty assembly." />
+  </Target>
 
   <ItemGroup>
     <None Update="CollectionConversionSnippet.tt">

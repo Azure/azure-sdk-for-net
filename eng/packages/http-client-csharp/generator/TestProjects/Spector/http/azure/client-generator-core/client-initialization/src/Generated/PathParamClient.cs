@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core.Pipeline;
 using Service;
 
-namespace Specs.Azure.ClientGeneratorCore.ClientInitialization
+namespace Specs.Azure.ClientGenerator.Core.ClientInitialization
 {
     public partial class PathParamClient
     {

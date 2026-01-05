@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Grafana users settings. </summary>
     public partial class GrafanaUserSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GrafanaUserSettings"/>. </summary>
         public GrafanaUserSettings()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of <see cref="GrafanaUserSettings"/>. </summary>
         /// <param name="viewersCanEdit"> Set to true so viewers can access and use explore and perform temporary edits on panels in dashboards they have access to. They cannot save their changes. </param>
         /// <param name="editorsCanAdmin"> Set to true so editors can administrate dashboards, folders and teams they create. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaUserSettings(bool? viewersCanEdit, bool? editorsCanAdmin, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaUserSettings(bool? viewersCanEdit, bool? editorsCanAdmin, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ViewersCanEdit = viewersCanEdit;
             EditorsCanAdmin = editorsCanAdmin;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Set to true so viewers can access and use explore and perform temporary edits on panels in dashboards they have access to. They cannot save their changes. </summary>
         public bool? ViewersCanEdit { get; set; }
+
         /// <summary> Set to true so editors can administrate dashboards, folders and teams they create. </summary>
         public bool? EditorsCanAdmin { get; set; }
     }

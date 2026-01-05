@@ -442,9 +442,9 @@ namespace Azure.Generator.Management.Providers
                 else
                 {
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true, false);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, true, asyncMethodName, forceLro: isFakeLro));
+                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, true, asyncMethodName, isFakeLro));
                     var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false, false);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodName, forceLro: isFakeLro));
+                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, false, methodName, isFakeLro));
                 }
             }
 
@@ -454,7 +454,7 @@ namespace Azure.Generator.Management.Providers
                 ResourceMethodSnippets.BuildValidateResourceIdMethod(this, _resourceTypeField)
             };
             methods.AddRange(operationMethods);
-            var getMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Get)?.InputMethod;
+            var getMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Read)?.InputMethod;
 
             // Only generate tag methods if the resource model has tag properties, has get and update methods
             if (HasTags() && getMethod is not null && updateMethodProvider is not null)
@@ -483,8 +483,20 @@ namespace Azure.Generator.Management.Providers
             return [.. methods];
         }
 
+        private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, bool isAsync, string? methodName, bool isFakeLro)
+        {
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            var responseBodyType = method.GetResponseBodyType();
+            if (responseBodyType != null && responseBodyType.IsList)
+            {
+                return new ArrayResponseOperationMethodProvider(this, _contextualPath, restClientInfo, method, isAsync, methodName);
+            }
+
+            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, isAsync, methodName, forceLro: isFakeLro);
+        }
+
         private InputClient? PopulateGetClient()
-            => _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Get)?.InputClient;
+            => _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Read)?.InputClient;
 
         private (bool IsPatch, InputClient? UpdateClient) PopulateUpdateClient()
         {

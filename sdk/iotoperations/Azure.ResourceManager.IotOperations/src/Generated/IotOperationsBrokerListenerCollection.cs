@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotOperations
 {
     /// <summary>
     /// A class representing a collection of <see cref="IotOperationsBrokerListenerResource"/> and their operations.
     /// Each <see cref="IotOperationsBrokerListenerResource"/> in the collection will belong to the same instance of <see cref="IotOperationsBrokerResource"/>.
-    /// To get an <see cref="IotOperationsBrokerListenerCollection"/> instance call the GetIotOperationsBrokerListeners method from an instance of <see cref="IotOperationsBrokerResource"/>.
+    /// To get a <see cref="IotOperationsBrokerListenerCollection"/> instance call the GetIotOperationsBrokerListeners method from an instance of <see cref="IotOperationsBrokerResource"/>.
     /// </summary>
     public partial class IotOperationsBrokerListenerCollection : ArmCollection, IEnumerable<IotOperationsBrokerListenerResource>, IAsyncEnumerable<IotOperationsBrokerListenerResource>
     {
-        private readonly ClientDiagnostics _iotOperationsBrokerListenerBrokerListenerClientDiagnostics;
-        private readonly BrokerListenerRestOperations _iotOperationsBrokerListenerBrokerListenerRestClient;
+        private readonly ClientDiagnostics _brokerListenerClientDiagnostics;
+        private readonly BrokerListener _brokerListenerRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="IotOperationsBrokerListenerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of IotOperationsBrokerListenerCollection for mocking. </summary>
         protected IotOperationsBrokerListenerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IotOperationsBrokerListenerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotOperationsBrokerListenerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IotOperationsBrokerListenerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _iotOperationsBrokerListenerBrokerListenerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsBrokerListenerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(IotOperationsBrokerListenerResource.ResourceType, out string iotOperationsBrokerListenerBrokerListenerApiVersion);
-            _iotOperationsBrokerListenerBrokerListenerRestClient = new BrokerListenerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsBrokerListenerBrokerListenerApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(IotOperationsBrokerListenerResource.ResourceType, out string iotOperationsBrokerListenerApiVersion);
+            _brokerListenerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsBrokerListenerResource.ResourceType.Namespace, Diagnostics);
+            _brokerListenerRestClient = new BrokerListener(_brokerListenerClientDiagnostics, Pipeline, Endpoint, iotOperationsBrokerListenerApiVersion ?? "2025-10-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != IotOperationsBrokerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsBrokerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsBrokerResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a BrokerListenerResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BrokerListenerResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BrokerListener_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsBrokerListenerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="listenerName"> Name of Instance broker listener resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="listenerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<IotOperationsBrokerListenerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string listenerName, IotOperationsBrokerListenerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(listenerName, nameof(listenerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _iotOperationsBrokerListenerBrokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _brokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _iotOperationsBrokerListenerBrokerListenerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotOperationsArmOperation<IotOperationsBrokerListenerResource>(new IotOperationsBrokerListenerOperationSource(Client), _iotOperationsBrokerListenerBrokerListenerClientDiagnostics, Pipeline, _iotOperationsBrokerListenerBrokerListenerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _brokerListenerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, IotOperationsBrokerListenerData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                IotOperationsArmOperation<IotOperationsBrokerListenerResource> operation = new IotOperationsArmOperation<IotOperationsBrokerListenerResource>(
+                    new IotOperationsBrokerListenerOperationSource(Client),
+                    _brokerListenerClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.IotOperations
         /// Create a BrokerListenerResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BrokerListenerResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BrokerListener_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsBrokerListenerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="listenerName"> Name of Instance broker listener resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="listenerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<IotOperationsBrokerListenerResource> CreateOrUpdate(WaitUntil waitUntil, string listenerName, IotOperationsBrokerListenerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(listenerName, nameof(listenerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _iotOperationsBrokerListenerBrokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _brokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _iotOperationsBrokerListenerBrokerListenerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, data, cancellationToken);
-                var operation = new IotOperationsArmOperation<IotOperationsBrokerListenerResource>(new IotOperationsBrokerListenerOperationSource(Client), _iotOperationsBrokerListenerBrokerListenerClientDiagnostics, Pipeline, _iotOperationsBrokerListenerBrokerListenerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _brokerListenerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, IotOperationsBrokerListenerData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                IotOperationsArmOperation<IotOperationsBrokerListenerResource> operation = new IotOperationsArmOperation<IotOperationsBrokerListenerResource>(
+                    new IotOperationsBrokerListenerOperationSource(Client),
+                    _brokerListenerClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.IotOperations
         /// Get a BrokerListenerResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BrokerListenerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BrokerListener_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsBrokerListenerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="listenerName"> Name of Instance broker listener resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="listenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<IotOperationsBrokerListenerResource>> GetAsync(string listenerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(listenerName, nameof(listenerName));
 
-            using var scope = _iotOperationsBrokerListenerBrokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.Get");
+            using DiagnosticScope scope = _brokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _iotOperationsBrokerListenerBrokerListenerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _brokerListenerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IotOperationsBrokerListenerData> response = Response.FromValue(IotOperationsBrokerListenerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotOperationsBrokerListenerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.IotOperations
         /// Get a BrokerListenerResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BrokerListenerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BrokerListener_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsBrokerListenerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="listenerName"> Name of Instance broker listener resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="listenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<IotOperationsBrokerListenerResource> Get(string listenerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(listenerName, nameof(listenerName));
 
-            using var scope = _iotOperationsBrokerListenerBrokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.Get");
+            using DiagnosticScope scope = _brokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.Get");
             scope.Start();
             try
             {
-                var response = _iotOperationsBrokerListenerBrokerListenerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _brokerListenerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IotOperationsBrokerListenerData> response = Response.FromValue(IotOperationsBrokerListenerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotOperationsBrokerListenerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.IotOperations
         /// List BrokerListenerResource resources by BrokerResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BrokerListenerResource_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> BrokerListener_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsBrokerListenerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotOperationsBrokerListenerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotOperationsBrokerListenerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotOperationsBrokerListenerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotOperationsBrokerListenerBrokerListenerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotOperationsBrokerListenerBrokerListenerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotOperationsBrokerListenerResource(Client, IotOperationsBrokerListenerData.DeserializeIotOperationsBrokerListenerData(e)), _iotOperationsBrokerListenerBrokerListenerClientDiagnostics, Pipeline, "IotOperationsBrokerListenerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IotOperationsBrokerListenerData, IotOperationsBrokerListenerResource>(new BrokerListenerGetByResourceGroupAsyncCollectionResultOfT(
+                _brokerListenerRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new IotOperationsBrokerListenerResource(Client, data));
         }
 
         /// <summary>
         /// List BrokerListenerResource resources by BrokerResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BrokerListenerResource_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> BrokerListener_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsBrokerListenerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.IotOperations
         /// <returns> A collection of <see cref="IotOperationsBrokerListenerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotOperationsBrokerListenerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotOperationsBrokerListenerBrokerListenerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotOperationsBrokerListenerBrokerListenerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotOperationsBrokerListenerResource(Client, IotOperationsBrokerListenerData.DeserializeIotOperationsBrokerListenerData(e)), _iotOperationsBrokerListenerBrokerListenerClientDiagnostics, Pipeline, "IotOperationsBrokerListenerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IotOperationsBrokerListenerData, IotOperationsBrokerListenerResource>(new BrokerListenerGetByResourceGroupCollectionResultOfT(
+                _brokerListenerRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new IotOperationsBrokerListenerResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BrokerListenerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BrokerListener_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsBrokerListenerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="listenerName"> Name of Instance broker listener resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="listenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string listenerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(listenerName, nameof(listenerName));
 
-            using var scope = _iotOperationsBrokerListenerBrokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.Exists");
+            using DiagnosticScope scope = _brokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _iotOperationsBrokerListenerBrokerListenerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _brokerListenerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IotOperationsBrokerListenerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotOperationsBrokerListenerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotOperationsBrokerListenerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.IotOperations
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BrokerListenerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BrokerListener_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsBrokerListenerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="listenerName"> Name of Instance broker listener resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="listenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string listenerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(listenerName, nameof(listenerName));
 
-            using var scope = _iotOperationsBrokerListenerBrokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.Exists");
+            using DiagnosticScope scope = _brokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _iotOperationsBrokerListenerBrokerListenerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _brokerListenerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IotOperationsBrokerListenerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotOperationsBrokerListenerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotOperationsBrokerListenerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.IotOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BrokerListenerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BrokerListener_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsBrokerListenerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="listenerName"> Name of Instance broker listener resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="listenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<IotOperationsBrokerListenerResource>> GetIfExistsAsync(string listenerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(listenerName, nameof(listenerName));
 
-            using var scope = _iotOperationsBrokerListenerBrokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.GetIfExists");
+            using DiagnosticScope scope = _brokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _iotOperationsBrokerListenerBrokerListenerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _brokerListenerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IotOperationsBrokerListenerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotOperationsBrokerListenerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotOperationsBrokerListenerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IotOperationsBrokerListenerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotOperationsBrokerListenerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.IotOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/listeners/{listenerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BrokerListenerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BrokerListener_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsBrokerListenerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="listenerName"> Name of Instance broker listener resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="listenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="listenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<IotOperationsBrokerListenerResource> GetIfExists(string listenerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(listenerName, nameof(listenerName));
 
-            using var scope = _iotOperationsBrokerListenerBrokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.GetIfExists");
+            using DiagnosticScope scope = _brokerListenerClientDiagnostics.CreateScope("IotOperationsBrokerListenerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _iotOperationsBrokerListenerBrokerListenerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _brokerListenerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, listenerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IotOperationsBrokerListenerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotOperationsBrokerListenerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotOperationsBrokerListenerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IotOperationsBrokerListenerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotOperationsBrokerListenerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.IotOperations
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<IotOperationsBrokerListenerResource> IAsyncEnumerable<IotOperationsBrokerListenerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

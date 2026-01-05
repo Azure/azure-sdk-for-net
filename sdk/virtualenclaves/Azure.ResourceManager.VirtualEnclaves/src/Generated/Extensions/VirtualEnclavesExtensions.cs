@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.VirtualEnclaves.Mocking;
 
@@ -17,126 +19,32 @@ namespace Azure.ResourceManager.VirtualEnclaves
     /// <summary> A class to add extension methods to Azure.ResourceManager.VirtualEnclaves. </summary>
     public static partial class VirtualEnclavesExtensions
     {
+        /// <param name="client"></param>
         private static MockableVirtualEnclavesArmClient GetMockableVirtualEnclavesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableVirtualEnclavesArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableVirtualEnclavesArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableVirtualEnclavesResourceGroupResource GetMockableVirtualEnclavesResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableVirtualEnclavesResourceGroupResource GetMockableVirtualEnclavesResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableVirtualEnclavesResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableVirtualEnclavesResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableVirtualEnclavesSubscriptionResource GetMockableVirtualEnclavesSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableVirtualEnclavesSubscriptionResource GetMockableVirtualEnclavesSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableVirtualEnclavesSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableVirtualEnclavesSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets a collection of VirtualEnclaveApprovalResources in the ArmClient.
+        /// Gets an object representing a <see cref="VirtualEnclaveWorkloadResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveApprovals(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveWorkloadResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of VirtualEnclaveApprovalResources and their operations over a VirtualEnclaveApprovalResource. </returns>
-        public static VirtualEnclaveApprovalCollection GetVirtualEnclaveApprovals(this ArmClient client, ResourceIdentifier scope)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableVirtualEnclavesArmClient(client).GetVirtualEnclaveApprovals(scope);
-        }
-
-        /// <summary>
-        /// Get a ApprovalResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveApprovalAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="approvalName"> The name of the approvals resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="approvalName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<VirtualEnclaveApprovalResource>> GetVirtualEnclaveApprovalAsync(this ArmClient client, ResourceIdentifier scope, string approvalName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableVirtualEnclavesArmClient(client).GetVirtualEnclaveApprovalAsync(scope, approvalName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a ApprovalResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApprovalResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveApproval(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="approvalName"> The name of the approvals resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="approvalName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<VirtualEnclaveApprovalResource> GetVirtualEnclaveApproval(this ArmClient client, ResourceIdentifier scope, string approvalName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableVirtualEnclavesArmClient(client).GetVirtualEnclaveApproval(scope, approvalName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualEnclaveWorkloadResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualEnclaveWorkloadResource.CreateResourceIdentifier" /> to create a <see cref="VirtualEnclaveWorkloadResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveWorkloadResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualEnclaveWorkloadResource"/> object. </returns>
@@ -148,14 +56,13 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualEnclaveResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualEnclaveResource.CreateResourceIdentifier" /> to create a <see cref="VirtualEnclaveResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VirtualEnclaveResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualEnclaveResource"/> object. </returns>
@@ -167,14 +74,13 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualEnclaveCommunityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualEnclaveCommunityResource.CreateResourceIdentifier" /> to create a <see cref="VirtualEnclaveCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VirtualEnclaveCommunityResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveCommunityResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveCommunityResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualEnclaveCommunityResource"/> object. </returns>
@@ -186,14 +92,13 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualEnclaveTransitHubResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualEnclaveTransitHubResource.CreateResourceIdentifier" /> to create a <see cref="VirtualEnclaveTransitHubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VirtualEnclaveTransitHubResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveTransitHubResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveTransitHubResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualEnclaveTransitHubResource"/> object. </returns>
@@ -205,14 +110,13 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualEnclaveConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualEnclaveConnectionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualEnclaveConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VirtualEnclaveConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualEnclaveConnectionResource"/> object. </returns>
@@ -224,14 +128,13 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualEnclaveEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualEnclaveEndpointResource.CreateResourceIdentifier" /> to create a <see cref="VirtualEnclaveEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VirtualEnclaveEndpointResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveEndpointResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualEnclaveEndpointResource"/> object. </returns>
@@ -243,14 +146,13 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualEnclaveCommunityEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualEnclaveCommunityEndpointResource.CreateResourceIdentifier" /> to create a <see cref="VirtualEnclaveCommunityEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VirtualEnclaveCommunityEndpointResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveCommunityEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveCommunityEndpointResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualEnclaveCommunityEndpointResource"/> object. </returns>
@@ -262,14 +164,13 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualEnclaveApprovalResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualEnclaveApprovalResource.CreateResourceIdentifier" /> to create a <see cref="VirtualEnclaveApprovalResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VirtualEnclaveApprovalResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveApprovalResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveApprovalResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualEnclaveApprovalResource"/> object. </returns>
@@ -281,15 +182,73 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
-        /// Gets a collection of VirtualEnclaveResources in the ResourceGroupResource.
+        /// Gets a collection of <see cref="VirtualEnclaveApprovalCollection"/> objects within the specified scope.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaves()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveApprovals(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="VirtualEnclaveApprovalResource"/> objects. </returns>
+        public static VirtualEnclaveApprovalCollection GetVirtualEnclaveApprovals(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableVirtualEnclavesArmClient(client).GetVirtualEnclaveApprovals(scope);
+        }
+
+        /// <summary>
+        /// Get a ApprovalResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveApproval(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="approvalName"> The name of the approvals resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<VirtualEnclaveApprovalResource> GetVirtualEnclaveApproval(this ArmClient client, ResourceIdentifier scope, string approvalName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableVirtualEnclavesArmClient(client).GetVirtualEnclaveApproval(scope, approvalName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a ApprovalResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetVirtualEnclaveApprovalAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="approvalName"> The name of the approvals resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<VirtualEnclaveApprovalResource>> GetVirtualEnclaveApprovalAsync(this ArmClient client, ResourceIdentifier scope, string approvalName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableVirtualEnclavesArmClient(client).GetVirtualEnclaveApprovalAsync(scope, approvalName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a collection of VirtualEnclaves in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaves()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of VirtualEnclaveResources and their operations over a VirtualEnclaveResource. </returns>
+        /// <returns> An object representing collection of VirtualEnclaves and their operations over a VirtualEnclaveResource. </returns>
         public static VirtualEnclaveCollection GetVirtualEnclaves(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -299,34 +258,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// Get a EnclaveResource
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualEnclaveName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<VirtualEnclaveResource>> GetVirtualEnclaveAsync(this ResourceGroupResource resourceGroupResource, string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
@@ -337,34 +277,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// Get a EnclaveResource
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclave(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclave(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualEnclaveName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<VirtualEnclaveResource> GetVirtualEnclave(this ResourceGroupResource resourceGroupResource, string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
@@ -374,15 +295,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
-        /// Gets a collection of VirtualEnclaveCommunityResources in the ResourceGroupResource.
+        /// Gets a collection of VirtualEnclaveCommunities in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveCommunities()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveCommunities()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of VirtualEnclaveCommunityResources and their operations over a VirtualEnclaveCommunityResource. </returns>
+        /// <returns> An object representing collection of VirtualEnclaveCommunities and their operations over a VirtualEnclaveCommunityResource. </returns>
         public static VirtualEnclaveCommunityCollection GetVirtualEnclaveCommunities(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -392,34 +313,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// Get a CommunityResource
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveCommunityAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveCommunityAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="communityName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<VirtualEnclaveCommunityResource>> GetVirtualEnclaveCommunityAsync(this ResourceGroupResource resourceGroupResource, string communityName, CancellationToken cancellationToken = default)
         {
@@ -430,34 +332,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// Get a CommunityResource
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveCommunity(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveCommunity(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="communityName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<VirtualEnclaveCommunityResource> GetVirtualEnclaveCommunity(this ResourceGroupResource resourceGroupResource, string communityName, CancellationToken cancellationToken = default)
         {
@@ -467,15 +350,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
-        /// Gets a collection of VirtualEnclaveConnectionResources in the ResourceGroupResource.
+        /// Gets a collection of VirtualEnclaveConnections in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveConnections()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveConnections()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of VirtualEnclaveConnectionResources and their operations over a VirtualEnclaveConnectionResource. </returns>
+        /// <returns> An object representing collection of VirtualEnclaveConnections and their operations over a VirtualEnclaveConnectionResource. </returns>
         public static VirtualEnclaveConnectionCollection GetVirtualEnclaveConnections(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -485,34 +368,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// Get a EnclaveConnectionResource
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveConnectionResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveConnectionAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveConnectionAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="enclaveConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<VirtualEnclaveConnectionResource>> GetVirtualEnclaveConnectionAsync(this ResourceGroupResource resourceGroupResource, string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
@@ -523,34 +387,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// Get a EnclaveConnectionResource
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveConnectionResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveConnection(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesResourceGroupResource.GetVirtualEnclaveConnection(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="enclaveConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<VirtualEnclaveConnectionResource> GetVirtualEnclaveConnection(this ResourceGroupResource resourceGroupResource, string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
@@ -561,35 +406,16 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List WorkloadResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/workloads</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveWorkloadResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveWorkloads(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveWorkloadsAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="virtualEnclaveName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualEnclaveWorkloadResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualEnclaveWorkloadResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualEnclaveWorkloadResource> GetVirtualEnclaveWorkloadsAsync(this SubscriptionResource subscriptionResource, string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -599,34 +425,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List WorkloadResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/workloads</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveWorkloadResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveWorkloads(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveWorkloads(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="virtualEnclaveName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualEnclaveWorkloadResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualEnclaveWorkloadResource> GetVirtualEnclaveWorkloads(this SubscriptionResource subscriptionResource, string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
@@ -637,33 +444,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List EnclaveResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/virtualEnclaves</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaves(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclavesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualEnclaveResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualEnclaveResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualEnclaveResource> GetVirtualEnclavesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -673,30 +462,12 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List EnclaveResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/virtualEnclaves</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaves(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaves(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualEnclaveResource"/> that may take multiple service requests to iterate over. </returns>
@@ -709,33 +480,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List CommunityResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/communities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunities(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunitiesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualEnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualEnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualEnclaveCommunityResource> GetVirtualEnclaveCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -745,30 +498,12 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List CommunityResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/communities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunities(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunities(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualEnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
@@ -781,35 +516,16 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List TransitHubResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/communities/{communityName}/transitHubs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TransitHubResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveTransitHubs(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveTransitHubsAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="communityName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualEnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualEnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualEnclaveTransitHubResource> GetVirtualEnclaveTransitHubsAsync(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -819,34 +535,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List TransitHubResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/communities/{communityName}/transitHubs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TransitHubResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveTransitHubs(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveTransitHubs(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="communityName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualEnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualEnclaveTransitHubResource> GetVirtualEnclaveTransitHubs(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
         {
@@ -857,33 +554,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List EnclaveConnectionResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/enclaveConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveConnectionResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveConnections(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveConnectionsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualEnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualEnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualEnclaveConnectionResource> GetVirtualEnclaveConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -893,30 +572,12 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List EnclaveConnectionResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/enclaveConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveConnectionResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveConnections(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveConnections(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualEnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
@@ -929,35 +590,16 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List EnclaveEndpointResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveEndpoints(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveEndpointsAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="virtualEnclaveName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualEnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualEnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualEnclaveEndpointResource> GetVirtualEnclaveEndpointsAsync(this SubscriptionResource subscriptionResource, string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -967,34 +609,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List EnclaveEndpointResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}/enclaveEndpoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveEndpointResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveEndpoints(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveEndpoints(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="virtualEnclaveName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualEnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualEnclaveEndpointResource> GetVirtualEnclaveEndpoints(this SubscriptionResource subscriptionResource, string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
@@ -1005,35 +628,16 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List CommunityEndpointResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/communities/{communityName}/communityEndpoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityEndpointResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveCommunityEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunityEndpoints(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunityEndpointsAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="communityName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualEnclaveCommunityEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualEnclaveCommunityEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualEnclaveCommunityEndpointResource> GetVirtualEnclaveCommunityEndpointsAsync(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1043,34 +647,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
 
         /// <summary>
         /// List CommunityEndpointResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Mission/communities/{communityName}/communityEndpoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityEndpointResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveCommunityEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunityEndpoints(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunityEndpoints(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="communityName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualEnclaveCommunityEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualEnclaveCommunityEndpointResource> GetVirtualEnclaveCommunityEndpoints(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
         {
