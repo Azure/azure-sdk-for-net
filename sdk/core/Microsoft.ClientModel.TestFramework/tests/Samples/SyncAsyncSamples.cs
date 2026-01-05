@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework.Tests;
@@ -23,10 +24,45 @@ public class SyncAsyncSamples
         [Test]
         public async Task CanPerformBasicOperation()
         {
+            MapsClientOptions options = new();
+
+#if !SNIPPET
+            MockPipelineTransport transport = new MockPipelineTransport(message =>
+            {
+                var request = (MockPipelineRequest)message.Request;
+
+                // AddCountryCode
+                if (request.Method == "PATCH" && request.Uri!.PathAndQuery.Contains("countries"))
+                {
+                    return new MockPipelineResponse(200)
+                        .WithContent("""{"isoCode": "TS"}""")
+                        .WithHeader("Content-Type", "application/json");
+                }
+
+                // GetCountryCode
+                if (request.Method == "GET" && request.Uri!.PathAndQuery.Contains("geolocation/ip"))
+                {
+                    return new MockPipelineResponse(200)
+                        .WithContent("""
+                {
+                    "countryRegion": {"isoCode": "TS"},
+                    "ipAddress": "203.0.113.1"
+                }
+                """)
+                        .WithHeader("Content-Type", "application/json");
+                }
+
+                return new MockPipelineResponse(404);
+            });
+            transport.ExpectSyncPipeline = !IsAsync;
+            options.Transport = transport;
+#endif
+
             // Create and proxy the client
             MapsClient client = CreateProxyFromClient(new MapsClient(
                 new Uri("https://atlas.microsoft.com"),
-                new ApiKeyCredential("test-key")));
+                new ApiKeyCredential("test-key"),
+                options));
 
             // Write the test using async methods - the framework will automatically
             // test both sync and async versions
@@ -40,8 +76,43 @@ public class SyncAsyncSamples
 
     public class SpecializedTests : ClientTestBase
     {
+        private MockPipelineTransport _transport;
+
         public SpecializedTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            _transport = new(message =>
+            {
+                var request = (MockPipelineRequest)message.Request;
+
+                // AddCountryCode
+                if (request.Method == "PATCH" && request.Uri!.PathAndQuery.Contains("countries"))
+                {
+                    return new MockPipelineResponse(200)
+                        .WithContent("""{"isoCode": "TS"}""")
+                        .WithHeader("Content-Type", "application/json");
+                }
+
+                // GetCountryCode
+                if (request.Method == "GET" && request.Uri!.PathAndQuery.Contains("geolocation/ip"))
+                {
+                    return new MockPipelineResponse(200)
+                        .WithContent("""
+                {
+                    "countryRegion": {"isoCode": "TS"},
+                    "ipAddress": "203.0.113.1"
+                }
+                """)
+                        .WithHeader("Content-Type", "application/json");
+                }
+
+                return new MockPipelineResponse(404);
+            });
+            _transport.ExpectSyncPipeline = !IsAsync;
         }
 
         #region Snippet:AsyncOnlyTests
@@ -51,8 +122,13 @@ public class SyncAsyncSamples
         {
             // No need to proxy since this is async-only, but also works the same way if proxied,
             // so existing helper methods can be used as needed
+            MapsClientOptions options = new();
+#if !SNIPPET
+            options.Transport = _transport;
+#endif
             MapsClient client = new(new Uri("https://atlas.microsoft.com"),
-                new ApiKeyCredential("test-key"));
+                new ApiKeyCredential("test-key"),
+                options);
 
             // Test async-specific functionality
             string[] ipAddresses = ["8.8.8.8", "1.1.1.1", "208.67.222.222"];
@@ -68,9 +144,14 @@ public class SyncAsyncSamples
         {
             // No need to proxy since this is sync-only, but also works the same way if proxied,
             // so existing helper methods can be used as needed
+            MapsClientOptions options = new();
+#if !SNIPPET
+            options.Transport = _transport;
+#endif
             MapsClient client = CreateProxyFromClient(new MapsClient(
                 new Uri("https://atlas.microsoft.com"),
-                new ApiKeyCredential("test-key")));
+                new ApiKeyCredential("test-key"),
+                options));
 
             // Test sync-specific behavior
             IPAddressCountryPair result = client.GetCountryCode(IPAddress.Parse("8.8.8.8"));
@@ -81,9 +162,17 @@ public class SyncAsyncSamples
         public async Task ErrorScenariorioTest()
         {
             #region Snippet:ErrorScenario
-            var client = CreateProxyFromClient(new MapsClient(
+            MapsClientOptions options = new();
+#if !SNIPPET
+            MockPipelineTransport transport = new MockPipelineTransport(message =>
+              new MockPipelineResponse(401));
+            transport.ExpectSyncPipeline = !IsAsync;
+            options.Transport = transport;
+#endif
+            MapsClient client = CreateProxyFromClient(new MapsClient(
             new Uri("https://atlas.microsoft.com"),
-            new ApiKeyCredential("invalid-key")));
+            new ApiKeyCredential("invalid-key"),
+            options));
 
             // Test error handling in both sync and async modes
             ClientResultException exception = Assert.ThrowsAsync<ClientResultException>(
@@ -99,15 +188,56 @@ public class SyncAsyncSamples
         {
         }
 
-        [Test]
+#if !SNIPPET
+        private MockPipelineTransport _transport;
+
+        [SetUp]
+        public void Setup()
+        {
+            _transport = new(message =>
+            {
+                var request = (MockPipelineRequest)message.Request;
+
+                // AddCountryCode
+                if (request.Method == "PATCH" && request.Uri!.PathAndQuery.Contains("countries"))
+                {
+                    return new MockPipelineResponse(200)
+                        .WithContent("""{"isoCode": "TS"}""")
+                        .WithHeader("Content-Type", "application/json");
+                }
+
+                // GetCountryCode
+                if (request.Method == "GET" && request.Uri!.PathAndQuery.Contains("geolocation/ip"))
+                {
+                    return new MockPipelineResponse(200)
+                        .WithContent("""
+                {
+                    "countryRegion": {"isoCode": "TS"},
+                    "ipAddress": "203.0.113.1"
+                }
+                """)
+                        .WithHeader("Content-Type", "application/json");
+                }
+
+                return new MockPipelineResponse(404);
+            });
+            _transport.ExpectSyncPipeline = !IsAsync;
+        }
+#endif
+
+        [RecordedTest]
         public async Task RecordedSyncAsyncTest()
         {
             // Combine recording with sync/async testing
-            MapsClientOptions options = InstrumentClientOptions(new MapsClientOptions());
+            MapsClientOptions options = new();
+#if !SNIPPET
+            options.Transport = _transport;
+#endif
+            MapsClientOptions instrumentedOptions = InstrumentClientOptions(options);
             MapsClient client = CreateProxyFromClient(new MapsClient(
                 new Uri(TestEnvironment.Endpoint),
                 new ApiKeyCredential(TestEnvironment.SubscriptionKey),
-                options));
+                instrumentedOptions));
 
             // This will be recorded for both sync and async modes
             IPAddressCountryPair result = await client.GetCountryCodeAsync(IPAddress.Parse("8.8.8.8"));
@@ -130,7 +260,7 @@ public class SyncAsyncSamples
 
 public class MapsTestEnvironment : TestEnvironment
 {
-    public string Endpoint => GetRecordedVariable("MAPS_ENDPOINT");
+    public string Endpoint => GetOptionalVariable("MAPS_ENDPOINT") ?? "";
     public string SubscriptionKey => GetRecordedVariable("MAPS_SUBSCRIPTION_KEY", options => options.IsSecret());
 
     public override Dictionary<string, string> ParseEnvironmentFile()

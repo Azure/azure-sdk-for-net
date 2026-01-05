@@ -66,8 +66,18 @@ public class UnitTestsSamples
         {
             #region Snippet:RequestValidation
             var mockTransport = new MockPipelineTransport(_ => new MockPipelineResponse(200));
+            mockTransport.ExpectSyncPipeline = !IsAsync;
+
+            var options = new MapsClientOptions();
+            options.Transport = mockTransport;
 
             // Call client methods
+            MapsClient client = CreateProxyFromClient(new MapsClient(
+                new Uri("https://example.com"),
+                new ApiKeyCredential("fake-key"),
+                options));
+
+             var result = await client.GetCountryCodeAsync("test");
 
             var request = mockTransport.Requests[0];
             #endregion
@@ -77,16 +87,17 @@ public class UnitTestsSamples
         public async Task MockTransportWorksBothSyncAndAsync()
         {
             #region Snippet:UnitTestSyncAsync
-            var mockTransport = new MockPipelineTransport(_ =>
+            MockPipelineTransport mockTransport = new(_ =>
                 new MockPipelineResponse(200)
                     .WithContent(System.Text.Encoding.UTF8.GetBytes("""{"id":"test","success":true}""")));
+            mockTransport.ExpectSyncPipeline = !IsAsync;
 
-            var options = new MapsClientOptions();
+            MapsClientOptions options = new();
             options.Transport = mockTransport;
 
-            var client = CreateProxyFromClient(new MapsClient(
+            MapsClient client = CreateProxyFromClient(new MapsClient(
                 new Uri("https://example.com"),
-                new Mock<ApiKeyCredential>().Object,
+                new ApiKeyCredential("fake-key"),
                 options));
 
             var result = await client.GetCountryCodeAsync("test");

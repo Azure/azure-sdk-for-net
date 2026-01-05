@@ -6,7 +6,9 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.ClientModel.TestFramework.Mocks;
 using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
+using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework.Tests;
 
@@ -26,8 +28,13 @@ public class RecordedTestsSamples
             // Read environment variables or parse and decrypt from an encrypted .env file as needed
             return new Dictionary<string, string>
             {
+#if SNIPPET
                 { "MAPS_ENDPOINT", Environment.GetEnvironmentVariable("MAPS_ENDPOINT") },
                 { "MAPS_SUBSCRIPTION_KEY", Environment.GetEnvironmentVariable("MAPS_SUBSCRIPTION_KEY") }
+#else
+                { "MAPS_ENDPOINT", "https://example.com" },
+                { "MAPS_SUBSCRIPTION_KEY", "your_subscription_key_here" }
+#endif
             };
         }
 
@@ -37,7 +44,7 @@ public class RecordedTestsSamples
             return Task.CompletedTask;
         }
     }
-    #endregion
+#endregion
 
     #region Snippet:BasicRecordedTest
     public class MapsRecordedTests : RecordedTestBase<MapsTestEnvironment>
@@ -46,11 +53,52 @@ public class RecordedTestsSamples
         {
         }
 
+#if !SNIPPET
+        private MockPipelineTransport _transport;
+
+        [SetUp]
+        public void Setup()
+        {
+            _transport = new(message =>
+            {
+                var request = (MockPipelineRequest)message.Request;
+
+                // AddCountryCode
+                if (request.Method == "PATCH" && request.Uri!.PathAndQuery.Contains("countries"))
+                {
+                    return new MockPipelineResponse(200)
+                        .WithContent("""{"isoCode": "TS"}""")
+                        .WithHeader("Content-Type", "application/json");
+                }
+
+                // GetCountryCode
+                if (request.Method == "GET" && request.Uri!.PathAndQuery.Contains("geolocation/ip"))
+                {
+                    return new MockPipelineResponse(200)
+                        .WithContent("""
+                {
+                    "countryRegion": {"isoCode": "TS"},
+                    "ipAddress": "203.0.113.1"
+                }
+                """)
+                        .WithHeader("Content-Type", "application/json");
+                }
+
+                return new MockPipelineResponse(404);
+            });
+            _transport.ExpectSyncPipeline = !IsAsync;
+        }
+#endif
+
         [RecordedTest]
         public async Task CanGetCountryCode()
         {
             // Create a client with instrumented options for recording
             MapsClientOptions options = InstrumentClientOptions(new MapsClientOptions());
+
+#if !SNIPPET
+            options.Transport = _transport;
+#endif
 
             // Proxy the client to enable auto sync forwarding from async calls
             MapsClient client = CreateProxyFromClient(new MapsClient(
