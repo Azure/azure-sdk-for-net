@@ -18,8 +18,13 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary> The service resource. </summary>
-    public partial class ServiceFabricManagedServiceData : ResourceData, IJsonModel<ServiceFabricManagedServiceData>
+    public partial class ServiceFabricManagedServiceData : TrackedResourceData, IJsonModel<ServiceFabricManagedServiceData>
     {
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedServiceData"/> for deserialization. </summary>
+        internal ServiceFabricManagedServiceData()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceFabricManagedServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -60,11 +65,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             ManagedServiceProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -134,6 +134,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -164,11 +169,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                location,
                 properties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location);
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
