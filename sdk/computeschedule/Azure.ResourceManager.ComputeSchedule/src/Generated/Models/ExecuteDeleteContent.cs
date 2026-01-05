@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="ExecuteDeleteContent"/>. </summary>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="resources"> The resources for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> or <paramref name="resources"/> is null. </exception>
-        public ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources)
+        /// <param name="resourcesIds"> The resource ids used for the request. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> or <paramref name="resourcesIds"/> is null. </exception>
+        public ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters, IEnumerable<ResourceIdentifier> resourcesIds)
         {
             Argument.AssertNotNull(executionParameters, nameof(executionParameters));
-            Argument.AssertNotNull(resources, nameof(resources));
+            Argument.AssertNotNull(resourcesIds, nameof(resourcesIds));
 
             ExecutionParameters = executionParameters;
-            Resources = resources;
+            Resources = new UserRequestResources(resourcesIds);
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecuteDeleteContent"/>. </summary>

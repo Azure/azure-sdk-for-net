@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="ExecuteDeallocateContent"/>. </summary>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="resources"> The resources for the request. </param>
+        /// <param name="resourcesIds"> The resource ids used for the request. </param>
         /// <param name="correlationId"> CorrelationId item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/>, <paramref name="resources"/> or <paramref name="correlationId"/> is null. </exception>
-        public ExecuteDeallocateContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationId)
+        /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/>, <paramref name="resourcesIds"/> or <paramref name="correlationId"/> is null. </exception>
+        public ExecuteDeallocateContent(ScheduledActionExecutionParameterDetail executionParameters, IEnumerable<ResourceIdentifier> resourcesIds, string correlationId)
         {
             Argument.AssertNotNull(executionParameters, nameof(executionParameters));
-            Argument.AssertNotNull(resources, nameof(resources));
+            Argument.AssertNotNull(resourcesIds, nameof(resourcesIds));
             Argument.AssertNotNull(correlationId, nameof(correlationId));
 
             ExecutionParameters = executionParameters;
-            Resources = resources;
+            Resources = new UserRequestResources(resourcesIds);
             CorrelationId = correlationId;
         }
 

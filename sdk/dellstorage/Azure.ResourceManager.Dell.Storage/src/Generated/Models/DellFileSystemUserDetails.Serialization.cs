@@ -14,7 +14,7 @@ using Azure.ResourceManager.Dell.Storage;
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
     /// <summary> User Details of Dell FileSystem resource. </summary>
-    public partial class DellFileSystemUserDetails : IJsonModel<DellFileSystemUserDetails>
+    internal partial class DellFileSystemUserDetails : IJsonModel<DellFileSystemUserDetails>
     {
         /// <summary> Initializes a new instance of <see cref="DellFileSystemUserDetails"/> for deserialization. </summary>
         internal DellFileSystemUserDetails()
