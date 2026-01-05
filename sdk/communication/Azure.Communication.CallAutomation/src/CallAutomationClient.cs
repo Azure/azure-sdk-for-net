@@ -2,14 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Communication.Pipeline;
-using System.Collections.Generic;
-using System.Net;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -140,6 +141,312 @@ namespace Azure.Communication.CallAutomation
             AzureCommunicationServicesRestClient = null;
             CallMediaRestClient = null;
         }
+
+        #region Token Extraction Methods
+
+        /// <summary>
+        /// Gets the current AAD token directly by creating a minimal request.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The AAD token if found, otherwise null.</returns>
+        public virtual async Task<Response<string>> GetCurrentAadTokenDirectAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCurrentAadTokenDirectAsync)}");
+            scope.Start();
+
+            try
+            {
+                var (authHeader, _) = await GetAuthenticationInfoInternalAsync(AuthenticationMode.AadToken, cancellationToken).ConfigureAwait(false);
+                var token = ExtractAadTokenInternal(authHeader);
+                return Response.FromValue(token, null);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                return Response.FromValue<string>(null, null);
+            }
+        }
+
+        /// <summary>
+        /// Gets the current AAD token directly by creating a minimal request.
+        /// </summary>
+        /// <returns>The AAD token if found, otherwise null.</returns>
+        public virtual Response<string> GetCurrentAadTokenDirect(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCurrentAadTokenDirectAsync)}");
+            scope.Start();
+
+            try
+            {
+                var (authHeader, _) = GetAuthenticationInfoInternal(AuthenticationMode.AadToken, cancellationToken);
+                var token = ExtractAadTokenInternal(authHeader);
+                return Response.FromValue(token, null);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                return Response.FromValue<string>(null, null);
+            }
+        }
+
+        /// <summary>
+        /// Gets the current HMAC token directly by creating a minimal request.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A Response containing HmacTokenInfo with the HMAC signature, date, and content SHA256 if found, otherwise null values.</returns>
+        public virtual async Task<Response<HmacTokenInfo>> GetCurrentHmacTokenDirectAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCurrentHmacTokenDirectAsync)}");
+            scope.Start();
+
+            try
+            {
+                var (_, hmacInfo) = await GetAuthenticationInfoInternalAsync(AuthenticationMode.Hmac, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(hmacInfo ?? new HmacTokenInfo(), null);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                return Response.FromValue(new HmacTokenInfo(), null);
+            }
+        }
+
+        /// <summary>
+        /// Gets the current HMAC token directly by creating a minimal request. Synchronous variant.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A Response containing HmacTokenInfo with the HMAC signature, date, and content SHA256 if found, otherwise null values.</returns>
+        public virtual Response<HmacTokenInfo> GetCurrentHmacTokenDirect(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCurrentHmacTokenDirect)}");
+            scope.Start();
+
+            try
+            {
+                var (_, hmacInfo) = GetAuthenticationInfoInternal(AuthenticationMode.Hmac, cancellationToken);
+                return Response.FromValue(hmacInfo ?? new HmacTokenInfo(), null);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                return Response.FromValue(new HmacTokenInfo(), null);
+            }
+        }
+
+        /// <summary>
+        /// Internal method to get authentication information with minimal overhead. Asynchronous variant.
+        /// </summary>
+        /// <param name="mode">The authentication mode determining what information to retrieve.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A tuple containing the authorization header and optional HMAC info based on the mode.</returns>
+        private async Task<(string AuthorizationHeader, HmacTokenInfo HmacInfo)> GetAuthenticationInfoInternalAsync(
+            AuthenticationMode mode,
+            CancellationToken cancellationToken = default)
+        {
+            // Create a lightweight HEAD request to get auth headers
+            var request = _pipeline.CreateRequest();
+            request.Method = RequestMethod.Head;
+            request.Uri.Reset(new Uri(_resourceEndpoint));
+
+            var message = new HttpMessage(request, _pipeline.ResponseClassifier);
+
+            try
+            {
+                // Send request - this triggers authentication policies to add the auth headers
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            catch
+            {
+                // Ignore response errors - we only need the auth headers that were added during pipeline processing
+            }
+
+            // Extract authorization header
+            if (!message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out string authHeader))
+            {
+                throw new InvalidOperationException("Unable to determine the authorization header. Ensure the client is properly configured with authentication credentials.");
+            }
+
+            // Return based on requested mode
+            return mode switch
+            {
+                AuthenticationMode.AadToken => (authHeader, null),
+                AuthenticationMode.Hmac => (authHeader, ExtractHmacAuthenticationInfo(message.Request.Headers)),
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, "Invalid authentication mode specified.")
+            };
+        }
+
+        /// <summary>
+        /// Internal method to get authentication information with minimal overhead. Synchronous variant.
+        /// </summary>
+        /// <param name="mode">The authentication mode determining what information to retrieve.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A tuple containing the authorization header and optional HMAC info based on the mode.</returns>
+        private (string AuthorizationHeader, HmacTokenInfo HmacInfo) GetAuthenticationInfoInternal(
+            AuthenticationMode mode,
+            CancellationToken cancellationToken = default)
+        {
+            // Create a lightweight HEAD request to get auth headers
+            var request = _pipeline.CreateRequest();
+            request.Method = RequestMethod.Head;
+            request.Uri.Reset(new Uri(_resourceEndpoint));
+
+            var message = new HttpMessage(request, _pipeline.ResponseClassifier);
+
+            try
+            {
+                // Send request - this triggers authentication policies to add the auth headers
+                _pipeline.Send(message, cancellationToken);
+            }
+            catch
+            {
+                // Ignore response errors - we only need the auth headers that were added during pipeline processing
+            }
+
+            // Extract authorization header
+            if (!message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out string authHeader))
+            {
+                throw new InvalidOperationException("Unable to determine the authorization header. Ensure the client is properly configured with authentication credentials.");
+            }
+
+            // Return based on requested mode
+            return mode switch
+            {
+                AuthenticationMode.AadToken => (authHeader, null),
+                AuthenticationMode.Hmac => (authHeader, ExtractHmacAuthenticationInfo(message.Request.Headers)),
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, "Invalid authentication mode specified.")
+            };
+        }
+
+        /// <summary>
+        /// Extracts HMAC authentication information from request headers.
+        /// </summary>
+        /// <param name="headers">The request headers collection.</param>
+        /// <returns>HmacTokenInfo containing the extracted HMAC authentication information.</returns>
+        private static HmacTokenInfo ExtractHmacAuthenticationInfo(RequestHeaders headers)
+        {
+            var hmacInfo = new HmacTokenInfo();
+
+            // Extract Authorization header and HMAC signature
+            if (headers.TryGetValue(HttpHeader.Names.Authorization, out string authHeader))
+            {
+                hmacInfo.RawAuthorizationHeader = authHeader;
+                hmacInfo.HmacSignature = ExtractHmacTokenInternal(authHeader);
+            }
+
+            // Extract x-ms-date header
+            if (headers.TryGetValue("x-ms-date", out string dateHeader))
+            {
+                hmacInfo.Date = dateHeader;
+            }
+
+            // Extract x-ms-content-sha256 header
+            if (headers.TryGetValue("x-ms-content-sha256", out string contentSha256Header))
+            {
+                hmacInfo.ContentSha256 = contentSha256Header;
+            }
+
+            return hmacInfo;
+        }
+
+        /// <summary>
+        /// Extracts the AAD (Azure Active Directory) token from the Authorization header.
+        /// </summary>
+        /// <param name="authorizationHeader">The Authorization header value.</param>
+        /// <returns>The AAD token if found and valid, otherwise null.</returns>
+        private static string ExtractAadTokenInternal(string authorizationHeader)
+        {
+            if (string.IsNullOrWhiteSpace(authorizationHeader))
+                return string.Empty;
+
+            try
+            {
+                const string bearerPrefix = "Bearer ";
+                if (authorizationHeader.StartsWith(bearerPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    var token = authorizationHeader.Substring(bearerPrefix.Length).Trim();
+
+                    // Basic validation: Bearer tokens should be non-empty and contain JWT structure
+                    if (!string.IsNullOrWhiteSpace(token) && token.Contains('.') && token.Length > 20)
+                    {
+                        return token;
+                    }
+                }
+
+                return string.Empty;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Extracts the HMAC token (signature) from the Authorization header.
+        /// </summary>
+        /// <param name="authorizationHeader">The Authorization header value.</param>
+        /// <returns>The HMAC signature if found and valid, otherwise null.</returns>
+        private static string ExtractHmacTokenInternal(string authorizationHeader)
+        {
+            if (string.IsNullOrWhiteSpace(authorizationHeader))
+                return string.Empty;
+
+            try
+            {
+                const string hmacPrefix = "HMAC-SHA256 ";
+                if (authorizationHeader.StartsWith(hmacPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    var hmacParams = authorizationHeader.Substring(hmacPrefix.Length).Trim();
+
+                    // Extract signature using regex
+                    var signaturePattern = @"Signature=([^&]+)";
+                    var match = Regex.Match(hmacParams, signaturePattern, RegexOptions.IgnoreCase);
+
+                    if (match.Success && match.Groups.Count > 1)
+                    {
+                        var signature = match.Groups[1].Value.Trim();
+
+                        // Basic validation: HMAC signatures should be valid base64
+                        if (!string.IsNullOrWhiteSpace(signature) && IsValidBase64Internal(signature))
+                        {
+                            return signature;
+                        }
+                    }
+                }
+
+                return string.Empty;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Validates if a string is a valid base64 encoded string.
+        /// </summary>
+        /// <param name="value">The string to validate.</param>
+        /// <returns>True if the string is valid base64, false otherwise.</returns>
+        private static bool IsValidBase64Internal(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return false;
+
+            try
+            {
+                value = value.Trim();
+                if (value.Length % 4 != 0)
+                    return false;
+
+                Convert.FromBase64String(value);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion
 
         /// Answer an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
