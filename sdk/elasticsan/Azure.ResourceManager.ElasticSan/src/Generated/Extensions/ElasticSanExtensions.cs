@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// List all the available Skus in the region and information related to them
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableElasticSanSubscriptionResource.GetAllAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableElasticSanSubscriptionResource.GetSkusAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -231,18 +231,18 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ElasticSanSkuInformation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ElasticSanSkuInformation> GetAllAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ElasticSanSkuInformation> GetSkusAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableElasticSanSubscriptionResource(subscriptionResource).GetAllAsync(filter, cancellationToken);
+            return GetMockableElasticSanSubscriptionResource(subscriptionResource).GetSkusAsync(filter, cancellationToken);
         }
 
         /// <summary>
         /// List all the available Skus in the region and information related to them
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableElasticSanSubscriptionResource.GetAll(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableElasticSanSubscriptionResource.GetSkus(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -250,11 +250,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ElasticSanSkuInformation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ElasticSanSkuInformation> GetAll(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        public static Pageable<ElasticSanSkuInformation> GetSkus(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableElasticSanSubscriptionResource(subscriptionResource).GetAll(filter, cancellationToken);
+            return GetMockableElasticSanSubscriptionResource(subscriptionResource).GetSkus(filter, cancellationToken);
         }
     }
 }

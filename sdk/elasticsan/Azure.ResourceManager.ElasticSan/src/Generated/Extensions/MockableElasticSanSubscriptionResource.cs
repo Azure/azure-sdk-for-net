@@ -120,13 +120,13 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <param name="filter"> Specify $filter='location eq &lt;location&gt;' to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticSanSkuInformation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticSanSkuInformation> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ElasticSanSkuInformation> GetSkusAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetAllAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context);
+            return new SkusGetSkusAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context);
         }
 
         /// <summary>
@@ -149,13 +149,13 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <param name="filter"> Specify $filter='location eq &lt;location&gt;' to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticSanSkuInformation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticSanSkuInformation> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ElasticSanSkuInformation> GetSkus(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetAllCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context);
+            return new SkusGetSkusCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context);
         }
     }
 }

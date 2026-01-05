@@ -13,7 +13,7 @@ using Azure.ResourceManager.ElasticSan;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Data used when creating a volume snapshot. </summary>
-    internal partial class SnapshotCreationInfo
+    public partial class SnapshotCreationInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

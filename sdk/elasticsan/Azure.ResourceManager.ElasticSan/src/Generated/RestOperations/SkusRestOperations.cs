@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string filter, RequestContext context)
+        internal HttpMessage CreateGetSkusRequest(string subscriptionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ElasticSan
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetSkusRequest(Uri nextPage, string subscriptionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

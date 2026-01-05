@@ -15,7 +15,7 @@ using Azure.ResourceManager.ElasticSan;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Data used when creating a volume snapshot. </summary>
-    internal partial class SnapshotCreationInfo : IJsonModel<SnapshotCreationInfo>
+    public partial class SnapshotCreationInfo : IJsonModel<SnapshotCreationInfo>
     {
         /// <summary> Initializes a new instance of <see cref="SnapshotCreationInfo"/> for deserialization. </summary>
         internal SnapshotCreationInfo()

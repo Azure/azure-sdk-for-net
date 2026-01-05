@@ -44,17 +44,6 @@ namespace Azure.ResourceManager.ElasticSan
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ElasticSanVolumeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            TryGetApiVersion(ResourceType, out string elasticSanVolumeApiVersion);
-            _volumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
-            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Endpoint, elasticSanVolumeApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
-        }
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 

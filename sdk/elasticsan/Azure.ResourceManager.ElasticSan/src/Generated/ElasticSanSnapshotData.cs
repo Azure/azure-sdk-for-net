@@ -71,22 +71,5 @@ namespace Azure.ResourceManager.ElasticSan
                 return Properties is null ? default : Properties.VolumeName;
             }
         }
-
-        /// <summary> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </summary>
-        public ResourceIdentifier CreationDataSourceId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CreationDataSourceId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SnapshotProperties();
-                }
-                Properties.CreationDataSourceId = value;
-            }
-        }
     }
 }
