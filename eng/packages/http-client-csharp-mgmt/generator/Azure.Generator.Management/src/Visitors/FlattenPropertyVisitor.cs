@@ -571,7 +571,9 @@ namespace Azure.Generator.Management.Visitors
                         if (invokeExpression.InstanceReference is TypeReferenceExpression typeReference && typeReference.Type?.Name == "Argument") // get the validation expression
                         {
                             var parameterName = invokeExpression.Arguments[0].ToDisplayString(); // we can ensure the first argument is always the parameter for validation expression
-                            if (flattenPropertyMap.TryGetValue(parameterName, out var value))
+                            // Remove the @ prefix if present (for C# keywords)
+                            var normalizedParameterName = parameterName.StartsWith("@") ? parameterName[1..] : parameterName;
+                            if (flattenPropertyMap.TryGetValue(normalizedParameterName, out var value))
                             {
                                 foreach (var (flattenProperty, _) in value)
                                 {
@@ -580,6 +582,10 @@ namespace Azure.Generator.Management.Visitors
                                         updatedBodyStatements.Add(ArgumentSnippets.ValidateParameter(flattenProperty.AsParameter));
                                     }
                                 }
+                            }
+                            else
+                            {
+                                updatedBodyStatements.Add(statement);
                             }
                         }
                         else
