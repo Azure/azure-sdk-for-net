@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The name of a managed cluster SKU. </summary>
+    /// <summary>
+    /// The name of a managed cluster SKU.
+    /// Serialized Name: ManagedClusterSKUName
+    /// </summary>
     public readonly partial struct ManagedClusterSkuName : IEquatable<ManagedClusterSkuName>
     {
         private readonly string _value;
@@ -23,9 +26,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         private const string BaseValue = "Base";
+        private const string AutomaticValue = "Automatic";
 
-        /// <summary> Base option for the AKS control plane. </summary>
+        /// <summary>
+        /// Base option for the AKS control plane.
+        /// Serialized Name: ManagedClusterSKUName.Base
+        /// </summary>
         public static ManagedClusterSkuName Base { get; } = new ManagedClusterSkuName(BaseValue);
+        /// <summary>
+        /// Automatic clusters are optimized to run most production workloads with configuration that follows AKS best practices and recommendations for cluster and workload setup, scalability, and security. For more details about Automatic clusters see aka.ms/aks/automatic.
+        /// Serialized Name: ManagedClusterSKUName.Automatic
+        /// </summary>
+        public static ManagedClusterSkuName Automatic { get; } = new ManagedClusterSkuName(AutomaticValue);
         /// <summary> Determines if two <see cref="ManagedClusterSkuName"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterSkuName left, ManagedClusterSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterSkuName"/> values are not the same. </summary>

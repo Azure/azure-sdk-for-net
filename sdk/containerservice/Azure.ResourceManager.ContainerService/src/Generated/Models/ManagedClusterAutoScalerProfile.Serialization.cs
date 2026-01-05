@@ -40,6 +40,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("balance-similar-node-groups"u8);
                 writer.WriteStringValue(BalanceSimilarNodeGroups);
             }
+            if (Optional.IsDefined(DaemonsetEvictionForEmptyNodes))
+            {
+                writer.WritePropertyName("daemonset-eviction-for-empty-nodes"u8);
+                writer.WriteBooleanValue(DaemonsetEvictionForEmptyNodes.Value);
+            }
+            if (Optional.IsDefined(DaemonsetEvictionForOccupiedNodes))
+            {
+                writer.WritePropertyName("daemonset-eviction-for-occupied-nodes"u8);
+                writer.WriteBooleanValue(DaemonsetEvictionForOccupiedNodes.Value);
+            }
+            if (Optional.IsDefined(IgnoreDaemonsetsUtilization))
+            {
+                writer.WritePropertyName("ignore-daemonsets-utilization"u8);
+                writer.WriteBooleanValue(IgnoreDaemonsetsUtilization.Value);
+            }
             if (Optional.IsDefined(Expander))
             {
                 writer.WritePropertyName("expander"u8);
@@ -158,6 +173,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string balanceSimilarNodeGroups = default;
+            bool? daemonsetEvictionForEmptyNodes = default;
+            bool? daemonsetEvictionForOccupiedNodes = default;
+            bool? ignoreDaemonsetsUtilization = default;
             AutoScaleExpander? expander = default;
             string maxEmptyBulkDelete = default;
             string maxGracefulTerminationSec = default;
@@ -181,6 +199,33 @@ namespace Azure.ResourceManager.ContainerService.Models
                 if (property.NameEquals("balance-similar-node-groups"u8))
                 {
                     balanceSimilarNodeGroups = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("daemonset-eviction-for-empty-nodes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    daemonsetEvictionForEmptyNodes = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("daemonset-eviction-for-occupied-nodes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    daemonsetEvictionForOccupiedNodes = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("ignore-daemonsets-utilization"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ignoreDaemonsetsUtilization = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("expander"u8))
@@ -275,6 +320,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterAutoScalerProfile(
                 balanceSimilarNodeGroups,
+                daemonsetEvictionForEmptyNodes,
+                daemonsetEvictionForOccupiedNodes,
+                ignoreDaemonsetsUtilization,
                 expander,
                 maxEmptyBulkDelete,
                 maxGracefulTerminationSec,
@@ -325,6 +373,54 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         builder.AppendLine($"'{BalanceSimilarNodeGroups}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaemonsetEvictionForEmptyNodes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  daemonset-eviction-for-empty-nodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaemonsetEvictionForEmptyNodes))
+                {
+                    builder.Append("  daemonset-eviction-for-empty-nodes: ");
+                    var boolValue = DaemonsetEvictionForEmptyNodes.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaemonsetEvictionForOccupiedNodes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  daemonset-eviction-for-occupied-nodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaemonsetEvictionForOccupiedNodes))
+                {
+                    builder.Append("  daemonset-eviction-for-occupied-nodes: ");
+                    var boolValue = DaemonsetEvictionForOccupiedNodes.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IgnoreDaemonsetsUtilization), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ignore-daemonsets-utilization: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IgnoreDaemonsetsUtilization))
+                {
+                    builder.Append("  ignore-daemonsets-utilization: ");
+                    var boolValue = IgnoreDaemonsetsUtilization.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 

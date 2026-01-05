@@ -69,7 +69,6 @@ namespace Azure.Generator.Management.Tests.Providers
             // Create test data with a long-running operation
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
-            var decorators = new List<InputDecoratorInfo>();
             var responseModel = InputFactory.Model(ResourceModelName,
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
                 properties:
@@ -77,7 +76,7 @@ namespace Azure.Generator.Management.Tests.Providers
                     InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
                 ],
-                decorators: decorators);
+                decorators: []);
 
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
@@ -106,19 +105,9 @@ namespace Azure.Generator.Management.Tests.Providers
                 parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter],
                 longRunningServiceMetadata: lroMetadata);
 
-            var client = InputFactory.Client(
-                TestClientName,
-                methods: [createMethod],
-                crossLanguageDefinitionId: $"Test.{TestClientName}");
-
             var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
-            decorators.Add(BuildResourceMetadata(
+            var armProviderDecorator = BuildArmProviderSchema(
                 responseModel,
-                client,
-                resourceIdPattern,
-                "Microsoft.Tests/tests",
-                null,
-                ResourceScope.ResourceGroup,
                 [
                     new ResourceMethod(
                         ResourceOperationKind.Create,
@@ -126,9 +115,19 @@ namespace Azure.Generator.Management.Tests.Providers
                         createMethod.Operation.Path,
                         ResourceScope.ResourceGroup,
                         resourceIdPattern,
-                        client)
+                        null!)
                 ],
-                "ResponseType"));
+                resourceIdPattern,
+                "Microsoft.Tests/tests",
+                null,
+                ResourceScope.ResourceGroup,
+                "ResponseType");
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [createMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [responseModel], clients: () => [client]);
             var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
@@ -138,15 +137,7 @@ namespace Azure.Generator.Management.Tests.Providers
             return operationSourceProvider!;
         }
 
-        private static InputDecoratorInfo BuildResourceMetadata(
-            InputModelType resourceModel,
-            InputClient resourceClient,
-            string resourceIdPattern,
-            string resourceType,
-            string? singletonResourceName,
-            ResourceScope resourceScope,
-            IReadOnlyList<ResourceMethod> methods,
-            string? resourceName)
+        private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, string resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
         {
             var options = new JsonSerializerOptions
             {
@@ -154,20 +145,24 @@ namespace Azure.Generator.Management.Tests.Providers
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
             };
 
-            var arguments = new Dictionary<string, BinaryData>
+            var resourceSchema = new Dictionary<string, object?>
             {
-                ["resourceIdPattern"] = FromLiteralString(resourceIdPattern),
-                ["resourceType"] = FromLiteralString(resourceType),
-                ["resourceScope"] = FromLiteralString(resourceScope.ToString()),
-                ["methods"] = BinaryData.FromObjectAsJson(methods.Select(SerializeResourceMethod), options),
-                ["singletonResourceName"] = BinaryData.FromObjectAsJson(singletonResourceName, options),
-                ["resourceName"] = BinaryData.FromObjectAsJson(resourceName, options),
+                ["resourceModelId"] = resourceModel.CrossLanguageDefinitionId,
+                ["resourceIdPattern"] = resourceIdPattern,
+                ["resourceType"] = resourceType,
+                ["resourceScope"] = resourceScope.ToString(),
+                ["methods"] = methods.Select(SerializeResourceMethod).ToList(),
+                ["singletonResourceName"] = singletonResourceName,
+                ["resourceName"] = resourceName,
             };
 
-            return new InputDecoratorInfo("Azure.ClientGenerator.Core.@resourceSchema", arguments);
+            var arguments = new Dictionary<string, BinaryData>
+            {
+                ["resources"] = BinaryData.FromObjectAsJson(new[] { resourceSchema }, options),
+                ["nonResourceMethods"] = BinaryData.FromObjectAsJson(Array.Empty<object>(), options)
+            };
 
-            static BinaryData FromLiteralString(string literal)
-                => BinaryData.FromString($"\"{literal}\"");
+            return new InputDecoratorInfo("Azure.ClientGenerator.Core.@armProviderSchema", arguments);
 
             static Dictionary<string, string> SerializeResourceMethod(ResourceMethod m)
             {

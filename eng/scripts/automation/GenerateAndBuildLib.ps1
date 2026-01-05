@@ -762,7 +762,7 @@ function GeneratePackage()
         }
     }
 
-    if ($isGenerateSuccess) {
+    if ($isGenerateSuccess -and $serviceType -eq "data-plane") {
         # Get the version from csproj before building
         $projectFile = Join-Path $srcPath "$packageName.csproj"
         $csproj = new-object xml

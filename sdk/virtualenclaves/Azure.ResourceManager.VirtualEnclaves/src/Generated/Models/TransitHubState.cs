@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public readonly partial struct TransitHubState : IEquatable<TransitHubState>
     {
         private readonly string _value;
+        /// <summary> TransitHubState Type PendingApproval. </summary>
+        private const string PendingApprovalValue = "PendingApproval";
+        /// <summary> TransitHubState Type Approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> TransitHubState Type PendingUpdate. </summary>
+        private const string PendingUpdateValue = "PendingUpdate";
+        /// <summary> TransitHubState Type Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> TransitHubState Type Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="TransitHubState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TransitHubState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingApprovalValue = "PendingApproval";
-        private const string ApprovedValue = "Approved";
-        private const string PendingUpdateValue = "PendingUpdate";
-        private const string ActiveValue = "Active";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> TransitHubState Type PendingApproval. </summary>
         public static TransitHubState PendingApproval { get; } = new TransitHubState(PendingApprovalValue);
+
         /// <summary> TransitHubState Type Approved. </summary>
         public static TransitHubState Approved { get; } = new TransitHubState(ApprovedValue);
+
         /// <summary> TransitHubState Type PendingUpdate. </summary>
         public static TransitHubState PendingUpdate { get; } = new TransitHubState(PendingUpdateValue);
+
         /// <summary> TransitHubState Type Active. </summary>
         public static TransitHubState Active { get; } = new TransitHubState(ActiveValue);
+
         /// <summary> TransitHubState Type Failed. </summary>
         public static TransitHubState Failed { get; } = new TransitHubState(FailedValue);
+
         /// <summary> Determines if two <see cref="TransitHubState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TransitHubState left, TransitHubState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TransitHubState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TransitHubState left, TransitHubState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TransitHubState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TransitHubState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TransitHubState(string value) => new TransitHubState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TransitHubState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TransitHubState?(string value) => value == null ? null : new TransitHubState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TransitHubState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TransitHubState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

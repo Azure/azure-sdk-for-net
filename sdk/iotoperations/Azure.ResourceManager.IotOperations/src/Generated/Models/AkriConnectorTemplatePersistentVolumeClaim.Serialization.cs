@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class AkriConnectorTemplatePersistentVolumeClaim : IUtf8JsonSerializable, IJsonModel<AkriConnectorTemplatePersistentVolumeClaim>
+    /// <summary> AkriConnectorTemplatePersistentVolumeClaim properties. </summary>
+    public partial class AkriConnectorTemplatePersistentVolumeClaim : IJsonModel<AkriConnectorTemplatePersistentVolumeClaim>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AkriConnectorTemplatePersistentVolumeClaim>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplatePersistentVolumeClaim"/> for deserialization. </summary>
+        internal AkriConnectorTemplatePersistentVolumeClaim()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AkriConnectorTemplatePersistentVolumeClaim>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,25 +34,24 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AkriConnectorTemplatePersistentVolumeClaim)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("claimName"u8);
             writer.WriteStringValue(ClaimName);
             writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -55,55 +60,61 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        AkriConnectorTemplatePersistentVolumeClaim IJsonModel<AkriConnectorTemplatePersistentVolumeClaim>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AkriConnectorTemplatePersistentVolumeClaim IJsonModel<AkriConnectorTemplatePersistentVolumeClaim>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AkriConnectorTemplatePersistentVolumeClaim JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AkriConnectorTemplatePersistentVolumeClaim)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAkriConnectorTemplatePersistentVolumeClaim(document.RootElement, options);
         }
 
-        internal static AkriConnectorTemplatePersistentVolumeClaim DeserializeAkriConnectorTemplatePersistentVolumeClaim(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AkriConnectorTemplatePersistentVolumeClaim DeserializeAkriConnectorTemplatePersistentVolumeClaim(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string claimName = default;
             string mountPath = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("claimName"u8))
+                if (prop.NameEquals("claimName"u8))
                 {
-                    claimName = property.Value.GetString();
+                    claimName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountPath"u8))
+                if (prop.NameEquals("mountPath"u8))
                 {
-                    mountPath = property.Value.GetString();
+                    mountPath = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AkriConnectorTemplatePersistentVolumeClaim(claimName, mountPath, serializedAdditionalRawData);
+            return new AkriConnectorTemplatePersistentVolumeClaim(claimName, mountPath, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -113,15 +124,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        AkriConnectorTemplatePersistentVolumeClaim IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AkriConnectorTemplatePersistentVolumeClaim IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AkriConnectorTemplatePersistentVolumeClaim PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAkriConnectorTemplatePersistentVolumeClaim(document.RootElement, options);
                     }
                 default:
@@ -129,6 +145,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AkriConnectorTemplatePersistentVolumeClaim>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,7 +12,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
-using Azure.Test.Perf;
 using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests

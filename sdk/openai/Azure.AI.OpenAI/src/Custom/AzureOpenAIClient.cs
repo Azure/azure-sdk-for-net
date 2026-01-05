@@ -294,10 +294,10 @@ public partial class AzureOpenAIClient : OpenAIClient
     // Not yet present in OpenAI GA dependency
 #endif
 
-    public override OpenAIResponseClient GetOpenAIResponseClient(string deploymentName)
+    public override ResponsesClient GetResponsesClient(string deploymentName)
     {
         Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-        return new AzureOpenAIResponseClient(Pipeline, deploymentName, _endpoint, _options);
+        return new AzureResponsesClient(Pipeline, deploymentName, _endpoint, _options);
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
