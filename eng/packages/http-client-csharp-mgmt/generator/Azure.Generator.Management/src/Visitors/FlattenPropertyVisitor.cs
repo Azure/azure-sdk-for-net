@@ -363,10 +363,6 @@ namespace Azure.Generator.Management.Visitors
                 var flattenedProperties = propertyMap.Values.SelectMany(x => x.Select(item => item.FlattenedProperty));
                 model.Update(properties: [.. model.Properties, .. flattenedProperties]);
                 _flattenedModelTypes.Add(model.Type, (propertyNameMap, propertyTypeMap));
-            }
-
-            if (isFlattenProperty)
-            {
                 UpdatePublicConstructor(model, propertyNameMap);
             }
         }
@@ -575,7 +571,9 @@ namespace Azure.Generator.Management.Visitors
                         if (invokeExpression.InstanceReference is TypeReferenceExpression typeReference && typeReference.Type?.Name == "Argument") // get the validation expression
                         {
                             var parameterName = invokeExpression.Arguments[0].ToDisplayString(); // we can ensure the first argument is always the parameter for validation expression
-                            if (map.TryGetValue(parameterName, out var value))
+                            // Remove the @ prefix if present (for C# keywords)
+                            var normalizedParameterName = parameterName.StartsWith("@") ? parameterName.Substring(1) : parameterName;
+                            if (map.TryGetValue(normalizedParameterName, out var value))
                             {
                                 foreach (var (flattenProperty, _) in value)
                                 {
@@ -584,6 +582,10 @@ namespace Azure.Generator.Management.Visitors
                                         updatedBodyStatements.Add(ArgumentSnippets.ValidateParameter(flattenProperty.AsParameter));
                                     }
                                 }
+                            }
+                            else
+                            {
+                                updatedBodyStatements.Add(statement);
                             }
                         }
                         else
