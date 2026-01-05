@@ -1336,5 +1336,15 @@ interface BestPracticeVersions {
     strictEqual(bestPracticeVersionsMetadata.methods.length, 3, "Should have 3 methods");
     // Note: parentResourceId is not set for legacy operations as there's no explicit @parentResource decorator
     // The parent-child relationship is inferred from the path structure in the generator
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 });
