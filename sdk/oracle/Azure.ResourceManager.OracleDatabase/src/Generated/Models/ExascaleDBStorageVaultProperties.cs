@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -17,19 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultProperties"/>. </summary>
-        /// <param name="displayName"> The user-friendly name for the Exadata Database Storage Vault. The name does not need to be unique. </param>
-        /// <param name="highCapacityDatabaseStorageInputTotalSizeInGbs"> Total Capacity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
-        public ExascaleDBStorageVaultProperties(string displayName, int? highCapacityDatabaseStorageInputTotalSizeInGbs)
-        {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-
-            DisplayName = displayName;
-            HighCapacityDatabaseStorageInput = highCapacityDatabaseStorageInputTotalSizeInGbs is null ? default : new ExascaleDBStorageInputDetails(highCapacityDatabaseStorageInputTotalSizeInGbs.Value);
-            AttachedShapeAttributes = new ChangeTrackingList<ExascaleStorageShapeAttribute>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultProperties"/>. </summary>
         /// <param name="additionalFlashCacheInPercent"> The size of additional Flash Cache in percentage of High Capacity database storage. </param>

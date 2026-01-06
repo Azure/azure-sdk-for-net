@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ArizeAIObservabilityEval;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
@@ -16,22 +15,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOrganizationProperties"/>. </summary>
-        /// <param name="marketplace"> Marketplace details of the resource. </param>
-        /// <param name="user"> Details of the user. </param>
-        /// <param name="partnerDescription"> Description of the Organization's purpose. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="user"/> or <paramref name="partnerDescription"/> is null. </exception>
-        public ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace, ArizeAIObservabilityEvalUserDetails user, string partnerDescription)
-        {
-            Argument.AssertNotNull(marketplace, nameof(marketplace));
-            Argument.AssertNotNull(user, nameof(user));
-            Argument.AssertNotNull(partnerDescription, nameof(partnerDescription));
-
-            Marketplace = marketplace;
-            User = user;
-            PartnerProperties = new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription);
-        }
 
         /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>

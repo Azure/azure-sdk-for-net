@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -22,25 +21,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="schedule"> The schedule for the request. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resourcesIds"> The resource ids used for the request. </param>
-        /// <param name="correlationId"> CorrelationId item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/>, <paramref name="executionParameters"/>, <paramref name="resourcesIds"/> or <paramref name="correlationId"/> is null. </exception>
-        public SubmitStartContent(UserRequestSchedule schedule, ScheduledActionExecutionParameterDetail executionParameters, IEnumerable<ResourceIdentifier> resourcesIds, string correlationId)
-        {
-            Argument.AssertNotNull(schedule, nameof(schedule));
-            Argument.AssertNotNull(executionParameters, nameof(executionParameters));
-            Argument.AssertNotNull(resourcesIds, nameof(resourcesIds));
-            Argument.AssertNotNull(correlationId, nameof(correlationId));
-
-            Schedule = schedule;
-            ExecutionParameters = executionParameters;
-            Resources = new UserRequestResources(resourcesIds);
-            CorrelationId = correlationId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SubmitStartContent"/>. </summary>
-        /// <param name="schedule"> The schedule for the request. </param>
-        /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="resources"> The resources for the request. </param>
         /// <param name="correlationId"> CorrelationId item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SubmitStartContent(UserRequestSchedule schedule, ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)

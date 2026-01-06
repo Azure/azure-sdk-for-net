@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -17,17 +16,6 @@ namespace Azure.ResourceManager.IotOperations.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="IotOperationsInstanceProperties"/>. </summary>
-        /// <param name="schemaRegistryRefResourceId"> The resource ID of the Schema Registry. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryRefResourceId"/> is null. </exception>
-        public IotOperationsInstanceProperties(ResourceIdentifier schemaRegistryRefResourceId)
-        {
-            Argument.AssertNotNull(schemaRegistryRefResourceId, nameof(schemaRegistryRefResourceId));
-
-            SchemaRegistryRef = new SchemaRegistryRef(schemaRegistryRefResourceId);
-            Features = new ChangeTrackingDictionary<string, IotOperationsInstanceFeature>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsInstanceProperties"/>. </summary>
         /// <param name="description"> Detailed description of the Instance. </param>
