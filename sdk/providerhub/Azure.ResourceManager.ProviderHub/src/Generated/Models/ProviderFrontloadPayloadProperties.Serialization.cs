@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ServiceFeatureFlagAction serviceFeatureFlag = default;
             IList<string> includeResourceTypes = default;
             IList<string> excludeResourceTypes = default;
-            ManifestLevelPropertyBag overrideManifestLevelFields = default;
-            ResourceTypeEndpointBase overrideEndpointLevelFields = default;
+            FrontloadPayloadPropertiesOverrideManifestLevelFields overrideManifestLevelFields = default;
+            FrontloadPayloadPropertiesOverrideEndpointLevelFields overrideEndpointLevelFields = default;
             IList<string> ignoreFields = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (prop.NameEquals("overrideManifestLevelFields"u8))
                 {
-                    overrideManifestLevelFields = ManifestLevelPropertyBag.DeserializeManifestLevelPropertyBag(prop.Value, options);
+                    overrideManifestLevelFields = FrontloadPayloadPropertiesOverrideManifestLevelFields.DeserializeFrontloadPayloadPropertiesOverrideManifestLevelFields(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("overrideEndpointLevelFields"u8))
                 {
-                    overrideEndpointLevelFields = ResourceTypeEndpointBase.DeserializeResourceTypeEndpointBase(prop.Value, options);
+                    overrideEndpointLevelFields = FrontloadPayloadPropertiesOverrideEndpointLevelFields.DeserializeFrontloadPayloadPropertiesOverrideEndpointLevelFields(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ignoreFields"u8))

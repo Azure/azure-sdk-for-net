@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             CustomRolloutAutoProvisionConfig autoProvisionConfig = default;
-            TrafficRegions canary = default;
+            CustomRolloutSpecificationCanary canary = default;
             IList<string> releaseScopes = default;
             bool? refreshSubscriptionRegistration = default;
             bool? skipReleaseScopeValidation = default;
-            ProviderRegistrationData providerRegistration = default;
+            CustomRolloutSpecificationProviderRegistration providerRegistration = default;
             IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    canary = TrafficRegions.DeserializeTrafficRegions(prop.Value, options);
+                    canary = CustomRolloutSpecificationCanary.DeserializeCustomRolloutSpecificationCanary(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("releaseScopes"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(prop.Value, options);
+                    providerRegistration = CustomRolloutSpecificationProviderRegistration.DeserializeCustomRolloutSpecificationProviderRegistration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceTypeRegistrations"u8))

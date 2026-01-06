@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TokenAuthConfiguration tokenAuthConfiguration = default;
             IList<string> actions = default;
             IList<ResourceProviderEndpoint> endpoints = default;
-            ProviderDstsConfiguration dstsConfiguration = default;
+            FanoutLinkedNotificationRuleDstsConfiguration dstsConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
+                    dstsConfiguration = FanoutLinkedNotificationRuleDstsConfiguration.DeserializeFanoutLinkedNotificationRuleDstsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

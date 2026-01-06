@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            ExtensionOptions resourceCreationBegin = default;
+            ResourceTypeExtensionOptionsResourceCreationBegin resourceCreationBegin = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceCreationBegin = ExtensionOptions.DeserializeExtensionOptions(prop.Value, options);
+                    resourceCreationBegin = ResourceTypeExtensionOptionsResourceCreationBegin.DeserializeResourceTypeExtensionOptionsResourceCreationBegin(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

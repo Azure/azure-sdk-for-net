@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="failedOrSkippedRegions"> The failed or skipped regions. </param>
         /// <param name="manifestCheckinStatus"> The manifest checkin status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRolloutStatus(AzureLocation? completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, CheckinManifestInfo manifestCheckinStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomRolloutStatus(AzureLocation? completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, CustomRolloutStatusManifestCheckinStatus manifestCheckinStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CompletedRegions = completedRegions;
             FailedOrSkippedRegions = failedOrSkippedRegions;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IDictionary<string, ExtendedErrorInfo> FailedOrSkippedRegions { get; }
 
         /// <summary> The manifest checkin status. </summary>
-        public CheckinManifestInfo ManifestCheckinStatus { get; set; }
+        public CustomRolloutStatusManifestCheckinStatus ManifestCheckinStatus { get; set; }
     }
 }

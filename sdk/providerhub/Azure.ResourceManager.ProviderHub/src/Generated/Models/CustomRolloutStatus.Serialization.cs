@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             AzureLocation? completedRegions = default;
             IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions = default;
-            CheckinManifestInfo manifestCheckinStatus = default;
+            CustomRolloutStatusManifestCheckinStatus manifestCheckinStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    manifestCheckinStatus = CheckinManifestInfo.DeserializeCheckinManifestInfo(prop.Value, options);
+                    manifestCheckinStatus = CustomRolloutStatusManifestCheckinStatus.DeserializeCustomRolloutStatusManifestCheckinStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

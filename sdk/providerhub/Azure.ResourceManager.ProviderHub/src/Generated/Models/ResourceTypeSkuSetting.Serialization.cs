@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<ResourceTypeSkuLocationInfo> locationInfo = default;
             IList<string> requiredQuotaIds = default;
             IList<string> requiredFeatures = default;
-            ResourceTypeSkuCapacity capacity = default;
+            SkuSettingCapacity capacity = default;
             IList<ResourceTypeSkuCost> costs = default;
             IList<ResourceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    capacity = ResourceTypeSkuCapacity.DeserializeResourceTypeSkuCapacity(prop.Value, options);
+                    capacity = SkuSettingCapacity.DeserializeSkuSettingCapacity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("costs"u8))

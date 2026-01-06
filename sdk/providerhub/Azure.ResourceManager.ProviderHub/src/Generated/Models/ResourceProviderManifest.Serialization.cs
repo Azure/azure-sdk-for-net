@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            ResourceProviderAuthentication providerAuthentication = default;
+            ResourceProviderManifestProviderAuthentication providerAuthentication = default;
             IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations = default;
             string @namespace = default;
             IReadOnlyList<ResourceProviderService> services = default;
@@ -242,15 +242,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string providerVersion = default;
             ResourceProviderType? providerType = default;
             IReadOnlyList<string> requiredFeatures = default;
-            ProviderFeaturesRule featuresRule = default;
-            ProviderRequestHeaderOptions requestHeaderOptions = default;
+            ResourceProviderManifestFeaturesRule featuresRule = default;
+            ResourceProviderManifestRequestHeaderOptions requestHeaderOptions = default;
             IReadOnlyList<ProviderResourceType> resourceTypes = default;
-            ResourceProviderManagement management = default;
+            ResourceProviderManifestManagement management = default;
             IReadOnlyList<ResourceProviderCapabilities> capabilities = default;
             CrossTenantTokenValidation? crossTenantTokenValidation = default;
             BinaryData metadata = default;
             IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints = default;
-            ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = default;
+            ResourceProviderManifestReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = default;
             bool? isTenantLinkedNotificationEnabled = default;
             IReadOnlyList<ProviderNotification> notifications = default;
             IReadOnlyList<FanoutLinkedNotificationRule> linkedNotificationRules = default;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(prop.Value, options);
+                    providerAuthentication = ResourceProviderManifestProviderAuthentication.DeserializeResourceProviderManifestProviderAuthentication(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("providerAuthorizations"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(prop.Value, options);
+                    featuresRule = ResourceProviderManifestFeaturesRule.DeserializeResourceProviderManifestFeaturesRule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("requestHeaderOptions"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = ProviderRequestHeaderOptions.DeserializeProviderRequestHeaderOptions(prop.Value, options);
+                    requestHeaderOptions = ResourceProviderManifestRequestHeaderOptions.DeserializeResourceProviderManifestRequestHeaderOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceTypes"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    management = ResourceProviderManagement.DeserializeResourceProviderManagement(prop.Value, options);
+                    management = ResourceProviderManifestManagement.DeserializeResourceProviderManifestManagement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("capabilities"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    reRegisterSubscriptionMetadata = ReRegisterSubscriptionMetadata.DeserializeReRegisterSubscriptionMetadata(prop.Value, options);
+                    reRegisterSubscriptionMetadata = ResourceProviderManifestReRegisterSubscriptionMetadata.DeserializeResourceProviderManifestReRegisterSubscriptionMetadata(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("enableTenantLinkedNotification"u8))

@@ -14,7 +14,7 @@ using Azure.ResourceManager.ProviderHub;
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ProviderFeaturesRule. </summary>
-    internal partial class ProviderFeaturesRule : IJsonModel<ProviderFeaturesRule>
+    public partial class ProviderFeaturesRule : IJsonModel<ProviderFeaturesRule>
     {
         /// <summary> Initializes a new instance of <see cref="ProviderFeaturesRule"/> for deserialization. </summary>
         internal ProviderFeaturesRule()

@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<string> apiVersions = default;
             AzureLocation? locations = default;
             IList<string> requiredFeatures = default;
-            ProviderFeaturesRule featuresRule = default;
+            ResourceTypeEndpointFeaturesRule featuresRule = default;
             IList<ResourceTypeExtension> extensions = default;
             TimeSpan? timeout = default;
             ProviderEndpointTypeResourceType? endpointType = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string endpointUri = default;
             string apiVersion = default;
             IList<string> zones = default;
-            ProviderDstsConfiguration dstsConfiguration = default;
+            ResourceTypeEndpointDstsConfiguration dstsConfiguration = default;
             ResourceTypeDataBoundary? dataBoundary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(prop.Value, options);
+                    featuresRule = ResourceTypeEndpointFeaturesRule.DeserializeResourceTypeEndpointFeaturesRule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("extensions"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
+                    dstsConfiguration = ResourceTypeEndpointDstsConfiguration.DeserializeResourceTypeEndpointDstsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dataBoundary"u8))

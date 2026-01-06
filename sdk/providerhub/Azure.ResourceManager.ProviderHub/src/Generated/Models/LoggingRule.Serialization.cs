@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string action = default;
             LoggingDirections direction = default;
             LoggingDetails detailLevel = default;
-            LoggingHiddenPropertyPaths hiddenPropertyPaths = default;
+            LoggingRuleHiddenPropertyPaths hiddenPropertyPaths = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    hiddenPropertyPaths = LoggingHiddenPropertyPaths.DeserializeLoggingHiddenPropertyPaths(prop.Value, options);
+                    hiddenPropertyPaths = LoggingRuleHiddenPropertyPaths.DeserializeLoggingRuleHiddenPropertyPaths(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

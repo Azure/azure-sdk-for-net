@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"></param>
-        internal ResourceTypeSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceTypeSkuProperties properties) : base(id, name, resourceType, systemData)
+        internal ResourceTypeSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SkuResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public ResourceTypeSkuProperties Properties { get; set; }
+        public SkuResourceProperties Properties { get; set; }
     }
 }

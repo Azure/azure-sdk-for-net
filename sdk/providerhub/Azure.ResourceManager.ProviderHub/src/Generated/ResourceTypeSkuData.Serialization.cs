@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ProviderHub
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceTypeSkuProperties properties = default;
+            SkuResourceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ProviderHub
                     {
                         continue;
                     }
-                    properties = ResourceTypeSkuProperties.DeserializeResourceTypeSkuProperties(prop.Value, options);
+                    properties = SkuResourceProperties.DeserializeSkuResourceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

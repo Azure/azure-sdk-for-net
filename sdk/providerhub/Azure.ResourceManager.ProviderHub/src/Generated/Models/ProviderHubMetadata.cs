@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="regionalAsyncOperationResourceTypeName"> The regional async operation resource type name. </param>
         /// <param name="globalAsyncOperationResourceTypeName"> The global async operation resource type name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ResourceProviderAuthentication providerAuthentication, ThirdPartyProviderAuthorization thirdPartyProviderAuthorization, string directRpRoleDefinitionId, string regionalAsyncOperationResourceTypeName, string globalAsyncOperationResourceTypeName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ProviderHubMetadataProviderAuthentication providerAuthentication, ProviderHubMetadataThirdPartyProviderAuthorization thirdPartyProviderAuthorization, string directRpRoleDefinitionId, string regionalAsyncOperationResourceTypeName, string globalAsyncOperationResourceTypeName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProviderAuthorizations = providerAuthorizations;
             ProviderAuthentication = providerAuthentication;
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
 
         /// <summary> The provider authentication. </summary>
-        internal ResourceProviderAuthentication ProviderAuthentication { get; set; }
+        internal ProviderHubMetadataProviderAuthentication ProviderAuthentication { get; set; }
 
         /// <summary> The third party provider authorization. </summary>
-        public ThirdPartyProviderAuthorization ThirdPartyProviderAuthorization { get; set; }
+        public ProviderHubMetadataThirdPartyProviderAuthorization ThirdPartyProviderAuthorization { get; set; }
 
         /// <summary> The direct RP role definition id. </summary>
         public string DirectRpRoleDefinitionId { get; set; }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             set
             {
-                ProviderAuthentication = new ResourceProviderAuthentication(value);
+                ProviderAuthentication = new ProviderHubMetadataProviderAuthentication(value);
             }
         }
     }

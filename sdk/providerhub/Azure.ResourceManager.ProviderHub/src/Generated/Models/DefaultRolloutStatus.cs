@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="nextTrafficRegionScheduledOn"> The next traffic region scheduled time. </param>
         /// <param name="subscriptionReregistrationResult"> The subscription reregistration result. </param>
         /// <param name="manifestCheckinStatus"> The manifest checkin status. </param>
-        internal DefaultRolloutStatus(AzureLocation? completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, IDictionary<string, BinaryData> additionalBinaryDataProperties, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult, CheckinManifestInfo manifestCheckinStatus) : base(completedRegions, failedOrSkippedRegions, additionalBinaryDataProperties)
+        internal DefaultRolloutStatus(AzureLocation? completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, IDictionary<string, BinaryData> additionalBinaryDataProperties, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult, DefaultRolloutStatusManifestCheckinStatus manifestCheckinStatus) : base(completedRegions, failedOrSkippedRegions, additionalBinaryDataProperties)
         {
             NextTrafficRegion = nextTrafficRegion;
             NextTrafficRegionScheduledOn = nextTrafficRegionScheduledOn;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public SubscriptionReregistrationResult? SubscriptionReregistrationResult { get; set; }
 
         /// <summary> The manifest checkin status. </summary>
-        public CheckinManifestInfo ManifestCheckinStatus { get; set; }
+        public DefaultRolloutStatusManifestCheckinStatus ManifestCheckinStatus { get; set; }
     }
 }

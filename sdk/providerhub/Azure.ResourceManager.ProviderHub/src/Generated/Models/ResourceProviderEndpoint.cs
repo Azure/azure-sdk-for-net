@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="endpointType"> The endpoint type. </param>
         /// <param name="skuLink"> The sku link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderEndpoint(bool? isEnabled, IReadOnlyList<string> apiVersions, string endpointUri, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> requiredFeatures, ProviderFeaturesRule featuresRule, TimeSpan? timeout, ProviderEndpointType? endpointType, string skuLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProviderEndpoint(bool? isEnabled, IReadOnlyList<string> apiVersions, string endpointUri, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> requiredFeatures, ResourceProviderEndpointFeaturesRule featuresRule, TimeSpan? timeout, ProviderEndpointType? endpointType, string skuLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             ApiVersions = apiVersions;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string EndpointUri { get; set; }
 
         /// <summary> The feature rules. </summary>
-        internal ProviderFeaturesRule FeaturesRule { get; set; }
+        internal ResourceProviderEndpointFeaturesRule FeaturesRule { get; set; }
 
         /// <summary> The timeout. </summary>
         public TimeSpan? Timeout { get; set; }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             set
             {
-                FeaturesRule = value.HasValue ? new ProviderFeaturesRule(value.Value) : default;
+                FeaturesRule = value.HasValue ? new ResourceProviderEndpointFeaturesRule(value.Value) : default;
             }
         }
     }

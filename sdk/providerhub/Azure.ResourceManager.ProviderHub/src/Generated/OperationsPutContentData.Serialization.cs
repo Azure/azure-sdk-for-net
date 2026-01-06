@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ProviderHub
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OperationsContentProperties properties = default;
+            OperationsPutContentProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ProviderHub
                     {
                         continue;
                     }
-                    properties = OperationsContentProperties.DeserializeOperationsContentProperties(prop.Value, options);
+                    properties = OperationsPutContentProperties.DeserializeOperationsPutContentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

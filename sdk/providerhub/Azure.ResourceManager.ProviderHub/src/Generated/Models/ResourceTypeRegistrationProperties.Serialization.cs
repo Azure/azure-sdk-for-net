@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             CrossTenantTokenValidation? crossTenantTokenValidation = default;
             ResourceTypeRegistrationRegionality? regionality = default;
             IList<ResourceTypeEndpoint> endpoints = default;
-            ResourceTypeExtensionOptions extensionOptions = default;
+            ResourceTypeRegistrationPropertiesExtensionOptions extensionOptions = default;
             MarketplaceType? marketplaceType = default;
             IList<SwaggerSpecification> swaggerSpecifications = default;
             IList<string> allowedUnauthorizedActions = default;
@@ -641,25 +641,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<LoggingRule> loggingRules = default;
             IList<ThrottlingRule> throttlingRules = default;
             IList<string> requiredFeatures = default;
-            ProviderFeaturesRule featuresRule = default;
+            ResourceTypeRegistrationPropertiesFeaturesRule featuresRule = default;
             bool? isAsyncOperationEnabled = default;
             ProviderHubProvisioningState? provisioningState = default;
             bool? isThirdPartyS2SEnabled = default;
-            SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = default;
+            ResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = default;
             bool? isPureProxy = default;
-            IdentityManagementProperties identityManagement = default;
-            CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications = default;
+            ResourceTypeRegistrationPropertiesIdentityManagement identityManagement = default;
+            ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications = default;
             IList<string> disallowedActionVerbs = default;
             IList<ServiceTreeInfo> serviceTreeInfos = default;
-            ProviderRequestHeaderOptions requestHeaderOptions = default;
+            ResourceTypeRegistrationPropertiesRequestHeaderOptions requestHeaderOptions = default;
             IList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
-            TemplateDeploymentOptions templateDeploymentOptions = default;
+            ResourceTypeRegistrationPropertiesTemplateDeploymentOptions templateDeploymentOptions = default;
             IList<ProviderHubExtendedLocationOptions> extendedLocations = default;
-            ResourceMovePolicy resourceMovePolicy = default;
+            ResourceTypeRegistrationPropertiesResourceMovePolicy resourceMovePolicy = default;
             ResourceDeletionPolicy? resourceDeletionPolicy = default;
             IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions = default;
-            ResourceGraphConfiguration resourceGraphConfiguration = default;
-            ResourceProviderManagement management = default;
+            ResourceTypeRegistrationPropertiesResourceGraphConfiguration resourceGraphConfiguration = default;
+            ResourceTypeRegistrationPropertiesManagement management = default;
             OpenApiConfiguration openApiConfiguration = default;
             ResourceTypeOnBehalfOfToken onBehalfOfTokens = default;
             ResourceTypeCategory? category = default;
@@ -672,11 +672,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<LinkedNotificationRule> linkedNotificationRules = default;
             ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
             TokenAuthConfiguration tokenAuthConfiguration = default;
-            TemplateDeploymentPolicy templateDeploymentPolicy = default;
+            ResourceTypeRegistrationPropertiesTemplateDeploymentPolicy templateDeploymentPolicy = default;
             bool? isEmptyRoleAssignmentsAllowed = default;
             PolicyExecutionType? policyExecutionType = default;
             ResourceTypeRegistrationAvailabilityZoneRule availabilityZoneRule = default;
-            ProviderDstsConfiguration dstsConfiguration = default;
+            ResourceTypeRegistrationPropertiesDstsConfiguration dstsConfiguration = default;
             IList<AsyncTimeoutRule> asyncTimeoutRules = default;
             IList<string> commonApiVersions = default;
             IList<ResourceTypeRegistrationApiProfile> apiProfiles = default;
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    extensionOptions = ResourceTypeExtensionOptions.DeserializeResourceTypeExtensionOptions(prop.Value, options);
+                    extensionOptions = ResourceTypeRegistrationPropertiesExtensionOptions.DeserializeResourceTypeRegistrationPropertiesExtensionOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("marketplaceType"u8))
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(prop.Value, options);
+                    featuresRule = ResourceTypeRegistrationPropertiesFeaturesRule.DeserializeResourceTypeRegistrationPropertiesFeaturesRule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("enableAsyncOperation"u8))
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    subscriptionLifecycleNotificationSpecifications = SubscriptionLifecycleNotificationSpecifications.DeserializeSubscriptionLifecycleNotificationSpecifications(prop.Value, options);
+                    subscriptionLifecycleNotificationSpecifications = ResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications.DeserializeResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isPureProxy"u8))
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    identityManagement = IdentityManagementProperties.DeserializeIdentityManagementProperties(prop.Value, options);
+                    identityManagement = ResourceTypeRegistrationPropertiesIdentityManagement.DeserializeResourceTypeRegistrationPropertiesIdentityManagement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("checkNameAvailabilitySpecifications"u8))
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    checkNameAvailabilitySpecifications = CheckNameAvailabilitySpecifications.DeserializeCheckNameAvailabilitySpecifications(prop.Value, options);
+                    checkNameAvailabilitySpecifications = ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications.DeserializeResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("disallowedActionVerbs"u8))
@@ -1015,7 +1015,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = ProviderRequestHeaderOptions.DeserializeProviderRequestHeaderOptions(prop.Value, options);
+                    requestHeaderOptions = ResourceTypeRegistrationPropertiesRequestHeaderOptions.DeserializeResourceTypeRegistrationPropertiesRequestHeaderOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("subscriptionStateRules"u8))
@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(prop.Value, options);
+                    templateDeploymentOptions = ResourceTypeRegistrationPropertiesTemplateDeploymentOptions.DeserializeResourceTypeRegistrationPropertiesTemplateDeploymentOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("extendedLocations"u8))
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceMovePolicy = ResourceMovePolicy.DeserializeResourceMovePolicy(prop.Value, options);
+                    resourceMovePolicy = ResourceTypeRegistrationPropertiesResourceMovePolicy.DeserializeResourceTypeRegistrationPropertiesResourceMovePolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceDeletionPolicy"u8))
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceGraphConfiguration = ResourceGraphConfiguration.DeserializeResourceGraphConfiguration(prop.Value, options);
+                    resourceGraphConfiguration = ResourceTypeRegistrationPropertiesResourceGraphConfiguration.DeserializeResourceTypeRegistrationPropertiesResourceGraphConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("management"u8))
@@ -1102,7 +1102,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    management = ResourceProviderManagement.DeserializeResourceProviderManagement(prop.Value, options);
+                    management = ResourceTypeRegistrationPropertiesManagement.DeserializeResourceTypeRegistrationPropertiesManagement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("openApiConfiguration"u8))
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    templateDeploymentPolicy = TemplateDeploymentPolicy.DeserializeTemplateDeploymentPolicy(prop.Value, options);
+                    templateDeploymentPolicy = ResourceTypeRegistrationPropertiesTemplateDeploymentPolicy.DeserializeResourceTypeRegistrationPropertiesTemplateDeploymentPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("allowEmptyRoleAssignments"u8))
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
+                    dstsConfiguration = ResourceTypeRegistrationPropertiesDstsConfiguration.DeserializeResourceTypeRegistrationPropertiesDstsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("asyncTimeoutRules"u8))

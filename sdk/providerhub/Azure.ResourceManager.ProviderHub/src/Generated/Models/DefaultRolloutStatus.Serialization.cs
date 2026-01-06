@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TrafficRegionCategory? nextTrafficRegion = default;
             DateTimeOffset? nextTrafficRegionScheduledOn = default;
             SubscriptionReregistrationResult? subscriptionReregistrationResult = default;
-            CheckinManifestInfo manifestCheckinStatus = default;
+            DefaultRolloutStatusManifestCheckinStatus manifestCheckinStatus = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("completedRegions"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    manifestCheckinStatus = CheckinManifestInfo.DeserializeCheckinManifestInfo(prop.Value, options);
+                    manifestCheckinStatus = DefaultRolloutStatusManifestCheckinStatus.DeserializeDefaultRolloutStatusManifestCheckinStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

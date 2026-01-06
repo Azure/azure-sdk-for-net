@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="linkedNotificationRules"> The linked notification rules. </param>
         /// <param name="resourceProviderAuthorizationRules"> The resource provider authorization rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManifest(ResourceProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IReadOnlyList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, IReadOnlyList<ProviderResourceType> resourceTypes, ResourceProviderManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata, bool? isTenantLinkedNotificationEnabled, IReadOnlyList<ProviderNotification> notifications, IReadOnlyList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProviderManifest(ResourceProviderManifestProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IReadOnlyList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, ResourceProviderManifestFeaturesRule featuresRule, ResourceProviderManifestRequestHeaderOptions requestHeaderOptions, IReadOnlyList<ProviderResourceType> resourceTypes, ResourceProviderManifestManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ResourceProviderManifestReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata, bool? isTenantLinkedNotificationEnabled, IReadOnlyList<ProviderNotification> notifications, IReadOnlyList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProviderAuthentication = providerAuthentication;
             ProviderAuthorizations = providerAuthorizations;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> The provider authentication. </summary>
-        internal ResourceProviderAuthentication ProviderAuthentication { get; }
+        internal ResourceProviderManifestProviderAuthentication ProviderAuthentication { get; }
 
         /// <summary> The provider authorizations. </summary>
         public IReadOnlyList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
@@ -105,16 +105,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IReadOnlyList<string> RequiredFeatures { get; }
 
         /// <summary> The features rule. </summary>
-        internal ProviderFeaturesRule FeaturesRule { get; }
+        internal ResourceProviderManifestFeaturesRule FeaturesRule { get; }
 
         /// <summary> The request header options. </summary>
-        public ProviderRequestHeaderOptions RequestHeaderOptions { get; }
+        public ResourceProviderManifestRequestHeaderOptions RequestHeaderOptions { get; }
 
         /// <summary> The resource types. </summary>
         public IReadOnlyList<ProviderResourceType> ResourceTypes { get; }
 
         /// <summary> The resource provider management. </summary>
-        public ResourceProviderManagement Management { get; }
+        public ResourceProviderManifestManagement Management { get; }
 
         /// <summary> The capabilities. </summary>
         public IReadOnlyList<ResourceProviderCapabilities> Capabilities { get; }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IReadOnlyList<ResourceProviderEndpoint> GlobalNotificationEndpoints { get; }
 
         /// <summary> The re-register subscription metadata. </summary>
-        public ReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata { get; }
+        public ResourceProviderManifestReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata { get; }
 
         /// <summary> Whether tenant linked notification is enabled. </summary>
         public bool? IsTenantLinkedNotificationEnabled { get; }

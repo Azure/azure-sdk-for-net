@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            ResourceProviderAuthentication providerAuthentication = default;
+            ResourceProviderManifestPropertiesProviderAuthentication providerAuthentication = default;
             IList<ResourceProviderAuthorization> providerAuthorizations = default;
             string @namespace = default;
             IList<ResourceProviderService> services = default;
@@ -316,19 +316,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string providerVersion = default;
             ResourceProviderType? providerType = default;
             IList<string> requiredFeatures = default;
-            ProviderFeaturesRule featuresRule = default;
-            ProviderRequestHeaderOptions requestHeaderOptions = default;
-            ResourceProviderManagement management = default;
+            ResourceProviderManifestPropertiesFeaturesRule featuresRule = default;
+            ResourceProviderManifestPropertiesRequestHeaderOptions requestHeaderOptions = default;
+            ResourceProviderManifestPropertiesManagement management = default;
             IList<ResourceProviderCapabilities> capabilities = default;
             CrossTenantTokenValidation? crossTenantTokenValidation = default;
             BinaryData metadata = default;
-            TemplateDeploymentOptions templateDeploymentOptions = default;
+            ResourceProviderManifestPropertiesTemplateDeploymentOptions templateDeploymentOptions = default;
             IList<ResourceProviderEndpoint> globalNotificationEndpoints = default;
             bool? enableTenantLinkedNotification = default;
             IList<ProviderNotification> notifications = default;
             IList<FanoutLinkedNotificationRule> linkedNotificationRules = default;
             ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
-            ProviderDstsConfiguration dstsConfiguration = default;
+            ResourceProviderManifestPropertiesDstsConfiguration dstsConfiguration = default;
             ProviderNotificationOption? notificationOptions = default;
             IList<ResourceHydrationAccount> resourceHydrationAccounts = default;
             ResourceProviderManifestNotificationSettings notificationSettings = default;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(prop.Value, options);
+                    providerAuthentication = ResourceProviderManifestPropertiesProviderAuthentication.DeserializeResourceProviderManifestPropertiesProviderAuthentication(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("providerAuthorizations"u8))
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(prop.Value, options);
+                    featuresRule = ResourceProviderManifestPropertiesFeaturesRule.DeserializeResourceProviderManifestPropertiesFeaturesRule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("requestHeaderOptions"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = ProviderRequestHeaderOptions.DeserializeProviderRequestHeaderOptions(prop.Value, options);
+                    requestHeaderOptions = ResourceProviderManifestPropertiesRequestHeaderOptions.DeserializeResourceProviderManifestPropertiesRequestHeaderOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("management"u8))
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    management = ResourceProviderManagement.DeserializeResourceProviderManagement(prop.Value, options);
+                    management = ResourceProviderManifestPropertiesManagement.DeserializeResourceProviderManifestPropertiesManagement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("capabilities"u8))
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(prop.Value, options);
+                    templateDeploymentOptions = ResourceProviderManifestPropertiesTemplateDeploymentOptions.DeserializeResourceProviderManifestPropertiesTemplateDeploymentOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("globalNotificationEndpoints"u8))
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
+                    dstsConfiguration = ResourceProviderManifestPropertiesDstsConfiguration.DeserializeResourceProviderManifestPropertiesDstsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("notificationOptions"u8))

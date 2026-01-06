@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
             return new NotificationRegistrationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SkuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ResourceTypeSkuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SkuResource"/> object. </returns>
-        public virtual SkuResource GetSkuResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceTypeSkuResource"/> object. </returns>
+        public virtual ResourceTypeSkuResource GetResourceTypeSkuResource(ResourceIdentifier id)
         {
-            SkuResource.ValidateResourceId(id);
-            return new SkuResource(Client, id);
+            ResourceTypeSkuResource.ValidateResourceId(id);
+            return new ResourceTypeSkuResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="NestedResourceTypeFirstSkuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
             return new NestedResourceTypeSecondSkuResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SkuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NestedResourceTypeThirdSkuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SkuResource"/> object. </returns>
-        public virtual SkuResource GetSkuResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NestedResourceTypeThirdSkuResource"/> object. </returns>
+        public virtual NestedResourceTypeThirdSkuResource GetNestedResourceTypeThirdSkuResource(ResourceIdentifier id)
         {
-            SkuResource.ValidateResourceId(id);
-            return new SkuResource(Client, id);
+            NestedResourceTypeThirdSkuResource.ValidateResourceId(id);
+            return new NestedResourceTypeThirdSkuResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="AuthorizedApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>

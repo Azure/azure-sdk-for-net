@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.ProviderHub
     {
         private readonly ClientDiagnostics _providerRegistrationsClientDiagnostics;
         private readonly ProviderRegistrations _providerRegistrationsRestClient;
+        private readonly ClientDiagnostics _providerHubClientClientDiagnostics;
+        private readonly ProviderHubClient _providerHubClientRestClient;
         private readonly ClientDiagnostics _newRegionFrontloadReleaseClientDiagnostics;
         private readonly NewRegionFrontloadRelease _newRegionFrontloadReleaseRestClient;
         private readonly ClientDiagnostics _resourceActionsClientDiagnostics;
@@ -46,6 +48,8 @@ namespace Azure.ResourceManager.ProviderHub
             TryGetApiVersion(ProviderRegistrationResource.ResourceType, out string providerRegistrationApiVersion);
             _providerRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
             _providerRegistrationsRestClient = new ProviderRegistrations(_providerRegistrationsClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
+            _providerHubClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
+            _providerHubClientRestClient = new ProviderHubClient(_providerHubClientClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
             _newRegionFrontloadReleaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
             _newRegionFrontloadReleaseRestClient = new NewRegionFrontloadRelease(_newRegionFrontloadReleaseClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
             _resourceActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);

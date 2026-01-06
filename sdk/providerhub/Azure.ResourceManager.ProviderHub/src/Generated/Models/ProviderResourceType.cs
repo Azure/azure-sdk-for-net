@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="linkedNotificationRules"> The linked notification rules. </param>
         /// <param name="resourceProviderAuthorizationRules"> The resource provider authorization rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderResourceType(string name, ResourceRoutingType? routingType, AdditionalOptionResourceType? additionalOptions, CrossTenantTokenValidation? crossTenantTokenValidation, ResourceValidation? resourceValidation, IReadOnlyList<string> allowedUnauthorizedActions, IReadOnlyList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions, IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings, IReadOnlyList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IReadOnlyList<LoggingRule> loggingRules, IReadOnlyList<ThrottlingRule> throttlingRules, IReadOnlyList<ResourceProviderEndpoint> endpoints, MarketplaceType? marketplaceType, IdentityManagement identityManagement, BinaryData metadata, IReadOnlyList<string> requiredFeatures, ProviderFeaturesRule featuresRule, IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules, IReadOnlyList<ServiceTreeInfo> serviceTreeInfos, ProviderRequestHeaderOptions requestHeaderOptions, string skuLink, IReadOnlyList<string> disallowedActionVerbs, TemplateDeploymentPolicy templateDeploymentPolicy, IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations, IReadOnlyList<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy, ProviderQuotaRule quotaRule, IReadOnlyList<ProviderNotification> notifications, IReadOnlyList<LinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProviderResourceType(string name, ResourceRoutingType? routingType, AdditionalOptionResourceType? additionalOptions, CrossTenantTokenValidation? crossTenantTokenValidation, ResourceValidation? resourceValidation, IReadOnlyList<string> allowedUnauthorizedActions, IReadOnlyList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions, IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings, IReadOnlyList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IReadOnlyList<LoggingRule> loggingRules, IReadOnlyList<ThrottlingRule> throttlingRules, IReadOnlyList<ResourceProviderEndpoint> endpoints, MarketplaceType? marketplaceType, ResourceTypeIdentityManagement identityManagement, BinaryData metadata, IReadOnlyList<string> requiredFeatures, ResourceTypeFeaturesRule featuresRule, IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules, IReadOnlyList<ServiceTreeInfo> serviceTreeInfos, ResourceTypeRequestHeaderOptions requestHeaderOptions, string skuLink, IReadOnlyList<string> disallowedActionVerbs, ResourceTypeTemplateDeploymentPolicy templateDeploymentPolicy, IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations, IReadOnlyList<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy, ProviderQuotaRule quotaRule, IReadOnlyList<ProviderNotification> notifications, IReadOnlyList<LinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             RoutingType = routingType;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public MarketplaceType? MarketplaceType { get; }
 
         /// <summary> The identity management. </summary>
-        internal IdentityManagement IdentityManagement { get; }
+        internal ResourceTypeIdentityManagement IdentityManagement { get; }
 
         /// <summary>
         /// The metadata.
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IReadOnlyList<string> RequiredFeatures { get; }
 
         /// <summary> The features rule. </summary>
-        internal ProviderFeaturesRule FeaturesRule { get; }
+        internal ResourceTypeFeaturesRule FeaturesRule { get; }
 
         /// <summary> The subscription state rules. </summary>
         public IReadOnlyList<ProviderSubscriptionStateRule> SubscriptionStateRules { get; }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IReadOnlyList<ServiceTreeInfo> ServiceTreeInfos { get; }
 
         /// <summary> The request header options. </summary>
-        public ProviderRequestHeaderOptions RequestHeaderOptions { get; }
+        public ResourceTypeRequestHeaderOptions RequestHeaderOptions { get; }
 
         /// <summary> The sku link. </summary>
         public string SkuLink { get; }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IReadOnlyList<string> DisallowedActionVerbs { get; }
 
         /// <summary> The template deployment policy. </summary>
-        public TemplateDeploymentPolicy TemplateDeploymentPolicy { get; }
+        public ResourceTypeTemplateDeploymentPolicy TemplateDeploymentPolicy { get; }
 
         /// <summary> The extended locations. </summary>
         public IReadOnlyList<ProviderHubExtendedLocationOptions> ExtendedLocations { get; }

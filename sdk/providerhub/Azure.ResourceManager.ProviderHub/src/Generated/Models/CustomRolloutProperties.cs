@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="CustomRolloutProperties"/>. </summary>
         /// <param name="specification"> The specification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="specification"/> is null. </exception>
-        public CustomRolloutProperties(CustomRolloutSpecification specification)
+        public CustomRolloutProperties(CustomRolloutPropertiesSpecification specification)
         {
             Argument.AssertNotNull(specification, nameof(specification));
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="specification"> The specification. </param>
         /// <param name="status"> The status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRolloutProperties(ProviderHubProvisioningState? provisioningState, CustomRolloutSpecification specification, CustomRolloutStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomRolloutProperties(ProviderHubProvisioningState? provisioningState, CustomRolloutPropertiesSpecification specification, CustomRolloutPropertiesStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Specification = specification;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> The specification. </summary>
-        public CustomRolloutSpecification Specification { get; set; }
+        public CustomRolloutPropertiesSpecification Specification { get; set; }
 
         /// <summary> The status. </summary>
-        public CustomRolloutStatus Status { get; set; }
+        public CustomRolloutPropertiesStatus Status { get; set; }
     }
 }

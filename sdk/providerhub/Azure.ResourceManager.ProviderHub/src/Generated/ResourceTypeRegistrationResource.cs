@@ -402,11 +402,11 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
-        /// <summary> Gets a collection of SkuResources in the <see cref="ResourceTypeRegistrationResource"/>. </summary>
-        /// <returns> An object representing collection of SkuResources and their operations over a SkuResource. </returns>
-        public virtual SkuResourceCollection GetSkuResources()
+        /// <summary> Gets a collection of ResourceTypeSkus in the <see cref="ResourceTypeRegistrationResource"/>. </summary>
+        /// <returns> An object representing collection of ResourceTypeSkus and their operations over a ResourceTypeSkuResource. </returns>
+        public virtual ResourceTypeSkuCollection GetResourceTypeSkus()
         {
-            return GetCachedClient(client => new SkuResourceCollection(client, Id));
+            return GetCachedClient(client => new ResourceTypeSkuCollection(client, Id));
         }
 
         /// <summary> Gets the sku details for the given resource type and sku name. </summary>
@@ -415,11 +415,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SkuResource>> GetSkuResourceAsync(string sku, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceTypeSkuResource>> GetResourceTypeSkuAsync(string sku, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
-            return await this.GetSkuResources().GetAsync(sku, cancellationToken).ConfigureAwait(false);
+            return await GetResourceTypeSkus().GetAsync(sku, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the sku details for the given resource type and sku name. </summary>
@@ -428,11 +428,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SkuResource> GetSkuResource(string sku, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceTypeSkuResource> GetResourceTypeSku(string sku, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
-            return this.GetSkuResources().Get(sku, cancellationToken);
+            return GetResourceTypeSkus().Get(sku, cancellationToken);
         }
 
         /// <summary> Gets a collection of NestedResourceTypeFirstSkus in the <see cref="ResourceTypeRegistrationResource"/>. </summary>
@@ -501,11 +501,11 @@ namespace Azure.ResourceManager.ProviderHub
             return GetNestedResourceTypeSecondSkus().GetNestedResourceTypeSecond(sku, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SkuResources in the <see cref="ResourceTypeRegistrationResource"/>. </summary>
-        /// <returns> An object representing collection of SkuResources and their operations over a SkuResource. </returns>
-        public virtual SkuResourceCollection GetSkuResources()
+        /// <summary> Gets a collection of NestedResourceTypeThirdSkus in the <see cref="ResourceTypeRegistrationResource"/>. </summary>
+        /// <returns> An object representing collection of NestedResourceTypeThirdSkus and their operations over a NestedResourceTypeThirdSkuResource. </returns>
+        public virtual NestedResourceTypeThirdSkuCollection GetNestedResourceTypeThirdSkus()
         {
-            return GetCachedClient(client => new SkuResourceCollection(client, Id));
+            return this.GetCachedClient(client => new NestedResourceTypeThirdSkuCollection(client, Id));
         }
 
         /// <summary> Gets the sku details for the given resource type and sku name. </summary>
@@ -514,11 +514,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SkuResource>> GetSkuResourceAsync(string sku, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NestedResourceTypeThirdSkuResource>> GetNestedResourceTypeThirdSkuAsync(string sku, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
-            return await this.GetSkuResources().GetNestedResourceTypeThirdAsync(sku, cancellationToken).ConfigureAwait(false);
+            return await GetNestedResourceTypeThirdSkus().GetNestedResourceTypeThirdAsync(sku, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the sku details for the given resource type and sku name. </summary>
@@ -527,11 +527,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SkuResource> GetSkuResource(string sku, CancellationToken cancellationToken = default)
+        public virtual Response<NestedResourceTypeThirdSkuResource> GetNestedResourceTypeThirdSku(string sku, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
-            return this.GetSkuResources().GetNestedResourceTypeThird(sku, cancellationToken);
+            return GetNestedResourceTypeThirdSkus().GetNestedResourceTypeThird(sku, cancellationToken);
         }
     }
 }

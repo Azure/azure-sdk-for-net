@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="costs"> The costs. </param>
         /// <param name="capabilities"> The capabilities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeSkuSetting(string name, string tier, string size, string family, string kind, IList<string> locations, IList<ResourceTypeSkuLocationInfo> locationInfo, IList<string> requiredQuotaIds, IList<string> requiredFeatures, ResourceTypeSkuCapacity capacity, IList<ResourceTypeSkuCost> costs, IList<ResourceSkuCapability> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceTypeSkuSetting(string name, string tier, string size, string family, string kind, IList<string> locations, IList<ResourceTypeSkuLocationInfo> locationInfo, IList<string> requiredQuotaIds, IList<string> requiredFeatures, SkuSettingCapacity capacity, IList<ResourceTypeSkuCost> costs, IList<ResourceSkuCapability> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<string> RequiredFeatures { get; }
 
         /// <summary> The capacity. </summary>
-        public ResourceTypeSkuCapacity Capacity { get; set; }
+        public SkuSettingCapacity Capacity { get; set; }
 
         /// <summary> The costs. </summary>
         public IList<ResourceTypeSkuCost> Costs { get; }

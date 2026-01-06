@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="dstsConfiguration"> The dsts configuration. </param>
         /// <param name="dataBoundary"> The data boundary. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeEndpoint(ResourceTypeEndpointKind? kind, bool? isEnabled, IList<string> apiVersions, AzureLocation? locations, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, ProviderEndpointTypeResourceType? endpointType, TokenAuthConfiguration tokenAuthConfiguration, string skuLink, string endpointUri, string apiVersion, IList<string> zones, ProviderDstsConfiguration dstsConfiguration, ResourceTypeDataBoundary? dataBoundary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceTypeEndpoint(ResourceTypeEndpointKind? kind, bool? isEnabled, IList<string> apiVersions, AzureLocation? locations, IList<string> requiredFeatures, ResourceTypeEndpointFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, ProviderEndpointTypeResourceType? endpointType, TokenAuthConfiguration tokenAuthConfiguration, string skuLink, string endpointUri, string apiVersion, IList<string> zones, ResourceTypeEndpointDstsConfiguration dstsConfiguration, ResourceTypeDataBoundary? dataBoundary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             IsEnabled = isEnabled;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<string> RequiredFeatures { get; }
 
         /// <summary> The features rule. </summary>
-        internal ProviderFeaturesRule FeaturesRule { get; set; }
+        internal ResourceTypeEndpointFeaturesRule FeaturesRule { get; set; }
 
         /// <summary> The extensions. </summary>
         public IList<ResourceTypeExtension> Extensions { get; }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<string> Zones { get; }
 
         /// <summary> The dsts configuration. </summary>
-        public ProviderDstsConfiguration DstsConfiguration { get; set; }
+        public ResourceTypeEndpointDstsConfiguration DstsConfiguration { get; set; }
 
         /// <summary> The data boundary. </summary>
         public ResourceTypeDataBoundary? DataBoundary { get; set; }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             set
             {
-                FeaturesRule = value.HasValue ? new ProviderFeaturesRule(value.Value) : default;
+                FeaturesRule = value.HasValue ? new ResourceTypeEndpointFeaturesRule(value.Value) : default;
             }
         }
     }

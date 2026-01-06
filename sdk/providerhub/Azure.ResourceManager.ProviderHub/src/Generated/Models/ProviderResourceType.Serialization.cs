@@ -342,16 +342,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IReadOnlyList<ThrottlingRule> throttlingRules = default;
             IReadOnlyList<ResourceProviderEndpoint> endpoints = default;
             MarketplaceType? marketplaceType = default;
-            IdentityManagement identityManagement = default;
+            ResourceTypeIdentityManagement identityManagement = default;
             BinaryData metadata = default;
             IReadOnlyList<string> requiredFeatures = default;
-            ProviderFeaturesRule featuresRule = default;
+            ResourceTypeFeaturesRule featuresRule = default;
             IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
             IReadOnlyList<ServiceTreeInfo> serviceTreeInfos = default;
-            ProviderRequestHeaderOptions requestHeaderOptions = default;
+            ResourceTypeRequestHeaderOptions requestHeaderOptions = default;
             string skuLink = default;
             IReadOnlyList<string> disallowedActionVerbs = default;
-            TemplateDeploymentPolicy templateDeploymentPolicy = default;
+            ResourceTypeTemplateDeploymentPolicy templateDeploymentPolicy = default;
             IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
             ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    identityManagement = IdentityManagement.DeserializeIdentityManagement(prop.Value, options);
+                    identityManagement = ResourceTypeIdentityManagement.DeserializeResourceTypeIdentityManagement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(prop.Value, options);
+                    featuresRule = ResourceTypeFeaturesRule.DeserializeResourceTypeFeaturesRule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("subscriptionStateRules"u8))
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = ProviderRequestHeaderOptions.DeserializeProviderRequestHeaderOptions(prop.Value, options);
+                    requestHeaderOptions = ResourceTypeRequestHeaderOptions.DeserializeResourceTypeRequestHeaderOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("skuLink"u8))
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    templateDeploymentPolicy = TemplateDeploymentPolicy.DeserializeTemplateDeploymentPolicy(prop.Value, options);
+                    templateDeploymentPolicy = ResourceTypeTemplateDeploymentPolicy.DeserializeResourceTypeTemplateDeploymentPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("extendedLocations"u8))

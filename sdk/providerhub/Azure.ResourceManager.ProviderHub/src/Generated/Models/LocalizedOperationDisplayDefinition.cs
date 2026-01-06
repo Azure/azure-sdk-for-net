@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="LocalizedOperationDisplayDefinition"/>. </summary>
         /// <param name="default"> Display information of the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
-        public LocalizedOperationDisplayDefinition(OperationsDisplayDefinition @default)
+        public LocalizedOperationDisplayDefinition(LocalizedOperationDisplayDefinitionDefault @default)
         {
             Argument.AssertNotNull(@default, nameof(@default));
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="zhHans"> Display information of the operation for zh-Hans locale. </param>
         /// <param name="zhHant"> Display information of the operation for zh-Hant locale. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocalizedOperationDisplayDefinition(OperationsDisplayDefinition @default, OperationsDisplayDefinition en, OperationsDisplayDefinition cs, OperationsDisplayDefinition de, OperationsDisplayDefinition es, OperationsDisplayDefinition fr, OperationsDisplayDefinition hu, OperationsDisplayDefinition it, OperationsDisplayDefinition ja, OperationsDisplayDefinition ko, OperationsDisplayDefinition nl, OperationsDisplayDefinition pl, OperationsDisplayDefinition ptBR, OperationsDisplayDefinition ptPT, OperationsDisplayDefinition ru, OperationsDisplayDefinition sv, OperationsDisplayDefinition zhHans, OperationsDisplayDefinition zhHant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocalizedOperationDisplayDefinition(LocalizedOperationDisplayDefinitionDefault @default, LocalizedOperationDisplayDefinitionEn en, LocalizedOperationDisplayDefinitionCs cs, LocalizedOperationDisplayDefinitionDe de, LocalizedOperationDisplayDefinitionEs es, LocalizedOperationDisplayDefinitionFr fr, LocalizedOperationDisplayDefinitionHu hu, LocalizedOperationDisplayDefinitionIt it, LocalizedOperationDisplayDefinitionJa ja, LocalizedOperationDisplayDefinitionKo ko, LocalizedOperationDisplayDefinitionNl nl, LocalizedOperationDisplayDefinitionPl pl, LocalizedOperationDisplayDefinitionPtBR ptBR, LocalizedOperationDisplayDefinitionPtPT ptPT, LocalizedOperationDisplayDefinitionRu ru, LocalizedOperationDisplayDefinitionSv sv, LocalizedOperationDisplayDefinitionZhHans zhHans, LocalizedOperationDisplayDefinitionZhHant zhHant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Default = @default;
             En = en;
@@ -71,57 +71,57 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Display information of the operation. </summary>
-        public OperationsDisplayDefinition Default { get; set; }
+        public LocalizedOperationDisplayDefinitionDefault Default { get; set; }
 
         /// <summary> Display information of the operation for en locale. </summary>
-        public OperationsDisplayDefinition En { get; set; }
+        public LocalizedOperationDisplayDefinitionEn En { get; set; }
 
         /// <summary> Display information of the operation for cs locale. </summary>
-        public OperationsDisplayDefinition Cs { get; set; }
+        public LocalizedOperationDisplayDefinitionCs Cs { get; set; }
 
         /// <summary> Display information of the operation for de locale. </summary>
-        public OperationsDisplayDefinition De { get; set; }
+        public LocalizedOperationDisplayDefinitionDe De { get; set; }
 
         /// <summary> Display information of the operation for es locale. </summary>
-        public OperationsDisplayDefinition Es { get; set; }
+        public LocalizedOperationDisplayDefinitionEs Es { get; set; }
 
         /// <summary> Display information of the operation for fr locale. </summary>
-        public OperationsDisplayDefinition Fr { get; set; }
+        public LocalizedOperationDisplayDefinitionFr Fr { get; set; }
 
         /// <summary> Display information of the operation for hu locale. </summary>
-        public OperationsDisplayDefinition Hu { get; set; }
+        public LocalizedOperationDisplayDefinitionHu Hu { get; set; }
 
         /// <summary> Display information of the operation for it locale. </summary>
-        public OperationsDisplayDefinition It { get; set; }
+        public LocalizedOperationDisplayDefinitionIt It { get; set; }
 
         /// <summary> Display information of the operation for ja locale. </summary>
-        public OperationsDisplayDefinition Ja { get; set; }
+        public LocalizedOperationDisplayDefinitionJa Ja { get; set; }
 
         /// <summary> Display information of the operation for ko locale. </summary>
-        public OperationsDisplayDefinition Ko { get; set; }
+        public LocalizedOperationDisplayDefinitionKo Ko { get; set; }
 
         /// <summary> Display information of the operation for nl locale. </summary>
-        public OperationsDisplayDefinition Nl { get; set; }
+        public LocalizedOperationDisplayDefinitionNl Nl { get; set; }
 
         /// <summary> Display information of the operation for pl locale. </summary>
-        public OperationsDisplayDefinition Pl { get; set; }
+        public LocalizedOperationDisplayDefinitionPl Pl { get; set; }
 
         /// <summary> Display information of the operation for pt-BR locale. </summary>
-        public OperationsDisplayDefinition PtBR { get; set; }
+        public LocalizedOperationDisplayDefinitionPtBR PtBR { get; set; }
 
         /// <summary> Display information of the operation for pt-PT locale. </summary>
-        public OperationsDisplayDefinition PtPT { get; set; }
+        public LocalizedOperationDisplayDefinitionPtPT PtPT { get; set; }
 
         /// <summary> Display information of the operation for ru locale. </summary>
-        public OperationsDisplayDefinition Ru { get; set; }
+        public LocalizedOperationDisplayDefinitionRu Ru { get; set; }
 
         /// <summary> Display information of the operation for sv locale. </summary>
-        public OperationsDisplayDefinition Sv { get; set; }
+        public LocalizedOperationDisplayDefinitionSv Sv { get; set; }
 
         /// <summary> Display information of the operation for zh-Hans locale. </summary>
-        public OperationsDisplayDefinition ZhHans { get; set; }
+        public LocalizedOperationDisplayDefinitionZhHans ZhHans { get; set; }
 
         /// <summary> Display information of the operation for zh-Hant locale. </summary>
-        public OperationsDisplayDefinition ZhHant { get; set; }
+        public LocalizedOperationDisplayDefinitionZhHant ZhHant { get; set; }
     }
 }

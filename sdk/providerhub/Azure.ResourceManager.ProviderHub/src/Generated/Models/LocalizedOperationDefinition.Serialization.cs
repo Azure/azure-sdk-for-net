@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string name = default;
             bool? isDataAction = default;
             OperationOrigins? origin = default;
-            LocalizedOperationDisplayDefinition display = default;
+            LocalizedOperationDefinitionDisplay display = default;
             OperationActionType? actionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (prop.NameEquals("display"u8))
                 {
-                    display = LocalizedOperationDisplayDefinition.DeserializeLocalizedOperationDisplayDefinition(prop.Value, options);
+                    display = LocalizedOperationDefinitionDisplay.DeserializeLocalizedOperationDefinitionDisplay(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("actionType"u8))

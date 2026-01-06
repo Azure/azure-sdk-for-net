@@ -121,44 +121,6 @@ namespace Azure.ResourceManager.ProviderHub
             return message;
         }
 
-        internal HttpMessage CreateGenerateManifestRequest(Guid subscriptionId, string providerNamespace, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/generateManifest", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCheckinManifestRequest(Guid subscriptionId, string providerNamespace, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
-            uri.AppendPath(providerNamespace, true);
-            uri.AppendPath("/checkinManifest", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateGenerateOperationsRequest(Guid subscriptionId, string providerNamespace, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

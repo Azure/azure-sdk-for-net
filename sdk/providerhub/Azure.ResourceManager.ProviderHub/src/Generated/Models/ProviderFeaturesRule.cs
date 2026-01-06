@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ProviderFeaturesRule. </summary>
-    internal partial class ProviderFeaturesRule
+    public partial class ProviderFeaturesRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

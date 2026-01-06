@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="overrideEndpointLevelFields"> The endpoint level fields to override. </param>
         /// <param name="ignoreFields"> The fields to ignore. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationType"/>, <paramref name="providerNamespace"/>, <paramref name="frontloadLocation"/>, <paramref name="copyFromLocation"/>, <paramref name="includeResourceTypes"/>, <paramref name="excludeResourceTypes"/>, <paramref name="overrideManifestLevelFields"/>, <paramref name="overrideEndpointLevelFields"/> or <paramref name="ignoreFields"/> is null. </exception>
-        public ProviderFrontloadPayloadProperties(string operationType, string providerNamespace, string frontloadLocation, string copyFromLocation, AvailableCheckInManifestEnvironment environmentType, ServiceFeatureFlagAction serviceFeatureFlag, IEnumerable<string> includeResourceTypes, IEnumerable<string> excludeResourceTypes, ManifestLevelPropertyBag overrideManifestLevelFields, ResourceTypeEndpointBase overrideEndpointLevelFields, IEnumerable<string> ignoreFields)
+        public ProviderFrontloadPayloadProperties(string operationType, string providerNamespace, string frontloadLocation, string copyFromLocation, AvailableCheckInManifestEnvironment environmentType, ServiceFeatureFlagAction serviceFeatureFlag, IEnumerable<string> includeResourceTypes, IEnumerable<string> excludeResourceTypes, FrontloadPayloadPropertiesOverrideManifestLevelFields overrideManifestLevelFields, FrontloadPayloadPropertiesOverrideEndpointLevelFields overrideEndpointLevelFields, IEnumerable<string> ignoreFields)
         {
             Argument.AssertNotNull(operationType, nameof(operationType));
             Argument.AssertNotNull(providerNamespace, nameof(providerNamespace));
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="overrideEndpointLevelFields"> The endpoint level fields to override. </param>
         /// <param name="ignoreFields"> The fields to ignore. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderFrontloadPayloadProperties(string operationType, string providerNamespace, string frontloadLocation, string copyFromLocation, AvailableCheckInManifestEnvironment environmentType, ServiceFeatureFlagAction serviceFeatureFlag, IList<string> includeResourceTypes, IList<string> excludeResourceTypes, ManifestLevelPropertyBag overrideManifestLevelFields, ResourceTypeEndpointBase overrideEndpointLevelFields, IList<string> ignoreFields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProviderFrontloadPayloadProperties(string operationType, string providerNamespace, string frontloadLocation, string copyFromLocation, AvailableCheckInManifestEnvironment environmentType, ServiceFeatureFlagAction serviceFeatureFlag, IList<string> includeResourceTypes, IList<string> excludeResourceTypes, FrontloadPayloadPropertiesOverrideManifestLevelFields overrideManifestLevelFields, FrontloadPayloadPropertiesOverrideEndpointLevelFields overrideEndpointLevelFields, IList<string> ignoreFields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationType = operationType;
             ProviderNamespace = providerNamespace;
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<string> ExcludeResourceTypes { get; }
 
         /// <summary> The manifest level fields to override. </summary>
-        internal ManifestLevelPropertyBag OverrideManifestLevelFields { get; }
+        internal FrontloadPayloadPropertiesOverrideManifestLevelFields OverrideManifestLevelFields { get; }
 
         /// <summary> The endpoint level fields to override. </summary>
-        public ResourceTypeEndpointBase OverrideEndpointLevelFields { get; }
+        public FrontloadPayloadPropertiesOverrideEndpointLevelFields OverrideEndpointLevelFields { get; }
 
         /// <summary> The fields to ignore. </summary>
         public IList<string> IgnoreFields { get; }

@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             ProviderHubProvisioningState? provisioningState = default;
-            CustomRolloutSpecification specification = default;
-            CustomRolloutStatus status = default;
+            CustomRolloutPropertiesSpecification specification = default;
+            CustomRolloutPropertiesStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (prop.NameEquals("specification"u8))
                 {
-                    specification = CustomRolloutSpecification.DeserializeCustomRolloutSpecification(prop.Value, options);
+                    specification = CustomRolloutPropertiesSpecification.DeserializeCustomRolloutPropertiesSpecification(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    status = CustomRolloutStatus.DeserializeCustomRolloutStatus(prop.Value, options);
+                    status = CustomRolloutPropertiesStatus.DeserializeCustomRolloutPropertiesStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

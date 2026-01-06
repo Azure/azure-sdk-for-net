@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="legacyRegistrations"> Legacy registrations. </param>
         /// <param name="customManifestVersion"> Custom manifest version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManifestProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IList<ResourceProviderEndpoint> globalNotificationEndpoints, bool? enableTenantLinkedNotification, IList<ProviderNotification> notifications, IList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, ProviderDstsConfiguration dstsConfiguration, ProviderNotificationOption? notificationOptions, IList<ResourceHydrationAccount> resourceHydrationAccounts, ResourceProviderManifestNotificationSettings notificationSettings, IList<ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints, IList<string> optionalFeatures, ResourceProviderManifestResourceGroupLockOptionDuringMove resourceGroupLockOptionDuringMove, ResourceProviderManifestResponseOptions responseOptions, string legacyNamespace, IList<string> legacyRegistrations, string customManifestVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProviderManifestProperties(ResourceProviderManifestPropertiesProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ResourceProviderManifestPropertiesFeaturesRule featuresRule, ResourceProviderManifestPropertiesRequestHeaderOptions requestHeaderOptions, ResourceProviderManifestPropertiesManagement management, IList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, ResourceProviderManifestPropertiesTemplateDeploymentOptions templateDeploymentOptions, IList<ResourceProviderEndpoint> globalNotificationEndpoints, bool? enableTenantLinkedNotification, IList<ProviderNotification> notifications, IList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, ResourceProviderManifestPropertiesDstsConfiguration dstsConfiguration, ProviderNotificationOption? notificationOptions, IList<ResourceHydrationAccount> resourceHydrationAccounts, ResourceProviderManifestNotificationSettings notificationSettings, IList<ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints, IList<string> optionalFeatures, ResourceProviderManifestResourceGroupLockOptionDuringMove resourceGroupLockOptionDuringMove, ResourceProviderManifestResponseOptions responseOptions, string legacyNamespace, IList<string> legacyRegistrations, string customManifestVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProviderAuthentication = providerAuthentication;
             ProviderAuthorizations = providerAuthorizations;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> The provider authentication. </summary>
-        internal ResourceProviderAuthentication ProviderAuthentication { get; set; }
+        internal ResourceProviderManifestPropertiesProviderAuthentication ProviderAuthentication { get; set; }
 
         /// <summary> The provider authorizations. </summary>
         public IList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<string> RequiredFeatures { get; }
 
         /// <summary> The features rule. </summary>
-        internal ProviderFeaturesRule FeaturesRule { get; set; }
+        internal ResourceProviderManifestPropertiesFeaturesRule FeaturesRule { get; set; }
 
         /// <summary> The request header options. </summary>
-        public ProviderRequestHeaderOptions RequestHeaderOptions { get; set; }
+        public ResourceProviderManifestPropertiesRequestHeaderOptions RequestHeaderOptions { get; set; }
 
         /// <summary> The resource provider management. </summary>
-        public ResourceProviderManagement Management { get; set; }
+        public ResourceProviderManifestPropertiesManagement Management { get; set; }
 
         /// <summary> The capabilities. </summary>
         public IList<ResourceProviderCapabilities> Capabilities { get; }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public BinaryData Metadata { get; set; }
 
         /// <summary> The template deployment options. </summary>
-        public TemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
+        public ResourceProviderManifestPropertiesTemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
 
         /// <summary> The global notification endpoints. </summary>
         public IList<ResourceProviderEndpoint> GlobalNotificationEndpoints { get; }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         internal ResourceProviderAuthorizationRules ResourceProviderAuthorizationRules { get; set; }
 
         /// <summary> The dsts configuration. </summary>
-        public ProviderDstsConfiguration DstsConfiguration { get; set; }
+        public ResourceProviderManifestPropertiesDstsConfiguration DstsConfiguration { get; set; }
 
         /// <summary> Notification options. </summary>
         public ProviderNotificationOption? NotificationOptions { get; set; }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             set
             {
-                ProviderAuthentication = new ResourceProviderAuthentication(value);
+                ProviderAuthentication = new ResourceProviderManifestPropertiesProviderAuthentication(value);
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             set
             {
-                FeaturesRule = value.HasValue ? new ProviderFeaturesRule(value.Value) : default;
+                FeaturesRule = value.HasValue ? new ResourceProviderManifestPropertiesFeaturesRule(value.Value) : default;
             }
         }
 

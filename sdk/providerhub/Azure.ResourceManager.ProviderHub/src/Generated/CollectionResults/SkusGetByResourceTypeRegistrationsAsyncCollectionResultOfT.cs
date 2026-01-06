@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceTypeRegistrationsRequest(nextLink, _subscriptionId, _providerNamespace, _resourceType, _context) : _client.CreateGetByResourceTypeRegistrationsRequest(_subscriptionId, _providerNamespace, _resourceType, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SkuResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetAll");
             scope.Start();
             try
             {

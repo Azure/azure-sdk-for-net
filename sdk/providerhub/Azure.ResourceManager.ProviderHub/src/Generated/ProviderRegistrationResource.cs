@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.ProviderHub
     {
         private readonly ClientDiagnostics _providerRegistrationsClientDiagnostics;
         private readonly ProviderRegistrations _providerRegistrationsRestClient;
+        private readonly ClientDiagnostics _providerHubClientClientDiagnostics;
+        private readonly ProviderHubClient _providerHubClientRestClient;
         private readonly ClientDiagnostics _newRegionFrontloadReleaseClientDiagnostics;
         private readonly NewRegionFrontloadRelease _newRegionFrontloadReleaseRestClient;
         private readonly ClientDiagnostics _resourceActionsClientDiagnostics;
@@ -57,6 +59,8 @@ namespace Azure.ResourceManager.ProviderHub
             TryGetApiVersion(ResourceType, out string providerRegistrationApiVersion);
             _providerRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
             _providerRegistrationsRestClient = new ProviderRegistrations(_providerRegistrationsClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
+            _providerHubClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
+            _providerHubClientRestClient = new ProviderHubClient(_providerHubClientClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
             _newRegionFrontloadReleaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
             _newRegionFrontloadReleaseRestClient = new NewRegionFrontloadRelease(_newRegionFrontloadReleaseClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
             _resourceActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
@@ -321,7 +325,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ResourceProviderManifest>> GenerateManifestAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateManifest");
+            using DiagnosticScope scope = _providerHubClientClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateManifest");
             scope.Start();
             try
             {
@@ -329,7 +333,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateGenerateManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                HttpMessage message = _providerHubClientRestClient.CreateGenerateManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceProviderManifest> response = Response.FromValue(ResourceProviderManifest.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +373,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceProviderManifest> GenerateManifest(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateManifest");
+            using DiagnosticScope scope = _providerHubClientClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateManifest");
             scope.Start();
             try
             {
@@ -377,7 +381,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateGenerateManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                HttpMessage message = _providerHubClientRestClient.CreateGenerateManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceProviderManifest> response = Response.FromValue(ResourceProviderManifest.FromResponse(result), result);
                 if (response.Value == null)
@@ -421,7 +425,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationResource.CheckinManifest");
+            using DiagnosticScope scope = _providerHubClientClientDiagnostics.CreateScope("ProviderRegistrationResource.CheckinManifest");
             scope.Start();
             try
             {
@@ -429,7 +433,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateCheckinManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, CheckinManifestContent.ToRequestContent(content), context);
+                HttpMessage message = _providerHubClientRestClient.CreateCheckinManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, CheckinManifestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckinManifestInfo> response = Response.FromValue(CheckinManifestInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -473,7 +477,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationResource.CheckinManifest");
+            using DiagnosticScope scope = _providerHubClientClientDiagnostics.CreateScope("ProviderRegistrationResource.CheckinManifest");
             scope.Start();
             try
             {
@@ -481,7 +485,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateCheckinManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, CheckinManifestContent.ToRequestContent(content), context);
+                HttpMessage message = _providerHubClientRestClient.CreateCheckinManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, CheckinManifestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckinManifestInfo> response = Response.FromValue(CheckinManifestInfo.FromResponse(result), result);
                 if (response.Value == null)

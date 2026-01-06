@@ -31,13 +31,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="skuLink"> The sku link. </param>
         /// <param name="apiVersion"> The api version. </param>
         /// <param name="zones"> The zones. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersions"/>, <paramref name="endpointUri"/>, <paramref name="locations"/>, <paramref name="requiredFeatures"/>, <paramref name="dstsConfiguration"/>, <paramref name="skuLink"/>, <paramref name="apiVersion"/> or <paramref name="zones"/> is null. </exception>
-        public ResourceTypeEndpointBase(bool enabled, IEnumerable<string> apiVersions, string endpointUri, IEnumerable<string> locations, IEnumerable<string> requiredFeatures, FeaturesPolicy featuresRule, TimeSpan timeout, ProviderEndpointType endpointType, ProviderDstsConfiguration dstsConfiguration, string skuLink, string apiVersion, IEnumerable<string> zones)
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersions"/>, <paramref name="endpointUri"/>, <paramref name="locations"/>, <paramref name="requiredFeatures"/>, <paramref name="featuresRule"/>, <paramref name="dstsConfiguration"/>, <paramref name="skuLink"/>, <paramref name="apiVersion"/> or <paramref name="zones"/> is null. </exception>
+        public ResourceTypeEndpointBase(bool enabled, IEnumerable<string> apiVersions, string endpointUri, IEnumerable<string> locations, IEnumerable<string> requiredFeatures, ResourceTypeEndpointBaseFeaturesRule featuresRule, TimeSpan timeout, ProviderEndpointType endpointType, ResourceTypeEndpointBaseDstsConfiguration dstsConfiguration, string skuLink, string apiVersion, IEnumerable<string> zones)
         {
             Argument.AssertNotNull(apiVersions, nameof(apiVersions));
             Argument.AssertNotNull(endpointUri, nameof(endpointUri));
             Argument.AssertNotNull(locations, nameof(locations));
             Argument.AssertNotNull(requiredFeatures, nameof(requiredFeatures));
+            Argument.AssertNotNull(featuresRule, nameof(featuresRule));
             Argument.AssertNotNull(dstsConfiguration, nameof(dstsConfiguration));
             Argument.AssertNotNull(skuLink, nameof(skuLink));
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="apiVersion"> The api version. </param>
         /// <param name="zones"> The zones. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeEndpointBase(bool enabled, IList<string> apiVersions, string endpointUri, IList<string> locations, IList<string> requiredFeatures, FeaturesPolicy featuresRule, TimeSpan timeout, ProviderEndpointType endpointType, ProviderDstsConfiguration dstsConfiguration, string skuLink, string apiVersion, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceTypeEndpointBase(bool enabled, IList<string> apiVersions, string endpointUri, IList<string> locations, IList<string> requiredFeatures, ResourceTypeEndpointBaseFeaturesRule featuresRule, TimeSpan timeout, ProviderEndpointType endpointType, ResourceTypeEndpointBaseDstsConfiguration dstsConfiguration, string skuLink, string apiVersion, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             ApiVersions = apiVersions;
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<string> RequiredFeatures { get; }
 
         /// <summary> The features rule. </summary>
-        public FeaturesPolicy FeaturesRule { get; }
+        internal ResourceTypeEndpointBaseFeaturesRule FeaturesRule { get; }
 
         /// <summary> This is a TimeSpan property. </summary>
         public TimeSpan Timeout { get; }
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ProviderEndpointType EndpointType { get; }
 
         /// <summary> The dsts configuration. </summary>
-        public ProviderDstsConfiguration DstsConfiguration { get; }
+        public ResourceTypeEndpointBaseDstsConfiguration DstsConfiguration { get; }
 
         /// <summary> The sku link. </summary>
         public string SkuLink { get; }
@@ -123,5 +124,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The zones. </summary>
         public IList<string> Zones { get; }
+
+        /// <summary> The required feature policy. </summary>
+        public FeaturesPolicy? RequiredFeaturesPolicy
+        {
+            get
+            {
+                return FeaturesRule.RequiredFeaturesPolicy;
+            }
+        }
     }
 }

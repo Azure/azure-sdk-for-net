@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string endpointUri = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<string> requiredFeatures = default;
-            ProviderFeaturesRule featuresRule = default;
+            ResourceProviderEndpointFeaturesRule featuresRule = default;
             TimeSpan? timeout = default;
             ProviderEndpointType? endpointType = default;
             string skuLink = default;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(prop.Value, options);
+                    featuresRule = ResourceProviderEndpointFeaturesRule.DeserializeResourceProviderEndpointFeaturesRule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("timeout"u8))

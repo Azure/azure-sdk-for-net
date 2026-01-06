@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="specification"> The default rollout specification. </param>
         /// <param name="status"> The default rollout status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultRolloutProperties(ProviderHubProvisioningState? provisioningState, DefaultRolloutSpecification specification, DefaultRolloutStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefaultRolloutProperties(ProviderHubProvisioningState? provisioningState, DefaultRolloutPropertiesSpecification specification, DefaultRolloutPropertiesStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Specification = specification;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> The default rollout specification. </summary>
-        public DefaultRolloutSpecification Specification { get; set; }
+        public DefaultRolloutPropertiesSpecification Specification { get; set; }
 
         /// <summary> The default rollout status. </summary>
-        public DefaultRolloutStatus Status { get; set; }
+        public DefaultRolloutPropertiesStatus Status { get; set; }
     }
 }

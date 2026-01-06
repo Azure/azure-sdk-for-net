@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
         /// <param name="autoProvisionConfig"> The auto provisioning config. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultRolloutSpecification(ExpeditedRolloutDefinition expeditedRollout, CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, DefaultRolloutAutoProvisionConfig autoProvisionConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefaultRolloutSpecification(DefaultRolloutSpecificationExpeditedRollout expeditedRollout, DefaultRolloutSpecificationCanary canary, DefaultRolloutSpecificationLowTraffic lowTraffic, DefaultRolloutSpecificationMediumTraffic mediumTraffic, DefaultRolloutSpecificationHighTraffic highTraffic, DefaultRolloutSpecificationRestOfTheWorldGroupOne restOfTheWorldGroupOne, DefaultRolloutSpecificationRestOfTheWorldGroupTwo restOfTheWorldGroupTwo, DefaultRolloutSpecificationProviderRegistration providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, DefaultRolloutAutoProvisionConfig autoProvisionConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpeditedRollout = expeditedRollout;
             Canary = canary;
@@ -51,28 +51,28 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> The expedited rollout definition. </summary>
-        internal ExpeditedRolloutDefinition ExpeditedRollout { get; set; }
+        internal DefaultRolloutSpecificationExpeditedRollout ExpeditedRollout { get; set; }
 
         /// <summary> The canary traffic region configuration. </summary>
-        public CanaryTrafficRegionRolloutConfiguration Canary { get; set; }
+        public DefaultRolloutSpecificationCanary Canary { get; set; }
 
         /// <summary> The low traffic region configuration. </summary>
-        public TrafficRegionRolloutConfiguration LowTraffic { get; set; }
+        public DefaultRolloutSpecificationLowTraffic LowTraffic { get; set; }
 
         /// <summary> The medium traffic region configuration. </summary>
-        public TrafficRegionRolloutConfiguration MediumTraffic { get; set; }
+        public DefaultRolloutSpecificationMediumTraffic MediumTraffic { get; set; }
 
         /// <summary> The high traffic region configuration. </summary>
-        public TrafficRegionRolloutConfiguration HighTraffic { get; set; }
+        public DefaultRolloutSpecificationHighTraffic HighTraffic { get; set; }
 
         /// <summary> The rest of the world group one region configuration. </summary>
-        public TrafficRegionRolloutConfiguration RestOfTheWorldGroupOne { get; set; }
+        public DefaultRolloutSpecificationRestOfTheWorldGroupOne RestOfTheWorldGroupOne { get; set; }
 
         /// <summary> The rest of the world group two region configuration. </summary>
-        public TrafficRegionRolloutConfiguration RestOfTheWorldGroupTwo { get; set; }
+        public DefaultRolloutSpecificationRestOfTheWorldGroupTwo RestOfTheWorldGroupTwo { get; set; }
 
         /// <summary> The provider registration. </summary>
-        public ProviderRegistrationData ProviderRegistration { get; set; }
+        public DefaultRolloutSpecificationProviderRegistration ProviderRegistration { get; set; }
 
         /// <summary> The resource type registrations. </summary>
         public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 if (ExpeditedRollout is null)
                 {
-                    ExpeditedRollout = new ExpeditedRolloutDefinition();
+                    ExpeditedRollout = new DefaultRolloutSpecificationExpeditedRollout();
                 }
                 ExpeditedRollout.IsExpeditedRolloutEnabled = value;
             }

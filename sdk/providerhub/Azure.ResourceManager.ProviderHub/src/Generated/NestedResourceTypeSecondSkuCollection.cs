@@ -288,21 +288,21 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SkuResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceTypeSkuResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceTypeSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceTypeSkuData, SkuResource>(new SkusGetByResourceTypeRegistrationsNestedResourceTypeSecondAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new SkusGetByResourceTypeRegistrationsNestedResourceTypeSecondAsyncCollectionResultOfT(
                 _skusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 _nestedResourceTypeFirst,
                 _nestedResourceTypeSecond,
-                context), data => new SkuResource(Client, data));
+                context), data => new ResourceTypeSkuResource(Client, data));
         }
 
         /// <summary>
@@ -323,21 +323,21 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SkuResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceTypeSkuResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceTypeSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceTypeSkuData, SkuResource>(new SkusGetByResourceTypeRegistrationsNestedResourceTypeSecondCollectionResultOfT(
+            return new PageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new SkusGetByResourceTypeRegistrationsNestedResourceTypeSecondCollectionResultOfT(
                 _skusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 _nestedResourceTypeFirst,
                 _nestedResourceTypeSecond,
-                context), data => new SkuResource(Client, data));
+                context), data => new ResourceTypeSkuResource(Client, data));
         }
 
         /// <summary>

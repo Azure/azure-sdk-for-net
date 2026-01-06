@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             IList<ResourceProviderAuthorization> providerAuthorizations = default;
-            ResourceProviderAuthentication providerAuthentication = default;
-            ThirdPartyProviderAuthorization thirdPartyProviderAuthorization = default;
+            ProviderHubMetadataProviderAuthentication providerAuthentication = default;
+            ProviderHubMetadataThirdPartyProviderAuthorization thirdPartyProviderAuthorization = default;
             string directRpRoleDefinitionId = default;
             string regionalAsyncOperationResourceTypeName = default;
             string globalAsyncOperationResourceTypeName = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(prop.Value, options);
+                    providerAuthentication = ProviderHubMetadataProviderAuthentication.DeserializeProviderHubMetadataProviderAuthentication(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("thirdPartyProviderAuthorization"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    thirdPartyProviderAuthorization = ThirdPartyProviderAuthorization.DeserializeThirdPartyProviderAuthorization(prop.Value, options);
+                    thirdPartyProviderAuthorization = ProviderHubMetadataThirdPartyProviderAuthorization.DeserializeProviderHubMetadataThirdPartyProviderAuthorization(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("directRpRoleDefinitionId"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="detailLevel"> The detail level. </param>
         /// <param name="hiddenPropertyPaths"> The hidden property paths. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoggingRule(string action, LoggingDirections direction, LoggingDetails detailLevel, LoggingHiddenPropertyPaths hiddenPropertyPaths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoggingRule(string action, LoggingDirections direction, LoggingDetails detailLevel, LoggingRuleHiddenPropertyPaths hiddenPropertyPaths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             Direction = direction;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public LoggingDetails DetailLevel { get; set; }
 
         /// <summary> The hidden property paths. </summary>
-        public LoggingHiddenPropertyPaths HiddenPropertyPaths { get; set; }
+        public LoggingRuleHiddenPropertyPaths HiddenPropertyPaths { get; set; }
     }
 }

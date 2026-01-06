@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="ResourceTypeExtensionOptions"/>. </summary>
         /// <param name="resourceCreationBegin"> Resource creation begin. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeExtensionOptions(ExtensionOptions resourceCreationBegin, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceTypeExtensionOptions(ResourceTypeExtensionOptionsResourceCreationBegin resourceCreationBegin, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceCreationBegin = resourceCreationBegin;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource creation begin. </summary>
-        public ExtensionOptions ResourceCreationBegin { get; set; }
+        public ResourceTypeExtensionOptionsResourceCreationBegin ResourceCreationBegin { get; set; }
     }
 }

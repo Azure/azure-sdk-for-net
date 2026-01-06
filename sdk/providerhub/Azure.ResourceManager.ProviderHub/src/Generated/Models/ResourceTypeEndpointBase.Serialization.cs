@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("featuresRule"u8);
-            writer.WriteStringValue(FeaturesRule.ToString());
+            writer.WriteObjectValue(FeaturesRule, options);
             writer.WritePropertyName("timeout"u8);
             writer.WriteStringValue(Timeout, "P");
             writer.WritePropertyName("endpointType"u8);
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string endpointUri = default;
             IList<string> locations = default;
             IList<string> requiredFeatures = default;
-            FeaturesPolicy featuresRule = default;
+            ResourceTypeEndpointBaseFeaturesRule featuresRule = default;
             TimeSpan timeout = default;
             ProviderEndpointType endpointType = default;
-            ProviderDstsConfiguration dstsConfiguration = default;
+            ResourceTypeEndpointBaseDstsConfiguration dstsConfiguration = default;
             string skuLink = default;
             string apiVersion = default;
             IList<string> zones = default;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (prop.NameEquals("featuresRule"u8))
                 {
-                    featuresRule = new FeaturesPolicy(prop.Value.GetString());
+                    featuresRule = ResourceTypeEndpointBaseFeaturesRule.DeserializeResourceTypeEndpointBaseFeaturesRule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("timeout"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (prop.NameEquals("dstsConfiguration"u8))
                 {
-                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
+                    dstsConfiguration = ResourceTypeEndpointBaseDstsConfiguration.DeserializeResourceTypeEndpointBaseDstsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("skuLink"u8))

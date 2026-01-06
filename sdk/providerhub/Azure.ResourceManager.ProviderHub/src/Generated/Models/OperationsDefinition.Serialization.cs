@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string name = default;
             bool? isDataAction = default;
             OperationOrigins? origin = default;
-            OperationsDisplayDefinition display = default;
+            OperationsDefinitionDisplay display = default;
             OperationActionType? actionType = default;
             BinaryData properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (prop.NameEquals("display"u8))
                 {
-                    display = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    display = OperationsDefinitionDisplay.DeserializeOperationsDefinitionDisplay(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("actionType"u8))

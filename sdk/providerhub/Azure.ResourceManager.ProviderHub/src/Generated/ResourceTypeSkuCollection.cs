@@ -19,41 +19,29 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SkuResource"/> and their operations.
-    /// Each <see cref="SkuResource"/> in the collection will belong to the same instance of <see cref="ResourceTypeRegistrationResource"/>.
-    /// To get a <see cref="SkuResourceCollection"/> instance call the GetSkuResources method from an instance of <see cref="ResourceTypeRegistrationResource"/>.
+    /// A class representing a collection of <see cref="ResourceTypeSkuResource"/> and their operations.
+    /// Each <see cref="ResourceTypeSkuResource"/> in the collection will belong to the same instance of <see cref="ResourceTypeRegistrationResource"/>.
+    /// To get a <see cref="ResourceTypeSkuCollection"/> instance call the GetResourceTypeSkus method from an instance of <see cref="ResourceTypeRegistrationResource"/>.
     /// </summary>
-    public partial class SkuResourceCollection : ArmCollection, IEnumerable<SkuResource>, IAsyncEnumerable<SkuResource>
+    public partial class ResourceTypeSkuCollection : ArmCollection, IEnumerable<ResourceTypeSkuResource>, IAsyncEnumerable<ResourceTypeSkuResource>
     {
         private readonly ClientDiagnostics _skusClientDiagnostics;
         private readonly Skus _skusRestClient;
-        /// <summary> The nestedResourceTypeFirst. </summary>
-        private readonly string _nestedResourceTypeFirst;
-        /// <summary> The nestedResourceTypeSecond. </summary>
-        private readonly string _nestedResourceTypeSecond;
-        /// <summary> The nestedResourceTypeThird. </summary>
-        private readonly string _nestedResourceTypeThird;
 
-        /// <summary> Initializes a new instance of SkuResourceCollection for mocking. </summary>
-        protected SkuResourceCollection()
+        /// <summary> Initializes a new instance of ResourceTypeSkuCollection for mocking. </summary>
+        protected ResourceTypeSkuCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkuResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="nestedResourceTypeFirst"> The nestedResourceTypeFirst for the resource. </param>
-        /// <param name="nestedResourceTypeSecond"> The nestedResourceTypeSecond for the resource. </param>
-        /// <param name="nestedResourceTypeThird"> The nestedResourceTypeThird for the resource. </param>
-        internal SkuResourceCollection(ArmClient client, ResourceIdentifier id, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird) : base(client, id)
+        internal ResourceTypeSkuCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(SkuResource.ResourceType, out string skuResourceApiVersion);
-            _nestedResourceTypeFirst = nestedResourceTypeFirst;
-            _nestedResourceTypeSecond = nestedResourceTypeSecond;
-            _nestedResourceTypeThird = nestedResourceTypeThird;
-            _skusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", SkuResource.ResourceType.Namespace, Diagnostics);
-            _skusRestClient = new Skus(_skusClientDiagnostics, Pipeline, Endpoint, skuResourceApiVersion ?? "2024-09-01");
-            SkuResourceCollection.ValidateResourceId(id);
+            TryGetApiVersion(ResourceTypeSkuResource.ResourceType, out string resourceTypeSkuApiVersion);
+            _skusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceTypeSkuResource.ResourceType.Namespace, Diagnostics);
+            _skusRestClient = new Skus(_skusClientDiagnostics, Pipeline, Endpoint, resourceTypeSkuApiVersion ?? "2024-09-01");
+            ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
@@ -71,11 +59,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_CreateOrUpdateNestedResourceTypeThird. </description>
+        /// <description> SkuResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -89,12 +77,12 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SkuResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceTypeSkuResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkuResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -102,12 +90,12 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, ResourceTypeSkuData.ToRequestContent(data), context);
+                HttpMessage message = _skusRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, sku, ResourceTypeSkuData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ProviderHubArmOperation<SkuResource> operation = new ProviderHubArmOperation<SkuResource>(Response.FromValue(new SkuResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ProviderHubArmOperation<ResourceTypeSkuResource> operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -126,11 +114,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_CreateOrUpdateNestedResourceTypeThird. </description>
+        /// <description> SkuResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -144,12 +132,12 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SkuResource> CreateOrUpdate(WaitUntil waitUntil, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceTypeSkuResource> CreateOrUpdate(WaitUntil waitUntil, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkuResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -157,12 +145,12 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, ResourceTypeSkuData.ToRequestContent(data), context);
+                HttpMessage message = _skusRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, sku, ResourceTypeSkuData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ProviderHubArmOperation<SkuResource> operation = new ProviderHubArmOperation<SkuResource>(Response.FromValue(new SkuResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ProviderHubArmOperation<ResourceTypeSkuResource> operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -181,11 +169,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_GetNestedResourceTypeThird. </description>
+        /// <description> SkuResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -197,11 +185,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SkuResource>> GetNestedResourceTypeThirdAsync(string sku, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceTypeSkuResource>> GetAsync(string sku, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkuResourceCollection.GetNestedResourceTypeThird");
+            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.Get");
             scope.Start();
             try
             {
@@ -209,14 +197,14 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, sku, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,11 +218,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_GetNestedResourceTypeThird. </description>
+        /// <description> SkuResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -246,11 +234,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SkuResource> GetNestedResourceTypeThird(string sku, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceTypeSkuResource> Get(string sku, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkuResourceCollection.GetNestedResourceTypeThird");
+            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.Get");
             scope.Start();
             try
             {
@@ -258,14 +246,14 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, sku, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -279,11 +267,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_ListByResourceTypeRegistrationsNestedResourceTypeThird. </description>
+        /// <description> SkuResources_ListByResourceTypeRegistrations. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -292,22 +280,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SkuResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceTypeSkuResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceTypeSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceTypeSkuData, SkuResource>(new SkusGetByResourceTypeRegistrationsNestedResourceTypeThirdAsyncCollectionResultOfT(
-                _skusRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.Parent.Name,
-                Id.Name,
-                _nestedResourceTypeFirst,
-                _nestedResourceTypeSecond,
-                _nestedResourceTypeThird,
-                context), data => new SkuResource(Client, data));
+            return new AsyncPageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new SkusGetByResourceTypeRegistrationsAsyncCollectionResultOfT(_skusRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context), data => new ResourceTypeSkuResource(Client, data));
         }
 
         /// <summary>
@@ -315,11 +295,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_ListByResourceTypeRegistrationsNestedResourceTypeThird. </description>
+        /// <description> SkuResources_ListByResourceTypeRegistrations. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -328,22 +308,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SkuResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceTypeSkuResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceTypeSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceTypeSkuData, SkuResource>(new SkusGetByResourceTypeRegistrationsNestedResourceTypeThirdCollectionResultOfT(
-                _skusRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.Parent.Name,
-                Id.Name,
-                _nestedResourceTypeFirst,
-                _nestedResourceTypeSecond,
-                _nestedResourceTypeThird,
-                context), data => new SkuResource(Client, data));
+            return new PageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new SkusGetByResourceTypeRegistrationsCollectionResultOfT(_skusRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context), data => new ResourceTypeSkuResource(Client, data));
         }
 
         /// <summary>
@@ -351,11 +323,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_GetNestedResourceTypeThird. </description>
+        /// <description> SkuResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -371,7 +343,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkuResourceCollection.Exists");
+            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.Exists");
             scope.Start();
             try
             {
@@ -379,7 +351,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, sku, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;
@@ -408,11 +380,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_GetNestedResourceTypeThird. </description>
+        /// <description> SkuResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -428,7 +400,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkuResourceCollection.Exists");
+            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.Exists");
             scope.Start();
             try
             {
@@ -436,7 +408,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, sku, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;
@@ -465,11 +437,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_GetNestedResourceTypeThird. </description>
+        /// <description> SkuResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -481,11 +453,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SkuResource>> GetIfExistsAsync(string sku, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ResourceTypeSkuResource>> GetIfExistsAsync(string sku, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkuResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -493,7 +465,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, sku, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;
@@ -510,9 +482,9 @@ namespace Azure.ResourceManager.ProviderHub
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SkuResource>(response.GetRawResponse());
+                    return new NoValueResponse<ResourceTypeSkuResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -526,11 +498,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_GetNestedResourceTypeThird. </description>
+        /// <description> SkuResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -542,11 +514,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SkuResource> GetIfExists(string sku, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ResourceTypeSkuResource> GetIfExists(string sku, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkuResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -554,7 +526,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, sku, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;
@@ -571,9 +543,9 @@ namespace Azure.ResourceManager.ProviderHub
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SkuResource>(response.GetRawResponse());
+                    return new NoValueResponse<ResourceTypeSkuResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -582,20 +554,20 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
-        IEnumerator<SkuResource> IEnumerable<SkuResource>.GetEnumerator()
+        IEnumerator<ResourceTypeSkuResource> IEnumerable<ResourceTypeSkuResource>.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<SkuResource> IAsyncEnumerable<SkuResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ResourceTypeSkuResource> IAsyncEnumerable<ResourceTypeSkuResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

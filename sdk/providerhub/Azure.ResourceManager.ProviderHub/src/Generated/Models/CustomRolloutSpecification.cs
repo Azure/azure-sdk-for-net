@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="providerRegistration"> The provider registration. </param>
         /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRolloutSpecification(CustomRolloutAutoProvisionConfig autoProvisionConfig, TrafficRegions canary, IList<string> releaseScopes, bool? refreshSubscriptionRegistration, bool? skipReleaseScopeValidation, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomRolloutSpecification(CustomRolloutAutoProvisionConfig autoProvisionConfig, CustomRolloutSpecificationCanary canary, IList<string> releaseScopes, bool? refreshSubscriptionRegistration, bool? skipReleaseScopeValidation, CustomRolloutSpecificationProviderRegistration providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoProvisionConfig = autoProvisionConfig;
             Canary = canary;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public CustomRolloutAutoProvisionConfig AutoProvisionConfig { get; set; }
 
         /// <summary> The canary region configuration. </summary>
-        internal TrafficRegions Canary { get; set; }
+        internal CustomRolloutSpecificationCanary Canary { get; set; }
 
         /// <summary> The list of ARM regions scoped for the release. </summary>
         public IList<string> ReleaseScopes { get; }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public bool? SkipReleaseScopeValidation { get; set; }
 
         /// <summary> The provider registration. </summary>
-        public ProviderRegistrationData ProviderRegistration { get; set; }
+        public CustomRolloutSpecificationProviderRegistration ProviderRegistration { get; set; }
 
         /// <summary> The resource type registrations. </summary>
         public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 if (Canary is null)
                 {
-                    Canary = new TrafficRegions();
+                    Canary = new CustomRolloutSpecificationCanary();
                 }
                 Canary.Regions = value;
             }

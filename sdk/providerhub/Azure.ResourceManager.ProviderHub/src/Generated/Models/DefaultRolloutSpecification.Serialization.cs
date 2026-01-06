@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            ExpeditedRolloutDefinition expeditedRollout = default;
-            CanaryTrafficRegionRolloutConfiguration canary = default;
-            TrafficRegionRolloutConfiguration lowTraffic = default;
-            TrafficRegionRolloutConfiguration mediumTraffic = default;
-            TrafficRegionRolloutConfiguration highTraffic = default;
-            TrafficRegionRolloutConfiguration restOfTheWorldGroupOne = default;
-            TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo = default;
-            ProviderRegistrationData providerRegistration = default;
+            DefaultRolloutSpecificationExpeditedRollout expeditedRollout = default;
+            DefaultRolloutSpecificationCanary canary = default;
+            DefaultRolloutSpecificationLowTraffic lowTraffic = default;
+            DefaultRolloutSpecificationMediumTraffic mediumTraffic = default;
+            DefaultRolloutSpecificationHighTraffic highTraffic = default;
+            DefaultRolloutSpecificationRestOfTheWorldGroupOne restOfTheWorldGroupOne = default;
+            DefaultRolloutSpecificationRestOfTheWorldGroupTwo restOfTheWorldGroupTwo = default;
+            DefaultRolloutSpecificationProviderRegistration providerRegistration = default;
             IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
             DefaultRolloutAutoProvisionConfig autoProvisionConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    expeditedRollout = ExpeditedRolloutDefinition.DeserializeExpeditedRolloutDefinition(prop.Value, options);
+                    expeditedRollout = DefaultRolloutSpecificationExpeditedRollout.DeserializeDefaultRolloutSpecificationExpeditedRollout(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("canary"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    canary = CanaryTrafficRegionRolloutConfiguration.DeserializeCanaryTrafficRegionRolloutConfiguration(prop.Value, options);
+                    canary = DefaultRolloutSpecificationCanary.DeserializeDefaultRolloutSpecificationCanary(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lowTraffic"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    lowTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(prop.Value, options);
+                    lowTraffic = DefaultRolloutSpecificationLowTraffic.DeserializeDefaultRolloutSpecificationLowTraffic(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("mediumTraffic"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    mediumTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(prop.Value, options);
+                    mediumTraffic = DefaultRolloutSpecificationMediumTraffic.DeserializeDefaultRolloutSpecificationMediumTraffic(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("highTraffic"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    highTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(prop.Value, options);
+                    highTraffic = DefaultRolloutSpecificationHighTraffic.DeserializeDefaultRolloutSpecificationHighTraffic(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("restOfTheWorldGroupOne"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    restOfTheWorldGroupOne = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(prop.Value, options);
+                    restOfTheWorldGroupOne = DefaultRolloutSpecificationRestOfTheWorldGroupOne.DeserializeDefaultRolloutSpecificationRestOfTheWorldGroupOne(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("restOfTheWorldGroupTwo"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    restOfTheWorldGroupTwo = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(prop.Value, options);
+                    restOfTheWorldGroupTwo = DefaultRolloutSpecificationRestOfTheWorldGroupTwo.DeserializeDefaultRolloutSpecificationRestOfTheWorldGroupTwo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("providerRegistration"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(prop.Value, options);
+                    providerRegistration = DefaultRolloutSpecificationProviderRegistration.DeserializeDefaultRolloutSpecificationProviderRegistration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceTypeRegistrations"u8))

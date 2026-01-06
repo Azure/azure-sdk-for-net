@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="OperationsDefinition"/>. </summary>
         /// <param name="name"> Name of the operation. </param>
         /// <param name="display"> Display information of the operation. </param>
-        internal OperationsDefinition(string name, OperationsDisplayDefinition display)
+        internal OperationsDefinition(string name, OperationsDefinitionDisplay display)
         {
             Name = name;
             Display = display;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="actionType"> The action type. </param>
         /// <param name="properties"> Anything. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationsDefinition(string name, bool? isDataAction, OperationOrigins? origin, OperationsDisplayDefinition display, OperationActionType? actionType, BinaryData properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationsDefinition(string name, bool? isDataAction, OperationOrigins? origin, OperationsDefinitionDisplay display, OperationActionType? actionType, BinaryData properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsDataAction = isDataAction;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public OperationOrigins? Origin { get; }
 
         /// <summary> Display information of the operation. </summary>
-        public OperationsDisplayDefinition Display { get; }
+        public OperationsDefinitionDisplay Display { get; }
 
         /// <summary> The action type. </summary>
         public OperationActionType? ActionType { get; }

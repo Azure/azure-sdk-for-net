@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="name"> Name of the operation. </param>
         /// <param name="display"> Display information of the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="display"/> is null. </exception>
-        public LocalizedOperationDefinition(string name, LocalizedOperationDisplayDefinition display)
+        public LocalizedOperationDefinition(string name, LocalizedOperationDefinitionDisplay display)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(display, nameof(display));
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="display"> Display information of the operation. </param>
         /// <param name="actionType"> The action type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocalizedOperationDefinition(string name, bool? isDataAction, OperationOrigins? origin, LocalizedOperationDisplayDefinition display, OperationActionType? actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocalizedOperationDefinition(string name, bool? isDataAction, OperationOrigins? origin, LocalizedOperationDefinitionDisplay display, OperationActionType? actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsDataAction = isDataAction;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public OperationOrigins? Origin { get; set; }
 
         /// <summary> Display information of the operation. </summary>
-        public LocalizedOperationDisplayDefinition Display { get; set; }
+        public LocalizedOperationDefinitionDisplay Display { get; set; }
 
         /// <summary> The action type. </summary>
         public OperationActionType? ActionType { get; set; }

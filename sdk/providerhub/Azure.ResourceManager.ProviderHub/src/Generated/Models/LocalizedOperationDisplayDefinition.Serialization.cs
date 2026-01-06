@@ -168,30 +168,30 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            OperationsDisplayDefinition @default = default;
-            OperationsDisplayDefinition en = default;
-            OperationsDisplayDefinition cs = default;
-            OperationsDisplayDefinition de = default;
-            OperationsDisplayDefinition es = default;
-            OperationsDisplayDefinition fr = default;
-            OperationsDisplayDefinition hu = default;
-            OperationsDisplayDefinition it = default;
-            OperationsDisplayDefinition ja = default;
-            OperationsDisplayDefinition ko = default;
-            OperationsDisplayDefinition nl = default;
-            OperationsDisplayDefinition pl = default;
-            OperationsDisplayDefinition ptBR = default;
-            OperationsDisplayDefinition ptPT = default;
-            OperationsDisplayDefinition ru = default;
-            OperationsDisplayDefinition sv = default;
-            OperationsDisplayDefinition zhHans = default;
-            OperationsDisplayDefinition zhHant = default;
+            LocalizedOperationDisplayDefinitionDefault @default = default;
+            LocalizedOperationDisplayDefinitionEn en = default;
+            LocalizedOperationDisplayDefinitionCs cs = default;
+            LocalizedOperationDisplayDefinitionDe de = default;
+            LocalizedOperationDisplayDefinitionEs es = default;
+            LocalizedOperationDisplayDefinitionFr fr = default;
+            LocalizedOperationDisplayDefinitionHu hu = default;
+            LocalizedOperationDisplayDefinitionIt it = default;
+            LocalizedOperationDisplayDefinitionJa ja = default;
+            LocalizedOperationDisplayDefinitionKo ko = default;
+            LocalizedOperationDisplayDefinitionNl nl = default;
+            LocalizedOperationDisplayDefinitionPl pl = default;
+            LocalizedOperationDisplayDefinitionPtBR ptBR = default;
+            LocalizedOperationDisplayDefinitionPtPT ptPT = default;
+            LocalizedOperationDisplayDefinitionRu ru = default;
+            LocalizedOperationDisplayDefinitionSv sv = default;
+            LocalizedOperationDisplayDefinitionZhHans zhHans = default;
+            LocalizedOperationDisplayDefinitionZhHant zhHant = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("default"u8))
                 {
-                    @default = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    @default = LocalizedOperationDisplayDefinitionDefault.DeserializeLocalizedOperationDisplayDefinitionDefault(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("en"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    en = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    en = LocalizedOperationDisplayDefinitionEn.DeserializeLocalizedOperationDisplayDefinitionEn(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("cs"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    cs = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    cs = LocalizedOperationDisplayDefinitionCs.DeserializeLocalizedOperationDisplayDefinitionCs(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("de"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    de = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    de = LocalizedOperationDisplayDefinitionDe.DeserializeLocalizedOperationDisplayDefinitionDe(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("es"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    es = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    es = LocalizedOperationDisplayDefinitionEs.DeserializeLocalizedOperationDisplayDefinitionEs(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("fr"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    fr = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    fr = LocalizedOperationDisplayDefinitionFr.DeserializeLocalizedOperationDisplayDefinitionFr(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hu"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    hu = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    hu = LocalizedOperationDisplayDefinitionHu.DeserializeLocalizedOperationDisplayDefinitionHu(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("it"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    it = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    it = LocalizedOperationDisplayDefinitionIt.DeserializeLocalizedOperationDisplayDefinitionIt(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ja"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    ja = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    ja = LocalizedOperationDisplayDefinitionJa.DeserializeLocalizedOperationDisplayDefinitionJa(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ko"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    ko = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    ko = LocalizedOperationDisplayDefinitionKo.DeserializeLocalizedOperationDisplayDefinitionKo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nl"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    nl = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    nl = LocalizedOperationDisplayDefinitionNl.DeserializeLocalizedOperationDisplayDefinitionNl(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("pl"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    pl = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    pl = LocalizedOperationDisplayDefinitionPl.DeserializeLocalizedOperationDisplayDefinitionPl(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ptBR"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    ptBR = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    ptBR = LocalizedOperationDisplayDefinitionPtBR.DeserializeLocalizedOperationDisplayDefinitionPtBR(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ptPT"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    ptPT = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    ptPT = LocalizedOperationDisplayDefinitionPtPT.DeserializeLocalizedOperationDisplayDefinitionPtPT(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ru"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    ru = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    ru = LocalizedOperationDisplayDefinitionRu.DeserializeLocalizedOperationDisplayDefinitionRu(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sv"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    sv = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    sv = LocalizedOperationDisplayDefinitionSv.DeserializeLocalizedOperationDisplayDefinitionSv(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("zhHans"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    zhHans = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    zhHans = LocalizedOperationDisplayDefinitionZhHans.DeserializeLocalizedOperationDisplayDefinitionZhHans(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("zhHant"u8))
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    zhHant = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
+                    zhHant = LocalizedOperationDisplayDefinitionZhHant.DeserializeLocalizedOperationDisplayDefinitionZhHant(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
