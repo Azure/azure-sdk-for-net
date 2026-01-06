@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Unknown version of BrokerStateStorePolicy. </summary>
     internal partial class UnknownBrokerStateStorePolicy : BrokerStateStorePolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBrokerStateStorePolicy"/>. </summary>
         /// <param name="mode"> 'All' to persist all keys, 'None' to not persist any, 'Custom' to persist only the specified keys. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBrokerStateStorePolicy(BrokerPersistencePolicyMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
-        {
-            Mode = mode;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownBrokerStateStorePolicy"/> for deserialization. </summary>
-        internal UnknownBrokerStateStorePolicy()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBrokerStateStorePolicy(BrokerPersistencePolicyMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(mode != default ? mode : "unknown", additionalBinaryDataProperties)
         {
         }
     }

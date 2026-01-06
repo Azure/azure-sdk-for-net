@@ -7,171 +7,44 @@
 
 using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ComputeSchedule;
 using Azure.ResourceManager.ComputeSchedule.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableComputeScheduleArmClient : ArmResource
     {
         private ClientDiagnostics _scheduledActionExtensionClientDiagnostics;
-        private ScheduledActionExtensionRestOperations _scheduledActionExtensionRestClient;
+        private ScheduledActionExtension _scheduledActionExtensionRestClient;
         private ClientDiagnostics _occurrenceExtensionClientDiagnostics;
-        private OccurrenceExtensionRestOperations _occurrenceExtensionRestClient;
+        private OccurrenceExtension _occurrenceExtensionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableComputeScheduleArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableComputeScheduleArmClient for mocking. </summary>
         protected MockableComputeScheduleArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableComputeScheduleArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableComputeScheduleArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableComputeScheduleArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableComputeScheduleArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
+        private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ScheduledActionExtensionRestOperations ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtensionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics OccurrenceExtensionClientDiagnostics => _occurrenceExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OccurrenceExtensionRestOperations OccurrenceExtensionRestClient => _occurrenceExtensionRestClient ??= new OccurrenceExtensionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics OccurrenceExtensionClientDiagnostics => _occurrenceExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// List ScheduledActionResources resources by parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ComputeSchedule/associatedScheduledActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActionResources_GetAssociatedScheduledActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScheduledActionResources> GetAssociatedScheduledActionsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
+        private OccurrenceExtension OccurrenceExtensionRestClient => _occurrenceExtensionRestClient ??= new OccurrenceExtension(OccurrenceExtensionClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionExtensionRestClient.CreateGetAssociatedScheduledActionsRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionExtensionRestClient.CreateGetAssociatedScheduledActionsNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ScheduledActionResources.DeserializeScheduledActionResources(e), ScheduledActionExtensionClientDiagnostics, Pipeline, "MockableComputeScheduleArmClient.GetAssociatedScheduledActions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List ScheduledActionResources resources by parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ComputeSchedule/associatedScheduledActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActionResources_GetAssociatedScheduledActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScheduledActionResources> GetAssociatedScheduledActions(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionExtensionRestClient.CreateGetAssociatedScheduledActionsRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionExtensionRestClient.CreateGetAssociatedScheduledActionsNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ScheduledActionResources.DeserializeScheduledActionResources(e), ScheduledActionExtensionClientDiagnostics, Pipeline, "MockableComputeScheduleArmClient.GetAssociatedScheduledActions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List OccurrenceExtensionResource resources by parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ComputeSchedule/associatedOccurrences</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OccurrenceExtensionResource_GetAssociatedOccurrences</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OccurrenceExtensionResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OccurrenceExtensionResourceData> GetAssociatedOccurrencesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OccurrenceExtensionRestClient.CreateGetAssociatedOccurrencesRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OccurrenceExtensionRestClient.CreateGetAssociatedOccurrencesNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OccurrenceExtensionResourceData.DeserializeOccurrenceExtensionResourceData(e), OccurrenceExtensionClientDiagnostics, Pipeline, "MockableComputeScheduleArmClient.GetAssociatedOccurrences", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List OccurrenceExtensionResource resources by parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ComputeSchedule/associatedOccurrences</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OccurrenceExtensionResource_GetAssociatedOccurrences</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceExtensionResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OccurrenceExtensionResourceData> GetAssociatedOccurrences(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OccurrenceExtensionRestClient.CreateGetAssociatedOccurrencesRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OccurrenceExtensionRestClient.CreateGetAssociatedOccurrencesNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OccurrenceExtensionResourceData.DeserializeOccurrenceExtensionResourceData(e), OccurrenceExtensionClientDiagnostics, Pipeline, "MockableComputeScheduleArmClient.GetAssociatedOccurrences", "value", "nextLink", cancellationToken);
-        }
-        /// <summary>
-        /// Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
         public virtual ScheduledActionResource GetScheduledActionResource(ResourceIdentifier id)
@@ -180,16 +53,145 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             return new ScheduledActionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ScheduledActionOccurrenceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduledActionOccurrenceResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionOccurrenceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ScheduledActionOccurrenceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScheduledActionOccurrenceResource"/> object. </returns>
         public virtual ScheduledActionOccurrenceResource GetScheduledActionOccurrenceResource(ResourceIdentifier id)
         {
             ScheduledActionOccurrenceResource.ValidateResourceId(id);
             return new ScheduledActionOccurrenceResource(Client, id);
+        }
+
+        /// <summary>
+        /// List ScheduledActionResources resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.ComputeSchedule/associatedScheduledActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionExtension_ListByVms. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduledActionResources> GetAssociatedScheduledActionsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ScheduledActionExtensionGetAssociatedScheduledActionsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
+        }
+
+        /// <summary>
+        /// List ScheduledActionResources resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.ComputeSchedule/associatedScheduledActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionExtension_ListByVms. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduledActionResources> GetAssociatedScheduledActions(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ScheduledActionExtensionGetAssociatedScheduledActionsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
+        }
+
+        /// <summary>
+        /// List OccurrenceExtensionResource resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.ComputeSchedule/associatedOccurrences. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OccurrenceExtension_ListOccurrenceByVms. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="OccurrenceExtensionResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OccurrenceExtensionResourceData> GetAssociatedOccurrencesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context);
+        }
+
+        /// <summary>
+        /// List OccurrenceExtensionResource resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.ComputeSchedule/associatedOccurrences. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OccurrenceExtension_ListOccurrenceByVms. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="OccurrenceExtensionResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OccurrenceExtensionResourceData> GetAssociatedOccurrences(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new OccurrenceExtensionGetAssociatedOccurrencesCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context);
         }
     }
 }
