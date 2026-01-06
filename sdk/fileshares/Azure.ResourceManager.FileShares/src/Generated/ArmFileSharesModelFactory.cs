@@ -256,14 +256,6 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareProvisioningRecommendationContent(fileShareProvisioningRecommendationInputProvisionedStorageInGiB is null ? default : new FileShareProvisioningRecommendationInputProperties(fileShareProvisioningRecommendationInputProvisionedStorageInGiB.Value, null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> File share provisioning parameters recommendation API input structure. </summary>
-        /// <param name="provisionedStorageInGiB"> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </param>
-        /// <returns> A new <see cref="Models.FileShareProvisioningRecommendationInputProperties"/> instance for mocking. </returns>
-        public static FileShareProvisioningRecommendationInputProperties FileShareProvisioningRecommendationInputProperties(int provisionedStorageInGiB = default)
-        {
-            return new FileShareProvisioningRecommendationInputProperties(provisionedStorageInGiB, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Response structure for file share provisioning parameters recommendation API. </summary>
         /// <param name="properties"> The properties of the file share provisioning recommendation output. </param>
         /// <returns> A new <see cref="Models.FileShareProvisioningRecommendationResult"/> instance for mocking. </returns>

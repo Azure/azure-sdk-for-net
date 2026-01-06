@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -17,25 +16,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="SubmitDeallocateContent"/>. </summary>
-        /// <param name="schedule"> The schedule for the request. </param>
-        /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="resources"> The resources for the request. </param>
-        /// <param name="correlationId"> CorrelationId item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/>, <paramref name="executionParameters"/>, <paramref name="resources"/> or <paramref name="correlationId"/> is null. </exception>
-        public SubmitDeallocateContent(UserRequestSchedule schedule, ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationId)
-        {
-            Argument.AssertNotNull(schedule, nameof(schedule));
-            Argument.AssertNotNull(executionParameters, nameof(executionParameters));
-            Argument.AssertNotNull(resources, nameof(resources));
-            Argument.AssertNotNull(correlationId, nameof(correlationId));
-
-            Schedule = schedule;
-            ExecutionParameters = executionParameters;
-            Resources = resources;
-            CorrelationId = correlationId;
-        }
 
         /// <summary> Initializes a new instance of <see cref="SubmitDeallocateContent"/>. </summary>
         /// <param name="schedule"> The schedule for the request. </param>

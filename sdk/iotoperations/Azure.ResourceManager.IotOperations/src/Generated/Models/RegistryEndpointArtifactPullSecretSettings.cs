@@ -12,7 +12,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> RegistryEndpoint Artifact Pull Secret authentication properties. </summary>
-    public partial class RegistryEndpointArtifactPullSecretSettings
+    internal partial class RegistryEndpointArtifactPullSecretSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

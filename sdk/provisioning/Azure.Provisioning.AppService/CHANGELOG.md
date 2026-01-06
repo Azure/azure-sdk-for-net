@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.1 (2026-01-06)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed the `Name` property of `SlotConfigNames` to include a default value of `slotConfigNames`. ([#54675](https://github.com/Azure/azure-sdk-for-net/issues/54675))
 
 ## 1.3.0 (2025-12-10)
 
