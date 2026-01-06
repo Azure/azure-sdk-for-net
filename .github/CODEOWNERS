@@ -1011,6 +1011,12 @@
 # ServiceLabel: %Elastic %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
+# PRLabel: %File Shares
+/sdk/fileshares/Azure.ResourceManager.FileShares/                  @ankushbindlish2
+
+# ServiceLabel: %File Shares %Mgmt
+# ServiceOwners:                                                   @ankushbindlish2
+
 # PRLabel: %Grafana
 /sdk/grafana/Azure.ResourceManager.*/                              @qingquanzhao
 

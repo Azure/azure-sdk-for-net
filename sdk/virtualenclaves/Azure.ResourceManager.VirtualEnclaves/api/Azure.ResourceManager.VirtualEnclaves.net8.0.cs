@@ -1291,7 +1291,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public partial class VirtualEnclaveCommunityEndpointPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch>
     {
         public VirtualEnclaveCommunityEndpointPatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule> CommunityEndpointPatchRuleCollection { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule> CommunityEndpointPatchRuleCollection { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1457,7 +1457,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public partial class VirtualEnclaveEndpointPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch>
     {
         public VirtualEnclaveEndpointPatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule> EnclaveEndpointPatchRuleCollection { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule> EnclaveEndpointPatchRuleCollection { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

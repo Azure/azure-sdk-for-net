@@ -49,18 +49,5 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> X.509 authentication configuration. </summary>
         public BrokerAuthenticatorMethodX509 X509Settings { get; set; }
-
-        /// <summary> List of allowed audience. </summary>
-        public IList<string> ServiceAccountTokenAudiences
-        {
-            get
-            {
-                return ServiceAccountTokenSettings is null ? default : ServiceAccountTokenSettings.Audiences;
-            }
-            set
-            {
-                ServiceAccountTokenSettings = new BrokerAuthenticatorMethodSat(value);
-            }
-        }
     }
 }

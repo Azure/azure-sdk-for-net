@@ -12,11 +12,11 @@
 
 ## Summary
 
-- Total libraries: 399
-- Management Plane (MPG): 226
+- Total libraries: 400
+- Management Plane (MPG): 227
   - Autorest/Swagger: 155
-  - New Emitter (TypeSpec): 49
-  - Old TypeSpec: 22
+  - New Emitter (TypeSpec): 51
+  - Old TypeSpec: 21
 - Data Plane (DPG): 173
   - Autorest/Swagger: 86
   - New Emitter (TypeSpec): 21
@@ -170,7 +170,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 49 / 71 (69%)
+**Migration Status**: 51 / 72 (70.8%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -202,6 +202,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
 | fabric | Azure.ResourceManager.Fabric |  |
+| fileshares | Azure.ResourceManager.FileShares | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
@@ -244,7 +245,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | virtualenclaves | Azure.ResourceManager.VirtualEnclaves | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
 | workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
-| workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance |  |
+| workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | ✅ |
 
 
 ## Management Plane Libraries (MPG) - Still on Swagger
