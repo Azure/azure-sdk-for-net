@@ -38,14 +38,5 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> VM Size properties. </summary>
         internal ServiceFabricManagedVmSizeProperties Properties { get; }
-
-        /// <summary> VM Size name. </summary>
-        public string ServiceFabricManagedVmSize
-        {
-            get
-            {
-                return Properties.Size;
-            }
-        }
     }
 }
