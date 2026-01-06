@@ -100,5 +100,4 @@ interface BestPracticeVersions {
     Azure.ResourceManager.Foundations.ResourceUpdateModel<BestPractice, BestPracticeProperties>
   >;
   delete is BestPracticesVersionOps.DeleteSync<BestPractice>;
-  list is BestPracticesVersionOps.List<BestPractice>;
 }
