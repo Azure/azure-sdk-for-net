@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DisconnectedOperations;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     public readonly partial struct DisconnectedOperationsBillingModel : IEquatable<DisconnectedOperationsBillingModel>
     {
         private readonly string _value;
+        /// <summary> Billed on capacity. </summary>
+        private const string CapacityValue = "Capacity";
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsBillingModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DisconnectedOperationsBillingModel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CapacityValue = "Capacity";
+            _value = value;
+        }
 
         /// <summary> Billed on capacity. </summary>
         public static DisconnectedOperationsBillingModel Capacity { get; } = new DisconnectedOperationsBillingModel(CapacityValue);
+
         /// <summary> Determines if two <see cref="DisconnectedOperationsBillingModel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DisconnectedOperationsBillingModel left, DisconnectedOperationsBillingModel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DisconnectedOperationsBillingModel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DisconnectedOperationsBillingModel left, DisconnectedOperationsBillingModel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DisconnectedOperationsBillingModel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DisconnectedOperationsBillingModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DisconnectedOperationsBillingModel(string value) => new DisconnectedOperationsBillingModel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DisconnectedOperationsBillingModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DisconnectedOperationsBillingModel?(string value) => value == null ? null : new DisconnectedOperationsBillingModel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DisconnectedOperationsBillingModel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DisconnectedOperationsBillingModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

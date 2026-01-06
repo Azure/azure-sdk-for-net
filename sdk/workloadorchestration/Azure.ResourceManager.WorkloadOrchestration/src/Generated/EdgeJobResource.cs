@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
-    /// A Class representing an EdgeJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EdgeJobResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetEdgeJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetEdgeJob method.
+    /// A class representing a EdgeJob along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EdgeJobResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetEdgeJobs method.
     /// </summary>
     public partial class EdgeJobResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EdgeJobResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        /// <param name="jobName"> The jobName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string jobName)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _edgeJobJobsClientDiagnostics;
-        private readonly JobsRestOperations _edgeJobJobsRestClient;
+        private readonly ClientDiagnostics _jobsClientDiagnostics;
+        private readonly Jobs _jobsRestClient;
         private readonly EdgeJobData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Edge/jobs";
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeJobResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeJobResource for mocking. </summary>
         protected EdgeJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EdgeJobResource(ArmClient client, EdgeJobData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string edgeJobJobsApiVersion);
-            _edgeJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeJobJobsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string edgeJobApiVersion);
+            _jobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
+            _jobsRestClient = new Jobs(_jobsClientDiagnostics, Pipeline, Endpoint, edgeJobApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual EdgeJobData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="jobName"> The jobName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string jobName)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Job resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EdgeJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeJobJobsClientDiagnostics.CreateScope("EdgeJobResource.Get");
+            using DiagnosticScope scope = _jobsClientDiagnostics.CreateScope("EdgeJobResource.Get");
             scope.Start();
             try
             {
-                var response = await _edgeJobJobsRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeJobData> response = Response.FromValue(EdgeJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Job resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EdgeJobResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeJobJobsClientDiagnostics.CreateScope("EdgeJobResource.Get");
+            using DiagnosticScope scope = _jobsClientDiagnostics.CreateScope("EdgeJobResource.Get");
             scope.Start();
             try
             {
-                var response = _edgeJobJobsRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeJobData> response = Response.FromValue(EdgeJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

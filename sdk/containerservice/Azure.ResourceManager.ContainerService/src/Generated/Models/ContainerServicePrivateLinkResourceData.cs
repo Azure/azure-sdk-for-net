@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> A private link resource. </summary>
+    /// <summary>
+    /// A private link resource
+    /// Serialized Name: PrivateLinkResource
+    /// </summary>
     public partial class ContainerServicePrivateLinkResourceData
     {
         /// <summary>
@@ -53,12 +56,30 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The ID of the private link resource. </param>
-        /// <param name="name"> The name of the private link resource. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="groupId"> The group ID of the resource. </param>
-        /// <param name="requiredMembers"> The RequiredMembers of the resource. </param>
-        /// <param name="privateLinkServiceId"> The private link service ID of the resource, this field is exposed only to NRP internally. </param>
+        /// <param name="id">
+        /// The ID of the private link resource.
+        /// Serialized Name: PrivateLinkResource.id
+        /// </param>
+        /// <param name="name">
+        /// The name of the private link resource.
+        /// Serialized Name: PrivateLinkResource.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The resource type.
+        /// Serialized Name: PrivateLinkResource.type
+        /// </param>
+        /// <param name="groupId">
+        /// The group ID of the resource.
+        /// Serialized Name: PrivateLinkResource.groupId
+        /// </param>
+        /// <param name="requiredMembers">
+        /// The RequiredMembers of the resource
+        /// Serialized Name: PrivateLinkResource.requiredMembers
+        /// </param>
+        /// <param name="privateLinkServiceId">
+        /// The private link service ID of the resource, this field is exposed only to NRP internally.
+        /// Serialized Name: PrivateLinkResource.privateLinkServiceID
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, string groupId, IList<string> requiredMembers, ResourceIdentifier privateLinkServiceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,22 +92,40 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The ID of the private link resource. </summary>
+        /// <summary>
+        /// The ID of the private link resource.
+        /// Serialized Name: PrivateLinkResource.id
+        /// </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
-        /// <summary> The name of the private link resource. </summary>
+        /// <summary>
+        /// The name of the private link resource.
+        /// Serialized Name: PrivateLinkResource.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The resource type. </summary>
+        /// <summary>
+        /// The resource type.
+        /// Serialized Name: PrivateLinkResource.type
+        /// </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
-        /// <summary> The group ID of the resource. </summary>
+        /// <summary>
+        /// The group ID of the resource.
+        /// Serialized Name: PrivateLinkResource.groupId
+        /// </summary>
         [WirePath("groupId")]
         public string GroupId { get; set; }
-        /// <summary> The RequiredMembers of the resource. </summary>
+        /// <summary>
+        /// The RequiredMembers of the resource
+        /// Serialized Name: PrivateLinkResource.requiredMembers
+        /// </summary>
         [WirePath("requiredMembers")]
         public IList<string> RequiredMembers { get; }
-        /// <summary> The private link service ID of the resource, this field is exposed only to NRP internally. </summary>
+        /// <summary>
+        /// The private link service ID of the resource, this field is exposed only to NRP internally.
+        /// Serialized Name: PrivateLinkResource.privateLinkServiceID
+        /// </summary>
         [WirePath("privateLinkServiceID")]
         public ResourceIdentifier PrivateLinkServiceId { get; }
     }

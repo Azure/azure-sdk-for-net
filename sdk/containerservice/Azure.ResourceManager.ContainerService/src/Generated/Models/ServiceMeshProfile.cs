@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Service mesh profile for a managed cluster. </summary>
+    /// <summary>
+    /// Service mesh profile for a managed cluster.
+    /// Serialized Name: ServiceMeshProfile
+    /// </summary>
     public partial class ServiceMeshProfile
     {
         /// <summary>
@@ -46,15 +49,24 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServiceMeshProfile"/>. </summary>
-        /// <param name="mode"> Mode of the service mesh. </param>
+        /// <param name="mode">
+        /// Mode of the service mesh.
+        /// Serialized Name: ServiceMeshProfile.mode
+        /// </param>
         public ServiceMeshProfile(ServiceMeshMode mode)
         {
             Mode = mode;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceMeshProfile"/>. </summary>
-        /// <param name="mode"> Mode of the service mesh. </param>
-        /// <param name="istio"> Istio service mesh configuration. </param>
+        /// <param name="mode">
+        /// Mode of the service mesh.
+        /// Serialized Name: ServiceMeshProfile.mode
+        /// </param>
+        /// <param name="istio">
+        /// Istio service mesh configuration.
+        /// Serialized Name: ServiceMeshProfile.istio
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServiceMeshProfile(ServiceMeshMode mode, IstioServiceMesh istio, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,10 +80,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> Mode of the service mesh. </summary>
+        /// <summary>
+        /// Mode of the service mesh.
+        /// Serialized Name: ServiceMeshProfile.mode
+        /// </summary>
         [WirePath("mode")]
         public ServiceMeshMode Mode { get; set; }
-        /// <summary> Istio service mesh configuration. </summary>
+        /// <summary>
+        /// Istio service mesh configuration.
+        /// Serialized Name: ServiceMeshProfile.istio
+        /// </summary>
         [WirePath("istio")]
         public IstioServiceMesh Istio { get; set; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -16,21 +17,16 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateRuntimeImageConfiguration"/>. </summary>
         /// <param name="imageConfigurationSettings"> The image configuration settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageConfigurationSettings"/> is null. </exception>
-        public AkriConnectorTemplateRuntimeImageConfiguration(AkriConnectorTemplateRuntimeImageConfigurationSettings imageConfigurationSettings)
+        public AkriConnectorTemplateRuntimeImageConfiguration(AkriConnectorTemplateRuntimeImageConfigurationSettings imageConfigurationSettings) : base(AkriConnectorTemplateManagedConfigurationType.ImageConfiguration)
         {
             Argument.AssertNotNull(imageConfigurationSettings, nameof(imageConfigurationSettings));
 
             ImageConfigurationSettings = imageConfigurationSettings;
-            ManagedConfigurationType = AkriConnectorTemplateManagedConfigurationType.ImageConfiguration;
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateRuntimeImageConfiguration"/>. </summary>
         /// <param name="managedConfigurationType"> The type of the managed configuration. </param>
-        /// <param name="allocation">
-        /// Allocation settings for the managed configuration.
-        /// Please note <see cref="AkriConnectorTemplateAllocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorTemplateBucketizedAllocation"/>.
-        /// </param>
+        /// <param name="allocation"> Allocation settings for the managed configuration. </param>
         /// <param name="persistentVolumeClaims"> The persistent volume claims for the managed configuration. </param>
         /// <param name="additionalConfiguration"> Additional configuration for the image of the managed configuration. </param>
         /// <param name="persistentVolumeClaimTemplates">
@@ -39,17 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// </param>
         /// <param name="secrets"> Connector secrets that will be mounted onto all connector instances. </param>
         /// <param name="trustSettings"> Trust list for the connector. This is used to specify the certificates that all connector instances should trust. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageConfigurationSettings"> The image configuration settings. </param>
-        internal AkriConnectorTemplateRuntimeImageConfiguration(AkriConnectorTemplateManagedConfigurationType managedConfigurationType, AkriConnectorTemplateAllocation allocation, IList<AkriConnectorTemplatePersistentVolumeClaim> persistentVolumeClaims, IDictionary<string, string> additionalConfiguration, IList<IDictionary<string, BinaryData>> persistentVolumeClaimTemplates, IList<AkriConnectorsSecret> secrets, AkriConnectorTemplateTrustList trustSettings, IDictionary<string, BinaryData> serializedAdditionalRawData, AkriConnectorTemplateRuntimeImageConfigurationSettings imageConfigurationSettings) : base(managedConfigurationType, allocation, persistentVolumeClaims, additionalConfiguration, persistentVolumeClaimTemplates, secrets, trustSettings, serializedAdditionalRawData)
+        internal AkriConnectorTemplateRuntimeImageConfiguration(AkriConnectorTemplateManagedConfigurationType managedConfigurationType, AkriConnectorTemplateAllocation allocation, IList<AkriConnectorTemplatePersistentVolumeClaim> persistentVolumeClaims, IDictionary<string, string> additionalConfiguration, IList<IDictionary<string, BinaryData>> persistentVolumeClaimTemplates, IList<AkriConnectorsSecret> secrets, AkriConnectorTemplateTrustList trustSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties, AkriConnectorTemplateRuntimeImageConfigurationSettings imageConfigurationSettings) : base(managedConfigurationType, allocation, persistentVolumeClaims, additionalConfiguration, persistentVolumeClaimTemplates, secrets, trustSettings, additionalBinaryDataProperties)
         {
             ImageConfigurationSettings = imageConfigurationSettings;
-            ManagedConfigurationType = managedConfigurationType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateRuntimeImageConfiguration"/> for deserialization. </summary>
-        internal AkriConnectorTemplateRuntimeImageConfiguration()
-        {
         }
 
         /// <summary> The image configuration settings. </summary>

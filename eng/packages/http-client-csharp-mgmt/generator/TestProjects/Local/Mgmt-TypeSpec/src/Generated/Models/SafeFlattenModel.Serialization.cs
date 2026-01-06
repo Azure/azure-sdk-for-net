@@ -16,11 +16,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     /// <summary> The SafeFlattenModel. </summary>
     internal partial class SafeFlattenModel : IJsonModel<SafeFlattenModel>
     {
-        /// <summary> Initializes a new instance of <see cref="SafeFlattenModel"/> for deserialization. </summary>
-        internal SafeFlattenModel()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SafeFlattenModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -39,8 +34,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 throw new FormatException($"The model {nameof(SafeFlattenModel)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("flattenedProperty"u8);
-            writer.WriteStringValue(FlattenedProperty);
+            if (Optional.IsCollectionDefined(FlattenedProperty))
+            {
+                writer.WritePropertyName("flattenedProperty"u8);
+                writer.WriteStartArray();
+                foreach (string item in FlattenedProperty)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -83,13 +91,29 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 return null;
             }
-            string flattenedProperty = default;
+            IList<string> flattenedProperty = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("flattenedProperty"u8))
                 {
-                    flattenedProperty = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    flattenedProperty = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +121,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SafeFlattenModel(flattenedProperty, additionalBinaryDataProperties);
+            return new SafeFlattenModel(flattenedProperty ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

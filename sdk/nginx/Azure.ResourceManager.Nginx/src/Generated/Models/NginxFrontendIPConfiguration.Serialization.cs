@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (WritableSubResource item in PublicIPAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

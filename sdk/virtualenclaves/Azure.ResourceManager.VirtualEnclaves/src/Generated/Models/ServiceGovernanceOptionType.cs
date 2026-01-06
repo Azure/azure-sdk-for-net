@@ -7,51 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary> The GovernedServiceItemOption. </summary>
+    /// <summary></summary>
     public readonly partial struct ServiceGovernanceOptionType : IEquatable<ServiceGovernanceOptionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceGovernanceOptionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceGovernanceOptionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllowValue = "Allow";
         private const string DenyValue = "Deny";
         private const string ExceptionOnlyValue = "ExceptionOnly";
         private const string NotApplicableValue = "NotApplicable";
 
-        /// <summary> Allow. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceGovernanceOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceGovernanceOptionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Allow. </summary>
         public static ServiceGovernanceOptionType Allow { get; } = new ServiceGovernanceOptionType(AllowValue);
-        /// <summary> Deny. </summary>
+
+        /// <summary> Gets the Deny. </summary>
         public static ServiceGovernanceOptionType Deny { get; } = new ServiceGovernanceOptionType(DenyValue);
-        /// <summary> ExceptionOnly. </summary>
+
+        /// <summary> Gets the ExceptionOnly. </summary>
         public static ServiceGovernanceOptionType ExceptionOnly { get; } = new ServiceGovernanceOptionType(ExceptionOnlyValue);
-        /// <summary> NotApplicable. </summary>
+
+        /// <summary> Gets the NotApplicable. </summary>
         public static ServiceGovernanceOptionType NotApplicable { get; } = new ServiceGovernanceOptionType(NotApplicableValue);
+
         /// <summary> Determines if two <see cref="ServiceGovernanceOptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceGovernanceOptionType left, ServiceGovernanceOptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceGovernanceOptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceGovernanceOptionType left, ServiceGovernanceOptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceGovernanceOptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceGovernanceOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceGovernanceOptionType(string value) => new ServiceGovernanceOptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceGovernanceOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceGovernanceOptionType?(string value) => value == null ? null : new ServiceGovernanceOptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceGovernanceOptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceGovernanceOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

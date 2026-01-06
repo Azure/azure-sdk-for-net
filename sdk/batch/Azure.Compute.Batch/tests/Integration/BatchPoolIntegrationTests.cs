@@ -83,6 +83,10 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.True(poolExist);
                 Assert.False(poolDoesntExist);
             }
+            catch (RequestFailedException e)
+            {
+                Assert.Contains(e.Status.ToString(), new[] { "404", });
+            }
             finally
             {
                 await client.DeletePoolAsync(poolID);
