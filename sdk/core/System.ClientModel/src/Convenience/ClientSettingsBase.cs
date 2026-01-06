@@ -50,14 +50,26 @@ public abstract class ClientSettingsBase
         if (Credential is null)
             throw new InvalidOperationException("Credential section must exist in configuration");
 
-        return GetClientConnectionCore();
-    }
+        object credential;
+        CredentialKind credentialKind = Credential?.CredentialSource == "ApiKey" ? CredentialKind.ApiKeyString : CredentialKind.TokenCredential;
+        if (CredentialObject is null)
+        {
+            if (Credential?.CredentialSource == "ApiKey")
+            {
+                credential = Credential!.Key!;
+            }
+            else
+            {
+                throw new InvalidOperationException("CredentialObject must be provided when CredentialSource is not ApiKey.");
+            }
+        }
+        else
+        {
+            credential = CredentialObject;
+        }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <returns></returns>
-    protected abstract ClientConnection GetClientConnectionCore();
+        return ClientConnection.Create(Properties, credential, credentialKind);
+    }
 
     /// <summary>
     /// .

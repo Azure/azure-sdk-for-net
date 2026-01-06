@@ -16,6 +16,9 @@ public class CredentialSettings
     /// <param name="section"></param>
     public CredentialSettings(IConfigurationSection section)
     {
+        if (section is null)
+            throw new ArgumentNullException(nameof(section));
+
         CredentialSource = section["CredentialSource"];
         Key = section["Key"];
         Properties = section;
@@ -34,5 +37,5 @@ public class CredentialSettings
     /// <summary>
     /// .
     /// </summary>
-    public IConfigurationSection? Properties { get; set; }
+    public IConfigurationSection Properties { get; set; }
 }

@@ -328,7 +328,6 @@ namespace Azure.Core
     {
         protected AzureClientSettings() { }
         public Azure.Core.ClientOptions ClientOptions { get { throw null; } set { } }
-        protected override System.ClientModel.Primitives.ClientConnection GetClientConnectionCore() { throw null; }
     }
     public partial class AzureCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {

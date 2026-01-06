@@ -15,11 +15,5 @@ namespace Azure.Core
         /// .
         /// </summary>
         public ClientOptions ClientOptions { get; set; } = ClientOptions.Default;
-
-        /// <inheritdoc/>
-        protected override ClientConnection GetClientConnectionCore()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -61,7 +61,6 @@ namespace System.ClientModel
     {
         protected ClientSettings() { }
         public System.ClientModel.Primitives.ClientPipelineOptions ClientOptions { get { throw null; } set { } }
-        protected override System.ClientModel.Primitives.ClientConnection GetClientConnectionCore() { throw null; }
     }
     public abstract partial class CollectionResult<T> : System.ClientModel.Primitives.CollectionResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
@@ -74,8 +73,6 @@ namespace System.ClientModel
     {
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettingsBase, new() { throw null; }
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfigurationSection section) where T : System.ClientModel.Primitives.ClientSettingsBase, new() { throw null; }
-        public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName, System.ClientModel.AuthenticationTokenProvider tokenProvider) { throw null; }
     }
     public partial class ContinuationToken
     {
@@ -89,7 +86,7 @@ namespace System.ClientModel
         public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public string? CredentialSource { get { throw null; } set { } }
         public string? Key { get { throw null; } set { } }
-        public Microsoft.Extensions.Configuration.IConfigurationSection? Properties { get { throw null; } set { } }
+        public Microsoft.Extensions.Configuration.IConfigurationSection Properties { get { throw null; } set { } }
     }
 }
 namespace System.ClientModel.Primitives
@@ -144,11 +141,9 @@ namespace System.ClientModel.Primitives
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ClientConnection(string id, string? locator) { throw null; }
-        public ClientConnection(string id, string? locator, object credential, System.ClientModel.Primitives.CredentialKind credentialKind) { throw null; }
-        public ClientConnection(string id, string? locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, Microsoft.Extensions.Configuration.IConfigurationSection configurationSection) { throw null; }
-        public ClientConnection(string id, string? locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata) { throw null; }
-        public Microsoft.Extensions.Configuration.IConfiguration? Configuration { get { throw null; } }
+        public ClientConnection(string id, string locator) { throw null; }
+        public ClientConnection(string id, string locator, object credential, System.ClientModel.Primitives.CredentialKind credentialKind) { throw null; }
+        public ClientConnection(string id, string locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata) { throw null; }
         public object? Credential { get { throw null; } }
         public System.ClientModel.Primitives.CredentialKind CredentialKind { get { throw null; } }
         public string Id { get { throw null; } }
@@ -239,7 +234,6 @@ namespace System.ClientModel.Primitives
         protected bool Initialized { get { throw null; } }
         public Microsoft.Extensions.Configuration.IConfigurationSection? Properties { get { throw null; } set { } }
         public System.ClientModel.Primitives.ClientConnection GetClientConnection() { throw null; }
-        protected abstract System.ClientModel.Primitives.ClientConnection GetClientConnectionCore();
         public void Read(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         protected abstract void ReadCore(Microsoft.Extensions.Configuration.IConfigurationSection section);
     }
