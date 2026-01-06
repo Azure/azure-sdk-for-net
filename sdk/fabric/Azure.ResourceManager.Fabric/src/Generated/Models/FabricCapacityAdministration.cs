@@ -13,7 +13,7 @@ using Azure.ResourceManager.Fabric;
 namespace Azure.ResourceManager.Fabric.Models
 {
     /// <summary> The administration properties of the Fabric capacity resource. </summary>
-    public partial class FabricCapacityAdministration
+    internal partial class FabricCapacityAdministration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
