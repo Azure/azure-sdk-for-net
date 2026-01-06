@@ -73,7 +73,8 @@ public class BasicPrivateDnsTests
                         }
                     };
                 infra.Add(vnet);
-                PrivateDnsZone privateDnsZone = new(nameof(privateDnsZone), PrivateDnsZone.ResourceVersions.V2020_06_01)
+                PrivateDnsZone privateDnsZone =
+                    new(nameof(privateDnsZone), PrivateDnsZone.ResourceVersions.V2020_06_01)
                     {
                         Name = privateDnsZoneName,
                         Location = new AzureLocation("global")
