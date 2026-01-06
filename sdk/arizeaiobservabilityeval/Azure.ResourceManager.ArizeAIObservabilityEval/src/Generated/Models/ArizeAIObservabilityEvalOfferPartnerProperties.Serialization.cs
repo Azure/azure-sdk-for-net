@@ -14,7 +14,7 @@ using Azure.ResourceManager.ArizeAIObservabilityEval;
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
     /// <summary> Partner's specific Properties. </summary>
-    public partial class ArizeAIObservabilityEvalOfferPartnerProperties : IJsonModel<ArizeAIObservabilityEvalOfferPartnerProperties>
+    internal partial class ArizeAIObservabilityEvalOfferPartnerProperties : IJsonModel<ArizeAIObservabilityEvalOfferPartnerProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOfferPartnerProperties"/> for deserialization. </summary>
         internal ArizeAIObservabilityEvalOfferPartnerProperties()
