@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     yield break;
                 }
-                ManagedVMSizesResult result = ManagedVMSizesResult.FromResponse(response);
+                ServiceFabricManagedUnsupportedVmSizeListResult result = ServiceFabricManagedUnsupportedVmSizeListResult.FromResponse(response);
                 yield return Page<ServiceFabricManagedUnsupportedVmSize>.FromValues((IReadOnlyList<ServiceFabricManagedUnsupportedVmSize>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

@@ -15,16 +15,16 @@ using Azure.ResourceManager.ServiceFabricManagedClusters;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes the result of the request to list Managed VM Sizes for Service Fabric Managed Clusters. </summary>
-    internal partial class ManagedVMSizesResult : IJsonModel<ManagedVMSizesResult>
+    internal partial class ServiceFabricManagedUnsupportedVmSizeListResult : IJsonModel<ServiceFabricManagedUnsupportedVmSizeListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedVMSizesResult"/> for deserialization. </summary>
-        internal ManagedVMSizesResult()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedUnsupportedVmSizeListResult"/> for deserialization. </summary>
+        internal ServiceFabricManagedUnsupportedVmSizeListResult()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedVMSizesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceFabricManagedUnsupportedVmSizeListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedVMSizesResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedUnsupportedVmSizeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedVMSizesResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedUnsupportedVmSizeListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -71,24 +71,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedVMSizesResult IJsonModel<ManagedVMSizesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ServiceFabricManagedUnsupportedVmSizeListResult IJsonModel<ServiceFabricManagedUnsupportedVmSizeListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedVMSizesResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ServiceFabricManagedUnsupportedVmSizeListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedVMSizesResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedUnsupportedVmSizeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedVMSizesResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedUnsupportedVmSizeListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedVMSizesResult(document.RootElement, options);
+            return DeserializeServiceFabricManagedUnsupportedVmSizeListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedVMSizesResult DeserializeManagedVMSizesResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceFabricManagedUnsupportedVmSizeListResult DeserializeServiceFabricManagedUnsupportedVmSizeListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,54 +123,54 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedVMSizesResult(value, nextLink, additionalBinaryDataProperties);
+            return new ServiceFabricManagedUnsupportedVmSizeListResult(value, nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedVMSizesResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceFabricManagedUnsupportedVmSizeListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedVMSizesResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedUnsupportedVmSizeListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedVMSizesResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedUnsupportedVmSizeListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedVMSizesResult IPersistableModel<ManagedVMSizesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ServiceFabricManagedUnsupportedVmSizeListResult IPersistableModel<ServiceFabricManagedUnsupportedVmSizeListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedVMSizesResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ServiceFabricManagedUnsupportedVmSizeListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedVMSizesResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedUnsupportedVmSizeListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedVMSizesResult(document.RootElement, options);
+                        return DeserializeServiceFabricManagedUnsupportedVmSizeListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedVMSizesResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedUnsupportedVmSizeListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedVMSizesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceFabricManagedUnsupportedVmSizeListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedVMSizesResult"/> from. </param>
-        internal static ManagedVMSizesResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricManagedUnsupportedVmSizeListResult"/> from. </param>
+        internal static ServiceFabricManagedUnsupportedVmSizeListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeManagedVMSizesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeServiceFabricManagedUnsupportedVmSizeListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
