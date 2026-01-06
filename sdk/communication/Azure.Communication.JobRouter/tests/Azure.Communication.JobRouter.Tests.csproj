@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -16,9 +16,7 @@
     <PackageReference Include="Azure.Messaging.EventGrid" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit" />
-    
-    <PackageReference Include="NUnit.Analyzers" />
-<PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="NUnit3TestAdapter" />
     <ExcludeFromProjectReferenceToConversion Include="Azure.Messaging.EventGrid" />
   </ItemGroup>
 

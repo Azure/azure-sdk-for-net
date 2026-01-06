@@ -60,7 +60,7 @@
     <MicrosoftExtensionsLoggingVersion>10.0.1</MicrosoftExtensionsLoggingVersion>
     <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
     <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
-    <NUnitVersion>3.14.0</NUnitVersion>
+    <NUnitVersion>4.4.0</NUnitVersion>
     <OpenTelemetryInstrumentationHttpVersion>1.14.0</OpenTelemetryInstrumentationHttpVersion>
     <OpenTelemetryVersion>1.14.0</OpenTelemetryVersion>
   </PropertyGroup>
@@ -359,8 +359,7 @@
     <PackageReference Update="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="$(NUnitVersion)" />
-    <PackageReference Update="NUnit.Analyzers" Version="4.3.0" PrivateAssets="All" />
-    <PackageReference Update="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Update="NUnit3TestAdapter" Version="6.0.1" />
     <PackageReference Update="Microsoft.NET.Sdk.Functions" Version="4.2.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.0.0" />
 
@@ -482,10 +481,8 @@
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="4.12.0" />
   </ItemGroup>
 
-  <!-- The unbranded test framework is the first to use NUnit 4; the repository will migrate fully in the near future -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
     <PackageReference Update="Castle.Core" Version="$(CastleCoreVersion)" />
-    <PackageReference Update="NUnit" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">

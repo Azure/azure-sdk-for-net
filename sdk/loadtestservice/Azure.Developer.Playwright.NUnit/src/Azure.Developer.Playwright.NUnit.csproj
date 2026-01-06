@@ -15,8 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Developer.Playwright\src\Azure.Developer.Playwright.csproj" />
     <PackageReference Include="NUnit" />
-    
-    <PackageReference Include="NUnit.Analyzers" />
-<PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 </Project>

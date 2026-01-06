@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure DataMovement Blobs Stress Testing</Description>
     <PackageTags>Microsoft Azure Storage DataMovement, DataMovement, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
@@ -14,9 +14,7 @@
     <PackageReference Include="CommandLineParser" />
     <PackageReference Include="Microsoft.ApplicationInsights" />
     <PackageReference Include="NUnit" />
-  
-    <PackageReference Include="NUnit.Analyzers" />
-</ItemGroup>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" >

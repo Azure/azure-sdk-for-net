@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Version>1.0.0-beta.1</Version>
@@ -9,9 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
     <PackageReference Include="NUnit" />
-    
-    <PackageReference Include="NUnit.Analyzers" />
-<PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
