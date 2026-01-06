@@ -15,8 +15,8 @@
 - Total libraries: 399
 - Management Plane (MPG): 226
   - Autorest/Swagger: 156
-  - New Emitter (TypeSpec): 49
-  - Old TypeSpec: 21
+  - New Emitter (TypeSpec): 50
+  - Old TypeSpec: 20
 - Data Plane (DPG): 173
   - Autorest/Swagger: 86
   - New Emitter (TypeSpec): 21
@@ -170,7 +170,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 49 / 70 (70%)
+**Migration Status**: 50 / 70 (71.4%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -200,7 +200,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
-| fabric | Azure.ResourceManager.Fabric |  |
+| fabric | Azure.ResourceManager.Fabric | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
