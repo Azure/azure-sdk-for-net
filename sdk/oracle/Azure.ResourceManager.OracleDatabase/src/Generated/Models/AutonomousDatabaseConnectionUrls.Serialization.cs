@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    apexUri = new Uri(prop.Value.GetString());
+                    apexUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("databaseTransformsUrl"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    databaseTransformsUri = new Uri(prop.Value.GetString());
+                    databaseTransformsUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("graphStudioUrl"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    graphStudioUri = new Uri(prop.Value.GetString());
+                    graphStudioUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("machineLearningNotebookUrl"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    machineLearningNotebookUri = new Uri(prop.Value.GetString());
+                    machineLearningNotebookUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mongoDbUrl"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    mongoDBUri = new Uri(prop.Value.GetString());
+                    mongoDBUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ordsUrl"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    ordsUri = new Uri(prop.Value.GetString());
+                    ordsUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sqlDevWebUrl"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    sqlDevWebUri = new Uri(prop.Value.GetString());
+                    sqlDevWebUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

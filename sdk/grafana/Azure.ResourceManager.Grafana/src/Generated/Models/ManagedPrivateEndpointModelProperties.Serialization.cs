@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    privateLinkServiceUri = new Uri(prop.Value.GetString());
+                    privateLinkServiceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateLinkServicePrivateIP"u8))
