@@ -218,13 +218,13 @@
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @leareai @Han-msft
 
 # PRLabel: %Cognitive - Content Understanding
-/sdk/contentunderstanding/                                         @yungshinlintw @bojunehsu @changjian-wang
+/sdk/contentunderstanding/                                         @bojunehsu @changjian-wang
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/documentintelligence/                                         @yungshinlintw @bojunehsu
+/sdk/documentintelligence/                                         @changjian-wang @bojunehsu
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                                               @yungshinlintw @bojunehsu
+/sdk/formrecognizer/                                               @changjian-wang @bojunehsu
 
 # ServiceLabel: %Cognitive - Form Recognizer
 # ServiceOwners:                                                   @vkurpad
@@ -386,10 +386,10 @@
 # ServiceOwners:                                                   @drishtipeshwani09
 
 # PRLabel: %Container Registry
-/sdk/containerregistry/                                            @Azure/azsdk-acr
+/sdk/containerregistry/                                            @Azure/azure-sdk-write-acr
 
 # ServiceLabel: %Container Registry
-# ServiceOwners:                                                   @toddysm @Azure/azsdk-acr
+# ServiceOwners:                                                   @Azure/azure-sdk-write-acr
 
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
@@ -1010,6 +1010,12 @@
 
 # ServiceLabel: %Elastic %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
+
+# PRLabel: %File Shares
+/sdk/fileshares/Azure.ResourceManager.FileShares/                  @ankushbindlish2
+
+# ServiceLabel: %File Shares %Mgmt
+# ServiceOwners:                                                   @ankushbindlish2
 
 # PRLabel: %Grafana
 /sdk/grafana/Azure.ResourceManager.*/                              @qingquanzhao

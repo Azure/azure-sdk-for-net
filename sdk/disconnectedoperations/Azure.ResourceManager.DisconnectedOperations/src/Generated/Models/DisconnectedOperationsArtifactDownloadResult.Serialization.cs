@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 }
                 if (prop.NameEquals("downloadLink"u8))
                 {
-                    downloadLink = new Uri(prop.Value.GetString());
+                    downloadLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("linkExpiry"u8))
