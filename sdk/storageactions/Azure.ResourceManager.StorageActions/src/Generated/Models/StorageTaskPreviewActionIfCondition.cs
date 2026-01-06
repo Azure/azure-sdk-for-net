@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Represents storage task preview action condition. </summary>
-    public partial class StorageTaskPreviewActionIfCondition
+    internal partial class StorageTaskPreviewActionIfCondition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
