@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
     {
         private ClientDiagnostics _labsClientDiagnostics;
         private Labs _labsRestClient;
-        private ClientDiagnostics _globalSchedulesClientDiagnostics;
-        private GlobalSchedules _globalSchedulesRestClient;
+        private ClientDiagnostics _devTestLabGlobalSchedulesClientDiagnostics;
+        private DevTestLabGlobalSchedules _devTestLabGlobalSchedulesRestClient;
 
         /// <summary> Initializes a new instance of MockableDevTestLabsSubscriptionResource for mocking. </summary>
         protected MockableDevTestLabsSubscriptionResource()
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
 
         private Labs LabsRestClient => _labsRestClient ??= new Labs(LabsClientDiagnostics, Pipeline, Endpoint, "2018-09-15");
 
-        private ClientDiagnostics GlobalSchedulesClientDiagnostics => _globalSchedulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevTestLabs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DevTestLabGlobalSchedulesClientDiagnostics => _devTestLabGlobalSchedulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevTestLabs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GlobalSchedules GlobalSchedulesRestClient => _globalSchedulesRestClient ??= new GlobalSchedules(GlobalSchedulesClientDiagnostics, Pipeline, Endpoint, "2018-09-15");
+        private DevTestLabGlobalSchedules DevTestLabGlobalSchedulesRestClient => _devTestLabGlobalSchedulesRestClient ??= new DevTestLabGlobalSchedules(DevTestLabGlobalSchedulesClientDiagnostics, Pipeline, Endpoint, "2018-09-15");
 
         /// <summary>
         /// List labs in a subscription.
@@ -143,21 +143,21 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabScheduleResource> GetDevTestLabSchedulesAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabScheduleResource>(new GlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT(
-                GlobalSchedulesRestClient,
+            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabGlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT(
+                DevTestLabGlobalSchedulesRestClient,
                 Id.SubscriptionId,
                 expand,
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabScheduleResource(Client, data));
+                context), data => new DevTestLabGlobalScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -182,21 +182,21 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabScheduleResource> GetDevTestLabSchedules(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabScheduleData, DevTestLabScheduleResource>(new GlobalSchedulesGetBySubscriptionCollectionResultOfT(
-                GlobalSchedulesRestClient,
+            return new PageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabGlobalSchedulesGetBySubscriptionCollectionResultOfT(
+                DevTestLabGlobalSchedulesRestClient,
                 Id.SubscriptionId,
                 expand,
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabScheduleResource(Client, data));
+                context), data => new DevTestLabGlobalScheduleResource(Client, data));
         }
     }
 }

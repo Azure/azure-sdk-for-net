@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    internal partial class VirtualMachineSchedules
+    internal partial class DevTestLabServiceFabricSchedules
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of VirtualMachineSchedules for mocking. </summary>
-        protected VirtualMachineSchedules()
+        /// <summary> Initializes a new instance of DevTestLabServiceFabricSchedules for mocking. </summary>
+        protected DevTestLabServiceFabricSchedules()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineSchedules. </summary>
+        /// <summary> Initializes a new instance of DevTestLabServiceFabricSchedules. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal VirtualMachineSchedules(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal DevTestLabServiceFabricSchedules(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, string name, string expand, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string name, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,8 +51,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
             uri.AppendPath(labName, true);
-            uri.AppendPath("/virtualmachines/", false);
-            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userName, true);
+            uri.AppendPath("/servicefabrics/", false);
+            uri.AppendPath(serviceFabricName, true);
             uri.AppendPath("/schedules/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -68,7 +70,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string name, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -78,8 +80,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
             uri.AppendPath(labName, true);
-            uri.AppendPath("/virtualmachines/", false);
-            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userName, true);
+            uri.AppendPath("/servicefabrics/", false);
+            uri.AppendPath(serviceFabricName, true);
             uri.AppendPath("/schedules/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string name, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -103,8 +107,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
             uri.AppendPath(labName, true);
-            uri.AppendPath("/virtualmachines/", false);
-            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userName, true);
+            uri.AppendPath("/servicefabrics/", false);
+            uri.AppendPath(serviceFabricName, true);
             uri.AppendPath("/schedules/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -118,7 +124,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, string name, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -128,8 +134,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
             uri.AppendPath(labName, true);
-            uri.AppendPath("/virtualmachines/", false);
-            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userName, true);
+            uri.AppendPath("/servicefabrics/", false);
+            uri.AppendPath(serviceFabricName, true);
             uri.AppendPath("/schedules/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -140,7 +148,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, string expand, string filter, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string expand, string filter, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -150,8 +158,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
             uri.AppendPath(labName, true);
-            uri.AppendPath("/virtualmachines/", false);
-            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userName, true);
+            uri.AppendPath("/servicefabrics/", false);
+            uri.AppendPath(serviceFabricName, true);
             uri.AppendPath("/schedules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
@@ -178,7 +188,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, string expand, string filter, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string expand, string filter, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
@@ -190,7 +200,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateExecuteRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, string name, RequestContext context)
+        internal HttpMessage CreateExecuteRequest(string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -200,8 +210,10 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
             uri.AppendPath(labName, true);
-            uri.AppendPath("/virtualmachines/", false);
-            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userName, true);
+            uri.AppendPath("/servicefabrics/", false);
+            uri.AppendPath(serviceFabricName, true);
             uri.AppendPath("/schedules/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/execute", false);

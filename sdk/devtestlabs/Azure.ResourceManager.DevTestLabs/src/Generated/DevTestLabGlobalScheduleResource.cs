@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
-    /// A class representing a DevTestLabSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabScheduleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevTestLabSchedules method.
+    /// A class representing a DevTestLabGlobalSchedule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabGlobalScheduleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevTestLabGlobalSchedules method.
     /// </summary>
-    public partial class DevTestLabScheduleResource : ArmResource
+    public partial class DevTestLabGlobalScheduleResource : ArmResource
     {
-        private readonly ClientDiagnostics _devTestLabSchedulesClientDiagnostics;
-        private readonly DevTestLabSchedules _devTestLabSchedulesRestClient;
+        private readonly ClientDiagnostics _devTestLabGlobalSchedulesClientDiagnostics;
+        private readonly DevTestLabGlobalSchedules _devTestLabGlobalSchedulesRestClient;
         private readonly DevTestLabScheduleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/schedules";
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/schedules";
 
-        /// <summary> Initializes a new instance of DevTestLabScheduleResource for mocking. </summary>
-        protected DevTestLabScheduleResource()
+        /// <summary> Initializes a new instance of DevTestLabGlobalScheduleResource for mocking. </summary>
+        protected DevTestLabGlobalScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGlobalScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DevTestLabScheduleResource(ArmClient client, DevTestLabScheduleData data) : this(client, data.Id)
+        internal DevTestLabGlobalScheduleResource(ArmClient client, DevTestLabScheduleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGlobalScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DevTestLabScheduleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevTestLabGlobalScheduleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string devTestLabScheduleApiVersion);
-            _devTestLabSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
-            _devTestLabSchedulesRestClient = new DevTestLabSchedules(_devTestLabSchedulesClientDiagnostics, Pipeline, Endpoint, devTestLabScheduleApiVersion ?? "2018-09-15");
+            TryGetApiVersion(ResourceType, out string devTestLabGlobalScheduleApiVersion);
+            _devTestLabGlobalSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
+            _devTestLabGlobalSchedulesRestClient = new DevTestLabGlobalSchedules(_devTestLabGlobalSchedulesClientDiagnostics, Pipeline, Endpoint, devTestLabGlobalScheduleApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -76,11 +76,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="labName"> The labName. </param>
         /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string name)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -99,11 +98,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Schedules_Get. </description>
+        /// <description> GlobalSchedules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -111,15 +110,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevTestLabScheduleResource"/>. </description>
+        /// <description> <see cref="DevTestLabGlobalScheduleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DevTestLabScheduleResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabGlobalScheduleResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.Get");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.Get");
             scope.Start();
             try
             {
@@ -127,14 +126,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,11 +147,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Schedules_Get. </description>
+        /// <description> GlobalSchedules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -160,15 +159,15 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevTestLabScheduleResource"/>. </description>
+        /// <description> <see cref="DevTestLabGlobalScheduleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DevTestLabScheduleResource> Get(string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabGlobalScheduleResource> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.Get");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.Get");
             scope.Start();
             try
             {
@@ -176,14 +175,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,11 +196,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Schedules_Update. </description>
+        /// <description> GlobalSchedules_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -209,18 +208,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevTestLabScheduleResource"/>. </description>
+        /// <description> <see cref="DevTestLabGlobalScheduleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabScheduleResource>> UpdateAsync(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabGlobalScheduleResource>> UpdateAsync(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.Update");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.Update");
             scope.Start();
             try
             {
@@ -228,14 +227,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabSchedulePatch.ToRequestContent(patch), context);
+                HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DevTestLabSchedulePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -249,11 +248,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Schedules_Update. </description>
+        /// <description> GlobalSchedules_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -261,18 +260,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevTestLabScheduleResource"/>. </description>
+        /// <description> <see cref="DevTestLabGlobalScheduleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<DevTestLabScheduleResource> Update(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabGlobalScheduleResource> Update(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.Update");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.Update");
             scope.Start();
             try
             {
@@ -280,14 +279,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabSchedulePatch.ToRequestContent(patch), context);
+                HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DevTestLabSchedulePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -301,11 +300,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Schedules_Delete. </description>
+        /// <description> GlobalSchedules_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -313,7 +312,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevTestLabScheduleResource"/>. </description>
+        /// <description> <see cref="DevTestLabGlobalScheduleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.Delete");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.Delete");
             scope.Start();
             try
             {
@@ -329,7 +328,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -352,11 +351,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Schedules_Delete. </description>
+        /// <description> GlobalSchedules_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -364,7 +363,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevTestLabScheduleResource"/>. </description>
+        /// <description> <see cref="DevTestLabGlobalScheduleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,7 +371,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.Delete");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.Delete");
             scope.Start();
             try
             {
@@ -380,7 +379,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -403,11 +402,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}/execute. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}/execute. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Schedules_Execute. </description>
+        /// <description> GlobalSchedules_Execute. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -415,7 +414,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevTestLabScheduleResource"/>. </description>
+        /// <description> <see cref="DevTestLabGlobalScheduleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -423,7 +422,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> ExecuteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.Execute");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.Execute");
             scope.Start();
             try
             {
@@ -431,9 +430,9 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_devTestLabSchedulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_devTestLabGlobalSchedulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -452,11 +451,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}/execute. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}/execute. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Schedules_Execute. </description>
+        /// <description> GlobalSchedules_Execute. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -464,7 +463,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevTestLabScheduleResource"/>. </description>
+        /// <description> <see cref="DevTestLabGlobalScheduleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -472,7 +471,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Execute(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.Execute");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.Execute");
             scope.Start();
             try
             {
@@ -480,9 +479,9 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_devTestLabSchedulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_devTestLabGlobalSchedulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -497,15 +496,15 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// Lists all applicable schedules
+        /// Updates a schedule's target resource Id. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}/listApplicable. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}/retarget. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Schedules_ListApplicable. </description>
+        /// <description> GlobalSchedules_Retarget. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -513,37 +512,52 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevTestLabScheduleResource"/>. </description>
+        /// <description> <see cref="DevTestLabGlobalScheduleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Properties for retargeting a virtual machine schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetApplicableAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> RetargetAsync(WaitUntil waitUntil, DevTestLabGlobalScheduleRetargetContent content, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.Retarget");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabSchedulesGetApplicableAsyncCollectionResultOfT(
-                _devTestLabSchedulesRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context), data => new DevTestLabGlobalScheduleResource(Client, data));
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateRetargetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DevTestLabGlobalScheduleRetargetContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_devTestLabGlobalSchedulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Lists all applicable schedules
+        /// Updates a schedule's target resource Id. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}/listApplicable. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}/retarget. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Schedules_ListApplicable. </description>
+        /// <description> GlobalSchedules_Retarget. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -551,25 +565,40 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevTestLabScheduleResource"/>. </description>
+        /// <description> <see cref="DevTestLabGlobalScheduleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Properties for retargeting a virtual machine schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabGlobalScheduleResource> GetApplicable(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Retarget(WaitUntil waitUntil, DevTestLabGlobalScheduleRetargetContent content, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.Retarget");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabSchedulesGetApplicableCollectionResultOfT(
-                _devTestLabSchedulesRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context), data => new DevTestLabGlobalScheduleResource(Client, data));
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateRetargetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DevTestLabGlobalScheduleRetargetContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_devTestLabGlobalSchedulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Add a tag to the current resource. </summary>
@@ -577,12 +606,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabGlobalScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.AddTag");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.AddTag");
             scope.Start();
             try
             {
@@ -595,10 +624,10 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
-                    return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -609,7 +638,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<DevTestLabScheduleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<DevTestLabGlobalScheduleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -625,12 +654,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<DevTestLabScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabGlobalScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.AddTag");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.AddTag");
             scope.Start();
             try
             {
@@ -643,10 +672,10 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
-                    return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -657,7 +686,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<DevTestLabScheduleResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<DevTestLabGlobalScheduleResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -672,11 +701,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabGlobalScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.SetTags");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.SetTags");
             scope.Start();
             try
             {
@@ -690,17 +719,17 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
-                    return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     DevTestLabScheduleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     DevTestLabSchedulePatch patch = new DevTestLabSchedulePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<DevTestLabScheduleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<DevTestLabGlobalScheduleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -715,11 +744,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<DevTestLabScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabGlobalScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.SetTags");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.SetTags");
             scope.Start();
             try
             {
@@ -733,17 +762,17 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
-                    return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     DevTestLabScheduleData current = Get(cancellationToken: cancellationToken).Value.Data;
                     DevTestLabSchedulePatch patch = new DevTestLabSchedulePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<DevTestLabScheduleResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<DevTestLabGlobalScheduleResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -758,11 +787,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabGlobalScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.RemoveTag");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.RemoveTag");
             scope.Start();
             try
             {
@@ -775,10 +804,10 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
-                    return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -789,7 +818,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<DevTestLabScheduleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<DevTestLabGlobalScheduleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -804,11 +833,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<DevTestLabScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabGlobalScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _devTestLabSchedulesClientDiagnostics.CreateScope("DevTestLabScheduleResource.RemoveTag");
+            using DiagnosticScope scope = _devTestLabGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleResource.RemoveTag");
             scope.Start();
             try
             {
@@ -821,10 +850,10 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
+                    HttpMessage message = _devTestLabGlobalSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
-                    return Response.FromValue(new DevTestLabScheduleResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -835,7 +864,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<DevTestLabScheduleResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<DevTestLabGlobalScheduleResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -35,6 +35,15 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
             return new DevTestLabResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="DevTestLabGlobalScheduleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevTestLabGlobalScheduleResource"/> object. </returns>
+        public virtual DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(ResourceIdentifier id)
+        {
+            DevTestLabGlobalScheduleResource.ValidateResourceId(id);
+            return new DevTestLabGlobalScheduleResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="DevTestLabScheduleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DevTestLabScheduleResource"/> object. </returns>
@@ -42,6 +51,24 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         {
             DevTestLabScheduleResource.ValidateResourceId(id);
             return new DevTestLabScheduleResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DevTestLabServiceFabricScheduleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevTestLabServiceFabricScheduleResource"/> object. </returns>
+        public virtual DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(ResourceIdentifier id)
+        {
+            DevTestLabServiceFabricScheduleResource.ValidateResourceId(id);
+            return new DevTestLabServiceFabricScheduleResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DevTestLabVmScheduleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevTestLabVmScheduleResource"/> object. </returns>
+        public virtual DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(ResourceIdentifier id)
+        {
+            DevTestLabVmScheduleResource.ValidateResourceId(id);
+            return new DevTestLabVmScheduleResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DevTestLabArtifactSourceResource"/> along with the instance operations that can be performed on it but with no data. </summary>

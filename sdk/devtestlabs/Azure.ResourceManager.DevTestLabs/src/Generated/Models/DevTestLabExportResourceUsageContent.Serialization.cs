@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    blobStorageAbsoluteSasUri = new Uri(prop.Value.GetString());
+                    blobStorageAbsoluteSasUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("usageStartDate"u8))

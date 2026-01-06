@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,28 +15,40 @@ using Azure.ResourceManager.DevTestLabs.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    internal partial class GlobalSchedulesGetBySubscriptionCollectionResultOfT : Pageable<DevTestLabScheduleData>
+    internal partial class DevTestLabServiceFabricSchedulesGetAllAsyncCollectionResultOfT : AsyncPageable<DevTestLabScheduleData>
     {
-        private readonly GlobalSchedules _client;
+        private readonly DevTestLabServiceFabricSchedules _client;
         private readonly string _subscriptionId;
+        private readonly string _resourceGroupName;
+        private readonly string _labName;
+        private readonly string _userName;
+        private readonly string _serviceFabricName;
         private readonly string _expand;
         private readonly string _filter;
         private readonly int? _top;
         private readonly string _orderby;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of GlobalSchedulesGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The GlobalSchedules client used to send requests. </param>
+        /// <summary> Initializes a new instance of DevTestLabServiceFabricSchedulesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DevTestLabServiceFabricSchedules client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="labName"> labs. </param>
+        /// <param name="userName"> users. </param>
+        /// <param name="serviceFabricName"> servicefabrics. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GlobalSchedulesGetBySubscriptionCollectionResultOfT(GlobalSchedules client, string subscriptionId, string expand, string filter, int? top, string @orderby, RequestContext context) : base(context?.CancellationToken ?? default)
+        public DevTestLabServiceFabricSchedulesGetAllAsyncCollectionResultOfT(DevTestLabServiceFabricSchedules client, string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string expand, string filter, int? top, string @orderby, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
+            _labName = labName;
+            _userName = userName;
+            _serviceFabricName = serviceFabricName;
             _expand = expand;
             _filter = filter;
             _top = top;
@@ -43,16 +56,16 @@ namespace Azure.ResourceManager.DevTestLabs
             _context = context;
         }
 
-        /// <summary> Gets the pages of GlobalSchedulesGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DevTestLabServiceFabricSchedulesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of GlobalSchedulesGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DevTestLabScheduleData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DevTestLabServiceFabricSchedulesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<DevTestLabScheduleData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -70,14 +83,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _expand, _filter, _top, _orderby, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _expand, _filter, _top, _orderby, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDevTestLabsSubscriptionResource.GetDevTestLabSchedules");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _labName, _userName, _serviceFabricName, _expand, _filter, _top, _orderby, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _labName, _userName, _serviceFabricName, _expand, _filter, _top, _orderby, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.GetAll");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

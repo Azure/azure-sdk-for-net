@@ -15,9 +15,9 @@ using Azure.ResourceManager.DevTestLabs.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    internal partial class GlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<DevTestLabScheduleData>
+    internal partial class DevTestLabGlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<DevTestLabScheduleData>
     {
-        private readonly GlobalSchedules _client;
+        private readonly DevTestLabGlobalSchedules _client;
         private readonly string _subscriptionId;
         private readonly string _expand;
         private readonly string _filter;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly string _orderby;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of GlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The GlobalSchedules client used to send requests. </param>
+        /// <summary> Initializes a new instance of DevTestLabGlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DevTestLabGlobalSchedules client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT(GlobalSchedules client, string subscriptionId, string expand, string filter, int? top, string @orderby, RequestContext context) : base(context?.CancellationToken ?? default)
+        public DevTestLabGlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT(DevTestLabGlobalSchedules client, string subscriptionId, string expand, string filter, int? top, string @orderby, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.DevTestLabs
             _context = context;
         }
 
-        /// <summary> Gets the pages of GlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DevTestLabGlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of GlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of DevTestLabGlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DevTestLabScheduleData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _expand, _filter, _top, _orderby, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _expand, _filter, _top, _orderby, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDevTestLabsSubscriptionResource.GetDevTestLabSchedules");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDevTestLabsSubscriptionResource.GetDevTestLabGlobalSchedules");
             scope.Start();
             try
             {

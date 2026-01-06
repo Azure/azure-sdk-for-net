@@ -113,11 +113,79 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
             return GetDevTestLabs().Get(name, expand, cancellationToken);
         }
 
+        /// <summary> Gets a collection of DevTestLabGlobalSchedules in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DevTestLabGlobalSchedules and their operations over a DevTestLabGlobalScheduleResource. </returns>
+        public virtual DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules()
+        {
+            return GetCachedClient(client => new DevTestLabGlobalScheduleCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalSchedules_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabGlobalScheduleResource>> GetDevTestLabGlobalScheduleAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabGlobalSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalSchedules_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedule(string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabGlobalSchedules().Get(name, expand, cancellationToken);
+        }
+
         /// <summary> Gets a collection of DevTestLabSchedules in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
         /// <returns> An object representing collection of DevTestLabSchedules and their operations over a DevTestLabScheduleResource. </returns>
-        public virtual DevTestLabScheduleCollection GetDevTestLabSchedules()
+        public virtual DevTestLabScheduleCollection GetDevTestLabSchedules(string labName)
         {
-            return GetCachedClient(client => new DevTestLabScheduleCollection(client, Id));
+            return GetCachedClient(client => new DevTestLabScheduleCollection(client, Id, labName));
         }
 
         /// <summary>
@@ -125,11 +193,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GlobalSchedules_Get. </description>
+        /// <description> Schedules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -137,17 +205,18 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabScheduleResource>> GetDevTestLabScheduleAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabScheduleResource>> GetDevTestLabScheduleAsync(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetDevTestLabSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDevTestLabSchedules(labName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,11 +224,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GlobalSchedules_Get. </description>
+        /// <description> Schedules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -167,17 +236,167 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevTestLabScheduleResource> GetDevTestLabSchedule(string name, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabScheduleResource> GetDevTestLabSchedule(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetDevTestLabSchedules().Get(name, expand, cancellationToken);
+            return GetDevTestLabSchedules(labName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabServiceFabricSchedules in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <param name="serviceFabricName"> The serviceFabricName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabServiceFabricSchedules and their operations over a DevTestLabServiceFabricScheduleResource. </returns>
+        public virtual DevTestLabServiceFabricScheduleCollection GetDevTestLabServiceFabricSchedules(string labName, string userName, string serviceFabricName)
+        {
+            return GetCachedClient(client => new DevTestLabServiceFabricScheduleCollection(client, Id, labName, userName, serviceFabricName));
+        }
+
+        /// <summary>
+        /// Get schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceFabricSchedules_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <param name="serviceFabricName"> The serviceFabricName for the resource. </param>
+        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabServiceFabricScheduleResource>> GetDevTestLabServiceFabricScheduleAsync(string labName, string userName, string serviceFabricName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabServiceFabricSchedules(labName, userName, serviceFabricName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceFabricSchedules_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <param name="serviceFabricName"> The serviceFabricName for the resource. </param>
+        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabServiceFabricScheduleResource> GetDevTestLabServiceFabricSchedule(string labName, string userName, string serviceFabricName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabServiceFabricSchedules(labName, userName, serviceFabricName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabVmSchedules in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="virtualMachineName"> The virtualMachineName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabVmSchedules and their operations over a DevTestLabVmScheduleResource. </returns>
+        public virtual DevTestLabVmScheduleCollection GetDevTestLabVmSchedules(string labName, string virtualMachineName)
+        {
+            return GetCachedClient(client => new DevTestLabVmScheduleCollection(client, Id, labName, virtualMachineName));
+        }
+
+        /// <summary>
+        /// Get schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineSchedules_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="virtualMachineName"> The virtualMachineName for the resource. </param>
+        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabVmScheduleResource>> GetDevTestLabVmScheduleAsync(string labName, string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabVmSchedules(labName, virtualMachineName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineSchedules_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="virtualMachineName"> The virtualMachineName for the resource. </param>
+        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabVmScheduleResource> GetDevTestLabVmSchedule(string labName, string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabVmSchedules(labName, virtualMachineName).Get(name, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevTestLabArtifactSources in the <see cref="ResourceGroupResource"/>. </summary>

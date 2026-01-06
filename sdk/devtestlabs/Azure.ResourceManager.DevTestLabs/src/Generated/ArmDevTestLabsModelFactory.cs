@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -1117,30 +1118,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 location);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="labVmsShutdown"> The auto-shutdown schedule, if one has been set at the lab or lab resource level. </param>
-        /// <param name="labVmsStartup"> The auto-startup schedule, if one has been set at the lab or lab resource level. </param>
-        /// <returns> A new <see cref="Models.DevTestLabApplicableSchedule"/> instance for mocking. </returns>
-        public static DevTestLabApplicableSchedule DevTestLabApplicableSchedule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, IDictionary<string, string> tags = default, DevTestLabScheduleData labVmsShutdown = default, DevTestLabScheduleData labVmsStartup = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DevTestLabApplicableSchedule(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                tags,
-                labVmsShutdown is null && labVmsStartup is null ? default : new ApplicableScheduleProperties(labVmsShutdown, labVmsStartup, null));
-        }
-
         /// <summary> A Service Fabric. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabServiceFabricPatch"/> instance for mocking. </returns>
@@ -1385,6 +1362,688 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DevTestLabVirtualNetworkPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="defaultStorageAccount"> The lab's default storage account. </param>
+        /// <param name="defaultPremiumStorageAccount"> The lab's default premium storage account. </param>
+        /// <param name="artifactsStorageAccount"> The lab's artifact storage account. </param>
+        /// <param name="premiumDataDiskStorageAccount"> The lab's premium data disk storage account. </param>
+        /// <param name="vaultName"> The lab's Key vault. </param>
+        /// <param name="labStorageType"> Type of storage used by the lab. It can be either Premium or Standard. Default is Premium. </param>
+        /// <param name="mandatoryArtifactsResourceIdsLinux"> The ordered list of artifact resource IDs that should be applied on all Linux VM creations by default, prior to the artifacts specified by the user. </param>
+        /// <param name="mandatoryArtifactsResourceIdsWindows"> The ordered list of artifact resource IDs that should be applied on all Windows VM creations by default, prior to the artifacts specified by the user. </param>
+        /// <param name="createdOn"> The creation date of the lab. </param>
+        /// <param name="premiumDataDisks">
+        /// The setting to enable usage of premium data disks.
+        ///             When its value is 'Enabled', creation of standard or premium data disks is allowed.
+        ///             When its value is 'Disabled', only creation of standard data disks is allowed.
+        /// </param>
+        /// <param name="environmentPermission"> The access rights to be granted to the user when provisioning an environment. </param>
+        /// <param name="announcement"> The properties of any lab announcement associated with this lab. </param>
+        /// <param name="support"> The properties of any lab support message associated with this lab. </param>
+        /// <param name="vmCreationResourceGroup"> The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null. </param>
+        /// <param name="publicIPId"> The public IP address for the lab's load balancer. </param>
+        /// <param name="loadBalancerId"> The load balancer used to for lab VMs that use shared IP address. </param>
+        /// <param name="networkSecurityGroupId"> The Network Security Group attached to the lab VMs Network interfaces to restrict open ports. </param>
+        /// <param name="extendedProperties"> Extended properties of the lab used for experimental features. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabData DevTestLabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, DevTestLabStorageType? labStorageType, IEnumerable<string> mandatoryArtifactsResourceIdsLinux, IEnumerable<string> mandatoryArtifactsResourceIdsWindows, DateTimeOffset? createdOn, DevTestLabPremiumDataDisk? premiumDataDisks, DevTestLabEnvironmentPermission? environmentPermission, DevTestLabAnnouncement announcement, DevTestLabSupport support, string vmCreationResourceGroup, string publicIPId, string loadBalancerId, string networkSecurityGroupId, IDictionary<string, string> extendedProperties, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            mandatoryArtifactsResourceIdsLinux ??= new ChangeTrackingList<string>();
+            mandatoryArtifactsResourceIdsWindows ??= new ChangeTrackingList<string>();
+            extendedProperties ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabScheduleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
+        /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
+        /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
+        /// <param name="dailyRecurrenceTime"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
+        /// <param name="hourlyRecurrenceMinute"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
+        /// <param name="timeZoneId"> The time zone ID (e.g. Pacific Standard time). </param>
+        /// <param name="notificationSettings"> Notification settings. </param>
+        /// <param name="createdOn"> The creation date of the schedule. </param>
+        /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabScheduleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabScheduleData DevTestLabScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, string dailyRecurrenceTime, int? hourlyRecurrenceMinute, string timeZoneId, DevTestLabNotificationSettings notificationSettings, DateTimeOffset? createdOn, string targetResourceId, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabScheduleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabArtifactSourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="displayName"> The artifact source's display name. </param>
+        /// <param name="uri"> The artifact source's URI. </param>
+        /// <param name="sourceType"> The artifact source's type. </param>
+        /// <param name="folderPath"> The folder containing artifacts. </param>
+        /// <param name="armTemplateFolderPath"> The folder containing Azure Resource Manager templates. </param>
+        /// <param name="branchRef"> The artifact source's branch reference. </param>
+        /// <param name="securityToken"> The security token to authenticate to the artifact source. </param>
+        /// <param name="status"> Indicates if the artifact source is enabled (values: Enabled, Disabled). </param>
+        /// <param name="createdOn"> The artifact source's creation date. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabArtifactSourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabArtifactSourceData DevTestLabArtifactSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, Uri uri, DevTestLabSourceControlType? sourceType, string folderPath, string armTemplateFolderPath, string branchRef, string securityToken, DevTestLabEnableStatus? status, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabArtifactSourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabArmTemplateData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="displayName"> The display name of the ARM template. </param>
+        /// <param name="description"> The description of the ARM template. </param>
+        /// <param name="publisher"> The publisher of the ARM template. </param>
+        /// <param name="icon"> The URI to the icon of the ARM template. </param>
+        /// <param name="contents"> The contents of the ARM template. </param>
+        /// <param name="createdOn"> The creation date of the armTemplate. </param>
+        /// <param name="parametersValueFilesInfo"> File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template. </param>
+        /// <param name="isEnabled"> Whether or not ARM template is enabled for use by lab user. </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabArmTemplateData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabArmTemplateData DevTestLabArmTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string description, string publisher, string icon, BinaryData contents, DateTimeOffset? createdOn, IEnumerable<DevTestLabParametersValueFileInfo> parametersValueFilesInfo, bool? isEnabled)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            parametersValueFilesInfo ??= new ChangeTrackingList<DevTestLabParametersValueFileInfo>();
+
+            return new DevTestLabArmTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabArtifactData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="title"> The artifact's title. </param>
+        /// <param name="description"> The artifact's description. </param>
+        /// <param name="publisher"> The artifact's publisher. </param>
+        /// <param name="filePath"> The file path to the artifact. </param>
+        /// <param name="icon"> The URI to the artifact icon. </param>
+        /// <param name="targetOSType"> The artifact's target OS. </param>
+        /// <param name="parameters"> The artifact's parameters. </param>
+        /// <param name="createdOn"> The artifact's creation date. </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabArtifactData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabArtifactData DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string title, string description, string publisher, string filePath, string icon, string targetOSType, BinaryData parameters, DateTimeOffset? createdOn)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabArtifactData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabCostData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="targetCost"> The target cost properties. </param>
+        /// <param name="estimatedLabCost"> The lab cost summary component of the cost data. </param>
+        /// <param name="labCostDetails"> The lab cost details component of the cost data. </param>
+        /// <param name="resourceCosts"> The resource cost component of the cost data. </param>
+        /// <param name="currencyCode"> The currency code of the cost. </param>
+        /// <param name="startOn"> The start time of the cost data. </param>
+        /// <param name="endOn"> The end time of the cost data. </param>
+        /// <param name="createdOn"> The creation date of the cost. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabCostData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabCostData DevTestLabCostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabTargetCost targetCost, double? estimatedLabCost, IEnumerable<DevTestLabCostDetails> labCostDetails, IEnumerable<DevTestLabResourceCost> resourceCosts, string currencyCode, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            labCostDetails ??= new ChangeTrackingList<DevTestLabCostDetails>();
+            resourceCosts ??= new ChangeTrackingList<DevTestLabResourceCost>();
+
+            return new DevTestLabCostData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabCustomImageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="vm"> The virtual machine from which the image is to be created. </param>
+        /// <param name="vhd"> The VHD from which the image is to be created. </param>
+        /// <param name="description"> The description of the custom image. </param>
+        /// <param name="author"> The author of the custom image. </param>
+        /// <param name="createdOn"> The creation date of the custom image. </param>
+        /// <param name="managedImageId"> The Managed Image Id backing the custom image. </param>
+        /// <param name="managedSnapshotId"> The Managed Snapshot Id backing the custom image. </param>
+        /// <param name="dataDiskStorageInfo"> Storage information about the data disks present in the custom image. </param>
+        /// <param name="customImagePlan"> Storage information about the plan related to this custom image. </param>
+        /// <param name="isPlanAuthorized"> Whether or not the custom images underlying offer/plan has been enabled for programmatic deployment. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabCustomImageData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabCustomImageData DevTestLabCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabCustomImageVm vm, DevTestLabCustomImageVhd vhd, string description, string author, DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, IEnumerable<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            dataDiskStorageInfo ??= new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>();
+
+            return new DevTestLabCustomImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabFormulaData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="description"> The description of the formula. </param>
+        /// <param name="author"> The author of the formula. </param>
+        /// <param name="osType"> The OS type of the formula. </param>
+        /// <param name="createdOn"> The creation date of the formula. </param>
+        /// <param name="formulaContent"> The content of the formula. </param>
+        /// <param name="labVmId"> Information about a VM from which a formula is to be created. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabFormulaData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabFormulaData DevTestLabFormulaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string author, string osType, DateTimeOffset? createdOn, DevTestLabVmCreationContent formulaContent, string labVmId, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabFormulaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabScheduleCreationParameter"/>. </summary>
+        /// <param name="name"> The name of the virtual machine or environment. </param>
+        /// <param name="location"> The location of the new virtual machine or environment. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
+        /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
+        /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
+        /// <param name="dailyRecurrenceTime"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
+        /// <param name="hourlyRecurrenceMinute"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
+        /// <param name="timeZoneId"> The time zone ID (e.g. Pacific Standard time). </param>
+        /// <param name="notificationSettings"> Notification settings. </param>
+        /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
+        /// <returns> A new <see cref="Models.DevTestLabScheduleCreationParameter"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(string name, AzureLocation? location, IDictionary<string, string> tags, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, string dailyRecurrenceTime, int? hourlyRecurrenceMinute, string timeZoneId, DevTestLabNotificationSettings notificationSettings, ResourceIdentifier targetResourceId)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabScheduleCreationParameter(default, name, location, tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabGalleryImage"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="author"> The author of the gallery image. </param>
+        /// <param name="createdOn"> The creation date of the gallery image. </param>
+        /// <param name="description"> The description of the gallery image. </param>
+        /// <param name="imageReference"> The image reference of the gallery image. </param>
+        /// <param name="icon"> The icon of the gallery image. </param>
+        /// <param name="isEnabled"> Indicates whether this gallery image is enabled. </param>
+        /// <param name="planId"> The third party plan that applies to this image. </param>
+        /// <param name="isPlanAuthorized"> Indicates if the plan has been authorized for programmatic deployment. </param>
+        /// <returns> A new <see cref="Models.DevTestLabGalleryImage"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabGalleryImage DevTestLabGalleryImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string author, DateTimeOffset? createdOn, string description, DevTestLabGalleryImageReference imageReference, string icon, bool? isEnabled, string planId, bool? isPlanAuthorized)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabGalleryImage(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabNotificationChannelData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="webHookUri"> The webhook URL to send notifications to. </param>
+        /// <param name="emailRecipient"> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </param>
+        /// <param name="notificationLocale"> The locale to use when sending a notification (fallback for unsupported languages is EN). </param>
+        /// <param name="description"> Description of notification. </param>
+        /// <param name="events"> The list of event for which this notification is enabled. </param>
+        /// <param name="createdOn"> The creation date of the notification channel. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabNotificationChannelData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabNotificationChannelData DevTestLabNotificationChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri webHookUri, string emailRecipient, string notificationLocale, string description, IEnumerable<DevTestLabNotificationChannelEvent> events, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            events ??= new ChangeTrackingList<DevTestLabNotificationChannelEvent>();
+
+            return new DevTestLabNotificationChannelData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="description"> The description of the policy. </param>
+        /// <param name="status"> The status of the policy. </param>
+        /// <param name="factName"> The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc. </param>
+        /// <param name="factData"> The fact data of the policy. </param>
+        /// <param name="threshold"> The threshold of the policy (i.e. a number for MaxValuePolicy, and a JSON array of values for AllowedValuesPolicy). </param>
+        /// <param name="evaluatorType"> The evaluator type of the policy (i.e. AllowedValuesPolicy, MaxValuePolicy). </param>
+        /// <param name="createdOn"> The creation date of the policy. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabPolicyData DevTestLabPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, DevTestLabPolicyStatus? status, DevTestLabPolicyFactName? factName, string factData, string threshold, DevTestLabPolicyEvaluatorType? evaluatorType, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabUserData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The identity of the user. </param>
+        /// <param name="secretStore"> The secret store of the user. </param>
+        /// <param name="createdOn"> The creation date of the user profile. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabUserData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabUserData DevTestLabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabUserIdentity identity, DevTestLabUserSecretStore secretStore, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabUserData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabDiskData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="diskType"> The storage type for the disk (i.e. Standard, Premium). </param>
+        /// <param name="diskSizeGiB"> The size of the disk in Gibibytes. </param>
+        /// <param name="leasedByLabVmId"> The resource ID of the VM to which this disk is leased. </param>
+        /// <param name="diskBlobName"> When backed by a blob, the name of the VHD blob without extension. </param>
+        /// <param name="diskUri"> When backed by a blob, the URI of underlying blob. </param>
+        /// <param name="storageAccountId"> When backed by a blob, the storage account where the blob is. </param>
+        /// <param name="createdOn"> The creation date of the disk. </param>
+        /// <param name="hostCaching"> The host caching policy of the disk (i.e. None, ReadOnly, ReadWrite). </param>
+        /// <param name="managedDiskId"> When backed by managed disk, this is the ID of the compute disk resource. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabDiskData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabDiskData DevTestLabDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabStorageType? diskType, int? diskSizeGiB, ResourceIdentifier leasedByLabVmId, string diskBlobName, Uri diskUri, string storageAccountId, DateTimeOffset? createdOn, string hostCaching, ResourceIdentifier managedDiskId, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabDiskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabEnvironmentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="deploymentProperties"> The deployment properties of the environment. </param>
+        /// <param name="armTemplateDisplayName"> The display name of the Azure Resource Manager template that produced the environment. </param>
+        /// <param name="resourceGroupId"> The identifier of the resource group containing the environment's resources. </param>
+        /// <param name="createdByUser"> The creator of the environment. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabEnvironmentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabEnvironmentData DevTestLabEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnvironmentDeployment deploymentProperties, string armTemplateDisplayName, string resourceGroupId, string createdByUser, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabEnvironmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabSecretData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="value"> The value of the secret for secret creation. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabSecretData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabSecretData DevTestLabSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string value, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabSecretData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabServiceFabricData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="externalServiceFabricId"> The backing service fabric resource's id. </param>
+        /// <param name="environmentId"> The resource id of the environment under which the service fabric resource is present. </param>
+        /// <param name="applicableSchedule"> The applicable schedule for the virtual machine. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabServiceFabricData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabServiceFabricData DevTestLabServiceFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string externalServiceFabricId, string environmentId, DevTestLabApplicableSchedule applicableSchedule, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabServiceFabricData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabApplicableSchedule"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="labVmsShutdown"> The auto-shutdown schedule, if one has been set at the lab or lab resource level. </param>
+        /// <param name="labVmsStartup"> The auto-startup schedule, if one has been set at the lab or lab resource level. </param>
+        /// <returns> A new <see cref="Models.DevTestLabApplicableSchedule"/> instance for mocking. </returns>
+        public static DevTestLabApplicableSchedule DevTestLabApplicableSchedule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabScheduleData labVmsShutdown = default, DevTestLabScheduleData labVmsStartup = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevTestLabApplicableSchedule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                tags,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabVmData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="notes"> The notes of the virtual machine. </param>
+        /// <param name="ownerObjectId"> The object identifier of the owner of the virtual machine. </param>
+        /// <param name="ownerUserPrincipalName"> The user principal name of the virtual machine owner. </param>
+        /// <param name="createdByUserId"> The object identifier of the creator of the virtual machine. </param>
+        /// <param name="createdByUser"> The email address of creator of the virtual machine. </param>
+        /// <param name="createdOn"> The creation date of the virtual machine. </param>
+        /// <param name="computeId"> The resource identifier (Microsoft.Compute) of the virtual machine. </param>
+        /// <param name="customImageId"> The custom image identifier of the virtual machine. </param>
+        /// <param name="osType"> The OS type of the virtual machine. </param>
+        /// <param name="size"> The size of the virtual machine. </param>
+        /// <param name="userName"> The user name of the virtual machine. </param>
+        /// <param name="password"> The password of the virtual machine administrator. </param>
+        /// <param name="sshKey"> The SSH key of the virtual machine administrator. </param>
+        /// <param name="isAuthenticationWithSshKey"> Indicates whether this virtual machine uses an SSH key for authentication. </param>
+        /// <param name="fqdn"> The fully-qualified domain name of the virtual machine. </param>
+        /// <param name="labSubnetName"> The lab subnet name of the virtual machine. </param>
+        /// <param name="labVirtualNetworkId"> The lab virtual network identifier of the virtual machine. </param>
+        /// <param name="disallowPublicIPAddress"> Indicates whether the virtual machine is to be created without a public IP address. </param>
+        /// <param name="artifacts"> The artifacts to be installed on the virtual machine. </param>
+        /// <param name="artifactDeploymentStatus"> The artifact deployment status for the virtual machine. </param>
+        /// <param name="galleryImageReference"> The Microsoft Azure Marketplace image reference of the virtual machine. </param>
+        /// <param name="planId"> The id of the plan associated with the virtual machine image. </param>
+        /// <param name="computeVm"> The compute virtual machine properties. </param>
+        /// <param name="networkInterface"> The network interface properties. </param>
+        /// <param name="applicableSchedule"> The applicable schedule for the virtual machine. </param>
+        /// <param name="expireOn"> The expiration date for VM. </param>
+        /// <param name="allowClaim"> Indicates whether another user can take ownership of the virtual machine. </param>
+        /// <param name="storageType"> Storage type to use for virtual machine (i.e. Standard, Premium). </param>
+        /// <param name="vmCreationSource"> Tells source of creation of lab virtual machine. Output property only. </param>
+        /// <param name="environmentId"> The resource ID of the environment that contains this virtual machine, if any. </param>
+        /// <param name="dataDiskParameters"> New or existing data disks to attach to the virtual machine after creation. </param>
+        /// <param name="scheduleParameters"> Virtual Machine schedules to be created. </param>
+        /// <param name="lastKnownPowerState"> Last known compute power state captured in DTL. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabVmData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabVmData DevTestLabVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IEnumerable<DevTestLabArtifactInstallInfo> artifacts, DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, DevTestLabGalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, DevTestLabNetworkInterface networkInterface, DevTestLabApplicableSchedule applicableSchedule, DateTimeOffset? expireOn, bool? allowClaim, string storageType, DevTestLabVmCreationSource? vmCreationSource, ResourceIdentifier environmentId, IEnumerable<DevTestLabDataDiskProperties> dataDiskParameters, IEnumerable<DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            artifacts ??= new ChangeTrackingList<DevTestLabArtifactInstallInfo>();
+            dataDiskParameters ??= new ChangeTrackingList<DevTestLabDataDiskProperties>();
+            scheduleParameters ??= new ChangeTrackingList<DevTestLabScheduleCreationParameter>();
+
+            return new DevTestLabVmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabVirtualNetworkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="allowedSubnets"> The allowed subnets of the virtual network. </param>
+        /// <param name="description"> The description of the virtual network. </param>
+        /// <param name="externalProviderResourceId"> The Microsoft.Network resource identifier of the virtual network. </param>
+        /// <param name="externalSubnets"> The external subnet properties. </param>
+        /// <param name="subnetOverrides"> The subnet overrides of the virtual network. </param>
+        /// <param name="createdOn"> The creation date of the virtual network. </param>
+        /// <param name="provisioningState"> The provisioning status of the resource. </param>
+        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <returns> A new <see cref="DevTestLabs.DevTestLabVirtualNetworkData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevTestLabVirtualNetworkData DevTestLabVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<DevTestLabSubnet> allowedSubnets, string description, string externalProviderResourceId, IEnumerable<DevTestLabExternalSubnet> externalSubnets, IEnumerable<DevTestLabSubnetOverride> subnetOverrides, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            allowedSubnets ??= new ChangeTrackingList<DevTestLabSubnet>();
+            externalSubnets ??= new ChangeTrackingList<DevTestLabExternalSubnet>();
+            subnetOverrides ??= new ChangeTrackingList<DevTestLabSubnetOverride>();
+
+            return new DevTestLabVirtualNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                tags,
+                location);
         }
     }
 }
