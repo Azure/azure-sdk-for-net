@@ -13,49 +13,48 @@ param (
 )
 
 # Get resource IDs from deployment outputs
-$sourceResourceId = $DeploymentOutputs['AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID']
-$targetResourceId = $DeploymentOutputs['AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID']
+$primaryResourceId = $DeploymentOutputs['AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID']
+$copyTargetResourceId = $DeploymentOutputs['AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID']
 
-if (-not $sourceResourceId) {
-    Write-Error "AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID not found in deployment outputs"
+if (-not $primaryResourceId) {
+    Write-Error "AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID (Primary Microsoft Foundry resource ID) not found in deployment outputs"
     exit 1
 }
 
-if (-not $targetResourceId) {
-    Write-Error "AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID not found in deployment outputs"
+if (-not $copyTargetResourceId) {
+    Write-Error "AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID (Copy target Microsoft Foundry resource ID) not found in deployment outputs"
     exit 1
 }
 
 # Extract account names from resource IDs
 # Format: /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.CognitiveServices/accounts/{accountName}
-$sourceAccountName = $sourceResourceId -replace '^.*/accounts/', ''
-$targetAccountName = $targetResourceId -replace '^.*/accounts/', ''
+$primaryAccountName = $primaryResourceId -replace '^.*/accounts/', ''
+$copyTargetAccountName = $copyTargetResourceId -replace '^.*/accounts/', ''
 
 # Get endpoints from deployment outputs
-$sourceEndpoint = $DeploymentOutputs['CONTENTUNDERSTANDING_ENDPOINT']
-$targetEndpoint = $DeploymentOutputs['CONTENTUNDERSTANDING_TARGET_ENDPOINT']
+$primaryEndpoint = $DeploymentOutputs['CONTENTUNDERSTANDING_ENDPOINT']
+$copyTargetEndpoint = $DeploymentOutputs['CONTENTUNDERSTANDING_TARGET_ENDPOINT']
 
-if (-not $sourceEndpoint) {
-    Write-Error "CONTENTUNDERSTANDING_ENDPOINT not found in deployment outputs"
+if (-not $primaryEndpoint) {
+    Write-Error "CONTENTUNDERSTANDING_ENDPOINT (Primary Microsoft Foundry endpoint) not found in deployment outputs"
     exit 1
 }
 
-if (-not $targetEndpoint) {
-    Write-Error "CONTENTUNDERSTANDING_TARGET_ENDPOINT not found in deployment outputs"
+if (-not $copyTargetEndpoint) {
+    Write-Error "CONTENTUNDERSTANDING_TARGET_ENDPOINT (Copy target Microsoft Foundry endpoint) not found in deployment outputs"
     exit 1
 }
 
-Write-Host "Deploying models to source Foundry resource: $sourceAccountName"
-Write-Host "Deploying models to target Foundry resource: $targetAccountName"
+Write-Host "Deploying models to Primary Microsoft Foundry resource: $primaryAccountName"
+Write-Host "Deploying models to copy target Foundry resource: $copyTargetAccountName"
 
 # Model deployment configurations
-# Note: Model versions and SKUs are verified to work with Azure AI Foundry
 $modelConfigs = @(
     @{
         Name = 'gpt-4.1'
         ModelName = 'gpt-4.1'
         Format = 'OpenAI'
-        Version = '2025-04-14'  # Verified: correct version for gpt-4.1
+        Version = '2025-04-14'
         SkuName = 'Standard'
         SkuCapacity = 150  # Rate limit: 150,000 tokens per minute
     },
@@ -63,7 +62,7 @@ $modelConfigs = @(
         Name = 'gpt-4.1-mini'
         ModelName = 'gpt-4.1-mini'
         Format = 'OpenAI'
-        Version = '2025-04-14'  # Verified: correct version for gpt-4.1-mini
+        Version = '2025-04-14'
         SkuName = 'Standard'
         SkuCapacity = 150  # Rate limit: 150,000 tokens per minute
     },
@@ -72,8 +71,8 @@ $modelConfigs = @(
         ModelName = 'text-embedding-3-large'
         Format = 'OpenAI'
         Version = '1'
-        SkuName = 'GlobalStandard'  # Verified: embedding models require GlobalStandard SKU, not Standard
-        SkuCapacity = 150  # Rate limit: 120,000 tokens per minute
+        SkuName = 'GlobalStandard'
+        SkuCapacity = 100  # Rate limit: 100,000 tokens per minute
     }
 )
 
@@ -266,73 +265,47 @@ function Update-ContentUnderstandingDefaults {
     }
 }
 
-# Deploy models to source resource
-$deploymentCount = 0
-$successCount = 0
-$failedDeployments = @()
-
+# Deploy models to Primary Microsoft Foundry resource
 foreach ($model in $modelConfigs) {
-    $deploymentCount++
     $result = Deploy-Model `
         -ResourceGroupName $ResourceGroupName `
-        -AccountName $sourceAccountName `
+        -AccountName $primaryAccountName `
         -DeploymentName $model.Name `
         -ModelName $model.ModelName `
         -ModelFormat $model.Format `
         -ModelVersion $model.Version `
         -SkuName $model.SkuName `
         -SkuCapacity $model.SkuCapacity
-    if ($result) {
-        $successCount++
-    }
-    else {
-        $failedDeployments += "$($model.Name) on source account"
+    if (-not $result) {
+        Write-Error "Failed to deploy '$($model.Name)' to Primary Microsoft Foundry resource. Exiting." -ErrorAction Stop
+        exit 1
     }
 }
 
-# Deploy models to target resource
+# Deploy models to copy target resource
 foreach ($model in $modelConfigs) {
-    $deploymentCount++
     $result = Deploy-Model `
         -ResourceGroupName $ResourceGroupName `
-        -AccountName $targetAccountName `
+        -AccountName $copyTargetAccountName `
         -DeploymentName $model.Name `
         -ModelName $model.ModelName `
         -ModelFormat $model.Format `
         -ModelVersion $model.Version `
         -SkuName $model.SkuName `
         -SkuCapacity $model.SkuCapacity
-    if ($result) {
-        $successCount++
-    }
-    else {
-        $failedDeployments += "$($model.Name) on target account"
+    if (-not $result) {
+        Write-Error "Failed to deploy '$($model.Name)' to copy target resource. Exiting." -ErrorAction Stop
+        exit 1
     }
 }
 
 Write-Host ""
-Write-Host "Model deployment script completed."
-Write-Host "Attempted $deploymentCount deployments, $successCount succeeded, $($deploymentCount - $successCount) failed."
+Write-Host "Model deployment script completed successfully." -ForegroundColor Green
 Write-Host ""
 Write-Host "IMPORTANT: Model deployments may take 5-15 minutes to propagate to the Content Understanding API." -ForegroundColor Yellow
 Write-Host "Even though deployments show 'Succeeded' in Azure Resource Manager, the Content Understanding" -ForegroundColor Yellow
 Write-Host "API may not see them immediately. If tests fail with 'DeploymentIdNotFound', wait a few" -ForegroundColor Yellow
 Write-Host "more minutes and retry the tests." -ForegroundColor Yellow
-
-if ($successCount -lt $deploymentCount) {
-    Write-Host ""
-    Write-Error "FAILED deployments:" -ErrorAction Continue
-    foreach ($failed in $failedDeployments) {
-        Write-Error "  - $failed" -ErrorAction Continue
-    }
-    Write-Host ""
-    Write-Host "Deployment failures may be expected if:" -ForegroundColor Yellow
-    Write-Host "  - Models are not available in your region/subscription" -ForegroundColor Yellow
-    Write-Host "  - Model names/versions are incorrect" -ForegroundColor Yellow
-    Write-Host "  - SKU is not supported for the model in this region" -ForegroundColor Yellow
-    Write-Host "Check the error messages above for specific details." -ForegroundColor Yellow
-    Write-Host "You may need to update the model configurations in this script to match available models." -ForegroundColor Yellow
-}
 
 Write-Host ""
 Write-Host "Note: Model deployments are asynchronous and may take 5-15 minutes to fully provision."
@@ -344,12 +317,12 @@ Write-Host "Waiting for model deployments to be ready before updating Content Un
 
 $allDeploymentsReady = $true
 
-# Wait for source resource deployments
-Write-Host "Checking source resource deployments..."
+# Wait for Primary Microsoft Foundry resource deployments
+Write-Host "Checking Primary Microsoft Foundry resource deployments..."
 foreach ($model in $modelConfigs) {
     $isReady = Wait-ForDeployment `
         -ResourceGroupName $ResourceGroupName `
-        -AccountName $sourceAccountName `
+        -AccountName $primaryAccountName `
         -DeploymentName $model.Name `
         -MaxWaitMinutes 15 `
         -PollIntervalSeconds 30
@@ -358,12 +331,12 @@ foreach ($model in $modelConfigs) {
     }
 }
 
-# Wait for target resource deployments
-Write-Host "Checking target resource deployments..."
+# Wait for copy target resource deployments
+Write-Host "Checking copy target resource deployments..."
 foreach ($model in $modelConfigs) {
     $isReady = Wait-ForDeployment `
         -ResourceGroupName $ResourceGroupName `
-        -AccountName $targetAccountName `
+        -AccountName $copyTargetAccountName `
         -DeploymentName $model.Name `
         -MaxWaitMinutes 15 `
         -PollIntervalSeconds 30
@@ -384,19 +357,19 @@ if ($allDeploymentsReady) {
         'text-embedding-3-large' = 'text-embedding-3-large'
     }
 
-    # Update defaults for source resource
-    $updateSourceResult = Update-ContentUnderstandingDefaults `
-        -Endpoint $sourceEndpoint `
-        -AccountName $sourceAccountName `
+    # Update defaults for Primary Microsoft Foundry resource
+    $updatePrimaryResult = Update-ContentUnderstandingDefaults `
+        -Endpoint $primaryEndpoint `
+        -AccountName $primaryAccountName `
         -ModelDeployments $modelDeployments
 
-    # Update defaults for target resource
-    $updateTargetResult = Update-ContentUnderstandingDefaults `
-        -Endpoint $targetEndpoint `
-        -AccountName $targetAccountName `
+    # Update defaults for copy target resource
+    $updateCopyTargetResult = Update-ContentUnderstandingDefaults `
+        -Endpoint $copyTargetEndpoint `
+        -AccountName $copyTargetAccountName `
         -ModelDeployments $modelDeployments
 
-    if ($updateSourceResult -and $updateTargetResult) {
+    if ($updatePrimaryResult -and $updateCopyTargetResult) {
         Write-Host ""
         Write-Host "Content Understanding defaults updated successfully for both resources!" -ForegroundColor Green
     }
