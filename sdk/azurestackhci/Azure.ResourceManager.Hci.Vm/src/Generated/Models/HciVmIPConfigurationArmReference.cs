@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> The Azure Resource ID of an IPConfiguration resource. </summary>
-    public partial class HciVmIPConfigurationArmReference
+    internal partial class HciVmIPConfigurationArmReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

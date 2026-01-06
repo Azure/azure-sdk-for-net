@@ -15,7 +15,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> The Azure Resource ID of an IPConfiguration resource. </summary>
-    public partial class HciVmIPConfigurationArmReference : IJsonModel<HciVmIPConfigurationArmReference>
+    internal partial class HciVmIPConfigurationArmReference : IJsonModel<HciVmIPConfigurationArmReference>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

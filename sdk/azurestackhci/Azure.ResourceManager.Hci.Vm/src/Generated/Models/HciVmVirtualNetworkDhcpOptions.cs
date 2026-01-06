@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> DHCP options for virtual networks. </summary>
-    public partial class HciVmVirtualNetworkDhcpOptions
+    internal partial class HciVmVirtualNetworkDhcpOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

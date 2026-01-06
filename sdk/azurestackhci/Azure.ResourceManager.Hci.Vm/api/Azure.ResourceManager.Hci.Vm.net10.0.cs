@@ -1138,9 +1138,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent HciVmVirtualHardDiskUploadContent(System.Uri managedDiskUploadUri = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult HciVmVirtualHardDiskUploadResult(Azure.Core.ResourceIdentifier virtualHardDiskId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus uploadStatus = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus HciVmVirtualHardDiskUploadStatus(long? uploadedSizeInMB = default(long?), Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? status = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus?), long? progressPercentage = default(long?), string errorCode = null, string errorMessage = null) { throw null; }
-        public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace HciVmVirtualNetworkAddressSpace(System.Collections.Generic.IEnumerable<string> addressPrefixes = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmVirtualNetworkData HciVmVirtualNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions HciVmVirtualNetworkDhcpOptions(System.Collections.Generic.IEnumerable<string> dnsServers = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkPatch HciVmVirtualNetworkPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkProperties HciVmVirtualNetworkProperties(System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<string> dhcpOptionsDnsServers = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkStatus status = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmVirtualNetworkSubnetData HciVmVirtualNetworkSubnetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkSubnetProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null) { throw null; }
@@ -1813,7 +1811,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     }
     public partial class HciVmInboundNatRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInboundNatRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInboundNatRuleProperties>
     {
-        public HciVmInboundNatRuleProperties(Azure.ResourceManager.Hci.Vm.Models.HciVmInboundNatRuleProtocol protocol, int frontendPort, int backendPort, Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference backendIPConfiguration, Azure.ResourceManager.Hci.Vm.Models.HciVmPublicIPAddressArmReference publicIPAddress) { }
+        public HciVmInboundNatRuleProperties(Azure.ResourceManager.Hci.Vm.Models.HciVmInboundNatRuleProtocol protocol, int frontendPort, int backendPort) { }
         public Azure.Core.ResourceIdentifier BackendIPResourceId { get { throw null; } set { } }
         public int BackendPort { get { throw null; } set { } }
         public int FrontendPort { get { throw null; } set { } }
@@ -2179,20 +2177,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HciVmIPConfigurationArmReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference>
-    {
-        public HciVmIPConfigurationArmReference() { }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationArmReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class HciVmIPConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationProperties>
     {
         public HciVmIPConfigurationProperties() { }
@@ -2278,20 +2262,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressAdminState left, Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressAdminState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HciVmLoadBalancerBackendAddressPoolReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference>
-    {
-        public HciVmLoadBalancerBackendAddressPoolReference(string name) { }
-        public string Name { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class HciVmLoadBalancerBackendAddressProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressProperties>
     {
         public HciVmLoadBalancerBackendAddressProperties() { }
@@ -2310,20 +2280,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class HciVmLoadBalancerFrontendIPConfigurationReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference>
-    {
-        public HciVmLoadBalancerFrontendIPConfigurationReference(string name) { }
-        public string Name { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HciVmLoadBalancerHealthProbe : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerHealthProbe>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerHealthProbe>
     {
@@ -2427,7 +2383,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     }
     public partial class HciVmLoadBalancerRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleProperties>
     {
-        public HciVmLoadBalancerRuleProperties(Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerFrontendIPConfigurationReference frontendIPConfiguration, Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerBackendAddressPoolReference backendAddressPool, int frontendPort, int backendPort, Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleTransportProtocol protocol) { }
+        public HciVmLoadBalancerRuleProperties(string frontendIPName, string backendAddressPoolName, int frontendPort, int backendPort, Azure.ResourceManager.Hci.Vm.Models.HciVmLoadBalancerRuleTransportProtocol protocol) { }
         public string BackendAddressPoolName { get { throw null; } set { } }
         public int BackendPort { get { throw null; } set { } }
         public string FrontendIPName { get { throw null; } set { } }
@@ -3605,34 +3561,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HciVmVirtualNetworkAddressSpace : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace>
-    {
-        public HciVmVirtualNetworkAddressSpace(System.Collections.Generic.IEnumerable<string> addressPrefixes) { }
-        public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class HciVmVirtualNetworkDhcpOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions>
-    {
-        public HciVmVirtualNetworkDhcpOptions() { }
-        public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class HciVmVirtualNetworkPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkPatch>
     {
         public HciVmVirtualNetworkPatch() { }
@@ -3649,7 +3577,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     }
     public partial class HciVmVirtualNetworkProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkProperties>
     {
-        public HciVmVirtualNetworkProperties(Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkAddressSpace addressSpace, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualNetworkDhcpOptions dhcpOptions) { }
+        public HciVmVirtualNetworkProperties(System.Collections.Generic.IEnumerable<string> addressPrefixes) { }
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
         public System.Collections.Generic.IList<string> DhcpOptionsDnsServers { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }

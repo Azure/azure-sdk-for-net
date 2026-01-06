@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Reference to a LoadBalancer Frontend IPConfiguration. </summary>
-    public partial class HciVmLoadBalancerFrontendIPConfigurationReference
+    internal partial class HciVmLoadBalancerFrontendIPConfigurationReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

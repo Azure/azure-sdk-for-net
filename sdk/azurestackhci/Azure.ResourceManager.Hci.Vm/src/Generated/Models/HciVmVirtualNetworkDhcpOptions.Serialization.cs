@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> DHCP options for virtual networks. </summary>
-    public partial class HciVmVirtualNetworkDhcpOptions : IJsonModel<HciVmVirtualNetworkDhcpOptions>
+    internal partial class HciVmVirtualNetworkDhcpOptions : IJsonModel<HciVmVirtualNetworkDhcpOptions>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

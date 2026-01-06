@@ -18,16 +18,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmVirtualNetworkProperties"/>. </summary>
-        /// <param name="addressSpace"> Virtual Network address space. All subnets must be within the defined range. </param>
-        /// <param name="dhcpOptions"> Virtual Network DHCP options. Inherited by all subnets and VMs. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addressSpace"/> or <paramref name="dhcpOptions"/> is null. </exception>
-        public HciVmVirtualNetworkProperties(HciVmVirtualNetworkAddressSpace addressSpace, HciVmVirtualNetworkDhcpOptions dhcpOptions)
+        /// <param name="addressPrefixes"> A list of one or more CIDR blocks that define the address space. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressPrefixes"/> is null. </exception>
+        public HciVmVirtualNetworkProperties(IEnumerable<string> addressPrefixes)
         {
-            Argument.AssertNotNull(addressSpace, nameof(addressSpace));
-            Argument.AssertNotNull(dhcpOptions, nameof(dhcpOptions));
+            Argument.AssertNotNull(addressPrefixes, nameof(addressPrefixes));
 
-            AddressSpace = addressSpace;
-            DhcpOptions = dhcpOptions;
+            AddressSpace = new HciVmVirtualNetworkAddressSpace(addressPrefixes);
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmVirtualNetworkProperties"/>. </summary>

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -22,19 +21,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="protocol"> Protocol for the NAT rule. </param>
         /// <param name="frontendPort"> Frontend Port for the inbound rule. </param>
         /// <param name="backendPort"> backend Port for the inbound rule. </param>
-        /// <param name="backendIPConfiguration"> IP configuration for the target backend. </param>
-        /// <param name="publicIPAddress"> Public IP Address for this NAT rule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backendIPConfiguration"/> or <paramref name="publicIPAddress"/> is null. </exception>
-        public HciVmInboundNatRuleProperties(HciVmInboundNatRuleProtocol protocol, int frontendPort, int backendPort, HciVmIPConfigurationArmReference backendIPConfiguration, HciVmPublicIPAddressArmReference publicIPAddress)
+        public HciVmInboundNatRuleProperties(HciVmInboundNatRuleProtocol protocol, int frontendPort, int backendPort)
         {
-            Argument.AssertNotNull(backendIPConfiguration, nameof(backendIPConfiguration));
-            Argument.AssertNotNull(publicIPAddress, nameof(publicIPAddress));
 
             Protocol = protocol;
             FrontendPort = frontendPort;
             BackendPort = backendPort;
-            BackendIPConfiguration = backendIPConfiguration;
-            PublicIPAddress = publicIPAddress;
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmInboundNatRuleProperties"/>. </summary>

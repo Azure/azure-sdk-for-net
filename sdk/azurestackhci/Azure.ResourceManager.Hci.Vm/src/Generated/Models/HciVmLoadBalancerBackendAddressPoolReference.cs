@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Reference to a LoadBalancer backend address pool reference. </summary>
-    public partial class HciVmLoadBalancerBackendAddressPoolReference
+    internal partial class HciVmLoadBalancerBackendAddressPoolReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

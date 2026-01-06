@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Reference to a LoadBalancer Frontend IPConfiguration. </summary>
-    public partial class HciVmLoadBalancerFrontendIPConfigurationReference : IJsonModel<HciVmLoadBalancerFrontendIPConfigurationReference>
+    internal partial class HciVmLoadBalancerFrontendIPConfigurationReference : IJsonModel<HciVmLoadBalancerFrontendIPConfigurationReference>
     {
         /// <summary> Initializes a new instance of <see cref="HciVmLoadBalancerFrontendIPConfigurationReference"/> for deserialization. </summary>
         internal HciVmLoadBalancerFrontendIPConfigurationReference()

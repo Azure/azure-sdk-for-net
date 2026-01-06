@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Reference to a LoadBalancer backend address pool reference. </summary>
-    public partial class HciVmLoadBalancerBackendAddressPoolReference : IJsonModel<HciVmLoadBalancerBackendAddressPoolReference>
+    internal partial class HciVmLoadBalancerBackendAddressPoolReference : IJsonModel<HciVmLoadBalancerBackendAddressPoolReference>
     {
         /// <summary> Initializes a new instance of <see cref="HciVmLoadBalancerBackendAddressPoolReference"/> for deserialization. </summary>
         internal HciVmLoadBalancerBackendAddressPoolReference()

@@ -1099,26 +1099,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmVirtualNetworkProperties(addressPrefixes is null ? default : new HciVmVirtualNetworkAddressSpace((addressPrefixes ?? new ChangeTrackingList<string>()).ToList(), null), dhcpOptionsDnsServers is null ? default : new HciVmVirtualNetworkDhcpOptions((dhcpOptionsDnsServers ?? new ChangeTrackingList<string>()).ToList(), null), provisioningState, status, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Address Space Information. </summary>
-        /// <param name="addressPrefixes"> A list of one or more CIDR blocks that define the address space. </param>
-        /// <returns> A new <see cref="Models.HciVmVirtualNetworkAddressSpace"/> instance for mocking. </returns>
-        public static HciVmVirtualNetworkAddressSpace HciVmVirtualNetworkAddressSpace(IEnumerable<string> addressPrefixes = default)
-        {
-            addressPrefixes ??= new ChangeTrackingList<string>();
-
-            return new HciVmVirtualNetworkAddressSpace(addressPrefixes.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> DHCP options for virtual networks. </summary>
-        /// <param name="dnsServers"> An array of DNS server IP addresses that VMs or wokloads in the vnet can inherit. </param>
-        /// <returns> A new <see cref="Models.HciVmVirtualNetworkDhcpOptions"/> instance for mocking. </returns>
-        public static HciVmVirtualNetworkDhcpOptions HciVmVirtualNetworkDhcpOptions(IEnumerable<string> dnsServers = default)
-        {
-            dnsServers ??= new ChangeTrackingList<string>();
-
-            return new HciVmVirtualNetworkDhcpOptions(dnsServers.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The type used for updating tags in VirtualNetwork resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualNetworkPatch"/> instance for mocking. </returns>

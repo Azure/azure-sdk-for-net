@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmLoadBalancerRuleProperties"/>. </summary>
-        /// <param name="frontendIPConfiguration"> arm reference to frontend IP being used by this LB. </param>
-        /// <param name="backendAddressPool"> arm reference to backend pool being used by ths pool. </param>
+        /// <param name="frontendIPName"> name of the frontnedIPConfiguration. </param>
+        /// <param name="backendAddressPoolName"> name of the backend address pool. </param>
         /// <param name="frontendPort"> Frontend port to accept connections. </param>
         /// <param name="backendPort"> backendPort to forward connections. </param>
         /// <param name="protocol"> IP Protocol that the rule must load-balance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfiguration"/> or <paramref name="backendAddressPool"/> is null. </exception>
-        public HciVmLoadBalancerRuleProperties(HciVmLoadBalancerFrontendIPConfigurationReference frontendIPConfiguration, HciVmLoadBalancerBackendAddressPoolReference backendAddressPool, int frontendPort, int backendPort, HciVmLoadBalancerRuleTransportProtocol protocol)
+        /// <exception cref="ArgumentNullException"> <paramref name="frontendIPName"/> or <paramref name="backendAddressPoolName"/> is null. </exception>
+        public HciVmLoadBalancerRuleProperties(string frontendIPName, string backendAddressPoolName, int frontendPort, int backendPort, HciVmLoadBalancerRuleTransportProtocol protocol)
         {
-            Argument.AssertNotNull(frontendIPConfiguration, nameof(frontendIPConfiguration));
-            Argument.AssertNotNull(backendAddressPool, nameof(backendAddressPool));
+            Argument.AssertNotNull(frontendIPName, nameof(frontendIPName));
+            Argument.AssertNotNull(backendAddressPoolName, nameof(backendAddressPoolName));
 
-            FrontendIPConfiguration = frontendIPConfiguration;
-            BackendAddressPool = backendAddressPool;
+            FrontendIPConfiguration = new HciVmLoadBalancerFrontendIPConfigurationReference(frontendIPName);
+            BackendAddressPool = new HciVmLoadBalancerBackendAddressPoolReference(backendAddressPoolName);
             FrontendPort = frontendPort;
             BackendPort = backendPort;
             Protocol = protocol;

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Address Space Information. </summary>
-    public partial class HciVmVirtualNetworkAddressSpace
+    internal partial class HciVmVirtualNetworkAddressSpace
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

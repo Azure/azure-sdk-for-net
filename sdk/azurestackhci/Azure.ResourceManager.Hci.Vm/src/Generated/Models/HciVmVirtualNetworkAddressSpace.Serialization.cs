@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Address Space Information. </summary>
-    public partial class HciVmVirtualNetworkAddressSpace : IJsonModel<HciVmVirtualNetworkAddressSpace>
+    internal partial class HciVmVirtualNetworkAddressSpace : IJsonModel<HciVmVirtualNetworkAddressSpace>
     {
         /// <summary> Initializes a new instance of <see cref="HciVmVirtualNetworkAddressSpace"/> for deserialization. </summary>
         internal HciVmVirtualNetworkAddressSpace()
