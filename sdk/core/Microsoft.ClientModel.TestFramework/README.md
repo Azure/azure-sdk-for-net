@@ -4,7 +4,7 @@
 
 ## Using the test framework
 
-The Test Framework is released to the Azure SDK for .NET dev feed. To use it in your project, you'll need to configure access to the dev feed as described in the [Contributing Guide](../../CONTRIBUTING.md#nuget-package-dev-feed).
+The Test Framework is released to the Azure SDK for .NET dev feed. To use it in your project, you'll need to configure access to the dev feed as described in the [Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#nuget-package-dev-feed).
 
 Once you have access to the dev feed, add a package reference to `Microsoft.ClientModel.TestFramework` in your test project.
 
