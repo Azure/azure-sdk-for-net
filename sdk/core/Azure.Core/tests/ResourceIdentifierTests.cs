@@ -1348,7 +1348,7 @@ namespace Azure.Core.Tests
             Assert.Multiple(() =>
             {
                 Assert.That(null <= id, Is.True);
-                Assert.That(id, Is.GreaterThan(null));
+                Assert.That(id <= null, Is.False);
             });
         }
 
@@ -1359,7 +1359,7 @@ namespace Azure.Core.Tests
             Assert.Multiple(() =>
             {
                 Assert.That(null > id, Is.False);
-                Assert.That(id, Is.GreaterThan(null));
+                Assert.That(id > null, Is.True);
             });
         }
 

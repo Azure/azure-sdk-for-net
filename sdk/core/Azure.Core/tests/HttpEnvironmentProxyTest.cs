@@ -68,22 +68,6 @@ namespace System.Net.Http.Tests
             // Set https to invalid strings and use only IP & port for http.
             Environment.SetEnvironmentVariable("http_proxy", "1.1.1.3:3003");
             Environment.SetEnvironmentVariable("https_proxy", "ab!cd");
-            Assert.Multiple(() =>
-            {
-                Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
-                Assert.That(p, Is.Not.Null);
-            });
-
-            // Protocol specific variables should take precedence over all_
-            // and https should still use all_proxy.
-            u = p.GetProxy(s_fooHttp);
-            Assert.That(u != null && u.Host == "1.1.1.2" && u.Port == 3001, Is.True);
-            u = p.GetProxy(s_fooHttps);
-            Assert.That(u != null && u.Host == "1.1.1.1" && u.Port == 3000, Is.True);
-
-            // Set https to invalid strings and use only IP & port for http.
-            Environment.SetEnvironmentVariable("http_proxy", "1.1.1.3:3003");
-            Environment.SetEnvironmentVariable("https_proxy", "ab!cd");
             Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
             Assert.That(p, Is.Not.Null);
 

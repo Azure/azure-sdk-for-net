@@ -247,11 +247,9 @@ namespace Azure.Core.Tests
             {
                 tasks.Add(Task.Run(async () =>
                 {
-                    Assert.Multiple(() =>
-                    {
-                        Assert.That(alwv.HasValue, Is.False);
-                        Assert.That(alwv.TryGetValue(out _), Is.False);
-                    });
+                    Assert.That(alwv.HasValue, Is.False);
+                    Assert.That(alwv.TryGetValue(out _), Is.False);
+
                     using var asyncLock = await alwv.GetLockOrValueAsync(async);
                     Assert.That(asyncLock.HasValue, Is.False);
                 }));
@@ -259,11 +257,8 @@ namespace Azure.Core.Tests
 
             firstLock.Dispose();
             await Task.WhenAll(tasks);
-            Assert.Multiple(() =>
-            {
-                Assert.That(alwv.HasValue, Is.False);
-                Assert.That(alwv.TryGetValue(out _), Is.False);
-            });
+            Assert.That(alwv.HasValue, Is.False);
+            Assert.That(alwv.TryGetValue(out _), Is.False);
         }
 
         [Test]
@@ -277,11 +272,8 @@ namespace Azure.Core.Tests
                 tasks.Add(Task.Run(async () =>
                 {
                     using var asyncLock = await alwv.GetLockOrValueAsync(async);
-                    Assert.Multiple(() =>
-                    {
-                        Assert.That(asyncLock.HasValue, Is.True);
-                        Assert.That(asyncLock.Value, Is.EqualTo(42));
-                    });
+                    Assert.That(asyncLock.HasValue, Is.True);
+                    Assert.That(asyncLock.Value, Is.EqualTo(42));
                 }));
             }
 

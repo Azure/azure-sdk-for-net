@@ -269,8 +269,8 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(options);
-            Assert.That(dynamicJson.root.child[0].item.leaf, Is.True);
-            Assert.That(dynamicJson.Root.Child[0].Item.Leaf, Is.True);
+            Assert.That((bool)dynamicJson.root.child[0].item.leaf, Is.True);
+            Assert.That((bool)dynamicJson.Root.Child[0].Item.Leaf, Is.True);
         }
 
         [Test]
