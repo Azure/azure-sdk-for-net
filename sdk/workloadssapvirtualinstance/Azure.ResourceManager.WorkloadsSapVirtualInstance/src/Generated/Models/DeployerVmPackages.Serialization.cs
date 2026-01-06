@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    packageUri = new Uri(prop.Value.GetString());
+                    packageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageAccountId"u8))
