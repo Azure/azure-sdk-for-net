@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderQuotaPolicy. </summary>
+    /// <summary></summary>
     public readonly partial struct ProviderQuotaPolicy : IEquatable<ProviderQuotaPolicy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProviderQuotaPolicy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProviderQuotaPolicy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DefaultValue = "Default";
         private const string NoneValue = "None";
         private const string RestrictedValue = "Restricted";
 
-        /// <summary> Default. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderQuotaPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProviderQuotaPolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Default. </summary>
         public static ProviderQuotaPolicy Default { get; } = new ProviderQuotaPolicy(DefaultValue);
-        /// <summary> None. </summary>
+
+        /// <summary> Gets the None. </summary>
         public static ProviderQuotaPolicy None { get; } = new ProviderQuotaPolicy(NoneValue);
-        /// <summary> Restricted. </summary>
+
+        /// <summary> Gets the Restricted. </summary>
         public static ProviderQuotaPolicy Restricted { get; } = new ProviderQuotaPolicy(RestrictedValue);
+
         /// <summary> Determines if two <see cref="ProviderQuotaPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderQuotaPolicy left, ProviderQuotaPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProviderQuotaPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderQuotaPolicy left, ProviderQuotaPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderQuotaPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProviderQuotaPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProviderQuotaPolicy(string value) => new ProviderQuotaPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProviderQuotaPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProviderQuotaPolicy?(string value) => value == null ? null : new ProviderQuotaPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderQuotaPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProviderQuotaPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

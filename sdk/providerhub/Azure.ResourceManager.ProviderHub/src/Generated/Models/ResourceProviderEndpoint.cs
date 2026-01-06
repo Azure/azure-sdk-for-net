@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceProviderEndpoint. </summary>
     public partial class ResourceProviderEndpoint
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderEndpoint"/>. </summary>
         public ResourceProviderEndpoint()
@@ -64,8 +36,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="timeout"> The timeout. </param>
         /// <param name="endpointType"> The endpoint type. </param>
         /// <param name="skuLink"> The sku link. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderEndpoint(bool? isEnabled, IReadOnlyList<string> apiVersions, Uri endpointUri, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> requiredFeatures, ProviderFeaturesRule featuresRule, TimeSpan? timeout, ProviderEndpointType? endpointType, string skuLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderEndpoint(bool? isEnabled, IReadOnlyList<string> apiVersions, string endpointUri, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> requiredFeatures, ProviderFeaturesRule featuresRule, TimeSpan? timeout, ProviderEndpointType? endpointType, string skuLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             ApiVersions = apiVersions;
@@ -76,30 +48,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Timeout = timeout;
             EndpointType = endpointType;
             SkuLink = skuLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether the endpoint is enabled. </summary>
         public bool? IsEnabled { get; set; }
+
         /// <summary> The endpoint uri. </summary>
-        public Uri EndpointUri { get; set; }
+        public string EndpointUri { get; set; }
+
         /// <summary> The feature rules. </summary>
         internal ProviderFeaturesRule FeaturesRule { get; set; }
-        /// <summary> The required feature policy. </summary>
-        public FeaturesPolicy? RequiredFeaturesPolicy
-        {
-            get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
-            set
-            {
-                FeaturesRule = value.HasValue ? new ProviderFeaturesRule(value.Value) : null;
-            }
-        }
 
         /// <summary> The timeout. </summary>
         public TimeSpan? Timeout { get; set; }
+
         /// <summary> The endpoint type. </summary>
         public ProviderEndpointType? EndpointType { get; set; }
+
         /// <summary> The sku link. </summary>
         public string SkuLink { get; set; }
+
+        /// <summary> The required feature policy. </summary>
+        public FeaturesPolicy? RequiredFeaturesPolicy
+        {
+            get
+            {
+                return FeaturesRule is null ? default : FeaturesRule.RequiredFeaturesPolicy;
+            }
+            set
+            {
+                FeaturesRule = value.HasValue ? new ProviderFeaturesRule(value.Value) : default;
+            }
+        }
     }
 }

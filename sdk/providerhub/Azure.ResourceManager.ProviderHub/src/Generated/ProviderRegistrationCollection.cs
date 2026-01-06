@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ProviderHub
@@ -25,51 +26,57 @@ namespace Azure.ResourceManager.ProviderHub
     /// </summary>
     public partial class ProviderRegistrationCollection : ArmCollection, IEnumerable<ProviderRegistrationResource>, IAsyncEnumerable<ProviderRegistrationResource>
     {
-        private readonly ClientDiagnostics _providerRegistrationClientDiagnostics;
-        private readonly ProviderRegistrationsRestOperations _providerRegistrationRestClient;
+        private readonly ClientDiagnostics _providerRegistrationsClientDiagnostics;
+        private readonly ProviderRegistrations _providerRegistrationsRestClient;
+        private readonly ClientDiagnostics _newRegionFrontloadReleaseClientDiagnostics;
+        private readonly NewRegionFrontloadRelease _newRegionFrontloadReleaseRestClient;
+        private readonly ClientDiagnostics _resourceActionsClientDiagnostics;
+        private readonly ResourceActions _resourceActionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderRegistrationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ProviderRegistrationCollection for mocking. </summary>
         protected ProviderRegistrationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderRegistrationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProviderRegistrationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _providerRegistrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ProviderRegistrationResource.ResourceType, out string providerRegistrationApiVersion);
-            _providerRegistrationRestClient = new ProviderRegistrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerRegistrationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _providerRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
+            _providerRegistrationsRestClient = new ProviderRegistrations(_providerRegistrationsClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
+            _newRegionFrontloadReleaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
+            _newRegionFrontloadReleaseRestClient = new NewRegionFrontloadRelease(_newRegionFrontloadReleaseClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
+            _resourceActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
+            _resourceActionsRestClient = new ResourceActions(_resourceActionsClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates or updates the provider registration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +84,34 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="data"> The provider registration properties supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ProviderRegistrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerNamespace, ProviderRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _providerRegistrationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, providerNamespace, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, providerNamespace, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, ProviderRegistrationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ProviderHubArmOperation<ProviderRegistrationResource> operation = new ProviderHubArmOperation<ProviderRegistrationResource>(
+                    new ProviderRegistrationOperationSource(Client),
+                    _providerRegistrationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +125,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// Creates or updates the provider registration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +142,34 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="data"> The provider registration properties supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ProviderRegistrationResource> CreateOrUpdate(WaitUntil waitUntil, string providerNamespace, ProviderRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _providerRegistrationRestClient.CreateOrUpdate(Id.SubscriptionId, providerNamespace, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, providerNamespace, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, ProviderRegistrationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ProviderHubArmOperation<ProviderRegistrationResource> operation = new ProviderHubArmOperation<ProviderRegistrationResource>(
+                    new ProviderRegistrationOperationSource(Client),
+                    _providerRegistrationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +183,42 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets the provider registration details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ProviderRegistrationResource>> GetAsync(string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
-            using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.Get");
+            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _providerRegistrationRestClient.GetAsync(Id.SubscriptionId, providerNamespace, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ProviderRegistrationData> response = Response.FromValue(ProviderRegistrationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProviderRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +232,42 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets the provider registration details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ProviderRegistrationResource> Get(string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
-            using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.Get");
+            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationCollection.Get");
             scope.Start();
             try
             {
-                var response = _providerRegistrationRestClient.Get(Id.SubscriptionId, providerNamespace, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ProviderRegistrationData> response = Response.FromValue(ProviderRegistrationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProviderRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +281,44 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets the list of the provider registrations in the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProviderRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProviderRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderRegistrationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerRegistrationRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerRegistrationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProviderRegistrationResource(Client, ProviderRegistrationData.DeserializeProviderRegistrationData(e)), _providerRegistrationClientDiagnostics, Pipeline, "ProviderRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationsGetAllAsyncCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ProviderRegistrationResource(Client, data));
         }
 
         /// <summary>
         /// Gets the list of the provider registrations in the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +326,61 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> A collection of <see cref="ProviderRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderRegistrationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerRegistrationRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerRegistrationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProviderRegistrationResource(Client, ProviderRegistrationData.DeserializeProviderRegistrationData(e)), _providerRegistrationClientDiagnostics, Pipeline, "ProviderRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationsGetAllCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ProviderRegistrationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
-            using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.Exists");
+            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _providerRegistrationRestClient.GetAsync(Id.SubscriptionId, providerNamespace, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ProviderRegistrationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProviderRegistrationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProviderRegistrationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +394,50 @@ namespace Azure.ResourceManager.ProviderHub
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
-            using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.Exists");
+            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _providerRegistrationRestClient.Get(Id.SubscriptionId, providerNamespace, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ProviderRegistrationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProviderRegistrationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProviderRegistrationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +451,54 @@ namespace Azure.ResourceManager.ProviderHub
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ProviderRegistrationResource>> GetIfExistsAsync(string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
-            using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.GetIfExists");
+            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _providerRegistrationRestClient.GetAsync(Id.SubscriptionId, providerNamespace, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ProviderRegistrationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProviderRegistrationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProviderRegistrationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ProviderRegistrationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProviderRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +512,54 @@ namespace Azure.ResourceManager.ProviderHub
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ProviderRegistrationResource> GetIfExists(string providerNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
-            using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.GetIfExists");
+            using DiagnosticScope scope = _providerRegistrationsClientDiagnostics.CreateScope("ProviderRegistrationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _providerRegistrationRestClient.Get(Id.SubscriptionId, providerNamespace, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ProviderRegistrationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProviderRegistrationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProviderRegistrationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ProviderRegistrationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProviderRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +579,7 @@ namespace Azure.ResourceManager.ProviderHub
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ProviderRegistrationResource> IAsyncEnumerable<ProviderRegistrationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

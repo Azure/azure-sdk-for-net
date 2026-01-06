@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ProviderHub
 {
+    /// <summary></summary>
     public partial class ProviderAuthorizedApplicationResource : IJsonModel<ProviderAuthorizedApplicationData>
     {
-        private static ProviderAuthorizedApplicationData s_dataDeserializationInstance;
-        private static ProviderAuthorizedApplicationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ProviderAuthorizedApplicationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ProviderAuthorizedApplicationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ProviderAuthorizedApplicationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProviderAuthorizedApplicationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProviderAuthorizedApplicationData>)Data).Write(writer, options);
 
-        ProviderAuthorizedApplicationData IJsonModel<ProviderAuthorizedApplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProviderAuthorizedApplicationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProviderAuthorizedApplicationData IJsonModel<ProviderAuthorizedApplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ProviderAuthorizedApplicationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProviderAuthorizedApplicationData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ProviderAuthorizedApplicationData IPersistableModel<ProviderAuthorizedApplicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProviderAuthorizedApplicationData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
-        string IPersistableModel<ProviderAuthorizedApplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProviderAuthorizedApplicationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProviderAuthorizedApplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

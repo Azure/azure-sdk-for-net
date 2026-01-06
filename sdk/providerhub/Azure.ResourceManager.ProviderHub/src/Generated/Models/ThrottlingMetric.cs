@@ -13,69 +13,37 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ThrottlingMetric. </summary>
     public partial class ThrottlingMetric
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ThrottlingMetric"/>. </summary>
-        /// <param name="metricType"> The throttling metric type. </param>
+        /// <param name="type"> The throttling metric type. </param>
         /// <param name="limit"> The limit. </param>
-        public ThrottlingMetric(ThrottlingMetricType metricType, long limit)
+        public ThrottlingMetric(ThrottlingMetricType @type, long limit)
         {
-            MetricType = metricType;
+            Type = @type;
             Limit = limit;
         }
 
         /// <summary> Initializes a new instance of <see cref="ThrottlingMetric"/>. </summary>
-        /// <param name="metricType"> The throttling metric type. </param>
+        /// <param name="type"> The throttling metric type. </param>
         /// <param name="limit"> The limit. </param>
         /// <param name="interval"> The interval. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThrottlingMetric(ThrottlingMetricType metricType, long limit, TimeSpan? interval, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ThrottlingMetric(ThrottlingMetricType @type, long limit, TimeSpan? interval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MetricType = metricType;
+            Type = @type;
             Limit = limit;
             Interval = interval;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ThrottlingMetric"/> for deserialization. </summary>
-        internal ThrottlingMetric()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The throttling metric type. </summary>
-        public ThrottlingMetricType MetricType { get; set; }
+        public ThrottlingMetricType Type { get; set; }
+
         /// <summary> The limit. </summary>
         public long Limit { get; set; }
+
         /// <summary> The interval. </summary>
         public TimeSpan? Interval { get; set; }
     }

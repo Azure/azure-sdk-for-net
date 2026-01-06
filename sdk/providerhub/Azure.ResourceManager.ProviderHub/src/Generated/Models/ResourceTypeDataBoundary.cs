@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ResourceTypeDataBoundary : IEquatable<ResourceTypeDataBoundary>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ResourceTypeDataBoundary"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceTypeDataBoundary(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotDefinedValue = "NotDefined";
         private const string GlobalValue = "Global";
         private const string EUValue = "EU";
         private const string USValue = "US";
 
-        /// <summary> NotDefined. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeDataBoundary"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceTypeDataBoundary(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotDefined. </summary>
         public static ResourceTypeDataBoundary NotDefined { get; } = new ResourceTypeDataBoundary(NotDefinedValue);
-        /// <summary> Global. </summary>
+
+        /// <summary> Gets the Global. </summary>
         public static ResourceTypeDataBoundary Global { get; } = new ResourceTypeDataBoundary(GlobalValue);
-        /// <summary> EU. </summary>
+
+        /// <summary> Gets the EU. </summary>
         public static ResourceTypeDataBoundary EU { get; } = new ResourceTypeDataBoundary(EUValue);
-        /// <summary> US. </summary>
+
+        /// <summary> Gets the US. </summary>
         public static ResourceTypeDataBoundary US { get; } = new ResourceTypeDataBoundary(USValue);
+
         /// <summary> Determines if two <see cref="ResourceTypeDataBoundary"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceTypeDataBoundary left, ResourceTypeDataBoundary right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceTypeDataBoundary"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceTypeDataBoundary left, ResourceTypeDataBoundary right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceTypeDataBoundary"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceTypeDataBoundary"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceTypeDataBoundary(string value) => new ResourceTypeDataBoundary(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceTypeDataBoundary"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceTypeDataBoundary?(string value) => value == null ? null : new ResourceTypeDataBoundary(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceTypeDataBoundary other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceTypeDataBoundary other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

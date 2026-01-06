@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="legacyNamespace"> Legacy namespace. </param>
         /// <param name="legacyRegistrations"> Legacy registrations. </param>
         /// <param name="customManifestVersion"> Custom manifest version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="providerHubMetadata"> The provider hub metadata. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="subscriptionLifecycleNotificationSpecifications"> The subscription lifecycle notification specifications. </param>
         /// <param name="privateResourceProviderConfiguration"> The private resource provider configuration. </param>
         /// <param name="tokenAuthConfiguration"> The token auth configuration. </param>
-        internal ProviderRegistrationProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IList<ResourceProviderEndpoint> globalNotificationEndpoints, bool? enableTenantLinkedNotification, IList<ProviderNotification> notifications, IList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, ProviderDstsConfiguration dstsConfiguration, ProviderNotificationOption? notificationOptions, IList<ResourceHydrationAccount> resourceHydrationAccounts, ResourceProviderManifestNotificationSettings notificationSettings, IList<ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints, IList<string> optionalFeatures, ResourceProviderManifestResourceGroupLockOptionDuringMove resourceGroupLockOptionDuringMove, ResourceProviderManifestResponseOptions responseOptions, string legacyNamespace, IList<string> legacyRegistrations, string customManifestVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, ProviderHubMetadata providerHubMetadata, ProviderHubProvisioningState? provisioningState, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, PrivateResourceProviderConfiguration privateResourceProviderConfiguration, TokenAuthConfiguration tokenAuthConfiguration) : base(providerAuthentication, providerAuthorizations, @namespace, services, serviceName, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, crossTenantTokenValidation, metadata, templateDeploymentOptions, globalNotificationEndpoints, enableTenantLinkedNotification, notifications, linkedNotificationRules, resourceProviderAuthorizationRules, dstsConfiguration, notificationOptions, resourceHydrationAccounts, notificationSettings, managementGroupGlobalNotificationEndpoints, optionalFeatures, resourceGroupLockOptionDuringMove, responseOptions, legacyNamespace, legacyRegistrations, customManifestVersion, serializedAdditionalRawData)
+        internal ProviderRegistrationProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IList<ResourceProviderEndpoint> globalNotificationEndpoints, bool? enableTenantLinkedNotification, IList<ProviderNotification> notifications, IList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, ProviderDstsConfiguration dstsConfiguration, ProviderNotificationOption? notificationOptions, IList<ResourceHydrationAccount> resourceHydrationAccounts, ResourceProviderManifestNotificationSettings notificationSettings, IList<ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints, IList<string> optionalFeatures, ResourceProviderManifestResourceGroupLockOptionDuringMove resourceGroupLockOptionDuringMove, ResourceProviderManifestResponseOptions responseOptions, string legacyNamespace, IList<string> legacyRegistrations, string customManifestVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProviderHubMetadata providerHubMetadata, ProviderHubProvisioningState? provisioningState, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, PrivateResourceProviderConfiguration privateResourceProviderConfiguration, TokenAuthConfiguration tokenAuthConfiguration) : base(providerAuthentication, providerAuthorizations, @namespace, services, serviceName, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, crossTenantTokenValidation, metadata, templateDeploymentOptions, globalNotificationEndpoints, enableTenantLinkedNotification, notifications, linkedNotificationRules, resourceProviderAuthorizationRules, dstsConfiguration, notificationOptions, resourceHydrationAccounts, notificationSettings, managementGroupGlobalNotificationEndpoints, optionalFeatures, resourceGroupLockOptionDuringMove, responseOptions, legacyNamespace, legacyRegistrations, customManifestVersion, additionalBinaryDataProperties)
         {
             ProviderHubMetadata = providerHubMetadata;
             ProvisioningState = provisioningState;
@@ -67,22 +67,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The provider hub metadata. </summary>
         public ProviderHubMetadata ProviderHubMetadata { get; set; }
+
         /// <summary> The subscription lifecycle notification specifications. </summary>
         public SubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }
+
         /// <summary> The private resource provider configuration. </summary>
         internal PrivateResourceProviderConfiguration PrivateResourceProviderConfiguration { get; set; }
+
+        /// <summary> The token auth configuration. </summary>
+        public TokenAuthConfiguration TokenAuthConfiguration { get; set; }
+
         /// <summary> The allowed subscriptions. </summary>
         public IList<string> PrivateResourceProviderAllowedSubscriptions
         {
             get
             {
                 if (PrivateResourceProviderConfiguration is null)
+                {
                     PrivateResourceProviderConfiguration = new PrivateResourceProviderConfiguration();
+                }
                 return PrivateResourceProviderConfiguration.AllowedSubscriptions;
             }
         }
-
-        /// <summary> The token auth configuration. </summary>
-        public TokenAuthConfiguration TokenAuthConfiguration { get; set; }
     }
 }

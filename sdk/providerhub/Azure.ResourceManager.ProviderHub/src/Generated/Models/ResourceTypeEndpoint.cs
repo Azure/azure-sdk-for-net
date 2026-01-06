@@ -8,49 +8,20 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceTypeEndpoint. </summary>
     public partial class ResourceTypeEndpoint
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpoint"/>. </summary>
         public ResourceTypeEndpoint()
         {
             ApiVersions = new ChangeTrackingList<string>();
-            Locations = new ChangeTrackingList<AzureLocation>();
             RequiredFeatures = new ChangeTrackingList<string>();
             Extensions = new ChangeTrackingList<ResourceTypeExtension>();
             Zones = new ChangeTrackingList<string>();
@@ -73,8 +44,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="zones"> List of zones. </param>
         /// <param name="dstsConfiguration"> The dsts configuration. </param>
         /// <param name="dataBoundary"> The data boundary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeEndpoint(ResourceTypeEndpointKind? kind, bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, ProviderEndpointTypeResourceType? endpointType, TokenAuthConfiguration tokenAuthConfiguration, string skuLink, Uri endpointUri, string apiVersion, IList<string> zones, ProviderDstsConfiguration dstsConfiguration, ResourceTypeDataBoundary? dataBoundary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeEndpoint(ResourceTypeEndpointKind? kind, bool? isEnabled, IList<string> apiVersions, AzureLocation? locations, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, ProviderEndpointTypeResourceType? endpointType, TokenAuthConfiguration tokenAuthConfiguration, string skuLink, string endpointUri, string apiVersion, IList<string> zones, ProviderDstsConfiguration dstsConfiguration, ResourceTypeDataBoundary? dataBoundary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             IsEnabled = isEnabled;
@@ -92,50 +63,68 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Zones = zones;
             DstsConfiguration = dstsConfiguration;
             DataBoundary = dataBoundary;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource type endpoint kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
         public ResourceTypeEndpointKind? Kind { get; set; }
+
         /// <summary> Whether the endpoint is enabled. </summary>
         public bool? IsEnabled { get; set; }
+
         /// <summary> The api versions. </summary>
         public IList<string> ApiVersions { get; }
+
         /// <summary> The locations. </summary>
-        public IList<AzureLocation> Locations { get; }
+        public AzureLocation? Locations { get; set; }
+
         /// <summary> The required features. </summary>
         public IList<string> RequiredFeatures { get; }
+
         /// <summary> The features rule. </summary>
         internal ProviderFeaturesRule FeaturesRule { get; set; }
-        /// <summary> The required feature policy. </summary>
-        public FeaturesPolicy? RequiredFeaturesPolicy
-        {
-            get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
-            set
-            {
-                FeaturesRule = value.HasValue ? new ProviderFeaturesRule(value.Value) : null;
-            }
-        }
 
         /// <summary> The extensions. </summary>
         public IList<ResourceTypeExtension> Extensions { get; }
+
         /// <summary> The timeout. </summary>
         public TimeSpan? Timeout { get; set; }
+
         /// <summary> The endpoint type. </summary>
         public ProviderEndpointTypeResourceType? EndpointType { get; set; }
+
         /// <summary> The token auth configuration. </summary>
         public TokenAuthConfiguration TokenAuthConfiguration { get; set; }
+
         /// <summary> The sku link. </summary>
         public string SkuLink { get; set; }
+
         /// <summary> The endpoint uri. </summary>
-        public Uri EndpointUri { get; set; }
+        public string EndpointUri { get; set; }
+
         /// <summary> Api version. </summary>
         public string ApiVersion { get; set; }
+
         /// <summary> List of zones. </summary>
         public IList<string> Zones { get; }
+
         /// <summary> The dsts configuration. </summary>
         public ProviderDstsConfiguration DstsConfiguration { get; set; }
+
         /// <summary> The data boundary. </summary>
         public ResourceTypeDataBoundary? DataBoundary { get; set; }
+
+        /// <summary> The required feature policy. </summary>
+        public FeaturesPolicy? RequiredFeaturesPolicy
+        {
+            get
+            {
+                return FeaturesRule is null ? default : FeaturesRule.RequiredFeaturesPolicy;
+            }
+            set
+            {
+                FeaturesRule = value.HasValue ? new ProviderFeaturesRule(value.Value) : default;
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ProviderHub.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AllowedResourceName))]
     [ModelReaderWriterBuildable(typeof(AllowedUnauthorizedActionsExtension))]
@@ -54,13 +55,13 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(LinkedAccessCheck))]
     [ModelReaderWriterBuildable(typeof(LinkedNotificationRule))]
     [ModelReaderWriterBuildable(typeof(LinkedOperationRule))]
+    [ModelReaderWriterBuildable(typeof(LocalizedOperationDefinition))]
+    [ModelReaderWriterBuildable(typeof(LocalizedOperationDisplayDefinition))]
     [ModelReaderWriterBuildable(typeof(LoggingHiddenPropertyPaths))]
     [ModelReaderWriterBuildable(typeof(LoggingRule))]
     [ModelReaderWriterBuildable(typeof(ManifestLevelPropertyBag))]
     [ModelReaderWriterBuildable(typeof(NestedProvisioningSupport))]
-    [ModelReaderWriterBuildable(typeof(NestedResourceTypeFirstSkuResource))]
-    [ModelReaderWriterBuildable(typeof(NestedResourceTypeSecondSkuResource))]
-    [ModelReaderWriterBuildable(typeof(NestedResourceTypeThirdSkuResource))]
+    [ModelReaderWriterBuildable(typeof(NewRegionFrontloadReleaseResource))]
     [ModelReaderWriterBuildable(typeof(NotificationEndpoint))]
     [ModelReaderWriterBuildable(typeof(NotificationRegistrationData))]
     [ModelReaderWriterBuildable(typeof(NotificationRegistrationListResult))]
@@ -68,6 +69,11 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(NotificationRegistrationResource))]
     [ModelReaderWriterBuildable(typeof(OpenApiConfiguration))]
     [ModelReaderWriterBuildable(typeof(OpenApiValidation))]
+    [ModelReaderWriterBuildable(typeof(OperationsContentProperties))]
+    [ModelReaderWriterBuildable(typeof(OperationsDefinition))]
+    [ModelReaderWriterBuildable(typeof(OperationsDisplayDefinition))]
+    [ModelReaderWriterBuildable(typeof(OperationsPutContentData))]
+    [ModelReaderWriterBuildable(typeof(OperationsPutContentResource))]
     [ModelReaderWriterBuildable(typeof(PrivateResourceProviderConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProviderAdditionalAuthorization))]
     [ModelReaderWriterBuildable(typeof(ProviderAuthorizedApplicationData))]
@@ -96,7 +102,6 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(ProviderResourceQueryManagement))]
     [ModelReaderWriterBuildable(typeof(ProviderResourceType))]
     [ModelReaderWriterBuildable(typeof(ProviderSubscriptionStateRule))]
-    [ModelReaderWriterBuildable(typeof(RegistrationNewRegionFrontloadReleaseResource))]
     [ModelReaderWriterBuildable(typeof(ReRegisterSubscriptionMetadata))]
     [ModelReaderWriterBuildable(typeof(ResourceAccessRole))]
     [ModelReaderWriterBuildable(typeof(ResourceConcurrencyControlOption))]
@@ -145,12 +150,12 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuListResult))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuLocationInfo))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuProperties))]
-    [ModelReaderWriterBuildable(typeof(ResourceTypeSkuResource))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuSetting))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuZoneDetail))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RolloutStatusBase))]
     [ModelReaderWriterBuildable(typeof(ServiceTreeInfo))]
+    [ModelReaderWriterBuildable(typeof(SkusResource))]
     [ModelReaderWriterBuildable(typeof(SubscriberSetting))]
     [ModelReaderWriterBuildable(typeof(SubscriptionLifecycleNotificationSpecifications))]
     [ModelReaderWriterBuildable(typeof(SubscriptionStateOverrideAction))]

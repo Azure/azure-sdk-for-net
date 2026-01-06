@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct AllowedUnauthorizedActionIntent : IEquatable<AllowedUnauthorizedActionIntent>
     {
         private readonly string _value;
+        /// <summary> Default value. </summary>
+        private const string NotSpecifiedValue = "NOT_SPECIFIED";
+        /// <summary> Data is not sensitive and ok to access. </summary>
+        private const string LowPrivilegeValue = "LOW_PRIVILEGE";
+        /// <summary> Used for RP's using a custom authorization check outside of ARM. </summary>
+        private const string DEFERREDACCESSCHECKValue = "DEFERRED_ACCESS_CHECK";
+        /// <summary> RP contract allows certain operations to be unauthorized action. </summary>
+        private const string RPCONTRACTValue = "RP_CONTRACT";
 
         /// <summary> Initializes a new instance of <see cref="AllowedUnauthorizedActionIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AllowedUnauthorizedActionIntent(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSpecifiedValue = "NOT_SPECIFIED";
-        private const string LowPrivilegeValue = "LOW_PRIVILEGE";
-        private const string DeferredAccessCheckValue = "DEFERRED_ACCESS_CHECK";
-        private const string RPContractValue = "RP_CONTRACT";
+            _value = value;
+        }
 
         /// <summary> Default value. </summary>
         public static AllowedUnauthorizedActionIntent NotSpecified { get; } = new AllowedUnauthorizedActionIntent(NotSpecifiedValue);
+
         /// <summary> Data is not sensitive and ok to access. </summary>
         public static AllowedUnauthorizedActionIntent LowPrivilege { get; } = new AllowedUnauthorizedActionIntent(LowPrivilegeValue);
+
         /// <summary> Used for RP's using a custom authorization check outside of ARM. </summary>
-        public static AllowedUnauthorizedActionIntent DeferredAccessCheck { get; } = new AllowedUnauthorizedActionIntent(DeferredAccessCheckValue);
+        public static AllowedUnauthorizedActionIntent DEFERREDACCESSCHECK { get; } = new AllowedUnauthorizedActionIntent(DEFERREDACCESSCHECKValue);
+
         /// <summary> RP contract allows certain operations to be unauthorized action. </summary>
-        public static AllowedUnauthorizedActionIntent RPContract { get; } = new AllowedUnauthorizedActionIntent(RPContractValue);
+        public static AllowedUnauthorizedActionIntent RPCONTRACT { get; } = new AllowedUnauthorizedActionIntent(RPCONTRACTValue);
+
         /// <summary> Determines if two <see cref="AllowedUnauthorizedActionIntent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AllowedUnauthorizedActionIntent left, AllowedUnauthorizedActionIntent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AllowedUnauthorizedActionIntent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AllowedUnauthorizedActionIntent left, AllowedUnauthorizedActionIntent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AllowedUnauthorizedActionIntent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AllowedUnauthorizedActionIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AllowedUnauthorizedActionIntent(string value) => new AllowedUnauthorizedActionIntent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AllowedUnauthorizedActionIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AllowedUnauthorizedActionIntent?(string value) => value == null ? null : new AllowedUnauthorizedActionIntent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AllowedUnauthorizedActionIntent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AllowedUnauthorizedActionIntent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ResourceTypeRegistrationRegionality : IEquatable<ResourceTypeRegistrationRegionality>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationRegionality"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceTypeRegistrationRegionality(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string GlobalValue = "Global";
         private const string RegionalValue = "Regional";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationRegionality"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceTypeRegistrationRegionality(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ResourceTypeRegistrationRegionality NotSpecified { get; } = new ResourceTypeRegistrationRegionality(NotSpecifiedValue);
-        /// <summary> Global. </summary>
+
+        /// <summary> Gets the Global. </summary>
         public static ResourceTypeRegistrationRegionality Global { get; } = new ResourceTypeRegistrationRegionality(GlobalValue);
-        /// <summary> Regional. </summary>
+
+        /// <summary> Gets the Regional. </summary>
         public static ResourceTypeRegistrationRegionality Regional { get; } = new ResourceTypeRegistrationRegionality(RegionalValue);
+
         /// <summary> Determines if two <see cref="ResourceTypeRegistrationRegionality"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceTypeRegistrationRegionality left, ResourceTypeRegistrationRegionality right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceTypeRegistrationRegionality"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceTypeRegistrationRegionality left, ResourceTypeRegistrationRegionality right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceTypeRegistrationRegionality"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceTypeRegistrationRegionality"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceTypeRegistrationRegionality(string value) => new ResourceTypeRegistrationRegionality(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceTypeRegistrationRegionality"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceTypeRegistrationRegionality?(string value) => value == null ? null : new ResourceTypeRegistrationRegionality(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceTypeRegistrationRegionality other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceTypeRegistrationRegionality other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

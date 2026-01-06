@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A Class representing a ProviderAuthorizedApplication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProviderAuthorizedApplicationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetProviderAuthorizedApplicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource"/> using the GetProviderAuthorizedApplication method.
+    /// A class representing a ProviderAuthorizedApplication along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProviderAuthorizedApplicationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource"/> using the GetProviderAuthorizedApplications method.
     /// </summary>
     public partial class ProviderAuthorizedApplicationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ProviderAuthorizedApplicationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="providerNamespace"> The providerNamespace. </param>
-        /// <param name="applicationId"> The applicationId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, Guid applicationId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _providerAuthorizedApplicationAuthorizedApplicationsClientDiagnostics;
-        private readonly AuthorizedApplicationsRestOperations _providerAuthorizedApplicationAuthorizedApplicationsRestClient;
+        private readonly ClientDiagnostics _authorizedApplicationsClientDiagnostics;
+        private readonly AuthorizedApplications _authorizedApplicationsRestClient;
         private readonly ProviderAuthorizedApplicationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/authorizedApplications";
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderAuthorizedApplicationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ProviderAuthorizedApplicationResource for mocking. </summary>
         protected ProviderAuthorizedApplicationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderAuthorizedApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderAuthorizedApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProviderAuthorizedApplicationResource(ArmClient client, ProviderAuthorizedApplicationData data) : this(client, data.Id)
@@ -53,71 +43,92 @@ namespace Azure.ResourceManager.ProviderHub
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderAuthorizedApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderAuthorizedApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProviderAuthorizedApplicationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _providerAuthorizedApplicationAuthorizedApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string providerAuthorizedApplicationAuthorizedApplicationsApiVersion);
-            _providerAuthorizedApplicationAuthorizedApplicationsRestClient = new AuthorizedApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerAuthorizedApplicationAuthorizedApplicationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string providerAuthorizedApplicationApiVersion);
+            _authorizedApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
+            _authorizedApplicationsRestClient = new AuthorizedApplications(_authorizedApplicationsClientDiagnostics, Pipeline, Endpoint, providerAuthorizedApplicationApiVersion ?? "2024-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ProviderAuthorizedApplicationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerNamespace"> The providerNamespace. </param>
+        /// <param name="applicationId"> The applicationId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string applicationId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the authorized application details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizedApplications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizedApplications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProviderAuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ProviderAuthorizedApplicationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _providerAuthorizedApplicationAuthorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Get");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Get");
             scope.Start();
             try
             {
-                var response = await _providerAuthorizedApplicationAuthorizedApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ProviderAuthorizedApplicationData> response = Response.FromValue(ProviderAuthorizedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProviderAuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets the authorized application details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizedApplications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizedApplications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProviderAuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ProviderAuthorizedApplicationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _providerAuthorizedApplicationAuthorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Get");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Get");
             scope.Start();
             try
             {
-                var response = _providerAuthorizedApplicationAuthorizedApplicationsRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ProviderAuthorizedApplicationData> response = Response.FromValue(ProviderAuthorizedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProviderAuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +190,20 @@ namespace Azure.ResourceManager.ProviderHub
         /// Deletes an authorized application.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizedApplications_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizedApplications_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProviderAuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,16 +211,23 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _providerAuthorizedApplicationAuthorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Delete");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _providerAuthorizedApplicationAuthorizedApplicationsRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
-                var uri = _providerAuthorizedApplicationAuthorizedApplicationsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Guid.Parse(Id.Name));
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ProviderHubArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizedApplicationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ProviderHubArmOperation operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +241,20 @@ namespace Azure.ResourceManager.ProviderHub
         /// Deletes an authorized application.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizedApplications_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizedApplications_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProviderAuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,16 +262,23 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _providerAuthorizedApplicationAuthorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Delete");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Delete");
             scope.Start();
             try
             {
-                var response = _providerAuthorizedApplicationAuthorizedApplicationsRestClient.Delete(Id.SubscriptionId, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken);
-                var uri = _providerAuthorizedApplicationAuthorizedApplicationsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Guid.Parse(Id.Name));
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ProviderHubArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizedApplicationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ProviderHubArmOperation operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -256,23 +289,23 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Creates or updates the authorized application.
+        /// Update a ProviderAuthorizedApplication.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizedApplications_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizedApplications_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProviderAuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,14 +317,27 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _providerAuthorizedApplicationAuthorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Update");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Update");
             scope.Start();
             try
             {
-                var response = await _providerAuthorizedApplicationAuthorizedApplicationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Name, Guid.Parse(Id.Name), data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(new ProviderAuthorizedApplicationOperationSource(Client), _providerAuthorizedApplicationAuthorizedApplicationsClientDiagnostics, Pipeline, _providerAuthorizedApplicationAuthorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Parent.Name, Guid.Parse(Id.Name), data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ProviderHubArmOperation<ProviderAuthorizedApplicationResource> operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(
+                    new ProviderAuthorizedApplicationOperationSource(Client),
+                    _authorizedApplicationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -302,23 +348,23 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Creates or updates the authorized application.
+        /// Update a ProviderAuthorizedApplication.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizedApplications_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizedApplications_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProviderAuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,14 +376,27 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _providerAuthorizedApplicationAuthorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Update");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationResource.Update");
             scope.Start();
             try
             {
-                var response = _providerAuthorizedApplicationAuthorizedApplicationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Name, Guid.Parse(Id.Name), data, cancellationToken);
-                var operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(new ProviderAuthorizedApplicationOperationSource(Client), _providerAuthorizedApplicationAuthorizedApplicationsClientDiagnostics, Pipeline, _providerAuthorizedApplicationAuthorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Parent.Name, Guid.Parse(Id.Name), data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ProviderHubArmOperation<ProviderAuthorizedApplicationResource> operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(
+                    new ProviderAuthorizedApplicationOperationSource(Client),
+                    _authorizedApplicationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
