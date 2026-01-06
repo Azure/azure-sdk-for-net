@@ -13,7 +13,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> The reference to the Schema Registry for this AIO Instance. </summary>
-    public partial class SchemaRegistryRef
+    internal partial class SchemaRegistryRef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

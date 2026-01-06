@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -16,16 +15,6 @@ namespace Azure.ResourceManager.IotOperations.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateDiagnostics"/>. </summary>
-        /// <param name="logs"> The log settings for the Connector template. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logs"/> is null. </exception>
-        public AkriConnectorTemplateDiagnostics(AkriConnectorsDiagnosticsLogs logs)
-        {
-            Argument.AssertNotNull(logs, nameof(logs));
-
-            Logs = logs;
-        }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateDiagnostics"/>. </summary>
         /// <param name="logs"> The log settings for the Connector template. </param>
