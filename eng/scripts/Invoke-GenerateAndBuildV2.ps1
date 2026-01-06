@@ -45,7 +45,7 @@ $relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
 $apiVersion = $inputJson.apiVersion
 $sdkReleaseType = $inputJson.sdkReleaseType
 
-function IsMgmtSdkUsingNewGenerator {
+function Test-MgmtSdkUsingNewGenerator {
     param(
         [string]$serviceType,
         [string]$tspConfigFile,
@@ -63,10 +63,10 @@ function IsMgmtSdkUsingNewGenerator {
     }
 
     $tspConfigContent = Get-Content $tspConfigFile -Raw
-    $IsNewMgmtEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp-mgmt'
+    $isNewMgmtEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp-mgmt'
     $tspLocationContent = Get-Content $tspLocationFile -Raw
     $hasNewEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json'
-    return ($IsNewMgmtEmitter -and $hasNewEmitterPackageJson)
+    return ($isNewMgmtEmitter -and $hasNewEmitterPackageJson)
 }
 
 function Update-PackageVersionSuffix {
@@ -287,7 +287,7 @@ if ($relatedTypeSpecProjectFolder) {
             -specRepoRoot $swaggerDir
         }
 
-        if ((IsMgmtSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder) -or $serviceType -eq "data-plane") {
+        if ((Test-MgmtSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder) -or $serviceType -eq "data-plane") {
             $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
         }
     }
