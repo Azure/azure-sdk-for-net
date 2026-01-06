@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.SiteManager
 {
-    internal partial class ServiceGroupEdgeSite
+    internal partial class SitesBySubscription
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ServiceGroupEdgeSite for mocking. </summary>
-        protected ServiceGroupEdgeSite()
+        /// <summary> Initializes a new instance of SitesBySubscription for mocking. </summary>
+        protected SitesBySubscription()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceGroupEdgeSite. </summary>
+        /// <summary> Initializes a new instance of SitesBySubscription. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ServiceGroupEdgeSite(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal SitesBySubscription(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.SiteManager
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string servicegroupName, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
-            uri.AppendPath(servicegroupName, true);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Edge/sites", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SiteManager
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string servicegroupName, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.SiteManager
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string servicegroupName, string siteName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string siteName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
-            uri.AppendPath(servicegroupName, true);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
             uri.AppendPath(siteName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.SiteManager
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string servicegroupName, string siteName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string siteName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
-            uri.AppendPath(servicegroupName, true);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
             uri.AppendPath(siteName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.SiteManager
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string servicegroupName, string siteName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string siteName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
-            uri.AppendPath(servicegroupName, true);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
             uri.AppendPath(siteName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.SiteManager
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string servicegroupName, string siteName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string siteName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
-            uri.AppendPath(servicegroupName, true);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
             uri.AppendPath(siteName, true);
             uri.AppendQuery("api-version", _apiVersion, true);

@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.SiteManager
     [ModelReaderWriterBuildable(typeof(EdgeSitePatch))]
     [ModelReaderWriterBuildable(typeof(EdgeSitePatchProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeSiteProperties))]
-    [ModelReaderWriterBuildable(typeof(ResourceGroupEdgeSiteResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(ServiceGroupEdgeSiteResource))]
     [ModelReaderWriterBuildable(typeof(SiteListResult))]
-    [ModelReaderWriterBuildable(typeof(SubscriptionEdgeSiteResource))]
+    [ModelReaderWriterBuildable(typeof(SiteResource))]
+    [ModelReaderWriterBuildable(typeof(SitesByServiceGroupResource))]
+    [ModelReaderWriterBuildable(typeof(SitesBySubscriptionResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSiteManagerContext : ModelReaderWriterContext
     {

@@ -19,48 +19,40 @@ using Azure.ResourceManager.SiteManager.Models;
 namespace Azure.ResourceManager.SiteManager
 {
     /// <summary>
-    /// A class representing a ResourceGroupEdgeSite along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceGroupEdgeSiteResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetResourceGroupEdgeSites method.
+    /// A class representing a SitesByServiceGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SitesByServiceGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetSitesByServiceGroups method.
     /// </summary>
-    public partial class ResourceGroupEdgeSiteResource : ArmResource
+    public partial class SitesByServiceGroupResource : ArmResource
     {
-        private readonly ClientDiagnostics _resourceGroupEdgeSiteClientDiagnostics;
-        private readonly ResourceGroupEdgeSite _resourceGroupEdgeSiteRestClient;
-        private readonly ClientDiagnostics _subscriptionEdgeSiteClientDiagnostics;
-        private readonly SubscriptionEdgeSite _subscriptionEdgeSiteRestClient;
-        private readonly ClientDiagnostics _serviceGroupEdgeSiteClientDiagnostics;
-        private readonly ServiceGroupEdgeSite _serviceGroupEdgeSiteRestClient;
+        private readonly ClientDiagnostics _sitesByServiceGroupClientDiagnostics;
+        private readonly SitesByServiceGroup _sitesByServiceGroupRestClient;
         private readonly EdgeSiteData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Edge/sites";
 
-        /// <summary> Initializes a new instance of ResourceGroupEdgeSiteResource for mocking. </summary>
-        protected ResourceGroupEdgeSiteResource()
+        /// <summary> Initializes a new instance of SitesByServiceGroupResource for mocking. </summary>
+        protected SitesByServiceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceGroupEdgeSiteResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SitesByServiceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceGroupEdgeSiteResource(ArmClient client, EdgeSiteData data) : this(client, data.Id)
+        internal SitesByServiceGroupResource(ArmClient client, EdgeSiteData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceGroupEdgeSiteResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SitesByServiceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupEdgeSiteResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SitesByServiceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string resourceGroupEdgeSiteApiVersion);
-            _resourceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceType.Namespace, Diagnostics);
-            _resourceGroupEdgeSiteRestClient = new ResourceGroupEdgeSite(_resourceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
-            _subscriptionEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceType.Namespace, Diagnostics);
-            _subscriptionEdgeSiteRestClient = new SubscriptionEdgeSite(_subscriptionEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
-            _serviceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceType.Namespace, Diagnostics);
-            _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
+            TryGetApiVersion(ResourceType, out string sitesByServiceGroupApiVersion);
+            _sitesByServiceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceType.Namespace, Diagnostics);
+            _sitesByServiceGroupRestClient = new SitesByServiceGroup(_sitesByServiceGroupClientDiagnostics, Pipeline, Endpoint, sitesByServiceGroupApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -81,12 +73,11 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="servicegroupName"> The servicegroupName. </param>
         /// <param name="siteName"> The siteName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName)
+        public static ResourceIdentifier CreateResourceIdentifier(string servicegroupName, string siteName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}";
+            string resourceId = $"/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -101,15 +92,15 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get a Site
+        /// Get Site at SG scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Sites_Get. </description>
+        /// <description> SitesByServiceGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -117,14 +108,14 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupEdgeSiteResource"/>. </description>
+        /// <description> <see cref="SitesByServiceGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceGroupEdgeSiteResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SitesByServiceGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteResource.Get");
+            using DiagnosticScope scope = _sitesByServiceGroupClientDiagnostics.CreateScope("SitesByServiceGroupResource.Get");
             scope.Start();
             try
             {
@@ -132,14 +123,14 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sitesByServiceGroupRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitesByServiceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,15 +140,15 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get a Site
+        /// Get Site at SG scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Sites_Get. </description>
+        /// <description> SitesByServiceGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -165,14 +156,14 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupEdgeSiteResource"/>. </description>
+        /// <description> <see cref="SitesByServiceGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceGroupEdgeSiteResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SitesByServiceGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteResource.Get");
+            using DiagnosticScope scope = _sitesByServiceGroupClientDiagnostics.CreateScope("SitesByServiceGroupResource.Get");
             scope.Start();
             try
             {
@@ -180,14 +171,14 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sitesByServiceGroupRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitesByServiceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,15 +188,15 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Update a Site
+        /// update Site at SG scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Sites_Update. </description>
+        /// <description> SitesByServiceGroup_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -213,18 +204,18 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupEdgeSiteResource"/>. </description>
+        /// <description> <see cref="SitesByServiceGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroupEdgeSiteResource>> UpdateAsync(EdgeSitePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SitesByServiceGroupResource>> UpdateAsync(EdgeSitePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteResource.Update");
+            using DiagnosticScope scope = _sitesByServiceGroupClientDiagnostics.CreateScope("SitesByServiceGroupResource.Update");
             scope.Start();
             try
             {
@@ -232,14 +223,14 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSitePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sitesByServiceGroupRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, EdgeSitePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitesByServiceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -249,15 +240,15 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Update a Site
+        /// update Site at SG scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Sites_Update. </description>
+        /// <description> SitesByServiceGroup_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -265,18 +256,18 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupEdgeSiteResource"/>. </description>
+        /// <description> <see cref="SitesByServiceGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ResourceGroupEdgeSiteResource> Update(EdgeSitePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<SitesByServiceGroupResource> Update(EdgeSitePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteResource.Update");
+            using DiagnosticScope scope = _sitesByServiceGroupClientDiagnostics.CreateScope("SitesByServiceGroupResource.Update");
             scope.Start();
             try
             {
@@ -284,14 +275,14 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSitePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sitesByServiceGroupRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, EdgeSitePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResourceGroupEdgeSiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitesByServiceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -301,15 +292,15 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Delete a Site
+        /// delete Site at SG scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Sites_Delete. </description>
+        /// <description> SitesByServiceGroup_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -317,7 +308,7 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupEdgeSiteResource"/>. </description>
+        /// <description> <see cref="SitesByServiceGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,7 +316,7 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteResource.Delete");
+            using DiagnosticScope scope = _sitesByServiceGroupClientDiagnostics.CreateScope("SitesByServiceGroupResource.Delete");
             scope.Start();
             try
             {
@@ -333,7 +324,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sitesByServiceGroupRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -352,15 +343,15 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Delete a Site
+        /// delete Site at SG scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Sites_Delete. </description>
+        /// <description> SitesByServiceGroup_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -368,7 +359,7 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupEdgeSiteResource"/>. </description>
+        /// <description> <see cref="SitesByServiceGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,7 +367,7 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _resourceGroupEdgeSiteClientDiagnostics.CreateScope("ResourceGroupEdgeSiteResource.Delete");
+            using DiagnosticScope scope = _sitesByServiceGroupClientDiagnostics.CreateScope("SitesByServiceGroupResource.Delete");
             scope.Start();
             try
             {
@@ -384,7 +375,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sitesByServiceGroupRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SiteManager.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableSiteManagerSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _subscriptionEdgeSiteClientDiagnostics;
-        private SubscriptionEdgeSite _subscriptionEdgeSiteRestClient;
+        private ClientDiagnostics _sitesBySubscriptionClientDiagnostics;
+        private SitesBySubscription _sitesBySubscriptionRestClient;
 
         /// <summary> Initializes a new instance of MockableSiteManagerSubscriptionResource for mocking. </summary>
         protected MockableSiteManagerSubscriptionResource()
@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         {
         }
 
-        private ClientDiagnostics SubscriptionEdgeSiteClientDiagnostics => _subscriptionEdgeSiteClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SiteManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SitesBySubscriptionClientDiagnostics => _sitesBySubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SiteManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionEdgeSite SubscriptionEdgeSiteRestClient => _subscriptionEdgeSiteRestClient ??= new SubscriptionEdgeSite(SubscriptionEdgeSiteClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private SitesBySubscription SitesBySubscriptionRestClient => _sitesBySubscriptionRestClient ??= new SitesBySubscription(SitesBySubscriptionClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
 
-        /// <summary> Gets a collection of SubscriptionEdgeSites in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of SubscriptionEdgeSites and their operations over a SubscriptionEdgeSiteResource. </returns>
-        public virtual SubscriptionEdgeSiteCollection GetSubscriptionEdgeSites()
+        /// <summary> Gets a collection of SitesBySubscriptions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of SitesBySubscriptions and their operations over a SitesBySubscriptionResource. </returns>
+        public virtual SitesBySubscriptionCollection GetSitesBySubscriptions()
         {
-            return GetCachedClient(client => new SubscriptionEdgeSiteCollection(client, Id));
+            return GetCachedClient(client => new SitesBySubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SubscriptionEdgeSiteResource>> GetSubscriptionEdgeSiteAsync(string siteName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SitesBySubscriptionResource>> GetSitesBySubscriptionAsync(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            return await GetSubscriptionEdgeSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
+            return await GetSitesBySubscriptions().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,15 +97,15 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SubscriptionEdgeSiteResource> GetSubscriptionEdgeSite(string siteName, CancellationToken cancellationToken = default)
+        public virtual Response<SitesBySubscriptionResource> GetSitesBySubscription(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            return GetSubscriptionEdgeSites().Get(siteName, cancellationToken);
+            return GetSitesBySubscriptions().Get(siteName, cancellationToken);
         }
 
         /// <summary>
-        /// List Site resources by scope
+        /// List Site resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -122,18 +122,18 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroupEdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGroupEdgeSiteResource> GetResourceGroupEdgeSitesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteResource> GetSitesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new SubscriptionEdgeSiteGetAllAsyncCollectionResultOfT(SubscriptionEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ResourceGroupEdgeSiteResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSiteData, SiteResource>(new SitesBySubscriptionGetAllAsyncCollectionResultOfT(SitesBySubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SiteResource(Client, data));
         }
 
         /// <summary>
-        /// List Site resources by scope
+        /// List Site resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroupEdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGroupEdgeSiteResource> GetResourceGroupEdgeSites(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteResource> GetSites(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new SubscriptionEdgeSiteGetAllCollectionResultOfT(SubscriptionEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ResourceGroupEdgeSiteResource(Client, data));
+            return new PageableWrapper<EdgeSiteData, SiteResource>(new SitesBySubscriptionGetAllCollectionResultOfT(SitesBySubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SiteResource(Client, data));
         }
     }
 }
