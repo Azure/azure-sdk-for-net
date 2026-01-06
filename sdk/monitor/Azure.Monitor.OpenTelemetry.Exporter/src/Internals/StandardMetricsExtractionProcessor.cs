@@ -75,22 +75,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _enableStandardMetrics = options.EnableStandardMetrics;
             _enablePerfCounters = options.EnablePerfCounters;
 
-            var meterProviderBuilder = Sdk.CreateMeterProviderBuilder();
-
-            if (_enableStandardMetrics)
+            if (_enableStandardMetrics || _enablePerfCounters)
             {
-                meterProviderBuilder.AddMeter(StandardMetricConstants.StandardMetricMeterName);
-            }
+                var meterProviderBuilder = Sdk.CreateMeterProviderBuilder();
 
-            if (_enablePerfCounters)
+                if (_enableStandardMetrics)
+                {
+                    meterProviderBuilder.AddMeter(StandardMetricConstants.StandardMetricMeterName);
+                }
+
+                if (_enablePerfCounters)
+                {
+                    meterProviderBuilder.AddMeter(PerfCounterConstants.PerfCounterMeterName);
+                }
+
+                _meterProvider = meterProviderBuilder
+                    .AddReader(new PeriodicExportingMetricReader(metricExporter)
+                    { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                    .Build();
+            }
+            else
             {
-                meterProviderBuilder.AddMeter(PerfCounterConstants.PerfCounterMeterName);
+                _meterProvider = null;
             }
-
-            _meterProvider = meterProviderBuilder
-                .AddReader(new PeriodicExportingMetricReader(metricExporter)
-                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
-                .Build();
 
             if (_enableStandardMetrics)
             {
