@@ -23,7 +23,6 @@ namespace Azure.Identity
         private ManagedIdentitySource _tokenExchangeManagedIdentitySource;
         private bool _isChainedCredential;
         private ManagedIdentityClientOptions _options;
-        private bool _probeRequestSent;
 
         protected ManagedIdentityClient()
         {
@@ -76,14 +75,6 @@ namespace Azure.Identity
             MSAL.ManagedIdentitySource availableSource = availableSourceResult.Source;
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
-
-            // If the source is IMDS and the credential is chained, we should probe the IMDS endpoint first.
-            if (availableSource == MSAL.ManagedIdentitySource.Imds && _isChainedCredential && !_probeRequestSent)
-            {
-                var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
-                _probeRequestSent = true;
-                return probedFlowTokenResult;
-            }
 
             // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
             if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ManagedIdentityId?._idType != ManagedIdentityIdType.SystemAssigned))
