@@ -32,14 +32,5 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <summary> The capacity administration. </summary>
         internal FabricCapacityAdministration Administration { get; set; }
-
-        /// <summary> An array of administrator user identities. </summary>
-        public IList<string> AdministrationMembers
-        {
-            get
-            {
-                return Administration is null ? default : Administration.Members;
-            }
-        }
     }
 }
