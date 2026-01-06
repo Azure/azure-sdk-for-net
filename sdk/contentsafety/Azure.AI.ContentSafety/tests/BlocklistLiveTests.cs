@@ -192,8 +192,8 @@ namespace Azure.AI.ContentSafety.Tests
             var blocklistItemId1 = addBlocklistItemResponse.Value.BlocklistItems[0].BlocklistItemId;
             Assert.IsNotNull(blocklistItemId1);
 
-            // Test maxCount
-            var response = client.GetTextBlocklistItemsAsync(blocklistName, maxCount: 2);
+            // Test maxpagesize
+            var response = client.GetTextBlocklistItemsAsync(blocklistName, maxpagesize: 2);
             Assert.IsNotNull(response);
             List<TextBlocklistItem> blocklistItems = await response.ToListAsync();
             Assert.LessOrEqual(blocklistItems.Count, 2);
