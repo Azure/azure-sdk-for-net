@@ -610,7 +610,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base class for targets with discriminator support.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAIAgentTarget"/>, <see cref="Projects.AzureAIModelTarget"/>, and <see cref="Projects.AzureAIAssistantTarget"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAIAgentTarget"/> and <see cref="Projects.AzureAIModelTarget"/>.
         /// </summary>
         /// <param name="type"> The type of target. </param>
         /// <returns> A new <see cref="Projects.Target"/> instance for mocking. </returns>
@@ -637,17 +637,6 @@ namespace Azure.AI.Projects
         public static ModelSamplingParams ModelSamplingParams(float temperature = default, float topP = default, int seed = default, int maxCompletionTokens = default)
         {
             return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents a target specifying an Azure AI Assistant (Agent V1) endpoint, including its id. </summary>
-        /// <param name="id"> The unique identifier of the Azure AI Assistant. </param>
-        /// <param name="toolDescriptions"> The descriptions of tools available to the assistant. </param>
-        /// <returns> A new <see cref="Projects.AzureAIAssistantTarget"/> instance for mocking. </returns>
-        public static AzureAIAssistantTarget AzureAIAssistantTarget(string id = default, IEnumerable<ToolDescription> toolDescriptions = default)
-        {
-            toolDescriptions ??= new ChangeTrackingList<ToolDescription>();
-
-            return new AzureAIAssistantTarget("azure_ai_assistant", additionalBinaryDataProperties: null, id, toolDescriptions.ToList());
         }
 
         /// <summary> Taxonomy category definition. </summary>

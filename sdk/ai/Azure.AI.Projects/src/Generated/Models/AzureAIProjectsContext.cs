@@ -35,7 +35,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(AIProjectIndexFieldMapping))]
     [ModelReaderWriterBuildable(typeof(AISearchIndexResource))]
     [ModelReaderWriterBuildable(typeof(AzureAIAgentTarget))]
-    [ModelReaderWriterBuildable(typeof(AzureAIAssistantTarget))]
     [ModelReaderWriterBuildable(typeof(AzureAIModelTarget))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchAgentTool))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchIndex))]
