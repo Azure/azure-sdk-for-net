@@ -12,21 +12,21 @@ using Azure.ResourceManager.ServiceNetworking;
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> Ip Access Policy. </summary>
-    internal partial class IpAccessRulesPolicy
+    internal partial class ServiceNetworkingIPAccessRulesPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpAccessRulesPolicy"/>. </summary>
-        public IpAccessRulesPolicy()
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingIPAccessRulesPolicy"/>. </summary>
+        public ServiceNetworkingIPAccessRulesPolicy()
         {
             Rules = new ChangeTrackingList<ServiceNetworkingIPAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpAccessRulesPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingIPAccessRulesPolicy"/>. </summary>
         /// <param name="rules"> Ip Access Policy Rules List. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpAccessRulesPolicy(IList<ServiceNetworkingIPAccessRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceNetworkingIPAccessRulesPolicy(IList<ServiceNetworkingIPAccessRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rules = rules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

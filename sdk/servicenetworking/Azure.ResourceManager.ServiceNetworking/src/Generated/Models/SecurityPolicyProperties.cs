@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="ipAccessRulesPolicy"> Ip Access Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityPolicyProperties(ApplicationGatewayForContainersSecurityPolicyType? policyType, WafPolicy wafPolicy, IpAccessRulesPolicy ipAccessRulesPolicy, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityPolicyProperties(ApplicationGatewayForContainersSecurityPolicyType? policyType, WafPolicy wafPolicy, ServiceNetworkingIPAccessRulesPolicy ipAccessRulesPolicy, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyType = policyType;
             WafPolicy = wafPolicy;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         internal WafPolicy WafPolicy { get; set; }
 
         /// <summary> Ip Access Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </summary>
-        internal IpAccessRulesPolicy IpAccessRulesPolicy { get; set; }
+        internal ServiceNetworkingIPAccessRulesPolicy IpAccessRulesPolicy { get; set; }
 
         /// <summary> Provisioning State of Traffic Controller SecurityPolicy Resource. </summary>
         public ServiceNetworkingProvisioningState? ProvisioningState { get; }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 if (IpAccessRulesPolicy is null)
                 {
-                    IpAccessRulesPolicy = new IpAccessRulesPolicy();
+                    IpAccessRulesPolicy = new ServiceNetworkingIPAccessRulesPolicy();
                 }
                 return IpAccessRulesPolicy.Rules;
             }

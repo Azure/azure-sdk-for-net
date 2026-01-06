@@ -13,25 +13,25 @@ using Azure.ResourceManager.ServiceNetworking;
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> IpAccessRules Security Policy. </summary>
-    internal partial class IpAccessRulesSecurityPolicy
+    internal partial class ServiceNetworkingIPAccessRulesSecurityPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpAccessRulesSecurityPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingIPAccessRulesSecurityPolicy"/>. </summary>
         /// <param name="id"> Resource ID of the Ip Access Rules Security Policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public IpAccessRulesSecurityPolicy(ResourceIdentifier id)
+        public ServiceNetworkingIPAccessRulesSecurityPolicy(ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpAccessRulesSecurityPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingIPAccessRulesSecurityPolicy"/>. </summary>
         /// <param name="id"> Resource ID of the Ip Access Rules Security Policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpAccessRulesSecurityPolicy(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceNetworkingIPAccessRulesSecurityPolicy(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

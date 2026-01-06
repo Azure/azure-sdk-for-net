@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 return null;
             }
             WafPolicy wafPolicy = default;
-            IpAccessRulesPolicy ipAccessRulesPolicy = default;
+            ServiceNetworkingIPAccessRulesPolicy ipAccessRulesPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     {
                         continue;
                     }
-                    ipAccessRulesPolicy = IpAccessRulesPolicy.DeserializeIpAccessRulesPolicy(prop.Value, options);
+                    ipAccessRulesPolicy = ServiceNetworkingIPAccessRulesPolicy.DeserializeServiceNetworkingIPAccessRulesPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="wafPolicy"> Web Application Firewall Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </param>
         /// <param name="ipAccessRulesPolicy"> Ip Access Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityPolicyUpdateProperties(WafPolicy wafPolicy, IpAccessRulesPolicy ipAccessRulesPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityPolicyUpdateProperties(WafPolicy wafPolicy, ServiceNetworkingIPAccessRulesPolicy ipAccessRulesPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WafPolicy = wafPolicy;
             IpAccessRulesPolicy = ipAccessRulesPolicy;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         internal WafPolicy WafPolicy { get; set; }
 
         /// <summary> Ip Access Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </summary>
-        internal IpAccessRulesPolicy IpAccessRulesPolicy { get; set; }
+        internal ServiceNetworkingIPAccessRulesPolicy IpAccessRulesPolicy { get; set; }
 
         /// <summary> Resource ID of the WAF. </summary>
         public ResourceIdentifier WafPolicyId
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 if (IpAccessRulesPolicy is null)
                 {
-                    IpAccessRulesPolicy = new IpAccessRulesPolicy();
+                    IpAccessRulesPolicy = new ServiceNetworkingIPAccessRulesPolicy();
                 }
                 return IpAccessRulesPolicy.Rules;
             }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                policyType is null && provisioningState is null && wafPolicyId is null && rules is null ? default : new SecurityPolicyProperties(policyType, new WafPolicy(wafPolicyId, null), new IpAccessRulesPolicy((rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>()).ToList(), null), provisioningState, null));
+                policyType is null && provisioningState is null && wafPolicyId is null && rules is null ? default : new SecurityPolicyProperties(policyType, new WafPolicy(wafPolicyId, null), new ServiceNetworkingIPAccessRulesPolicy((rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>()).ToList(), null), provisioningState, null));
         }
 
         /// <summary> Ip Access Policy Rules. </summary>

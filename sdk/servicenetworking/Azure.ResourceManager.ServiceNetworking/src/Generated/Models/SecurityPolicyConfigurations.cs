@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="wafSecurityPolicy"> Contains reference to a WAF-type security policy. </param>
         /// <param name="ipAccessRulesSecurityPolicy"> Contains reference to a IpAccessRules-type security policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityPolicyConfigurations(WafSecurityPolicy wafSecurityPolicy, IpAccessRulesSecurityPolicy ipAccessRulesSecurityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityPolicyConfigurations(WafSecurityPolicy wafSecurityPolicy, ServiceNetworkingIPAccessRulesSecurityPolicy ipAccessRulesSecurityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WafSecurityPolicy = wafSecurityPolicy;
             IPAccessRulesSecurityPolicy = ipAccessRulesSecurityPolicy;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         internal WafSecurityPolicy WafSecurityPolicy { get; set; }
 
         /// <summary> Contains reference to a IpAccessRules-type security policy. </summary>
-        internal IpAccessRulesSecurityPolicy IPAccessRulesSecurityPolicy { get; set; }
+        internal ServiceNetworkingIPAccessRulesSecurityPolicy IPAccessRulesSecurityPolicy { get; set; }
 
         /// <summary> Resource ID of the Waf Security Policy. </summary>
         public ResourceIdentifier WafSecurityPolicyId
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
             set
             {
-                IPAccessRulesSecurityPolicy = new IpAccessRulesSecurityPolicy(value);
+                IPAccessRulesSecurityPolicy = new ServiceNetworkingIPAccessRulesSecurityPolicy(value);
             }
         }
     }
