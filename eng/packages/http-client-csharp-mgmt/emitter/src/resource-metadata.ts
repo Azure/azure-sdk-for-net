@@ -121,7 +121,7 @@ export enum ResourceOperationKind {
 
 /**
  * Get the sort order for a resource operation kind.
- * CRUD operations come first, followed by List, then Action.
+ * Create operations come first, followed by other CRUD operations (Read, Update, Delete), then List, then Action.
  */
 function getKindSortOrder(kind: ResourceOperationKind): number {
   switch (kind) {
