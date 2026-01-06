@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Fabric
                 RpSkuEnumerationForExistingResourceResult result = RpSkuEnumerationForExistingResourceResult.FromResponse(response);
                 yield return Page<FabricSkuDetailsForExistingCapacity>.FromValues((IReadOnlyList<FabricSkuDetailsForExistingCapacity>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }

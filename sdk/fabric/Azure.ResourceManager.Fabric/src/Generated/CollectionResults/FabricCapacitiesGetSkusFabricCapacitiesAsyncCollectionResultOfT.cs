@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Fabric
                 RpSkuEnumerationForNewResourceResult result = RpSkuEnumerationForNewResourceResult.FromResponse(response);
                 yield return Page<FabricSkuDetailsForNewCapacity>.FromValues((IReadOnlyList<FabricSkuDetailsForNewCapacity>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
