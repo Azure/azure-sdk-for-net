@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static TrafficControllerFrontendData TrafficControllerFrontendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string fqdn, ServiceNetworkingProvisioningState? provisioningState)
         {
-            return TrafficControllerFrontendData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, fqdn: fqdn, securityPolicyConfigurations: default, provisioningState: provisioningState);
+            return TrafficControllerFrontendData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, fqdn: fqdn, securityPolicyConfigurations: null, provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceNetworking.TrafficControllerAssociationData"/>. </summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                associationType is null && provisioningState is null && subnetId is null ? default : new AssociationProperties(associationType.Value, new AssociationSubnet(subnetId, null), provisioningState, null));
+                associationType is null && provisioningState is null && subnetId is null ? null : new AssociationProperties(associationType.Value, new AssociationSubnet(subnetId, null), provisioningState, null));
         }
     }
 #pragma warning restore 0618

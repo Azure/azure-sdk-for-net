@@ -8,12 +8,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    // The definition in Swagger and TSP is not `Lifecycle.Read`, so this property is manually added back.
-    [CodeGenType(nameof(AssociationProperties))]
-    internal partial class AssociationProperties
-    {
-        /// <summary> Association Type. </summary>
-        [CodeGenMember("AssociationType")]
-        public TrafficControllerAssociationType? AssociationType { get; set; }
-    }
+   [CodeGenType(nameof(AssociationProperties))]
+   internal partial class AssociationProperties
+   {
+       /// <summary> Association Type. </summary>
+       [CodeGenMember("AssociationType")]
+       public TrafficControllerAssociationType? AssociationType { get; set; }
+   }
 }
