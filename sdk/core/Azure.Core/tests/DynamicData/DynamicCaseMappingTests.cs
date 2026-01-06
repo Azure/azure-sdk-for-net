@@ -48,14 +48,14 @@ namespace Azure.Core.Tests
         {
             dynamic value = new BinaryData(testJson).ToDynamicFromJson();
 
-            Assert.IsNull(value.Camel);
-            Assert.IsNull(value.pascal);
-            Assert.IsNull(value.ParentCamel);
-            Assert.IsNull(value.parentCamel.NestedCamel);
-            Assert.IsNull(value.parentCamel.nestedPascal);
-            Assert.IsNull(value.parentPascal);
-            Assert.IsNull(value.ParentPascal.NestedCamel);
-            Assert.IsNull(value.ParentPascal.nestedPascal);
+            Assert.That(value.Camel, Is.Null);
+            Assert.That(value.pascal, Is.Null);
+            Assert.That(value.ParentCamel, Is.Null);
+            Assert.That(value.parentCamel.NestedCamel, Is.Null);
+            Assert.That(value.parentCamel.nestedPascal, Is.Null);
+            Assert.That(value.parentPascal, Is.Null);
+            Assert.That(value.ParentPascal.NestedCamel, Is.Null);
+            Assert.That(value.ParentPascal.nestedPascal, Is.Null);
         }
 
         [Test]
@@ -84,10 +84,10 @@ namespace Azure.Core.Tests
             DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
-            Assert.IsNull(value.pascal);
-            Assert.IsNull(value.parentCamel.nestedPascal);
-            Assert.IsNull(value.parentPascal);
-            Assert.IsNull(value.ParentPascal.nestedPascal);
+            Assert.That(value.pascal, Is.Null);
+            Assert.That(value.parentCamel.nestedPascal, Is.Null);
+            Assert.That(value.parentPascal, Is.Null);
+            Assert.That(value.ParentPascal.nestedPascal, Is.Null);
         }
 
         [Test]
@@ -269,8 +269,8 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(options);
-            Assert.IsTrue(dynamicJson.root.child[0].item.leaf);
-            Assert.IsTrue(dynamicJson.Root.Child[0].Item.Leaf);
+            Assert.That(dynamicJson.root.child[0].item.leaf, Is.True);
+            Assert.That(dynamicJson.Root.Child[0].Item.Leaf, Is.True);
         }
 
         [Test]

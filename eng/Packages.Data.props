@@ -483,6 +483,7 @@
 
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
     <PackageReference Update="Castle.Core" Version="$(CastleCoreVersion)" />
+    <PackageReference Update="Nunit" Version="$(NUnitVersion)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">

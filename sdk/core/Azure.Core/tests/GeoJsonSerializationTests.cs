@@ -124,7 +124,6 @@ namespace Azure.Core.Tests
 
             Assert.That(dictionary["additionalNumber"], Is.EqualTo(1));
             Assert.That(dictionary["additionalNumber2"], Is.EqualTo(2.2));
-
         }
 
         [Test]
