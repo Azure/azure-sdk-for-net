@@ -754,11 +754,8 @@ namespace Azure.Identity.Tests
             var response = CreateMockResponse(200, ExpectedToken);
             var mockTransport = new MockTransport(req =>
             {
-                Assert.Multiple(() =>
-                {
-                    Assert.That(req.Uri.ToString(), Does.StartWith("https://mock.msi.endpoint/"));
-                    Assert.That(req.Content.TryComputeLength(out long contentLen), Is.True);
-                });
+                Assert.That(req.Uri.ToString(), Does.StartWith("https://mock.msi.endpoint/"));
+                Assert.That(req.Content.TryComputeLength(out long contentLen), Is.True);
 
                 var content = new byte[contentLen];
                 MemoryStream contentBuff = new MemoryStream(content);
@@ -796,11 +793,8 @@ namespace Azure.Identity.Tests
             var response = CreateMockResponse(200, ExpectedToken);
             var mockTransport = new MockTransport(req =>
             {
-                Assert.Multiple(() =>
-                {
-                    Assert.That(req.Uri.ToString(), Does.StartWith("https://mock.msi.endpoint/"), $"Unexpected Uri: {req.Uri}");
-                    Assert.That(req.Content.TryComputeLength(out long contentLen), Is.True);
-                });
+                Assert.That(req.Uri.ToString(), Does.StartWith("https://mock.msi.endpoint/"), $"Unexpected Uri: {req.Uri}");
+                Assert.That(req.Content.TryComputeLength(out long contentLen), Is.True);
 
                 var content = new byte[contentLen];
                 MemoryStream contentBuff = new MemoryStream(content);

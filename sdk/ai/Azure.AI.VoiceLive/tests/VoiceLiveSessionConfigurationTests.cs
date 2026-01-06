@@ -98,13 +98,12 @@ namespace Azure.AI.VoiceLive.Tests
             // Inspect the latest update for assertions (most specific state)
             using var doc = updateMessages.Last();
             var root = doc.RootElement;
-            Assert.Multiple(() =>
-            {
-                Assert.That(root.TryGetProperty("session", out var sessionElement), Is.True, "session object missing in payload");
 
-                // Modalities assertion
-                Assert.That(sessionElement.TryGetProperty("modalities", out var modalitiesElement), Is.True, "modalities missing");
-            });
+            Assert.That(root.TryGetProperty("session", out var sessionElement), Is.True, "session object missing in payload");
+
+            // Modalities assertion
+            Assert.That(sessionElement.TryGetProperty("modalities", out var modalitiesElement), Is.True, "modalities missing");
+
             var modalities = modalitiesElement.EnumerateArray().Select(e => e.GetString()).Where(s => s != null).ToArray();
             Assert.Multiple(() =>
             {

@@ -217,11 +217,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     // wait for callConnected
                     var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.That(connectedEvent, Is.Not.Null);
-                    Assert.Multiple(() =>
-                    {
-                        Assert.That(connectedEvent is CallConnected, Is.True);
-                        Assert.That(((CallConnected)connectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
-                    });
+                    Assert.That(connectedEvent is CallConnected, Is.True);
+                    Assert.That(((CallConnected)connectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
 
                     // server call locator for connect call.
                     CallLocator callLocator = new ServerCallLocator(connectedEvent.ServerCallId);
@@ -327,11 +324,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     // wait for callConnected
                     var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.That(connectedEvent, Is.Not.Null);
-                    Assert.Multiple(() =>
-                    {
-                        Assert.That(connectedEvent is CallConnected, Is.True);
-                        Assert.That(((CallConnected)connectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
-                    });
+                    Assert.That(connectedEvent is CallConnected, Is.True);
+                    Assert.That(((CallConnected)connectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
 
                     // server call locator for connect call.
                     CallLocator callLocator = new ServerCallLocator(connectedEvent.ServerCallId);

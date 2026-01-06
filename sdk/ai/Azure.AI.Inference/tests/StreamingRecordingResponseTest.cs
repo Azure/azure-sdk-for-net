@@ -67,8 +67,8 @@ namespace Azure.AI.Inference.Tests
                 Assert.That("gpt-100o", Is.EqualTo(response.Model));
                 Assert.That(withUsage ? "4" : "3", Is.EqualTo(response.Id));
 
-                Assert.That(withUsage ? 7 : null, Is.EqualTo(response.CompletionTokens));
-                Assert.That(withUsage ? 3 : null, Is.EqualTo(response.PromptTokens));
+                Assert.That(response.CompletionTokens, Is.EqualTo(withUsage ? 7 : null));
+                Assert.That(response.PromptTokens, Is.EqualTo(withUsage ? 3 : null));
 
                 Assert.That(response.Choices.Length, Is.EqualTo(1));
             });

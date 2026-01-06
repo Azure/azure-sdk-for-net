@@ -237,7 +237,7 @@ namespace Azure.Identity.Tests
                     Assert.That(tenantId, Is.EqualTo(config.TenantId));
                     Assert.That(context.TenantId, Is.EqualTo(config.RequestContext.TenantId));
                 });
-                Assert.AreEqual(config.AdditionallyAllowedTenants, additionalTenants);
+                Assert.That(config.AdditionallyAllowedTenants, Is.EquivalentTo(additionalTenants));
             }).Returns(resolvedTenantId);
         }
 

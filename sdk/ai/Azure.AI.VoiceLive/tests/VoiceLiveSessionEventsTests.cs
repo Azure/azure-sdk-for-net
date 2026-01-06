@@ -95,7 +95,7 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(CreateSessionCreatedJson("evt-first"));
 
             await using var enumerator1 = session.GetUpdatesAsync().GetAsyncEnumerator();
-            Assert.Multiple(() =>
+            Assert.Multiple(async () =>
             {
                 Assert.That(await enumerator1.MoveNextAsync(), Is.True, "First enumeration should obtain an event.");
                 Assert.That(enumerator1.Current, Is.TypeOf<SessionUpdateSessionCreated>());

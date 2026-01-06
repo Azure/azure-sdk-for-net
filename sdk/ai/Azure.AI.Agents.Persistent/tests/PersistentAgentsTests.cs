@@ -231,7 +231,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(id, Is.Not.EqualTo(default));
+                Assert.That(id, Is.Not.EqualTo(default(string)));
                 Assert.That(name, Is.EqualTo(AGENT_NAME));
             });
             Response<bool> delResponse = await client.Administration.DeleteAgentAsync(id);
@@ -412,7 +412,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(thread_id, Is.Not.EqualTo(default));
+                Assert.That(thread_id, Is.Not.EqualTo(default(string)));
                 Assert.That(metadata.Count, Is.EqualTo(2));
             });
 
@@ -461,7 +461,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             thread = getThreadResponse.Value;
             Assert.Multiple(() =>
             {
-                Assert.That(thread.Id, Is.Not.EqualTo(default));
+                Assert.That(thread.Id, Is.Not.EqualTo(default(string)));
                 Assert.That(thread.Metadata.Count, Is.EqualTo(2));
             });
 

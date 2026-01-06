@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             // deserialize
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-            Assert.IsNotNull(conversationalTaskResult);
+            Assert.That(conversationalTaskResult, Is.Not.Null);
 
             Assert.Multiple(() =>
             {
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             // cast prediction
             dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
-            Assert.IsNotNull(conversationPrediction);
+            Assert.That(conversationPrediction, Is.Not.Null);
 
             // assert - not empty
             Assert.That((IEnumerable)conversationPrediction.Intents, Is.Not.Empty);
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             // deserialize
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-            Assert.IsNotNull(conversationalTaskResult);
+            Assert.That(conversationalTaskResult, Is.Not.Null);
 
             Assert.Multiple(() =>
             {
@@ -112,14 +112,14 @@ namespace Azure.AI.Language.Conversations.Tests
 
             // cast prediction
             dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
-            Assert.IsNotNull(orchestrationPrediction);
+            Assert.That(orchestrationPrediction, Is.Not.Null);
 
             // assert - not empty
             Assert.That((IEnumerable)orchestrationPrediction.Intents, Is.Not.Empty);
 
             // cast top intent
             dynamic topIntent = orchestrationPrediction.Intents[(string)orchestrationPrediction.TopIntent];
-            Assert.IsNotNull(topIntent);
+            Assert.That(topIntent, Is.Not.Null);
 
             Assert.Multiple(() =>
             {
@@ -162,7 +162,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             // deserialize
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-            Assert.IsNotNull(conversationalTaskResult);
+            Assert.That(conversationalTaskResult, Is.Not.Null);
 
             Assert.Multiple(() =>
             {
@@ -175,14 +175,14 @@ namespace Azure.AI.Language.Conversations.Tests
 
             // cast prediction
             dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
-            Assert.IsNotNull(orchestrationPrediction);
+            Assert.That(orchestrationPrediction, Is.Not.Null);
 
             // assert - not empty
             Assert.That((IEnumerable)orchestrationPrediction.Intents, Is.Not.Empty);
 
             // cast top intent
             dynamic topIntent = orchestrationPrediction.Intents[(string)orchestrationPrediction.TopIntent];
-            Assert.IsNotNull(topIntent);
+            Assert.That(topIntent, Is.Not.Null);
 
             // assert - inent target kind
             Assert.That((string)topIntent.TargetProjectKind, Is.EqualTo("Luis"));
@@ -216,7 +216,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             // deserialize
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-            Assert.IsNotNull(conversationalTaskResult);
+            Assert.That(conversationalTaskResult, Is.Not.Null);
 
             Assert.Multiple(() =>
             {
@@ -229,14 +229,14 @@ namespace Azure.AI.Language.Conversations.Tests
 
             // cast prediction
             dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
-            Assert.IsNotNull(orchestrationPrediction);
+            Assert.That(orchestrationPrediction, Is.Not.Null);
 
             // assert - not empty
             Assert.That((IEnumerable)orchestrationPrediction.Intents, Is.Not.Empty);
 
             // cast top intent
             dynamic topIntent = orchestrationPrediction.Intents[(string)orchestrationPrediction.TopIntent];
-            Assert.IsNotNull(topIntent);
+            Assert.That(topIntent, Is.Not.Null);
 
             // assert - inent target kind
             Assert.That((string)topIntent.TargetProjectKind, Is.EqualTo("QuestionAnswering"));

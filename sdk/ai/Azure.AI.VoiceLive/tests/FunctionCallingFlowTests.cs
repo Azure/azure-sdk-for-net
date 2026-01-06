@@ -123,16 +123,15 @@ namespace Azure.AI.VoiceLive.Tests
                     if (typeVal == "conversation.item.create" && createIndex == -1)
                     {
                         createIndex = i;
-                        Assert.Multiple(() =>
-                        {
-                            // Validate this is the function_call_output item with our call id
-                            Assert.That(doc.RootElement.TryGetProperty("item", out var itemEl), Is.True, "item missing in create payload");
-                            Assert.That(itemEl.TryGetProperty("call_id", out var callIdEl), Is.True, "call_id missing in item");
-                            Assert.That(callIdEl.GetString(), Is.EqualTo(callId));
-                            Assert.That(itemEl.TryGetProperty("output", out var outputEl), Is.True, "output missing");
-                        });
+
+                        // Validate this is the function_call_output item with our call id
+                        Assert.That(doc.RootElement.TryGetProperty("item", out var itemEl), Is.True, "item missing in create payload");
+                        Assert.That(itemEl.TryGetProperty("call_id", out var callIdEl), Is.True, "call_id missing in item");
+                        Assert.That(callIdEl.GetString(), Is.EqualTo(callId));
+                        Assert.That(itemEl.TryGetProperty("output", out var outputEl), Is.True, "output missing");
+
                         // Basic structural assertion on output JSON string contents
-                        StringAssert.Contains("\"value\":42", outputEl.GetString());
+                        Assert.That(outputEl.GetString(), Does.Contain("\"value\":42"));
                     }
                     if (typeVal == "response.create" && responseIndex == -1)
                     {

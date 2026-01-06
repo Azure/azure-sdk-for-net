@@ -276,13 +276,10 @@ namespace Azure.Communication
             var otherTypeIdentifier = new MicrosoftTeamsUserIdentifier("123");
             CommunicationIdentifier? nullIdentifier = null;
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(identifier, Is.Not.EqualTo(null));
-                Assert.That(null, Is.Not.EqualTo(identifier));
-            });
-            Assert.That(identifier, Is.Not.EqualTo(null));
-            Assert.That(null, Is.Not.EqualTo(identifier));
+            Assert.That(identifier == null, Is.False);
+            Assert.That(null == identifier, Is.False);
+            Assert.That(identifier != null, Is.True);
+            Assert.That(null != identifier, Is.True);
 
             Assert.Multiple(() =>
             {
