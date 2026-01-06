@@ -10,7 +10,7 @@ description: Samples for the Microsoft.ClientModel.TestFramework library
 
 # Microsoft.ClientModel.TestFramework Samples
 
-- [Recorded Tests](RecordedTests.md)
-- [Sync/Async Testing](SyncAsync.md)
-- [Unit Testing](UnitTests.md)
-- [Test Utilities](TestUtilities.md)
+- [Recorded Tests]<!--(https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/RecordedTests.md)-->
+- [Sync/Async Testing]<!--(https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/SyncAsync.md)-->
+- [Unit Testing]<!--(https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/UnitTests.md)-->
+- [Test Utilities]<!--(https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/TestUtilities.md)-->
