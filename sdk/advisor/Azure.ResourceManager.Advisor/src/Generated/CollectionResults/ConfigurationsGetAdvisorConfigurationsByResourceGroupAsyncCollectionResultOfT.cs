@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Advisor
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAdvisorConfigurationsByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroup, _context) : _client.CreateGetAdvisorConfigurationsByResourceGroupRequest(_subscriptionId, _resourceGroup, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.GetAdvisorConfigurationsByResourceGroup");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAdvisorResourceGroupResource.GetAdvisorConfigurationsByResourceGroup");
             scope.Start();
             try
             {

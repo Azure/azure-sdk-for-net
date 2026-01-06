@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.Advisor.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
-    {/*
+    {
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task GetConfigurations_GetConfigurations()
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Advisor.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AdvisorConfigData item in resourceGroupResource.GetAdvisorConfigurationsAsync())
+            await foreach (AdvisorConfigurationData item in resourceGroupResource.GetAdvisorConfigurationsByResourceGroupAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -63,24 +63,24 @@ namespace Azure.ResourceManager.Advisor.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation
-            ConfigurationName configurationName = ConfigurationName.Default;
-            ConfigData data = new ConfigData
+            AdvisorConfigurationName configurationName = AdvisorConfigurationName.Default;
+            AdvisorConfigurationData data = new AdvisorConfigurationData
             {
-                Exclude = true,
-                LowCpuThreshold = CpuThreshold.Five,
-                Digests = {new DigestConfig
+                IsExcluded = true,
+                LowCpuThreshold = AdvisorCpuThreshold.Five,
+                Digests = {new AdvisorDigestConfiguration
 {
 Name = "digestConfigName",
 ActionGroupResourceId = "/subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/microsoft.insights/actionGroups/actionGroupName",
 Frequency = 30,
-Categories = {Category.HighAvailability, Category.Security, Category.Performance, Category.Cost, Category.OperationalExcellence},
+Categories = { RecommendationCategory.HighAvailability, RecommendationCategory.Security, RecommendationCategory.Performance, RecommendationCategory.Cost, RecommendationCategory.OperationalExcellence},
 Language = "en",
-State = DigestConfigState.Active,
+State = AdvisorDigestConfigurationState.Active,
 }},
             };
-            ConfigData result = await resourceGroupResource.CreateConfigurationAsync(configurationName, data);
+            AdvisorConfigurationData result = await resourceGroupResource.CreateAdvisorConfigurationInResourceGroupAsync(configurationName, data);
 
             Console.WriteLine($"Succeeded: {result}");
-        }*/
+        }
     }
 }
