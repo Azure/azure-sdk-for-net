@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +24,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// Each <see cref="BestPracticeResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
     /// To get a <see cref="BestPracticeCollection"/> instance call the GetBestPractices method from an instance of <see cref="TenantResource"/>.
     /// </summary>
-    public partial class BestPracticeCollection : ArmCollection
+    public partial class BestPracticeCollection : ArmCollection, IEnumerable<BestPracticeResource>, IAsyncEnumerable<BestPracticeResource>
     {
         private readonly ClientDiagnostics _bestPracticesClientDiagnostics;
         private readonly BestPractices _bestPracticesRestClient;
+        private readonly ClientDiagnostics _bestPracticeVersionsClientDiagnostics;
+        private readonly BestPracticeVersions _bestPracticeVersionsRestClient;
 
         /// <summary> Initializes a new instance of BestPracticeCollection for mocking. </summary>
         protected BestPracticeCollection()
@@ -40,6 +44,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(BestPracticeResource.ResourceType, out string bestPracticeApiVersion);
             _bestPracticesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BestPracticeResource.ResourceType.Namespace, Diagnostics);
             _bestPracticesRestClient = new BestPractices(_bestPracticesClientDiagnostics, Pipeline, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
+            _bestPracticeVersionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BestPracticeResource.ResourceType.Namespace, Diagnostics);
+            _bestPracticeVersionsRestClient = new BestPracticeVersions(_bestPracticeVersionsClientDiagnostics, Pipeline, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -259,6 +265,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List a BestPractice
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/bestPractices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BestPractices_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BestPracticeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BestPracticeResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BestPracticeData, BestPracticeResource>(new BestPracticesGetAllAsyncCollectionResultOfT(_bestPracticesRestClient, context), data => new BestPracticeResource(Client, data));
+        }
+
+        /// <summary>
+        /// List a BestPractice
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/bestPractices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BestPractices_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BestPracticeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BestPracticeResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BestPracticeData, BestPracticeResource>(new BestPracticesGetAllCollectionResultOfT(_bestPracticesRestClient, context), data => new BestPracticeResource(Client, data));
         }
 
         /// <summary>
@@ -495,6 +557,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<BestPracticeResource> IEnumerable<BestPracticeResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<BestPracticeResource> IAsyncEnumerable<BestPracticeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -27,6 +27,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     {
         private readonly ClientDiagnostics _bestPracticesClientDiagnostics;
         private readonly BestPractices _bestPracticesRestClient;
+        private readonly ClientDiagnostics _bestPracticeVersionsClientDiagnostics;
+        private readonly BestPracticeVersions _bestPracticeVersionsRestClient;
         private readonly BestPracticeData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/bestPractices";
@@ -53,6 +55,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(ResourceType, out string bestPracticeApiVersion);
             _bestPracticesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _bestPracticesRestClient = new BestPractices(_bestPracticesClientDiagnostics, Pipeline, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
+            _bestPracticeVersionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _bestPracticeVersionsRestClient = new BestPracticeVersions(_bestPracticeVersionsClientDiagnostics, Pipeline, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -390,6 +394,70 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List a BestPractice
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BestPracticeVersions_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BestPracticeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BestPracticeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BestPracticeResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BestPracticeData, BestPracticeResource>(new BestPracticeVersionsGetAllAsyncCollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context), data => new BestPracticeResource(Client, data));
+        }
+
+        /// <summary>
+        /// List a BestPractice
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BestPracticeVersions_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BestPracticeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BestPracticeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BestPracticeResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BestPracticeData, BestPracticeResource>(new BestPracticeVersionsGetAllCollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context), data => new BestPracticeResource(Client, data));
         }
 
         /// <summary> Gets a collection of BestPracticeVersions in the <see cref="BestPracticeResource"/>. </summary>
