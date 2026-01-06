@@ -813,7 +813,7 @@ function getResourceScopeOfMethod(
 }
 
 function getOperationScope(path: string): ResourceScope {
-  if (/^\/\{[^}]+\}/.test(path)) {
+  if (path.startsWith("/{resourceUri}") || path.startsWith("/{scope}")) {
     return ResourceScope.Extension;
   } else if (
     /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}\//.test(path)
