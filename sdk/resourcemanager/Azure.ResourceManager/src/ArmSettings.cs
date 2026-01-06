@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,24 +12,27 @@ namespace Azure.ResourceManager
     /// <summary>
     /// .
     /// </summary>
-    public class ArmSettings : AzureClientSettings
+    public class ArmSettings : ClientSettingsBase
     {
         /// <summary>
         /// .
         /// </summary>
-        public string DefaultSubscriptionId { get; set; }
+        public ArmSettings()
+            :base(new ArmClientOptions())
+        {
+        }
 
         /// <summary>
         /// .
         /// </summary>
-        public new ArmClientOptions ClientOptions { get; set; }
+        public string DefaultSubscriptionId { get; set; }
 
         /// <inheritdoc/>
         protected override void ReadCore(IConfigurationSection section)
         {
             DefaultSubscriptionId = section["DefaultSubscriptionId"];
             // for schema should we have a layer for ClientOptions section.GetSection("ClientOptions")
-            ClientOptions = new ArmClientOptions(section);
+            Options = new ArmClientOptions(section);
         }
 
         internal static ArmSettings Create(IServiceProvider serviceProvider, IConfigurationSection section, Action<ArmClientOptions> configureOptions)
@@ -55,7 +59,7 @@ namespace Azure.ResourceManager
             }
             settings.CredentialObject = credential;
 
-            configureOptions?.Invoke(settings.ClientOptions);
+            configureOptions?.Invoke((ArmClientOptions)settings.Options);
             return settings;
         }
     }

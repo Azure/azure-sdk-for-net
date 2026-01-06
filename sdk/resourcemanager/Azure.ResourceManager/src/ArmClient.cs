@@ -96,7 +96,7 @@ namespace Azure.ResourceManager
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         public ArmClient(ArmSettings settings)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-            : this((TokenCredential)settings.CredentialObject, settings.DefaultSubscriptionId, settings.ClientOptions)
+            : this((TokenCredential)settings.CredentialObject, settings.DefaultSubscriptionId, settings.Options as ArmClientOptions)
         {
         }
 

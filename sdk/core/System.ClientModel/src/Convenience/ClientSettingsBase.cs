@@ -8,8 +8,17 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// .
 /// </summary>
-public abstract class ClientSettingsBase
+public class ClientSettingsBase
 {
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="options"></param>
+    public ClientSettingsBase(object options)
+    {
+        Options = options;
+    }
+
     /// <summary>
     /// .
     /// </summary>
@@ -24,6 +33,11 @@ public abstract class ClientSettingsBase
     /// .
     /// </summary>
     public object? CredentialObject { get; set; }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    public object Options { get; set; }
 
     /// <summary>
     /// .
@@ -80,5 +94,5 @@ public abstract class ClientSettingsBase
     /// .
     /// </summary>
     /// <param name="section"></param>
-    protected abstract void ReadCore(IConfigurationSection section);
+    protected virtual void ReadCore(IConfigurationSection section) { }
 }
