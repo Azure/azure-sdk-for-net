@@ -125,9 +125,9 @@ export enum ResourceOperationKind {
  */
 function getKindSortOrder(kind: ResourceOperationKind): number {
   switch (kind) {
-    case ResourceOperationKind.Read:
-      return 1;
     case ResourceOperationKind.Create:
+      return 1;
+    case ResourceOperationKind.Read:
       return 2;
     case ResourceOperationKind.Update:
       return 3;
