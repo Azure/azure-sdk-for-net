@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     }
     public partial class DedicatedHsmData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData>
     {
-        public DedicatedHsmData(Azure.Core.AzureLocation location, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku sku) { }
+        public DedicatedHsmData(Azure.Core.AzureLocation location, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties) { }
         public DedicatedHsmData(Azure.Core.AzureLocation location, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku sku, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties) { }
         public Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? SkuName { get { throw null; } set { } }

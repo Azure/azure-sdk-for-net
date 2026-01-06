@@ -3465,6 +3465,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     }
     public partial class ExadbVmClusterProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.ExadbVmClusterProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.ExadbVmClusterProperties>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ExadbVmClusterProperties(Azure.Core.ResourceIdentifier vnetId, Azure.Core.ResourceIdentifier subnetId, string displayName, int enabledEcpuCount, Azure.Core.ResourceIdentifier exascaleDBStorageVaultId, string hostname, int nodeCount, string shape, System.Collections.Generic.IEnumerable<string> sshPublicKeys, int totalEcpuCount, Azure.ResourceManager.OracleDatabase.Models.ExadbVmClusterStorageDetails vmFileSystemStorage) { }
         public string BackupSubnetCidr { get { throw null; } set { } }
         public string BackupSubnetOcid { get { throw null; } }
@@ -3657,6 +3658,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     }
     public partial class ExascaleDBStorageVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.ExascaleDBStorageVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.ExascaleDBStorageVaultProperties>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ExascaleDBStorageVaultProperties(string displayName, Azure.ResourceManager.OracleDatabase.Models.ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput) { }
         public int? AdditionalFlashCacheInPercent { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OracleDatabase.Models.ExascaleStorageShapeAttribute> AttachedShapeAttributes { get { throw null; } }

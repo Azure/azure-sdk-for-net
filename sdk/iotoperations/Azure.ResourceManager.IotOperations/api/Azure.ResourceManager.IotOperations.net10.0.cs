@@ -765,20 +765,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsContainerRegistrySettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsContainerRegistrySettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AkriConnectorsDiagnosticsLogs : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs>
-    {
-        public AkriConnectorsDiagnosticsLogs() { }
-        public string Level { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class AkriConnectorsDigest : Azure.ResourceManager.IotOperations.Models.AkriConnectorsTagDigestSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsDigest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsDigest>
     {
         public AkriConnectorsDigest(string digest) { }
@@ -923,7 +909,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class AkriConnectorsServiceAccountAuthentication : Azure.ResourceManager.IotOperations.Models.AkriConnectorsMqttAuthentication, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountAuthentication>
     {
-        public AkriConnectorsServiceAccountAuthentication(Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings serviceAccountTokenSettings) { }
+        public AkriConnectorsServiceAccountAuthentication(string serviceAccountTokenAudience) { }
         public string ServiceAccountTokenAudience { get { throw null; } set { } }
         protected override Azure.ResourceManager.IotOperations.Models.AkriConnectorsMqttAuthentication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -934,20 +920,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AkriConnectorsServiceAccountTokenSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings>
-    {
-        public AkriConnectorsServiceAccountTokenSettings(string audience) { }
-        public string Audience { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsServiceAccountTokenSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AkriConnectorsTag : Azure.ResourceManager.IotOperations.Models.AkriConnectorsTagDigestSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorsTag>
     {
@@ -1036,7 +1008,6 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class AkriConnectorTemplateDiagnostics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDiagnostics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDiagnostics>
     {
-        public AkriConnectorTemplateDiagnostics(Azure.ResourceManager.IotOperations.Models.AkriConnectorsDiagnosticsLogs logs) { }
         public AkriConnectorTemplateDiagnostics(string logs) { }
         public string LogsLevel { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDiagnostics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1293,7 +1264,6 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class BrokerAuthenticatorCustomAuth : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorCustomAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorCustomAuth>
     {
-        public BrokerAuthenticatorCustomAuth(Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate x509) { }
         public BrokerAuthenticatorCustomAuth(string secretRef) { }
         public string X509SecretRef { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorCustomAuth JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1853,20 +1823,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.BrokerSubscriberQueuePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.BrokerSubscriberQueuePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BrokerX509ManualCertificate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate>
-    {
-        public BrokerX509ManualCertificate(string secretRef) { }
-        public string SecretRef { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.BrokerX509ManualCertificate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class CertManagerCertConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.CertManagerCertConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.CertManagerCertConfig>
     {
         public CertManagerCertConfig(string duration, string renewBefore, Azure.ResourceManager.IotOperations.Models.CertManagerPrivateKey privateKey) { }
@@ -2182,20 +2138,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static bool operator !=(Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationSaslType left, Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationSaslType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataflowEndpointAuthenticationServiceAccountToken : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken>
-    {
-        public DataflowEndpointAuthenticationServiceAccountToken(string audience) { }
-        public string Audience { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class DataflowEndpointAuthenticationUserAssignedManagedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationUserAssignedManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationUserAssignedManagedIdentity>
     {
         public DataflowEndpointAuthenticationUserAssignedManagedIdentity(string clientId, string tenantId) { }
@@ -2211,20 +2153,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationUserAssignedManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationUserAssignedManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationUserAssignedManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationUserAssignedManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DataflowEndpointAuthenticationX509 : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509>
-    {
-        public DataflowEndpointAuthenticationX509(string secretRef) { }
-        public string SecretRef { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509 JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509 PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataflowEndpointDataExplorer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointDataExplorer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowEndpointDataExplorer>
     {
@@ -2619,20 +2547,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataflowGraphConnectionOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput>
-    {
-        public DataflowGraphConnectionOutput(string name) { }
-        public string Name { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataflowGraphConnectionSchemaSerializationFormat : System.IEquatable<Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionSchemaSerializationFormat>
     {
@@ -2801,7 +2715,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class DataflowGraphNodeConnection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphNodeConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphNodeConnection>
     {
-        public DataflowGraphNodeConnection(Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionInput from, Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionOutput to) { }
+        public DataflowGraphNodeConnection(Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionInput from, string toName) { }
         public Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionInput From { get { throw null; } set { } }
         public string ToName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.IotOperations.Models.DataflowGraphNodeConnection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2911,7 +2825,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class DataflowOpenTelemetryServiceAccountAuthentication : Azure.ResourceManager.IotOperations.Models.DataflowOpenTelemetryAuthentication, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowOpenTelemetryServiceAccountAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowOpenTelemetryServiceAccountAuthentication>
     {
-        public DataflowOpenTelemetryServiceAccountAuthentication(Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationServiceAccountToken serviceAccountTokenSettings) { }
+        public DataflowOpenTelemetryServiceAccountAuthentication(string serviceAccountTokenAudience) { }
         public string ServiceAccountTokenAudience { get { throw null; } set { } }
         protected override Azure.ResourceManager.IotOperations.Models.DataflowOpenTelemetryAuthentication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2925,7 +2839,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class DataflowOpenTelemetryX509CertificateAuthentication : Azure.ResourceManager.IotOperations.Models.DataflowOpenTelemetryAuthentication, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowOpenTelemetryX509CertificateAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowOpenTelemetryX509CertificateAuthentication>
     {
-        public DataflowOpenTelemetryX509CertificateAuthentication(Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationX509 x509CertificateSettings) { }
+        public DataflowOpenTelemetryX509CertificateAuthentication(string x509CertificateSecretRef) { }
         public string X509CertificateSecretRef { get { throw null; } set { } }
         protected override Azure.ResourceManager.IotOperations.Models.DataflowOpenTelemetryAuthentication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3386,6 +3300,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class IotOperationsInstanceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public IotOperationsInstanceProperties(Azure.ResourceManager.IotOperations.Models.SchemaRegistryRef schemaRegistryRef) { }
         public Azure.Core.ResourceIdentifier AdrNamespaceRefResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultSecretProviderClassRefResourceId { get { throw null; } set { } }
@@ -3681,7 +3596,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class RegistryEndpointArtifactPullSecretAuthentication : Azure.ResourceManager.IotOperations.Models.RegistryEndpointAuthentication, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretAuthentication>
     {
-        public RegistryEndpointArtifactPullSecretAuthentication(Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings artifactPullSecretSettings) { }
+        public RegistryEndpointArtifactPullSecretAuthentication(string secretRef) { }
         public string SecretRef { get { throw null; } set { } }
         protected override Azure.ResourceManager.IotOperations.Models.RegistryEndpointAuthentication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3692,20 +3607,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RegistryEndpointArtifactPullSecretSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings>
-    {
-        public RegistryEndpointArtifactPullSecretSettings(string secretRef) { }
-        public string SecretRef { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointArtifactPullSecretSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class RegistryEndpointAuthentication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointAuthentication>
     {
@@ -3722,7 +3623,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class RegistryEndpointSystemAssignedIdentityAuthentication : Azure.ResourceManager.IotOperations.Models.RegistryEndpointAuthentication, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedIdentityAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedIdentityAuthentication>
     {
-        public RegistryEndpointSystemAssignedIdentityAuthentication(Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings systemAssignedManagedIdentitySettings) { }
+        internal RegistryEndpointSystemAssignedIdentityAuthentication() { }
         public string SystemAssignedManagedIdentityAudience { get { throw null; } set { } }
         protected override Azure.ResourceManager.IotOperations.Models.RegistryEndpointAuthentication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3733,20 +3634,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedIdentityAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedIdentityAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedIdentityAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedIdentityAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RegistryEndpointSystemAssignedManagedIdentitySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings>
-    {
-        public RegistryEndpointSystemAssignedManagedIdentitySettings() { }
-        public string Audience { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedManagedIdentitySettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class RegistryEndpointTrustedSigningKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointTrustedSigningKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointTrustedSigningKey>
     {
