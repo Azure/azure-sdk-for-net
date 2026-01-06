@@ -3272,7 +3272,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknown.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3520,7 +3520,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknownDerived.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3768,7 +3768,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknownDiscriminated.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4016,7 +4016,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknown.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4264,7 +4264,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknownDerived.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4512,7 +4512,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknownDiscriminated.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4760,7 +4760,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5008,7 +5008,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5256,7 +5256,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5504,7 +5504,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsFloat.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5752,7 +5752,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsFloat.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6000,7 +6000,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadFloat.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6248,7 +6248,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6496,7 +6496,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6744,7 +6744,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6992,7 +6992,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsModelArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7240,7 +7240,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsModelArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7488,7 +7488,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadModelArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7736,7 +7736,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7984,7 +7984,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentFloat.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8232,7 +8232,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8480,7 +8480,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentModelArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8728,7 +8728,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8976,7 +8976,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadFloat.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9224,7 +9224,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9472,7 +9472,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModelArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9720,7 +9720,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.MultipleSpread.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9968,7 +9968,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordUnion.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10216,7 +10216,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10464,7 +10464,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion2.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10712,7 +10712,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion3.endpoint"
             }
           ],
           "initializedBy": 0,
