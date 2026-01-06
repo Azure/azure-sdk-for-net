@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Unknown version of RegistryEndpointAuthentication. </summary>
     internal partial class UnknownRegistryEndpointAuthentication : RegistryEndpointAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRegistryEndpointAuthentication"/>. </summary>
         /// <param name="method"> The authentication method. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRegistryEndpointAuthentication(RegistryEndpointAuthenticationMethod method, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(method, serializedAdditionalRawData)
-        {
-            Method = method;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownRegistryEndpointAuthentication"/> for deserialization. </summary>
-        internal UnknownRegistryEndpointAuthentication()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRegistryEndpointAuthentication(RegistryEndpointAuthenticationMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@method != default ? @method : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageSync
                 StorageSyncServiceArray result = StorageSyncServiceArray.FromResponse(response);
                 yield return Page<StorageSyncServiceData>.FromValues((IReadOnlyList<StorageSyncServiceData>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
