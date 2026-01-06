@@ -813,20 +813,16 @@ function getResourceScopeOfMethod(
 }
 
 function getOperationScope(path: string): ResourceScope {
-  if (path.startsWith("/{resourceUri}") || path.startsWith("/{scope}")) {
+  if (/^\/\{[^}]+\}/.test(path)) {
     return ResourceScope.Extension;
   } else if (
-    path.startsWith(
-      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/"
-    )
+    /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}\//.test(path)
   ) {
     return ResourceScope.ResourceGroup;
-  } else if (path.startsWith("/subscriptions/{subscriptionId}/")) {
+  } else if (/^\/subscriptions\/\{[^}]+\}\//.test(path)) {
     return ResourceScope.Subscription;
   } else if (
-    path.startsWith(
-      "/providers/Microsoft.Management/managementGroups/{managementGroupId}/"
-    )
+    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}\//.test(path)
   ) {
     return ResourceScope.ManagementGroup;
   }
