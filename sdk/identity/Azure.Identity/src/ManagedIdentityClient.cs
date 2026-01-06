@@ -63,14 +63,22 @@ namespace Azure.Identity
         {
             AuthenticationResult result;
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            MSAL.ManagedIdentitySource availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
-#pragma warning restore CS0618 // Type or member is obsolete
+            var miBuilder = ManagedIdentityApplicationBuilder.Create(_msalManagedIdentityClient.ManagedIdentityId);
+
+            ManagedIdentityApplication mi = miBuilder.Build() as ManagedIdentityApplication;
+
+            MSAL.ManagedIdentitySourceResult availableSourceResult = async
+                ? await mi.GetManagedIdentitySourceAsync(cancellationToken).ConfigureAwait(false)
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+                : mi.GetManagedIdentitySourceAsync(cancellationToken).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+
+            MSAL.ManagedIdentitySource availableSource = availableSourceResult.Source;
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
 
-            // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
-            if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential && !_probeRequestSent)
+            // If the source is IMDS and the credential is chained, we should probe the IMDS endpoint first.
+            if (availableSource == MSAL.ManagedIdentitySource.Imds && _isChainedCredential && !_probeRequestSent)
             {
                 var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
                 _probeRequestSent = true;
