@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(ManagedHsmNameAvailabilityParameters content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedHsmsOperationGroupRestClient.CreateCheckManagedHsmNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ManagedHsmNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = ManagedHsmsOperationGroupRestClient.CreateCheckManagedHsmNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ManagedHsmNameAvailabilityParameters.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedHsmNameAvailabilityResult> response = Response.FromValue(ManagedHsmNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(ManagedHsmNameAvailabilityParameters content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedHsmsOperationGroupRestClient.CreateCheckManagedHsmNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ManagedHsmNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = ManagedHsmsOperationGroupRestClient.CreateCheckManagedHsmNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ManagedHsmNameAvailabilityParameters.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedHsmNameAvailabilityResult> response = Response.FromValue(ManagedHsmNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

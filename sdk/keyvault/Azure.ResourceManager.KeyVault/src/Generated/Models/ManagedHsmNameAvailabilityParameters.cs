@@ -12,25 +12,25 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The parameters used to check the availability of the managed hsm name. </summary>
-    public partial class ManagedHsmNameAvailabilityContent
+    public partial class ManagedHsmNameAvailabilityParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedHsmNameAvailabilityContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmNameAvailabilityParameters"/>. </summary>
         /// <param name="name"> The managed hsm name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ManagedHsmNameAvailabilityContent(string name)
+        public ManagedHsmNameAvailabilityParameters(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedHsmNameAvailabilityContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmNameAvailabilityParameters"/>. </summary>
         /// <param name="name"> The managed hsm name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmNameAvailabilityContent(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedHsmNameAvailabilityParameters(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

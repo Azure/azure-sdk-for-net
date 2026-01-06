@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpoint"/>. </summary>
         /// <param name="id"> Full identifier of the private endpoint resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmPrivateEndpoint(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedHsmPrivateEndpoint(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +33,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Full identifier of the private endpoint resource. </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; }
+        public string Id { get; }
     }
 }

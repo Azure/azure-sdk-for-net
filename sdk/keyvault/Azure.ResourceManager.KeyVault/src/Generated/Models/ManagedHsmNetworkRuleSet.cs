@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of <see cref="ManagedHsmNetworkRuleSet"/>. </summary>
         public ManagedHsmNetworkRuleSet()
         {
-            IPRules = new ChangeTrackingList<ManagedHsmIPRule>();
+            IpRules = new ChangeTrackingList<ManagedHsmIPRule>();
             ServiceTags = new ChangeTrackingList<ManagedHsmServiceTagRule>();
             VirtualNetworkRules = new ChangeTrackingList<ManagedHsmVirtualNetworkRule>();
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
-            IPRules = ipRules;
+            IpRules = ipRules;
             ServiceTags = serviceTags;
             VirtualNetworkRules = virtualNetworkRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> The list of IP address rules. </summary>
         [WirePath("ipRules")]
-        public IList<ManagedHsmIPRule> IPRules { get; }
+        public IList<ManagedHsmIPRule> IpRules { get; }
 
         /// <summary> The list of service tags. </summary>
         [WirePath("serviceTags")]

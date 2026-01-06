@@ -427,9 +427,9 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedHsmPrivateLinkResourceListResult>> GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedHsmPrivateLinkResourceListResult>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedHsmsClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
+            using DiagnosticScope scope = _managedHsmsClientDiagnostics.CreateScope("ManagedHsmResource.GetPrivateLinkResources");
             scope.Start();
             try
             {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedHsmsRestClient.CreateGetMHSMPrivateLinkResourcesByManagedHsmResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _managedHsmsRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedHsmPrivateLinkResourceListResult> response = Response.FromValue(ManagedHsmPrivateLinkResourceListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -475,9 +475,9 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedHsmPrivateLinkResourceListResult> GetMHSMPrivateLinkResourcesByManagedHsmResource(CancellationToken cancellationToken = default)
+        public virtual Response<ManagedHsmPrivateLinkResourceListResult> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedHsmsClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
+            using DiagnosticScope scope = _managedHsmsClientDiagnostics.CreateScope("ManagedHsmResource.GetPrivateLinkResources");
             scope.Start();
             try
             {
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedHsmsRestClient.CreateGetMHSMPrivateLinkResourcesByManagedHsmResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _managedHsmsRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedHsmPrivateLinkResourceListResult> response = Response.FromValue(ManagedHsmPrivateLinkResourceListResult.FromResponse(result), result);
                 if (response.Value == null)

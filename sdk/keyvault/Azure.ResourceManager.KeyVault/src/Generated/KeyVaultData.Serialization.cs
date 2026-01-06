@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Resource information with extended details. </summary>
-    public partial class KeyVaultData : TrackedResourceData, IJsonModel<KeyVaultData>
+    public partial class KeyVaultData : ResourceData, IJsonModel<KeyVaultData>
     {
         /// <summary> Initializes a new instance of <see cref="KeyVaultData"/> for deserialization. </summary>
         internal KeyVaultData()
@@ -44,11 +44,8 @@ namespace Azure.ResourceManager.KeyVault
                 throw new FormatException($"The model {nameof(KeyVaultData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -64,6 +61,11 @@ namespace Azure.ResourceManager.KeyVault
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
         }
 
@@ -97,9 +99,9 @@ namespace Azure.ResourceManager.KeyVault
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureLocation location = default;
             Models.KeyVaultProperties properties = default;
             IDictionary<string, string> tags = default;
+            AzureLocation? location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -134,17 +136,8 @@ namespace Azure.ResourceManager.KeyVault
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKeyVaultContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = Models.KeyVaultProperties.DeserializeKeyVaultProperties(prop.Value, options);
                     continue;
                 }
@@ -169,6 +162,15 @@ namespace Azure.ResourceManager.KeyVault
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -180,9 +182,9 @@ namespace Azure.ResourceManager.KeyVault
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                location,
                 properties,
-                tags ?? new ChangeTrackingDictionary<string, string>());
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Resource information with extended details. </summary>
-    public partial class ManagedHsmData : TrackedResourceData
+    public partial class ManagedHsmData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        public ManagedHsmData(AzureLocation location) : base(location)
+        public ManagedHsmData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmData"/>. </summary>
@@ -31,15 +31,17 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the managed HSM. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="identity"> Managed service identity. </param>
-        /// <param name="tags"> Resource tags. </param>
-        internal ManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ManagedHsmProperties properties, ManagedHsmSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedHsmProperties properties, IDictionary<string, string> tags, AzureLocation? location, ManagedHsmSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            Tags = tags;
+            Location = location;
             Sku = sku;
             Identity = identity;
         }
@@ -47,6 +49,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Properties of the managed HSM. </summary>
         [WirePath("properties")]
         public ManagedHsmProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; set; }
 
         /// <summary> SKU details. </summary>
         [WirePath("sku")]

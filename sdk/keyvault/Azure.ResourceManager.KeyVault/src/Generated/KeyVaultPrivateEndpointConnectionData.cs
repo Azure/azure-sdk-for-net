@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Full identifier of the private endpoint resource. </summary>
         [WirePath("properties.privateEndpoint.id")]
-        public ResourceIdentifier PrivateEndpointId
+        public string PrivateEndpointId
         {
             get
             {

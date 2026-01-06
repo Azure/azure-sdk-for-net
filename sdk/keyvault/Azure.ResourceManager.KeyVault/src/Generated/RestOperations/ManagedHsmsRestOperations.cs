@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.KeyVault
             return message;
         }
 
-        internal HttpMessage CreateGetMHSMPrivateLinkResourcesByManagedHsmResourceRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateGetPrivateLinkResourcesRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

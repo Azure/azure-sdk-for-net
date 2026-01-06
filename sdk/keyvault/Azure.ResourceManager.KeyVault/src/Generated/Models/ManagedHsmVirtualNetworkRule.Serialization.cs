@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 throw new FormatException($"The model {nameof(ManagedHsmVirtualNetworkRule)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(SubnetId);
+            writer.WriteStringValue(Id);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            ResourceIdentifier subnetId = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    subnetId = new ResourceIdentifier(prop.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedHsmVirtualNetworkRule(subnetId, additionalBinaryDataProperties);
+            return new ManagedHsmVirtualNetworkRule(id, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
