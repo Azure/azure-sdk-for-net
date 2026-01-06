@@ -340,9 +340,6 @@ function convertResolvedResourceToMetadata(
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
-  // Sort methods by kind (CRUD, List, Action) and then by methodId for deterministic ordering
-  sortResourceMethods(methods);
-
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
