@@ -4,10 +4,8 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Provisioning;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Network;
-using Azure.Provisioning.PrivateDns;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -121,12 +119,11 @@ public class BasicPrivateDnsTests
             @description('Subnet Name')
             param subnetName string = 'App'
 
-            @description('Location for all resources.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' = {
               name: vnetName
-              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -142,6 +139,7 @@ public class BasicPrivateDnsTests
                   }
                 ]
               }
+              location: location
             }
 
             resource privateDnsZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
@@ -150,7 +148,6 @@ public class BasicPrivateDnsTests
             }
 
             resource privateDnsZoneLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-              parent: privateDnsZone
               name: '${vnet.name}-link'
               location: 'global'
               properties: {
@@ -159,6 +156,7 @@ public class BasicPrivateDnsTests
                   id: vnet.id
                 }
               }
+              parent: privateDnsZone
             }
             """);
     }
