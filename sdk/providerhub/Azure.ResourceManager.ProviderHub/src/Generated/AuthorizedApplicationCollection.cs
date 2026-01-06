@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProviderAuthorizedApplicationResource"/> and their operations.
-    /// Each <see cref="ProviderAuthorizedApplicationResource"/> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource"/>.
-    /// To get a <see cref="ProviderAuthorizedApplicationCollection"/> instance call the GetProviderAuthorizedApplications method from an instance of <see cref="ProviderRegistrationResource"/>.
+    /// A class representing a collection of <see cref="AuthorizedApplicationResource"/> and their operations.
+    /// Each <see cref="AuthorizedApplicationResource"/> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource"/>.
+    /// To get a <see cref="AuthorizedApplicationCollection"/> instance call the GetAuthorizedApplications method from an instance of <see cref="ProviderRegistrationResource"/>.
     /// </summary>
-    public partial class ProviderAuthorizedApplicationCollection : ArmCollection, IEnumerable<ProviderAuthorizedApplicationResource>, IAsyncEnumerable<ProviderAuthorizedApplicationResource>
+    public partial class AuthorizedApplicationCollection : ArmCollection, IEnumerable<AuthorizedApplicationResource>, IAsyncEnumerable<AuthorizedApplicationResource>
     {
         private readonly ClientDiagnostics _authorizedApplicationsClientDiagnostics;
         private readonly AuthorizedApplications _authorizedApplicationsRestClient;
 
-        /// <summary> Initializes a new instance of ProviderAuthorizedApplicationCollection for mocking. </summary>
-        protected ProviderAuthorizedApplicationCollection()
+        /// <summary> Initializes a new instance of AuthorizedApplicationCollection for mocking. </summary>
+        protected AuthorizedApplicationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProviderAuthorizedApplicationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizedApplicationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProviderAuthorizedApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AuthorizedApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ProviderAuthorizedApplicationResource.ResourceType, out string providerAuthorizedApplicationApiVersion);
-            _authorizedApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderAuthorizedApplicationResource.ResourceType.Namespace, Diagnostics);
-            _authorizedApplicationsRestClient = new AuthorizedApplications(_authorizedApplicationsClientDiagnostics, Pipeline, Endpoint, providerAuthorizedApplicationApiVersion ?? "2024-09-01");
+            TryGetApiVersion(AuthorizedApplicationResource.ResourceType, out string authorizedApplicationApiVersion);
+            _authorizedApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", AuthorizedApplicationResource.ResourceType.Namespace, Diagnostics);
+            _authorizedApplicationsRestClient = new AuthorizedApplications(_authorizedApplicationsClientDiagnostics, Pipeline, Endpoint, authorizedApplicationApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ProviderAuthorizedApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationId, ProviderAuthorizedApplicationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AuthorizedApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationId, ProviderAuthorizedApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.ProviderHub
                 };
                 HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ProviderHubArmOperation<ProviderAuthorizedApplicationResource> operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(
-                    new ProviderAuthorizedApplicationOperationSource(Client),
+                ProviderHubArmOperation<AuthorizedApplicationResource> operation = new ProviderHubArmOperation<AuthorizedApplicationResource>(
+                    new AuthorizedApplicationOperationSource(Client),
                     _authorizedApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ProviderAuthorizedApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationId, ProviderAuthorizedApplicationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AuthorizedApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationId, ProviderAuthorizedApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.ProviderHub
                 };
                 HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ProviderHubArmOperation<ProviderAuthorizedApplicationResource> operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(
-                    new ProviderAuthorizedApplicationOperationSource(Client),
+                ProviderHubArmOperation<AuthorizedApplicationResource> operation = new ProviderHubArmOperation<AuthorizedApplicationResource>(
+                    new AuthorizedApplicationOperationSource(Client),
                     _authorizedApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ProviderAuthorizedApplicationResource>> GetAsync(string applicationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AuthorizedApplicationResource>> GetAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationCollection.Get");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationCollection.Get");
             scope.Start();
             try
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProviderAuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ProviderAuthorizedApplicationResource> Get(string applicationId, CancellationToken cancellationToken = default)
+        public virtual Response<AuthorizedApplicationResource> Get(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationCollection.Get");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationCollection.Get");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProviderAuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,14 +286,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProviderAuthorizedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProviderAuthorizedApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AuthorizedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AuthorizedApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProviderAuthorizedApplicationData, ProviderAuthorizedApplicationResource>(new AuthorizedApplicationsGetAllAsyncCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new ProviderAuthorizedApplicationResource(Client, data));
+            return new AsyncPageableWrapper<ProviderAuthorizedApplicationData, AuthorizedApplicationResource>(new AuthorizedApplicationsGetAllAsyncCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new AuthorizedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -314,14 +314,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProviderAuthorizedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProviderAuthorizedApplicationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AuthorizedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AuthorizedApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProviderAuthorizedApplicationData, ProviderAuthorizedApplicationResource>(new AuthorizedApplicationsGetAllCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new ProviderAuthorizedApplicationResource(Client, data));
+            return new PageableWrapper<ProviderAuthorizedApplicationData, AuthorizedApplicationResource>(new AuthorizedApplicationsGetAllCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new AuthorizedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationCollection.Exists");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationCollection.Exists");
             scope.Start();
             try
             {
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationCollection.Exists");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationCollection.Exists");
             scope.Start();
             try
             {
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ProviderAuthorizedApplicationResource>> GetIfExistsAsync(string applicationId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AuthorizedApplicationResource>> GetIfExistsAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationCollection.GetIfExists");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -488,9 +488,9 @@ namespace Azure.ResourceManager.ProviderHub
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ProviderAuthorizedApplicationResource>(response.GetRawResponse());
+                    return new NoValueResponse<AuthorizedApplicationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProviderAuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -520,11 +520,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ProviderAuthorizedApplicationResource> GetIfExists(string applicationId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AuthorizedApplicationResource> GetIfExists(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("ProviderAuthorizedApplicationCollection.GetIfExists");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -549,9 +549,9 @@ namespace Azure.ResourceManager.ProviderHub
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ProviderAuthorizedApplicationResource>(response.GetRawResponse());
+                    return new NoValueResponse<AuthorizedApplicationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProviderAuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
-        IEnumerator<ProviderAuthorizedApplicationResource> IEnumerable<ProviderAuthorizedApplicationResource>.GetEnumerator()
+        IEnumerator<AuthorizedApplicationResource> IEnumerable<AuthorizedApplicationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ProviderAuthorizedApplicationResource> IAsyncEnumerable<ProviderAuthorizedApplicationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AuthorizedApplicationResource> IAsyncEnumerable<AuthorizedApplicationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

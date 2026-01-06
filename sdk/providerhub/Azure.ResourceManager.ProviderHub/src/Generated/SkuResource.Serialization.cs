@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary></summary>
-    public partial class SkusResource : IJsonModel<ResourceTypeSkuData>
+    public partial class SkuResource : IJsonModel<ResourceTypeSkuData>
     {
         private static IJsonModel<ResourceTypeSkuData> s_dataDeserializationInstance;
 

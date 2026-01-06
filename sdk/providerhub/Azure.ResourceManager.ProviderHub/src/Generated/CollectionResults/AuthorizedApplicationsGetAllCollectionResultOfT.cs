@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _providerNamespace, _context) : _client.CreateGetAllRequest(_subscriptionId, _providerNamespace, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProviderAuthorizedApplicationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AuthorizedApplicationCollection.GetAll");
             scope.Start();
             try
             {

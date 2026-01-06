@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,10 +21,10 @@ namespace Azure.ResourceManager.ProviderHub
     /// Each <see cref="DefaultRolloutResource"/> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource"/>.
     /// To get a <see cref="DefaultRolloutCollection"/> instance call the GetDefaultRollouts method from an instance of <see cref="ProviderRegistrationResource"/>.
     /// </summary>
-    public partial class DefaultRolloutCollection : ArmCollection, IEnumerable<DefaultRolloutResource>, IAsyncEnumerable<DefaultRolloutResource>
+    public partial class DefaultRolloutCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _defaultRolloutsClientDiagnostics;
-        private readonly DefaultRollouts _defaultRolloutsRestClient;
+        private readonly ClientDiagnostics _newRegionFrontloadReleaseClientDiagnostics;
+        private readonly NewRegionFrontloadRelease _newRegionFrontloadReleaseRestClient;
 
         /// <summary> Initializes a new instance of DefaultRolloutCollection for mocking. </summary>
         protected DefaultRolloutCollection()
@@ -38,10 +36,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DefaultRolloutCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DefaultRolloutResource.ResourceType, out string defaultRolloutApiVersion);
-            _defaultRolloutsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", DefaultRolloutResource.ResourceType.Namespace, Diagnostics);
-            _defaultRolloutsRestClient = new DefaultRollouts(_defaultRolloutsClientDiagnostics, Pipeline, Endpoint, defaultRolloutApiVersion ?? "2024-09-01");
-            ValidateResourceId(id);
+            this.TryGetApiVersion(DefaultRolloutResource.ResourceType, out string defaultRolloutApiVersion);
+            _newRegionFrontloadReleaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", DefaultRolloutResource.ResourceType.Namespace, Diagnostics);
+            _newRegionFrontloadReleaseRestClient = new NewRegionFrontloadRelease(_newRegionFrontloadReleaseClientDiagnostics, Pipeline, Endpoint, defaultRolloutApiVersion ?? "2024-09-01");
+            DefaultRolloutCollection.ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
@@ -55,15 +53,15 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Creates or updates the rollout details.
+        /// Gets a new region frontload release.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DefaultRollouts_CreateOrUpdate. </description>
+        /// <description> NewRegionFrontloadRelease_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -71,18 +69,15 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="rolloutName"> The rollout name. </param>
-        /// <param name="data"> The Default rollout properties supplied to the CreateOrUpdate operation. </param>
+        /// <param name="releaseName"> The name of the release. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DefaultRolloutResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string rolloutName, DefaultRolloutData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DefaultRolloutResource>> GetAsync(string releaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNullOrEmpty(releaseName, nameof(releaseName));
 
-            using DiagnosticScope scope = _defaultRolloutsClientDiagnostics.CreateScope("DefaultRolloutCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _newRegionFrontloadReleaseClientDiagnostics.CreateScope("DefaultRolloutCollection.Get");
             scope.Start();
             try
             {
@@ -90,120 +85,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defaultRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, DefaultRolloutData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ProviderHubArmOperation<DefaultRolloutResource> operation = new ProviderHubArmOperation<DefaultRolloutResource>(
-                    new NewRegionFrontloadReleaseOperationSource(Client),
-                    _defaultRolloutsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates or updates the rollout details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DefaultRollouts_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="rolloutName"> The rollout name. </param>
-        /// <param name="data"> The Default rollout properties supplied to the CreateOrUpdate operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DefaultRolloutResource> CreateOrUpdate(WaitUntil waitUntil, string rolloutName, DefaultRolloutData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _defaultRolloutsClientDiagnostics.CreateScope("DefaultRolloutCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _defaultRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, DefaultRolloutData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ProviderHubArmOperation<DefaultRolloutResource> operation = new ProviderHubArmOperation<DefaultRolloutResource>(
-                    new NewRegionFrontloadReleaseOperationSource(Client),
-                    _defaultRolloutsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the default rollout details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DefaultRollouts_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="rolloutName"> The rollout name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DefaultRolloutResource>> GetAsync(string rolloutName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
-
-            using DiagnosticScope scope = _defaultRolloutsClientDiagnostics.CreateScope("DefaultRolloutCollection.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _defaultRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                HttpMessage message = _newRegionFrontloadReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, releaseName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefaultRolloutData> response = Response.FromValue(DefaultRolloutData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,15 +102,15 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Gets the default rollout details.
+        /// Gets a new region frontload release.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DefaultRollouts_Get. </description>
+        /// <description> NewRegionFrontloadRelease_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,15 +118,15 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="releaseName"> The name of the release. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DefaultRolloutResource> Get(string rolloutName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DefaultRolloutResource> Get(string releaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+            Argument.AssertNotNullOrEmpty(releaseName, nameof(releaseName));
 
-            using DiagnosticScope scope = _defaultRolloutsClientDiagnostics.CreateScope("DefaultRolloutCollection.Get");
+            using DiagnosticScope scope = _newRegionFrontloadReleaseClientDiagnostics.CreateScope("DefaultRolloutCollection.Get");
             scope.Start();
             try
             {
@@ -252,7 +134,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defaultRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                HttpMessage message = _newRegionFrontloadReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, releaseName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefaultRolloutData> response = Response.FromValue(DefaultRolloutData.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,71 +151,15 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Gets the list of the rollouts for the given provider.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DefaultRollouts_ListByProviderRegistration. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NewRegionFrontloadReleaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NewRegionFrontloadReleaseResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DefaultRolloutData, NewRegionFrontloadReleaseResource>(new DefaultRolloutsGetByProviderRegistrationAsyncCollectionResultOfT(_defaultRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new NewRegionFrontloadReleaseResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets the list of the rollouts for the given provider.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DefaultRollouts_ListByProviderRegistration. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NewRegionFrontloadReleaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NewRegionFrontloadReleaseResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DefaultRolloutData, NewRegionFrontloadReleaseResource>(new DefaultRolloutsGetByProviderRegistrationCollectionResultOfT(_defaultRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new NewRegionFrontloadReleaseResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DefaultRollouts_Get. </description>
+        /// <description> NewRegionFrontloadRelease_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -341,15 +167,15 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="releaseName"> The name of the release. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string rolloutName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string releaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+            Argument.AssertNotNullOrEmpty(releaseName, nameof(releaseName));
 
-            using DiagnosticScope scope = _defaultRolloutsClientDiagnostics.CreateScope("DefaultRolloutCollection.Exists");
+            using DiagnosticScope scope = _newRegionFrontloadReleaseClientDiagnostics.CreateScope("DefaultRolloutCollection.Exists");
             scope.Start();
             try
             {
@@ -357,7 +183,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defaultRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                HttpMessage message = _newRegionFrontloadReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, releaseName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DefaultRolloutData> response = default;
@@ -386,11 +212,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DefaultRollouts_Get. </description>
+        /// <description> NewRegionFrontloadRelease_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -398,15 +224,15 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="releaseName"> The name of the release. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string rolloutName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string releaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+            Argument.AssertNotNullOrEmpty(releaseName, nameof(releaseName));
 
-            using DiagnosticScope scope = _defaultRolloutsClientDiagnostics.CreateScope("DefaultRolloutCollection.Exists");
+            using DiagnosticScope scope = _newRegionFrontloadReleaseClientDiagnostics.CreateScope("DefaultRolloutCollection.Exists");
             scope.Start();
             try
             {
@@ -414,7 +240,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defaultRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                HttpMessage message = _newRegionFrontloadReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, releaseName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DefaultRolloutData> response = default;
@@ -443,11 +269,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DefaultRollouts_Get. </description>
+        /// <description> NewRegionFrontloadRelease_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -455,15 +281,15 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="releaseName"> The name of the release. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DefaultRolloutResource>> GetIfExistsAsync(string rolloutName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DefaultRolloutResource>> GetIfExistsAsync(string releaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+            Argument.AssertNotNullOrEmpty(releaseName, nameof(releaseName));
 
-            using DiagnosticScope scope = _defaultRolloutsClientDiagnostics.CreateScope("DefaultRolloutCollection.GetIfExists");
+            using DiagnosticScope scope = _newRegionFrontloadReleaseClientDiagnostics.CreateScope("DefaultRolloutCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -471,7 +297,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defaultRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                HttpMessage message = _newRegionFrontloadReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, releaseName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DefaultRolloutData> response = default;
@@ -504,11 +330,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DefaultRollouts_Get. </description>
+        /// <description> NewRegionFrontloadRelease_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -516,15 +342,15 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="releaseName"> The name of the release. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DefaultRolloutResource> GetIfExists(string rolloutName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DefaultRolloutResource> GetIfExists(string releaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+            Argument.AssertNotNullOrEmpty(releaseName, nameof(releaseName));
 
-            using DiagnosticScope scope = _defaultRolloutsClientDiagnostics.CreateScope("DefaultRolloutCollection.GetIfExists");
+            using DiagnosticScope scope = _newRegionFrontloadReleaseClientDiagnostics.CreateScope("DefaultRolloutCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -532,7 +358,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defaultRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                HttpMessage message = _newRegionFrontloadReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, releaseName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DefaultRolloutData> response = default;
@@ -558,22 +384,6 @@ namespace Azure.ResourceManager.ProviderHub
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<DefaultRolloutResource> IEnumerable<DefaultRolloutResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<DefaultRolloutResource> IAsyncEnumerable<DefaultRolloutResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

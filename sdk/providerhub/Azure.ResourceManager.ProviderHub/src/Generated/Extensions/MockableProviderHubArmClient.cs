@@ -26,24 +26,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="OperationsPutContentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationsPutContentResource"/> object. </returns>
-        public virtual OperationsPutContentResource GetOperationsPutContentResource(ResourceIdentifier id)
-        {
-            OperationsPutContentResource.ValidateResourceId(id);
-            return new OperationsPutContentResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CustomRolloutResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomRolloutResource"/> object. </returns>
-        public virtual CustomRolloutResource GetCustomRolloutResource(ResourceIdentifier id)
-        {
-            CustomRolloutResource.ValidateResourceId(id);
-            return new CustomRolloutResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ProviderRegistrationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ProviderRegistrationResource"/> object. </returns>
@@ -62,13 +44,22 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
             return new ResourceTypeRegistrationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="NewRegionFrontloadReleaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CustomRolloutResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NewRegionFrontloadReleaseResource"/> object. </returns>
-        public virtual NewRegionFrontloadReleaseResource GetNewRegionFrontloadReleaseResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CustomRolloutResource"/> object. </returns>
+        public virtual CustomRolloutResource GetCustomRolloutResource(ResourceIdentifier id)
         {
-            NewRegionFrontloadReleaseResource.ValidateResourceId(id);
-            return new NewRegionFrontloadReleaseResource(Client, id);
+            CustomRolloutResource.ValidateResourceId(id);
+            return new CustomRolloutResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DefaultRolloutResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DefaultRolloutResource"/> object. </returns>
+        public virtual DefaultRolloutResource GetDefaultRolloutResource(ResourceIdentifier id)
+        {
+            DefaultRolloutResource.ValidateResourceId(id);
+            return new DefaultRolloutResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DefaultRolloutResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -89,49 +80,49 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
             return new NotificationRegistrationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SkusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SkuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SkusResource"/> object. </returns>
-        public virtual SkusResource GetSkusResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SkuResource"/> object. </returns>
+        public virtual SkuResource GetSkuResource(ResourceIdentifier id)
         {
-            SkusResource.ValidateResourceId(id);
-            return new SkusResource(Client, id);
+            SkuResource.ValidateResourceId(id);
+            return new SkuResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SkusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NestedResourceTypeFirstSkuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SkusResource"/> object. </returns>
-        public virtual SkusResource GetSkusResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource"/> object. </returns>
+        public virtual NestedResourceTypeFirstSkuResource GetNestedResourceTypeFirstSkuResource(ResourceIdentifier id)
         {
-            SkusResource.ValidateResourceId(id);
-            return new SkusResource(Client, id);
+            NestedResourceTypeFirstSkuResource.ValidateResourceId(id);
+            return new NestedResourceTypeFirstSkuResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SkusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NestedResourceTypeSecondSkuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SkusResource"/> object. </returns>
-        public virtual SkusResource GetSkusResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NestedResourceTypeSecondSkuResource"/> object. </returns>
+        public virtual NestedResourceTypeSecondSkuResource GetNestedResourceTypeSecondSkuResource(ResourceIdentifier id)
         {
-            SkusResource.ValidateResourceId(id);
-            return new SkusResource(Client, id);
+            NestedResourceTypeSecondSkuResource.ValidateResourceId(id);
+            return new NestedResourceTypeSecondSkuResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SkusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SkuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SkusResource"/> object. </returns>
-        public virtual SkusResource GetSkusResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SkuResource"/> object. </returns>
+        public virtual SkuResource GetSkuResource(ResourceIdentifier id)
         {
-            SkusResource.ValidateResourceId(id);
-            return new SkusResource(Client, id);
+            SkuResource.ValidateResourceId(id);
+            return new SkuResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ProviderAuthorizedApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AuthorizedApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderAuthorizedApplicationResource"/> object. </returns>
-        public virtual ProviderAuthorizedApplicationResource GetProviderAuthorizedApplicationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AuthorizedApplicationResource"/> object. </returns>
+        public virtual AuthorizedApplicationResource GetAuthorizedApplicationResource(ResourceIdentifier id)
         {
-            ProviderAuthorizedApplicationResource.ValidateResourceId(id);
-            return new ProviderAuthorizedApplicationResource(Client, id);
+            AuthorizedApplicationResource.ValidateResourceId(id);
+            return new AuthorizedApplicationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ProviderMonitorSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -141,6 +132,15 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         {
             ProviderMonitorSettingResource.ValidateResourceId(id);
             return new ProviderMonitorSettingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="OperationsPutContentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OperationsPutContentResource"/> object. </returns>
+        public virtual OperationsPutContentResource GetOperationsPutContentResource(ResourceIdentifier id)
+        {
+            OperationsPutContentResource.ValidateResourceId(id);
+            return new OperationsPutContentResource(Client, id);
         }
     }
 }

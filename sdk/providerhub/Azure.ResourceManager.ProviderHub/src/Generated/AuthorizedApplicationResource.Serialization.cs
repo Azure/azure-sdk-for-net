@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary></summary>
-    public partial class ProviderAuthorizedApplicationResource : IJsonModel<ProviderAuthorizedApplicationData>
+    public partial class AuthorizedApplicationResource : IJsonModel<ProviderAuthorizedApplicationData>
     {
         private static IJsonModel<ProviderAuthorizedApplicationData> s_dataDeserializationInstance;
 

@@ -17,48 +17,48 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a Skus along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SkusResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceTypeRegistrationResource"/> using the GetSkus method.
+    /// A class representing a AuthorizedApplication along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AuthorizedApplicationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource"/> using the GetAuthorizedApplications method.
     /// </summary>
-    public partial class SkusResource : ArmResource
+    public partial class AuthorizedApplicationResource : ArmResource
     {
-        private readonly ClientDiagnostics _skusClientDiagnostics;
-        private readonly Skus _skusRestClient;
-        private readonly ResourceTypeSkuData _data;
+        private readonly ClientDiagnostics _authorizedApplicationsClientDiagnostics;
+        private readonly AuthorizedApplications _authorizedApplicationsRestClient;
+        private readonly ProviderAuthorizedApplicationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/skus";
+        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/authorizedApplications";
 
-        /// <summary> Initializes a new instance of SkusResource for mocking. </summary>
-        protected SkusResource()
+        /// <summary> Initializes a new instance of AuthorizedApplicationResource for mocking. </summary>
+        protected AuthorizedApplicationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkusResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizedApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SkusResource(ArmClient client, ResourceTypeSkuData data) : this(client, data.Id)
+        internal AuthorizedApplicationResource(ArmClient client, ProviderAuthorizedApplicationData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkusResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizedApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SkusResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AuthorizedApplicationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string skusApiVersion);
-            _skusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            _skusRestClient = new Skus(_skusClientDiagnostics, Pipeline, Endpoint, skusApiVersion ?? "2024-09-01");
-            SkusResource.ValidateResourceId(id);
+            TryGetApiVersion(ResourceType, out string authorizedApplicationApiVersion);
+            _authorizedApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
+            _authorizedApplicationsRestClient = new AuthorizedApplications(_authorizedApplicationsClientDiagnostics, Pipeline, Endpoint, authorizedApplicationApiVersion ?? "2024-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ResourceTypeSkuData Data
+        public virtual ProviderAuthorizedApplicationData Data
         {
             get
             {
@@ -73,14 +73,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="providerNamespace"> The providerNamespace. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="nestedResourceTypeFirst"> The nestedResourceTypeFirst. </param>
-        /// <param name="nestedResourceTypeSecond"> The nestedResourceTypeSecond. </param>
-        /// <param name="nestedResourceTypeThird"> The nestedResourceTypeThird. </param>
-        /// <param name="sku"> The sku. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku)
+        /// <param name="applicationId"> The applicationId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string applicationId)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}";
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -95,15 +91,15 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Gets the sku details for the given resource type and sku name.
+        /// Gets the authorized application details.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_GetNestedResourceTypeThird. </description>
+        /// <description> AuthorizedApplications_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -111,14 +107,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SkusResource"/>. </description>
+        /// <description> <see cref="AuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SkusResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AuthorizedApplicationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkusResource.Get");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationResource.Get");
             scope.Start();
             try
             {
@@ -126,14 +122,14 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
+                Response<ProviderAuthorizedApplicationData> response = Response.FromValue(ProviderAuthorizedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SkusResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,15 +139,15 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Gets the sku details for the given resource type and sku name.
+        /// Gets the authorized application details.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_GetNestedResourceTypeThird. </description>
+        /// <description> AuthorizedApplications_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -159,14 +155,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SkusResource"/>. </description>
+        /// <description> <see cref="AuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SkusResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AuthorizedApplicationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkusResource.Get");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationResource.Get");
             scope.Start();
             try
             {
@@ -174,14 +170,14 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
+                Response<ProviderAuthorizedApplicationData> response = Response.FromValue(ProviderAuthorizedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SkusResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AuthorizedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,15 +187,15 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Deletes a resource type sku.
+        /// Deletes an authorized application.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_DeleteNestedResourceTypeThird. </description>
+        /// <description> AuthorizedApplications_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -207,15 +203,15 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SkusResource"/>. </description>
+        /// <description> <see cref="AuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteNestedResourceTypeThirdAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkusResource.DeleteNestedResourceTypeThird");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationResource.Delete");
             scope.Start();
             try
             {
@@ -223,7 +219,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateDeleteNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _authorizedApplicationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -242,15 +238,15 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Deletes a resource type sku.
+        /// Deletes an authorized application.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_DeleteNestedResourceTypeThird. </description>
+        /// <description> AuthorizedApplications_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -258,15 +254,15 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SkusResource"/>. </description>
+        /// <description> <see cref="AuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation DeleteNestedResourceTypeThird(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkusResource.DeleteNestedResourceTypeThird");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationResource.Delete");
             scope.Start();
             try
             {
@@ -274,7 +270,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateDeleteNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _authorizedApplicationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -293,15 +289,15 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Update a Skus.
+        /// Update a AuthorizedApplication.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_CreateOrUpdateNestedResourceTypeThird. </description>
+        /// <description> AuthorizedApplications_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -309,19 +305,19 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SkusResource"/>. </description>
+        /// <description> <see cref="AuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
+        /// <param name="data"> The authorized application properties supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SkusResource>> UpdateAsync(WaitUntil waitUntil, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AuthorizedApplicationResource>> UpdateAsync(WaitUntil waitUntil, ProviderAuthorizedApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkusResource.Update");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationResource.Update");
             scope.Start();
             try
             {
@@ -329,12 +325,15 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ResourceTypeSkuData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ProviderHubArmOperation<SkusResource> operation = new ProviderHubArmOperation<SkusResource>(Response.FromValue(new SkusResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ProviderHubArmOperation<AuthorizedApplicationResource> operation = new ProviderHubArmOperation<AuthorizedApplicationResource>(
+                    new AuthorizedApplicationOperationSource(Client),
+                    _authorizedApplicationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -349,15 +348,15 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Update a Skus.
+        /// Update a AuthorizedApplication.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_CreateOrUpdateNestedResourceTypeThird. </description>
+        /// <description> AuthorizedApplications_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -365,19 +364,19 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SkusResource"/>. </description>
+        /// <description> <see cref="AuthorizedApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
+        /// <param name="data"> The authorized application properties supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SkusResource> Update(WaitUntil waitUntil, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AuthorizedApplicationResource> Update(WaitUntil waitUntil, ProviderAuthorizedApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("SkusResource.Update");
+            using DiagnosticScope scope = _authorizedApplicationsClientDiagnostics.CreateScope("AuthorizedApplicationResource.Update");
             scope.Start();
             try
             {
@@ -385,12 +384,15 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skusRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ResourceTypeSkuData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ProviderHubArmOperation<SkusResource> operation = new ProviderHubArmOperation<SkusResource>(Response.FromValue(new SkusResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ProviderHubArmOperation<AuthorizedApplicationResource> operation = new ProviderHubArmOperation<AuthorizedApplicationResource>(
+                    new AuthorizedApplicationOperationSource(Client),
+                    _authorizedApplicationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary></summary>
-    internal partial class ProviderAuthorizedApplicationOperationSource : IOperationSource<ProviderAuthorizedApplicationResource>
+    internal partial class DefaultRolloutOperationSource : IOperationSource<DefaultRolloutResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ProviderAuthorizedApplicationOperationSource(ArmClient client)
+        internal DefaultRolloutOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ProviderAuthorizedApplicationResource IOperationSource<ProviderAuthorizedApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DefaultRolloutResource IOperationSource<DefaultRolloutResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ProviderAuthorizedApplicationData data = ProviderAuthorizedApplicationData.DeserializeProviderAuthorizedApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ProviderAuthorizedApplicationResource(_client, data);
+            DefaultRolloutData data = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DefaultRolloutResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ProviderAuthorizedApplicationResource> IOperationSource<ProviderAuthorizedApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DefaultRolloutResource> IOperationSource<DefaultRolloutResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ProviderAuthorizedApplicationData data = ProviderAuthorizedApplicationData.DeserializeProviderAuthorizedApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ProviderAuthorizedApplicationResource(_client, data);
+            DefaultRolloutData data = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DefaultRolloutResource(_client, data);
         }
     }
 }

@@ -13,7 +13,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ProviderHub;
-using Azure.ResourceManager.ProviderHub.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ProviderHub.Mocking
@@ -23,8 +22,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
     {
         private ClientDiagnostics _providerMonitorSettingsClientDiagnostics;
         private ProviderMonitorSettings _providerMonitorSettingsRestClient;
-        private ClientDiagnostics _newRegionFrontloadReleaseClientDiagnostics;
-        private NewRegionFrontloadRelease _newRegionFrontloadReleaseRestClient;
 
         /// <summary> Initializes a new instance of MockableProviderHubSubscriptionResource for mocking. </summary>
         protected MockableProviderHubSubscriptionResource()
@@ -41,10 +38,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         private ClientDiagnostics ProviderMonitorSettingsClientDiagnostics => _providerMonitorSettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ProviderHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ProviderMonitorSettings ProviderMonitorSettingsRestClient => _providerMonitorSettingsRestClient ??= new ProviderMonitorSettings(ProviderMonitorSettingsClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
-
-        private ClientDiagnostics NewRegionFrontloadReleaseClientDiagnostics => _newRegionFrontloadReleaseClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ProviderHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private NewRegionFrontloadRelease NewRegionFrontloadReleaseRestClient => _newRegionFrontloadReleaseRestClient ??= new NewRegionFrontloadRelease(NewRegionFrontloadReleaseClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
 
         /// <summary> Gets a collection of ProviderRegistrations in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of ProviderRegistrations and their operations over a ProviderRegistrationResource. </returns>
@@ -165,112 +158,6 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingsGetBySubscriptionCollectionResultOfT(ProviderMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ProviderMonitorSettingResource(Client, data));
-        }
-
-        /// <summary>
-        /// Creates or updates a new region frontload release.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NewRegionFrontloadRelease_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="releaseName"> The name of the release. </param>
-        /// <param name="properties"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/>, <paramref name="releaseName"/> or <paramref name="properties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> or <paramref name="releaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NewRegionFrontloadReleaseResource>> CreateOrUpdateAsync(string providerNamespace, string releaseName, ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(releaseName, nameof(releaseName));
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            using DiagnosticScope scope = NewRegionFrontloadReleaseClientDiagnostics.CreateScope("MockableProviderHubSubscriptionResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = NewRegionFrontloadReleaseRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, releaseName, ProviderFrontloadPayload.ToRequestContent(properties), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DefaultRolloutData> response = Response.FromValue(DefaultRolloutData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new NewRegionFrontloadReleaseResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates or updates a new region frontload release.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NewRegionFrontloadRelease_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="releaseName"> The name of the release. </param>
-        /// <param name="properties"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/>, <paramref name="releaseName"/> or <paramref name="properties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> or <paramref name="releaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NewRegionFrontloadReleaseResource> CreateOrUpdate(string providerNamespace, string releaseName, ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(releaseName, nameof(releaseName));
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            using DiagnosticScope scope = NewRegionFrontloadReleaseClientDiagnostics.CreateScope("MockableProviderHubSubscriptionResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = NewRegionFrontloadReleaseRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, releaseName, ProviderFrontloadPayload.ToRequestContent(properties), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DefaultRolloutData> response = Response.FromValue(DefaultRolloutData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new NewRegionFrontloadReleaseResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

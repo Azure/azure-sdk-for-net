@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ProviderHub.Mocking;
-using Azure.ResourceManager.ProviderHub.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ProviderHub
@@ -36,42 +35,6 @@ namespace Azure.ResourceManager.ProviderHub
         private static MockableProviderHubSubscriptionResource GetMockableProviderHubSubscriptionResource(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient(client => new MockableProviderHubSubscriptionResource(client, subscriptionResource.Id));
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="OperationsPutContentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetOperationsPutContentResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OperationsPutContentResource"/> object. </returns>
-        public static OperationsPutContentResource GetOperationsPutContentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableProviderHubArmClient(client).GetOperationsPutContentResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CustomRolloutResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetCustomRolloutResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CustomRolloutResource"/> object. </returns>
-        public static CustomRolloutResource GetCustomRolloutResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableProviderHubArmClient(client).GetCustomRolloutResource(id);
         }
 
         /// <summary>
@@ -111,21 +74,39 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NewRegionFrontloadReleaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CustomRolloutResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetNewRegionFrontloadReleaseResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetCustomRolloutResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NewRegionFrontloadReleaseResource"/> object. </returns>
-        public static NewRegionFrontloadReleaseResource GetNewRegionFrontloadReleaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CustomRolloutResource"/> object. </returns>
+        public static CustomRolloutResource GetCustomRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableProviderHubArmClient(client).GetNewRegionFrontloadReleaseResource(id);
+            return GetMockableProviderHubArmClient(client).GetCustomRolloutResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DefaultRolloutResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetDefaultRolloutResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DefaultRolloutResource"/> object. </returns>
+        public static DefaultRolloutResource GetDefaultRolloutResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetDefaultRolloutResource(id);
         }
 
         /// <summary>
@@ -165,93 +146,93 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SkusResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SkuResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetSkusResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetSkuResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SkusResource"/> object. </returns>
-        public static SkusResource GetSkusResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SkuResource"/> object. </returns>
+        public static SkuResource GetSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableProviderHubArmClient(client).GetSkusResource(id);
+            return GetMockableProviderHubArmClient(client).GetSkuResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SkusResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NestedResourceTypeFirstSkuResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetSkusResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetNestedResourceTypeFirstSkuResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SkusResource"/> object. </returns>
-        public static SkusResource GetSkusResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource"/> object. </returns>
+        public static NestedResourceTypeFirstSkuResource GetNestedResourceTypeFirstSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableProviderHubArmClient(client).GetSkusResource(id);
+            return GetMockableProviderHubArmClient(client).GetNestedResourceTypeFirstSkuResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SkusResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NestedResourceTypeSecondSkuResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetSkusResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetNestedResourceTypeSecondSkuResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SkusResource"/> object. </returns>
-        public static SkusResource GetSkusResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NestedResourceTypeSecondSkuResource"/> object. </returns>
+        public static NestedResourceTypeSecondSkuResource GetNestedResourceTypeSecondSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableProviderHubArmClient(client).GetSkusResource(id);
+            return GetMockableProviderHubArmClient(client).GetNestedResourceTypeSecondSkuResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SkusResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SkuResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetSkusResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetSkuResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SkusResource"/> object. </returns>
-        public static SkusResource GetSkusResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SkuResource"/> object. </returns>
+        public static SkuResource GetSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableProviderHubArmClient(client).GetSkusResource(id);
+            return GetMockableProviderHubArmClient(client).GetSkuResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderAuthorizedApplicationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="AuthorizedApplicationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetProviderAuthorizedApplicationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetAuthorizedApplicationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProviderAuthorizedApplicationResource"/> object. </returns>
-        public static ProviderAuthorizedApplicationResource GetProviderAuthorizedApplicationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AuthorizedApplicationResource"/> object. </returns>
+        public static AuthorizedApplicationResource GetAuthorizedApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableProviderHubArmClient(client).GetProviderAuthorizedApplicationResource(id);
+            return GetMockableProviderHubArmClient(client).GetAuthorizedApplicationResource(id);
         }
 
         /// <summary>
@@ -270,6 +251,24 @@ namespace Azure.ResourceManager.ProviderHub
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetProviderMonitorSettingResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="OperationsPutContentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetOperationsPutContentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationsPutContentResource"/> object. </returns>
+        public static OperationsPutContentResource GetOperationsPutContentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetOperationsPutContentResource(id);
         }
 
         /// <summary>
@@ -416,46 +415,6 @@ namespace Azure.ResourceManager.ProviderHub
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableProviderHubSubscriptionResource(subscriptionResource).GetProviderMonitorSettings(cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates or updates a new region frontload release.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProviderHubSubscriptionResource.CreateOrUpdateAsync(string, string, ProviderFrontloadPayload, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="releaseName"> The name of the release. </param>
-        /// <param name="properties"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<NewRegionFrontloadReleaseResource>> CreateOrUpdateAsync(this SubscriptionResource subscriptionResource, string providerNamespace, string releaseName, ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableProviderHubSubscriptionResource(subscriptionResource).CreateOrUpdateAsync(providerNamespace, releaseName, properties, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates or updates a new region frontload release.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableProviderHubSubscriptionResource.CreateOrUpdate(string, string, ProviderFrontloadPayload, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="releaseName"> The name of the release. </param>
-        /// <param name="properties"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<NewRegionFrontloadReleaseResource> CreateOrUpdate(this SubscriptionResource subscriptionResource, string providerNamespace, string releaseName, ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableProviderHubSubscriptionResource(subscriptionResource).CreateOrUpdate(providerNamespace, releaseName, properties, cancellationToken);
         }
     }
 }

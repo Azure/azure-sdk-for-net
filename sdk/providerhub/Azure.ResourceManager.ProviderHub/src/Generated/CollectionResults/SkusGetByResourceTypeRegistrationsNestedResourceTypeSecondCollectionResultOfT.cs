@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ProviderHub
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceTypeRegistrationsNestedResourceTypeSecondRequest(nextLink, _subscriptionId, _providerNamespace, _resourceType, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _context) : _client.CreateGetByResourceTypeRegistrationsNestedResourceTypeSecondRequest(_subscriptionId, _providerNamespace, _resourceType, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SkusCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.GetAll");
             scope.Start();
             try
             {
