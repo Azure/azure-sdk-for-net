@@ -508,8 +508,8 @@ namespace Azure.Core.Tests
             });
 
             // And that they serialized to camelCase
-            Assert.AreEqual("""{"a":3}""", value.Foo.ToString());
-            Assert.AreEqual("""{"b":4}""", value.Bar.ToString());
+            Assert.That("""{"a":3}""", Is.EqualTo(value.Foo.ToString()));
+            Assert.That("""{"b":4}""", Is.EqualTo(value.Bar.ToString()));
         }
 
         [Test]
@@ -529,7 +529,7 @@ namespace Azure.Core.Tests
                 Assert.That((string)value.foo, Is.EqualTo("orig"));
                 Assert.That((int)value.Bar, Is.EqualTo(2));
             });
-            Assert.IsNull(value.bar);
+            Assert.That(value.bar, Is.Null);
 
             // Serialized model - existing property
             value.Foo = new
@@ -550,11 +550,11 @@ namespace Azure.Core.Tests
                 Assert.That((string)value.foo, Is.EqualTo("orig"));
                 Assert.That((int)value.Bar.B, Is.EqualTo(4));
             });
-            Assert.IsNull(value.bar);
+            Assert.That(value.bar, Is.Null);
 
             // And that they serialized to PascalCase
-            Assert.AreEqual("""{"A":3}""", value.Foo.ToString());
-            Assert.AreEqual("""{"B":4}""", value.Bar.ToString());
+            Assert.That("""{"A":3}""", Is.EqualTo(value.Foo.ToString()));
+            Assert.That("""{"B":4}""", Is.EqualTo(value.Bar.ToString()));
         }
 
         [Test]

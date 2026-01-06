@@ -330,8 +330,8 @@ namespace Azure.Core.Tests.Public
         {
             dynamic json = new BinaryData("\"test\"").ToDynamicFromJson();
 
-            Assert.IsTrue(json.Equals("test"));
-            Assert.IsTrue(json == "test");
+            Assert.That(json.Equals("test"), Is.True);
+            Assert.That(json == "test", Is.True);
         }
 
         [Test]
@@ -354,30 +354,30 @@ namespace Azure.Core.Tests.Public
             dynamic aJson = new BinaryData(a).ToDynamicFromJson();
             dynamic bJson = new BinaryData(b).ToDynamicFromJson();
 
-            Assert.AreEqual(expected, aJson.Equals(bJson));
-            Assert.AreEqual(expected, aJson == bJson);
-            Assert.AreEqual(expected, bJson.Equals(aJson));
-            Assert.AreEqual(expected, bJson == aJson);
+            Assert.That(aJson.Equals(bJson), Is.EqualTo(expected));
+            Assert.That(aJson == bJson, Is.EqualTo(expected));
+            Assert.That(bJson.Equals(aJson), Is.EqualTo(expected));
+            Assert.That(bJson == aJson, Is.EqualTo(expected));
         }
 
         [Test]
         public void EqualsNull()
         {
             dynamic value = JsonDataTestHelpers.CreateFromJson("""{ "foo": null }""");
-            Assert.AreEqual(null, value.foo);
-            Assert.IsTrue(value.foo == null);
+            Assert.That(value.foo, Is.EqualTo(null));
+            Assert.That(value.foo == null, Is.True);
 
             string nullString = null;
-            Assert.IsTrue(value.foo == nullString);
-            Assert.IsTrue(nullString == value.foo);
+            Assert.That(value.foo == nullString, Is.True);
+            Assert.That(nullString == value.foo, Is.True);
 
             int? nullInt = null;
-            Assert.IsTrue(value.foo == nullInt);
-            Assert.IsTrue(nullInt == value.foo);
+            Assert.That(value.foo == nullInt, Is.True);
+            Assert.That(nullInt == value.foo, Is.True);
 
             bool? nullBool = null;
-            Assert.IsTrue(value.foo == nullBool);
-            Assert.IsTrue(nullBool == value.foo);
+            Assert.That(value.foo == nullBool, Is.True);
+            Assert.That(nullBool == value.foo, Is.True);
         }
 
         [Test]
@@ -390,11 +390,11 @@ namespace Azure.Core.Tests.Public
             dynamic arr2 = new BinaryData(new[] { "bar" }).ToDynamicFromJson();
 
             // For objects and arrays, Equals provides reference equality.
-            Assert.AreEqual(obj1, obj1);
-            Assert.AreEqual(arr1, arr1);
+            Assert.That(obj1, Is.EqualTo(obj1));
+            Assert.That(arr1, Is.EqualTo(arr1));
 
-            Assert.AreNotEqual(obj1, obj2);
-            Assert.AreNotEqual(arr1, arr2);
+            Assert.That(obj1, Is.Not.EqualTo(obj2));
+            Assert.That(arr1, Is.Not.EqualTo(arr2));
         }
 
         [Test]
@@ -403,15 +403,15 @@ namespace Azure.Core.Tests.Public
             dynamic trueJson = new BinaryData("{ \"value\": true }").ToDynamicFromJson().value;
             dynamic falseJson = new BinaryData("{ \"value\": false }").ToDynamicFromJson().value;
 
-            Assert.IsTrue(trueJson == true);
-            Assert.IsTrue(true == trueJson);
-            Assert.IsFalse(trueJson != true);
-            Assert.IsFalse(true != trueJson);
+            Assert.That(trueJson == true, Is.True);
+            Assert.That(true == trueJson, Is.True);
+            Assert.That(trueJson != true, Is.False);
+            Assert.That(true != trueJson, Is.False);
 
-            Assert.IsFalse(falseJson == true);
-            Assert.IsFalse(true == falseJson);
-            Assert.IsTrue(falseJson != true);
-            Assert.IsTrue(true != falseJson);
+            Assert.That(falseJson == true, Is.False);
+            Assert.That(true == falseJson, Is.False);
+            Assert.That(falseJson != true, Is.True);
+            Assert.That(true != falseJson, Is.True);
         }
 
         [Test]
@@ -420,15 +420,15 @@ namespace Azure.Core.Tests.Public
             dynamic fiveJson = new BinaryData("{ \"value\": 5 }").ToDynamicFromJson().value;
             dynamic sixJson = new BinaryData("{ \"value\": 6 }").ToDynamicFromJson().value;
 
-            Assert.IsTrue(fiveJson == 5);
-            Assert.IsTrue(5 == fiveJson);
-            Assert.IsFalse(fiveJson != 5);
-            Assert.IsFalse(5 != fiveJson);
+            Assert.That(fiveJson == 5, Is.True);
+            Assert.That(5 == fiveJson, Is.True);
+            Assert.That(fiveJson != 5, Is.False);
+            Assert.That(5 != fiveJson, Is.False);
 
-            Assert.IsFalse(sixJson == 5);
-            Assert.IsFalse(5 == sixJson);
-            Assert.IsTrue(sixJson != 5);
-            Assert.IsTrue(5 != sixJson);
+            Assert.That(sixJson == 5, Is.False);
+            Assert.That(5 == sixJson, Is.False);
+            Assert.That(sixJson != 5, Is.True);
+            Assert.That(5 != sixJson, Is.True);
         }
 
         [Test]
@@ -440,15 +440,15 @@ namespace Azure.Core.Tests.Public
             dynamic maxJson = new BinaryData($"{{ \"value\": {max} }}").ToDynamicFromJson().value;
             dynamic minJson = new BinaryData($"{{ \"value\": {min} }}").ToDynamicFromJson().value;
 
-            Assert.IsTrue(maxJson == max);
-            Assert.IsTrue(max == maxJson);
-            Assert.IsFalse(maxJson != max);
-            Assert.IsFalse(max != maxJson);
+            Assert.That(maxJson == max, Is.True);
+            Assert.That(max == maxJson, Is.True);
+            Assert.That(maxJson != max, Is.False);
+            Assert.That(max != maxJson, Is.False);
 
-            Assert.IsFalse(minJson == max);
-            Assert.IsFalse(max == minJson);
-            Assert.IsTrue(minJson != max);
-            Assert.IsTrue(max != minJson);
+            Assert.That(minJson == max, Is.False);
+            Assert.That(max == minJson, Is.False);
+            Assert.That(minJson != max, Is.True);
+            Assert.That(max != minJson, Is.True);
         }
 
         [Test]
@@ -459,15 +459,15 @@ namespace Azure.Core.Tests.Public
             dynamic halfJson = new BinaryData("{ \"value\": 0.5 }").ToDynamicFromJson().value;
             dynamic fourthJson = new BinaryData("{ \"value\": 0.25 }").ToDynamicFromJson().value;
 
-            Assert.IsTrue(halfJson == half);
-            Assert.IsTrue(half == halfJson);
-            Assert.IsFalse(halfJson != half);
-            Assert.IsFalse(half != halfJson);
+            Assert.That(halfJson == half, Is.True);
+            Assert.That(half == halfJson, Is.True);
+            Assert.That(halfJson != half, Is.False);
+            Assert.That(half != halfJson, Is.False);
 
-            Assert.IsFalse(fourthJson == half);
-            Assert.IsFalse(half == fourthJson);
-            Assert.IsTrue(fourthJson != half);
-            Assert.IsTrue(half != fourthJson);
+            Assert.That(fourthJson == half, Is.False);
+            Assert.That(half == fourthJson, Is.False);
+            Assert.That(fourthJson != half, Is.True);
+            Assert.That(half != fourthJson, Is.True);
         }
         [Test]
         public void OperatorEqualsForDouble()
@@ -477,15 +477,15 @@ namespace Azure.Core.Tests.Public
             dynamic halfJson = new BinaryData("{ \"value\": 0.5 }").ToDynamicFromJson().value;
             dynamic fourthJson = new BinaryData("{ \"value\": 0.25 }").ToDynamicFromJson().value;
 
-            Assert.IsTrue(halfJson == half);
-            Assert.IsTrue(half == halfJson);
-            Assert.IsFalse(halfJson != half);
-            Assert.IsFalse(half != halfJson);
+            Assert.That(halfJson == half, Is.True);
+            Assert.That(half == halfJson, Is.True);
+            Assert.That(halfJson != half, Is.False);
+            Assert.That(half != halfJson, Is.False);
 
-            Assert.IsFalse(fourthJson == half);
-            Assert.IsFalse(half == fourthJson);
-            Assert.IsTrue(fourthJson != half);
-            Assert.IsTrue(half != fourthJson);
+            Assert.That(fourthJson == half, Is.False);
+            Assert.That(half == fourthJson, Is.False);
+            Assert.That(fourthJson != half, Is.True);
+            Assert.That(half != fourthJson, Is.True);
         }
 
         [Test]
@@ -494,15 +494,15 @@ namespace Azure.Core.Tests.Public
             dynamic fooJson = new BinaryData("\"foo\"").ToDynamicFromJson();
             dynamic barJson = new BinaryData("\"bar\"").ToDynamicFromJson();
 
-            Assert.IsTrue(fooJson == "foo");
-            Assert.IsTrue("foo" == fooJson);
-            Assert.IsFalse(fooJson != "foo");
-            Assert.IsFalse("foo" != fooJson);
+            Assert.That(fooJson == "foo", Is.True);
+            Assert.That("foo" == fooJson, Is.True);
+            Assert.That(fooJson != "foo", Is.False);
+            Assert.That("foo" != fooJson, Is.False);
 
-            Assert.IsFalse(barJson == "foo");
-            Assert.IsFalse("foo" == barJson);
-            Assert.IsTrue(barJson != "foo");
-            Assert.IsTrue("foo" != barJson);
+            Assert.That(barJson == "foo", Is.False);
+            Assert.That("foo" == barJson, Is.False);
+            Assert.That(barJson != "foo", Is.True);
+            Assert.That("foo" != barJson, Is.True);
         }
 
         [Test]

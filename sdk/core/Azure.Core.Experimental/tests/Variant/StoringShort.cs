@@ -118,14 +118,11 @@ namespace Azure.Core.Experimental.Tests
             object o = i;
             Variant value = new(o);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(value.Type, Is.EqualTo(typeof(short)));
-                Assert.That(value.TryGetValue(out short result), Is.True);
-                Assert.That(result, Is.EqualTo(testValue));
-                Assert.That(value.TryGetValue(out short? nullableResult), Is.True);
-                Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
-            });
+            Assert.That(value.Type, Is.EqualTo(typeof(short)));
+            Assert.That(value.TryGetValue(out short result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out short? nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
 
             short? n = testValue;
             o = n;

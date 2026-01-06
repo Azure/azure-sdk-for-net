@@ -294,13 +294,11 @@ namespace Azure.Core.Tests
                 request.Content = RequestContent.Create(new byte[16]);
             }
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(request.Headers.TryGetValue(headerName, out var value), Is.True);
-                Assert.That(value, Is.EqualTo(headerValue));
+            Assert.That(request.Headers.TryGetValue(headerName, out var value), Is.True);
+            Assert.That(value, Is.EqualTo(headerValue));
 
-                Assert.That(request.Headers.TryGetValue(headerName.ToUpper(), out value), Is.True);
-            });
+            Assert.That(request.Headers.TryGetValue(headerName.ToUpper(), out value), Is.True);
+
             Assert.That(value, Is.EqualTo(headerValue));
 
             Assert.That(request.Headers, Is.EqualTo(new[]
@@ -358,16 +356,14 @@ namespace Azure.Core.Tests
             request.Headers.Add(headerName, headerValue);
             request.Headers.Add(headerName, anotherHeaderValue);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(request.Headers.Contains(headerName), Is.True);
+            Assert.That(request.Headers.Contains(headerName), Is.True);
 
-                Assert.That(request.Headers.TryGetValue(headerName, out var value), Is.True);
-                Assert.That(value, Is.EqualTo(joinedHeaderValues));
+            Assert.That(request.Headers.TryGetValue(headerName, out var value), Is.True);
+            Assert.That(value, Is.EqualTo(joinedHeaderValues));
 
-                Assert.That(request.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
-            });
-            CollectionAssert.AreEqual(new[] { headerValue, anotherHeaderValue }, values);
+            Assert.That(request.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
+
+            Assert.That(values, Is.EqualTo(new[] { headerValue, anotherHeaderValue }));
 
             Assert.That(request.Headers, Is.EqualTo(new[]
             {
@@ -395,16 +391,14 @@ namespace Azure.Core.Tests
 
             Response response = await ExecuteRequest(request, transport);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(response.Headers.Contains(headerName), Is.True, $"response.Headers contains the following headers: {string.Join(", ", response.Headers.Select(h => $"\"{h.Name}\": \"{h.Value}\""))}");
+            Assert.That(response.Headers.Contains(headerName), Is.True, $"response.Headers contains the following headers: {string.Join(", ", response.Headers.Select(h => $"\"{h.Name}\": \"{h.Value}\""))}");
 
-                Assert.That(response.Headers.TryGetValue(headerName, out var value), Is.True);
-                Assert.That(value, Is.EqualTo(headerValue));
+            Assert.That(response.Headers.TryGetValue(headerName, out var value), Is.True);
+            Assert.That(value, Is.EqualTo(headerValue));
 
-                Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
-            });
-            CollectionAssert.AreEqual(new[] { headerValue }, values);
+            Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
+
+            Assert.That(new[] { headerValue }, Is.EqualTo(values));
 
             Assert.That(response.Headers, Has.Member(new HttpHeader(headerName, headerValue)));
         }
@@ -434,16 +428,14 @@ namespace Azure.Core.Tests
 
             Response response = await ExecuteRequest(request, transport);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(response.Headers.Contains(headerName), Is.True);
+            Assert.That(response.Headers.Contains(headerName), Is.True);
 
-                Assert.That(response.Headers.TryGetValue(headerName, out var value), Is.True);
-                Assert.That(value, Is.EqualTo(joinedHeaderValues));
+            Assert.That(response.Headers.TryGetValue(headerName, out var value), Is.True);
+            Assert.That(value, Is.EqualTo(joinedHeaderValues));
 
-                Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
-            });
-            CollectionAssert.AreEqual(new[] { headerValue, anotherHeaderValue }, values);
+            Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
+
+            Assert.That(new[] { headerValue, anotherHeaderValue }, Is.EqualTo(values));
 
             Assert.That(response.Headers, Has.Member(new HttpHeader(headerName, joinedHeaderValues)));
         }
@@ -502,13 +494,11 @@ namespace Azure.Core.Tests
                 request.Content = RequestContent.Create(new byte[16]);
             }
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(request.Headers.TryGetValue(headerName, out var value), Is.True);
-                Assert.That(value, Is.EqualTo(headerValue));
+            Assert.That(request.Headers.TryGetValue(headerName, out var value), Is.True);
+            Assert.That(value, Is.EqualTo(headerValue));
 
-                Assert.That(request.Headers.TryGetValue(headerName.ToUpper(), out value), Is.True);
-            });
+            Assert.That(request.Headers.TryGetValue(headerName.ToUpper(), out value), Is.True);
+
             Assert.That(value, Is.EqualTo(headerValue));
 
             Assert.That(request.Headers, Is.EqualTo(new[]
@@ -859,12 +849,11 @@ namespace Azure.Core.Tests
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
                 Response response = await ExecuteRequest(request, transport);
-                Assert.Multiple(() =>
-                {
-                    Assert.That(response.Headers.TryGetValues("Sync-Token", out System.Collections.Generic.IEnumerable<string> tokens), Is.True);
-                    Assert.That(tokens.Count(), Is.EqualTo(2));
-                });
-                CollectionAssert.AreEqual(new[] { "A", "B" }, tokens);
+
+                Assert.That(response.Headers.TryGetValues("Sync-Token", out System.Collections.Generic.IEnumerable<string> tokens), Is.True);
+                Assert.That(tokens.Count(), Is.EqualTo(2));
+
+                Assert.That(new[] { "A", "B" }, Is.EqualTo(tokens));
             }
         }
 
@@ -883,12 +872,11 @@ namespace Azure.Core.Tests
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
                 Response response = await ExecuteRequest(request, transport);
-                Assert.Multiple(() =>
-                {
-                    Assert.That(response.Headers.TryGetValues("Sync-Token", out System.Collections.Generic.IEnumerable<string> tokens), Is.True);
-                    Assert.That(tokens.Count(), Is.EqualTo(1));
-                });
-                CollectionAssert.AreEqual(new[] { "A,B" }, tokens);
+
+                Assert.That(response.Headers.TryGetValues("Sync-Token", out System.Collections.Generic.IEnumerable<string> tokens), Is.True);
+                Assert.That(tokens.Count(), Is.EqualTo(1));
+
+                Assert.That(new[] { "A,B" }, Is.EqualTo(tokens));
             }
         }
 

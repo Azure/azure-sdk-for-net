@@ -367,12 +367,9 @@ namespace TestProject1
             else
             {
                 Assert.That(result.GenerationSpec, Is.Not.Null);
-                Assert.Multiple(() =>
-                {
-                    Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
-                    Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
-                    Assert.That(result.GenerationSpec.Modifier, Is.EqualTo("public"));
-                });
+                Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+                Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+                Assert.That(result.GenerationSpec.Modifier, Is.EqualTo("public"));
 
                 //if the persistable is from a dependency, it won't be added to the context builders
                 if (!shouldBeFound && type != JsonModel && type != LocalBaseModel)

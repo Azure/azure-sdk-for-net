@@ -151,13 +151,11 @@ namespace Azure.Core.Tests
             Assert.That(responses.Length, Is.EqualTo(3));
 
             var response = responses[0];
-            Assert.Multiple(() =>
-            {
-                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.Accepted));
-                Assert.That(response.TryGetHeader("x-ms-version", out var version));
-                Assert.That(version, Is.EqualTo("2018-11-09"));
-                Assert.That(response.TryGetHeader("x-ms-request-id", out _));
-            });
+
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            Assert.That(response.TryGetHeader("x-ms-version", out var version));
+            Assert.That(version, Is.EqualTo("2018-11-09"));
+            Assert.That(response.TryGetHeader("x-ms-request-id", out _));
 
             response = responses[1];
             Assert.Multiple(() =>

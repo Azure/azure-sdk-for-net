@@ -22,7 +22,7 @@ namespace Azure.Core.Samples
             dynamic widget = response.Content.ToDynamicFromJson();
             #endregion
 
-            Assert.IsTrue(widget.name == "Widget");
+            Assert.That(widget.name == "Widget");
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace Azure.Core.Samples
             client.SetWidget(RequestContent.Create(widget));
             #endregion
 
-            Assert.IsTrue(widget.Name == "New Name");
+            Assert.That(widget.Name == "New Name");
         }
 
         [Test]
@@ -88,8 +88,8 @@ namespace Azure.Core.Samples
             }
             #endregion
 
-            Assert.IsTrue(widget.Values.Length > 0);
-            Assert.IsTrue(widget.Values[0] == 1);
+            Assert.That(widget.Values.Length > 0);
+            Assert.That(widget.Values[0] == 1);
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Azure.Core.Samples
             }
             #endregion
 
-            Assert.IsTrue(widget.Details.Color == "blue");
+            Assert.That(widget.Details.Color == "blue");
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace Azure.Core.Samples
             }
             #endregion
 
-            Assert.IsTrue(widget.details.color == "blue");
+            Assert.That(widget.details.color == "blue");
         }
 
         [Test]
@@ -220,8 +220,8 @@ namespace Azure.Core.Samples
             // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
             #endregion
 
-            Assert.IsTrue(widget.details.IPAddress == "127.0.0.1");
-            Assert.IsTrue(widget.details["IPAddress"] == "127.0.0.1");
+            Assert.That(widget.details.IPAddress == "127.0.0.1");
+            Assert.That(widget.details["IPAddress"] == "127.0.0.1");
         }
 
         [Test]

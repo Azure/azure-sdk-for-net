@@ -68,11 +68,9 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
 
         // User-Agent header should be present when user agent policy is included
         Assert.That(capturedRequest, Is.Not.Null);
-        Assert.Multiple(() =>
-        {
-            Assert.That(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent), Is.True);
-            Assert.That(userAgent, Is.Not.Null);
-        });
+
+        Assert.That(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent), Is.True);
+        Assert.That(userAgent, Is.Not.Null);
 
         // Should contain assembly name and version
         Assert.That(userAgent, Does.Contain("ClientModel.Tests"));
@@ -111,11 +109,10 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         pipeline.Send(message);
 
         Assert.That(capturedRequest, Is.Not.Null);
-        Assert.Multiple(() =>
-        {
-            Assert.That(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent), Is.True);
-            Assert.That(userAgent, Is.Not.Null);
-        });
+
+        Assert.That(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent), Is.True);
+        Assert.That(userAgent, Is.Not.Null);
+
         Assert.That(userAgent, Is.Not.Empty);
 
         // Should contain assembly name and version

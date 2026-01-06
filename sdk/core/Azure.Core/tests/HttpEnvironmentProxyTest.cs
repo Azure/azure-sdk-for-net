@@ -130,11 +130,8 @@ namespace System.Net.Http.Tests
             Environment.SetEnvironmentVariable("all_proxy", input);
             Uri u;
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
-                Assert.That(p, Is.Not.Null);
-            });
+            Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
+            Assert.That(p, Is.Not.Null);
 
             u = p.GetProxy(s_fooHttp);
             Assert.Multiple(() =>
@@ -159,39 +156,34 @@ namespace System.Net.Http.Tests
         public void HttpProxy_CredentialParsing_Basic()
         {
             Environment.SetEnvironmentVariable("all_proxy", "http://foo:pwd1@1.1.1.1:3000");
-            Assert.Multiple(() =>
-            {
-                Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
-                Assert.That(p, Is.Not.Null);
-            });
+
+            Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
+            Assert.That(p, Is.Not.Null);
+
             Assert.That(p.Credentials, Is.Not.Null);
 
             // Use user only without password.
             Environment.SetEnvironmentVariable("all_proxy", "http://foo@1.1.1.1:3000");
-            Assert.Multiple(() =>
-            {
-                Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
-                Assert.That(p, Is.Not.Null);
-            });
+
+            Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
+            Assert.That(p, Is.Not.Null);
+
             Assert.That(p.Credentials, Is.Not.Null);
 
             // Use different user for http and https
             Environment.SetEnvironmentVariable("https_proxy", "http://foo1:pwd2@1.1.1.1:3000");
-            Assert.Multiple(() =>
-            {
-                Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
-                Assert.That(p, Is.Not.Null);
-            });
+
+            Assert.That(HttpEnvironmentProxy.TryCreate(out p), Is.True);
+            Assert.That(p, Is.Not.Null);
+
             Uri u = p.GetProxy(s_fooHttp);
             Assert.That(p.Credentials.GetCredential(u, "Basic"), Is.Not.Null);
             u = p.GetProxy(s_fooHttps);
-            Assert.Multiple(() =>
-            {
-                Assert.That(p.Credentials.GetCredential(u, "Basic"), Is.Not.Null);
-                // This should not match Proxy Uri
-                Assert.That(p.Credentials.GetCredential(s_fooHttp, "Basic"), Is.Null);
-                Assert.That(p.Credentials.GetCredential(null, null), Is.Null);
-            });
+
+            Assert.That(p.Credentials.GetCredential(u, "Basic"), Is.Not.Null);
+            // This should not match Proxy Uri
+            Assert.That(p.Credentials.GetCredential(s_fooHttp, "Basic"), Is.Null);
+            Assert.That(p.Credentials.GetCredential(null, null), Is.Null);
         }
 
         [Test]
@@ -199,20 +191,15 @@ namespace System.Net.Http.Tests
         {
             Environment.SetEnvironmentVariable("no_proxy", ".test.com,, foo.com");
             Environment.SetEnvironmentVariable("all_proxy", "http://foo:pwd1@1.1.1.1:3000");
-            Assert.Multiple(() =>
-            {
-                Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
-                Assert.That(p, Is.Not.Null);
-            });
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(p.IsBypassed(s_fooHttp), Is.True);
-                Assert.That(p.IsBypassed(s_fooHttps), Is.True);
-                Assert.That(p.IsBypassed(new Uri("http://test.com")), Is.True);
-                Assert.That(p.IsBypassed(new Uri("http://1test.com")), Is.False);
-                Assert.That(p.IsBypassed(new Uri("http://www.test.com")), Is.True);
-            });
+            Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
+            Assert.That(p, Is.Not.Null);
+
+            Assert.That(p.IsBypassed(s_fooHttp), Is.True);
+            Assert.That(p.IsBypassed(s_fooHttps), Is.True);
+            Assert.That(p.IsBypassed(new Uri("http://test.com")), Is.True);
+            Assert.That(p.IsBypassed(new Uri("http://1test.com")), Is.False);
+            Assert.That(p.IsBypassed(new Uri("http://www.test.com")), Is.True);
         }
 
         public static IEnumerable<object[]> HttpProxyNoProxyEnvVarMemberData()
@@ -235,18 +222,11 @@ namespace System.Net.Http.Tests
             var directUri = new Uri("http://test.com");
             var thruProxyUri = new Uri("http://atest.com");
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
-                Assert.That(p, Is.Not.Null);
-            });
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(p.IsBypassed(directUri), Is.True);
-                Assert.That(p.IsBypassed(thruProxyUri), Is.False);
-                Assert.That(p.GetProxy(thruProxyUri), Is.EqualTo(new Uri(proxy)));
-            });
+            Assert.That(HttpEnvironmentProxy.TryCreate(out IWebProxy p), Is.True);
+            Assert.That(p, Is.Not.Null);
+            Assert.That(p.IsBypassed(directUri), Is.True);
+            Assert.That(p.IsBypassed(thruProxyUri), Is.False);
+            Assert.That(p.GetProxy(thruProxyUri), Is.EqualTo(new Uri(proxy)));
         }
     }
 }

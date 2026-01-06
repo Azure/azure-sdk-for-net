@@ -26,13 +26,11 @@ public class ActivityExtensionsTests
         Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
         Assert.That(activity, Is.Not.Null);
-        Assert.Multiple(() =>
-        {
-            Assert.That(activity!.OperationName, Is.EqualTo("Client.Method"));
-            Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Internal)); // default
-            Assert.That(activity.GetCustomProperty(ScmScopeLabel), Is.EqualTo(ScmScopeValue));
-            Assert.That(Activity.Current, Is.EqualTo(activity));
-        });
+
+        Assert.That(activity!.OperationName, Is.EqualTo("Client.Method"));
+        Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Internal)); // default
+        Assert.That(activity.GetCustomProperty(ScmScopeLabel), Is.EqualTo(ScmScopeValue));
+        Assert.That(Activity.Current, Is.EqualTo(activity));
 
         activity.Dispose();
         Assert.That(listener.Activities.Count, Is.EqualTo(1));

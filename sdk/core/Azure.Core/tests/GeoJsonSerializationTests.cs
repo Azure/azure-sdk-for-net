@@ -107,26 +107,24 @@ namespace Azure.Core.Tests
                         $" }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
-            Assert.Multiple(() =>
-            {
-                Assert.That(point.Coordinates, Is.EqualTo(P(0)));
-                Assert.That(point.CustomProperties["additionalNumber"], Is.EqualTo(1));
-                Assert.That(point.CustomProperties["additionalNumber2"], Is.EqualTo(2.2));
-                Assert.That(point.CustomProperties["additionalNumber3"], Is.EqualTo(9999999999999999999L));
-                Assert.That(point.CustomProperties["additionalString"], Is.EqualTo("hello"));
-                Assert.That(point.CustomProperties["additionalNull"], Is.EqualTo(null));
-                Assert.That(point.CustomProperties["additionalBool"], Is.EqualTo(true));
-                Assert.That(point.CustomProperties["additionalArray"], Is.EqualTo(new object[] { 1, 2.2, 9999999999999999999L, "hello", true, null }));
 
-                Assert.That(point.TryGetCustomProperty("additionalObject", out var obj), Is.EqualTo(true));
-                Assert.That(obj is IReadOnlyDictionary<string, object>, Is.True);
-            });
+            Assert.That(point.Coordinates, Is.EqualTo(P(0)));
+            Assert.That(point.CustomProperties["additionalNumber"], Is.EqualTo(1));
+            Assert.That(point.CustomProperties["additionalNumber2"], Is.EqualTo(2.2));
+            Assert.That(point.CustomProperties["additionalNumber3"], Is.EqualTo(9999999999999999999L));
+            Assert.That(point.CustomProperties["additionalString"], Is.EqualTo("hello"));
+            Assert.That(point.CustomProperties["additionalNull"], Is.EqualTo(null));
+            Assert.That(point.CustomProperties["additionalBool"], Is.EqualTo(true));
+            Assert.That(point.CustomProperties["additionalArray"], Is.EqualTo(new object[] { 1, 2.2, 9999999999999999999L, "hello", true, null }));
+
+            Assert.That(point.TryGetCustomProperty("additionalObject", out var obj), Is.EqualTo(true));
+            Assert.That(obj is IReadOnlyDictionary<string, object>, Is.True);
+
             var dictionary = (IReadOnlyDictionary<string, object>) obj;
-            Assert.Multiple(() =>
-            {
-                Assert.That(dictionary["additionalNumber"], Is.EqualTo(1));
-                Assert.That(dictionary["additionalNumber2"], Is.EqualTo(2.2));
-            });
+
+            Assert.That(dictionary["additionalNumber"], Is.EqualTo(1));
+            Assert.That(dictionary["additionalNumber2"], Is.EqualTo(2.2));
+
         }
 
         [Test]

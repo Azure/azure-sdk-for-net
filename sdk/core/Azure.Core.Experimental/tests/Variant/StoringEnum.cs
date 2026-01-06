@@ -88,13 +88,12 @@ namespace Azure.Core.Experimental.Tests
         public void ByteSize(ByteEnum testValue)
         {
             Variant value = Variant.Create(testValue);
-            Assert.Multiple(() =>
-            {
-                Assert.That(value.TryGetValue(out ByteEnum result), Is.True);
-                Assert.That(result, Is.EqualTo(testValue));
-                Assert.That(value.TryGetValue(out ByteEnum? nullResult), Is.True);
-                Assert.That(nullResult!.Value, Is.EqualTo(testValue));
-            });
+
+            Assert.That(value.TryGetValue(out ByteEnum result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out ByteEnum? nullResult), Is.True);
+            Assert.That(nullResult!.Value, Is.EqualTo(testValue));
+
             value = Variant.Create((ByteEnum?)testValue);
             Assert.Multiple(() =>
             {

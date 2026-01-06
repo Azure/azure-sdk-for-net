@@ -205,12 +205,10 @@ public class AuthenticationTokenProviderTests
                 }
                 else
                 {
-                    Assert.Multiple(() =>
-                    {
-                        // If operation overrides service level flows, Authorization header should be present and populated.
-                        Assert.That(m.Request.Headers.TryGetValue("Authorization", out var authHeader), Is.True, "Request should have an Authorization header.");
-                        Assert.That(authHeader, Is.Not.Null);
-                    });
+                    // If operation overrides service level flows, Authorization header should be present and populated.
+                    Assert.That(m.Request.Headers.TryGetValue("Authorization", out var authHeader), Is.True, "Request should have an Authorization header.");
+                    Assert.That(authHeader, Is.Not.Null);
+
                     Assert.That(authHeader, Is.Not.Empty);
                 }
                 return new MockPipelineResponse(200);

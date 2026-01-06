@@ -90,16 +90,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = ModelReaderWriter.Read<DictionaryOfAset>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
             Assert.That(model, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(model!.Items.Count, Is.EqualTo(2));
-                Assert.That(model.Items.ContainsKey("testAS-3375"), Is.True);
-                Assert.That(model.Items.ContainsKey("testAS-3376"), Is.True);
-                Assert.That(model.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
-                Assert.That(model.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
-                Assert.That(model.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
-                Assert.That(model.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
-            });
+
+            Assert.That(model!.Items.Count, Is.EqualTo(2));
+            Assert.That(model.Items.ContainsKey("testAS-3375"), Is.True);
+            Assert.That(model.Items.ContainsKey("testAS-3376"), Is.True);
+            Assert.That(model.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
+            Assert.That(model.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
+            Assert.That(model.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
+            Assert.That(model.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
 
             model.Patch.Set<AvailabilitySetData>("$.testAS-3375"u8, new AvailabilitySetData(AzureLocation.BrazilSouth)
             {
@@ -139,16 +137,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = ModelReaderWriter.Read<DictionaryOfAset>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
             Assert.That(model, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(model!.Items.Count, Is.EqualTo(2));
-                Assert.That(model.Items.ContainsKey("testAS-3375"), Is.True);
-                Assert.That(model.Items.ContainsKey("testAS-3376"), Is.True);
-                Assert.That(model.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
-                Assert.That(model.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
-                Assert.That(model.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
-                Assert.That(model.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
-            });
+
+            Assert.That(model!.Items.Count, Is.EqualTo(2));
+            Assert.That(model.Items.ContainsKey("testAS-3375"), Is.True);
+            Assert.That(model.Items.ContainsKey("testAS-3376"), Is.True);
+            Assert.That(model.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
+            Assert.That(model.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
+            Assert.That(model.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
+            Assert.That(model.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
 
             model.Patch.Remove("$.testAS-3375"u8);
 
@@ -177,16 +173,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = ModelReaderWriter.Read<DictionaryOfAset>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
             Assert.That(model, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(model!.Items.Count, Is.EqualTo(2));
-                Assert.That(model.Items.ContainsKey("testAS-3375"), Is.True);
-                Assert.That(model.Items.ContainsKey("testAS-3376"), Is.True);
-                Assert.That(model.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
-                Assert.That(model.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
-                Assert.That(model.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
-                Assert.That(model.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
-            });
+
+            Assert.That(model!.Items.Count, Is.EqualTo(2));
+            Assert.That(model.Items.ContainsKey("testAS-3375"), Is.True);
+            Assert.That(model.Items.ContainsKey("testAS-3376"), Is.True);
+            Assert.That(model.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
+            Assert.That(model.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
+            Assert.That(model.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
+            Assert.That(model.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
 
             model.Patch.Set<AvailabilitySetData>("$.testAS-3377"u8, new AvailabilitySetData(AzureLocation.BrazilSouth)
             {
@@ -203,22 +197,20 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model2 = ModelReaderWriter.Read<DictionaryOfAset>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
             Assert.That(model2, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(model2!.Items.Count, Is.EqualTo(3));
-                Assert.That(model2.Items.ContainsKey("testAS-3375"), Is.True);
-                Assert.That(model2.Items.ContainsKey("testAS-3376"), Is.True);
-                Assert.That(model2.Items.ContainsKey("testAS-3377"), Is.True);
-                Assert.That(model2.Items["testAS-3377"].Name, Is.EqualTo("testAS-3377"));
-                Assert.That(model2.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
-                Assert.That(model2.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
-                Assert.That(model2.Patch.GetString("$.testAS-3377.name"u8), Is.EqualTo("testAS-3377"));
-                Assert.That(model2.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
-                Assert.That(model2.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
 
-                Assert.That(model2.Items["testAS-3377"].Location.ToString(), Is.EqualTo("brazilsouth"));
-                Assert.That(model2.Patch.GetString("$.testAS-3377.location"u8), Is.EqualTo("brazilsouth"));
-            });
+            Assert.That(model2!.Items.Count, Is.EqualTo(3));
+            Assert.That(model2.Items.ContainsKey("testAS-3375"), Is.True);
+            Assert.That(model2.Items.ContainsKey("testAS-3376"), Is.True);
+            Assert.That(model2.Items.ContainsKey("testAS-3377"), Is.True);
+            Assert.That(model2.Items["testAS-3377"].Name, Is.EqualTo("testAS-3377"));
+            Assert.That(model2.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
+            Assert.That(model2.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
+            Assert.That(model2.Patch.GetString("$.testAS-3377.name"u8), Is.EqualTo("testAS-3377"));
+            Assert.That(model2.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
+            Assert.That(model2.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
+
+            Assert.That(model2.Items["testAS-3377"].Location.ToString(), Is.EqualTo("brazilsouth"));
+            Assert.That(model2.Patch.GetString("$.testAS-3377.location"u8), Is.EqualTo("brazilsouth"));
 
             model2.Patch.Set("$.testAS-3377.foobar"u8, 999);
 
@@ -258,17 +250,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = ModelReaderWriter.Read<DictionaryOfAset>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
             Assert.That(model, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(model!.Items.Count, Is.EqualTo(2));
-                Assert.That(model.Items.ContainsKey("testAS-3375"), Is.True);
-                Assert.That(model.Items.ContainsKey("testAS-3376"), Is.True);
-                Assert.That(model.Items["testAS-3375"].PlatformUpdateDomainCount, Is.EqualTo(5));
-                Assert.That(model.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
-                Assert.That(model.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
-                Assert.That(model.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
-                Assert.That(model.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
-            });
+
+            Assert.That(model!.Items.Count, Is.EqualTo(2));
+            Assert.That(model.Items.ContainsKey("testAS-3375"), Is.True);
+            Assert.That(model.Items.ContainsKey("testAS-3376"), Is.True);
+            Assert.That(model.Items["testAS-3375"].PlatformUpdateDomainCount, Is.EqualTo(5));
+            Assert.That(model.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
+            Assert.That(model.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
+            Assert.That(model.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
+            Assert.That(model.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
 
             model.Patch.Set("$.testAS-3375.properties.platformUpdateDomainCount"u8, 10);
 
@@ -302,16 +292,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = ModelReaderWriter.Read<DictionaryOfAset>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
             Assert.That(model, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(model!.Items.Count, Is.EqualTo(2));
-                Assert.That(model.Items.ContainsKey("testAS-3375"), Is.True);
-                Assert.That(model.Items.ContainsKey("testAS-3376"), Is.True);
-                Assert.That(model.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
-                Assert.That(model.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
-                Assert.That(model.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
-                Assert.That(model.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
-            });
+
+            Assert.That(model!.Items.Count, Is.EqualTo(2));
+            Assert.That(model.Items.ContainsKey("testAS-3375"), Is.True);
+            Assert.That(model.Items.ContainsKey("testAS-3376"), Is.True);
+            Assert.That(model.Items["testAS-3375"].Name, Is.EqualTo("testAS-3375"));
+            Assert.That(model.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
+            Assert.That(model.Patch.GetString("$.testAS-3375.name"u8), Is.EqualTo("testAS-3375"));
+            Assert.That(model.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
 
             model.Patch.Remove("$.testAS-3375.name"u8);
 
@@ -323,14 +311,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model2 = ModelReaderWriter.Read<DictionaryOfAset>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
             Assert.That(model2, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(model2!.Items.Count, Is.EqualTo(2));
-                Assert.That(model2.Items.ContainsKey("testAS-3375"), Is.True);
-                Assert.That(model2.Items.ContainsKey("testAS-3376"), Is.True);
-                Assert.That(model2.Items["testAS-3375"].Name, Is.EqualTo(null));
-                Assert.That(model2.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
-            });
+
+            Assert.That(model2!.Items.Count, Is.EqualTo(2));
+            Assert.That(model2.Items.ContainsKey("testAS-3375"), Is.True);
+            Assert.That(model2.Items.ContainsKey("testAS-3376"), Is.True);
+            Assert.That(model2.Items["testAS-3375"].Name, Is.EqualTo(null));
+            Assert.That(model2.Items["testAS-3376"].Name, Is.EqualTo("testAS-3376"));
+
             Assert.Throws<KeyNotFoundException>(() => model2.Patch.GetString("$.testAS-3375.name"u8));
             Assert.That(model2.Patch.GetString("$.testAS-3376.name"u8), Is.EqualTo("testAS-3376"));
         }

@@ -132,19 +132,17 @@ namespace Azure.Core.Tests
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://example.com:340"));
 
-            Response response = await ExecuteRequest(request, transport);
-            response.ContentStream = new MemoryStream();
+        Response response = await ExecuteRequest(request, transport);
+        response.ContentStream = new MemoryStream();
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(response.Headers.Contains(headerName), Is.True);
+            Assert.That(response.Headers.Contains(headerName), Is.True);
 
-                Assert.That(response.Headers.TryGetValue(headerName, out var value), Is.True);
-                Assert.That(value, Is.EqualTo(headerValue));
+            Assert.That(response.Headers.TryGetValue(headerName, out var value), Is.True);
+            Assert.That(value, Is.EqualTo(headerValue));
 
-                Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
-            });
-            CollectionAssert.AreEqual(new[] { headerValue }, values);
+            Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string> values), Is.True);
+
+            Assert.That(values, Is.EqualTo(new[] { headerValue }));
 
             Assert.That(response.Headers, Has.Member(new HttpHeader(headerName, headerValue)));
         }

@@ -787,14 +787,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<short>("$.property"u8));
             Assert.That(formatException!.Message, Is.EqualTo("Value at '$.property' is not a System.Nullable`1[System.Int16]."));
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<short>("$.notPresent"u8));
-            Assert.Multiple(() =>
-            {
-                Assert.That(keyNotFoundException!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
 
-                Assert.That(jp.TryGetValue("$.property"u8, out short property), Is.False);
-                Assert.That(property, Is.EqualTo(default(short)));
-                Assert.That(jp.TryGetValue("$.notPresent"u8, out short notPresent), Is.False);
-            });
+            Assert.That(keyNotFoundException!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
+
+            Assert.That(jp.TryGetValue("$.property"u8, out short property), Is.False);
+            Assert.That(property, Is.EqualTo(default(short)));
+            Assert.That(jp.TryGetValue("$.notPresent"u8, out short notPresent), Is.False);
+
             Assert.That(property, Is.EqualTo(default(short)));
             Assert.That(jp.TryGetValue("$.nullProperty"u8, out short nullProperty), Is.False);
             Assert.That(property, Is.EqualTo(default(short)));
@@ -860,14 +859,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<TimeSpan>("$.property"u8));
             Assert.That(formatException!.Message, Is.EqualTo("Value at '$.property' is not a System.Nullable`1[System.TimeSpan]."));
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<TimeSpan>("$.notPresent"u8));
-            Assert.Multiple(() =>
-            {
-                Assert.That(keyNotFoundException!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
 
-                Assert.That(jp.TryGetValue("$.property"u8, out TimeSpan property), Is.False);
-                Assert.That(property, Is.EqualTo(default(TimeSpan)));
-                Assert.That(jp.TryGetValue("$.notPresent"u8, out TimeSpan notPresent), Is.False);
-            });
+            Assert.That(keyNotFoundException!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
+
+            Assert.That(jp.TryGetValue("$.property"u8, out TimeSpan property), Is.False);
+            Assert.That(property, Is.EqualTo(default(TimeSpan)));
+            Assert.That(jp.TryGetValue("$.notPresent"u8, out TimeSpan notPresent), Is.False);
+
             Assert.That(property, Is.EqualTo(default(TimeSpan)));
             Assert.That(jp.TryGetValue("$.nullProperty"u8, out TimeSpan nullProperty), Is.False);
             Assert.That(property, Is.EqualTo(default(TimeSpan)));
@@ -933,14 +931,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<uint>("$.property"u8));
             Assert.That(formatException!.Message, Is.EqualTo("Value at '$.property' is not a System.Nullable`1[System.UInt32]."));
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<uint>("$.notPresent"u8));
-            Assert.Multiple(() =>
-            {
-                Assert.That(keyNotFoundException!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
 
-                Assert.That(jp.TryGetValue("$.property"u8, out uint property), Is.False);
-                Assert.That(property, Is.EqualTo(default(uint)));
-                Assert.That(jp.TryGetValue("$.notPresent"u8, out uint notPresent), Is.False);
-            });
+            Assert.That(keyNotFoundException!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
+
+            Assert.That(jp.TryGetValue("$.property"u8, out uint property), Is.False);
+            Assert.That(property, Is.EqualTo(default(uint)));
+            Assert.That(jp.TryGetValue("$.notPresent"u8, out uint notPresent), Is.False);
+
             Assert.That(property, Is.EqualTo(default(uint)));
             Assert.That(jp.TryGetValue("$.nullProperty"u8, out uint nullProperty), Is.False);
             Assert.That(property, Is.EqualTo(default(uint)));
@@ -1006,14 +1003,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<ulong>("$.property"u8));
             Assert.That(formatException!.Message, Is.EqualTo("Value at '$.property' is not a System.Nullable`1[System.UInt64]."));
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<ulong>("$.notPresent"u8));
-            Assert.Multiple(() =>
-            {
-                Assert.That(keyNotFoundException!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
 
-                Assert.That(jp.TryGetValue("$.property"u8, out ulong property), Is.False);
-                Assert.That(property, Is.EqualTo(default(ulong)));
-                Assert.That(jp.TryGetValue("$.notPresent"u8, out ulong notPresent), Is.False);
-            });
+            Assert.That(keyNotFoundException!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
+
+            Assert.That(jp.TryGetValue("$.property"u8, out ulong property), Is.False);
+            Assert.That(property, Is.EqualTo(default(ulong)));
+            Assert.That(jp.TryGetValue("$.notPresent"u8, out ulong notPresent), Is.False);
+
             Assert.That(property, Is.EqualTo(default(ulong)));
             Assert.That(jp.TryGetValue("$.nullProperty"u8, out ulong nullProperty), Is.False);
             Assert.That(property, Is.EqualTo(default(ulong)));
@@ -1079,14 +1075,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<ushort>("$.property"u8));
             Assert.That(formatException!.Message, Is.EqualTo("Value at '$.property' is not a System.Nullable`1[System.UInt16]."));
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<ushort>("$.notPresent"u8));
-            Assert.Multiple(() =>
-            {
-                Assert.That(keyNotFoundException!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
 
-                Assert.That(jp.TryGetValue("$.property"u8, out ushort property), Is.False);
-                Assert.That(property, Is.EqualTo(default(ushort)));
-                Assert.That(jp.TryGetValue("$.notPresent"u8, out ushort notPresent), Is.False);
-            });
+            Assert.That(keyNotFoundException!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
+
+            Assert.That(jp.TryGetValue("$.property"u8, out ushort property), Is.False);
+            Assert.That(property, Is.EqualTo(default(ushort)));
+            Assert.That(jp.TryGetValue("$.notPresent"u8, out ushort notPresent), Is.False);
+
             Assert.That(property, Is.EqualTo(default(ushort)));
             Assert.That(jp.TryGetValue("$.nullProperty"u8, out ushort nullProperty), Is.False);
             Assert.That(property, Is.EqualTo(default(ushort)));
@@ -1105,17 +1100,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$.property"u8, value);
             jp.SetNull("$.property2"u8);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(jp.Contains("$.property"u8), Is.True);
-                Assert.That(jp.Contains("$.property2"u8), Is.True);
+            Assert.That(jp.Contains("$.property"u8), Is.True);
+            Assert.That(jp.Contains("$.property2"u8), Is.True);
 
-                Assert.That(jp.GetString("$.property"u8), Is.EqualTo(value));
-                Assert.That(jp.GetString("$.property2"u8), Is.EqualTo(null));
-                Assert.That(jp.TryGetValue("$.property"u8, out string? property), Is.True);
-                Assert.That(property, Is.EqualTo(value));
-                Assert.That(jp.TryGetValue("$.property2"u8, out property), Is.True);
-            });
+            Assert.That(jp.GetString("$.property"u8), Is.EqualTo(value));
+            Assert.That(jp.GetString("$.property2"u8), Is.EqualTo(null));
+            Assert.That(jp.TryGetValue("$.property"u8, out string? property), Is.True);
+            Assert.That(property, Is.EqualTo(value));
+            Assert.That(jp.TryGetValue("$.property2"u8, out property), Is.True);
+
             Assert.That(property, Is.EqualTo(null));
 
             Assert.That(jp.ToString("J"), Is.EqualTo("{\"property\":\"value\",\"property2\":null}"));
@@ -1128,20 +1121,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$.property"u8, true);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(jp.Contains("$.property"u8), Is.True);
+            Assert.That(jp.Contains("$.property"u8), Is.True);
 
-                Assert.That(jp.GetString("$.property"u8), Is.EqualTo("true"));
-                Assert.That(jp.TryGetValue("$.property"u8, out string? property), Is.True);
-                Assert.That(property, Is.EqualTo("true"));
-            });
+            Assert.That(jp.GetString("$.property"u8), Is.EqualTo("true"));
+            Assert.That(jp.TryGetValue("$.property"u8, out string? property), Is.True);
+            Assert.That(property, Is.EqualTo("true"));
+
             var ex = Assert.Throws<KeyNotFoundException>(() => jp.GetString("$.notPresent"u8));
-            Assert.Multiple(() =>
-            {
-                Assert.That(ex!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
-                Assert.That(jp.TryGetValue("$.notPresent"u8, out property), Is.False);
-            });
+
+            Assert.That(ex!.Message, Is.EqualTo("No value found at JSON path '$.notPresent'."));
+            Assert.That(jp.TryGetValue("$.notPresent"u8, out property), Is.False);
         }
     }
 }

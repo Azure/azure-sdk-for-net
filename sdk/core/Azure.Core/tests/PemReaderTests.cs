@@ -137,23 +137,17 @@ pn29yMivL7r48dlo";
         {
             ReadOnlySpan<char> data = RsaPem.AsSpan();
 
-            Assert.Multiple(() =>
-            {
-                // Expect to find the private key first.
-                Assert.That(PemReader.TryRead(data, out PemReader.PemField field), Is.True);
-                Assert.That(field.Label.ToString(), Is.EqualTo("PRIVATE KEY"));
-                Assert.That(field.FromBase64Data(), Is.EqualTo(s_rsaPrivateKeyBytes));
-            });
+            // Expect to find the private key first.
+            Assert.That(PemReader.TryRead(data, out PemReader.PemField field), Is.True);
+            Assert.That(field.Label.ToString(), Is.EqualTo("PRIVATE KEY"));
+            Assert.That(field.FromBase64Data(), Is.EqualTo(s_rsaPrivateKeyBytes));
 
             // Expect to find the certificate second.
             data = data.Slice(field.Start + field.Length);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(PemReader.TryRead(data, out field), Is.True);
-                Assert.That(field.Label.ToString(), Is.EqualTo("CERTIFICATE"));
-                Assert.That(field.FromBase64Data(), Is.EqualTo(s_rsaCertificateBytes));
-            });
+            Assert.That(PemReader.TryRead(data, out field), Is.True);
+            Assert.That(field.Label.ToString(), Is.EqualTo("CERTIFICATE"));
+            Assert.That(field.FromBase64Data(), Is.EqualTo(s_rsaCertificateBytes));
         }
 
         [Test]

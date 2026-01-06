@@ -74,12 +74,12 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         MockPipelineResponse response = new(500);
 
         messageLogger.LogRequest("requestId", request, "assembly");
-        messageLogger.LogRequestContent("requestId", [1,2,3], null);
+        messageLogger.LogRequestContent("requestId", [1, 2, 3], null);
         messageLogger.LogRequestContent("requestId", "Hello"u8.ToArray(), Encoding.UTF8); // text
         messageLogger.LogResponse("requestId", response, 1);
-        messageLogger.LogResponseContent("requestId", [1,2,3], null);
+        messageLogger.LogResponseContent("requestId", [1, 2, 3], null);
         messageLogger.LogResponseContent("requestId", "Hello"u8.ToArray(), Encoding.UTF8); // text
-        messageLogger.LogResponseContentBlock("requestId", 1, [1,2,3], null);
+        messageLogger.LogResponseContentBlock("requestId", 1, [1, 2, 3], null);
         messageLogger.LogResponseContentBlock("requestId", 1, "Hello"u8.ToArray(), Encoding.UTF8); // text
         messageLogger.LogErrorResponse("requestId", response, 1);
         messageLogger.LogErrorResponseContent("requestId", [1, 2, 3], null);
@@ -142,12 +142,9 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         using TestLoggingFactory factory = new(LogLevel.Debug);
         PipelineMessageLogger messageLogger = new(new PipelineMessageSanitizer([], []), factory);
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(messageLogger.IsEnabled(LogLevel.Debug, EventLevel.Verbose), Is.True);
-            Assert.That(messageLogger.IsEnabled(LogLevel.Critical, EventLevel.Verbose), Is.True);
-            Assert.That(messageLogger.IsEnabled(LogLevel.Trace, EventLevel.Warning), Is.False);
-        });
+        Assert.That(messageLogger.IsEnabled(LogLevel.Debug, EventLevel.Verbose));
+        Assert.That(messageLogger.IsEnabled(LogLevel.Critical, EventLevel.Verbose));
+        Assert.That(messageLogger.IsEnabled(LogLevel.Trace, EventLevel.Warning), Is.False);
     }
 
     [Test]
@@ -413,7 +410,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         string headers = (log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString();
         Assert.That(headers, Does.Contain($"Date:08/16/2024{Environment.NewLine}"));
         Assert.That(headers, Does.Contain($"Custom-Header:Value{Environment.NewLine}"));
-        Assert.That(headers, Does.Contain($"Secret-Custom-Header:Value{Environment.NewLine}"));
+        Assert.That(headers, Does.Contain($"Secret-Custom-Header:Value{Environment.NewLine}")   );
 
         log = logger.GetAndValidateSingleEvent(LoggingEventIds.ResponseEvent, "Response", LogLevel.Information);
         headers = (log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString();
@@ -437,11 +434,8 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         // Assert that the request log message is written and formatted correctly
 
         EventWrittenEventArgs log = listener.GetAndValidateSingleEvent(LoggingEventIds.RequestEvent, "Request", EventLevel.Informational, SystemClientModelEventSourceName);
-        Assert.Multiple(() =>
-        {
-            Assert.That(log.GetProperty<string>("uri"), Is.EqualTo("http://example.com/"));
-            Assert.That(log.GetProperty<string>("method"), Is.EqualTo("GET"));
-        });
+        Assert.That(log.GetProperty<string>("uri"), Is.EqualTo("http://example.com/"));
+        Assert.That(log.GetProperty<string>("method"), Is.EqualTo("GET"));
         Assert.That(log.GetProperty<string>("headers"), Does.Contain($"Date:08/16/2024{Environment.NewLine}"));
         Assert.That(log.GetProperty<string>("headers"), Does.Contain($"Custom-Header:custom-header-value{Environment.NewLine}"));
 
@@ -478,11 +472,8 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         // Assert that the request log message is written and formatted correctly
 
         LoggerEvent log = logger.GetAndValidateSingleEvent(LoggingEventIds.RequestEvent, "Request", LogLevel.Information);
-        Assert.Multiple(() =>
-        {
-            Assert.That(log.GetValueFromArguments<string>("uri"), Is.EqualTo("http://example.com/"));
-            Assert.That(log.GetValueFromArguments<string>("method"), Is.EqualTo("GET"));
-        });
+        Assert.That(log.GetValueFromArguments<string>("uri"), Is.EqualTo("http://example.com/"));
+        Assert.That(log.GetValueFromArguments<string>("method"), Is.EqualTo("GET"));
         Assert.That((log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString(), Does.Contain($"Date:08/16/2024{Environment.NewLine}"));
         Assert.That((log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString(), Does.Contain($"Custom-Header:custom-header-value{Environment.NewLine}"));
 
@@ -523,7 +514,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         // Assert that the error response content log message is written and formatted correctly
 
         log = listener.GetAndValidateSingleEvent(LoggingEventIds.ErrorResponseContentEvent, "ErrorResponseContent", EventLevel.Informational, SystemClientModelEventSourceName);
-        Assert.That(log.GetProperty<byte[]>("content"), Is.EqualTo(responseContent).AsCollection);
+        Assert.That(responseContent, Is.EqualTo(log.GetProperty<byte[]>("content")));
     }
 
     [Test]
@@ -556,7 +547,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         // Assert that the error response content log message is written and formatted correctly
 
         log = logger.GetAndValidateSingleEvent(LoggingEventIds.ErrorResponseContentEvent, "ErrorResponseContent", LogLevel.Information);
-        Assert.That(log.GetValueFromArguments<byte[]>("content"), Is.EqualTo(responseContent).AsCollection);
+        Assert.That(responseContent, Is.EqualTo(log.GetValueFromArguments<byte[]>("content")));
     }
 
     [Test]
@@ -581,12 +572,12 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         // Assert that the request content log message is written and formatted correctly
 
         EventWrittenEventArgs log = listener.GetAndValidateSingleEvent(LoggingEventIds.RequestContentEvent, "RequestContent", EventLevel.Verbose, SystemClientModelEventSourceName);
-        Assert.That(log.GetProperty<byte[]>("content"), Is.EqualTo(requestContent));
+        Assert.That(requestContent, Is.EqualTo(log.GetProperty<byte[]>("content")));
 
         // Assert that the response content log message is written and formatted correctly
 
         log = listener.GetAndValidateSingleEvent(LoggingEventIds.ResponseContentEvent, "ResponseContent", EventLevel.Verbose, SystemClientModelEventSourceName);
-        Assert.That(log.GetProperty<byte[]>("content"), Is.EqualTo(responseContent));
+        Assert.That(responseContent, Is.EqualTo(log.GetProperty<byte[]>("content")));
 
         // Assert content was not written as text
 
@@ -618,12 +609,12 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         // Assert that the request content log message is written and formatted correctly
 
         LoggerEvent log = logger.GetAndValidateSingleEvent(LoggingEventIds.RequestContentEvent, "RequestContent", LogLevel.Debug);
-        Assert.That(log.GetValueFromArguments<byte[]>("content"), Is.EqualTo(requestContent));
+        Assert.That(requestContent, Is.EqualTo(log.GetValueFromArguments<byte[]>("content")));
 
         // Assert that the response content log message is written and formatted correctly
 
         log = logger.GetAndValidateSingleEvent(LoggingEventIds.ResponseContentEvent, "ResponseContent", LogLevel.Debug);
-        Assert.That(log.GetValueFromArguments<byte[]>("content"), Is.EqualTo(responseContent));
+        Assert.That(responseContent, Is.EqualTo(log.GetValueFromArguments<byte[]>("content")));
 
         // Assert content was not written as text
 
@@ -653,12 +644,12 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         // Assert that the request content text event is written and formatted correctly
 
         EventWrittenEventArgs log = listener.GetAndValidateSingleEvent(LoggingEventIds.RequestContentTextEvent, "RequestContentText", EventLevel.Verbose, SystemClientModelEventSourceName);
-        Assert.That(log.GetProperty<string>("content"), Is.EqualTo(requestContent));
+        Assert.That(requestContent, Is.EqualTo(log.GetProperty<string>("content")));
 
         // Assert that the response content text event is written and formatted correctly
 
         log = listener.GetAndValidateSingleEvent(LoggingEventIds.ResponseContentTextEvent, "ResponseContentText", EventLevel.Verbose, SystemClientModelEventSourceName);
-        Assert.That(log.GetProperty<string>("content"), Is.EqualTo(responseContent));
+        Assert.That(responseContent, Is.EqualTo(log.GetProperty<string>("content")));
 
         // Assert content was not written not as text
 
@@ -690,12 +681,12 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         // Assert that the request content text event is written and formatted correctly
 
         LoggerEvent log = logger.GetAndValidateSingleEvent(LoggingEventIds.RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
-        Assert.That(log.GetValueFromArguments<string>("content"), Is.EqualTo(requestContent));
+        Assert.That(requestContent, Is.EqualTo(log.GetValueFromArguments<string>("content")));
 
         // Assert that the response content text event is written and formatted correctly
 
         log = logger.GetAndValidateSingleEvent(LoggingEventIds.ResponseContentTextEvent, "ResponseContentText", LogLevel.Debug);
-        Assert.That(log.GetValueFromArguments<string>("content"), Is.EqualTo(responseContent));
+        Assert.That(responseContent, Is.EqualTo(log.GetValueFromArguments<string>("content")));
 
         // Assert content was not written not as text
 
@@ -711,7 +702,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         await CreatePipelineAndSendRequestWithStreamingResponse(200, true, _defaultTextHeaders, new ClientLoggingOptions(), int.MaxValue);
 
         EventWrittenEventArgs logEvent = listener.GetAndValidateSingleEvent(LoggingEventIds.ResponseContentTextEvent, "ResponseContentText", EventLevel.Verbose, SystemClientModelEventSourceName);
-        Assert.That(logEvent.GetProperty<string>("content"), Is.EqualTo("Hello world"));
+        Assert.That("Hello world", Is.EqualTo(logEvent.GetProperty<string>("content")));
     }
 
     [Test]
@@ -724,7 +715,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
 
         LoggerEvent logEvent = logger.GetAndValidateSingleEvent(LoggingEventIds.ResponseContentTextEvent, "ResponseContentText", LogLevel.Debug);
-        Assert.That(logEvent.GetValueFromArguments<string>("content"), Is.EqualTo("Hello world"));
+        Assert.That("Hello world", Is.EqualTo(logEvent.GetValueFromArguments<string>("content")));
     }
 
     [Test]
@@ -735,7 +726,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         await CreatePipelineAndSendRequestWithStreamingResponse(500, true, _defaultTextHeaders, new ClientLoggingOptions(), 5);
 
         EventWrittenEventArgs logEvent = listener.GetAndValidateSingleEvent(LoggingEventIds.ErrorResponseContentTextEvent, "ErrorResponseContentText", EventLevel.Informational, SystemClientModelEventSourceName);
-        Assert.That(logEvent.GetProperty<string>("content"), Is.EqualTo("Hello"));
+        Assert.That("Hello", Is.EqualTo(logEvent.GetProperty<string>("content")));
     }
 
     [Test]
@@ -748,7 +739,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
 
         LoggerEvent logEvent = logger.GetAndValidateSingleEvent(LoggingEventIds.ErrorResponseContentTextEvent, "ErrorResponseContentText", LogLevel.Information);
-        Assert.That(logEvent.GetValueFromArguments<string>("content"), Is.EqualTo("Hello"));
+        Assert.That("Hello", Is.EqualTo(logEvent.GetValueFromArguments<string>("content")));
     }
 
     [Test]
@@ -762,23 +753,17 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
 
         Assert.That(contentEvents.Length, Is.EqualTo(2));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(contentEvents[0].Level, Is.EqualTo(EventLevel.Verbose));
-            Assert.That(contentEvents[0].EventName, Is.EqualTo("ResponseContentBlock"));
-            Assert.That(contentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
-            Assert.That(contentEvents[0].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
-        });
-        Assert.That(contentEvents[0].GetProperty<byte[]>("content"), Is.EqualTo("Hello "u8.ToArray()).AsCollection);
+        Assert.That(contentEvents[0].Level, Is.EqualTo(EventLevel.Verbose));
+        Assert.That(contentEvents[0].EventName, Is.EqualTo("ResponseContentBlock"));
+        Assert.That(contentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
+        Assert.That(contentEvents[0].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
+        Assert.That(contentEvents[0].GetProperty<byte[]>("content"), Is.EqualTo("Hello "u8.ToArray()));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(contentEvents[1].Level, Is.EqualTo(EventLevel.Verbose));
-            Assert.That(contentEvents[1].EventName, Is.EqualTo("ResponseContentBlock"));
-            Assert.That(contentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
-            Assert.That(contentEvents[1].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
-        });
-        Assert.That(contentEvents[1].GetProperty<byte[]>("content"), Is.EqualTo("world"u8.ToArray()).AsCollection);
+        Assert.That(contentEvents[1].Level, Is.EqualTo(EventLevel.Verbose));
+        Assert.That(contentEvents[1].EventName, Is.EqualTo("ResponseContentBlock"));
+        Assert.That(contentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
+        Assert.That(contentEvents[1].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
+        Assert.That(contentEvents[1].GetProperty<byte[]>("content"), Is.EqualTo("world"u8.ToArray()));
 
         Assert.That(listener.EventsById(LoggingEventIds.ResponseContentEvent), Is.Empty);
     }
@@ -796,21 +781,15 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
 
         Assert.That(contentEvents.Length, Is.EqualTo(2));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(contentEvents[0].LogLevel, Is.EqualTo(LogLevel.Debug));
-            Assert.That(contentEvents[0].EventId.Name, Is.EqualTo("ResponseContentBlock"));
-            Assert.That(contentEvents[0].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(0));
-        });
-        Assert.That(contentEvents[0].GetValueFromArguments<byte[]>("content"), Is.EqualTo("Hello "u8.ToArray()).AsCollection);
+        Assert.That(contentEvents[0].LogLevel, Is.EqualTo(LogLevel.Debug));
+        Assert.That(contentEvents[0].EventId.Name, Is.EqualTo("ResponseContentBlock"));
+        Assert.That(contentEvents[0].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(0));
+        Assert.That(contentEvents[0].GetValueFromArguments<byte[]>("content"), Is.EqualTo("Hello "u8.ToArray()));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(contentEvents[1].LogLevel, Is.EqualTo(LogLevel.Debug));
-            Assert.That(contentEvents[1].EventId.Name, Is.EqualTo("ResponseContentBlock"));
-            Assert.That(contentEvents[1].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(1));
-        });
-        Assert.That(contentEvents[1].GetValueFromArguments<byte[]>("content"), Is.EqualTo("world"u8.ToArray()).AsCollection);
+        Assert.That(contentEvents[1].LogLevel, Is.EqualTo(LogLevel.Debug));
+        Assert.That(contentEvents[1].EventId.Name, Is.EqualTo("ResponseContentBlock"));
+        Assert.That(contentEvents[1].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(1));
+        Assert.That(contentEvents[1].GetValueFromArguments<byte[]>("content"), Is.EqualTo("world"u8.ToArray()));
 
         Assert.That(logger.EventsById(LoggingEventIds.ResponseContentEvent), Is.Empty);
     }
@@ -826,23 +805,17 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
 
         Assert.That(errorContentEvents.Length, Is.EqualTo(2));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(errorContentEvents[0].Level, Is.EqualTo(EventLevel.Informational));
-            Assert.That(errorContentEvents[0].EventName, Is.EqualTo("ErrorResponseContentBlock"));
-            Assert.That(errorContentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
-            Assert.That(errorContentEvents[0].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
-        });
-        Assert.That(errorContentEvents[0].GetProperty<byte[]>("content"), Is.EqualTo("Hello "u8.ToArray()).AsCollection);
+        Assert.That(errorContentEvents[0].Level, Is.EqualTo(EventLevel.Informational));
+        Assert.That(errorContentEvents[0].EventName, Is.EqualTo("ErrorResponseContentBlock"));
+        Assert.That(errorContentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
+        Assert.That(errorContentEvents[0].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
+        Assert.That(errorContentEvents[0].GetProperty<byte[]>("content"), Is.EqualTo("Hello "u8.ToArray()));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(errorContentEvents[1].Level, Is.EqualTo(EventLevel.Informational));
-            Assert.That(errorContentEvents[1].EventName, Is.EqualTo("ErrorResponseContentBlock"));
-            Assert.That(errorContentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
-            Assert.That(errorContentEvents[1].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
-        });
-        Assert.That(errorContentEvents[1].GetProperty<byte[]>("content"), Is.EqualTo("world"u8.ToArray()).AsCollection);
+        Assert.That(errorContentEvents[1].Level, Is.EqualTo(EventLevel.Informational));
+        Assert.That(errorContentEvents[1].EventName, Is.EqualTo("ErrorResponseContentBlock"));
+        Assert.That(errorContentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
+        Assert.That(errorContentEvents[1].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
+        Assert.That(errorContentEvents[1].GetProperty<byte[]>("content"), Is.EqualTo("world"u8.ToArray()));
 
         Assert.That(listener.EventsById(LoggingEventIds.ErrorResponseContentEvent), Is.Empty);
     }
@@ -860,21 +833,15 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
 
         Assert.That(errorContentEvents.Length, Is.EqualTo(2));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(errorContentEvents[0].LogLevel, Is.EqualTo(LogLevel.Information));
-            Assert.That(errorContentEvents[0].EventId.Name, Is.EqualTo("ErrorResponseContentBlock"));
-            Assert.That(errorContentEvents[0].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(0));
-        });
-        Assert.That(errorContentEvents[0].GetValueFromArguments<byte[]>("content"), Is.EqualTo("Hello "u8.ToArray()).AsCollection);
+        Assert.That(errorContentEvents[0].LogLevel, Is.EqualTo(LogLevel.Information));
+        Assert.That(errorContentEvents[0].EventId.Name, Is.EqualTo("ErrorResponseContentBlock"));
+        Assert.That(errorContentEvents[0].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(0));
+        Assert.That(errorContentEvents[0].GetValueFromArguments<byte[]>("content"), Is.EqualTo("Hello "u8.ToArray()));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(errorContentEvents[1].LogLevel, Is.EqualTo(LogLevel.Information));
-            Assert.That(errorContentEvents[1].EventId.Name, Is.EqualTo("ErrorResponseContentBlock"));
-            Assert.That(errorContentEvents[1].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(1));
-        });
-        Assert.That(errorContentEvents[1].GetValueFromArguments<byte[]>("content"), Is.EqualTo("world"u8.ToArray()).AsCollection);
+        Assert.That(errorContentEvents[1].LogLevel, Is.EqualTo(LogLevel.Information));
+        Assert.That(errorContentEvents[1].EventId.Name, Is.EqualTo("ErrorResponseContentBlock"));
+        Assert.That(errorContentEvents[1].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(1));
+        Assert.That(errorContentEvents[1].GetValueFromArguments<byte[]>("content"), Is.EqualTo("world"u8.ToArray()));
 
         Assert.That(logger.EventsById(LoggingEventIds.ErrorResponseContentEvent), Is.Empty);
     }
@@ -890,21 +857,18 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
 
         Assert.That(contentEvents.Length, Is.EqualTo(2));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(contentEvents[0].Level, Is.EqualTo(EventLevel.Verbose));
+        Assert.That(contentEvents[0].Level, Is.EqualTo(EventLevel.Verbose));
 
-            Assert.That(contentEvents[0].EventName, Is.EqualTo("ResponseContentTextBlock"));
-            Assert.That(contentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
-            Assert.That(contentEvents[0].GetProperty<string>("content"), Is.EqualTo("Hello "));
-            Assert.That(contentEvents[0].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
+        Assert.That(contentEvents[0].EventName, Is.EqualTo("ResponseContentTextBlock"));
+        Assert.That(contentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
+        Assert.That(contentEvents[0].GetProperty<string>("content"), Is.EqualTo("Hello "));
+        Assert.That(contentEvents[0].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
 
-            Assert.That(contentEvents[1].Level, Is.EqualTo(EventLevel.Verbose));
-            Assert.That(contentEvents[1].EventName, Is.EqualTo("ResponseContentTextBlock"));
-            Assert.That(contentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
-            Assert.That(contentEvents[1].GetProperty<string>("content"), Is.EqualTo("world"));
-            Assert.That(contentEvents[1].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
-        });
+        Assert.That(contentEvents[1].Level, Is.EqualTo(EventLevel.Verbose));
+        Assert.That(contentEvents[1].EventName, Is.EqualTo("ResponseContentTextBlock"));
+        Assert.That(contentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
+        Assert.That(contentEvents[1].GetProperty<string>("content"), Is.EqualTo("world"));
+        Assert.That(contentEvents[1].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
 
         Assert.That(listener.EventsById(LoggingEventIds.ResponseContentEvent), Is.Empty);
     }
@@ -922,19 +886,16 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
 
         Assert.That(contentEvents.Length, Is.EqualTo(2));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(contentEvents[0].LogLevel, Is.EqualTo(LogLevel.Debug));
+        Assert.That(contentEvents[0].LogLevel, Is.EqualTo(LogLevel.Debug));
 
-            Assert.That(contentEvents[0].EventId.Name, Is.EqualTo("ResponseContentTextBlock"));
-            Assert.That(contentEvents[0].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(0));
-            Assert.That(contentEvents[0].GetValueFromArguments<string>("content"), Is.EqualTo("Hello "));
+        Assert.That(contentEvents[0].EventId.Name, Is.EqualTo("ResponseContentTextBlock"));
+        Assert.That(contentEvents[0].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(0));
+        Assert.That(contentEvents[0].GetValueFromArguments<string>("content"), Is.EqualTo("Hello "));
 
-            Assert.That(contentEvents[1].LogLevel, Is.EqualTo(LogLevel.Debug));
-            Assert.That(contentEvents[1].EventId.Name, Is.EqualTo("ResponseContentTextBlock"));
-            Assert.That(contentEvents[1].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(1));
-            Assert.That(contentEvents[1].GetValueFromArguments<string>("content"), Is.EqualTo("world"));
-        });
+        Assert.That(contentEvents[1].LogLevel, Is.EqualTo(LogLevel.Debug));
+        Assert.That(contentEvents[1].EventId.Name, Is.EqualTo("ResponseContentTextBlock"));
+        Assert.That(contentEvents[1].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(1));
+        Assert.That(contentEvents[1].GetValueFromArguments<string>("content"), Is.EqualTo("world"));
 
         Assert.That(logger.EventsById(LoggingEventIds.ResponseContentEvent), Is.Empty);
     }
@@ -950,20 +911,17 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
 
         Assert.That(errorContentEvents.Length, Is.EqualTo(2));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(errorContentEvents[0].Level, Is.EqualTo(EventLevel.Informational));
-            Assert.That(errorContentEvents[0].EventName, Is.EqualTo("ErrorResponseContentTextBlock"));
-            Assert.That(errorContentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
-            Assert.That(errorContentEvents[0].GetProperty<string>("content"), Is.EqualTo("Hello "));
-            Assert.That(errorContentEvents[0].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
+        Assert.That(errorContentEvents[0].Level, Is.EqualTo(EventLevel.Informational));
+        Assert.That(errorContentEvents[0].EventName, Is.EqualTo("ErrorResponseContentTextBlock"));
+        Assert.That(errorContentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
+        Assert.That(errorContentEvents[0].GetProperty<string>("content"), Is.EqualTo("Hello "));
+        Assert.That(errorContentEvents[0].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
 
-            Assert.That(errorContentEvents[1].Level, Is.EqualTo(EventLevel.Informational));
-            Assert.That(errorContentEvents[1].EventName, Is.EqualTo("ErrorResponseContentTextBlock"));
-            Assert.That(errorContentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
-            Assert.That(errorContentEvents[1].GetProperty<string>("content"), Is.EqualTo("world"));
-            Assert.That(errorContentEvents[1].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
-        });
+        Assert.That(errorContentEvents[1].Level, Is.EqualTo(EventLevel.Informational));
+        Assert.That(errorContentEvents[1].EventName, Is.EqualTo("ErrorResponseContentTextBlock"));
+        Assert.That(errorContentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
+        Assert.That(errorContentEvents[1].GetProperty<string>("content"), Is.EqualTo("world"));
+        Assert.That(errorContentEvents[1].EventSource.Name, Is.EqualTo(SystemClientModelEventSourceName));
 
         Assert.That(listener.EventsById(LoggingEventIds.ErrorResponseContentEvent), Is.Empty);
     }
@@ -981,18 +939,15 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
 
         Assert.That(errorContentEvents.Length, Is.EqualTo(2));
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(errorContentEvents[0].LogLevel, Is.EqualTo(LogLevel.Information));
-            Assert.That(errorContentEvents[0].EventId.Name, Is.EqualTo("ErrorResponseContentTextBlock"));
-            Assert.That(errorContentEvents[0].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(0));
-            Assert.That(errorContentEvents[0].GetValueFromArguments<string>("content"), Is.EqualTo("Hello "));
+        Assert.That(errorContentEvents[0].LogLevel, Is.EqualTo(LogLevel.Information));
+        Assert.That(errorContentEvents[0].EventId.Name, Is.EqualTo("ErrorResponseContentTextBlock"));
+        Assert.That(errorContentEvents[0].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(0));
+        Assert.That(errorContentEvents[0].GetValueFromArguments<string>("content"), Is.EqualTo("Hello "));
 
-            Assert.That(errorContentEvents[1].LogLevel, Is.EqualTo(LogLevel.Information));
-            Assert.That(errorContentEvents[1].EventId.Name, Is.EqualTo("ErrorResponseContentTextBlock"));
-            Assert.That(errorContentEvents[1].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(1));
-            Assert.That(errorContentEvents[1].GetValueFromArguments<string>("content"), Is.EqualTo("world"));
-        });
+        Assert.That(errorContentEvents[1].LogLevel, Is.EqualTo(LogLevel.Information));
+        Assert.That(errorContentEvents[1].EventId.Name, Is.EqualTo("ErrorResponseContentTextBlock"));
+        Assert.That(errorContentEvents[1].GetValueFromArguments<int>("blockNumber"), Is.EqualTo(1));
+        Assert.That(errorContentEvents[1].GetValueFromArguments<string>("content"), Is.EqualTo("world"));
 
         Assert.That(logger.EventsById(LoggingEventIds.ErrorResponseContentEvent), Is.Empty);
     }
@@ -1043,45 +998,22 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         var buffer = new byte[11];
 
         if (IsAsync)
-
-<<<<<<< TODO: Unmerged change from project 'System.ClientModel.Tests.Internal(net462)', Before:
         {
-#if NET462
-            Assert.That(await response.ContentStream.ReadAsync(buffer, 5, 6), Is.EqualTo(6));
-            Assert.That(await response.ContentStream.ReadAsync(buffer, 6, 5), Is.EqualTo(5));
-            Assert.That(await response.ContentStream.ReadAsync(buffer, 0, 5), Is.EqualTo(0));
-=======
-        {
-            Assert.Multiple(async () =>
-            {
-#if NET462
-                Assert.That(await response.ContentStream.ReadAsync(buffer, 5, 6), Is.EqualTo(6));
-                Assert.That(await response.ContentStream.ReadAsync(buffer, 6, 5), Is.EqualTo(5));
-                Assert.That(await response.ContentStream.ReadAsync(buffer, 0, 5), Is.EqualTo(0));
-            });
->>>>>>> After
-        {
-            Assert.Multiple(async () =>
-            {
 #if NET462
             Assert.That(await response.ContentStream.ReadAsync(buffer, 5, 6), Is.EqualTo(6));
             Assert.That(await response.ContentStream.ReadAsync(buffer, 6, 5), Is.EqualTo(5));
             Assert.That(await response.ContentStream.ReadAsync(buffer, 0, 5), Is.EqualTo(0));
 #else
-                Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(5, 6)), Is.EqualTo(6));
-                Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(6, 5)), Is.EqualTo(5));
-                Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(0, 5)), Is.EqualTo(0));
-            });
+            Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(5, 6)), Is.EqualTo(6));
+            Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(6, 5)), Is.EqualTo(5));
+            Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(0, 5)), Is.EqualTo(0));
 #endif
         }
         else
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(response.ContentStream.Read(buffer, 5, 6), Is.EqualTo(6));
-                Assert.That(response.ContentStream.Read(buffer, 6, 5), Is.EqualTo(5));
-                Assert.That(response.ContentStream.Read(buffer, 0, 5), Is.EqualTo(0));
-            });
+            Assert.That(response.ContentStream.Read(buffer, 5, 6), Is.EqualTo(6));
+            Assert.That(response.ContentStream.Read(buffer, 6, 5), Is.EqualTo(5));
+            Assert.That(response.ContentStream.Read(buffer, 0, 5), Is.EqualTo(0));
         }
     }
 

@@ -45,15 +45,13 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.That(result.GenerationSpec, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
-                Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
-                Assert.That(result.Diagnostics, Is.Empty);
-                Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
-                Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
-                Assert.That(result.GenerationSpec.ReferencedContexts, Is.Empty);
-            });
+
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics, Is.Empty);
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.ReferencedContexts, Is.Empty);
 
             var jsonModel = result.GenerationSpec.TypeBuilders[0];
             Assert.That(jsonModel.Modifier, Is.EqualTo("internal"));
@@ -106,15 +104,13 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.That(result.GenerationSpec, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
-                Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
-                Assert.That(result.Diagnostics, Is.Empty);
-                Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
-                Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
-                Assert.That(result.GenerationSpec.ReferencedContexts, Is.Empty);
-            });
+
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics, Is.Empty);
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.ReferencedContexts, Is.Empty);
 
             var jsonModel = result.GenerationSpec.TypeBuilders[0];
             Assert.That(jsonModel.Modifier, Is.EqualTo("internal"));
@@ -164,15 +160,13 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.That(result.GenerationSpec, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
-                Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
-                Assert.That(result.Diagnostics, Is.Empty);
-                Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
-                Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
-                Assert.That(result.GenerationSpec.ReferencedContexts, Is.Empty);
-            });
+
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics, Is.Empty);
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.ReferencedContexts, Is.Empty);
 
             var jsonModel = result.GenerationSpec.TypeBuilders[0];
             Assert.That(jsonModel.Modifier, Is.EqualTo("internal"));
@@ -216,15 +210,13 @@ namespace TestDependency
             var depResult = CompilationHelper.RunSourceGenerator(depCompilation, out var newDepCompilation);
 
             Assert.That(depResult.GenerationSpec, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(depResult.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
-                Assert.That(depResult.GenerationSpec.Type.Namespace, Is.EqualTo("TestDependency"));
-                Assert.That(depResult.Diagnostics, Is.Empty);
-                Assert.That(depResult.GenerationSpec!.Modifier, Is.EqualTo("public"));
-                Assert.That(depResult.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
-                Assert.That(depResult.GenerationSpec.ReferencedContexts, Is.Empty);
-            });
+
+            Assert.That(depResult.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(depResult.GenerationSpec.Type.Namespace, Is.EqualTo("TestDependency"));
+            Assert.That(depResult.Diagnostics, Is.Empty);
+            Assert.That(depResult.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(depResult.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(depResult.GenerationSpec.ReferencedContexts, Is.Empty);
 
             var depJsonModel = depResult.GenerationSpec.TypeBuilders[0];
             Assert.That(depJsonModel.Modifier, Is.EqualTo("internal"));
@@ -262,15 +254,13 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.That(result.GenerationSpec, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
-                Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
-                Assert.That(result.Diagnostics, Is.Empty);
-                Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
-                Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
-                Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(1));
-            });
+
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics, Is.Empty);
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(1));
 
             var jsonModel = result.GenerationSpec.TypeBuilders[0];
             Assert.That(jsonModel.Modifier, Is.EqualTo("internal"));

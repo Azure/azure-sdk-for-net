@@ -371,12 +371,9 @@ namespace Azure.Core.Tests
             // Get from parsed JSON
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(mdoc.RootElement.GetProperty("foo").TryGetByte(out byte b), Is.True);
-                Assert.That(b, Is.EqualTo((byte)42));
-                Assert.That(mdoc.RootElement.GetProperty("foo").GetByte(), Is.EqualTo((byte)42));
-            });
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetByte(out byte b), Is.True);
+            Assert.That(b, Is.EqualTo((byte)42));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetByte(), Is.EqualTo((byte)42));
 
             // Get from assigned existing value
             byte newValue = 43;
@@ -469,12 +466,9 @@ namespace Azure.Core.Tests
             // Get from parsed JSON
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(mdoc.RootElement.GetProperty("foo").TryGetGuid(out Guid g), Is.True);
-                Assert.That(g, Is.EqualTo(guid));
-                Assert.That(mdoc.RootElement.GetProperty("foo").GetGuid(), Is.EqualTo(guid));
-            });
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetGuid(out Guid g), Is.True);
+            Assert.That(g, Is.EqualTo(guid));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetGuid(), Is.EqualTo(guid));
 
             // Get from assigned existing value
             Guid fooValue = Guid.NewGuid();
@@ -520,12 +514,9 @@ namespace Azure.Core.Tests
             // Get from parsed JSON
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(mdoc.RootElement.GetProperty("foo").TryGetDateTime(out DateTime d), Is.True);
-                Assert.That(d, Is.EqualTo(dateTime));
-                Assert.That(mdoc.RootElement.GetProperty("foo").GetDateTime(), Is.EqualTo(dateTime));
-            });
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetDateTime(out DateTime d), Is.True);
+            Assert.That(d, Is.EqualTo(dateTime));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetDateTime(), Is.EqualTo(dateTime));
 
             // Get from assigned existing value
             DateTime fooValue = dateTime.AddDays(1);
@@ -571,12 +562,9 @@ namespace Azure.Core.Tests
             // Get from parsed JSON
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(mdoc.RootElement.GetProperty("foo").TryGetDateTimeOffset(out DateTimeOffset d), Is.True);
-                Assert.That(d, Is.EqualTo(dateTime));
-                Assert.That(mdoc.RootElement.GetProperty("foo").GetDateTimeOffset(), Is.EqualTo(dateTime));
-            });
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetDateTimeOffset(out DateTimeOffset d), Is.True);
+            Assert.That(d, Is.EqualTo(dateTime));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetDateTimeOffset(), Is.EqualTo(dateTime));
 
             // Get from assigned existing value
             DateTimeOffset fooValue = DateTimeOffset.Now.AddDays(1);

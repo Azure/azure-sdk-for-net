@@ -38,11 +38,8 @@ namespace Azure.Core.Tests
                 offset => SendTestRequestAsync(pipeline, offset),
                 ResponseClassifier.Shared, maxRetries: 5);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(await ReadAsync(reliableStream, _buffer, 0, 25), Is.EqualTo(25));
-                Assert.That(reliableStream.Length, Is.EqualTo(100));
-            });
+            Assert.That(await ReadAsync(reliableStream, _buffer, 0, 25), Is.EqualTo(25));
+            Assert.That(reliableStream.Length, Is.EqualTo(100));
             Assert.Multiple(async () =>
             {
                 Assert.That(reliableStream.Position, Is.EqualTo(25));
@@ -118,7 +115,7 @@ namespace Azure.Core.Tests
                 ResponseClassifier.Shared,
                 maxRetries: 5);
 
-            Assert.Multiple(() =>
+            Assert.Multiple(async () =>
             {
                 Assert.That(await ReadAsync(reliableStream, _buffer, 0, 25), Is.EqualTo(25));
                 Assert.That(reliableStream.Length, Is.EqualTo(100));
@@ -161,7 +158,7 @@ namespace Azure.Core.Tests
                 ResponseClassifier.Shared,
                 maxRetries: 5);
 
-            Assert.Multiple(() =>
+            Assert.Multiple(async () =>
             {
                 Assert.That(await ReadAsync(reliableStream, _buffer, 0, 25), Is.EqualTo(25));
                 Assert.That(reliableStream.Length, Is.EqualTo(100));
@@ -193,7 +190,7 @@ namespace Azure.Core.Tests
                 ResponseClassifier.Shared,
                 maxRetries: 5);
 
-            Assert.Multiple(() =>
+            Assert.Multiple(async () =>
             {
                 Assert.That(await ReadAsync(reliableStream, _buffer, 0, 25), Is.EqualTo(25));
                 Assert.That(reliableStream.Length, Is.EqualTo(100));
@@ -236,7 +233,7 @@ namespace Azure.Core.Tests
                 ResponseClassifier.Shared,
                 maxRetries: 5);
 
-            Assert.Multiple(() =>
+            Assert.Multiple(async () =>
             {
                 Assert.That(await ReadAsync(reliableStream, _buffer, 0, 50), Is.EqualTo(50));
                 Assert.That(reliableStream.Position, Is.EqualTo(50));

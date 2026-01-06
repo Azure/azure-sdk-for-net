@@ -672,11 +672,11 @@ namespace Azure.Core.Tests
                 Assert.That(resourceId.ResourceGroupName, Is.Null);
                 Assert.That(resourceId.Location, Is.Null);
             });
-            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", resourceId.SubscriptionId);
-            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", resourceId.Name);
+            Assert.That(resourceId.SubscriptionId, Is.EqualTo("17fecd63-33d8-4e43-ac6f-0aafa111b38d"));
+            Assert.That(resourceId.Name, Is.EqualTo("17fecd63-33d8-4e43-ac6f-0aafa111b38d"));
 
             resourceId = resourceId.Parent;
-            Assert.AreEqual("Microsoft.Resources/tenants", resourceId.ResourceType.ToString());
+            Assert.That(resourceId.ResourceType.ToString(), Is.EqualTo("Microsoft.Resources/tenants"));
             Assert.Multiple(() =>
             {
                 Assert.That(resourceId.ResourceGroupName, Is.Null);

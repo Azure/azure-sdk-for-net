@@ -130,14 +130,12 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
         using PipelineResponse response = message.Response!;
         response.ContentStream = new MemoryStream();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(response.Headers.TryGetValue(headerName, out var value), Is.True);
-            Assert.That(value, Is.EqualTo(headerValue));
+        Assert.That(response.Headers.TryGetValue(headerName, out var value), Is.True);
+        Assert.That(value, Is.EqualTo(headerValue));
 
-            Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string>? values), Is.True);
-        });
-        CollectionAssert.AreEqual(new[] { headerValue }, values);
+        Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string>? values), Is.True);
+
+        Assert.That(new[] { headerValue }, Is.EqualTo(values));
 
         Assert.That(response.Headers, Has.Member(new KeyValuePair<string, string>(headerName, headerValue)));
     }

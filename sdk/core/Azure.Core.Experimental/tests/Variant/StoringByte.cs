@@ -121,14 +121,11 @@ namespace Azure.Core.Experimental.Tests
             object o = i;
             Variant value = new(o);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(value.Type, Is.EqualTo(typeof(byte)));
-                Assert.That(value.TryGetValue(out byte result), Is.True);
-                Assert.That(result, Is.EqualTo(testValue));
-                Assert.That(value.TryGetValue(out byte? nullableResult), Is.True);
-                Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
-            });
+            Assert.That(value.Type, Is.EqualTo(typeof(byte)));
+            Assert.That(value.TryGetValue(out byte result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out byte? nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
 
             byte? n = testValue;
             o = n;
@@ -146,11 +143,8 @@ namespace Azure.Core.Experimental.Tests
         {
             byte? source = null;
             Variant value = source;
-            Assert.Multiple(() =>
-            {
-                Assert.That(value.Type, Is.Null);
-                Assert.That(value.As<byte?>(), Is.EqualTo(source));
-            });
+            Assert.That(value.Type, Is.Null);
+            Assert.That(value.As<byte?>(), Is.EqualTo(source));
             Assert.That(value.As<byte?>().HasValue, Is.False);
         }
 

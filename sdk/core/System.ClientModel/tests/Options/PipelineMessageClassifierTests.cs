@@ -165,53 +165,38 @@ public class PipelineMessageClassifierTests
         MockPipelineMessage message = new();
 
         message.SetResponse(new MockPipelineResponse(200));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out bool isError), Is.True);
-            Assert.That(isError, Is.False);
-        });
+
+        Assert.That(classifier.TryClassify(message, out bool isError), Is.True);
+        Assert.That(isError, Is.False);
 
         message.SetResponse(new MockPipelineResponse(201));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(isError, Is.True);
-        });
+
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(isError, Is.True);
 
         message.SetResponse(new MockPipelineResponse(204));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(isError, Is.False);
-        });
+
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(isError, Is.False);
 
         message.SetResponse(new MockPipelineResponse(304));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(isError, Is.True);
-        });
+
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(isError, Is.True);
 
         message.SetResponse(new MockPipelineResponse(403));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(isError, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(isError, Is.False);
 
         message.SetResponse(new MockPipelineResponse(404));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(isError, Is.False);
-        });
+
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(isError, Is.False);
 
         message.SetResponse(new MockPipelineResponse(500));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(isError, Is.True);
-        });
+
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(isError, Is.True);
     }
 
     [Test]
@@ -227,53 +212,32 @@ public class PipelineMessageClassifierTests
         MockPipelineMessage message = new();
 
         message.SetResponse(new MockPipelineResponse(200));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, exception: default, out bool isRetriable), Is.True);
-            Assert.That(isRetriable, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, exception: default, out bool isRetriable), Is.True);
+        Assert.That(isRetriable, Is.False);
 
         message.SetResponse(new MockPipelineResponse(201));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isRetriable, Is.True);
-        });
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isRetriable, Is.True);
 
         message.SetResponse(new MockPipelineResponse(204));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isRetriable, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isRetriable, Is.False);
 
         message.SetResponse(new MockPipelineResponse(304));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isRetriable, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isRetriable, Is.False);
 
         message.SetResponse(new MockPipelineResponse(403));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isRetriable, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isRetriable, Is.False);
 
         message.SetResponse(new MockPipelineResponse(404));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isRetriable, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isRetriable, Is.False);
 
         message.SetResponse(new MockPipelineResponse(500));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isRetriable, Is.True);
-        });
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isRetriable, Is.True);
     }
 
     [Test]
@@ -289,67 +253,46 @@ public class PipelineMessageClassifierTests
         MockPipelineMessage message = new();
 
         message.SetResponse(new MockPipelineResponse(200));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out bool isError), Is.True);
-            Assert.That(classifier.TryClassify(message, exception: default, out bool isRetriable), Is.True);
-            Assert.That(isError, Is.False);
-            Assert.That(isRetriable, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, out bool isError), Is.True);
+        Assert.That(classifier.TryClassify(message, exception: default, out bool isRetriable), Is.True);
+        Assert.That(isError, Is.False);
+        Assert.That(isRetriable, Is.False);
 
         message.SetResponse(new MockPipelineResponse(201));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isError, Is.True);
-            Assert.That(isRetriable, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isError, Is.True);
+        Assert.That(isRetriable, Is.False);
 
         message.SetResponse(new MockPipelineResponse(204));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isError, Is.False);
-            Assert.That(isRetriable, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isError, Is.False);
+        Assert.That(isRetriable, Is.False);
 
         message.SetResponse(new MockPipelineResponse(304));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isError, Is.True);
-            Assert.That(isRetriable, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isError, Is.True);
+        Assert.That(isRetriable, Is.False);
 
         message.SetResponse(new MockPipelineResponse(404));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isError, Is.False);
-            Assert.That(isRetriable, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isError, Is.False);
+        Assert.That(isRetriable, Is.False);
 
         message.SetResponse(new MockPipelineResponse(429));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isError, Is.True);
-            Assert.That(isRetriable, Is.False);
-        });
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isError, Is.True);
+        Assert.That(isRetriable, Is.False);
 
         message.SetResponse(new MockPipelineResponse(500));
-        Assert.Multiple(() =>
-        {
-            Assert.That(classifier.TryClassify(message, out isError), Is.True);
-            Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
-            Assert.That(isError, Is.True);
-            Assert.That(isRetriable, Is.True);
-        });
+        Assert.That(classifier.TryClassify(message, out isError), Is.True);
+        Assert.That(classifier.TryClassify(message, exception: default, out isRetriable), Is.True);
+        Assert.That(isError, Is.True);
+        Assert.That(isRetriable, Is.True);
     }
 
     #region Helpers

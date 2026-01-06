@@ -821,14 +821,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = ModelReaderWriter.Read<ListOfAset>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
             Assert.That(model, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(model!.Items.Count, Is.EqualTo(2));
-                Assert.That(model.Items[0].Name, Is.EqualTo("testAS-3375"));
-                Assert.That(model.Items[1].Name, Is.EqualTo("testAS-3376"));
-                Assert.That(model.Patch.GetString("$[0].name"u8), Is.EqualTo("testAS-3375"));
-                Assert.That(model.Patch.GetString("$[1].name"u8), Is.EqualTo("testAS-3376"));
-            });
+
+            Assert.That(model!.Items.Count, Is.EqualTo(2));
+            Assert.That(model.Items[0].Name, Is.EqualTo("testAS-3375"));
+            Assert.That(model.Items[1].Name, Is.EqualTo("testAS-3376"));
+            Assert.That(model.Patch.GetString("$[0].name"u8), Is.EqualTo("testAS-3375"));
+            Assert.That(model.Patch.GetString("$[1].name"u8), Is.EqualTo("testAS-3376"));
 
             model.Patch.Append("$"u8, new AvailabilitySetData(AzureLocation.BrazilSouth)
             {

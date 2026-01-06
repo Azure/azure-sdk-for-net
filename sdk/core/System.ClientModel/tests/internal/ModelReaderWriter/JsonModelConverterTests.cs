@@ -74,11 +74,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             ModelY? modelY = JsonSerializer.Deserialize<ModelY>(modelYResponse, options);
             Assert.That(modelY, Is.Not.Null);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(modelY!.Kind, Is.EqualTo("Y"));
-                Assert.That(modelY.Name, Is.EqualTo("ymodel"));
-            });
+            Assert.That(modelY!.Kind, Is.EqualTo("Y"));
+            Assert.That(modelY.Name, Is.EqualTo("ymodel"));
+
             if (format == "J")
                 Assert.That(modelY.YProperty, Is.EqualTo("100"));
 
@@ -99,11 +97,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             ModelX? modelX = JsonSerializer.Deserialize<ModelX>(modelXResponse, options);
             Assert.That(modelX, Is.Not.Null);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(modelX!.Kind, Is.EqualTo("X"));
-                Assert.That(modelX.Name, Is.EqualTo("xmodel"));
-            });
+            Assert.That(modelX!.Kind, Is.EqualTo("X"));
+            Assert.That(modelX.Name, Is.EqualTo("xmodel"));
             if (format == "J")
                 Assert.That(modelX.XProperty, Is.EqualTo(100));
 

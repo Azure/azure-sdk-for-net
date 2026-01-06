@@ -108,7 +108,7 @@ namespace Azure.Core.Tests.Public
             int i = 0;
             foreach (dynamic property in data)
             {
-                Assert.AreEqual(expectedNames[i], property.Name);
+                Assert.That(property.Name, Is.EqualTo(expectedNames[i]));
                 Assert.That((int)property.Value, Is.EqualTo(expectedValues[i]));
                 i++;
             }
@@ -140,7 +140,7 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");
 
-            Assert.IsNull(data.Length);
+            Assert.That(data.Length, Is.Null);
         }
 
         [Test]

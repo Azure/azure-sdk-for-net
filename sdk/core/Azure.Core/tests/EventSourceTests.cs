@@ -259,7 +259,7 @@ namespace Azure.Core.Tests
                 Assert.That(e.EventName, Is.EqualTo("ErrorResponseContent"));
                 Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(requestId));
             });
-            CollectionAssert.AreEqual(new byte[] { 6, 7, 8, 9, 0 }, e.GetProperty<byte[]>("content"));
+            Assert.That(new byte[] { 6, 7, 8, 9, 0 }, Is.EqualTo(e.GetProperty<byte[]>("content")));
         }
 
         [Test]
@@ -289,7 +289,7 @@ namespace Azure.Core.Tests
                 Assert.That(e.GetProperty<string>("content"), Is.EqualTo("Hello world"));
             });
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -356,16 +356,16 @@ namespace Azure.Core.Tests
 
         private void AssertNoContentLogged()
         {
-            CollectionAssert.IsEmpty(_listener.EventsById(RequestContentEvent));
-            CollectionAssert.IsEmpty(_listener.EventsById(RequestContentTextEvent));
+            Assert.That(_listener.EventsById(RequestContentEvent), Is.Empty);
+            Assert.That(_listener.EventsById(RequestContentTextEvent), Is.Empty);
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentBlockEvent));
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentTextBlockEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
+            Assert.That(_listener.EventsById(ResponseContentBlockEvent), Is.Empty);
+            Assert.That(_listener.EventsById(ResponseContentTextBlockEvent), Is.Empty);
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentEvent));
-            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentTextEvent));
-            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentTextBlockEvent));
+            Assert.That(_listener.EventsById(ErrorResponseContentEvent), Is.Empty);
+            Assert.That(_listener.EventsById(ErrorResponseContentTextEvent), Is.Empty);
+            Assert.That(_listener.EventsById(ErrorResponseContentTextBlockEvent), Is.Empty);
         }
 
         [Test]
@@ -384,7 +384,7 @@ namespace Azure.Core.Tests
                 Assert.That(contentEvents[0].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
                 Assert.That(contentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
             });
-            CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, contentEvents[0].GetProperty<byte[]>("content"));
+            Assert.That(new byte[] { 72, 101, 108, 108, 111, 32 }, Is.EqualTo(contentEvents[0].GetProperty<byte[]>("content")));
 
             Assert.Multiple(() =>
             {
@@ -393,9 +393,9 @@ namespace Azure.Core.Tests
                 Assert.That(contentEvents[1].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
                 Assert.That(contentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
             });
-            CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, contentEvents[1].GetProperty<byte[]>("content"));
+            Assert.That(new byte[] { 119, 111, 114, 108, 100 }, Is.EqualTo(contentEvents[1].GetProperty<byte[]>("content")));
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -414,7 +414,7 @@ namespace Azure.Core.Tests
                 Assert.That(errorContentEvents[0].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
                 Assert.That(errorContentEvents[0].GetProperty<int>("blockNumber"), Is.EqualTo(0));
             });
-            CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, errorContentEvents[0].GetProperty<byte[]>("content"));
+            Assert.That(new byte[] { 72, 101, 108, 108, 111, 32 }, Is.EqualTo(errorContentEvents[0].GetProperty<byte[]>("content")));
 
             Assert.Multiple(() =>
             {
@@ -423,9 +423,9 @@ namespace Azure.Core.Tests
                 Assert.That(errorContentEvents[1].GetProperty<string>("requestId"), Is.EqualTo(response.ClientRequestId));
                 Assert.That(errorContentEvents[1].GetProperty<int>("blockNumber"), Is.EqualTo(1));
             });
-            CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, errorContentEvents[1].GetProperty<byte[]>("content"));
+            Assert.That(new byte[] { 119, 111, 114, 108, 100 }, Is.EqualTo(errorContentEvents[1].GetProperty<byte[]>("content")));
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentEvent));
+            Assert.That(_listener.EventsById(ErrorResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -456,7 +456,7 @@ namespace Azure.Core.Tests
                 Assert.That(contentEvents[1].GetProperty<string>("content"), Is.EqualTo("world"));
             });
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -487,7 +487,7 @@ namespace Azure.Core.Tests
                 Assert.That(errorContentEvents[1].GetProperty<string>("content"), Is.EqualTo("world"));
             });
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentEvent));
+            Assert.That(_listener.EventsById(ErrorResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -579,7 +579,7 @@ namespace Azure.Core.Tests
                 Assert.That(e.GetProperty<string>("content"), Is.EqualTo("Hello"));
             });
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
         }
 
         [Test]
@@ -605,7 +605,7 @@ namespace Azure.Core.Tests
                 Assert.That(contentEvents[0].GetProperty<string>("content"), Is.EqualTo("Hello"));
             });
 
-            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
+            Assert.That(_listener.EventsById(ResponseContentEvent), Is.Empty);
         }
 
         [Test]

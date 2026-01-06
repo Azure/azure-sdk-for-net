@@ -75,7 +75,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
-        message.Request.Content = BinaryContent.Create(new BinaryData([1,2,3]));
+        message.Request.Content = BinaryContent.Create(new BinaryData([1, 2, 3]));
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -584,45 +584,22 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         var buffer = new byte[11];
 
         if (IsAsync)
-
-<<<<<<< TODO: Unmerged change from project 'System.ClientModel.Tests(net462)', Before:
         {
-#if NET462
-            Assert.That(await response.ContentStream.ReadAsync(buffer, 5, 6), Is.EqualTo(6));
-            Assert.That(await response.ContentStream.ReadAsync(buffer, 6, 5), Is.EqualTo(5));
-            Assert.That(await response.ContentStream.ReadAsync(buffer, 0, 5), Is.EqualTo(0));
-=======
-        {
-            Assert.Multiple(async () =>
-            {
-#if NET462
-                Assert.That(await response.ContentStream.ReadAsync(buffer, 5, 6), Is.EqualTo(6));
-                Assert.That(await response.ContentStream.ReadAsync(buffer, 6, 5), Is.EqualTo(5));
-                Assert.That(await response.ContentStream.ReadAsync(buffer, 0, 5), Is.EqualTo(0));
-            });
->>>>>>> After
-        {
-            Assert.Multiple(async () =>
-            {
 #if NET462
             Assert.That(await response.ContentStream.ReadAsync(buffer, 5, 6), Is.EqualTo(6));
             Assert.That(await response.ContentStream.ReadAsync(buffer, 6, 5), Is.EqualTo(5));
             Assert.That(await response.ContentStream.ReadAsync(buffer, 0, 5), Is.EqualTo(0));
 #else
-                Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(5, 6)), Is.EqualTo(6));
-                Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(6, 5)), Is.EqualTo(5));
-                Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(0, 5)), Is.EqualTo(0));
-            });
+            Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(5, 6)), Is.EqualTo(6));
+            Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(6, 5)), Is.EqualTo(5));
+            Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(0, 5)), Is.EqualTo(0));
 #endif
         }
         else
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(response.ContentStream.Read(buffer, 5, 6), Is.EqualTo(6));
-                Assert.That(response.ContentStream.Read(buffer, 6, 5), Is.EqualTo(5));
-                Assert.That(response.ContentStream.Read(buffer, 0, 5), Is.EqualTo(0));
-            });
+            Assert.That(response.ContentStream.Read(buffer, 5, 6), Is.EqualTo(6));
+            Assert.That(response.ContentStream.Read(buffer, 6, 5), Is.EqualTo(5));
+            Assert.That(response.ContentStream.Read(buffer, 0, 5), Is.EqualTo(0));
         }
     }
 

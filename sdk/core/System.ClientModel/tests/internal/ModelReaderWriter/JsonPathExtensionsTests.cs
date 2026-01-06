@@ -21,11 +21,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
             ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
-            Assert.Multiple(() =>
-            {
-                Assert.That(json.TryGetJson(jsonPath, out var slice), Is.True);
-                Assert.That(Encoding.UTF8.GetString(slice.ToArray()), Is.EqualTo(expected));
-            });
+
+            Assert.That(json.TryGetJson(jsonPath, out var slice), Is.True);
+            Assert.That(Encoding.UTF8.GetString(slice.ToArray()), Is.EqualTo(expected));
         }
 
         [TestCase("{\"a\":1}", "$.missing")]
@@ -233,12 +231,10 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             var reader = new Utf8JsonReader(json);
             Assert.That(reader.Read(), Is.True);
             int maxIndex;
-            Assert.Multiple(() =>
-            {
-                Assert.That(reader.SkipToIndex(index, out maxIndex), Is.True);
-                Assert.That(Encoding.UTF8.GetString(reader.ValueSpan.ToArray()), Is.EqualTo(expectedValue));
-                Assert.That(maxIndex, Is.EqualTo(expectedMaxIndex));
-            });
+
+            Assert.That(reader.SkipToIndex(index, out maxIndex), Is.True);
+            Assert.That(Encoding.UTF8.GetString(reader.ValueSpan.ToArray()), Is.EqualTo(expectedValue));
+            Assert.That(maxIndex, Is.EqualTo(expectedMaxIndex));
         }
 
         [TestCase("[10,20,30]", -1, 3)]
@@ -250,11 +246,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             var reader = new Utf8JsonReader(json);
             Assert.That(reader.Read(), Is.True);
             int maxIndex;
-            Assert.Multiple(() =>
-            {
-                Assert.That(reader.SkipToIndex(index, out maxIndex), Is.False);
-                Assert.That(maxIndex, Is.EqualTo(expectedMaxIndex));
-            });
+
+            Assert.That(reader.SkipToIndex(index, out maxIndex), Is.False);
+            Assert.That(maxIndex, Is.EqualTo(expectedMaxIndex));
         }
 
         [TestCase("$.a.b.c", "$.a")]

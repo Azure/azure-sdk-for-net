@@ -69,14 +69,12 @@ public class ClientCacheTests
         var clients = clientsField?.GetValue(clientCache) as Dictionary<object, ClientEntry>;
 
         Assert.That(clients, Is.Not.Null, "The _clients field is null.");
-        Assert.Multiple(() =>
-        {
-            Assert.That(clients!.Count, Is.EqualTo(100), "Cache did not cleanup correctly.");
 
-            // Ensure that recently accessed clients are still in the cache.
-            Assert.That(clients.ContainsKey(new DummyClientKey("client0")), Is.True, "Most recently accessed client 'client0' should be in the cache.");
-            Assert.That(clients.ContainsKey(new DummyClientKey("client1")), Is.True, "Most recently accessed client 'client1' should be in the cache.");
-        });
+        Assert.That(clients!.Count, Is.EqualTo(100), "Cache did not cleanup correctly.");
+
+        // Ensure that recently accessed clients are still in the cache.
+        Assert.That(clients.ContainsKey(new DummyClientKey("client0")), Is.True, "Most recently accessed client 'client0' should be in the cache.");
+        Assert.That(clients.ContainsKey(new DummyClientKey("client1")), Is.True, "Most recently accessed client 'client1' should be in the cache.");
 
         // Based on the LRU policy, after adding 110 items then re-accessing "client0" and "client1",
         // the evicted keys are those that were least recently used.

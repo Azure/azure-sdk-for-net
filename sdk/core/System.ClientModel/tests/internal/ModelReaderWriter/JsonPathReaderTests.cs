@@ -60,12 +60,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             JsonPathReader reader = new(jsonPath);
 
-            Assert.Multiple(() =>
-            {
-                // Root
-                Assert.That(reader.Read(), Is.True, "Expected to read Root token");
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-            });
+            // Root
+            Assert.That(reader.Read(), Is.True, "Expected to read Root token");
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
 
             // PropertySeparator
             Assert.That(reader.Read(), Is.True, "Expected to read PropertySeparator token");
@@ -82,13 +79,10 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var reader = new JsonPathReader("$"u8);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(reader.Read(), Is.True, "Expected to read Root token");
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-                Assert.That(reader.Current.TokenStartIndex, Is.EqualTo(0));
-                Assert.That(Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray()), Is.EqualTo("$"));
-            });
+            Assert.That(reader.Read(), Is.True, "Expected to read Root token");
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
+            Assert.That(reader.Current.TokenStartIndex, Is.EqualTo(0));
+            Assert.That(Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray()), Is.EqualTo("$"));
 
             Assert.That(reader.Read(), Is.True, "Expected to read End token");
             Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.End));
@@ -101,12 +95,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var reader = new JsonPathReader("$.property"u8);
 
-            Assert.Multiple(() =>
-            {
-                // Root
-                Assert.That(reader.Read(), Is.True, "Expected to read Root token");
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-            });
+            // Root
+            Assert.That(reader.Read(), Is.True, "Expected to read Root token");
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
 
             // Property separator
             Assert.That(reader.Read(), Is.True, "Expected to read PropertySeparator token");
@@ -129,12 +120,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var reader = new JsonPathReader("$['quoted-property']"u8);
 
-            Assert.Multiple(() =>
-            {
-                // Root
-                Assert.That(reader.Read(), Is.True, "Expected to read Root token");
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-            });
+            // Root
+            Assert.That(reader.Read(), Is.True, "Expected to read Root token");
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
 
             // Property separator
             Assert.That(reader.Read(), Is.True, "Expected to read PropertySeparator token");
@@ -156,11 +144,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var reader = new JsonPathReader("$['123']"u8);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(reader.Read(), Is.True, "Expected to read Root token");
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-            });
+            Assert.That(reader.Read(), Is.True, "Expected to read Root token");
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
 
             Assert.That(reader.Read(), Is.True, "Expected to read PropertySeparator token");
             Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.PropertySeparator));
@@ -178,11 +163,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var reader = new JsonPathReader("$['unterminated"u8);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(reader.Read(), Is.True, "Expected to read Root token");
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-            });
+            Assert.That(reader.Read(), Is.True, "Expected to read Root token");
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
 
             // Property separator
             Assert.That(reader.Read(), Is.True, "Expected to read PropertySeparator token");
@@ -207,12 +189,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var reader = new JsonPathReader("$.items[0].name"u8);
 
-            Assert.Multiple(() =>
-            {
-                // Root
-                Assert.That(reader.Read(), Is.True, "Expected to read Root token");
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-            });
+            // Root
+            Assert.That(reader.Read(), Is.True, "Expected to read Root token");
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
 
             // PropertySeparator
             Assert.That(reader.Read(), Is.True, "Expected to read PropertySeparator token");
@@ -249,12 +228,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var reader = new JsonPathReader("$[?(test"u8);
 
-            Assert.Multiple(() =>
-            {
-                // Root
-                Assert.That(reader.Read(), Is.True, "Expected to read Root token");
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-            });
+            // Root
+            Assert.That(reader.Read(), Is.True, "Expected to read Root token");
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
 
             bool exceptionThrown = false;
             try
@@ -274,12 +250,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var reader = new JsonPathReader("$.*"u8);
 
-            Assert.Multiple(() =>
-            {
-                // Root
-                Assert.That(reader.Read(), Is.True, "Expected to read Root token");
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-            });
+            // Root
+            Assert.That(reader.Read(), Is.True, "Expected to read Root token");
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
 
             // PropertySeparator
             Assert.That(reader.Read(), Is.True, "Expected to read PropertySeparator token");
@@ -303,14 +276,11 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 
             // Compare properties individually since JsonPathToken doesn't have custom equality
             var defaultToken = default(JsonPathToken);
-            Assert.Multiple(() =>
-            {
-                Assert.That(reader.Current.TokenType, Is.EqualTo(defaultToken.TokenType));
-                Assert.That(reader.Current.TokenStartIndex, Is.EqualTo(defaultToken.TokenStartIndex));
-                Assert.That(reader.Current.ValueSpan.SequenceEqual(defaultToken.ValueSpan),
-                    Is.True,
-                    $"Expected empty span but got '{Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray())}'");
-            });
+            Assert.That(reader.Current.TokenType, Is.EqualTo(defaultToken.TokenType));
+            Assert.That(reader.Current.TokenStartIndex, Is.EqualTo(defaultToken.TokenStartIndex));
+            Assert.That(reader.Current.ValueSpan.SequenceEqual(defaultToken.ValueSpan),
+                Is.True,
+                $"Expected empty span but got '{Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray())}'");
         }
 
         [Test]
@@ -318,14 +288,11 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var reader = new JsonPathReader("$.x.2.y"u8);
 
-            Assert.Multiple(() =>
-            {
-                // Root $
-                Assert.That(reader.Read(), Is.True, "Expected to read Root token");
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-                Assert.That(reader.Current.TokenStartIndex, Is.EqualTo(0));
-                Assert.That(Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray()), Is.EqualTo("$"));
-            });
+            // Root $
+            Assert.That(reader.Read(), Is.True, "Expected to read Root token");
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
+            Assert.That(reader.Current.TokenStartIndex, Is.EqualTo(0));
+            Assert.That(Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray()), Is.EqualTo("$"));
 
             // PropertySeparator .
             Assert.That(reader.Read(), Is.True, "Expected to read PropertySeparator token");
@@ -384,12 +351,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var reader = new JsonPathReader("$.foo['property.with.dot'].x"u8);
 
-            Assert.Multiple(() =>
-            {
-                // Root
-                Assert.That(reader.Read(), Is.True, "Expected to read Root token");
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-            });
+            Assert.That(reader.Read(), Is.True, "Expected to read Root token");
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
 
             // PropertySeparator
             Assert.That(reader.Read(), Is.True, "Expected to read PropertySeparator token");
@@ -430,38 +393,32 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var reader = new JsonPathReader("$.x.y"u8);
 
-            Assert.Multiple(() =>
-            {
-                // First token
-                Assert.That(reader.Read(), Is.True);
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
-            });
+            // First token
+            Assert.That(reader.Read(), Is.True);
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
 
             // Peek property separator
             var peek1 = reader.Peek();
-            Assert.Multiple(() =>
-            {
-                Assert.That(peek1.TokenType, Is.EqualTo(JsonPathTokenType.PropertySeparator));
-                // After peek, current still root
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
 
-                // Read now moves to separator
-                Assert.That(reader.Read(), Is.True);
-            });
+            Assert.That(peek1.TokenType, Is.EqualTo(JsonPathTokenType.PropertySeparator));
+            // After peek, current still root
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Root));
+
+            // Read now moves to separator
+            Assert.That(reader.Read(), Is.True);
+
             Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.PropertySeparator));
 
             // Peek property 'x'
             var peek2 = reader.Peek();
-            Assert.Multiple(() =>
-            {
-                Assert.That(peek2.TokenType, Is.EqualTo(JsonPathTokenType.Property));
-                Assert.That(Encoding.UTF8.GetString(peek2.ValueSpan.ToArray()), Is.EqualTo("x"));
 
-                // Read property 'x'
-                Assert.That(reader.Read(), Is.True);
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Property));
-                Assert.That(Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray()), Is.EqualTo("x"));
-            });
+            Assert.That(peek2.TokenType, Is.EqualTo(JsonPathTokenType.Property));
+            Assert.That(Encoding.UTF8.GetString(peek2.ValueSpan.ToArray()), Is.EqualTo("x"));
+
+            // Read property 'x'
+            Assert.That(reader.Read(), Is.True);
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.Property));
+            Assert.That(Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray()), Is.EqualTo("x"));
         }
 
         [Test]
@@ -476,14 +433,13 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 
             // Now advance 'full' reader using parsed prefix slice
             var slice = Encoding.UTF8.GetBytes("$.a.b");
-            Assert.Multiple(() =>
-            {
-                Assert.That(full.Advance(slice), Is.True);
 
-                // After advance, next token should continue at '.c'
-                Assert.That(full.Read(), Is.True); // Expect PropertySeparator
-                Assert.That(full.Current.TokenType, Is.EqualTo(JsonPathTokenType.PropertySeparator));
-            });
+            Assert.That(full.Advance(slice), Is.True);
+
+            // After advance, next token should continue at '.c'
+            Assert.That(full.Read(), Is.True); // Expect PropertySeparator
+            Assert.That(full.Current.TokenType, Is.EqualTo(JsonPathTokenType.PropertySeparator));
+
             Assert.That(full.Read(), Is.True); // Property c
             Assert.That(full.Current.TokenType, Is.EqualTo(JsonPathTokenType.Property));
             Assert.That(Encoding.UTF8.GetString(full.Current.ValueSpan.ToArray()), Is.EqualTo("c"));
@@ -578,11 +534,10 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             Assert.That(reader.Read(), Is.True); // $
             Assert.That(reader.Read(), Is.True); // .
             Assert.That(reader.Read(), Is.True); // foo
-            Assert.Multiple(() =>
-            {
-                Assert.That(reader.Read(), Is.True); // trailing .
-                Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.PropertySeparator));
-            });
+
+            Assert.That(reader.Read(), Is.True); // trailing .
+            Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.PropertySeparator));
+
             Assert.That(reader.Read(), Is.True);
             Assert.That(reader.Current.TokenType, Is.EqualTo(JsonPathTokenType.End));
         }
@@ -592,11 +547,10 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var r = new JsonPathReader("$"u8);
             Assert.That(r.Read(), Is.True);
-            Assert.Multiple(() =>
-            {
-                Assert.That(r.Read(), Is.True); // End
-                Assert.That(r.Current.TokenType, Is.EqualTo(JsonPathTokenType.End));
-            });
+
+            Assert.That(r.Read(), Is.True); // End
+            Assert.That(r.Current.TokenType, Is.EqualTo(JsonPathTokenType.End));
+
             var pk = r.Peek();
             Assert.That(pk.TokenType, Is.EqualTo(JsonPathTokenType.End));
             var pk2 = r.Peek();

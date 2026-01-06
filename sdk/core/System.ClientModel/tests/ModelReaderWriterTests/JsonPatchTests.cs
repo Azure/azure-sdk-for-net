@@ -569,15 +569,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$.text"u8, "Line1\nLine2\tTabbed\"Quote\"");
 
-            Assert.Multiple(() =>
-            {
-                // GetString should return single escape
-                Assert.That(jp.GetString("$.text"u8), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
-                Assert.That(jp.TryGetValue("$.text"u8, out string? value), Is.True);
-                Assert.That(value, Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
-            });
+            // GetString should return single escape
+            Assert.That(jp.GetString("$.text"u8), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+            Assert.That(jp.TryGetValue("$.text"u8, out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+
             Assert.That(value!, Does.Contain("\n"));
-            Assert.That(value.Contains("\\n"), Is.False);
+            Assert.That(value!.Contains("\\n"), Is.False);
 
             // GetJson should return the exact byte array we passed in
             Assert.That(jp.GetJson("$.text"u8).ToArray(), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""u8.ToArray()).AsCollection);
@@ -600,15 +598,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$.text"u8, "\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8);
 
-            Assert.Multiple(() =>
-            {
-                // GetString should return single escape
-                Assert.That(jp.GetString("$.text"u8), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
-                Assert.That(jp.TryGetValue("$.text"u8, out string? value), Is.True);
-                Assert.That(value, Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
-            });
+            // GetString should return single escape
+            Assert.That(jp.GetString("$.text"u8), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+            Assert.That(jp.TryGetValue("$.text"u8, out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+
             Assert.That(value!, Does.Contain("\n"));
-            Assert.That(value.Contains("\\n"), Is.False);
+            Assert.That(value!.Contains("\\n"), Is.False);
 
             // GetJson should return the exact byte array we passed in
             Assert.That(jp.GetJson("$.text"u8).ToArray(), Is.EqualTo("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray()).AsCollection);
@@ -630,15 +626,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             // Start with a seeded json patch with escaped characters
             JsonPatch jp = new("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}"u8.ToArray());
 
-            Assert.Multiple(() =>
-            {
-                // GetString should return single escape
-                Assert.That(jp.GetString("$.text"u8), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
-                Assert.That(jp.TryGetValue("$.text"u8, out string? value), Is.True);
-                Assert.That(value, Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
-            });
+            // GetString should return single escape
+            Assert.That(jp.GetString("$.text"u8), Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+            Assert.That(jp.TryGetValue("$.text"u8, out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Line1\nLine2\tTabbed\"Quote\""));
+
             Assert.That(value!, Does.Contain("\n"));
-            Assert.That(value.Contains("\\n"), Is.False);
+            Assert.That(value!.Contains("\\n"), Is.False);
 
             // GetJson should return the exact byte array we passed in
             Assert.That(jp.GetJson("$.text"u8).ToArray(), Is.EqualTo("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray()).AsCollection);
