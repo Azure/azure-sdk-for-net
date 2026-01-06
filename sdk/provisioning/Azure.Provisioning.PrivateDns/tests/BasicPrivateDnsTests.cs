@@ -13,12 +13,12 @@ namespace Azure.Provisioning.PrivateDns.Tests;
 
 public class BasicPrivateDnsTests
 {
-    internal static Trycep CreateCreatePrivateDnsZone()
+    internal static Trycep CreatePrivateDnsZoneBasic()
     {
         return new Trycep().Define(
             ctx =>
             {
-                #region Snippet:CreatePrivateDnsZone
+                #region Snippet:PrivateDnsZoneBasic
                 Infrastructure infra = new();
                 ProvisioningParameter privateDnsZoneName = new(nameof(privateDnsZoneName), typeof(string))
                     {
@@ -96,9 +96,9 @@ public class BasicPrivateDnsTests
 
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.network/private-dns-zone/main.bicep")]
-    public async Task CreatePrivateDnsZone()
+    public async Task PrivateDnsZoneBasic()
     {
-        await using Trycep test = CreateCreatePrivateDnsZone();
+        await using Trycep test = CreatePrivateDnsZoneBasic();
         test.Compare(
             """
             @description('Private DNS zone name')

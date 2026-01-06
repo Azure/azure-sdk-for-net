@@ -22,6 +22,85 @@ dotnet add package Azure.Provisioning.PrivateDns --prerelease
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a Basic Private Azure DNS Zone
+
+This is a starter template that shows how to create a private Azure DNS zone and link it to a Virtual Network.
+
+```C# Snippet:PrivateDnsZoneBasic
+Infrastructure infra = new();
+ProvisioningParameter privateDnsZoneName = new(nameof(privateDnsZoneName), typeof(string))
+    {
+        Description = "Private DNS zone name"
+    };
+infra.Add(privateDnsZoneName);
+ProvisioningParameter vmRegistration = new(nameof(vmRegistration), typeof(bool))
+    {
+        Description = "Enable automatic VM DNS registration in the zone",
+        Value = true
+    };
+infra.Add(vmRegistration);
+ProvisioningParameter vnetName = new(nameof(vnetName), typeof(string))
+    {
+        Description = "VNet name",
+        Value = "VNet"
+    };
+infra.Add(vnetName);
+ProvisioningParameter vnetAddressPrefix = new(nameof(vnetAddressPrefix), typeof(string))
+    {
+        Description = "VNet Address prefix",
+        Value = "10.0.0.0/16"
+    };
+infra.Add(vnetAddressPrefix);
+ProvisioningParameter subnetPrefix = new(nameof(subnetPrefix), typeof(string))
+    {
+        Description = "Subnet Prefix",
+        Value = "10.0.0.0/24"
+    };
+infra.Add(subnetPrefix);
+ProvisioningParameter subnetName = new(nameof(subnetName), typeof(string))
+    {
+        Description = "Subnet Name",
+        Value = "App"
+    };
+infra.Add(subnetName);
+VirtualNetwork vnet =
+    new(nameof(vnet), VirtualNetwork.ResourceVersions.V2021_03_01)
+    {
+        Name = vnetName,
+        AddressSpace = new()
+        {
+            AddressPrefixes = { vnetAddressPrefix }
+        },
+        Subnets =
+        {
+            new SubnetResource("subnet")
+            {
+                Name = subnetName,
+                AddressPrefix = subnetPrefix
+            }
+        }
+    };
+infra.Add(vnet);
+PrivateDnsZone privateDnsZone = new(nameof(privateDnsZone), PrivateDnsZone.ResourceVersions.V2020_06_01)
+    {
+        Name = privateDnsZoneName,
+        Location = new AzureLocation("global")
+    };
+infra.Add(privateDnsZone);
+VirtualNetworkLink privateDnsZoneLink =
+    new(nameof(privateDnsZoneLink), VirtualNetworkLink.ResourceVersions.V2020_06_01)
+    {
+        Parent = privateDnsZone,
+        Name = BicepFunction.Interpolate($"{vnet.Name.ToBicepExpression()}-link"),
+        Location = new AzureLocation("global"),
+        RegistrationEnabled = vmRegistration,
+        VirtualNetworkId = vnet.Id
+    };
+infra.Add(privateDnsZoneLink);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

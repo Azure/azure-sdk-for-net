@@ -14,9 +14,9 @@ public class BasicLivePrivateDnsTests(bool async)
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.network/private-dns-zone/main.bicep")]
     [LiveOnly]
-    public async Task CreatePrivateDnsZone()
+    public async Task PrivateDnsZoneBasic()
     {
-        await using Trycep test = BasicPrivateDnsTests.CreateCreatePrivateDnsZone();
+        await using Trycep test = BasicPrivateDnsTests.CreatePrivateDnsZoneBasic();
         await test.SetupLiveCalls(this)
             .Lint()
             .DeployAsync();
