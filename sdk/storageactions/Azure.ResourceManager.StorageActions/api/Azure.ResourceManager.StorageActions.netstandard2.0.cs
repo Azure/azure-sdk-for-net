@@ -279,7 +279,6 @@ namespace Azure.ResourceManager.StorageActions.Models
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public StorageTaskPreviewActionCondition(Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewActionIfCondition @if, bool elseBlockExists) { }
-        public StorageTaskPreviewActionCondition(bool elseBlockExists) { }
         public bool ElseBlockExists { get { throw null; } set { } }
         public string IfCondition { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewActionCondition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

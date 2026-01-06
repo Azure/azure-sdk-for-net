@@ -205,7 +205,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ArizeAIObservabilityEvalOrganizationProperties(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails marketplace, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails user, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferPartnerProperties partnerProperties) { }
-        public ArizeAIObservabilityEvalOrganizationProperties(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails marketplace, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails user, string partnerDescription) { }
         public Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails Marketplace { get { throw null; } set { } }
         public string PartnerDescription { get { throw null; } set { } }
         public Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferProvisioningState? ProvisioningState { get { throw null; } }
