@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nextLink = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

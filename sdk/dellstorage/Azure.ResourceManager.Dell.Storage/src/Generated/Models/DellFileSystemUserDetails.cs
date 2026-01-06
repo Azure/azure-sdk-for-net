@@ -12,7 +12,7 @@ using Azure.ResourceManager.Dell.Storage;
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
     /// <summary> User Details of Dell FileSystem resource. </summary>
-    internal partial class DellFileSystemUserDetails
+    public partial class DellFileSystemUserDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

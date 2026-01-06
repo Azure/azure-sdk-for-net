@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.FileShares;
 
 namespace Azure.ResourceManager.FileShares.Models
 {
@@ -17,11 +18,13 @@ namespace Azure.ResourceManager.FileShares.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileShareProvisioningRecommendationContent"/>. </summary>
-        /// <param name="fileShareProvisioningRecommendationInputProvisionedStorageInGiB"> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </param>
-        public FileShareProvisioningRecommendationContent(int? fileShareProvisioningRecommendationInputProvisionedStorageInGiB)
+        /// <param name="properties"> The properties of the file share provisioning recommendation input. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public FileShareProvisioningRecommendationContent(FileShareProvisioningRecommendationInputProperties properties)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            Properties = fileShareProvisioningRecommendationInputProvisionedStorageInGiB is null ? default : new FileShareProvisioningRecommendationInputProperties(fileShareProvisioningRecommendationInputProvisionedStorageInGiB.Value);
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="FileShareProvisioningRecommendationContent"/>. </summary>

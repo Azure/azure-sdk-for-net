@@ -15,7 +15,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> The reference to the Schema Registry for this AIO Instance. </summary>
-    internal partial class SchemaRegistryRef : IJsonModel<SchemaRegistryRef>
+    public partial class SchemaRegistryRef : IJsonModel<SchemaRegistryRef>
     {
         /// <summary> Initializes a new instance of <see cref="SchemaRegistryRef"/> for deserialization. </summary>
         internal SchemaRegistryRef()

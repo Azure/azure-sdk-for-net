@@ -14,7 +14,7 @@ using Azure.ResourceManager.StorageActions;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Represents storage task preview action condition. </summary>
-    internal partial class StorageTaskPreviewActionIfCondition : IJsonModel<StorageTaskPreviewActionIfCondition>
+    public partial class StorageTaskPreviewActionIfCondition : IJsonModel<StorageTaskPreviewActionIfCondition>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> File share provisioning parameters recommendation API input structure. </summary>
-    internal partial class FileShareProvisioningRecommendationInputProperties
+    public partial class FileShareProvisioningRecommendationInputProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

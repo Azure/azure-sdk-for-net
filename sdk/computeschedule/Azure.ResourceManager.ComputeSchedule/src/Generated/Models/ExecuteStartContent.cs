@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="ExecuteStartContent"/>. </summary>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="resourcesIds"> The resource ids used for the request. </param>
+        /// <param name="resources"> The resources for the request. </param>
         /// <param name="correlationId"> CorrelationId item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ExecuteStartContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
