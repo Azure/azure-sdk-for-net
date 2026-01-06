@@ -105,15 +105,21 @@ namespace Azure.AI.Personalizer.Tests
             // Action
             PersonalizerMultiSlotRankResult response = await client.RankMultiSlotAsync(request);
             // Assert
-            Assert.AreEqual(slots.Count, response.Slots.Count);
+            Assert.That(response.Slots, Has.Count.EqualTo(slots.Count));
             // Assertions for first slot
             PersonalizerSlotResult responseSlot1 = response.Slots[0];
-            Assert.AreEqual(slot1.Id, responseSlot1.SlotId);
-            Assert.AreEqual("NewsArticle", responseSlot1.RewardActionId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseSlot1.SlotId, Is.EqualTo(slot1.Id));
+                Assert.That(responseSlot1.RewardActionId, Is.EqualTo("NewsArticle"));
+            });
             // Assertions for second slot
             PersonalizerSlotResult responseSlot2 = response.Slots[1];
-            Assert.AreEqual(slot2.Id, responseSlot2.SlotId);
-            Assert.AreEqual("SportsArticle", responseSlot2.RewardActionId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseSlot2.SlotId, Is.EqualTo(slot2.Id));
+                Assert.That(responseSlot2.RewardActionId, Is.EqualTo("SportsArticle"));
+            });
         }
 
         private async Task RankMultiSlot(PersonalizerClient client)
@@ -123,15 +129,21 @@ namespace Azure.AI.Personalizer.Tests
             // Action
             PersonalizerMultiSlotRankResult response = await client.RankMultiSlotAsync(request);
             // Assert
-            Assert.AreEqual(slots.Count, response.Slots.Count);
+            Assert.That(response.Slots, Has.Count.EqualTo(slots.Count));
             // Assertions for first slot
             PersonalizerSlotResult responseSlot1 = response.Slots[0];
-            Assert.AreEqual(slot1.Id, responseSlot1.SlotId);
-            Assert.AreEqual("NewsArticle", responseSlot1.RewardActionId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseSlot1.SlotId, Is.EqualTo(slot1.Id));
+                Assert.That(responseSlot1.RewardActionId, Is.EqualTo("NewsArticle"));
+            });
             // Assertions for second slot
             PersonalizerSlotResult responseSlot2 = response.Slots[1];
-            Assert.AreEqual(slot2.Id, responseSlot2.SlotId);
-            Assert.AreEqual("SportsArticle", responseSlot2.RewardActionId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseSlot2.SlotId, Is.EqualTo(slot2.Id));
+                Assert.That(responseSlot2.RewardActionId, Is.EqualTo("SportsArticle"));
+            });
         }
 
         private async Task RankMultiSlotNoOptions(PersonalizerClient client)
@@ -139,15 +151,21 @@ namespace Azure.AI.Personalizer.Tests
             // Action
             PersonalizerMultiSlotRankResult response = await client.RankMultiSlotAsync(actions, slots, contextFeatures);
             // Assert
-            Assert.AreEqual(slots.Count, response.Slots.Count);
+            Assert.That(response.Slots, Has.Count.EqualTo(slots.Count));
             // Assertions for first slot
             PersonalizerSlotResult responseSlot1 = response.Slots[0];
-            Assert.AreEqual(slot1.Id, responseSlot1.SlotId);
-            Assert.AreEqual("NewsArticle", responseSlot1.RewardActionId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseSlot1.SlotId, Is.EqualTo(slot1.Id));
+                Assert.That(responseSlot1.RewardActionId, Is.EqualTo("NewsArticle"));
+            });
             // Assertions for second slot
             PersonalizerSlotResult responseSlot2 = response.Slots[1];
-            Assert.AreEqual(slot2.Id, responseSlot2.SlotId);
-            Assert.AreEqual("SportsArticle", responseSlot2.RewardActionId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseSlot2.SlotId, Is.EqualTo(slot2.Id));
+                Assert.That(responseSlot2.RewardActionId, Is.EqualTo("SportsArticle"));
+            });
         }
 
         private async Task Reward(PersonalizerClient client)

@@ -33,9 +33,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             await WaitForOperationAsync();
 
-            Assert.That(source.IsCancellationRequested, Is.False);
-            Assert.That(backupResult, Is.Not.Null);
-            Assert.That(backupOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(source.IsCancellationRequested, Is.False);
+                Assert.That(backupResult, Is.Not.Null);
+                Assert.That(backupOperation.HasValue, Is.True);
+            });
 
             // Start the restore.
             KeyVaultRestoreOperation restoreOperation = await Client.StartRestoreAsync(backupResult.FolderUri, "?" + SasToken, source.Token);
@@ -45,9 +48,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             await WaitForOperationAsync();
 
-            Assert.That(source.IsCancellationRequested, Is.False);
-            Assert.That(restoreResult, Is.Not.Null);
-            Assert.That(restoreOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(source.IsCancellationRequested, Is.False);
+                Assert.That(restoreResult, Is.Not.Null);
+                Assert.That(restoreOperation.HasValue, Is.True);
+            });
         }
 
         [RecordedTest]
@@ -68,9 +74,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             await WaitForOperationAsync();
 
-            Assert.That(source.IsCancellationRequested, Is.False);
-            Assert.That(backupResult, Is.Not.Null);
-            Assert.That(backupOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(source.IsCancellationRequested, Is.False);
+                Assert.That(backupResult, Is.Not.Null);
+                Assert.That(backupOperation.HasValue, Is.True);
+            });
 
             // Start the restore.
             KeyVaultRestoreOperation restoreOperation = await Client.StartRestoreAsync(backupResult.FolderUri, "?" + SasToken, source.Token);
@@ -80,9 +89,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             await WaitForOperationAsync();
 
-            Assert.That(source.IsCancellationRequested, Is.False);
-            Assert.That(restoreResult, Is.Not.Null);
-            Assert.That(restoreOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(source.IsCancellationRequested, Is.False);
+                Assert.That(restoreResult, Is.Not.Null);
+                Assert.That(restoreOperation.HasValue, Is.True);
+            });
         }
 
         [RecordedTest]
@@ -101,9 +113,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             await WaitForOperationAsync();
 
-            Assert.That(source.IsCancellationRequested, Is.False);
-            Assert.That(preBackupResult, Is.Not.Null);
-            Assert.That(preBackupOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(source.IsCancellationRequested, Is.False);
+                Assert.That(preBackupResult, Is.Not.Null);
+                Assert.That(preBackupOperation.HasValue, Is.True);
+            });
         }
 
         [RecordedTest]
@@ -128,9 +143,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             await WaitForOperationAsync();
 
-            Assert.That(source.IsCancellationRequested, Is.False);
-            Assert.That(preRestoreResult, Is.Not.Null);
-            Assert.That(preRestoreOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(source.IsCancellationRequested, Is.False);
+                Assert.That(preRestoreResult, Is.Not.Null);
+                Assert.That(preRestoreOperation.HasValue, Is.True);
+            });
         }
     }
 }

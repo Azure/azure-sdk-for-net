@@ -35,9 +35,12 @@ namespace Azure.Maps.Rendering.Tests
                 FillColor = Color.FromArgb(230, 30, 211, 117)
             };
 
-            Assert.AreEqual("||12.56 22.56|14.561 19.801", simplePathStyle.ToQueryString());
-            Assert.AreEqual("lcF5F5FF|lw5||12.56 22.56|14.561 19.801", complexPathStyle1.ToQueryString());
-            Assert.AreEqual("lc802DC8|la0.784|fc1ED3E6|fa0.902|lw4||14.561 19.801|12.56 22.56", complexPathStyle2.ToQueryString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(simplePathStyle.ToQueryString(), Is.EqualTo("||12.56 22.56|14.561 19.801"));
+                Assert.That(complexPathStyle1.ToQueryString(), Is.EqualTo("lcF5F5FF|lw5||12.56 22.56|14.561 19.801"));
+                Assert.That(complexPathStyle2.ToQueryString(), Is.EqualTo("lc802DC8|la0.784|fc1ED3E6|fa0.902|lw4||14.561 19.801|12.56 22.56"));
+            });
         }
     }
 }

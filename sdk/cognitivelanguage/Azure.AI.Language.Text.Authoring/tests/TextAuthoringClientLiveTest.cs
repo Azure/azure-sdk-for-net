@@ -36,12 +36,15 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             TextAuthoringProjectMetadata projectMetadata = response.Value;
 
             // Assert
-            Assert.IsNotNull(projectMetadata);
-            Assert.AreEqual(projectName, projectMetadata.ProjectName);
-            Assert.IsNotNull(projectMetadata.Language);
-            Assert.IsNotNull(projectMetadata.CreatedOn);
-            Assert.IsNotNull(projectMetadata.LastModifiedOn);
-            Assert.IsNotNull(projectMetadata.StorageInputContainerName);
+            Assert.That(projectMetadata, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(projectMetadata.ProjectName, Is.EqualTo(projectName));
+                Assert.That(projectMetadata.Language, Is.Not.Null);
+                Assert.That(projectMetadata.CreatedOn, Is.Not.Null);
+                Assert.That(projectMetadata.LastModifiedOn, Is.Not.Null);
+                Assert.That(projectMetadata.StorageInputContainerName, Is.Not.Null);
+            });
 
             Console.WriteLine($"Project Name: {projectMetadata.ProjectName}");
             Console.WriteLine($"Language: {projectMetadata.Language}");
@@ -109,8 +112,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation);
-            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200));
 
             // Logging for additional context
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -168,8 +171,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation);
-            Assert.AreEqual(202, operation.GetRawResponse().Status);
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(202));
 
             // Logging for additional context
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -198,8 +201,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             Response response = await projectClient.CreateProjectAsync(projectMetadata);
 
             // Assert
-            Assert.IsNotNull(response);
-            Assert.AreEqual(201, response.Status, "Expected the status to indicate project creation success.");
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Status, Is.EqualTo(201), "Expected the status to indicate project creation success.");
 
             // Logging for additional context
             Console.WriteLine($"Project created with status: {response.Status}");
@@ -218,8 +221,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
                 );
 
             // Assert
-            Assert.IsNotNull(operation);
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate project deletion success.");
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate project deletion success.");
 
             // Logging for additional context
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -254,8 +257,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation);
-            Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected the status to indicate successful training.");
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(202), "Expected the status to indicate successful training.");
 
             // Logging for additional context
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -278,8 +281,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation);
-            Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected the status to indicate successful cancellation.");
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(202), "Expected the status to indicate successful cancellation.");
 
             // Logging for additional context
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -301,14 +304,17 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             TextAuthoringEvalSummary evaluationSummary = evaluationSummaryResponse.Value;
 
             // Assert
-            Assert.IsNotNull(evaluationSummary, "Evaluation summary should not be null.");
+            Assert.That(evaluationSummary, Is.Not.Null, "Evaluation summary should not be null.");
 
             // Specific type assertion for single-label classification
             if (evaluationSummary is CustomSingleLabelClassificationEvalSummary singleLabelSummary)
             {
-                Assert.IsNotNull(singleLabelSummary.EvaluationOptions, "Evaluation options should not be null.");
-                Assert.IsNotNull(singleLabelSummary.CustomSingleLabelClassificationEvaluation, "Evaluation metrics should not be null.");
-                Assert.IsNotEmpty(singleLabelSummary.CustomSingleLabelClassificationEvaluation.Classes, "Class-specific metrics should not be empty.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(singleLabelSummary.EvaluationOptions, Is.Not.Null, "Evaluation options should not be null.");
+                    Assert.That(singleLabelSummary.CustomSingleLabelClassificationEvaluation, Is.Not.Null, "Evaluation metrics should not be null.");
+                });
+                Assert.That(singleLabelSummary.CustomSingleLabelClassificationEvaluation.Classes, Is.Not.Empty, "Class-specific metrics should not be empty.");
 
                 Console.WriteLine($"Project Kind: CustomSingleLabelClassification");
                 Console.WriteLine($"Evaluation Options: ");
@@ -378,8 +384,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation);
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful snapshot loading.");
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate successful snapshot loading.");
 
             // Logging for additional context
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -399,8 +405,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             Response response = await trainedModelClient.DeleteTrainedModelAsync();
 
             // Assert
-            Assert.IsNotNull(response);
-            Assert.AreEqual(204, response.Status, "Expected the status to indicate successful deletion.");
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Status, Is.EqualTo(204), "Expected the status to indicate successful deletion.");
 
             // Logging for additional context
             Console.WriteLine($"Trained model deleted. Response status: {response.Status}");
@@ -422,8 +428,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation);
-            Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(202), "Expected the status to indicate successful deployment.");
 
             // Logging for additional context
             Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
@@ -447,8 +453,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation);
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful swap.");
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate successful swap.");
 
             // Logging for additional context
             Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");
@@ -468,8 +474,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(operation);
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deletion.");
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate successful deletion.");
 
             // Logging for additional context
             Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");
@@ -489,8 +495,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
                 stringIndexType: StringIndexType.Utf16CodeUnit);
 
             // Assert
-            Assert.IsNotNull(operation, "The export operation should not be null.");
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected operation status to be 200 (OK).");
+            Assert.That(operation, Is.Not.Null, "The export operation should not be null.");
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected operation status to be 200 (OK).");
 
             // Extract and check the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -515,23 +521,29 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             );
 
             // Assert
-            Assert.IsNotNull(results, "The evaluation results should not be null.");
+            Assert.That(results, Is.Not.Null, "The evaluation results should not be null.");
 
             await foreach (TextAuthoringDocumentEvalResult result in results)
             {
                 // Validate base properties
-                Assert.IsNotNull(result, "The result should not be null.");
-                Assert.IsNotNull(result.Location, "The result location should not be null.");
-                Assert.IsNotNull(result.Language, "The result language should not be null.");
+                Assert.That(result, Is.Not.Null, "The result should not be null.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result.Location, Is.Not.Null, "The result location should not be null.");
+                    Assert.That(result.Language, Is.Not.Null, "The result language should not be null.");
+                });
 
                 // Validate classification result
                 if (result is CustomSingleLabelClassificationDocumentEvalResult singleLabelResult)
                 {
                     var classification = singleLabelResult.CustomSingleLabelClassificationResult;
 
-                    Assert.IsNotNull(classification, "The classification result should not be null.");
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(classification.ExpectedClass), "The expected class should not be null or empty.");
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(classification.PredictedClass), "The predicted class should not be null or empty.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(classification, Is.Not.Null, "The classification result should not be null.");
+                        Assert.That(string.IsNullOrWhiteSpace(classification.ExpectedClass), Is.False, "The expected class should not be null or empty.");
+                        Assert.That(string.IsNullOrWhiteSpace(classification.PredictedClass), Is.False, "The predicted class should not be null or empty.");
+                    });
                 }
                 else
                 {
@@ -553,18 +565,21 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             Response<TextAuthoringProjectDeployment> response = await deploymentClient.GetDeploymentAsync();
 
             // Assert
-            Assert.IsNotNull(response, "The response should not be null.");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected status to be 200 (OK).");
+            Assert.That(response, Is.Not.Null, "The response should not be null.");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected status to be 200 (OK).");
 
             TextAuthoringProjectDeployment deployment = response.Value;
 
-            Assert.IsNotNull(deployment, "Deployment details should not be null.");
-            Assert.IsNotNull(deployment.DeploymentName, "DeploymentName should not be null.");
-            Assert.IsNotNull(deployment.ModelId, "ModelId should not be null.");
-            Assert.IsNotNull(deployment.LastTrainedOn, "LastTrainedOn should not be null.");
-            Assert.IsNotNull(deployment.LastDeployedOn, "LastDeployedOn should not be null.");
-            Assert.IsNotNull(deployment.DeploymentExpiredOn, "DeploymentExpiredOn should not be null.");
-            Assert.IsNotNull(deployment.ModelTrainingConfigVersion, "ModelTrainingConfigVersion should not be null.");
+            Assert.That(deployment, Is.Not.Null, "Deployment details should not be null.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(deployment.DeploymentName, Is.Not.Null, "DeploymentName should not be null.");
+                Assert.That(deployment.ModelId, Is.Not.Null, "ModelId should not be null.");
+                Assert.That(deployment.LastTrainedOn, Is.Not.Null, "LastTrainedOn should not be null.");
+                Assert.That(deployment.LastDeployedOn, Is.Not.Null, "LastDeployedOn should not be null.");
+                Assert.That(deployment.DeploymentExpiredOn, Is.Not.Null, "DeploymentExpiredOn should not be null.");
+                Assert.That(deployment.ModelTrainingConfigVersion, Is.Not.Null, "ModelTrainingConfigVersion should not be null.");
+            });
         }
     }
 }

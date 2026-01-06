@@ -27,10 +27,13 @@ namespace Azure.Data.Tables.Tests
         {
             var connString = $"UseDevelopmentStorage=true";
 
-            Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
-            Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedDevStoraageCred)), "The Credentials should have matched.");
-            Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"http://{TableConstants.ConnectionStrings.Localhost}:{TableConstants.ConnectionStrings.TableEndpointPortNumber}/{TableConstants.ConnectionStrings.DevStoreAccountName}")), "The PrimaryUri should have matched.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
+                Assert.That(tcs.Credentials, Is.Not.Null);
+                Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedDevStoraageCred)), "The Credentials should have matched.");
+                Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"http://{TableConstants.ConnectionStrings.Localhost}:{TableConstants.ConnectionStrings.TableEndpointPortNumber}/{TableConstants.ConnectionStrings.DevStoreAccountName}")), "The PrimaryUri should have matched.");
+            });
         }
 
         public static IEnumerable<object[]> ValidStorageConnStrings()
@@ -56,11 +59,14 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(ValidStorageConnStrings))]
         public void TryParsesStorage(string connString)
         {
-            Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
-            Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
-            Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/")), "The PrimaryUri should have matched.");
-            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/")), "The SecondaryUri should have matched.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
+                Assert.That(tcs.Credentials, Is.Not.Null);
+                Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
+                Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/")), "The PrimaryUri should have matched.");
+                Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/")), "The SecondaryUri should have matched.");
+            });
         }
 
         /// <summary>
@@ -91,10 +97,13 @@ namespace Azure.Data.Tables.Tests
         {
             var tcs = TableConnectionString.Parse(connString);
 
-            Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
-            Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/")), "The PrimaryUri should have matched.");
-            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/")), "The SecondaryUri should have matched.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(tcs.Credentials, Is.Not.Null);
+                Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
+                Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/")), "The PrimaryUri should have matched.");
+                Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/")), "The SecondaryUri should have matched.");
+            });
         }
 
         public static IEnumerable<object[]> ValidCosmosConnStrings()
@@ -114,11 +123,14 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(ValidCosmosConnStrings))]
         public void ParsesCosmos(string connString, string domain)
         {
-            Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
-            Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
-            Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.{domain}:443/")), "The PrimaryUri should have matched.");
-            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.{domain}:443/")), "The SecondaryUri should have matched.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
+                Assert.That(tcs.Credentials, Is.Not.Null);
+                Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
+                Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.{domain}:443/")), "The PrimaryUri should have matched.");
+                Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.{domain}:443/")), "The SecondaryUri should have matched.");
+            });
         }
 
         public static IEnumerable<object[]> ValidSasStorageConnStrings()
@@ -137,11 +149,14 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(ValidSasStorageConnStrings))]
         public void ParsesSasStorage(string connString)
         {
-            Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
-            Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
-            Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/?{SasToken}")), "The PrimaryUri should have matched.");
-            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/?{SasToken}")), "The SecondaryUri should have matched.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
+                Assert.That(tcs.Credentials, Is.Not.Null);
+                Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
+                Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/?{SasToken}")), "The PrimaryUri should have matched.");
+                Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/?{SasToken}")), "The SecondaryUri should have matched.");
+            });
         }
 
         public static IEnumerable<object[]> ValidSaSCosmosConnStrings()
@@ -157,12 +172,15 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(ValidSaSCosmosConnStrings))]
         public void ParsesSaSCosmos(string connString)
         {
-            Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
-            Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
-            Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.cosmos.azure.com/?{SasToken}")), "The PrimaryUri should have matched.");
-            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.cosmos.azure.com/?{SasToken}")), "The SecondaryUri should have matched.");
-            Assert.AreEqual(AccountName,tcs._accountName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
+                Assert.That(tcs.Credentials, Is.Not.Null);
+                Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
+                Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.cosmos.azure.com/?{SasToken}")), "The PrimaryUri should have matched.");
+                Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.cosmos.azure.com/?{SasToken}")), "The SecondaryUri should have matched.");
+                Assert.That(tcs._accountName, Is.EqualTo(AccountName));
+            });
         }
         public static IEnumerable<object[]> InvalidConnStrings()
         {
@@ -215,7 +233,7 @@ namespace Azure.Data.Tables.Tests
             var uri = "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;";
 
             var result = TableConnectionString.Parse(uri);
-            Assert.AreEqual("devstoreaccount1", result._accountName);
+            Assert.That(result._accountName, Is.EqualTo("devstoreaccount1"));
         }
 
         [Test]
@@ -224,7 +242,7 @@ namespace Azure.Data.Tables.Tests
             var uri = "DefaultEndpointsProtocol=http;AccountName=localhost;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==;TableEndpoint=http://localhost:8902/;";
 
             var result = TableConnectionString.Parse(uri);
-            Assert.AreEqual("localhost", result._accountName);
+            Assert.That(result._accountName, Is.EqualTo("localhost"));
         }
 
         public static IEnumerable<object[]> UriInputs()

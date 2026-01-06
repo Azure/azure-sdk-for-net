@@ -98,22 +98,28 @@ namespace Azure.AI.VoiceLive.Tests
             // Inspect the latest update for assertions (most specific state)
             using var doc = updateMessages.Last();
             var root = doc.RootElement;
-            Assert.That(root.TryGetProperty("session", out var sessionElement), Is.True, "session object missing in payload");
+            Assert.Multiple(() =>
+            {
+                Assert.That(root.TryGetProperty("session", out var sessionElement), Is.True, "session object missing in payload");
 
-            // Modalities assertion
-            Assert.That(sessionElement.TryGetProperty("modalities", out var modalitiesElement), Is.True, "modalities missing");
+                // Modalities assertion
+                Assert.That(sessionElement.TryGetProperty("modalities", out var modalitiesElement), Is.True, "modalities missing");
+            });
             var modalities = modalitiesElement.EnumerateArray().Select(e => e.GetString()).Where(s => s != null).ToArray();
-            Assert.That(modalities, Is.EquivalentTo(new[] { "text", "audio" }), "Modalities did not match expected set");
+            Assert.Multiple(() =>
+            {
+                Assert.That(modalities, Is.EquivalentTo(new[] { "text", "audio" }), "Modalities did not match expected set");
 
-            // Voice assertion
-            Assert.That(sessionElement.TryGetProperty("voice", out var voiceElement), Is.True, "voice object missing");
-            Assert.That(voiceElement.TryGetProperty("name", out var voiceNameProp), Is.True, "voice.name missing");
-            Assert.That(voiceNameProp.GetString(), Is.EqualTo(TestConstants.VoiceName));
+                // Voice assertion
+                Assert.That(sessionElement.TryGetProperty("voice", out var voiceElement), Is.True, "voice object missing");
+                Assert.That(voiceElement.TryGetProperty("name", out var voiceNameProp), Is.True, "voice.name missing");
+                Assert.That(voiceNameProp.GetString(), Is.EqualTo(TestConstants.VoiceName));
 
-            // Turn detection assertion (type should be server_vad)
-            Assert.That(sessionElement.TryGetProperty("turn_detection", out var tdElement), Is.True, "turn_detection missing");
-            Assert.That(tdElement.TryGetProperty("type", out var tdTypeProp), Is.True, "turn_detection.type missing");
-            Assert.That(tdTypeProp.GetString(), Is.EqualTo("server_vad"));
+                // Turn detection assertion (type should be server_vad)
+                Assert.That(sessionElement.TryGetProperty("turn_detection", out var tdElement), Is.True, "turn_detection missing");
+                Assert.That(tdElement.TryGetProperty("type", out var tdTypeProp), Is.True, "turn_detection.type missing");
+                Assert.That(tdTypeProp.GetString(), Is.EqualTo("server_vad"));
+            });
         }
 
         [Test]
@@ -137,7 +143,7 @@ namespace Azure.AI.VoiceLive.Tests
             var sessionEl = doc.RootElement.GetProperty("session");
             Assert.That(sessionEl.TryGetProperty("tools", out var toolsEl), Is.True, "tools array missing");
             var tools = toolsEl.EnumerateArray().ToArray();
-            Assert.That(tools.Length, Is.EqualTo(2), "Unexpected number of tools serialized");
+            Assert.That(tools, Has.Length.EqualTo(2), "Unexpected number of tools serialized");
             var names = tools.Select(t => t.GetProperty("name").GetString()).ToArray();
             Assert.That(names, Is.EquivalentTo(new[] { "get_weather", "book_flight" }));
         }
@@ -200,7 +206,7 @@ namespace Azure.AI.VoiceLive.Tests
                 MaxResponseOutputTokens = 4
             };
 
-            Assert.AreEqual(4, sessionOpts.MaxResponseOutputTokens.NumericValue);
+            Assert.That(sessionOpts.MaxResponseOutputTokens.NumericValue, Is.EqualTo(4));
 
             var sessionOpts2 = new VoiceLiveSessionOptions
             {
@@ -208,7 +214,7 @@ namespace Azure.AI.VoiceLive.Tests
                 MaxResponseOutputTokens = MaxResponseOutputTokensOption.CreateInfiniteMaxTokensOption()
             };
 
-            Assert.IsNull(sessionOpts2.MaxResponseOutputTokens.NumericValue);
+            Assert.That(sessionOpts2.MaxResponseOutputTokens.NumericValue, Is.Null);
         }
 
         [Test]
@@ -220,7 +226,7 @@ namespace Azure.AI.VoiceLive.Tests
                 ToolChoice = "my_tool"
             };
 
-            Assert.AreEqual("my_tool", sessionOpts.ToolChoice.FunctionName);
+            Assert.That(sessionOpts.ToolChoice.FunctionName, Is.EqualTo("my_tool"));
 
             var sessionOpts2 = new VoiceLiveSessionOptions
             {
@@ -228,7 +234,7 @@ namespace Azure.AI.VoiceLive.Tests
                 ToolChoice = ToolChoiceLiteral.None
             };
 
-            Assert.IsNull(sessionOpts2.ToolChoice.FunctionName);
+            Assert.That(sessionOpts2.ToolChoice.FunctionName, Is.Null);
         }
     }
 }

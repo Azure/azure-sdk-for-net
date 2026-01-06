@@ -277,13 +277,13 @@ namespace Azure.Identity.Tests
             cache.TokenCacheUpdatedAsync += (args) =>
             {
                 updatedCalled = true;
-                Assert.AreEqual(enableCae, args.IsCaeEnabled);
+                Assert.That(args.IsCaeEnabled, Is.EqualTo(enableCae));
                 return Task.CompletedTask;
             };
 
             cache.RefreshCacheFromOptionsAsync += (args, cancellationToken) =>
             {
-                Assert.AreEqual(enableCae, args.IsCaeEnabled);
+                Assert.That(args.IsCaeEnabled, Is.EqualTo(enableCae));
                 return Task.FromResult(new TokenCacheData(bytes));
             };
 
@@ -293,8 +293,11 @@ namespace Azure.Identity.Tests
 
             mockSerializer.Verify(m => m.DeserializeMsalV3(cache.Data, true), Times.Once);
             mockSerializer.Verify(m => m.SerializeMsalV3(), Times.Once);
-            Assert.That(updatedCalled);
-            Assert.That(cache.Data, Is.EqualTo(bytes));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedCalled);
+                Assert.That(cache.Data, Is.EqualTo(bytes));
+            });
         }
 
         [Test]
@@ -394,8 +397,11 @@ namespace Azure.Identity.Tests
 
             Task updateHandler(TokenCacheUpdatedArgs args)
             {
-                Assert.That(args.UnsafeCacheData.ToArray(), Is.EqualTo(updatedBytes));
-                Assert.AreEqual(enableCae, args.IsCaeEnabled);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(args.UnsafeCacheData.ToArray(), Is.EqualTo(updatedBytes));
+                    Assert.That(args.IsCaeEnabled, Is.EqualTo(enableCae));
+                });
                 evt.Set();
                 return Task.CompletedTask;
             };

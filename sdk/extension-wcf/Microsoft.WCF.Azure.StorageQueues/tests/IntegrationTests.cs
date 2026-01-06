@@ -28,7 +28,7 @@ namespace Microsoft.WCF.Azure.StorageQueues.Tests
             string inputMessage = $"<s:Envelope xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:a=\"http://www.w3.org/2005/08/addressing\"><s:Header><a:Action s:mustUnderstand=\"1\">http://tempuri.org/ITestContract/Create</a:Action><a:To s:mustUnderstand=\"1\">{endpointUrlString}</a:To></s:Header><s:Body><Create xmlns=\"http://tempuri.org/\"><name>TestService</name></Create></s:Body></s:Envelope>";
             using CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(5));
             QueueMessage message = await queueClient.ReceiveMessageAsync(null, cancellationTokenSource.Token);
-            Assert.AreEqual(inputMessage, message.MessageText.ToString());
+            Assert.That(message.MessageText.ToString(), Is.EqualTo(inputMessage));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Microsoft.WCF.Azure.StorageQueues.Tests
 
             using CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(5));
             QueueMessage message = await queueClient.ReceiveMessageAsync(null, cancellationTokenSource.Token);
-            Assert.IsNotNull(message.MessageText);
+            Assert.That(message.MessageText, Is.Not.Null);
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Microsoft.WCF.Azure.StorageQueues.Tests
 
             using CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(5));
             QueueMessage message = await queueClient.ReceiveMessageAsync(null, cancellationTokenSource.Token);
-            Assert.IsNotNull(message.MessageText);
+            Assert.That(message.MessageText, Is.Not.Null);
         }
 
         [Test]

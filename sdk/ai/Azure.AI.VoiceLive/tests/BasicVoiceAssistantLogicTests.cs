@@ -175,8 +175,11 @@ namespace Azure.AI.VoiceLive.Tests
                 itemId: "item-1");
 
             Assert.That(speechStartedEvent, Is.Not.Null);
-            Assert.That(speechStartedEvent.Type.ToString(), Is.EqualTo("input_audio_buffer.speech_started"));
-            Assert.That(speechStartedEvent.ItemId, Is.EqualTo("item-1"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(speechStartedEvent.Type.ToString(), Is.EqualTo("input_audio_buffer.speech_started"));
+                Assert.That(speechStartedEvent.ItemId, Is.EqualTo("item-1"));
+            });
 
             // Create speech stopped event
             var speechStoppedEvent = VoiceLiveModelFactory.SessionUpdateInputAudioBufferSpeechStopped(
@@ -185,8 +188,11 @@ namespace Azure.AI.VoiceLive.Tests
                 itemId: "item-2");
 
             Assert.That(speechStoppedEvent, Is.Not.Null);
-            Assert.That(speechStoppedEvent.Type.ToString(), Is.EqualTo("input_audio_buffer.speech_stopped"));
-            Assert.That(speechStoppedEvent.ItemId, Is.EqualTo("item-2"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(speechStoppedEvent.Type.ToString(), Is.EqualTo("input_audio_buffer.speech_stopped"));
+                Assert.That(speechStoppedEvent.ItemId, Is.EqualTo("item-2"));
+            });
 
             // Create audio delta event with test data
             var testAudioData = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 };
@@ -201,8 +207,11 @@ namespace Azure.AI.VoiceLive.Tests
                 delta: audioDelta);
 
             Assert.That(responseAudioDeltaEvent, Is.Not.Null);
-            Assert.That(responseAudioDeltaEvent.Type.ToString(), Is.EqualTo("response.audio.delta"));
-            Assert.That(responseAudioDeltaEvent.Delta, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseAudioDeltaEvent.Type.ToString(), Is.EqualTo("response.audio.delta"));
+                Assert.That(responseAudioDeltaEvent.Delta, Is.Not.Null);
+            });
             Assert.That(responseAudioDeltaEvent.Delta.ToArray(), Is.EqualTo(testAudioData));
 
             Assert.Pass("All server events can be created successfully for testing purposes.");
@@ -223,23 +232,32 @@ namespace Azure.AI.VoiceLive.Tests
             // Test AudioProcessor test double
             Assert.That(testAudioProcessor.StartPlaybackAsyncCallCount, Is.EqualTo(0));
             _ = testAudioProcessor.StartPlaybackAsync();
-            Assert.That(testAudioProcessor.StartPlaybackAsyncCallCount, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(testAudioProcessor.StartPlaybackAsyncCallCount, Is.EqualTo(1));
 
-            Assert.That(testAudioProcessor.StopPlaybackAsyncCallCount, Is.EqualTo(0));
+                Assert.That(testAudioProcessor.StopPlaybackAsyncCallCount, Is.EqualTo(0));
+            });
             _ = testAudioProcessor.StopPlaybackAsync();
             Assert.That(testAudioProcessor.StopPlaybackAsyncCallCount, Is.EqualTo(1));
 
             var testAudioData = new byte[] { 0x01, 0x02 };
             _ = testAudioProcessor.QueueAudioAsync(testAudioData);
-            Assert.That(testAudioProcessor.QueueAudioAsyncCallCount, Is.EqualTo(1));
-            Assert.That(testAudioProcessor.LastQueuedAudioData, Is.EqualTo(testAudioData));
+            Assert.Multiple(() =>
+            {
+                Assert.That(testAudioProcessor.QueueAudioAsyncCallCount, Is.EqualTo(1));
+                Assert.That(testAudioProcessor.LastQueuedAudioData, Is.EqualTo(testAudioData));
 
-            // Test VoiceLiveSession test double
-            Assert.That(testSession.CancelResponseAsyncCallCount, Is.EqualTo(0));
+                // Test VoiceLiveSession test double
+                Assert.That(testSession.CancelResponseAsyncCallCount, Is.EqualTo(0));
+            });
             _ = testSession.CancelResponseAsync();
-            Assert.That(testSession.CancelResponseAsyncCallCount, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(testSession.CancelResponseAsyncCallCount, Is.EqualTo(1));
 
-            Assert.That(testSession.ClearStreamingAudioAsyncCallCount, Is.EqualTo(0));
+                Assert.That(testSession.ClearStreamingAudioAsyncCallCount, Is.EqualTo(0));
+            });
             _ = testSession.ClearStreamingAudioAsync();
             Assert.That(testSession.ClearStreamingAudioAsyncCallCount, Is.EqualTo(1));
 

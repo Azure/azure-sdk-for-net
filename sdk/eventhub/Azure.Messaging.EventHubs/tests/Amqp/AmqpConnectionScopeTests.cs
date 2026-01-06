@@ -369,9 +369,12 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(activeLinks.Count, Is.Zero, "There should be no active links when none have been created.");
 
             var link = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), TimeSpan.FromDays(1), cancellationSource.Token);
-            Assert.That(link, Is.Not.Null, "The link produced was null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(link, Is.Not.Null, "The link produced was null");
 
-            Assert.That(activeLinks.Count, Is.EqualTo(1), "There should be an active link being tracked.");
+                Assert.That(activeLinks, Has.Count.EqualTo(1), "There should be an active link being tracked.");
+            });
             Assert.That(activeLinks.ContainsKey(link), Is.True, "The management link should be tracked as active.");
 
             activeLinks.TryGetValue(link, out var refreshTimer);
@@ -626,18 +629,24 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkSource = (Source)link.Settings.Source;
-            Assert.That(linkSource.FilterSet.Any(item => item.Key.Key.ToString() == AmqpFilter.ConsumerFilterName), Is.True, "There should have been a producer filter set.");
-            Assert.That(linkSource.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
-            Assert.That(linkSource.Address.ToString(), Contains.Substring($"/{ consumerGroup }"), "The consumer group should have been part of the link address.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(linkSource.FilterSet.Any(item => item.Key.Key.ToString() == AmqpFilter.ConsumerFilterName), Is.True, "There should have been a producer filter set.");
+                Assert.That(linkSource.Address.ToString(), Contains.Substring($"/{partitionId}"), "The partition identifier should have been part of the link address.");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(linkSource.Address.ToString(), Contains.Substring($"/{consumerGroup}"), "The consumer group should have been part of the link address.");
 
-            Assert.That(link.Settings.TotalLinkCredit, Is.EqualTo(prefetchCount), "The prefetch count should have been used to set the credits.");
-            Assert.That(link.GetSettingPropertyOrDefault<long>(AmqpProperty.ConsumerOwnerLevel, -1), Is.EqualTo(ownerLevel), "The owner level should have been used.");
+                Assert.That(link.Settings.TotalLinkCredit, Is.EqualTo(prefetchCount), "The prefetch count should have been used to set the credits.");
+                Assert.That(link.GetSettingPropertyOrDefault<long>(AmqpProperty.ConsumerOwnerLevel, -1), Is.EqualTo(ownerLevel), "The owner level should have been used.");
 
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ConsumerIdentifier.ToString()), Is.True, "There should be a consumer identifier specified.");
-            Assert.That(link.Settings.Properties[AmqpProperty.ConsumerIdentifier], Is.EqualTo(identifier), "The consumer identifier should match.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ConsumerIdentifier.ToString()), Is.True, "There should be a consumer identifier specified.");
+                Assert.That(link.Settings.Properties[AmqpProperty.ConsumerIdentifier], Is.EqualTo(identifier), "The consumer identifier should match.");
 
-            Assert.That(link.Settings.DesiredCapabilities, Is.Not.Null, "There should have been a set of desired capabilities created.");
+                Assert.That(link.Settings.DesiredCapabilities, Is.Not.Null, "There should have been a set of desired capabilities created.");
+            });
             Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.TrackLastEnqueuedEventProperties), Is.True, "Last event tracking should be requested.");
         }
 
@@ -851,9 +860,12 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(activeLinks.Count, Is.Zero, "There should be no active links when none have been created.");
 
             var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, identifier, cancellationSource.Token);
-            Assert.That(link, Is.Not.Null, "The link produced was null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(link, Is.Not.Null, "The link produced was null");
 
-            Assert.That(activeLinks.Count, Is.EqualTo(1), "There should be an active link being tracked.");
+                Assert.That(activeLinks, Has.Count.EqualTo(1), "There should be an active link being tracked.");
+            });
             Assert.That(activeLinks.ContainsKey(link), Is.True, "The consumer link should be tracked as active.");
 
             activeLinks.TryGetValue(link, out var refreshTimer);
@@ -1287,13 +1299,16 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
-            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
-            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
-            Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");
-            Assert.That(link.Settings.Properties[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(options.OwnerLevel), "The owner level should have been set.");
-            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
-            Assert.That(link.Settings.Properties[AmqpProperty.ProducerSequenceNumber], Is.EqualTo(options.StartingSequenceNumber), "The published sequence number should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{partitionId}"), "The partition identifier should have been part of the link address.");
+                Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
+                Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");
+                Assert.That(link.Settings.Properties[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(options.OwnerLevel), "The owner level should have been set.");
+                Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
+                Assert.That(link.Settings.Properties[AmqpProperty.ProducerSequenceNumber], Is.EqualTo(options.StartingSequenceNumber), "The published sequence number should have been set.");
+            });
         }
 
         /// <summary>
@@ -1361,12 +1376,15 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
-            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
-            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerGroupId.ToString()), Is.False, "The producer group should not have been set.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerOwnerLevel.ToString()), Is.False, "The owner level should not have been set.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerSequenceNumber.ToString()), Is.False, "The published sequence number should not have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{partitionId}"), "The partition identifier should have been part of the link address.");
+                Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerGroupId.ToString()), Is.False, "The producer group should not have been set.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerOwnerLevel.ToString()), Is.False, "The owner level should not have been set.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerSequenceNumber.ToString()), Is.False, "The published sequence number should not have been set.");
+            });
         }
 
         /// <summary>
@@ -1434,13 +1452,16 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
-            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
-            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
-            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerGroupId.ToString()), Is.True, "The producer group should have been set.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerOwnerLevel.ToString()), Is.True, "The owner level should have been set.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerSequenceNumber.ToString()), Is.True, "The published sequence number should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{partitionId}"), "The partition identifier should have been part of the link address.");
+                Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
+                Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerGroupId.ToString()), Is.True, "The producer group should have been set.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerOwnerLevel.ToString()), Is.True, "The owner level should have been set.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerSequenceNumber.ToString()), Is.True, "The published sequence number should have been set.");
+            });
         }
 
         /// <summary>
@@ -1514,12 +1535,15 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
-            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
-            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
-            Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");
-            Assert.That(link.Settings.Properties[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(options.OwnerLevel), "The owner level should have been set.");
-            Assert.That(link.Settings.Properties[AmqpProperty.ProducerSequenceNumber], Is.EqualTo(options.StartingSequenceNumber), "The published sequence number should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{partitionId}"), "The partition identifier should have been part of the link address.");
+                Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
+                Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
+                Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");
+                Assert.That(link.Settings.Properties[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(options.OwnerLevel), "The owner level should have been set.");
+                Assert.That(link.Settings.Properties[AmqpProperty.ProducerSequenceNumber], Is.EqualTo(options.StartingSequenceNumber), "The published sequence number should have been set.");
+            });
         }
 
         /// <summary>
@@ -1585,9 +1609,12 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(activeLinks.Count, Is.Zero, "There should be no active links when none have been created.");
 
             var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptions(), TimeSpan.FromDays(1), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
-            Assert.That(link, Is.Not.Null, "The link produced was null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(link, Is.Not.Null, "The link produced was null");
 
-            Assert.That(activeLinks.Count, Is.EqualTo(1), "There should be an active link being tracked.");
+                Assert.That(activeLinks, Has.Count.EqualTo(1), "There should be an active link being tracked.");
+            });
             Assert.That(activeLinks.ContainsKey(link), Is.True, "The producer link should be tracked as active.");
 
             activeLinks.TryGetValue(link, out var refreshTimer);
@@ -1865,8 +1892,11 @@ namespace Azure.Messaging.EventHubs.Tests
             refreshTimer.Change(0, Timeout.Infinite);
 
             await Task.WhenAny(mockScope.CallbackCompletionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(mockScope.IsDisposed, Is.True, "The scope should have been disposed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(mockScope.IsDisposed, Is.True, "The scope should have been disposed.");
+            });
         }
 
         /// <summary>
@@ -2031,11 +2061,17 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(producerLink, Is.Not.Null, "The producer link produced was null");
 
             var managementLink = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), TimeSpan.FromDays(1), cancellationSource.Token);
-            Assert.That(managementLink, Is.Not.Null, "The management link produced was null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(managementLink, Is.Not.Null, "The management link produced was null");
 
-            Assert.That(activeLinks.Count, Is.EqualTo(2), "There should be active links being tracked.");
-            Assert.That(activeLinks.ContainsKey(managementLink), Is.True, "The management link should be tracked as active.");
-            Assert.That(activeLinks.ContainsKey(producerLink), Is.True, "The producer link should be tracked as active.");
+                Assert.That(activeLinks, Has.Count.EqualTo(2), "There should be active links being tracked.");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(activeLinks.ContainsKey(managementLink), Is.True, "The management link should be tracked as active.");
+                Assert.That(activeLinks.ContainsKey(producerLink), Is.True, "The producer link should be tracked as active.");
+            });
 
             mockScope.Object.Dispose();
             Assert.That(activeLinks.Count, Is.Zero, "Disposal should stop tracking it as active.");
@@ -2107,19 +2143,25 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(managedAuthorizations.Count, Is.Zero, "There should be no managed authorizations when none have been created.");
 
             var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), 12, 555, 777, true, identifier, cancellationSource.Token);
-            Assert.That(link, Is.Not.Null, "The producer link produced was null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(link, Is.Not.Null, "The producer link produced was null");
 
-            Assert.That(managedAuthorizations.Count, Is.EqualTo(1), "There should be a managed authorization being tracked.");
+                Assert.That(managedAuthorizations, Has.Count.EqualTo(1), "There should be a managed authorization being tracked.");
+            });
             Assert.That(managedAuthorizations.ContainsKey(link), Is.True, "The producer link should be tracked for authorization.");
 
             managedAuthorizations.TryGetValue(link, out var refreshTimer);
             Assert.That(refreshTimer, Is.Not.Null, "The link should have a non-null timer.");
 
             mockScope.Object.Dispose();
-            Assert.That(managedAuthorizations.Count, Is.Zero, "Disposal should stop managing authorizations.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(managedAuthorizations.Count, Is.Zero, "Disposal should stop managing authorizations.");
 
 #if NET8_0_OR_GREATER
-            Assert.That(refreshTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan), Is.False, "The timer should have been disposed.");
+                Assert.That(refreshTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan), Is.False, "The timer should have been disposed.");
+            });
 #else
             Assert.That(() => refreshTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan), Throws.InstanceOf<ObjectDisposedException>(), "The timer should have been disposed.");
 #endif
@@ -2163,9 +2205,12 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(observedException, Is.Not.Null, "An Event Hubs exception should have been thrown when requesting authorization.");
-            Assert.That(observedException.IsTransient, Is.True, "The authorization failure should have been transient.");
-            Assert.That(observedException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The authorization failure should present as a generic failure.");
-            Assert.That(observedException.InnerException, Is.Null, "The authorization failure should not be wrapping another exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(observedException.IsTransient, Is.True, "The authorization failure should have been transient.");
+                Assert.That(observedException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The authorization failure should present as a generic failure.");
+                Assert.That(observedException.InnerException, Is.Null, "The authorization failure should not be wrapping another exception.");
+            });
 
             mockCredential.Verify(cred =>
                 cred.GetTokenAsync(
@@ -2279,8 +2324,11 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(observedException, Is.Not.Null, "An exception should have been observed.");
-            Assert.That(observedException, Is.TypeOf<EventHubsException>(), "The exception should have been translated.");
-            Assert.That(((EventHubsException)observedException).IsTransient, Is.True, "The exception should be transient.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(observedException, Is.TypeOf<EventHubsException>(), "The exception should have been translated.");
+                Assert.That(((EventHubsException)observedException).IsTransient, Is.True, "The exception should be transient.");
+            });
 
             mockScope.MockConnection.VerifyAll();
         }

@@ -54,9 +54,12 @@ namespace Azure.Compute.Batch.Tests.Integration
                     poolFound |= pool.Id.Equals(item.PoolId, StringComparison.OrdinalIgnoreCase);
                 }
 
-                // verify we found at least one poolnode
-                Assert.AreNotEqual(0, count);
-                Assert.IsTrue(poolFound);
+                Assert.Multiple(() =>
+                {
+                    // verify we found at least one poolnode
+                    Assert.That(count, Is.Not.EqualTo(0));
+                    Assert.That(poolFound, Is.True);
+                });
             }
             finally
             {
@@ -79,13 +82,16 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 var poolDoesntExist = await client.PoolExistsAsync("fakepool");
 
-                // verify exists
-                Assert.True(poolExist);
-                Assert.False(poolDoesntExist);
+                Assert.Multiple(() =>
+                {
+                    // verify exists
+                    Assert.That(poolExist, Is.True);
+                    Assert.That((bool)poolDoesntExist, Is.False);
+                });
             }
             catch (RequestFailedException e)
             {
-                Assert.Contains(e.Status.ToString(), new[] { "404", });
+                Assert.That(new[] { "404", }, Does.Contain(e.Status.ToString()));
             }
             finally
             {
@@ -114,7 +120,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     batchNodeID = item.Id;
                 }
 
-                Assert.AreEqual(2, nodeCount);
+                Assert.That(nodeCount, Is.EqualTo(2));
 
                 BatchNodeRemoveOptions content = new BatchNodeRemoveOptions(new string[] { batchNodeID });
                 RemoveNodesOperation operation = await client.RemoveNodesAsync(poolID, content);
@@ -123,8 +129,8 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchPool modfiedPool = operation.Value;
 
                 // verify that some usage exists, we can't predict what usage that might be at the time of the test
-                Assert.NotNull(modfiedPool);
-                Assert.AreNotEqual(AllocationState.Resizing, modfiedPool.AllocationState);
+                Assert.That(modfiedPool, Is.Not.Null);
+                Assert.That(modfiedPool.AllocationState, Is.Not.EqualTo(AllocationState.Resizing));
             }
             finally
             {
@@ -152,14 +158,17 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
                 BatchPool autoScalePool = await iaasWindowsPoolFixture.WaitForPoolAllocation(client, iaasWindowsPoolFixture.PoolId);
 
-                // verify autoscale settings
-                Assert.IsTrue(autoScalePool.EnableAutoScale);
-                Assert.AreEqual(autoScalePool.AutoScaleFormula, poolASFormulaOrig);
+                Assert.Multiple(() =>
+                {
+                    // verify autoscale settings
+                    Assert.That(autoScalePool.EnableAutoScale, Is.True);
+                    Assert.That(poolASFormulaOrig, Is.EqualTo(autoScalePool.AutoScaleFormula));
+                });
 
                 // evaluate autoscale formula
                 BatchPoolEvaluateAutoScaleOptions batchPoolEvaluateAutoScaleContent = new BatchPoolEvaluateAutoScaleOptions(poolASFormulaNew);
                 AutoScaleRun eval = await client.EvaluatePoolAutoScaleAsync(autoScalePool.Id, batchPoolEvaluateAutoScaleContent);
-                Assert.Null(eval.Error);
+                Assert.That(eval.Error, Is.Null);
 
                 // change eval interval
                 TimeSpan newEvalInterval = evalInterval + TimeSpan.FromMinutes(1);
@@ -171,13 +180,16 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 // verify
                 response = await client.EnablePoolAutoScaleAsync(autoScalePool.Id, batchPoolEnableAutoScaleContent);
-                Assert.AreEqual(200, response.Status);
+                Assert.That(response.Status, Is.EqualTo(200));
                 autoScalePool = await client.GetPoolAsync((autoScalePool.Id));
-                Assert.AreEqual(autoScalePool.AutoScaleEvaluationInterval, newEvalInterval);
-                Assert.AreEqual(autoScalePool.AutoScaleFormula, poolASFormulaNew);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(newEvalInterval, Is.EqualTo(autoScalePool.AutoScaleEvaluationInterval));
+                    Assert.That(poolASFormulaNew, Is.EqualTo(autoScalePool.AutoScaleFormula));
+                });
 
                 response = await client.DisablePoolAutoScaleAsync(autoScalePool.Id);
-                Assert.AreEqual(200, response.Status);
+                Assert.That(response.Status, Is.EqualTo(200));
             }
             finally
             {
@@ -251,17 +263,20 @@ namespace Azure.Compute.Batch.Tests.Integration
                 };
 
                 Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
-                Assert.AreEqual(201, response.Status);
+                Assert.That(response.Status, Is.EqualTo(201));
 
                 BatchPool pool = await client.GetPoolAsync(poolID);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.SecurityType, SecurityTypes.ConfidentialVM);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost, false);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, true);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, true);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, false);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, HostEndpointSettingsModeTypes.Audit);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.Caching, CachingType.ReadWrite);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType, SecurityEncryptionTypes.VMGuestStateOnly);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(SecurityTypes.ConfidentialVM, Is.EqualTo(pool.VirtualMachineConfiguration.SecurityProfile.SecurityType));
+                    Assert.That(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost, Is.EqualTo(false));
+                    Assert.That(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, Is.EqualTo(true));
+                    Assert.That(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, Is.EqualTo(true));
+                    Assert.That(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, Is.EqualTo(false));
+                    Assert.That(HostEndpointSettingsModeTypes.Audit, Is.EqualTo(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode));
+                    Assert.That(CachingType.ReadWrite, Is.EqualTo(pool.VirtualMachineConfiguration.OsDisk.Caching));
+                    Assert.That(SecurityEncryptionTypes.VMGuestStateOnly, Is.EqualTo(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType));
+                });
             }
             catch (RequestFailedException e)
             {
@@ -354,18 +369,21 @@ namespace Azure.Compute.Batch.Tests.Integration
                 };
 
                 Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
-                Assert.AreEqual(201, response.Status);
+                Assert.That(response.Status, Is.EqualTo(201));
 
                 BatchPool pool = await client.GetPoolAsync(poolID);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.SecurityType, SecurityTypes.ConfidentialVM);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost, false);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, true);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, true);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, false);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, HostEndpointSettingsModeTypes.Audit);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.Caching, CachingType.ReadWrite);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType, SecurityEncryptionTypes.VMGuestStateOnly);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.DiskEncryptionSet.Id, DiskEncryptionSetId);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(SecurityTypes.ConfidentialVM, Is.EqualTo(pool.VirtualMachineConfiguration.SecurityProfile.SecurityType));
+                    Assert.That(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost, Is.EqualTo(false));
+                    Assert.That(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, Is.EqualTo(true));
+                    Assert.That(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, Is.EqualTo(true));
+                    Assert.That(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, Is.EqualTo(false));
+                    Assert.That(HostEndpointSettingsModeTypes.Audit, Is.EqualTo(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode));
+                    Assert.That(CachingType.ReadWrite, Is.EqualTo(pool.VirtualMachineConfiguration.OsDisk.Caching));
+                    Assert.That(SecurityEncryptionTypes.VMGuestStateOnly, Is.EqualTo(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType));
+                    Assert.That(DiskEncryptionSetId, Is.EqualTo(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.DiskEncryptionSet.Id));
+                });
             }
             catch (RequestFailedException e)
             {
@@ -399,7 +417,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 // resize pool
                 await client.ResizePoolAsync(poolID, resizeContent);
                 resizePool = await client.GetPoolAsync(poolID);
-                Assert.AreEqual(AllocationState.Resizing, resizePool.AllocationState);
+                Assert.That(resizePool.AllocationState, Is.EqualTo(AllocationState.Resizing));
 
                 // stop resizing
                 StopPoolResizeOperation operation = await client.StopPoolResizeAsync(poolID);
@@ -438,7 +456,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchPoolReplaceOptions replaceContent = new BatchPoolReplaceOptions(batchApplicationPackageReferences, metadataIems);
                 Response response = await client.ReplacePoolPropertiesAsync(poolID, replaceContent);
                 BatchPool replacePool = await client.GetPoolAsync(poolID);
-                Assert.AreEqual(replacePool.Metadata.First().Value, "value");
+                Assert.That(replacePool.Metadata.First().Value, Is.EqualTo("value"));
             }
             finally
             {
@@ -532,24 +550,27 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 Response response = await client.UpdatePoolAsync(poolID, updateContent);
                 BatchPool patchPool = await client.GetPoolAsync(poolID);
-                Assert.AreEqual(patchPool.Metadata.First().Value, "value");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(patchPool.Metadata.First().Value, Is.EqualTo("value"));
 
-                Assert.AreEqual(startTaskCommandLine, patchPool.StartTask.CommandLine);
-                Assert.AreEqual(updateContent.Metadata.Single().Name, patchPool.Metadata.Single().Name);
-                Assert.AreEqual(updateContent.Metadata.Single().Value, patchPool.Metadata.Single().Value);
-                Assert.AreEqual(displayName, patchPool.DisplayName);
-                Assert.AreEqual(20, patchPool.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent);
-                Assert.AreEqual(BatchNodeFillType.Pack, patchPool.TaskSchedulingPolicy.NodeFillType);
-                Assert.AreEqual(BatchJobDefaultOrder.CreationTime, patchPool.TaskSchedulingPolicy.JobDefaultOrder);
-                Assert.AreEqual(4, patchPool.UserAccounts.Count);
-                Assert.AreEqual("standard_d2s_v3", patchPool.VmSize);
-                Assert.AreEqual(1, patchPool.TaskSlotsPerNode);
-                Assert.IsTrue(patchPool.EnableInterNodeCommunication);
-                Assert.AreEqual("ruleName", patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().Name);
-                Assert.AreEqual(InboundEndpointProtocol.Tcp, patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().Protocol);
-                Assert.AreEqual(3389, patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().BackendPort);
-                Assert.AreEqual(15000, patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().FrontendPortRangeStart);
-                Assert.AreEqual(15100, patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().FrontendPortRangeEnd);
+                    Assert.That(patchPool.StartTask.CommandLine, Is.EqualTo(startTaskCommandLine));
+                    Assert.That(patchPool.Metadata.Single().Name, Is.EqualTo(updateContent.Metadata.Single().Name));
+                    Assert.That(patchPool.Metadata.Single().Value, Is.EqualTo(updateContent.Metadata.Single().Value));
+                    Assert.That(patchPool.DisplayName, Is.EqualTo(displayName));
+                    Assert.That(patchPool.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent, Is.EqualTo(20));
+                    Assert.That(patchPool.TaskSchedulingPolicy.NodeFillType, Is.EqualTo(BatchNodeFillType.Pack));
+                    Assert.That(patchPool.TaskSchedulingPolicy.JobDefaultOrder, Is.EqualTo(BatchJobDefaultOrder.CreationTime));
+                    Assert.That(patchPool.UserAccounts, Has.Count.EqualTo(4));
+                    Assert.That(patchPool.VmSize, Is.EqualTo("standard_d2s_v3"));
+                    Assert.That(patchPool.TaskSlotsPerNode, Is.EqualTo(1));
+                    Assert.That(patchPool.EnableInterNodeCommunication, Is.True);
+                    Assert.That(patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().Name, Is.EqualTo("ruleName"));
+                    Assert.That(patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().Protocol, Is.EqualTo(InboundEndpointProtocol.Tcp));
+                    Assert.That(patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().BackendPort, Is.EqualTo(3389));
+                    Assert.That(patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().FrontendPortRangeStart, Is.EqualTo(15000));
+                    Assert.That(patchPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.First().FrontendPortRangeEnd, Is.EqualTo(15100));
+                });
             }
             finally
             {

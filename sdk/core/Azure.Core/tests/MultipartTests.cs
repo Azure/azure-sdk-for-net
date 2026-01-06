@@ -116,11 +116,14 @@ namespace Azure.Core.Tests
 
             foreach (var response in responses)
             {
-                Assert.That(response.TryGetHeader("Location", out var location));
-                Assert.That(location.Contains("RowKey='01'"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.TryGetHeader("Location", out var location));
+                    Assert.That(location, Does.Contain("RowKey='01'"));
 
-                Assert.That(response.TryGetHeader("Content-Type", out var contentType));
-                Assert.That(contentType, Is.EqualTo("application/json;odata=fullmetadata;streaming=true;charset=utf-8"));
+                    Assert.That(response.TryGetHeader("Content-Type", out var contentType));
+                    Assert.That(contentType, Is.EqualTo("application/json;odata=fullmetadata;streaming=true;charset=utf-8"));
+                });
 
                 var bytes = new byte[response.ContentStream.Length];
 #if NET6_0_OR_GREATER
@@ -148,22 +151,31 @@ namespace Azure.Core.Tests
             Assert.That(responses.Length, Is.EqualTo(3));
 
             var response = responses[0];
-            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.Accepted));
-            Assert.That(response.TryGetHeader("x-ms-version", out var version));
-            Assert.That(version, Is.EqualTo("2018-11-09"));
-            Assert.That(response.TryGetHeader("x-ms-request-id", out _));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+                Assert.That(response.TryGetHeader("x-ms-version", out var version));
+                Assert.That(version, Is.EqualTo("2018-11-09"));
+                Assert.That(response.TryGetHeader("x-ms-request-id", out _));
+            });
 
             response = responses[1];
-            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.Accepted));
-            Assert.That(response.TryGetHeader("x-ms-version", out version));
-            Assert.That(version, Is.EqualTo("2018-11-09"));
-            Assert.That(response.TryGetHeader("x-ms-request-id", out _));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+                Assert.That(response.TryGetHeader("x-ms-version", out version));
+                Assert.That(version, Is.EqualTo("2018-11-09"));
+                Assert.That(response.TryGetHeader("x-ms-request-id", out _));
+            });
 
             response = responses[2];
-            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
-            Assert.That(response.TryGetHeader("x-ms-version", out version));
-            Assert.That(version, Is.EqualTo("2018-11-09"));
-            Assert.That(response.TryGetHeader("x-ms-request-id", out _));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
+                Assert.That(response.TryGetHeader("x-ms-version", out version));
+                Assert.That(version, Is.EqualTo("2018-11-09"));
+                Assert.That(response.TryGetHeader("x-ms-request-id", out _));
+            });
             var bytes = new byte[response.ContentStream.Length];
 #if NET6_0_OR_GREATER
             await response.ContentStream.ReadExactlyAsync(bytes, 0, bytes.Length);
@@ -171,7 +183,7 @@ namespace Azure.Core.Tests
             await response.ContentStream.ReadAsync(bytes, 0, bytes.Length);
 #endif
             var content = GetString(bytes, bytes.Length);
-            Assert.That(content.Contains("<Error><Code>BlobNotFound</Code><Message>The specified blob does not exist."));
+            Assert.That(content, Does.Contain("<Error><Code>BlobNotFound</Code><Message>The specified blob does not exist."));
         }
 
         [Test]

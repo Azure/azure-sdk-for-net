@@ -37,8 +37,11 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
 
         VectorStore vectorStore = await client.CreateVectorStoreAsync();
         VectorStoreDeletionResult deletionResult = await client.DeleteVectorStoreAsync(vectorStore.Id);
-        Assert.That(deletionResult.VectorStoreId, Is.EqualTo(vectorStore.Id));
-        Assert.That(deletionResult.Deleted, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(deletionResult.VectorStoreId, Is.EqualTo(vectorStore.Id));
+            Assert.That(deletionResult.Deleted, Is.True);
+        });
 
         IReadOnlyList<OpenAIFile> testFiles = await GetNewTestFilesAsync(client.GetConfigOrThrow(), 5);
 
@@ -77,8 +80,11 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         });
 
         deletionResult = await client.DeleteVectorStoreAsync(vectorStore.Id);
-        Assert.That(deletionResult.VectorStoreId, Is.EqualTo(vectorStore.Id));
-        Assert.That(deletionResult.Deleted, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(deletionResult.VectorStoreId, Is.EqualTo(vectorStore.Id));
+            Assert.That(deletionResult.Deleted, Is.True);
+        });
 
         var options = new VectorStoreCreationOptions();
         foreach (var file in testFiles)
@@ -120,8 +126,11 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             {
                 string idString = vectorStore.Name.Substring("Test Vector Store ".Length);
 
-                Assert.That(int.TryParse(idString, out int seenId), Is.True);
-                Assert.That(seenId, Is.LessThan(lastIdSeen));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(int.TryParse(idString, out int seenId), Is.True);
+                    Assert.That(seenId, Is.LessThan(lastIdSeen));
+                });
                 lastIdSeen = seenId;
             }
             if (lastIdSeen == 0 || ++count >= 100)
@@ -157,8 +166,11 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         }
 
         FileFromStoreRemovalResult removalResult = await client.RemoveFileFromVectorStoreAsync(vectorStore.Id, files[0].Id);
-        Assert.That(removalResult.FileId, Is.EqualTo(files[0].Id));
-        Assert.True(removalResult.Removed);
+        Assert.Multiple(() =>
+        {
+            Assert.That(removalResult.FileId, Is.EqualTo(files[0].Id));
+            Assert.That(removalResult.Removed, Is.True);
+        });
 
         // Errata: removals aren't immediately reflected when requesting the list
         TimeSpan waitTime = Recording!.Mode == RecordedTestMode.Playback ? TimeSpan.FromMilliseconds(1) : TimeSpan.FromSeconds(10);
@@ -169,8 +181,11 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         await foreach (VectorStoreFile association in response)
         {
             count++;
-            Assert.That(association.FileId, Is.Not.EqualTo(files[0].Id));
-            Assert.That(association.VectorStoreId, Is.EqualTo(vectorStore.Id));
+            Assert.Multiple(() =>
+            {
+                Assert.That(association.FileId, Is.Not.EqualTo(files[0].Id));
+                Assert.That(association.VectorStoreId, Is.EqualTo(vectorStore.Id));
+            });
         }
 
         Assert.That(count, Is.EqualTo(2));

@@ -17,13 +17,37 @@ namespace Azure.Core.Tests
             var target = noOptionsSpecified ? HttpPipelineTransport.Create() : HttpPipelineTransport.Create(options);
             var target2 = noOptionsSpecified ? HttpPipelineTransport.Create() : HttpPipelineTransport.Create(options);
 #if NETFRAMEWORK
+
+<<<<<<< TODO: Unmerged change from project 'Azure.Core.Tests(net462)', Before:
             var sharedInstance = HttpWebRequestTransport.Shared;
 #else
             var sharedInstance = HttpClientTransport.Shared;
 #endif
 
-            Assert.AreEqual(noOptionsSpecified, target == sharedInstance);
-            Assert.AreEqual(noOptionsSpecified, target == target2);
+            Assert.That(target == sharedInstance, Is.EqualTo(noOptionsSpecified));
+            Assert.That(target == target2, Is.EqualTo(noOptionsSpecified));
+=======
+            var sharedInstance = HttpWebRequestTransport.Shared;
+            Assert.Multiple(() =>
+            {
+#else
+            var sharedInstance = HttpClientTransport.Shared;
+#endif
+
+                Assert.That(target == sharedInstance, Is.EqualTo(noOptionsSpecified));
+                Assert.That(target == target2, Is.EqualTo(noOptionsSpecified));
+            });
+>>>>>>> After
+            var sharedInstance = HttpWebRequestTransport.Shared;
+#else
+            var sharedInstance = HttpClientTransport.Shared;
+            Assert.Multiple(() =>
+            {
+#endif
+
+                Assert.That(target == sharedInstance, Is.EqualTo(noOptionsSpecified));
+                Assert.That(target == target2, Is.EqualTo(noOptionsSpecified));
+            });
         }
 
         private class MockHttpPipelineTransport : HttpPipelineTransport

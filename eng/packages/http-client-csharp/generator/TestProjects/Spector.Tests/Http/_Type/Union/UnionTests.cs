@@ -17,112 +17,130 @@ namespace TestProjects.Spector.Tests.Http._Type.Union
         public Task GetStringsOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetStringsOnlyClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(GetResponseProp.B, response.Value.Prop);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Prop, Is.EqualTo(GetResponseProp.B));
+            });
         });
 
         [SpectorTest]
         public Task SendStringsOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetStringsOnlyClient().SendAsync(GetResponseProp.B);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetStringExtensibleOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetStringExtensibleClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(new GetResponseProp1("custom"), response.Value.Prop);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Prop, Is.EqualTo(new GetResponseProp1("custom")));
+            });
         });
 
         [SpectorTest]
         public Task SendStringExtensibleOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetStringExtensibleClient().SendAsync(new GetResponseProp1("custom"));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetStringExtensibleNamedOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetStringExtensibleNamedClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(new StringExtensibleNamedUnion("custom"), response.Value.Prop);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Prop, Is.EqualTo(new StringExtensibleNamedUnion("custom")));
+            });
         });
 
         [SpectorTest]
         public Task SendStringExtensibleNamedOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetStringExtensibleNamedClient().SendAsync(new StringExtensibleNamedUnion("custom"));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetIntsOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetIntsOnlyClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(GetResponseProp2._2, response.Value.Prop);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Prop, Is.EqualTo(GetResponseProp2._2));
+            });
         });
 
         [SpectorTest]
         public Task SendIntsOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetIntsOnlyClient().SendAsync(GetResponseProp2._2);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetFloatsOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetFloatsOnlyClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(GetResponseProp3._22, response.Value.Prop);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Prop, Is.EqualTo(GetResponseProp3._22));
+            });
         });
 
         [SpectorTest]
         public Task SendFloatsOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetFloatsOnlyClient().SendAsync(GetResponseProp3._22);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetModelsOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetModelsOnlyClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         });
 
         [SpectorTest]
         public Task SendModelsOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetModelsOnlyClient().SendAsync(ModelReaderWriter.Write(new Cat("test")));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetEnumsOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetEnumsOnlyClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(EnumsOnlyCasesLr.Right, response.Value.Prop.Lr);
-            Assert.AreEqual(EnumsOnlyCasesUd.Up, response.Value.Prop.Ud);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Prop.Lr, Is.EqualTo(EnumsOnlyCasesLr.Right));
+                Assert.That(response.Value.Prop.Ud, Is.EqualTo(EnumsOnlyCasesUd.Up));
+            });
         });
 
         [SpectorTest]
         public Task SendEnumsOnly() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetEnumsOnlyClient().SendAsync(new EnumsOnlyCases(EnumsOnlyCasesLr.Right, EnumsOnlyCasesUd.Up));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetStringAndArray() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetStringAndArrayClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             AssertEqual(BinaryData.FromObjectAsJson("test"), response.Value.Prop.String);
             AssertEqual(BinaryData.FromObjectAsJson(new List<string>() { "test1", "test2" }), response.Value.Prop.Array);
         });
@@ -132,14 +150,14 @@ namespace TestProjects.Spector.Tests.Http._Type.Union
         {
             var response = await new UnionClient(host, null).GetStringAndArrayClient().SendAsync(new StringAndArrayCases(BinaryData.FromObjectAsJson("test"),
                 BinaryData.FromObjectAsJson(new List<string>() { "test1", "test2" })));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetMixedLiterals() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetMixedLiteralsClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             AssertEqual(BinaryData.FromObjectAsJson("a"), response.Value.Prop.StringLiteral);
             AssertEqual(BinaryData.FromObjectAsJson(2), response.Value.Prop.IntLiteral);
             AssertEqual(BinaryData.FromObjectAsJson(3.3), response.Value.Prop.FloatLiteral);
@@ -153,14 +171,14 @@ namespace TestProjects.Spector.Tests.Http._Type.Union
                 BinaryData.FromObjectAsJson(2),
                 BinaryData.FromObjectAsJson(3.3),
                 BinaryData.FromObjectAsJson(true)));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetMixedTypes() => Test(async (host) =>
         {
             var response = await new UnionClient(host, null).GetMixedTypesClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             AssertEqual(BinaryData.FromObjectAsJson(new { name = "test" }), response.Value.Prop.Model);
             AssertEqual(BinaryData.FromObjectAsJson("a"), response.Value.Prop.Literal);
             AssertEqual(BinaryData.FromObjectAsJson(2), response.Value.Prop.Int);
@@ -182,7 +200,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Union
                     BinaryData.FromObjectAsJson(2),
                     BinaryData.FromObjectAsJson(true)
                 }));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         private static void AssertEqual(BinaryData source, BinaryData target)

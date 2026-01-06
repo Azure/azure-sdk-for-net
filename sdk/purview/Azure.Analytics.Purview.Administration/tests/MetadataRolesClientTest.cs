@@ -25,7 +25,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
             {
                 using var jsonDocument = JsonDocument.Parse(item);
                 JsonElement fetchBodyJson = jsonDocument.RootElement;
-                Assert.AreEqual(fetchBodyJson.GetProperty("id").ToString().StartsWith("purviewmetadatarole"), true);
+                Assert.That(fetchBodyJson.GetProperty("id").ToString().StartsWith("purviewmetadatarole"), Is.EqualTo(true));
             }
         }
 

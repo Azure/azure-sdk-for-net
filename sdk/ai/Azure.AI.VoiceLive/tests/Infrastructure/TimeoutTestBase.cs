@@ -24,7 +24,7 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         protected async Task TimeoutTestAction(Task action, string message = "")
         {
             var t = await Task.WhenAny(action, Task.Delay(_actionTimeout, _timeoutToken)).ConfigureAwait(false);
-            Assert.AreEqual(action, t, message);
+            Assert.That(t, Is.EqualTo(action), message);
         }
 
         protected Task TimeoutTestAction<T>(TaskCompletionSource<T> action, string message = "") =>

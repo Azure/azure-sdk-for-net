@@ -123,8 +123,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Name, Is.EqualTo("Test"));
-            Assert.That(result.Value, Is.EqualTo(42));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result!.Name, Is.EqualTo("Test"));
+                Assert.That(result.Value, Is.EqualTo(42));
+            });
         }
 
         [Test]
@@ -157,8 +160,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Name, Is.EqualTo("Test"));
-            Assert.That(result.Value, Is.EqualTo(42));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result!.Name, Is.EqualTo("Test"));
+                Assert.That(result.Value, Is.EqualTo(42));
+            });
         }
 
         [Test]
@@ -208,8 +214,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Name, Is.EqualTo("Integration"));
-            Assert.That(result.Value, Is.EqualTo(123));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result!.Name, Is.EqualTo("Integration"));
+                Assert.That(result.Value, Is.EqualTo(123));
+            });
         }
 
         [Test]
@@ -225,8 +234,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             // Assert
             Assert.That(roundTripModel, Is.Not.Null);
-            Assert.That(roundTripModel!.Name, Is.EqualTo(originalModel.Name));
-            Assert.That(roundTripModel.Value, Is.EqualTo(originalModel.Value));
+            Assert.Multiple(() =>
+            {
+                Assert.That(roundTripModel!.Name, Is.EqualTo(originalModel.Name));
+                Assert.That(roundTripModel.Value, Is.EqualTo(originalModel.Value));
+            });
         }
 
         #endregion
@@ -423,8 +435,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Name, Is.Null);
-            Assert.That(result.Value, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result!.Name, Is.Null);
+                Assert.That(result.Value, Is.EqualTo(0));
+            });
         }
 
         [Test]
@@ -440,8 +455,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Name, Is.Null);
-            Assert.That(result.Value, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result!.Name, Is.Null);
+                Assert.That(result.Value, Is.EqualTo(0));
+            });
         }
 
         [Test]

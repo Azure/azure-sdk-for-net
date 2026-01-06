@@ -28,15 +28,18 @@ namespace Azure.Generator.Tests.Visitors
             var result = visitor.InvokeVisitExpressionStatement(statement, mockMethod.Object);
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             var resultExpression = result as ExpressionStatement;
-            Assert.IsNotNull(resultExpression);
+            Assert.That(resultExpression, Is.Not.Null);
 
             var resultInvoke = resultExpression!.Expression as InvokeMethodExpression;
-            Assert.IsNotNull(resultInvoke);
-            Assert.AreEqual("AppendQueryDelimited", resultInvoke!.MethodName);
-            Assert.AreEqual(AzureClientGenerator.Instance.RawRequestUriBuilderExtensionsDefinition.Type,
-                resultInvoke.ExtensionType);
+            Assert.That(resultInvoke, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultInvoke!.MethodName, Is.EqualTo("AppendQueryDelimited"));
+                Assert.That(resultInvoke.ExtensionType,
+                    Is.EqualTo(AzureClientGenerator.Instance.RawRequestUriBuilderExtensionsDefinition.Type));
+            });
         }
 
         [Test]
@@ -53,15 +56,18 @@ namespace Azure.Generator.Tests.Visitors
             var result = visitor.InvokeVisitExpressionStatement(statement, mockMethod.Object);
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             var resultExpression = result as ExpressionStatement;
-            Assert.IsNotNull(resultExpression);
+            Assert.That(resultExpression, Is.Not.Null);
 
             var resultInvoke = resultExpression!.Expression as InvokeMethodExpression;
-            Assert.IsNotNull(resultInvoke);
-            Assert.AreEqual("SetDelimited", resultInvoke!.MethodName);
-            Assert.AreEqual(AzureClientGenerator.Instance.RequestHeaderExtensionsDefinition.Type,
-                resultInvoke.ExtensionType);
+            Assert.That(resultInvoke, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultInvoke!.MethodName, Is.EqualTo("SetDelimited"));
+                Assert.That(resultInvoke.ExtensionType,
+                    Is.EqualTo(AzureClientGenerator.Instance.RequestHeaderExtensionsDefinition.Type));
+            });
         }
 
         [Test]
@@ -78,14 +84,17 @@ namespace Azure.Generator.Tests.Visitors
             var result = visitor.InvokeVisitExpressionStatement(statement, mockMethod.Object);
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             var resultExpression = result as ExpressionStatement;
-            Assert.IsNotNull(resultExpression);
+            Assert.That(resultExpression, Is.Not.Null);
 
             var resultInvoke = resultExpression!.Expression as InvokeMethodExpression;
-            Assert.IsNotNull(resultInvoke);
-            Assert.AreEqual("SomeOtherMethod", resultInvoke!.MethodName);
-            Assert.IsNull(resultInvoke.ExtensionType);
+            Assert.That(resultInvoke, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultInvoke!.MethodName, Is.EqualTo("SomeOtherMethod"));
+                Assert.That(resultInvoke.ExtensionType, Is.Null);
+            });
         }
 
         [Test]
@@ -101,8 +110,8 @@ namespace Azure.Generator.Tests.Visitors
             var result = visitor.InvokeVisitExpressionStatement(statement, mockMethod.Object);
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(statement, result);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.EqualTo(statement));
         }
 
         [Test]
@@ -124,14 +133,14 @@ namespace Azure.Generator.Tests.Visitors
 
             // Assert
             var resultInvoke1 = (result1 as ExpressionStatement)?.Expression as InvokeMethodExpression;
-            Assert.IsNotNull(resultInvoke1);
-            Assert.AreEqual(AzureClientGenerator.Instance.RawRequestUriBuilderExtensionsDefinition.Type,
-                resultInvoke1!.ExtensionType);
+            Assert.That(resultInvoke1, Is.Not.Null);
+            Assert.That(resultInvoke1!.ExtensionType,
+                Is.EqualTo(AzureClientGenerator.Instance.RawRequestUriBuilderExtensionsDefinition.Type));
 
             var resultInvoke2 = (result2 as ExpressionStatement)?.Expression as InvokeMethodExpression;
-            Assert.IsNotNull(resultInvoke2);
-            Assert.AreEqual(AzureClientGenerator.Instance.RequestHeaderExtensionsDefinition.Type,
-                resultInvoke2!.ExtensionType);
+            Assert.That(resultInvoke2, Is.Not.Null);
+            Assert.That(resultInvoke2!.ExtensionType,
+                Is.EqualTo(AzureClientGenerator.Instance.RequestHeaderExtensionsDefinition.Type));
         }
 
         private class TestInvokeDelimitedMethodVisitor : InvokeDelimitedMethodVisitor

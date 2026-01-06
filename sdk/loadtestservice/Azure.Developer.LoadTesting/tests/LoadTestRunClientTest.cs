@@ -72,11 +72,14 @@ namespace Azure.Developer.LoadTesting.Tests
                 ));
 
             JsonDocument jsonDocument = JsonDocument.Parse(testRunOperation.Value.ToString());
-            Assert.AreEqual(_testRunId, jsonDocument.RootElement.GetProperty("testRunId").ToString());
-            Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
-            Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
-            Assert.IsTrue(testRunOperation.HasValue);
-            Assert.IsTrue(testRunOperation.HasCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(jsonDocument.RootElement.GetProperty("testRunId").ToString(), Is.EqualTo(_testRunId));
+                Assert.That(jsonDocument.RootElement.GetProperty("testId").ToString(), Is.EqualTo(_testId));
+                Assert.That(jsonDocument.RootElement.GetProperty("status").ToString(), Is.EqualTo("DONE"));
+                Assert.That(testRunOperation.HasValue, Is.True);
+                Assert.That(testRunOperation.HasCompleted, Is.True);
+            });
         }
 
         [Test]
@@ -94,11 +97,14 @@ namespace Azure.Developer.LoadTesting.Tests
             await testRunOperation.WaitForCompletionAsync();
 
             var jsonDocument = JsonDocument.Parse(testRunOperation.Value.ToString());
-            Assert.AreEqual(_testRunId, jsonDocument.RootElement.GetProperty("testRunId").ToString());
-            Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
-            Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
-            Assert.IsTrue(testRunOperation.HasValue);
-            Assert.IsTrue(testRunOperation.HasCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(jsonDocument.RootElement.GetProperty("testRunId").ToString(), Is.EqualTo(_testRunId));
+                Assert.That(jsonDocument.RootElement.GetProperty("testId").ToString(), Is.EqualTo(_testId));
+                Assert.That(jsonDocument.RootElement.GetProperty("status").ToString(), Is.EqualTo("DONE"));
+                Assert.That(testRunOperation.HasValue, Is.True);
+                Assert.That(testRunOperation.HasCompleted, Is.True);
+            });
         }
 
         [Test]
@@ -109,9 +115,12 @@ namespace Azure.Developer.LoadTesting.Tests
 
             var testRunResponse = await _loadTestRunClient.GetTestRunAsync(_testRunId);
             var testRun = testRunResponse.Value;
-            Assert.NotNull(testRun);
-            Assert.AreEqual(_testRunId, testRun.TestRunId);
-            Assert.AreEqual(_testId, testRun.TestId);
+            Assert.That(testRun, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(testRun.TestRunId, Is.EqualTo(_testRunId));
+                Assert.That(testRun.TestId, Is.EqualTo(_testId));
+            });
         }
 
         [Test]
@@ -121,9 +130,12 @@ namespace Azure.Developer.LoadTesting.Tests
             await _testRunOperation.WaitForCompletionAsync();
 
             var testRunFileResponse = await _loadTestRunClient.GetTestRunFileAsync(_testRunId, _fileName);
-            Assert.NotNull(testRunFileResponse.Value);
-            Assert.AreEqual(_fileName, testRunFileResponse.Value.FileName);
-            Assert.AreEqual(FileValidationStatus.ValidationSuccess, testRunFileResponse.Value.ValidationStatus);
+            Assert.That(testRunFileResponse.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(testRunFileResponse.Value.FileName, Is.EqualTo(_fileName));
+                Assert.That(testRunFileResponse.Value.ValidationStatus, Is.EqualTo(FileValidationStatus.ValidationSuccess));
+            });
         }
 
         [Test]
@@ -143,8 +155,11 @@ namespace Azure.Developer.LoadTesting.Tests
 
                 foreach (var testRun in page.Values)
                 {
-                    Assert.AreEqual(_testId, testRun.TestId);
-                    Assert.AreEqual(_testRunId, testRun.TestRunId);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(testRun.TestId, Is.EqualTo(_testId));
+                        Assert.That(testRun.TestRunId, Is.EqualTo(_testRunId));
+                    });
                 }
             }
 
@@ -155,11 +170,11 @@ namespace Azure.Developer.LoadTesting.Tests
 
                 if (i < count)
                 {
-                    Assert.AreEqual(pageSizeHint, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(pageSizeHint));
                 }
                 else
                 {
-                    Assert.LessOrEqual(page.Values.Count, pageSizeHint);
+                    Assert.That(page.Values, Has.Count.LessThanOrEqualTo(pageSizeHint));
                 }
             }
         }
@@ -178,9 +193,12 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task StopTestRun()
         {
             var stopResponse = await _loadTestRunClient.StopTestRunAsync(_testRunId);
-            Assert.NotNull(stopResponse.Value);
-            Assert.AreEqual(_testId, stopResponse.Value.TestId);
-            Assert.AreEqual(_testRunId, stopResponse.Value.TestRunId);
+            Assert.That(stopResponse.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stopResponse.Value.TestId, Is.EqualTo(_testId));
+                Assert.That(stopResponse.Value.TestRunId, Is.EqualTo(_testRunId));
+            });
         }
 
         [Test]
@@ -213,7 +231,7 @@ namespace Azure.Developer.LoadTesting.Tests
                 );
 
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("components").GetProperty(_resourceId).GetProperty("resourceId").ToString());
+            Assert.That(jsonDocument.RootElement.GetProperty("components").GetProperty(_resourceId).GetProperty("resourceId").ToString(), Is.EqualTo(_resourceId));
         }
 
         [Test]
@@ -248,7 +266,7 @@ namespace Azure.Developer.LoadTesting.Tests
             var appComponentsResponse = await _loadTestRunClient.GetAppComponentsAsync(_testRunId);
             var appComponents = appComponentsResponse.Value;
             var component = appComponents.Components.Values.FirstOrDefault();
-            Assert.NotNull(component);
+            Assert.That(component, Is.Not.Null);
             Assert.AreEqual(_resourceId, component.ResourceId.ToString());
         }
 
@@ -325,7 +343,7 @@ namespace Azure.Developer.LoadTesting.Tests
             var serverMetricsResponse = await _loadTestRunClient.GetServerMetricsConfigAsync(_testRunId);
             var serverMetrics = serverMetricsResponse.Value;
             var metric = serverMetrics.Metrics.Values.FirstOrDefault();
-            Assert.NotNull(metric);
+            Assert.That(metric, Is.Not.Null);
             Assert.AreEqual(_resourceId, metric.ResourceId.ToString());
         }
 
@@ -336,11 +354,11 @@ namespace Azure.Developer.LoadTesting.Tests
             await _testRunOperation.WaitForCompletionAsync();
 
             var getTestRunResponse = await _loadTestRunClient.GetTestRunAsync(_testRunId);
-            Assert.NotNull(getTestRunResponse.Value);
+            Assert.That(getTestRunResponse.Value, Is.Not.Null);
             var testRun = getTestRunResponse.Value;
 
             var getMetricNamespaces = await _loadTestRunClient.GetMetricNamespacesAsync(_testRunId);
-            Assert.NotNull(getMetricNamespaces.Value);
+            Assert.That(getMetricNamespaces.Value, Is.Not.Null);
             var metricNamespaces = getMetricNamespaces.Value;
 
             var getMetricDefinitions = await _loadTestRunClient.GetMetricDefinitionsAsync(
@@ -358,7 +376,7 @@ namespace Azure.Developer.LoadTesting.Tests
             {
                 foreach (var item in page.Values)
                 {
-                    Assert.NotNull(item.Data);
+                    Assert.That(item.Data, Is.Not.Null);
                 }
             }
         }
@@ -381,8 +399,11 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.AreEqual(_testProfileRunId, jsonDocument.RootElement.GetProperty("testProfileRunId").ToString());
             Assert.AreEqual(_testProfileId, jsonDocument.RootElement.GetProperty("testProfileId").ToString());
             Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
-            Assert.IsTrue(testProfileRunOperation.HasValue);
-            Assert.IsTrue(testProfileRunOperation.HasCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(testProfileRunOperation.HasValue, Is.True);
+                Assert.That(testProfileRunOperation.HasCompleted, Is.True);
+            });
         }
 
         [Test]
@@ -404,8 +425,11 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.AreEqual(_testProfileRunId, jsonDocument.RootElement.GetProperty("testProfileRunId").ToString());
             Assert.AreEqual(_testProfileId, jsonDocument.RootElement.GetProperty("testProfileId").ToString());
             Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
-            Assert.IsTrue(testProfileRunOperation.HasValue);
-            Assert.IsTrue(testProfileRunOperation.HasCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(testProfileRunOperation.HasValue, Is.True);
+                Assert.That(testProfileRunOperation.HasCompleted, Is.True);
+            });
         }
 
         [Test]
@@ -414,7 +438,7 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             var testProfileRunResponse = await _loadTestRunClient.GetTestProfileRunAsync(_testProfileRunId);
             var testProfileRun = testProfileRunResponse.Value;
-            Assert.NotNull(testProfileRun);
+            Assert.That(testProfileRun, Is.Not.Null);
             Assert.AreEqual(_testProfileRunId, testProfileRun.TestProfileRunId);
             Assert.AreEqual(_testProfileId, testProfileRun.TestProfileId);
         }
@@ -439,7 +463,7 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task DeleteTestProfileRun()
         {
             Response response = await _loadTestRunClient.DeleteTestProfileRunAsync(_testProfileRunId);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
     }
 }

@@ -48,8 +48,11 @@ public class FilesTests : AssistantsTestBase
             = await client.GetFilesAsync(OpenAIFilePurpose.Assistants);
         AssertSuccessfulResponse(listMatchingPurposeFilesResponse);
         IReadOnlyList<OpenAIFile> matchingPurposeFiles = listMatchingPurposeFilesResponse.Value;
-        Assert.That(matchingPurposeFiles.All(file => file.Purpose == OpenAIFilePurpose.Assistants));
-        Assert.That(matchingPurposeFiles.Any(file => file.Id == uploadedFile.Id));
+        Assert.Multiple(() =>
+        {
+            Assert.That(matchingPurposeFiles.All(file => file.Purpose == OpenAIFilePurpose.Assistants));
+            Assert.That(matchingPurposeFiles.Any(file => file.Id == uploadedFile.Id));
+        });
 
         // Listing files with a different purpose should work, and our uploaded file should not be there
         if (target != OpenAIClientServiceTarget.Azure)
@@ -58,16 +61,22 @@ public class FilesTests : AssistantsTestBase
                 = await client.GetFilesAsync(OpenAIFilePurpose.FineTuneResults);
             AssertSuccessfulResponse(listNotMatchingPurposeFilesResponse);
             IReadOnlyList<OpenAIFile> notMatchingPurposeFiles = listNotMatchingPurposeFilesResponse.Value;
-            Assert.That(notMatchingPurposeFiles.All(file => file.Purpose == OpenAIFilePurpose.FineTuneResults));
-            Assert.That(!notMatchingPurposeFiles.Any(file => file.Id == uploadedFile.Id));
+            Assert.Multiple(() =>
+            {
+                Assert.That(notMatchingPurposeFiles.All(file => file.Purpose == OpenAIFilePurpose.FineTuneResults));
+                Assert.That(!notMatchingPurposeFiles.Any(file => file.Id == uploadedFile.Id));
+            });
         }
 
         // Retrieving file information should work
         Response<OpenAIFile> retrieveFileResponse = await client.GetFileAsync(uploadedFile.Id);
         AssertSuccessfulResponse(retrieveFileResponse);
         OpenAIFile retrievedFile = retrieveFileResponse.Value;
-        Assert.That(retrievedFile.Id, Is.EqualTo(uploadedFile.Id));
-        Assert.That(retrievedFile.Purpose, Is.EqualTo(uploadedFile.Purpose));
+        Assert.Multiple(() =>
+        {
+            Assert.That(retrievedFile.Id, Is.EqualTo(uploadedFile.Id));
+            Assert.That(retrievedFile.Purpose, Is.EqualTo(uploadedFile.Purpose));
+        });
 
         // Note: can't retrieve Assistants file contents
 

@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 }
                 Console.WriteLine($"Total number of search results:{count}");
                 #endregion
-                Assert.GreaterOrEqual(count, 1);
+                Assert.That(count, Is.GreaterThanOrEqualTo(1));
             }
             finally
             {
@@ -148,7 +148,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 }
                 Console.WriteLine($"Total number of search results:{count}");
                 #endregion
-                Assert.GreaterOrEqual(count, 1);
+                Assert.That(count, Is.GreaterThanOrEqualTo(1));
             }
             finally
             {

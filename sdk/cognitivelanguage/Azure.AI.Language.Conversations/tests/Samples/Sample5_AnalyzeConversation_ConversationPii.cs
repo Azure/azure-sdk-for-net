@@ -94,8 +94,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
 
-            Assert.NotZero(entitiesDetected.Count);
-            Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entitiesDetected, Is.Not.Empty);
+                Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
+            });
         }
 
         [AsyncOnly]
@@ -177,10 +180,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            #endregion
 
-            Assert.NotZero(entitiesDetected.Count);
-            Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.Multiple(() =>
+            {
+                #endregion
+
+                Assert.That(entitiesDetected, Is.Not.Empty);
+                Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
+            });
         }
     }
 }

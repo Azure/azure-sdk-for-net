@@ -98,11 +98,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var context = new PartitionContext("fqns", "hub", "consumerGroup", "partition", mockConsumer);
             var information = context.ReadLastEnqueuedEventProperties();
 
-            Assert.That(information.SequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
-            Assert.That(information.OffsetString, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
-            Assert.That(information.EnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The last enqueue time should match.");
-            Assert.That(information.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionPropertiesRetrievalTime), "The retrieval time should match.");
-            Assert.That(mockConsumer.IsClosed, Is.False, "The consumer should not have been closed or disposed of.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(information.SequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
+                Assert.That(information.OffsetString, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
+                Assert.That(information.EnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The last enqueue time should match.");
+                Assert.That(information.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionPropertiesRetrievalTime), "The retrieval time should match.");
+                Assert.That(mockConsumer.IsClosed, Is.False, "The consumer should not have been closed or disposed of.");
+            });
         }
 
         /// <summary>

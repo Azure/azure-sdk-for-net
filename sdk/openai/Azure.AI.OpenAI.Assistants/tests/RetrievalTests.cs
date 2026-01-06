@@ -80,14 +80,17 @@ public class RetrievalTests : AssistantsTestBase
         }
         while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
-        Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
-        Assert.That(run.AssistantId, Is.EqualTo(assistant.Id));
+        Assert.Multiple(() =>
+        {
+            Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
+            Assert.That(run.AssistantId, Is.EqualTo(assistant.Id));
+        });
 
         // List the messages on the thread, now updated from the completed run
         Response<PageableList<ThreadMessage>> messageListResponse = await client.GetMessagesAsync(run.ThreadId);
         AssertSuccessfulResponse(messageListResponse);
         IReadOnlyList<ThreadMessage> messages = messageListResponse.Value.Data;
-        Assert.That(messages.Count, Is.EqualTo(2));
+        Assert.That(messages, Has.Count.EqualTo(2));
 
         // Messages are most recent first in the list
         ThreadMessage latestMessage = messages[0];
@@ -96,6 +99,6 @@ public class RetrievalTests : AssistantsTestBase
         Assert.That(latestMessage.ContentItems, Is.Not.Null.Or.Empty);
         MessageTextContent textContent = latestMessage.ContentItems[0] as MessageTextContent;
         Assert.That(textContent, Is.Not.Null);
-        Assert.That(textContent.Text.Contains('8'));
+        Assert.That(textContent.Text, Does.Contain('8'));
     }
 }

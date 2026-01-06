@@ -13,14 +13,14 @@ namespace TestProjects.Spector.Tests.Http.Server.Path.Multiple
         public Task NoOperationParams() => Test(async (host) =>
         {
             var result = await new MultipleClient(host, null).NoOperationParamsAsync();
-            Assert.AreEqual(204, result.Status);
+            Assert.That(result.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task WithOperationPathParam() => Test(async (host) =>
         {
             var result = await new MultipleClient(host, null).WithOperationPathParamAsync("test");
-            Assert.AreEqual(204, result.Status);
+            Assert.That(result.Status, Is.EqualTo(204));
         });
     }
 }

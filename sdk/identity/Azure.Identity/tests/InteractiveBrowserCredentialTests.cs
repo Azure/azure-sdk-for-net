@@ -66,11 +66,11 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsNotNull(ex.InnerException);
+            Assert.That(ex.InnerException, Is.Not.Null);
 
-            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(MockClientException)));
 
-            Assert.AreEqual(expInnerExMessage, ex.InnerException.Message);
+            Assert.That(ex.InnerException.Message, Is.EqualTo(expInnerExMessage));
 
             await Task.CompletedTask;
         }
@@ -92,17 +92,20 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken, token.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(expToken));
 
-            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+                Assert.That(token.ExpiresOn, Is.EqualTo(expExpiresOn));
+            });
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsNotNull(ex.InnerException);
+            Assert.That(ex.InnerException, Is.Not.Null);
 
-            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(MockClientException)));
 
-            Assert.AreEqual(expInnerExMessage, ex.InnerException.Message);
+            Assert.That(ex.InnerException.Message, Is.EqualTo(expInnerExMessage));
 
             await Task.CompletedTask;
         }
@@ -124,19 +127,22 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken, token.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(expToken));
 
-            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+                Assert.That(token.ExpiresOn, Is.EqualTo(expExpiresOn));
+            });
 
             mockMsalClient.AuthFactory = (_, _) => { throw new MockClientException(expInnerExMessage); };
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsNotNull(ex.InnerException);
+            Assert.That(ex.InnerException, Is.Not.Null);
 
-            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(MockClientException)));
 
-            Assert.AreEqual(expInnerExMessage, ex.InnerException.Message);
+            Assert.That(ex.InnerException.Message, Is.EqualTo(expInnerExMessage));
 
             await Task.CompletedTask;
         }
@@ -187,8 +193,11 @@ namespace Azure.Identity.Tests
             {
                 InteractiveAuthFactory = (_, _, prompt, hintArg, _, _, _, _) =>
                 {
-                    Assert.AreEqual(loginHint == null ? Prompt.SelectAccount : Prompt.NoPrompt, prompt);
-                    Assert.AreEqual(loginHint, hintArg);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(prompt, Is.EqualTo(loginHint == null ? Prompt.SelectAccount : Prompt.NoPrompt));
+                        Assert.That(hintArg, Is.EqualTo(loginHint));
+                    });
                     return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
                 }
             };
@@ -229,8 +238,11 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expectedThreadPoolExecution, threadPoolExec);
-            Assert.AreEqual(!expectedThreadPoolExecution, inlineExec);
+            Assert.Multiple(() =>
+            {
+                Assert.That(threadPoolExec, Is.EqualTo(expectedThreadPoolExecution));
+                Assert.That(inlineExec, Is.EqualTo(!expectedThreadPoolExecution));
+            });
         }
 
         [Test]
@@ -242,7 +254,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<AuthenticationRequiredException>(async () => await cred.GetTokenAsync(expTokenRequestContext).ConfigureAwait(false));
 
-            Assert.AreEqual(expTokenRequestContext, ex.TokenRequestContext);
+            Assert.That(ex.TokenRequestContext, Is.EqualTo(expTokenRequestContext));
         }
 
         [Test]
@@ -263,8 +275,11 @@ namespace Azure.Identity.Tests
 
             var actualToken = await credential.GetTokenAsync(context, CancellationToken.None);
 
-            Assert.AreEqual(expectedToken, actualToken.Token, "Token should match");
-            Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualToken.Token, Is.EqualTo(expectedToken), "Token should match");
+                Assert.That(actualToken.ExpiresOn, Is.EqualTo(expiresOn), "expiresOn should match");
+            });
         }
 
         public class ExtendedInteractiveBrowserCredentialOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
@@ -292,7 +307,7 @@ namespace Azure.Identity.Tests
 
             var options = new ExtendedInteractiveBrowserCredentialOptions(builder =>
             {
-                Assert.NotNull(builder);
+                Assert.That(builder, Is.Not.Null);
                 beforeBuildClientInvoked = true;
                 cancelSource.Cancel();
             }
@@ -306,7 +321,7 @@ namespace Azure.Identity.Tests
             }
             catch (OperationCanceledException) { }
 
-            Assert.True(beforeBuildClientInvoked);
+            Assert.That(beforeBuildClientInvoked, Is.True);
         }
 
         [Test]
@@ -318,7 +333,7 @@ namespace Azure.Identity.Tests
 
             var options = new ExtendedInteractiveBrowserCredentialOptions(builder =>
             {
-                Assert.NotNull(builder);
+                Assert.That(builder, Is.Not.Null);
                 beforeBuildClientInvoked = true;
                 cancelSource.Cancel();
             });
@@ -329,7 +344,7 @@ namespace Azure.Identity.Tests
 
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
 
-            Assert.True(beforeBuildClientInvoked);
+            Assert.That(beforeBuildClientInvoked, Is.True);
         }
 
         [Test]
@@ -339,11 +354,14 @@ namespace Azure.Identity.Tests
             {
                 InteractiveAuthFactory = (_, _, _, _, _, _, browserOptions, _) =>
                 {
+                    Assert.Multiple(() =>
+                    {
 #pragma warning disable CS0618 // Type or member is obsolete
-                    Assert.AreEqual(false, browserOptions.UseEmbeddedWebView);
+                        Assert.That(browserOptions.UseEmbeddedWebView, Is.EqualTo(false));
 #pragma warning restore CS0618 // Type or member is obsolete
-                    Assert.AreEqual(htmlMessageSuccess, browserOptions.SuccessMessage);
-                    Assert.AreEqual(htmlMessageError, browserOptions.ErrorMessage);
+                        Assert.That(browserOptions.SuccessMessage, Is.EqualTo(htmlMessageSuccess));
+                        Assert.That(browserOptions.ErrorMessage, Is.EqualTo(htmlMessageError));
+                    });
                     return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
                 }
             };
@@ -371,10 +389,13 @@ namespace Azure.Identity.Tests
             {
                 InteractiveAuthFactory = (_, _, _, _, _, _, browserOptions, _) =>
                 {
+                    Assert.Multiple(() =>
+                    {
 #pragma warning disable CS0618 // Type or member is obsolete
-                    Assert.AreEqual(useEmbeddedWebView, browserOptions.UseEmbeddedWebView);
+                        Assert.That(browserOptions.UseEmbeddedWebView, Is.EqualTo(useEmbeddedWebView));
 #pragma warning restore CS0618 // Type or member is obsolete
-                    Assert.AreEqual(htmlMessageError, browserOptions.ErrorMessage);
+                        Assert.That(browserOptions.ErrorMessage, Is.EqualTo(htmlMessageError));
+                    });
                     return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
                 }
             };

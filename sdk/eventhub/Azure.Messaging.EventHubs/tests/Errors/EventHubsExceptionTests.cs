@@ -85,9 +85,12 @@ namespace Azure.Messaging.EventHubs.Tests
                                                     EventHubsException.FailureReason expectedReason)
         {
             EventHubsException instance = constructor();
-            Assert.That(instance.IsTransient, Is.EqualTo(expectedIsTransient), $"IsTransient should be set for the { constructorDescription }");
-            Assert.That(instance.EventHubName, Is.EqualTo(expectedResourceName), $"EventHubsNamespace should be set for the { constructorDescription }");
-            Assert.That(instance.Reason, Is.EqualTo(expectedReason), $"Reason should be set for the { constructorDescription }");
+            Assert.Multiple(() =>
+            {
+                Assert.That(instance.IsTransient, Is.EqualTo(expectedIsTransient), $"IsTransient should be set for the {constructorDescription}");
+                Assert.That(instance.EventHubName, Is.EqualTo(expectedResourceName), $"EventHubsNamespace should be set for the {constructorDescription}");
+                Assert.That(instance.Reason, Is.EqualTo(expectedReason), $"Reason should be set for the {constructorDescription}");
+            });
         }
 
         /// <summary>

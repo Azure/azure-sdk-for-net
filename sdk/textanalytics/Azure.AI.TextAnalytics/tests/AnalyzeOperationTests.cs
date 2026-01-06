@@ -55,8 +55,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.AreEqual(2, keyPhrasesActionsResults.FirstOrDefault().DocumentsResults.Count);
+            Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+            Assert.That(keyPhrasesActionsResults.FirstOrDefault().DocumentsResults, Has.Count.EqualTo(2));
         }
 
         [RecordedTest]
@@ -87,31 +87,34 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
             IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.IsNotNull(entitiesActionsResults);
-            Assert.IsNotNull(piiActionsResults);
-            Assert.IsNotNull(entityLinkingActionsResults);
-            Assert.IsNotNull(analyzeSentimentActionsResults);
-            Assert.IsNotNull(singleLabelClassifyResults);
-            Assert.IsNotNull(multiLabelClassifyResults);
-            Assert.IsNotNull(recognizeCustomEntitiesActionResults);
-            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
-            Assert.IsNotNull(extractiveSummarizeActionResults);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+                Assert.That(entitiesActionsResults, Is.Not.Null);
+                Assert.That(piiActionsResults, Is.Not.Null);
+                Assert.That(entityLinkingActionsResults, Is.Not.Null);
+                Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
+                Assert.That(singleLabelClassifyResults, Is.Not.Null);
+                Assert.That(multiLabelClassifyResults, Is.Not.Null);
+                Assert.That(recognizeCustomEntitiesActionResults, Is.Not.Null);
+                Assert.That(analyzeHealthcareEntitiesActionResults, Is.Not.Null);
+                Assert.That(extractiveSummarizeActionResults, Is.Not.Null);
+            });
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
 
             ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(2, keyPhrasesDocumentsResults.Count);
+            Assert.That(keyPhrasesDocumentsResults, Has.Count.EqualTo(2));
 
             foreach (string keyphrase in keyPhrasesDocumentsResults[0].KeyPhrases)
             {
-                Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
+                Assert.That(keyPhrasesListId1, Does.Contain(keyphrase));
             }
 
             foreach (string keyphrase in keyPhrasesDocumentsResults[1].KeyPhrases)
             {
-                Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
+                Assert.That(keyPhrasesListId2, Does.Contain(keyphrase));
             }
         }
 
@@ -146,24 +149,27 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
+            Assert.That(keyPhrasesActionsResults, Is.Not.Null);
 
             ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(2, keyPhrasesDocumentsResults.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keyPhrasesDocumentsResults, Has.Count.EqualTo(2));
 
-            Assert.AreEqual("AnalyzeOperationWithLanguageTest", operation.DisplayName);
+                Assert.That(operation.DisplayName, Is.EqualTo("AnalyzeOperationWithLanguageTest"));
+            });
 
             var keyPhrasesListId1 = new List<string> { "Bill Gates", "Paul Allen", "Microsoft" };
             var keyPhrasesListId2 = new List<string> { "Mi", "gato", "perro", "veterinario" };
 
             foreach (string keyphrase in keyPhrasesDocumentsResults[0].KeyPhrases)
             {
-                Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
+                Assert.That(keyPhrasesListId1, Does.Contain(keyphrase));
             }
 
             foreach (string keyphrase in keyPhrasesDocumentsResults[1].KeyPhrases)
             {
-                Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
+                Assert.That(keyPhrasesListId2, Does.Contain(keyphrase));
             }
         }
 
@@ -197,17 +203,23 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Started, batchDocuments, batchActions);
 
-            Assert.AreEqual(0, operation.ActionsFailed);
-            Assert.AreEqual(0, operation.ActionsSucceeded);
-            Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(0, operation.ActionsTotal);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.ActionsFailed, Is.EqualTo(0));
+                Assert.That(operation.ActionsSucceeded, Is.EqualTo(0));
+                Assert.That(operation.ActionsInProgress, Is.EqualTo(0));
+                Assert.That(operation.ActionsTotal, Is.EqualTo(0));
+            });
 
             await operation.WaitForCompletionAsync();
 
-            Assert.AreEqual(0, operation.ActionsFailed);
-            Assert.AreEqual(5, operation.ActionsSucceeded);
-            Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(5, operation.ActionsTotal);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.ActionsFailed, Is.EqualTo(0));
+                Assert.That(operation.ActionsSucceeded, Is.EqualTo(5));
+                Assert.That(operation.ActionsInProgress, Is.EqualTo(0));
+                Assert.That(operation.ActionsTotal, Is.EqualTo(5));
+            });
 
             ValidateOperationProperties(operation);
 
@@ -220,85 +232,106 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.IsNotNull(entitiesActionsResults);
-            Assert.IsNotNull(piiActionsResults);
-            Assert.IsNotNull(entityLinkingActionsResults);
-            Assert.IsNotNull(analyzeSentimentActionsResults);
-            Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+                Assert.That(entitiesActionsResults, Is.Not.Null);
+                Assert.That(piiActionsResults, Is.Not.Null);
+                Assert.That(entityLinkingActionsResults, Is.Not.Null);
+                Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
+                Assert.That(operation.DisplayName, Is.EqualTo("AnalyzeOperationWithMultipleTasks"));
+            });
 
             // Keyphrases
             ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(2, keyPhrasesDocumentsResults.Count);
+            Assert.That(keyPhrasesDocumentsResults, Has.Count.EqualTo(2));
 
             var keyPhrasesListId1 = new List<string> { "Bill Gates", "Paul Allen", "Microsoft" };
             var keyPhrasesListId2 = new List<string> { "Mi", "gato", "perro", "veterinario" };
 
             foreach (string keyphrase in keyPhrasesDocumentsResults[0].KeyPhrases)
             {
-                Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
+                Assert.That(keyPhrasesListId1, Does.Contain(keyphrase));
             }
 
             foreach (string keyphrase in keyPhrasesDocumentsResults[1].KeyPhrases)
             {
-                Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
+                Assert.That(keyPhrasesListId2, Does.Contain(keyphrase));
             }
 
             // Entities
             RecognizeEntitiesResultCollection entitiesDocumentsResults = entitiesActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(2, entitiesDocumentsResults.Count);
+            Assert.That(entitiesDocumentsResults, Has.Count.EqualTo(2));
 
-            Assert.AreEqual(3, entitiesDocumentsResults[0].Entities.Count);
+            Assert.That(entitiesDocumentsResults[0].Entities, Has.Count.EqualTo(3));
 
             var entitiesList = new List<string> { "Bill Gates", "Microsoft", "Paul Allen" };
             foreach (CategorizedEntity entity in entitiesDocumentsResults[0].Entities)
             {
-                Assert.IsTrue(entitiesList.Contains(entity.Text));
-                Assert.IsNotNull(entity.Category);
-                Assert.IsNotNull(entity.Offset);
-                Assert.IsNotNull(entity.ConfidenceScore);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entitiesList, Does.Contain(entity.Text));
+                    Assert.That(entity.Category, Is.Not.Null);
+                    Assert.That(entity.Offset, Is.Not.Null);
+                    Assert.That(entity.ConfidenceScore, Is.Not.Null);
+                });
             }
 
             // PII
             RecognizePiiEntitiesResultCollection piiDocumentsResults = piiActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(2, piiDocumentsResults.Count);
+            Assert.That(piiDocumentsResults, Has.Count.EqualTo(2));
 
-            Assert.AreEqual(3, piiDocumentsResults[0].Entities.Count);
-            Assert.IsNotNull(piiDocumentsResults[0].Id);
-            Assert.IsNotNull(piiDocumentsResults[0].Entities);
-            Assert.IsNotNull(piiDocumentsResults[0].Error);
+            Assert.Multiple(() =>
+            {
+                Assert.That(piiDocumentsResults[0].Entities, Has.Count.EqualTo(3));
+                Assert.That(piiDocumentsResults[0].Id, Is.Not.Null);
+                Assert.That(piiDocumentsResults[0].Entities, Is.Not.Null);
+                Assert.That(piiDocumentsResults[0].Error, Is.Not.Null);
+            });
 
             // Entity Linking
             RecognizeLinkedEntitiesResultCollection entityLinkingDocumentsResults = entityLinkingActionsResults.FirstOrDefault().DocumentsResults;
-            // Disable because of bug https://github.com/Azure/azure-sdk-for-net/issues/22648
-            //Assert.AreEqual(2, entityLinkingDocumentsResults.Count);
+            Assert.Multiple(() =>
+            {
+                // Disable because of bug https://github.com/Azure/azure-sdk-for-net/issues/22648
+                //Assert.AreEqual(2, entityLinkingDocumentsResults.Count);
 
-            Assert.AreEqual(3, entityLinkingDocumentsResults[0].Entities.Count);
-            Assert.IsNotNull(entityLinkingDocumentsResults[0].Id);
-            Assert.IsNotNull(entityLinkingDocumentsResults[0].Entities);
-            Assert.IsNotNull(entityLinkingDocumentsResults[0].Error);
+                Assert.That(entityLinkingDocumentsResults[0].Entities, Has.Count.EqualTo(3));
+                Assert.That(entityLinkingDocumentsResults[0].Id, Is.Not.Null);
+                Assert.That(entityLinkingDocumentsResults[0].Entities, Is.Not.Null);
+                Assert.That(entityLinkingDocumentsResults[0].Error, Is.Not.Null);
+            });
 
             foreach (LinkedEntity entity in entityLinkingDocumentsResults[0].Entities)
             {
                 if (entity.Name == "Bill Gates")
                 {
-                    Assert.AreEqual("Bill Gates", entity.DataSourceEntityId);
-                    Assert.AreEqual("Wikipedia", entity.DataSource);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(entity.DataSourceEntityId, Is.EqualTo("Bill Gates"));
+                        Assert.That(entity.DataSource, Is.EqualTo("Wikipedia"));
+                    });
                 }
 
                 if (entity.Name == "Microsoft")
                 {
-                    Assert.AreEqual("Microsoft", entity.DataSourceEntityId);
-                    Assert.AreEqual("Wikipedia", entity.DataSource);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(entity.DataSourceEntityId, Is.EqualTo("Microsoft"));
+                        Assert.That(entity.DataSource, Is.EqualTo("Wikipedia"));
+                    });
                 }
             }
 
             // Analyze sentiment
             AnalyzeSentimentResultCollection analyzeSentimentDocumentsResults = analyzeSentimentActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(2, analyzeSentimentDocumentsResults.Count);
+            Assert.That(analyzeSentimentDocumentsResults, Has.Count.EqualTo(2));
 
-            Assert.AreEqual(TextSentiment.Neutral, analyzeSentimentDocumentsResults[0].DocumentSentiment.Sentiment);
-            Assert.AreEqual(TextSentiment.Neutral, analyzeSentimentDocumentsResults[1].DocumentSentiment.Sentiment);
+            Assert.Multiple(() =>
+            {
+                Assert.That(analyzeSentimentDocumentsResults[0].DocumentSentiment.Sentiment, Is.EqualTo(TextSentiment.Neutral));
+                Assert.That(analyzeSentimentDocumentsResults[1].DocumentSentiment.Sentiment, Is.EqualTo(TextSentiment.Neutral));
+            });
         }
 
         [RecordedTest]
@@ -385,17 +418,23 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Started, batchDocuments, batchActions);
 
-            Assert.AreEqual(0, operation.ActionsFailed);
-            Assert.AreEqual(0, operation.ActionsSucceeded);
-            Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(0, operation.ActionsTotal);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.ActionsFailed, Is.EqualTo(0));
+                Assert.That(operation.ActionsSucceeded, Is.EqualTo(0));
+                Assert.That(operation.ActionsInProgress, Is.EqualTo(0));
+                Assert.That(operation.ActionsTotal, Is.EqualTo(0));
+            });
 
             await operation.WaitForCompletionAsync();
 
-            Assert.AreEqual(0, operation.ActionsFailed);
-            Assert.AreEqual(18, operation.ActionsSucceeded);
-            Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(18, operation.ActionsTotal);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.ActionsFailed, Is.EqualTo(0));
+                Assert.That(operation.ActionsSucceeded, Is.EqualTo(18));
+                Assert.That(operation.ActionsInProgress, Is.EqualTo(0));
+                Assert.That(operation.ActionsTotal, Is.EqualTo(18));
+            });
 
             ValidateOperationProperties(operation);
 
@@ -412,16 +451,19 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyResults = resultCollection.MultiLabelClassifyResults;
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.IsNotNull(entitiesActionsResults);
-            Assert.IsNotNull(piiActionsResults);
-            Assert.IsNotNull(entityLinkingActionsResults);
-            Assert.IsNotNull(analyzeSentimentActionsResults);
-            Assert.IsNotNull(recognizeCustomEntitiesResults);
-            Assert.IsNotNull(singleLabelClassifyResults);
-            Assert.IsNotNull(multiLabelClassifyResults);
-            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
-            Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+                Assert.That(entitiesActionsResults, Is.Not.Null);
+                Assert.That(piiActionsResults, Is.Not.Null);
+                Assert.That(entityLinkingActionsResults, Is.Not.Null);
+                Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
+                Assert.That(recognizeCustomEntitiesResults, Is.Not.Null);
+                Assert.That(singleLabelClassifyResults, Is.Not.Null);
+                Assert.That(multiLabelClassifyResults, Is.Not.Null);
+                Assert.That(analyzeHealthcareEntitiesActionResults, Is.Not.Null);
+                Assert.That(operation.DisplayName, Is.EqualTo("AnalyzeOperationWithMultipleTasks"));
+            });
         }
 
         [RecordedTest]
@@ -444,35 +486,47 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Started, documents, batchActions);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
 
             // try async
             //There most be 2 pages as service limit is 20 documents per page
             List<AnalyzeActionsResult> asyncPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(2, asyncPages.Count);
+            Assert.That(asyncPages, Has.Count.EqualTo(2));
 
-            // First page should have 20 results
-            Assert.AreEqual(20, asyncPages[0].ExtractKeyPhrasesResults.FirstOrDefault().DocumentsResults.Count);
+            Assert.Multiple(() =>
+            {
+                // First page should have 20 results
+                Assert.That(asyncPages[0].ExtractKeyPhrasesResults.FirstOrDefault().DocumentsResults, Has.Count.EqualTo(20));
 
-            // Second page should have remaining 3 results
-            Assert.AreEqual(3, asyncPages[1].ExtractKeyPhrasesResults.FirstOrDefault().DocumentsResults.Count);
+                // Second page should have remaining 3 results
+                Assert.That(asyncPages[1].ExtractKeyPhrasesResults.FirstOrDefault().DocumentsResults, Has.Count.EqualTo(3));
+            });
 
             // try sync
             //There most be 2 pages as service limit is 20 documents per page
             List<AnalyzeActionsResult> pages = operation.GetValues().AsEnumerable().ToList();
-            Assert.AreEqual(2, pages.Count);
+            Assert.That(pages, Has.Count.EqualTo(2));
 
-            // First page should have 20 results
-            Assert.AreEqual(20, pages[0].ExtractKeyPhrasesResults.FirstOrDefault().DocumentsResults.Count);
+            Assert.Multiple(() =>
+            {
+                // First page should have 20 results
+                Assert.That(pages[0].ExtractKeyPhrasesResults.FirstOrDefault().DocumentsResults, Has.Count.EqualTo(20));
 
-            // Second page should have remaining 3 results
-            Assert.AreEqual(3, pages[1].ExtractKeyPhrasesResults.FirstOrDefault().DocumentsResults.Count);
+                // Second page should have remaining 3 results
+                Assert.That(pages[1].ExtractKeyPhrasesResults.FirstOrDefault().DocumentsResults, Has.Count.EqualTo(3));
+            });
         }
 
         [RecordedTest]
@@ -499,7 +553,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, documents, batchActions));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidParameterValue, ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo(TextAnalyticsErrorCode.InvalidParameterValue));
         }
 
         [RecordedTest]
@@ -529,12 +583,15 @@ namespace Azure.AI.TextAnalytics.Tests
             //Key phrases
             List<ExtractKeyPhrasesActionResult> keyPhrasesActions = resultCollection.ExtractKeyPhrasesResults.ToList();
 
-            Assert.AreEqual(1, keyPhrasesActions.Count);
+            Assert.That(keyPhrasesActions, Has.Count.EqualTo(1));
 
             ExtractKeyPhrasesResultCollection documentsResults = keyPhrasesActions[0].DocumentsResults;
-            Assert.IsFalse(documentsResults[0].HasError);
-            Assert.IsTrue(documentsResults[1].HasError);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, documentsResults[1].Error.ErrorCode.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(documentsResults[0].HasError, Is.False);
+                Assert.That(documentsResults[1].HasError, Is.True);
+                Assert.That(documentsResults[1].Error.ErrorCode.ToString(), Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
+            });
         }
 
         [RecordedTest]
@@ -561,15 +618,18 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
 
-            Assert.IsNotNull(piiActionsResults);
+            Assert.That(piiActionsResults, Is.Not.Null);
 
             RecognizePiiEntitiesResultCollection piiDocumentsResults = piiActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(1, piiDocumentsResults.Count);
+            Assert.That(piiDocumentsResults, Has.Count.EqualTo(1));
 
-            Assert.IsNotEmpty(piiDocumentsResults[0].Entities.RedactedText);
+            Assert.Multiple(() =>
+            {
+                Assert.That(piiDocumentsResults[0].Entities.RedactedText, Is.Not.Empty);
 
-            Assert.IsFalse(piiDocumentsResults[0].HasError);
-            Assert.AreEqual(2, piiDocumentsResults[0].Entities.Count);
+                Assert.That(piiDocumentsResults[0].HasError, Is.False);
+                Assert.That(piiDocumentsResults[0].Entities, Has.Count.EqualTo(2));
+            });
         }
 
         [RecordedTest]
@@ -595,16 +655,19 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
 
-            Assert.IsNotNull(piiActionsResults);
+            Assert.That(piiActionsResults, Is.Not.Null);
 
             RecognizePiiEntitiesResultCollection piiDocumentsResults = piiActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(1, piiDocumentsResults.Count);
+            Assert.That(piiDocumentsResults, Has.Count.EqualTo(1));
 
-            Assert.IsNotEmpty(piiDocumentsResults[0].Entities.RedactedText);
+            Assert.Multiple(() =>
+            {
+                Assert.That(piiDocumentsResults[0].Entities.RedactedText, Is.Not.Empty);
 
-            Assert.IsFalse(piiDocumentsResults[0].HasError);
-            Assert.AreEqual(1, piiDocumentsResults[0].Entities.Count);
-            Assert.AreEqual(PiiEntityCategory.USSocialSecurityNumber, piiDocumentsResults[0].Entities.FirstOrDefault().Category);
+                Assert.That(piiDocumentsResults[0].HasError, Is.False);
+                Assert.That(piiDocumentsResults[0].Entities, Has.Count.EqualTo(1));
+            });
+            Assert.That(piiDocumentsResults[0].Entities.FirstOrDefault().Category, Is.EqualTo(PiiEntityCategory.USSocialSecurityNumber));
         }
 
         [RecordedTest]
@@ -647,17 +710,20 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ExtractKeyPhrasesResultCollection documentsResults = resultCollection.ExtractKeyPhrasesResults.ElementAt(0).DocumentsResults;
 
-            Assert.IsNotNull(documentsResults);
+            Assert.That(documentsResults, Is.Not.Null);
 
-            Assert.AreEqual(3, documentsResults.Count);
+            Assert.That(documentsResults, Has.Count.EqualTo(3));
 
-            Assert.AreEqual(3, documentsResults.Statistics.DocumentCount);
-            Assert.AreEqual(2, documentsResults.Statistics.TransactionCount);
-            Assert.AreEqual(2, documentsResults.Statistics.ValidDocumentCount);
-            Assert.AreEqual(1, documentsResults.Statistics.InvalidDocumentCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(documentsResults.Statistics.DocumentCount, Is.EqualTo(3));
+                Assert.That(documentsResults.Statistics.TransactionCount, Is.EqualTo(2));
+                Assert.That(documentsResults.Statistics.ValidDocumentCount, Is.EqualTo(2));
+                Assert.That(documentsResults.Statistics.InvalidDocumentCount, Is.EqualTo(1));
 
-            Assert.AreEqual(51, documentsResults[0].Statistics.CharacterCount);
-            Assert.AreEqual(1, documentsResults[0].Statistics.TransactionCount);
+                Assert.That(documentsResults[0].Statistics.CharacterCount, Is.EqualTo(51));
+                Assert.That(documentsResults[0].Statistics.TransactionCount, Is.EqualTo(1));
+            });
         }
 
         [RecordedTest]
@@ -686,20 +752,32 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.AreEqual(2, keyPhrasesActionsResults.FirstOrDefault().DocumentsResults.Count);
+            Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keyPhrasesActionsResults.FirstOrDefault().DocumentsResults, Has.Count.EqualTo(2));
 
-            Assert.IsNotNull(entitiesActionsResults);
-            Assert.AreEqual(2, entitiesActionsResults.FirstOrDefault().DocumentsResults.Count);
+                Assert.That(entitiesActionsResults, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(entitiesActionsResults.FirstOrDefault().DocumentsResults, Has.Count.EqualTo(2));
 
-            Assert.IsNotNull(piiActionsResults);
-            Assert.AreEqual(2, piiActionsResults.FirstOrDefault().DocumentsResults.Count);
+                Assert.That(piiActionsResults, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(piiActionsResults.FirstOrDefault().DocumentsResults, Has.Count.EqualTo(2));
 
-            Assert.IsNotNull(entityLinkingActionsResults);
-            Assert.AreEqual(2, entityLinkingActionsResults.FirstOrDefault().DocumentsResults.Count);
+                Assert.That(entityLinkingActionsResults, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(entityLinkingActionsResults.FirstOrDefault().DocumentsResults, Has.Count.EqualTo(2));
 
-            Assert.IsNotNull(analyzeSentimentActionsResults);
-            Assert.AreEqual(2, analyzeSentimentActionsResults.FirstOrDefault().DocumentsResults.Count);
+                Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
+            });
+            Assert.That(analyzeSentimentActionsResults.FirstOrDefault().DocumentsResults, Has.Count.EqualTo(2));
         }
 
         [RecordedTest]
@@ -726,12 +804,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
 
-            Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
 
             AnalyzeSentimentResultCollection analyzeSentimentDocumentsResults = analyzeSentimentActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(1, analyzeSentimentDocumentsResults.Count);
+            Assert.That(analyzeSentimentDocumentsResults, Has.Count.EqualTo(1));
 
-            Assert.AreEqual(TextSentiment.Mixed, analyzeSentimentDocumentsResults[0].DocumentSentiment.Sentiment);
+            Assert.That(analyzeSentimentDocumentsResults[0].DocumentSentiment.Sentiment, Is.EqualTo(TextSentiment.Mixed));
         }
 
         [RecordedTest]
@@ -747,13 +825,19 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Started, batchDocuments, batchActions);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
         }
 
@@ -770,13 +854,19 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Started, batchConvenienceDocuments, batchActions);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
         }
 
@@ -793,13 +883,19 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
 
             // Take the first page.
@@ -816,31 +912,34 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
             IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.IsNotNull(entitiesActionsResults);
-            Assert.IsNotNull(piiActionsResults);
-            Assert.IsNotNull(entityLinkingActionsResults);
-            Assert.IsNotNull(analyzeSentimentActionsResults);
-            Assert.IsNotNull(singleLabelClassifyResults);
-            Assert.IsNotNull(multiLabelClassifyResults);
-            Assert.IsNotNull(recognizeCustomEntitiesActionResults);
-            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
-            Assert.IsNotNull(extractiveSummarizeActionResults);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+                Assert.That(entitiesActionsResults, Is.Not.Null);
+                Assert.That(piiActionsResults, Is.Not.Null);
+                Assert.That(entityLinkingActionsResults, Is.Not.Null);
+                Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
+                Assert.That(singleLabelClassifyResults, Is.Not.Null);
+                Assert.That(multiLabelClassifyResults, Is.Not.Null);
+                Assert.That(recognizeCustomEntitiesActionResults, Is.Not.Null);
+                Assert.That(analyzeHealthcareEntitiesActionResults, Is.Not.Null);
+                Assert.That(extractiveSummarizeActionResults, Is.Not.Null);
+            });
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
 
             ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(2, keyPhrasesDocumentsResults.Count);
+            Assert.That(keyPhrasesDocumentsResults, Has.Count.EqualTo(2));
 
             foreach (string keyphrase in keyPhrasesDocumentsResults[0].KeyPhrases)
             {
-                Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
+                Assert.That(keyPhrasesListId1, Does.Contain(keyphrase));
             }
 
             foreach (string keyphrase in keyPhrasesDocumentsResults[1].KeyPhrases)
             {
-                Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
+                Assert.That(keyPhrasesListId2, Does.Contain(keyphrase));
             }
         }
 
@@ -857,13 +956,19 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
 
             // Take the first page.
@@ -880,31 +985,34 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
             IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
 
-            Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.IsNotNull(entitiesActionsResults);
-            Assert.IsNotNull(piiActionsResults);
-            Assert.IsNotNull(entityLinkingActionsResults);
-            Assert.IsNotNull(analyzeSentimentActionsResults);
-            Assert.IsNotNull(singleLabelClassifyResults);
-            Assert.IsNotNull(multiLabelClassifyResults);
-            Assert.IsNotNull(recognizeCustomEntitiesActionResults);
-            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
-            Assert.IsNotNull(extractiveSummarizeActionResults);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keyPhrasesActionsResults, Is.Not.Null);
+                Assert.That(entitiesActionsResults, Is.Not.Null);
+                Assert.That(piiActionsResults, Is.Not.Null);
+                Assert.That(entityLinkingActionsResults, Is.Not.Null);
+                Assert.That(analyzeSentimentActionsResults, Is.Not.Null);
+                Assert.That(singleLabelClassifyResults, Is.Not.Null);
+                Assert.That(multiLabelClassifyResults, Is.Not.Null);
+                Assert.That(recognizeCustomEntitiesActionResults, Is.Not.Null);
+                Assert.That(analyzeHealthcareEntitiesActionResults, Is.Not.Null);
+                Assert.That(extractiveSummarizeActionResults, Is.Not.Null);
+            });
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
 
             ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(2, keyPhrasesDocumentsResults.Count);
+            Assert.That(keyPhrasesDocumentsResults, Has.Count.EqualTo(2));
 
             foreach (string keyphrase in keyPhrasesDocumentsResults[0].KeyPhrases)
             {
-                Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
+                Assert.That(keyPhrasesListId1, Does.Contain(keyphrase));
             }
 
             foreach (string keyphrase in keyPhrasesDocumentsResults[1].KeyPhrases)
             {
-                Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
+                Assert.That(keyPhrasesListId2, Does.Contain(keyphrase));
             }
         }
 
@@ -963,7 +1071,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
-            Assert.AreEqual("AnalyzeHealthcareEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("AnalyzeHealthcareEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer."));
         }
 
         [RecordedTest]
@@ -982,7 +1090,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
-            Assert.AreEqual("RecognizeCustomEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("RecognizeCustomEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer."));
         }
 
         [RecordedTest]
@@ -1001,7 +1109,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
-            Assert.AreEqual("SingleLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("SingleLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer."));
         }
 
         [RecordedTest]
@@ -1020,7 +1128,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
-            Assert.AreEqual("MultiLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("MultiLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer."));
         }
 
         [RecordedTest]
@@ -1039,7 +1147,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
-            Assert.That(ex.Message.EndsWith("Use service API version 2023-04-01 or newer."));
+            Assert.That(ex.Message, Does.EndWith("Use service API version 2023-04-01 or newer."));
         }
 
         [RecordedTest]
@@ -1058,19 +1166,22 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
-            Assert.That(ex.Message.EndsWith("Use service API version 2023-04-01 or newer."));
+            Assert.That(ex.Message, Does.EndWith("Use service API version 2023-04-01 or newer."));
         }
 
         private void ValidateOperationProperties(AnalyzeActionsOperation operation)
         {
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.CreatedOn, Is.Not.EqualTo(new DateTimeOffset()));
+            });
             // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
             // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
 
             if (operation.ExpiresOn.HasValue)
             {
-                Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn.Value);
+                Assert.That(operation.ExpiresOn.Value, Is.Not.EqualTo(new DateTimeOffset()));
             }
         }
     }

@@ -20,10 +20,13 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             options.Mode = Core.RetryMode.Fixed;
             options.MaxRetries = 5;
             var policy = new WebPubSubRetryPolicy(options);
-            Assert.AreEqual(TimeSpan.FromSeconds(5), policy.NextRetryDelay(new RetryContext { RetryAttempt = 1 }));
-            Assert.AreEqual(TimeSpan.FromSeconds(5), policy.NextRetryDelay(new RetryContext { RetryAttempt = 2 }));
-            Assert.AreEqual(TimeSpan.FromSeconds(5), policy.NextRetryDelay(new RetryContext { RetryAttempt = 5 }));
-            Assert.Null(policy.NextRetryDelay(new RetryContext { RetryAttempt = 6 }));
+            Assert.Multiple(() =>
+            {
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 1 }), Is.EqualTo(TimeSpan.FromSeconds(5)));
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 2 }), Is.EqualTo(TimeSpan.FromSeconds(5)));
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 5 }), Is.EqualTo(TimeSpan.FromSeconds(5)));
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 6 }), Is.Null);
+            });
         }
 
         [Test]
@@ -45,14 +48,17 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             options.Mode = Core.RetryMode.Exponential;
             options.MaxRetries = 7;
             var policy = new WebPubSubRetryPolicy(options);
-            Assert.AreEqual(TimeSpan.FromSeconds(1), policy.NextRetryDelay(new RetryContext { RetryAttempt = 1 }));
-            Assert.AreEqual(TimeSpan.FromSeconds(2), policy.NextRetryDelay(new RetryContext { RetryAttempt = 2 }));
-            Assert.AreEqual(TimeSpan.FromSeconds(4), policy.NextRetryDelay(new RetryContext { RetryAttempt = 3 }));
-            Assert.AreEqual(TimeSpan.FromSeconds(8), policy.NextRetryDelay(new RetryContext { RetryAttempt = 4 }));
-            Assert.AreEqual(TimeSpan.FromSeconds(14), policy.NextRetryDelay(new RetryContext { RetryAttempt = 5 }));
-            Assert.AreEqual(TimeSpan.FromSeconds(14), policy.NextRetryDelay(new RetryContext { RetryAttempt = 6 }));
-            Assert.AreEqual(TimeSpan.FromSeconds(14), policy.NextRetryDelay(new RetryContext { RetryAttempt = 7 }));
-            Assert.Null(policy.NextRetryDelay(new RetryContext { RetryAttempt = 8 }));
+            Assert.Multiple(() =>
+            {
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 1 }), Is.EqualTo(TimeSpan.FromSeconds(1)));
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 2 }), Is.EqualTo(TimeSpan.FromSeconds(2)));
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 3 }), Is.EqualTo(TimeSpan.FromSeconds(4)));
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 4 }), Is.EqualTo(TimeSpan.FromSeconds(8)));
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 5 }), Is.EqualTo(TimeSpan.FromSeconds(14)));
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 6 }), Is.EqualTo(TimeSpan.FromSeconds(14)));
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 7 }), Is.EqualTo(TimeSpan.FromSeconds(14)));
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 8 }), Is.Null);
+            });
         }
 
         [Test]
@@ -64,8 +70,11 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             options.Mode = Core.RetryMode.Exponential;
             options.MaxRetries = int.MaxValue;
             var policy = new WebPubSubRetryPolicy(options);
-            Assert.AreEqual(TimeSpan.FromTicks(long.MaxValue), policy.NextRetryDelay(new RetryContext { RetryAttempt = 1 }));
-            Assert.AreEqual(TimeSpan.FromTicks(long.MaxValue), policy.NextRetryDelay(new RetryContext { RetryAttempt = int.MaxValue }));
+            Assert.Multiple(() =>
+            {
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = 1 }), Is.EqualTo(TimeSpan.FromTicks(long.MaxValue)));
+                Assert.That(policy.NextRetryDelay(new RetryContext { RetryAttempt = int.MaxValue }), Is.EqualTo(TimeSpan.FromTicks(long.MaxValue)));
+            });
         }
     }
 }

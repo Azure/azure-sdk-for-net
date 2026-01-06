@@ -23,7 +23,7 @@ namespace Azure.Maps.Rendering.Tests
             var copyrights = await client.GetMapCopyrightAttributionAsync(
                 MapTileSetId.MicrosoftBase, new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629));
 
-            Assert.IsNotNull(copyrights);
+            Assert.That(copyrights, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -37,9 +37,9 @@ namespace Azure.Maps.Rendering.Tests
             using var imageStream = new MemoryStream();
             var image = await client.GetMapStaticImageAsync(options);
 
-            Assert.IsNotNull(image);
+            Assert.That(image, Is.Not.Null);
             image.Value.CopyTo(imageStream);
-            Assert.IsTrue(imageStream.Length > 0);
+            Assert.That(imageStream.Length, Is.GreaterThan(0));
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Azure.Maps.Rendering.Tests
             var client = CreateClient();
             var options = new GetMapStaticImageOptions(null);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetMapStaticImageAsync(options));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
 
         [RecordedTest]
@@ -62,9 +62,9 @@ namespace Azure.Maps.Rendering.Tests
             using var imageryStream = new MemoryStream();
             var tile = await client.GetMapTileAsync(options);
 
-            Assert.IsNotNull(tile);
+            Assert.That(tile, Is.Not.Null);
             tile.Value.CopyTo(imageryStream);
-            Assert.IsTrue(imageryStream.Length > 0);
+            Assert.That(imageryStream.Length, Is.GreaterThan(0));
         }
 
         [RecordedTest]
@@ -73,13 +73,16 @@ namespace Azure.Maps.Rendering.Tests
             var client = CreateClient();
             var tileSet = await client.GetMapTileSetAsync(MapTileSetId.MicrosoftImagery);
 
-            Assert.IsNotNull(tileSet);
-            Assert.AreEqual("2.2.0", tileSet.Value.TileJsonVersion);
-            Assert.AreEqual("1.0.0", tileSet.Value.TileSetVersion);
-            Assert.AreEqual("microsoft.imagery", tileSet.Value.TileSetName);
-            Assert.AreEqual(1, tileSet.Value.TileEndpoints.Count);
-            Assert.AreEqual(1, tileSet.Value.MinZoomLevel);
-            Assert.AreEqual(19, tileSet.Value.MaxZoomLevel);
+            Assert.That(tileSet, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(tileSet.Value.TileJsonVersion, Is.EqualTo("2.2.0"));
+                Assert.That(tileSet.Value.TileSetVersion, Is.EqualTo("1.0.0"));
+                Assert.That(tileSet.Value.TileSetName, Is.EqualTo("microsoft.imagery"));
+                Assert.That(tileSet.Value.TileEndpoints, Has.Count.EqualTo(1));
+                Assert.That(tileSet.Value.MinZoomLevel, Is.EqualTo(1));
+                Assert.That(tileSet.Value.MaxZoomLevel, Is.EqualTo(19));
+            });
         }
 
         public void GetMapTileException()

@@ -26,8 +26,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardTo = $"{baseUrl}{longName}");
 
-            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
-            Assert.AreEqual($"ForwardTo", ex.ParamName);
+            Assert.That(ex.Message, Does.StartWith($"Entity path '{longName}' exceeds the '260' character limit."));
+            Assert.That(ex.ParamName, Is.EqualTo($"ForwardTo"));
         }
 
         [Test]
@@ -36,8 +36,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var sub = new QueueProperties("Fake Name");
             ArgumentOutOfRangeException ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.AutoDeleteOnIdle = TimeSpan.FromMinutes(2));
 
-            StringAssert.StartsWith($"The value supplied must be greater than or equal to {AdministrationClientConstants.MinimumAllowedAutoDeleteOnIdle}.", ex.Message);
-            Assert.AreEqual($"AutoDeleteOnIdle", ex.ParamName);
+            Assert.That(ex.Message, Does.StartWith($"The value supplied must be greater than or equal to {AdministrationClientConstants.MinimumAllowedAutoDeleteOnIdle}."));
+            Assert.That(ex.ParamName, Is.EqualTo($"AutoDeleteOnIdle"));
         }
 
         [Test]
@@ -50,8 +50,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardDeadLetteredMessagesTo = $"{baseUrl}{longName}");
 
-            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
-            Assert.AreEqual($"ForwardDeadLetteredMessagesTo", ex.ParamName);
+            Assert.That(ex.Message, Does.StartWith($"Entity path '{longName}' exceeds the '260' character limit."));
+            Assert.That(ex.ParamName, Is.EqualTo($"ForwardDeadLetteredMessagesTo"));
         }
 
         [Test]
@@ -64,8 +64,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.Name = $"{baseUrl}{longName}");
 
-            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
-            Assert.AreEqual($"Name", ex.ParamName);
+            Assert.That(ex.Message, Does.StartWith($"Entity path '{longName}' exceeds the '260' character limit."));
+            Assert.That(ex.ParamName, Is.EqualTo($"Name"));
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var longName = string.Join(string.Empty, Enumerable.Repeat('a', lengthOfName));
             var sub = new QueueProperties("Fake SubscriptionName");
             sub.ForwardTo = $"{baseUrl}{longName}";
-            Assert.AreEqual($"{baseUrl}{longName}", sub.ForwardTo);
+            Assert.That(sub.ForwardTo, Is.EqualTo($"{baseUrl}{longName}"));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var longName = string.Join(string.Empty, Enumerable.Repeat('a', lengthOfName));
             var sub = new QueueProperties("Fake SubscriptionName");
             sub.ForwardDeadLetteredMessagesTo = $"{baseUrl}{longName}";
-            Assert.AreEqual($"{baseUrl}{longName}", sub.ForwardDeadLetteredMessagesTo);
+            Assert.That(sub.ForwardDeadLetteredMessagesTo, Is.EqualTo($"{baseUrl}{longName}"));
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var longName = string.Join(string.Empty, Enumerable.Repeat('a', lengthOfName));
             var sub = new CreateQueueOptions("Fake SubscriptionName");
             sub.Name = $"{baseUrl}{longName}";
-            Assert.AreEqual($"{baseUrl}{longName}", sub.Name);
+            Assert.That(sub.Name, Is.EqualTo($"{baseUrl}{longName}"));
         }
 
         [Test]
@@ -122,23 +122,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 "metadata",
                 true,
                 2000);
-            Assert.AreEqual("queueName", properties.Name);
-            Assert.AreEqual(TimeSpan.FromSeconds(30), properties.LockDuration);
-            Assert.AreEqual(100, properties.MaxSizeInMegabytes);
-            Assert.IsTrue(properties.RequiresDuplicateDetection);
-            Assert.IsTrue(properties.RequiresSession);
-            Assert.AreEqual(TimeSpan.FromSeconds(10), properties.DefaultMessageTimeToLive);
-            Assert.AreEqual(TimeSpan.FromMinutes(5), properties.AutoDeleteOnIdle);
-            Assert.IsTrue(properties.DeadLetteringOnMessageExpiration);
-            Assert.AreEqual(TimeSpan.FromMinutes(10), properties.DuplicateDetectionHistoryTimeWindow);
-            Assert.AreEqual(5, properties.MaxDeliveryCount);
-            Assert.IsFalse(properties.EnableBatchedOperations);
-            Assert.AreEqual(EntityStatus.Active, properties.Status);
-            Assert.AreEqual("forward", properties.ForwardTo);
-            Assert.AreEqual("dlq", properties.ForwardDeadLetteredMessagesTo);
-            Assert.AreEqual("metadata", properties.UserMetadata);
-            Assert.IsTrue(properties.EnablePartitioning);
-            Assert.AreEqual(2000, properties.MaxMessageSizeInKilobytes);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Name, Is.EqualTo("queueName"));
+                Assert.That(properties.LockDuration, Is.EqualTo(TimeSpan.FromSeconds(30)));
+                Assert.That(properties.MaxSizeInMegabytes, Is.EqualTo(100));
+                Assert.That(properties.RequiresDuplicateDetection, Is.True);
+                Assert.That(properties.RequiresSession, Is.True);
+                Assert.That(properties.DefaultMessageTimeToLive, Is.EqualTo(TimeSpan.FromSeconds(10)));
+                Assert.That(properties.AutoDeleteOnIdle, Is.EqualTo(TimeSpan.FromMinutes(5)));
+                Assert.That(properties.DeadLetteringOnMessageExpiration, Is.True);
+                Assert.That(properties.DuplicateDetectionHistoryTimeWindow, Is.EqualTo(TimeSpan.FromMinutes(10)));
+                Assert.That(properties.MaxDeliveryCount, Is.EqualTo(5));
+                Assert.That(properties.EnableBatchedOperations, Is.False);
+                Assert.That(properties.Status, Is.EqualTo(EntityStatus.Active));
+                Assert.That(properties.ForwardTo, Is.EqualTo("forward"));
+                Assert.That(properties.ForwardDeadLetteredMessagesTo, Is.EqualTo("dlq"));
+                Assert.That(properties.UserMetadata, Is.EqualTo("metadata"));
+                Assert.That(properties.EnablePartitioning, Is.True);
+                Assert.That(properties.MaxMessageSizeInKilobytes, Is.EqualTo(2000));
+            });
         }
 
         [Test]
@@ -159,17 +162,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 twoDaysAgo,
                 yesterday,
                 today);
-            Assert.AreEqual("queueName", properties.Name);
-            Assert.AreEqual(10, properties.ActiveMessageCount);
-            Assert.AreEqual(1, properties.ScheduledMessageCount);
-            Assert.AreEqual(5, properties.DeadLetterMessageCount);
-            Assert.AreEqual(2, properties.TransferDeadLetterMessageCount);
-            Assert.AreEqual(3, properties.TransferMessageCount);
-            Assert.AreEqual(21, properties.TotalMessageCount);
-            Assert.AreEqual(100, properties.SizeInBytes);
-            Assert.AreEqual(twoDaysAgo, properties.CreatedAt);
-            Assert.AreEqual(yesterday, properties.UpdatedAt);
-            Assert.AreEqual(today, properties.AccessedAt);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Name, Is.EqualTo("queueName"));
+                Assert.That(properties.ActiveMessageCount, Is.EqualTo(10));
+                Assert.That(properties.ScheduledMessageCount, Is.EqualTo(1));
+                Assert.That(properties.DeadLetterMessageCount, Is.EqualTo(5));
+                Assert.That(properties.TransferDeadLetterMessageCount, Is.EqualTo(2));
+                Assert.That(properties.TransferMessageCount, Is.EqualTo(3));
+                Assert.That(properties.TotalMessageCount, Is.EqualTo(21));
+                Assert.That(properties.SizeInBytes, Is.EqualTo(100));
+                Assert.That(properties.CreatedAt, Is.EqualTo(twoDaysAgo));
+                Assert.That(properties.UpdatedAt, Is.EqualTo(yesterday));
+                Assert.That(properties.AccessedAt, Is.EqualTo(today));
+            });
         }
 
         [Test]
@@ -197,7 +203,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             };
             var properties = new QueueProperties(options);
 
-            Assert.AreEqual(options, new CreateQueueOptions(properties));
+            Assert.That(new CreateQueueOptions(properties), Is.EqualTo(options));
         }
 
         [Test]
@@ -236,7 +242,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             MockResponse response = new MockResponse(200);
             response.SetContent(queueDescriptionXml);
             QueueProperties queueDesc = await QueuePropertiesExtensions.ParseResponseAsync(response, new ClientDiagnostics(new ServiceBusAdministrationClientOptions()));
-            Assert.NotNull(queueDesc.UnknownProperties);
+            Assert.That(queueDesc.UnknownProperties, Is.Not.Null);
             XDocument doc = QueuePropertiesExtensions.Serialize(queueDesc);
 
             XName queueDescriptionElementName = XName.Get("QueueDescription", AdministrationClientConstants.ServiceBusNamespace);
@@ -246,8 +252,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             XNode actualChildNode = serializedQueueDescritionElement.FirstNode;
             while (expectedChildNode != null)
             {
-                Assert.NotNull(actualChildNode);
-                Assert.True(XNode.DeepEquals(expectedChildNode, actualChildNode), $"QueueDescrition parsing and serialization combo didn't work as expected. {expectedChildNode.ToString()}");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actualChildNode, Is.Not.Null);
+                    Assert.That(XNode.DeepEquals(expectedChildNode, actualChildNode), Is.True, $"QueueDescrition parsing and serialization combo didn't work as expected. {expectedChildNode.ToString()}");
+                });
                 expectedChildNode = expectedChildNode.NextNode;
                 actualChildNode = actualChildNode.NextNode;
             }

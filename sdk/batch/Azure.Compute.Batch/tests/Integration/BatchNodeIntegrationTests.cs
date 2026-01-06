@@ -50,7 +50,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 }
 
                 // verify we found at least one poolnode
-                Assert.AreEqual(2, count);
+                Assert.That(count, Is.EqualTo(2));
             }
             finally
             {
@@ -78,7 +78,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 // create new user
                 BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions(userName)
@@ -86,7 +86,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     Password = userPassWord
                 };
                 Response response = await client.CreateNodeUserAsync(poolID, batchNodeID, user);
-                Assert.IsFalse(response.IsError);
+                Assert.That(response.IsError, Is.False);
 
                 // update users password
                 BatchNodeUserUpdateOptions content = new BatchNodeUserUpdateOptions()
@@ -94,11 +94,11 @@ namespace Azure.Compute.Batch.Tests.Integration
                     Password = updatedPassWord
                 };
                 response = await client.ReplaceNodeUserAsync(poolID, batchNodeID, userName, content);
-                Assert.IsFalse(response.IsError);
+                Assert.That(response.IsError, Is.False);
 
                 // delete uswer
                 response = await client.DeleteNodeUserAsync(poolID, batchNodeID, userName);
-                Assert.IsFalse(response.IsError);
+                Assert.That(response.IsError, Is.False);
             }
             finally
             {
@@ -123,15 +123,18 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 // reboot node
                 RebootNodeOperation rebootNodeOperation = await client.RebootNodeAsync(poolID, batchNodeID);
 
                 BatchNode node = await rebootNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(rebootNodeOperation.HasCompleted);
-                Assert.IsTrue(rebootNodeOperation.HasValue);
-                Assert.IsFalse(rebootNodeOperation.GetRawResponse().IsError);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(rebootNodeOperation.HasCompleted, Is.True);
+                    Assert.That(rebootNodeOperation.HasValue, Is.True);
+                    Assert.That(rebootNodeOperation.GetRawResponse().IsError, Is.False);
+                });
                 await iaasWindowsPoolFixture.WaitForPoolAllocation(client, poolID);
             }
             finally
@@ -157,16 +160,19 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 // reboot node
                 ReimageNodeOperation reImageNodeOperation = await client.ReimageNodeAsync(poolID, batchNodeID);
 
                 BatchNode node = await reImageNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-                Assert.IsFalse(reImageNodeOperation.GetRawResponse().IsError);
-                Assert.IsTrue(reImageNodeOperation.HasCompleted);
-                Assert.IsTrue(reImageNodeOperation.HasValue);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(reImageNodeOperation.GetRawResponse().IsError, Is.False);
+                    Assert.That(reImageNodeOperation.HasCompleted, Is.True);
+                    Assert.That(reImageNodeOperation.HasValue, Is.True);
+                });
                 await iaasWindowsPoolFixture.WaitForPoolAllocation(client, poolID);
             }
             finally
@@ -192,23 +198,29 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 // Deallocate node
                 DeallocateNodeOperation deallocateNodeOperation = await client.DeallocateNodeAsync(poolID, batchNodeID);
                 await deallocateNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(deallocateNodeOperation.HasCompleted);
-                Assert.IsTrue(deallocateNodeOperation.HasValue);
-                Assert.IsFalse(deallocateNodeOperation.GetRawResponse().IsError);
-                Assert.AreEqual(BatchNodeState.Deallocated, deallocateNodeOperation.Value.State);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(deallocateNodeOperation.HasCompleted, Is.True);
+                    Assert.That(deallocateNodeOperation.HasValue, Is.True);
+                    Assert.That(deallocateNodeOperation.GetRawResponse().IsError, Is.False);
+                    Assert.That(deallocateNodeOperation.Value.State, Is.EqualTo(BatchNodeState.Deallocated));
+                });
 
                 // start node
                 StartNodeOperation startNodeOperation = await client.StartNodeAsync(poolID, batchNodeID);
                 await startNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(startNodeOperation.HasCompleted);
-                Assert.IsTrue(startNodeOperation.HasValue);
-                Assert.IsFalse(startNodeOperation.GetRawResponse().IsError);
-                Assert.AreNotEqual(BatchNodeState.Starting, startNodeOperation.Value.State);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(startNodeOperation.HasCompleted, Is.True);
+                    Assert.That(startNodeOperation.HasValue, Is.True);
+                    Assert.That(startNodeOperation.GetRawResponse().IsError, Is.False);
+                    Assert.That(startNodeOperation.Value.State, Is.Not.EqualTo(BatchNodeState.Starting));
+                });
             }
             finally
             {
@@ -244,18 +256,18 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 BatchNodeVMExtension batchNodeVMExtension1 = await client.GetNodeExtensionAsync(poolID, batchNodeID, "CustomExtension");
 
                 // reboot node
                 await foreach (BatchNodeVMExtension item in client.GetNodeExtensionsAsync(poolID, batchNodeID))
                 {
-                    Assert.NotNull(item);
-                    Assert.IsNotEmpty(item.VmExtension.Name);
+                    Assert.That(item, Is.Not.Null);
+                    Assert.That(item.VmExtension.Name, Is.Not.Empty);
 
                     BatchNodeVMExtension batchNodeVMExtension = await client.GetNodeExtensionAsync(poolID, batchNodeID, item.VmExtension.Name);
-                    Assert.NotNull(batchNodeVMExtension);
+                    Assert.That(batchNodeVMExtension, Is.Not.Null);
                 }
             }
             finally
@@ -297,13 +309,16 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
 
                 BatchNodeRemoteLoginSettings batchNodeRemoteLoginSettings = await client.GetNodeRemoteLoginSettingsAsync(poolID, batchNodeID);
-                Assert.NotNull(batchNodeRemoteLoginSettings);
-                Assert.NotNull(batchNodeRemoteLoginSettings.RemoteLoginIpAddress);
-                Assert.NotNull(batchNodeRemoteLoginSettings.Ipv6RemoteLoginPort);
-                Assert.NotNull(batchNodeRemoteLoginSettings.Ipv6RemoteLoginIpAddress);
+                Assert.That(batchNodeRemoteLoginSettings, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(batchNodeRemoteLoginSettings.RemoteLoginIpAddress, Is.Not.Null);
+                    Assert.That(batchNodeRemoteLoginSettings.Ipv6RemoteLoginPort, Is.Not.Null);
+                    Assert.That(batchNodeRemoteLoginSettings.Ipv6RemoteLoginIpAddress, Is.Not.Null);
+                });
             }
             finally
             {
@@ -328,22 +343,22 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     batchNodeID = item.Id;
                 }
-                Assert.IsNotEmpty(batchNodeID);
+                Assert.That(batchNodeID, Is.Not.Empty);
                 BatchNodeDisableSchedulingOptions batchNodeDisableSchedulingContent = new BatchNodeDisableSchedulingOptions()
                 {
                     NodeDisableSchedulingOption = BatchNodeDisableSchedulingOption.Terminate,
                 };
                 Response response = await client.DisableNodeSchedulingAsync(poolID, batchNodeID, batchNodeDisableSchedulingContent);
-                Assert.AreEqual(200, response.Status);
+                Assert.That(response.Status, Is.EqualTo(200));
 
                 response = await client.EnableNodeSchedulingAsync(poolID, batchNodeID);
-                Assert.AreEqual(200, response.Status);
+                Assert.That(response.Status, Is.EqualTo(200));
 
                 UploadBatchServiceLogsOptions uploadBatchServiceLogsContent = new UploadBatchServiceLogsOptions(new Uri("http://contoso.com"), DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
 
                 UploadBatchServiceLogsResult uploadBatchServiceLogsResult =  await client.UploadNodeLogsAsync(poolID, batchNodeID, uploadBatchServiceLogsContent);
-                Assert.NotNull(uploadBatchServiceLogsResult);
-                Assert.IsNotEmpty(uploadBatchServiceLogsResult.VirtualDirectoryName);
+                Assert.That(uploadBatchServiceLogsResult, Is.Not.Null);
+                Assert.That(uploadBatchServiceLogsResult.VirtualDirectoryName, Is.Not.Empty);
             }
             finally
             {

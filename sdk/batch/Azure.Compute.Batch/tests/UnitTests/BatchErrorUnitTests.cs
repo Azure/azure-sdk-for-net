@@ -27,9 +27,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var result = (BatchError)mockResponse.Object;
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual("ErrorCode", result.Code);
-            Assert.AreEqual("Error message", result.Message.Value);
+            Assert.That(result, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Code, Is.EqualTo("ErrorCode"));
+                Assert.That(result.Message.Value, Is.EqualTo("Error message"));
+            });
         }
 
         [Test]
@@ -46,14 +49,20 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var result = (BatchError)mockResponse.Object;
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual("ErrorCode", result.Code);
-            Assert.AreEqual("Error message", result.Message.Value);
-            Assert.AreEqual(2, result.Values.Count);
-            Assert.AreEqual("key1", result.Values[0].Key);
-            Assert.AreEqual("value1", result.Values[0].Value);
-            Assert.AreEqual("key2", result.Values[1].Key);
-            Assert.AreEqual("value2", result.Values[1].Value);
+            Assert.That(result, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Code, Is.EqualTo("ErrorCode"));
+                Assert.That(result.Message.Value, Is.EqualTo("Error message"));
+                Assert.That(result.Values, Has.Count.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Values[0].Key, Is.EqualTo("key1"));
+                Assert.That(result.Values[0].Value, Is.EqualTo("value1"));
+                Assert.That(result.Values[1].Key, Is.EqualTo("key2"));
+                Assert.That(result.Values[1].Value, Is.EqualTo("value2"));
+            });
         }
 
         [Test]
@@ -69,10 +78,13 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var result = (BatchError)mockResponse.Object;
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Null(result.Code);
-            Assert.Null(result.Message);
-            Assert.AreEqual(0, result.Values.Count);
+            Assert.That(result, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Code, Is.Null);
+                Assert.That(result.Message, Is.Null);
+                Assert.That(result.Values.Count, Is.EqualTo(0));
+            });
         }
 
         [Test]
@@ -87,12 +99,15 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var result4 = BatchErrorCode.TooManyRequests == "TooManyRequests";
             var result5 = "TooManyRequestsExtraText" != BatchErrorCode.TooManyRequests;
 
-            // Assert
-            Assert.True(result1); // verify normal match
-            Assert.True(result2); // verify case insenstive
-            Assert.False(result3); // verify failure
-            Assert.True(result4); // verify order doesn't matter
-            Assert.True(result5); // verify not match
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(result1, Is.True); // verify normal match
+                Assert.That(result2, Is.True); // verify case insenstive
+                Assert.That(result3, Is.False); // verify failure
+                Assert.That(result4, Is.True); // verify order doesn't matter
+                Assert.That(result5, Is.True); // verify not match
+            });
         }
     }
 }

@@ -85,9 +85,9 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsFilesSearchExample_RunSteps_Reference
@@ -196,9 +196,9 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsFilesSearchExample_RunSteps_Reference_Sync

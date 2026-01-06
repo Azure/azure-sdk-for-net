@@ -74,26 +74,35 @@ public partial class ChatTests
         Assert.That(response, Is.Not.Null);
 
         ChatCompletion completion = response.Value;
-        Assert.IsNotNull(completion);
+        Assert.That(completion, Is.Not.Null);
         Assert.That(completion.Id, Is.Not.Null.Or.Empty);
 
         RequestContentFilterResult filter = completion.GetRequestContentFilterResult();
-        Assert.IsNotNull(filter);
+        Assert.That(filter, Is.Not.Null);
         Assert.That(filter.SelfHarm, Is.Not.Null);
-        Assert.That(filter.SelfHarm.Filtered, Is.False);
-        Assert.That(filter.SelfHarm.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+        Assert.Multiple(() =>
+        {
+            Assert.That(filter.SelfHarm.Filtered, Is.False);
+            Assert.That(filter.SelfHarm.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+        });
 
         if (functionCallType == FunctionCallTestType.None)
         {
-            Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
-            Assert.That(completion.FunctionCall, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
+                Assert.That(completion.FunctionCall, Is.Null);
 
-            Assert.That(completion.Content, Has.Count.GreaterThan(0));
+                Assert.That(completion.Content, Has.Count.GreaterThan(0));
+            });
             Assert.That(completion.Content, Has.All.Not.Null);
 
             ChatMessageContentPart content = completion.Content[0];
-            Assert.That(content.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
-            Assert.That(content.Text, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(content.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+                Assert.That(content.Text, Is.Not.Null.Or.Empty);
+            });
 
             // test complete, as we were merely validating that we didn't get what we shouldn't
             return;
@@ -110,15 +119,24 @@ public partial class ChatTests
             Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
         }
 
-        Assert.That(completion.Content, Has.Count.EqualTo(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(completion.Content, Has.Count.EqualTo(0));
 
-        Assert.That(completion.FunctionCall, Is.Not.Null);
-        Assert.That(completion.FunctionCall.FunctionName, Is.EqualTo(FUNCTION_TEMPERATURE.FunctionName));
-        Assert.That(completion.FunctionCall.FunctionArguments, Is.Not.Null);
+            Assert.That(completion.FunctionCall, Is.Not.Null);
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(completion.FunctionCall.FunctionName, Is.EqualTo(FUNCTION_TEMPERATURE.FunctionName));
+            Assert.That(completion.FunctionCall.FunctionArguments, Is.Not.Null);
+        });
         var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(completion.FunctionCall.FunctionArguments, SERIALIZER_OPTIONS)!;
         Assert.That(parsedArgs, Is.Not.Null);
-        Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
-        Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
+            Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
+        });
 
         // Complete the function call
         messages.Add(new AssistantChatMessage(completion.FunctionCall));
@@ -141,13 +159,19 @@ public partial class ChatTests
         ResponseContentFilterResult responseFilter = completion.GetResponseContentFilterResult();
         Assert.That(responseFilter, Is.Not.Null);
         Assert.That(responseFilter.Hate, Is.Not.Null);
-        Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
-        Assert.That(responseFilter.Hate.Filtered, Is.False);
+        Assert.Multiple(() =>
+        {
+            Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+            Assert.That(responseFilter.Hate.Filtered, Is.False);
 
-        Assert.That(completion.Content, Has.Count.GreaterThan(0));
+            Assert.That(completion.Content, Has.Count.GreaterThan(0));
+        });
         Assert.That(completion.Content[0], Is.Not.Null);
-        Assert.That(completion.Content[0].Text, Is.Not.Null.Or.Empty);
-        Assert.That(completion.Content[0].Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+        Assert.Multiple(() =>
+        {
+            Assert.That(completion.Content[0].Text, Is.Not.Null.Or.Empty);
+            Assert.That(completion.Content[0].Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+        });
     }
 
     [RecordedTest]
@@ -202,8 +226,11 @@ public partial class ChatTests
 
             foreach (var part in update.ContentUpdate)
             {
-                Assert.That(part.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
-                Assert.That(part.Text, Is.Not.Null); // Could be empty string
+                Assert.Multiple(() =>
+                {
+                    Assert.That(part.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+                    Assert.That(part.Text, Is.Not.Null); // Could be empty string
+                });
 
                 content.Append(part.Text);
             }
@@ -211,16 +238,22 @@ public partial class ChatTests
             var promptFilter = update.GetRequestContentFilterResult();
             if (!foundPromptFilter && promptFilter?.Hate != null)
             {
-                Assert.That(promptFilter.Hate.Filtered, Is.False);
-                Assert.That(promptFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(promptFilter.Hate.Filtered, Is.False);
+                    Assert.That(promptFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                });
                 foundPromptFilter = true;
             }
 
             var responseFilter = update.GetResponseContentFilterResult();
             if (!foundResponseFilter && responseFilter?.Hate != null)
             {
-                Assert.That(responseFilter.Hate.Filtered, Is.False);
-                Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(responseFilter.Hate.Filtered, Is.False);
+                    Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                });
                 foundResponseFilter = true;
             }
         };
@@ -240,8 +273,11 @@ public partial class ChatTests
             Assert.That(functionName, Is.Not.Null);
             var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(functionArgs.ToString(), SERIALIZER_OPTIONS)!;
             Assert.That(parsedArgs, Is.Not.Null);
-            Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
-            Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
+                Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
+            });
 
             // TODO FIXME: There isn't a clear or obvious way to pass the assistant function message back to the service, and the constructors that allow
             //             us manual control are internal. So let's use JSON.
@@ -274,10 +310,13 @@ public partial class ChatTests
             }
         }
 
-        Assert.That(foundPromptFilter, Is.True);
-        Assert.That(foundResponseFilter, Is.True);
-        Assert.That(functionName, Is.Null);
-        Assert.That(functionArgs, Has.Length.EqualTo(0));
-        Assert.That(content.ToString(), Is.Not.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(foundPromptFilter, Is.True);
+            Assert.That(foundResponseFilter, Is.True);
+            Assert.That(functionName, Is.Null);
+            Assert.That(functionArgs, Has.Length.EqualTo(0));
+            Assert.That(content.ToString(), Is.Not.Null.Or.Empty);
+        });
     }
 }

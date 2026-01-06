@@ -47,14 +47,14 @@ namespace Azure.Identity.Tests
                 "client",
                 new InteractiveBrowserCredentialOptions(){ IsUnsafeSupportLoggingEnabled = false }); // never log PII
 
-            Assert.AreEqual(logPii, client_1.IsSupportLoggingEnabled);
+            Assert.That(client_1.IsSupportLoggingEnabled, Is.EqualTo(logPii));
 
             client_1.Log(client1Message, true);
             client_2.Log(client2Message, true);
 
             if (logPii)
             {
-                Assert.Contains(client1Message, messages);
+                Assert.That(messages, Does.Contain(client1Message));
             }
             Assert.That(messages, Does.Not.Contain(client2Message));
             messages.Clear();

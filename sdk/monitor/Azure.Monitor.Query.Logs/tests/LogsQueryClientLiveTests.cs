@@ -94,21 +94,24 @@ namespace Azure.Monitor.Query.Logs.Tests
                 MockQuery,
                 _logsTestData.DataTimeRange);
             var resultTable = results.Value.Table;
-            CollectionAssert.IsNotEmpty(resultTable.Columns);
+            Assert.That(resultTable.Columns, Is.Not.Empty);
 
-            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(results.Value.Status, Is.EqualTo(LogsQueryResultStatus.Success));
 
-            Assert.AreEqual("a", resultTable.Rows[0].GetString(0));
-            Assert.AreEqual("a", resultTable.Rows[0].GetString(LogsTestData.StringColumnName));
+                Assert.That(resultTable.Rows[0].GetString(0), Is.EqualTo("a"));
+                Assert.That(resultTable.Rows[0].GetString(LogsTestData.StringColumnName), Is.EqualTo("a"));
 
-            Assert.AreEqual(1, resultTable.Rows[0].GetInt32(1));
-            Assert.AreEqual(1, resultTable.Rows[0].GetInt32(LogsTestData.IntColumnName));
+                Assert.That(resultTable.Rows[0].GetInt32(1), Is.EqualTo(1));
+                Assert.That(resultTable.Rows[0].GetInt32(LogsTestData.IntColumnName), Is.EqualTo(1));
 
-            Assert.AreEqual(false, resultTable.Rows[0].GetBoolean(2));
-            Assert.AreEqual(false, resultTable.Rows[0].GetBoolean(LogsTestData.BoolColumnName));
+                Assert.That(resultTable.Rows[0].GetBoolean(2), Is.EqualTo(false));
+                Assert.That(resultTable.Rows[0].GetBoolean(LogsTestData.BoolColumnName), Is.EqualTo(false));
 
-            Assert.AreEqual(0.0, resultTable.Rows[0].GetDouble(3));
-            Assert.AreEqual(0.0, resultTable.Rows[0].GetDouble(LogsTestData.DoubleColumnName));
+                Assert.That(resultTable.Rows[0].GetDouble(3), Is.EqualTo(0.0));
+                Assert.That(resultTable.Rows[0].GetDouble(LogsTestData.DoubleColumnName), Is.EqualTo(0.0));
+            });
         }
 
         [RecordedTest]
@@ -127,7 +130,7 @@ namespace Azure.Monitor.Query.Logs.Tests
                mockQuery,
                 _logsTestData.DataTimeRange);
 
-            CollectionAssert.AreEqual(new[] {"a", "b", "c"}, results.Value);
+            Assert.That(results.Value, Is.EqualTo(new[] { "a", "b", "c" }).AsCollection);
         }
 
         [RecordedTest]
@@ -142,9 +145,12 @@ namespace Azure.Monitor.Query.Logs.Tests
                     AllowPartialErrors = true
                 });
 
-            Assert.AreEqual(LogsQueryResultStatus.PartialFailure, results.Value.Status);
-            Assert.NotNull(results.Value.Error.Code);
-            Assert.NotNull(results.Value.Error.Message);
+            Assert.Multiple(() =>
+            {
+                Assert.That(results.Value.Status, Is.EqualTo(LogsQueryResultStatus.PartialFailure));
+                Assert.That(results.Value.Error.Code, Is.Not.Null);
+                Assert.That(results.Value.Error.Message, Is.Not.Null);
+            });
         }
 
         [RecordedTest]
@@ -156,7 +162,7 @@ namespace Azure.Monitor.Query.Logs.Tests
                 $"set truncationmaxrecords=1; datatable (s: string) ['a', 'b']",
                 _logsTestData.DataTimeRange));
 
-            StringAssert.StartsWith("The result was returned but contained a partial error", exception.Message);
+            Assert.That(exception.Message, Does.StartWith("The result was returned but contained a partial error"));
         }
 
         [RecordedTest]
@@ -178,9 +184,9 @@ namespace Azure.Monitor.Query.Logs.Tests
                     AdditionalWorkspaces = { TestEnvironment.SecondaryWorkspaceId }
                 });
 
-            CollectionAssert.Contains(results.Value, "a");
-            CollectionAssert.Contains(results.Value, "b");
-            CollectionAssert.Contains(results.Value, "c");
+            Assert.That(results.Value, Has.Member("a"));
+            Assert.That(results.Value, Has.Member("b"));
+            Assert.That(results.Value, Has.Member("c"));
         }
 
         [RecordedTest]
@@ -199,7 +205,7 @@ namespace Azure.Monitor.Query.Logs.Tests
                 mockQuery,
                 _logsTestData.DataTimeRange);
 
-            Assert.GreaterOrEqual(_logsTestData.TableA.Count, results.Value[0]);
+            Assert.That(_logsTestData.TableA, Has.Count.GreaterThanOrEqualTo(results.Value[0]));
         }
 
         [RecordedTest]
@@ -218,9 +224,9 @@ namespace Azure.Monitor.Query.Logs.Tests
                 mockQuery,
                 _logsTestData.DataTimeRange);
 
-            Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 1, Name = "a" }));
-            Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 2, Name = "b" }));
-            Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 3, Name = "c" }));
+            Assert.That(results.Value, Does.Contain(new TestModel() { Age = 1, Name = "a" }));
+            Assert.That(results.Value, Does.Contain(new TestModel() { Age = 2, Name = "b" }));
+            Assert.That(results.Value, Does.Contain(new TestModel() { Age = 3, Name = "c" }));
         }
 
         [RecordedTest]
@@ -239,12 +245,12 @@ namespace Azure.Monitor.Query.Logs.Tests
                mockQuery,
                 _logsTestData.DataTimeRange);
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(results.Value, Is.EqualTo(new[]
             {
                 new Dictionary<string, object>() {{"Age", 1}, {"Name", "a"}},
                 new Dictionary<string, object>() {{"Age", 2}, {"Name", "b"}},
                 new Dictionary<string, object>() {{"Age", 3}, {"Name", "c"}}
-            }, results.Value);
+            }).AsCollection);
         }
 
         [RecordedTest]
@@ -263,12 +269,12 @@ namespace Azure.Monitor.Query.Logs.Tests
                 mockQuery,
                 _logsTestData.DataTimeRange);
 
-            CollectionAssert.AreEqual(new[]
+            Assert.That(results.Value, Is.EqualTo(new[]
             {
                 new Dictionary<string, object>() {{"Age", 1}, {"Name", "a"}},
                 new Dictionary<string, object>() {{"Age", 2}, {"Name", "b"}},
                 new Dictionary<string, object>() {{"Age", 3}, {"Name", "c"}}
-            }, results.Value);
+            }).AsCollection);
         }
 
         [RecordedTest]
@@ -283,8 +289,8 @@ namespace Azure.Monitor.Query.Logs.Tests
             var result1 = response.Value.GetResult(id1);
             var result2 = response.Value.GetResult(id2);
 
-            CollectionAssert.IsNotEmpty(result1.AllTables[0].Columns);
-            CollectionAssert.IsNotEmpty(result2.AllTables[0].Columns);
+            Assert.That(result1.AllTables[0].Columns, Is.Not.Empty);
+            Assert.That(result2.AllTables[0].Columns, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -298,18 +304,24 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
-            Assert.AreEqual(LogsQueryResultStatus.Success, response.Value.Single(r => r.Id == id1).Status);
+            Assert.That(response.Value.Single(r => r.Id == id1).Status, Is.EqualTo(LogsQueryResultStatus.Success));
 
             var failedResult = response.Value.Single(r => r.Id == id2);
-            Assert.AreEqual(LogsQueryResultStatus.Failure, failedResult.Status);
-            Assert.NotNull(failedResult.Error.Code);
-            Assert.NotNull(failedResult.Error.Message);
+            Assert.Multiple(() =>
+            {
+                Assert.That(failedResult.Status, Is.EqualTo(LogsQueryResultStatus.Failure));
+                Assert.That(failedResult.Error.Code, Is.Not.Null);
+                Assert.That(failedResult.Error.Message, Is.Not.Null);
+            });
 
             var partialResult = response.Value.Single(r => r.Id == id3);
-            Assert.AreEqual(LogsQueryResultStatus.PartialFailure, partialResult.Status);
-            CollectionAssert.IsNotEmpty(partialResult.Table.Rows);
-            Assert.NotNull(partialResult.Error.Code);
-            Assert.NotNull(partialResult.Error.Message);
+            Assert.That(partialResult.Status, Is.EqualTo(LogsQueryResultStatus.PartialFailure));
+            Assert.That(partialResult.Table.Rows, Is.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(partialResult.Error.Code, Is.Not.Null);
+                Assert.That(partialResult.Error.Message, Is.Not.Null);
+            });
         }
 
         [RecordedTest]
@@ -336,39 +348,42 @@ namespace Azure.Monitor.Query.Logs.Tests
             LogsTableRow row = results.Value.Table.Rows[0];
 
             var expectedDate = DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00");
-            Assert.AreEqual(expectedDate, row.GetDateTimeOffset("DateTime"));
-            Assert.AreEqual(expectedDate, row.GetDateTimeOffset(0));
-            Assert.AreEqual(expectedDate, row.GetObject("DateTime"));
-            Assert.AreEqual(false, row.GetBoolean("Bool"));
-            Assert.AreEqual(false, row.GetBoolean(1));
-            Assert.AreEqual(false, row.GetObject("Bool"));
-            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.GetGuid("Guid"));
-            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.GetGuid(2));
-            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.GetObject("Guid"));
-            Assert.AreEqual(12345, row.GetInt32("Int"));
-            Assert.AreEqual(12345, row.GetInt32(3));
-            Assert.AreEqual(12345, row.GetObject("Int"));
-            Assert.AreEqual(1234567890123, row.GetInt64("Long"));
-            Assert.AreEqual(1234567890123, row.GetInt64(4));
-            Assert.AreEqual(1234567890123, row.GetObject("Long"));
-            Assert.AreEqual(12345.6789d, row.GetDouble("Double"));
-            Assert.AreEqual(12345.6789d, row.GetDouble(5));
-            Assert.AreEqual(12345.6789d, row.GetObject("Double"));
-            Assert.AreEqual("string value", row.GetString("String"));
-            Assert.AreEqual("string value", row.GetString(6));
-            Assert.AreEqual("string value", row.GetObject("String"));
-            Assert.AreEqual(TimeSpan.FromSeconds(10), row.GetTimeSpan("Timespan"));
-            Assert.AreEqual(TimeSpan.FromSeconds(10), row.GetTimeSpan(7));
-            Assert.AreEqual(TimeSpan.FromSeconds(10),  row.GetObject("Timespan"));
-            Assert.AreEqual(0.10101m, row.GetDecimal("Decimal"));
-            Assert.AreEqual(0.10101m, row.GetDecimal(8));
-            Assert.AreEqual(0.10101m, row.GetObject("Decimal"));
-            Assert.Null(row.GetBoolean("NullBool"));
-            Assert.Null(row.GetBoolean(9));
-            Assert.IsNull(row.GetObject("NullBool"));
-            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetDynamic(10).ToString());
-            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetDynamic("Dynamic").ToString());
-            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetObject("Dynamic").ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(row.GetDateTimeOffset("DateTime"), Is.EqualTo(expectedDate));
+                Assert.That(row.GetDateTimeOffset(0), Is.EqualTo(expectedDate));
+                Assert.That(row.GetObject("DateTime"), Is.EqualTo(expectedDate));
+                Assert.That(row.GetBoolean("Bool"), Is.EqualTo(false));
+                Assert.That(row.GetBoolean(1), Is.EqualTo(false));
+                Assert.That(row.GetObject("Bool"), Is.EqualTo(false));
+                Assert.That(row.GetGuid("Guid"), Is.EqualTo(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")));
+                Assert.That(row.GetGuid(2), Is.EqualTo(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")));
+                Assert.That(row.GetObject("Guid"), Is.EqualTo(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")));
+                Assert.That(row.GetInt32("Int"), Is.EqualTo(12345));
+                Assert.That(row.GetInt32(3), Is.EqualTo(12345));
+                Assert.That(row.GetObject("Int"), Is.EqualTo(12345));
+                Assert.That(row.GetInt64("Long"), Is.EqualTo(1234567890123));
+                Assert.That(row.GetInt64(4), Is.EqualTo(1234567890123));
+                Assert.That(row.GetObject("Long"), Is.EqualTo(1234567890123));
+                Assert.That(row.GetDouble("Double"), Is.EqualTo(12345.6789d));
+                Assert.That(row.GetDouble(5), Is.EqualTo(12345.6789d));
+                Assert.That(row.GetObject("Double"), Is.EqualTo(12345.6789d));
+                Assert.That(row.GetString("String"), Is.EqualTo("string value"));
+                Assert.That(row.GetString(6), Is.EqualTo("string value"));
+                Assert.That(row.GetObject("String"), Is.EqualTo("string value"));
+                Assert.That(row.GetTimeSpan("Timespan"), Is.EqualTo(TimeSpan.FromSeconds(10)));
+                Assert.That(row.GetTimeSpan(7), Is.EqualTo(TimeSpan.FromSeconds(10)));
+                Assert.That(row.GetObject("Timespan"), Is.EqualTo(TimeSpan.FromSeconds(10)));
+                Assert.That(row.GetDecimal("Decimal"), Is.EqualTo(0.10101m));
+                Assert.That(row.GetDecimal(8), Is.EqualTo(0.10101m));
+                Assert.That(row.GetObject("Decimal"), Is.EqualTo(0.10101m));
+                Assert.That(row.GetBoolean("NullBool"), Is.Null);
+                Assert.That(row.GetBoolean(9), Is.Null);
+                Assert.That(row.GetObject("NullBool"), Is.Null);
+                Assert.That(row.GetDynamic(10).ToString(), Is.EqualTo("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}"));
+                Assert.That(row.GetDynamic("Dynamic").ToString(), Is.EqualTo("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}"));
+                Assert.That(row.GetObject("Dynamic").ToString(), Is.EqualTo("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}"));
+            });
         }
 
         [RecordedTest]
@@ -393,16 +408,16 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             TestModelForTypes row = results.Value[0];
 
-            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.DateTime);
-            Assert.AreEqual(false, row.Bool);
-            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.Guid);
-            Assert.AreEqual(12345, row.Int);
-            Assert.AreEqual(1234567890123, row.Long);
-            Assert.AreEqual(12345.6789d, row.Double);
-            Assert.AreEqual("string value", row.String);
-            Assert.AreEqual(TimeSpan.FromSeconds(10), row.Timespan);
-            Assert.AreEqual(0.10101m, row.Decimal);
-            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.Dynamic.ToString());
+            Assert.That(row.DateTime, Is.EqualTo(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00")));
+            Assert.That(row.Bool, Is.EqualTo(false));
+            Assert.That(row.Guid, Is.EqualTo(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")));
+            Assert.That(row.Int, Is.EqualTo(12345));
+            Assert.That(row.Long, Is.EqualTo(1234567890123));
+            Assert.That(row.Double, Is.EqualTo(12345.6789d));
+            Assert.That(row.String, Is.EqualTo("string value"));
+            Assert.That(row.Timespan, Is.EqualTo(TimeSpan.FromSeconds(10)));
+            Assert.That(row.Decimal, Is.EqualTo(0.10101m));
+            Assert.That(row.Dynamic.ToString(), Is.EqualTo("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}"));
         }
 
         [RecordedTest]
@@ -427,16 +442,16 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             TestModelForTypesNullable row = results.Value[0];
 
-            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.DateTime);
-            Assert.AreEqual(false, row.Bool);
-            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.Guid);
-            Assert.AreEqual(12345, row.Int);
-            Assert.AreEqual(1234567890123, row.Long);
-            Assert.AreEqual(12345.6789d, row.Double);
-            Assert.AreEqual("string value", row.String);
-            Assert.AreEqual(TimeSpan.FromSeconds(10), row.Timespan);
-            Assert.AreEqual(0.10101m, row.Decimal);
-            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.Dynamic.ToString());
+            Assert.That(row.DateTime, Is.EqualTo(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00")));
+            Assert.That(row.Bool, Is.EqualTo(false));
+            Assert.That(row.Guid, Is.EqualTo(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")));
+            Assert.That(row.Int, Is.EqualTo(12345));
+            Assert.That(row.Long, Is.EqualTo(1234567890123));
+            Assert.That(row.Double, Is.EqualTo(12345.6789d));
+            Assert.That(row.String, Is.EqualTo("string value"));
+            Assert.That(row.Timespan, Is.EqualTo(TimeSpan.FromSeconds(10)));
+            Assert.That(row.Decimal, Is.EqualTo(0.10101m));
+            Assert.That(row.Dynamic.ToString(), Is.EqualTo("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}"));
         }
 
         [RecordedTest]
@@ -461,16 +476,16 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             TestModelForTypesNullable row = results.Value[0];
 
-            Assert.IsNull(row.DateTime);
-            Assert.IsNull(row.Bool);
-            Assert.IsNull(row.Guid);
-            Assert.IsNull(row.Int);
-            Assert.IsNull(row.Long);
-            Assert.IsNull(row.Double);
-            Assert.AreEqual("I cant be null", row.String);
-            Assert.IsNull(row.Timespan);
-            Assert.IsNull(row.Decimal);
-            Assert.IsNull(row.Dynamic);
+            Assert.That(row.DateTime, Is.Null);
+            Assert.That(row.Bool, Is.Null);
+            Assert.That(row.Guid, Is.Null);
+            Assert.That(row.Int, Is.Null);
+            Assert.That(row.Long, Is.Null);
+            Assert.That(row.Double, Is.Null);
+            Assert.That(row.String, Is.EqualTo("I cant be null"));
+            Assert.That(row.Timespan, Is.Null);
+            Assert.That(row.Decimal, Is.Null);
+            Assert.That(row.Dynamic, Is.Null);
         }
 
         [RecordedTest]
@@ -478,15 +493,15 @@ namespace Azure.Monitor.Query.Logs.Tests
         {
             var client = CreateClient();
 
-            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), (await client.QueryWorkspaceAsync<DateTimeOffset>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(2015-12-31 23:59:59.9) ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.AreEqual(false, (await client.QueryWorkspaceAsync<bool>(TestEnvironment.WorkspaceId, $"datatable (Bool: bool) [ false ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), (await client.QueryWorkspaceAsync<Guid>(TestEnvironment.WorkspaceId, $"datatable (Guid: guid) [ guid(74be27de-1e4e-49d9-b579-fe0b331d3642) ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.AreEqual(12345, (await client.QueryWorkspaceAsync<int>(TestEnvironment.WorkspaceId, $"datatable (Int: int) [ 12345 ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.AreEqual(1234567890123, (await client.QueryWorkspaceAsync<long>(TestEnvironment.WorkspaceId, $"datatable (Long: long) [ 1234567890123 ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.AreEqual(12345.6789d, (await client.QueryWorkspaceAsync<double>(TestEnvironment.WorkspaceId, $"datatable (Double: double) [ 12345.6789 ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.AreEqual("string value", (await client.QueryWorkspaceAsync<string>(TestEnvironment.WorkspaceId, $"datatable (String: string) [ \"string value\" ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.AreEqual(TimeSpan.FromSeconds(10), (await client.QueryWorkspaceAsync<TimeSpan>(TestEnvironment.WorkspaceId, $"datatable (Timespan: timespan) [ 10s ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.AreEqual(0.10101m, (await client.QueryWorkspaceAsync<decimal>(TestEnvironment.WorkspaceId, $"datatable (Decimal: decimal) [ decimal(0.10101) ]", _logsTestData.DataTimeRange)).Value[0]);
+            Assert.That((await client.QueryWorkspaceAsync<DateTimeOffset>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(2015-12-31 23:59:59.9) ]", _logsTestData.DataTimeRange)).Value[0], Is.EqualTo(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00")));
+            Assert.That((await client.QueryWorkspaceAsync<bool>(TestEnvironment.WorkspaceId, $"datatable (Bool: bool) [ false ]", _logsTestData.DataTimeRange)).Value[0], Is.EqualTo(false));
+            Assert.That((await client.QueryWorkspaceAsync<Guid>(TestEnvironment.WorkspaceId, $"datatable (Guid: guid) [ guid(74be27de-1e4e-49d9-b579-fe0b331d3642) ]", _logsTestData.DataTimeRange)).Value[0], Is.EqualTo(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")));
+            Assert.That((await client.QueryWorkspaceAsync<int>(TestEnvironment.WorkspaceId, $"datatable (Int: int) [ 12345 ]", _logsTestData.DataTimeRange)).Value[0], Is.EqualTo(12345));
+            Assert.That((await client.QueryWorkspaceAsync<long>(TestEnvironment.WorkspaceId, $"datatable (Long: long) [ 1234567890123 ]", _logsTestData.DataTimeRange)).Value[0], Is.EqualTo(1234567890123));
+            Assert.That((await client.QueryWorkspaceAsync<double>(TestEnvironment.WorkspaceId, $"datatable (Double: double) [ 12345.6789 ]", _logsTestData.DataTimeRange)).Value[0], Is.EqualTo(12345.6789d));
+            Assert.That((await client.QueryWorkspaceAsync<string>(TestEnvironment.WorkspaceId, $"datatable (String: string) [ \"string value\" ]", _logsTestData.DataTimeRange)).Value[0], Is.EqualTo("string value"));
+            Assert.That((await client.QueryWorkspaceAsync<TimeSpan>(TestEnvironment.WorkspaceId, $"datatable (Timespan: timespan) [ 10s ]", _logsTestData.DataTimeRange)).Value[0], Is.EqualTo(TimeSpan.FromSeconds(10)));
+            Assert.That((await client.QueryWorkspaceAsync<decimal>(TestEnvironment.WorkspaceId, $"datatable (Decimal: decimal) [ decimal(0.10101) ]", _logsTestData.DataTimeRange)).Value[0], Is.EqualTo(0.10101m));
         }
 
         [RecordedTest]
@@ -494,14 +509,14 @@ namespace Azure.Monitor.Query.Logs.Tests
         {
             var client = CreateClient();
 
-            Assert.IsNull((await client.QueryWorkspaceAsync<DateTimeOffset?>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(null) ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.IsNull((await client.QueryWorkspaceAsync<bool?>(TestEnvironment.WorkspaceId, $"datatable (Bool: bool) [ bool(null) ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.IsNull((await client.QueryWorkspaceAsync<Guid?>(TestEnvironment.WorkspaceId, $"datatable (Guid: guid) [ guid(null) ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.IsNull((await client.QueryWorkspaceAsync<int?>(TestEnvironment.WorkspaceId, $"datatable (Int: int) [ int(null) ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.IsNull((await client.QueryWorkspaceAsync<long?>(TestEnvironment.WorkspaceId, $"datatable (Long: long) [ long(null) ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.IsNull((await client.QueryWorkspaceAsync<double?>(TestEnvironment.WorkspaceId, $"datatable (Double: double) [ double(null) ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.IsNull((await client.QueryWorkspaceAsync<TimeSpan?>(TestEnvironment.WorkspaceId, $"datatable (Timespan: timespan) [ timespan(null) ]", _logsTestData.DataTimeRange)).Value[0]);
-            Assert.IsNull((await client.QueryWorkspaceAsync<decimal?>(TestEnvironment.WorkspaceId, $"datatable (Decimal: decimal) [ decimal(null) ]", _logsTestData.DataTimeRange)).Value[0]);
+            Assert.That((await client.QueryWorkspaceAsync<DateTimeOffset?>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(null) ]", _logsTestData.DataTimeRange)).Value[0], Is.Null);
+            Assert.That((await client.QueryWorkspaceAsync<bool?>(TestEnvironment.WorkspaceId, $"datatable (Bool: bool) [ bool(null) ]", _logsTestData.DataTimeRange)).Value[0], Is.Null);
+            Assert.That((await client.QueryWorkspaceAsync<Guid?>(TestEnvironment.WorkspaceId, $"datatable (Guid: guid) [ guid(null) ]", _logsTestData.DataTimeRange)).Value[0], Is.Null);
+            Assert.That((await client.QueryWorkspaceAsync<int?>(TestEnvironment.WorkspaceId, $"datatable (Int: int) [ int(null) ]", _logsTestData.DataTimeRange)).Value[0], Is.Null);
+            Assert.That((await client.QueryWorkspaceAsync<long?>(TestEnvironment.WorkspaceId, $"datatable (Long: long) [ long(null) ]", _logsTestData.DataTimeRange)).Value[0], Is.Null);
+            Assert.That((await client.QueryWorkspaceAsync<double?>(TestEnvironment.WorkspaceId, $"datatable (Double: double) [ double(null) ]", _logsTestData.DataTimeRange)).Value[0], Is.Null);
+            Assert.That((await client.QueryWorkspaceAsync<TimeSpan?>(TestEnvironment.WorkspaceId, $"datatable (Timespan: timespan) [ timespan(null) ]", _logsTestData.DataTimeRange)).Value[0], Is.Null);
+            Assert.That((await client.QueryWorkspaceAsync<decimal?>(TestEnvironment.WorkspaceId, $"datatable (Decimal: decimal) [ decimal(null) ]", _logsTestData.DataTimeRange)).Value[0], Is.Null);
         }
 
         [RecordedTest]
@@ -511,7 +526,7 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             var results = await client.QueryWorkspaceAsync<DateTimeOffset?>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(null) ]", _logsTestData.DataTimeRange);
 
-            Assert.IsNull(results.Value[0]);
+            Assert.That(results.Value[0], Is.Null);
         }
 
         [RecordedTest]
@@ -532,7 +547,7 @@ namespace Azure.Monitor.Query.Logs.Tests
                 mockQuery,
                 timespan);
 
-            Assert.GreaterOrEqual(results.Value.Count, 3);
+            Assert.That(results.Value, Has.Count.GreaterThanOrEqualTo(3));
         }
 
         [RecordedTest]
@@ -565,7 +580,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             var result1 = response.Value.GetResult<DateTimeOffset>(id1);
             var result2 = response.Value.GetResult<DateTimeOffset>(id2);
 
-            Assert.GreaterOrEqual(result2.Count, 3);
+            Assert.That(result2, Has.Count.GreaterThanOrEqualTo(3));
         }
 
         [RecordedTest]
@@ -574,8 +589,8 @@ namespace Azure.Monitor.Query.Logs.Tests
             var client = CreateClient();
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, "this won't work", _logsTestData.DataTimeRange));
 
-            Assert.AreEqual("BadArgumentError", exception.ErrorCode);
-            StringAssert.StartsWith("The request had some invalid properties", exception.Message);
+            Assert.That(exception.ErrorCode, Is.EqualTo("BadArgumentError"));
+            Assert.That(exception.Message, Does.StartWith("The request had some invalid properties"));
         }
 
         [RecordedTest]
@@ -589,8 +604,8 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             var exception = Assert.Throws<RequestFailedException>(() => batchResult.Value.GetResult(queryId));
 
-            Assert.AreEqual("BadArgumentError", exception.ErrorCode);
-            StringAssert.StartsWith("Batch query with id '0' failed.", exception.Message);
+            Assert.That(exception.ErrorCode, Is.EqualTo("BadArgumentError"));
+            Assert.That(exception.Message, Does.StartWith("Batch query with id '0' failed."));
         }
 
         [RecordedTest]
@@ -604,8 +619,8 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             var exception = Assert.Throws<RequestFailedException>(() => batchResult.Value.GetResult(queryId));
 
-            Assert.AreEqual("PartialError", exception.ErrorCode);
-            StringAssert.StartsWith("The result was returned but contained a partial error", exception.Message);
+            Assert.That(exception.ErrorCode, Is.EqualTo("PartialError"));
+            Assert.That(exception.Message, Does.StartWith("The result was returned but contained a partial error"));
         }
 
         [RecordedTest]
@@ -620,8 +635,8 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
 
-            Assert.AreEqual("queryId", exception.ParamName);
-            StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of LogsBatchQuery.AddWorkspaceQuery as the 'queryId' argument.", exception.Message);
+            Assert.That(exception.ParamName, Is.EqualTo("queryId"));
+            Assert.That(exception.Message, Does.StartWith("Query with ID '12345' wasn't part of the batch. Please use the return value of LogsBatchQuery.AddWorkspaceQuery as the 'queryId' argument."));
         }
 
         [RecordedTest]
@@ -646,11 +661,11 @@ namespace Azure.Monitor.Query.Logs.Tests
             if (include)
             {
                 using JsonDocument document = JsonDocument.Parse(response.Value.GetStatistics());
-                Assert.GreaterOrEqual(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
+                Assert.That(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), Is.GreaterThanOrEqualTo(0));
             }
             else
             {
-                Assert.AreEqual(default, response.Value.GetStatistics());
+                Assert.That(response.Value.GetStatistics(), Is.EqualTo(default));
             }
         }
 
@@ -669,11 +684,11 @@ namespace Azure.Monitor.Query.Logs.Tests
             if (include)
             {
                 using JsonDocument document = JsonDocument.Parse(response.Value.GetVisualization());
-                Assert.AreNotEqual(JsonValueKind.Undefined, document.RootElement.GetProperty("visualization").ValueKind);
+                Assert.That(document.RootElement.GetProperty("visualization").ValueKind, Is.Not.EqualTo(JsonValueKind.Undefined));
             }
             else
             {
-                Assert.AreEqual(default, response.Value.GetVisualization());
+                Assert.That(response.Value.GetVisualization(), Is.EqualTo(default));
             }
         }
 
@@ -701,11 +716,11 @@ namespace Azure.Monitor.Query.Logs.Tests
             if (include)
             {
                 using JsonDocument document = JsonDocument.Parse(result.GetStatistics());
-                Assert.GreaterOrEqual(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
+                Assert.That(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), Is.GreaterThanOrEqualTo(0));
             }
             else
             {
-                Assert.AreEqual(default, result.GetStatistics());
+                Assert.That(result.GetStatistics(), Is.EqualTo(default));
             }
         }
 
@@ -744,11 +759,11 @@ namespace Azure.Monitor.Query.Logs.Tests
                     // or a partial failure 200 response
                     if (exception.Status == 200)
                     {
-                        StringAssert.Contains("PartialError", exception.Message);
+                        Assert.That(exception.Message, Does.Contain("PartialError"));
                     }
                     else
                     {
-                        Assert.AreEqual(504, exception.Status);
+                        Assert.That(exception.Status, Is.EqualTo(504));
                     }
                     return;
                 }
@@ -762,7 +777,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             var client = CreateClient();
 
             var response = await client.QueryWorkspaceAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQuery(query.Value), _logsTestData.DataTimeRange);
-            Assert.True(response.Value.Single());
+            Assert.That(response.Value.Single(), Is.True);
         }
 
         [Test]
@@ -786,7 +801,7 @@ namespace Azure.Monitor.Query.Logs.Tests
                 mockQuery,
                 timespan);
 
-            Assert.GreaterOrEqual(results.Value.Count, 3);
+            Assert.That(results.Value, Has.Count.GreaterThanOrEqualTo(3));
         }
 
         [Test]
@@ -808,7 +823,7 @@ namespace Azure.Monitor.Query.Logs.Tests
                 mockQuery,
                 timespan);
 
-            Assert.GreaterOrEqual(results.Value.Table.Rows.Count, 3);
+            Assert.That(results.Value.Table.Rows, Has.Count.GreaterThanOrEqualTo(3));
         }
 
         [Test]
@@ -831,7 +846,7 @@ namespace Azure.Monitor.Query.Logs.Tests
                 mockQuery,
                 timespan);
 
-            Assert.GreaterOrEqual(results.Value.Table.Rows.Count, 3);
+            Assert.That(results.Value.Table.Rows, Has.Count.GreaterThanOrEqualTo(3));
         }
 
         [Test]
@@ -854,7 +869,7 @@ namespace Azure.Monitor.Query.Logs.Tests
                 mockQuery,
                 timespan);
 
-            Assert.GreaterOrEqual(results.Value.Count, 3);
+            Assert.That(results.Value, Has.Count.GreaterThanOrEqualTo(3));
         }
 
         [Test]
@@ -870,7 +885,7 @@ namespace Azure.Monitor.Query.Logs.Tests
                 _logsTestData.DataTimeRange,
                 options));
 
-            StringAssert.AreEqualIgnoringCase("resourceId", exception.ParamName);
+            Assert.That(exception.ParamName, Is.EqualTo("resourceId").IgnoreCase);
         }
 
         public static IEnumerable<FormattableStringWrapper> Queries
@@ -968,14 +983,14 @@ namespace Azure.Monitor.Query.Logs.Tests
             var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, "print real(nan), real(+inf), real(-inf), real(null), real(123)", TimeSpan.FromMinutes(1));
 
             var resultTable = results.Value.Table;
-            CollectionAssert.IsNotEmpty(resultTable.Columns);
+            Assert.That(resultTable.Columns, Is.Not.Empty);
 
-            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
-            Assert.AreEqual(double.NaN, resultTable.Rows[0][0]);
-            Assert.AreEqual(double.PositiveInfinity, resultTable.Rows[0][1]);
-            Assert.AreEqual(double.NegativeInfinity, resultTable.Rows[0][2]);
-            Assert.AreEqual(null, resultTable.Rows[0][3]);
-            Assert.AreEqual(123, resultTable.Rows[0][4]);
+            Assert.That(results.Value.Status, Is.EqualTo(LogsQueryResultStatus.Success));
+            Assert.That(resultTable.Rows[0][0], Is.EqualTo(double.NaN));
+            Assert.That(resultTable.Rows[0][1], Is.EqualTo(double.PositiveInfinity));
+            Assert.That(resultTable.Rows[0][2], Is.EqualTo(double.NegativeInfinity));
+            Assert.That(resultTable.Rows[0][3], Is.EqualTo(null));
+            Assert.That(resultTable.Rows[0][4], Is.EqualTo(123));
         }
     }
 }

@@ -72,8 +72,11 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             azureStatus = newFile.GetAzureOpenAIFileStatus();
         }
 
-        Assert.That(azureStatus, Is.EqualTo(AzureOpenAIFileStatus.Error), "Expected file id {0} to be in error state, but it was {1}", newFile.Id, azureStatus);
-        Assert.That(newFile.StatusDetails.ToLower(), Does.Contain("validation of jsonl"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(azureStatus, Is.EqualTo(AzureOpenAIFileStatus.Error), $"Expected file id {newFile.Id} to be in error state, but it was {azureStatus}");
+            Assert.That(newFile.StatusDetails.ToLower(), Does.Contain("validation of jsonl"));
+        });
     }
 
     [RecordedTest]
@@ -99,8 +102,11 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             }
 
             Assert.That(job, Is.Not.Null);
-            Assert.That(job.Value, Is.Null.Or.Not.Empty); // this either null or set to some non-empty value
-            Assert.That(job.Status, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(job.Value, Is.Null.Or.Not.Empty); // this either null or set to some non-empty value
+                Assert.That(job.Status, Is.Not.Null.Or.Empty);
+            });
         }
     }
 
@@ -177,16 +183,19 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
 
         FineTuningJob job = await client.GetJobsAsync().GetFirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
 
-        Assert.NotNull(job);
-        Assert.AreEqual(job.Status, "succeeded");
+        Assert.That(job, Is.Not.Null);
+        Assert.That(job.Status, Is.EqualTo("succeeded"));
 
         var evt = await job.GetEventsAsync(new() { PageSize = 1 }).GetFirstOrDefaultAsync();
 
         Assert.That(evt, Is.Not.Null);
-        Assert.That(evt.Id, !(Is.Null.Or.Empty));
-        Assert.That(evt.CreatedAt, Is.GreaterThan(START_2024));
-        Assert.That(evt.Level, !(Is.Null.Or.Empty));
-        Assert.That(evt.Message, !(Is.Null.Or.Empty));
+        Assert.Multiple(() =>
+        {
+            Assert.That(evt.Id, !(Is.Null.Or.Empty));
+            Assert.That(evt.CreatedAt, Is.GreaterThan(START_2024));
+            Assert.That(evt.Level, !(Is.Null.Or.Empty));
+            Assert.That(evt.Message, !(Is.Null.Or.Empty));
+        });
     }
 
     [RecordedTest]
@@ -212,8 +221,11 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             uploadedFile.Id,
             waitUntilCompleted: false, new() { TrainingMethod = FineTuningTrainingMethod.CreateSupervised() });
 
-        Assert.That(job.JobId, Is.Not.Null.Or.Empty);
-        Assert.That(job.Status, !(Is.Null.Or.EqualTo("failed").Or.EqualTo("cancelled")));
+        Assert.Multiple(() =>
+        {
+            Assert.That(job.JobId, Is.Not.Null.Or.Empty);
+            Assert.That(job.Status, !(Is.Null.Or.EqualTo("failed").Or.EqualTo("cancelled")));
+        });
 
         await job.CancelAndUpdateAsync();
 
@@ -222,7 +234,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.That(job.Status, Is.EqualTo("cancelled"), "Fine tuning did not cancel");
 
         bool deleted = await DeleteJobAndVerifyAsync((AzureFineTuningJob)job, job.JobId, client);
-        Assert.True(deleted, "Failed to delete fine tuning model: {0}", job.Value);
+        Assert.That(deleted, Is.True, $"Failed to delete fine tuning model: {job.Value}");
 
         FileDeletionResult success = await fileClient.DeleteFileAsync(uploadedFile.Id);
         Assert.That(success.Deleted, Is.True);
@@ -263,8 +275,11 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         deploymentName = "azure-ai-openai-test-" + Recording?.Random.NewGuid().ToString();
         AzureDeployedModel deployment = await deploymentClient.CreateDeploymentAsync(deploymentName, job.Value!);
         Assert.That(deployment, Is.Not.Null);
-        Assert.That(deployment.ID, !(Is.Null.Or.Empty));
-        Assert.That(deployment.Properties, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(deployment.ID, !(Is.Null.Or.Empty));
+            Assert.That(deployment.Properties, Is.Not.Null);
+        });
 
         deployment = await WaitUntilReturnLast(
             deployment,
@@ -291,10 +306,16 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             new UserChatMessage("Pavleski will not play in 2024-2025 season")
         ]);
         Assert.That(completion, Is.Not.Null);
-        Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
-        Assert.That(completion.Content, Has.Count.GreaterThan(0));
-        Assert.That(completion.Content[0].Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
-        Assert.That(completion.Content[0].Text, !Is.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
+            Assert.That(completion.Content, Has.Count.GreaterThan(0));
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(completion.Content[0].Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+            Assert.That(completion.Content[0].Text, !Is.Null.Or.Empty);
+        });
 
         // we expect a JSON payload as the response so let's try to deserialize it
         using var jsonDoc = JsonDocument.Parse(completion.Content[0].Text, new()
@@ -309,8 +330,11 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             json = json.EnumerateArray().FirstOrDefault();
         }
 
-        Assert.That(json.ValueKind, Is.EqualTo(JsonValueKind.Object));
-        Assert.That(json.EnumerateObject().Select(p => p.Name), Has.Some.Match("(player)|(team)|(sport)|(gender)"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(json.ValueKind, Is.EqualTo(JsonValueKind.Object));
+            Assert.That(json.EnumerateObject().Select(p => p.Name), Has.Some.Match("(player)|(team)|(sport)|(gender)"));
+        });
     }
 
     #region helper methods

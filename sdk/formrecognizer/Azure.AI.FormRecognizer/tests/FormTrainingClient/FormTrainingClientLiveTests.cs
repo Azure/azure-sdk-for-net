@@ -59,11 +59,14 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            // Sanity check to make sure we got an actual response back from the service.
-            Assert.IsNotNull(model.ModelId);
-            Assert.AreEqual(CustomFormModelStatus.Ready, model.Status);
-            Assert.IsNotNull(model.Errors);
-            Assert.AreEqual(0, model.Errors.Count);
+            Assert.Multiple(() =>
+            {
+                // Sanity check to make sure we got an actual response back from the service.
+                Assert.That(model.ModelId, Is.Not.Null);
+                Assert.That(model.Status, Is.EqualTo(CustomFormModelStatus.Ready));
+                Assert.That(model.Errors, Is.Not.Null);
+            });
+            Assert.That(model.Errors.Count, Is.EqualTo(0));
         }
 
         #region StartTraining
@@ -85,7 +88,7 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 await operation.WaitForCompletionAsync();
 
-                Assert.IsTrue(operation.HasValue);
+                Assert.That(operation.HasValue, Is.True);
 
                 model = operation.Value;
             }
@@ -97,37 +100,49 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            Assert.IsNotNull(model.ModelId);
-            Assert.IsNull(model.ModelName);
-            Assert.IsNotNull(model.Properties);
-            Assert.IsFalse(model.Properties.IsComposedModel);
-            Assert.IsNotNull(model.TrainingStartedOn);
-            Assert.IsNotNull(model.TrainingCompletedOn);
-            Assert.AreEqual(CustomFormModelStatus.Ready, model.Status);
-            Assert.IsNotNull(model.Errors);
-            Assert.AreEqual(0, model.Errors.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.ModelId, Is.Not.Null);
+                Assert.That(model.ModelName, Is.Null);
+                Assert.That(model.Properties, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.Properties.IsComposedModel, Is.False);
+                Assert.That(model.TrainingStartedOn, Is.Not.Null);
+                Assert.That(model.TrainingCompletedOn, Is.Not.Null);
+                Assert.That(model.Status, Is.EqualTo(CustomFormModelStatus.Ready));
+                Assert.That(model.Errors, Is.Not.Null);
+            });
+            Assert.That(model.Errors.Count, Is.EqualTo(0));
 
             foreach (TrainingDocumentInfo doc in model.TrainingDocuments)
             {
-                Assert.IsNotNull(doc.Name);
-                Assert.IsNotNull(doc.ModelId);
-                Assert.IsNotNull(doc.PageCount);
-                Assert.AreEqual(TrainingStatus.Succeeded, doc.Status);
-                Assert.IsNotNull(doc.Errors);
-                Assert.AreEqual(0, doc.Errors.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(doc.Name, Is.Not.Null);
+                    Assert.That(doc.ModelId, Is.Not.Null);
+                    Assert.That(doc.PageCount, Is.Not.Null);
+                    Assert.That(doc.Status, Is.EqualTo(TrainingStatus.Succeeded));
+                    Assert.That(doc.Errors, Is.Not.Null);
+                });
+                Assert.That(doc.Errors.Count, Is.EqualTo(0));
             }
 
             foreach (var submodel in model.Submodels)
             {
-                Assert.IsNotNull(submodel.FormType);
-                Assert.IsNotNull(submodel.ModelId);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(submodel.FormType, Is.Not.Null);
+                    Assert.That(submodel.ModelId, Is.Not.Null);
+                });
                 foreach (var fields in submodel.Fields)
                 {
-                    Assert.IsNotNull(fields.Value.Name);
+                    Assert.That(fields.Value.Name, Is.Not.Null);
                     if (labeled)
-                        Assert.IsNotNull(fields.Value.Accuracy);
+                        Assert.That(fields.Value.Accuracy, Is.Not.Null);
                     else
-                        Assert.IsNotNull(fields.Value.Label);
+                        Assert.That(fields.Value.Label, Is.Not.Null);
                 }
             }
         }
@@ -154,8 +169,11 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(CustomFormModelStatus.Ready, operation.Value.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasValue, Is.True);
+                Assert.That(operation.Value.Status, Is.EqualTo(CustomFormModelStatus.Ready));
+            });
         }
 
         [RecordedTest]
@@ -169,7 +187,7 @@ namespace Azure.AI.FormRecognizer.Tests
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { TrainingFileFilter = filter });
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
-            Assert.AreEqual("2014", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("2014"));
         }
 
         [RecordedTest]
@@ -194,8 +212,11 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(modelName, operation.Value.ModelName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasValue, Is.True);
+                Assert.That(operation.Value.ModelName, Is.EqualTo(modelName));
+            });
         }
 
         [RecordedTest]
@@ -221,8 +242,11 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(modelName, operation.Value.ModelName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasValue, Is.True);
+                Assert.That(operation.Value.ModelName, Is.EqualTo(modelName));
+            });
         }
 
         [RecordedTest]
@@ -233,7 +257,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var containerUrl = new Uri("https://someUrl");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartTrainingAsync(containerUrl, useTrainingLabels: false));
-            Assert.AreEqual("2011", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("2011"));
         }
 
         #endregion StartTraining
@@ -255,10 +279,10 @@ namespace Azure.AI.FormRecognizer.Tests
             try
             {
                 await trainingOperation.WaitForCompletionAsync();
-                Assert.IsTrue(trainingOperation.HasValue);
+                Assert.That(trainingOperation.HasValue, Is.True);
 
                 model = trainingOperation.Value;
-                Assert.IsNotNull(model.Submodels.FirstOrDefault().FormType);
+                Assert.That(model.Submodels.FirstOrDefault().FormType, Is.Not.Null);
 
                 var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
 
@@ -273,11 +297,14 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            Assert.IsTrue(recognizeOperation.HasValue);
+            Assert.That(recognizeOperation.HasValue, Is.True);
 
             RecognizedForm form = recognizeOperation.Value.Single();
-            Assert.IsNotNull(form.FormType);
-            Assert.AreEqual(form.FormType, model.Submodels.FirstOrDefault().FormType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(form.FormType, Is.Not.Null);
+                Assert.That(model.Submodels.FirstOrDefault().FormType, Is.EqualTo(form.FormType));
+            });
         }
 
         [RecordedTest]
@@ -292,7 +319,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds));
-            Assert.AreEqual("404", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("404"));
         }
 
         [RecordedTest]
@@ -316,7 +343,7 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 await operation.WaitForCompletionAsync();
 
-                Assert.IsTrue(operation.HasValue);
+                Assert.That(operation.HasValue, Is.True);
 
                 composedModel = operation.Value;
             }
@@ -328,53 +355,74 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            Assert.IsNotNull(composedModel.ModelId);
-            Assert.IsNotNull(composedModel.Properties);
-            Assert.IsTrue(composedModel.Properties.IsComposedModel);
-            Assert.IsNotNull(composedModel.TrainingStartedOn);
-            Assert.IsNotNull(composedModel.TrainingCompletedOn);
-            Assert.AreEqual(CustomFormModelStatus.Ready, composedModel.Status);
-            Assert.IsNotNull(composedModel.Errors);
-            Assert.AreEqual(0, composedModel.Errors.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(composedModel.ModelId, Is.Not.Null);
+                Assert.That(composedModel.Properties, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(composedModel.Properties.IsComposedModel, Is.True);
+                Assert.That(composedModel.TrainingStartedOn, Is.Not.Null);
+                Assert.That(composedModel.TrainingCompletedOn, Is.Not.Null);
+                Assert.That(composedModel.Status, Is.EqualTo(CustomFormModelStatus.Ready));
+                Assert.That(composedModel.Errors, Is.Not.Null);
+            });
+            Assert.That(composedModel.Errors.Count, Is.EqualTo(0));
 
             Dictionary<string, List<TrainingDocumentInfo>> trainingDocsPerModel = composedModel.TrainingDocuments.GroupBy(doc => doc.ModelId).ToDictionary(g => g.Key, g => g.ToList());
 
-            Assert.AreEqual(2, trainingDocsPerModel.Count);
-            Assert.IsTrue(trainingDocsPerModel.ContainsKey(trainedModelA.ModelId));
-            Assert.IsTrue(trainingDocsPerModel.ContainsKey(trainedModelB.ModelId));
+            Assert.That(trainingDocsPerModel, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(trainingDocsPerModel.ContainsKey(trainedModelA.ModelId), Is.True);
+                Assert.That(trainingDocsPerModel.ContainsKey(trainedModelB.ModelId), Is.True);
+            });
 
             //Check training documents in modelA
             foreach (TrainingDocumentInfo doc in trainingDocsPerModel[trainedModelA.ModelId])
             {
-                Assert.IsNotNull(doc.Name);
-                Assert.AreEqual(trainedModelA.ModelId, doc.ModelId);
-                Assert.IsNotNull(doc.PageCount);
-                Assert.AreEqual(TrainingStatus.Succeeded, doc.Status);
-                Assert.IsNotNull(doc.Errors);
-                Assert.AreEqual(0, doc.Errors.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(doc.Name, Is.Not.Null);
+                    Assert.That(doc.ModelId, Is.EqualTo(trainedModelA.ModelId));
+                    Assert.That(doc.PageCount, Is.Not.Null);
+                    Assert.That(doc.Status, Is.EqualTo(TrainingStatus.Succeeded));
+                    Assert.That(doc.Errors, Is.Not.Null);
+                });
+                Assert.That(doc.Errors.Count, Is.EqualTo(0));
             }
 
             //Check training documents in modelB
             foreach (TrainingDocumentInfo doc in trainingDocsPerModel[trainedModelB.ModelId])
             {
-                Assert.IsNotNull(doc.Name);
-                Assert.AreEqual(trainedModelB.ModelId, doc.ModelId);
-                Assert.IsNotNull(doc.PageCount);
-                Assert.AreEqual(TrainingStatus.Succeeded, doc.Status);
-                Assert.IsNotNull(doc.Errors);
-                Assert.AreEqual(0, doc.Errors.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(doc.Name, Is.Not.Null);
+                    Assert.That(doc.ModelId, Is.EqualTo(trainedModelB.ModelId));
+                    Assert.That(doc.PageCount, Is.Not.Null);
+                    Assert.That(doc.Status, Is.EqualTo(TrainingStatus.Succeeded));
+                    Assert.That(doc.Errors, Is.Not.Null);
+                });
+                Assert.That(doc.Errors.Count, Is.EqualTo(0));
             }
 
-            Assert.AreEqual(2, composedModel.Submodels.Count);
+            Assert.That(composedModel.Submodels, Has.Count.EqualTo(2));
             foreach (var submodel in composedModel.Submodels)
             {
-                Assert.IsNotNull(submodel.FormType);
-                Assert.IsNotNull(submodel.ModelId);
-                Assert.IsTrue(modelIds.Contains(submodel.ModelId));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(submodel.FormType, Is.Not.Null);
+                    Assert.That(submodel.ModelId, Is.Not.Null);
+                    Assert.That(modelIds, Does.Contain(submodel.ModelId));
+                });
                 foreach (var fields in submodel.Fields)
                 {
-                    Assert.IsNotNull(fields.Value.Name);
-                    Assert.IsNotNull(fields.Value.Accuracy);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(fields.Value.Name, Is.Not.Null);
+                        Assert.That(fields.Value.Accuracy, Is.Not.Null);
+                    });
                 }
             }
         }
@@ -391,7 +439,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var modelIds = new List<string> { trainedModelA.ModelId, "00000000-0000-0000-0000-000000000000" };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds, "My composed model"));
-            Assert.AreEqual("1001", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("1001"));
         }
 
         #region administration ops
@@ -413,59 +461,80 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 await operation.WaitForCompletionAsync();
 
-                Assert.IsTrue(operation.HasValue);
+                Assert.That(operation.HasValue, Is.True);
 
                 trainedModel = operation.Value;
 
                 CustomFormModel resultModel = await client.GetCustomModelAsync(trainedModel.ModelId);
 
-                Assert.AreEqual(trainedModel.ModelId, resultModel.ModelId);
-                Assert.AreEqual(trainedModel.Properties.IsComposedModel, resultModel.Properties.IsComposedModel);
-                Assert.AreEqual(trainedModel.TrainingStartedOn, resultModel.TrainingStartedOn);
-                Assert.AreEqual(trainedModel.TrainingCompletedOn, resultModel.TrainingCompletedOn);
-                Assert.AreEqual(CustomFormModelStatus.Ready, resultModel.Status);
-                Assert.AreEqual(trainedModel.Status, resultModel.Status);
-                Assert.AreEqual(trainedModel.Errors.Count, resultModel.Errors.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(resultModel.ModelId, Is.EqualTo(trainedModel.ModelId));
+                    Assert.That(resultModel.Properties.IsComposedModel, Is.EqualTo(trainedModel.Properties.IsComposedModel));
+                    Assert.That(resultModel.TrainingStartedOn, Is.EqualTo(trainedModel.TrainingStartedOn));
+                    Assert.That(resultModel.TrainingCompletedOn, Is.EqualTo(trainedModel.TrainingCompletedOn));
+                    Assert.That(resultModel.Status, Is.EqualTo(CustomFormModelStatus.Ready));
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(resultModel.Status, Is.EqualTo(trainedModel.Status));
+                    Assert.That(resultModel.Errors, Has.Count.EqualTo(trainedModel.Errors.Count));
+                });
 
                 for (int i = 0; i < resultModel.TrainingDocuments.Count; i++)
                 {
                     var tm = trainedModel.TrainingDocuments[i];
                     var rm = resultModel.TrainingDocuments[i];
 
-                    Assert.AreEqual(tm.Name, rm.Name);
-                    Assert.AreEqual(tm.ModelId, rm.ModelId);
-                    Assert.AreEqual(tm.PageCount, rm.PageCount);
-                    Assert.AreEqual(TrainingStatus.Succeeded, rm.Status);
-                    Assert.AreEqual(tm.Status, rm.Status);
-                    Assert.AreEqual(tm.Errors.Count, rm.Errors.Count);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(rm.Name, Is.EqualTo(tm.Name));
+                        Assert.That(rm.ModelId, Is.EqualTo(tm.ModelId));
+                        Assert.That(rm.PageCount, Is.EqualTo(tm.PageCount));
+                        Assert.That(rm.Status, Is.EqualTo(TrainingStatus.Succeeded));
+                    });
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(rm.Status, Is.EqualTo(tm.Status));
+                        Assert.That(rm.Errors, Has.Count.EqualTo(tm.Errors.Count));
+                    });
                 }
 
                 for (int i = 0; i < resultModel.Submodels.Count; i++)
                 {
-                    Assert.AreEqual(trainedModel.Submodels[i].FormType, resultModel.Submodels[i].FormType);
-                    Assert.AreEqual(trainedModel.Submodels[i].ModelId, resultModel.Submodels[i].ModelId);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(resultModel.Submodels[i].FormType, Is.EqualTo(trainedModel.Submodels[i].FormType));
+                        Assert.That(resultModel.Submodels[i].ModelId, Is.EqualTo(trainedModel.Submodels[i].ModelId));
+                    });
                     foreach (var fields in resultModel.Submodels[i].Fields)
                     {
-                        Assert.AreEqual(trainedModel.Submodels[i].Fields[fields.Key].Name, fields.Value.Name);
+                        Assert.That(fields.Value.Name, Is.EqualTo(trainedModel.Submodels[i].Fields[fields.Key].Name));
                         if (labeled)
-                            Assert.AreEqual(trainedModel.Submodels[i].Fields[fields.Key].Accuracy, fields.Value.Accuracy);
+                            Assert.That(fields.Value.Accuracy, Is.EqualTo(trainedModel.Submodels[i].Fields[fields.Key].Accuracy));
                         else
-                            Assert.AreEqual(trainedModel.Submodels[i].Fields[fields.Key].Label, fields.Value.Label);
+                            Assert.That(fields.Value.Label, Is.EqualTo(trainedModel.Submodels[i].Fields[fields.Key].Label));
                     }
                 }
 
                 CustomFormModelInfo modelInfo = client.GetCustomModelsAsync().ToEnumerableAsync().Result.FirstOrDefault();
 
-                Assert.IsNotNull(modelInfo.ModelId);
-                Assert.IsNotNull(modelInfo.TrainingStartedOn);
-                Assert.IsNotNull(modelInfo.TrainingCompletedOn);
-                Assert.IsNotNull(modelInfo.Status);
-                Assert.IsNotNull(modelInfo.Properties);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(modelInfo.ModelId, Is.Not.Null);
+                    Assert.That(modelInfo.TrainingStartedOn, Is.Not.Null);
+                    Assert.That(modelInfo.TrainingCompletedOn, Is.Not.Null);
+                    Assert.That(modelInfo.Status, Is.Not.Null);
+                    Assert.That(modelInfo.Properties, Is.Not.Null);
+                });
 
                 AccountProperties accountP = await client.GetAccountPropertiesAsync();
 
-                Assert.IsNotNull(accountP.CustomModelCount);
-                Assert.IsNotNull(accountP.CustomModelLimit);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(accountP.CustomModelCount, Is.Not.Null);
+                    Assert.That(accountP.CustomModelLimit, Is.Not.Null);
+                });
             }
             finally
             {
@@ -476,7 +545,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.GetCustomModelAsync(trainedModel.ModelId));
-            Assert.AreEqual("1022", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("1022"));
         }
 
         [RecordedTest]
@@ -486,7 +555,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var fakeModelId = "00000000-0000-0000-0000-000000000000";
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeleteModelAsync(fakeModelId));
-            Assert.AreEqual("1022", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("1022"));
         }
 
         #endregion administration ops
@@ -514,7 +583,7 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 await operation.WaitForCompletionAsync();
 
-                Assert.IsTrue(operation.HasValue);
+                Assert.That(operation.HasValue, Is.True);
 
                 modelCopied = operation.Value;
             }
@@ -526,10 +595,13 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            Assert.IsNotNull(modelCopied.TrainingCompletedOn);
-            Assert.IsNotNull(modelCopied.TrainingStartedOn);
-            Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
-            Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(modelCopied.TrainingCompletedOn, Is.Not.Null);
+                Assert.That(modelCopied.TrainingStartedOn, Is.Not.Null);
+                Assert.That(modelCopied.ModelId, Is.EqualTo(targetAuth.ModelId));
+            });
+            Assert.That(modelCopied.ModelId, Is.Not.EqualTo(trainedModel.ModelId));
         }
 
         [RecordedTest]
@@ -554,15 +626,15 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 await operation.WaitForCompletionAsync();
 
-                Assert.IsTrue(operation.HasValue);
+                Assert.That(operation.HasValue, Is.True);
 
                 modelCopied = operation.Value;
 
-                Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
-                Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
+                Assert.That(modelCopied.ModelId, Is.EqualTo(targetAuth.ModelId));
+                Assert.That(modelCopied.ModelId, Is.Not.EqualTo(trainedModel.ModelId));
 
                 CustomFormModel modelCopiedFullInfo = await sourceClient.GetCustomModelAsync(modelCopied.ModelId);
-                Assert.AreEqual(modelName, modelCopiedFullInfo.ModelName);
+                Assert.That(modelCopiedFullInfo.ModelName, Is.EqualTo(modelName));
             }
             finally
             {
@@ -598,24 +670,24 @@ namespace Azure.AI.FormRecognizer.Tests
             try
             {
                 await operation.WaitForCompletionAsync();
-                Assert.IsTrue(operation.HasValue);
+                Assert.That(operation.HasValue, Is.True);
                 composedModel = operation.Value;
 
                 CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
 
                 CopyModelOperation copyOperation = await sourceClient.StartCopyModelAsync(composedModel.ModelId, targetAuth);
                 await copyOperation.WaitForCompletionAsync();
-                Assert.IsTrue(copyOperation.HasValue);
+                Assert.That(copyOperation.HasValue, Is.True);
                 modelCopied = copyOperation.Value;
 
-                Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
-                Assert.AreNotEqual(composedModel.ModelId, modelCopied.ModelId);
+                Assert.That(modelCopied.ModelId, Is.EqualTo(targetAuth.ModelId));
+                Assert.That(modelCopied.ModelId, Is.Not.EqualTo(composedModel.ModelId));
 
                 CustomFormModel modelCopiedFullInfo = await sourceClient.GetCustomModelAsync(modelCopied.ModelId);
-                Assert.AreEqual(modelName, modelCopiedFullInfo.ModelName);
+                Assert.That(modelCopiedFullInfo.ModelName, Is.EqualTo(modelName));
                 foreach (var submodel in modelCopiedFullInfo.Submodels)
                 {
-                    Assert.IsTrue(modelIds.Contains(submodel.ModelId));
+                    Assert.That(modelIds, Does.Contain(submodel.ModelId));
                 }
             }
             finally
@@ -654,15 +726,15 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 await operation.WaitForCompletionAsync();
 
-                Assert.IsTrue(operation.HasValue);
+                Assert.That(operation.HasValue, Is.True);
 
                 modelCopied = operation.Value;
 
-                Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
-                Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
+                Assert.That(modelCopied.ModelId, Is.EqualTo(targetAuth.ModelId));
+                Assert.That(modelCopied.ModelId, Is.Not.EqualTo(trainedModel.ModelId));
 
                 CustomFormModel modelCopiedFullInfo = await sourceClient.GetCustomModelAsync(modelCopied.ModelId);
-                Assert.AreEqual(modelName, modelCopiedFullInfo.ModelName);
+                Assert.That(modelCopiedFullInfo.ModelName, Is.EqualTo(modelName));
             }
             finally
             {
@@ -685,8 +757,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelAsync("00000000-0000-0000-0000-000000000000", targetAuth));
 
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("1002", ex.ErrorCode);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.Status, Is.EqualTo(400));
+                Assert.That(ex.ErrorCode, Is.EqualTo("1002"));
+            });
         }
 
         [RecordedTest]
@@ -731,11 +806,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
 
-            Assert.IsNotNull(targetAuth.ModelId);
-            Assert.IsNotNull(targetAuth.AccessToken);
-            Assert.IsNotNull(targetAuth.ExpiresOn);
-            Assert.AreEqual(resourceId, targetAuth.ResourceId);
-            Assert.AreEqual(region, targetAuth.Region);
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetAuth.ModelId, Is.Not.Null);
+                Assert.That(targetAuth.AccessToken, Is.Not.Null);
+                Assert.That(targetAuth.ExpiresOn, Is.Not.Null);
+                Assert.That(targetAuth.ResourceId, Is.EqualTo(resourceId));
+                Assert.That(targetAuth.Region, Is.EqualTo(region));
+            });
         }
 
         [RecordedTest]
@@ -751,11 +829,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
             CopyAuthorization targetAuthFromJson = CopyAuthorization.FromJson(jsonTargetAuth);
 
-            Assert.AreEqual(targetAuth.ModelId, targetAuthFromJson.ModelId);
-            Assert.AreEqual(targetAuth.ExpiresOn, targetAuthFromJson.ExpiresOn);
-            Assert.AreEqual(targetAuth.AccessToken, targetAuthFromJson.AccessToken);
-            Assert.AreEqual(targetAuth.ResourceId, targetAuthFromJson.ResourceId);
-            Assert.AreEqual(targetAuth.Region, targetAuthFromJson.Region);
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetAuthFromJson.ModelId, Is.EqualTo(targetAuth.ModelId));
+                Assert.That(targetAuthFromJson.ExpiresOn, Is.EqualTo(targetAuth.ExpiresOn));
+                Assert.That(targetAuthFromJson.AccessToken, Is.EqualTo(targetAuth.AccessToken));
+                Assert.That(targetAuthFromJson.ResourceId, Is.EqualTo(targetAuth.ResourceId));
+                Assert.That(targetAuthFromJson.Region, Is.EqualTo(targetAuth.Region));
+            });
         }
 
         #endregion Copy

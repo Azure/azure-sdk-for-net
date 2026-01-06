@@ -32,7 +32,7 @@ namespace Azure.Core.Tests
         public void EqualsOpResourceTypeToString(bool expected, string left, string right)
         {
             ResourceType leftResource = left;
-            Assert.AreEqual(expected, leftResource == right);
+            Assert.That(leftResource == right, Is.EqualTo(expected));
         }
 
         [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests
         public void EqualsOpStringToResourceType(bool expected, string left, string right)
         {
             ResourceType rightResource = right;
-            Assert.AreEqual(expected, left == rightResource);
+            Assert.That(left == rightResource, Is.EqualTo(expected));
         }
 
         [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
@@ -51,8 +51,11 @@ namespace Azure.Core.Tests
         {
             ResourceType leftResource = left;
             ResourceType rightResource = right;
-            Assert.AreEqual(expected, leftResource == rightResource);
-            Assert.AreEqual(expected, leftResource.GetHashCode() == rightResource.GetHashCode());
+            Assert.Multiple(() =>
+            {
+                Assert.That(leftResource == rightResource, Is.EqualTo(expected));
+                Assert.That(leftResource.GetHashCode() == rightResource.GetHashCode(), Is.EqualTo(expected));
+            });
         }
 
         [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
@@ -61,7 +64,7 @@ namespace Azure.Core.Tests
         public void NotEqualsOpResourceTypeToString(bool expected, string left, string right)
         {
             ResourceType leftResource = left;
-            Assert.AreEqual(expected, leftResource != right);
+            Assert.That(leftResource != right, Is.EqualTo(expected));
         }
 
         [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
@@ -70,7 +73,7 @@ namespace Azure.Core.Tests
         public void NotEqualsOpStringToResourceType(bool expected, string left, string right)
         {
             ResourceType rightResource = right;
-            Assert.AreEqual(expected, left != rightResource);
+            Assert.That(left != rightResource, Is.EqualTo(expected));
         }
 
         [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
@@ -80,7 +83,7 @@ namespace Azure.Core.Tests
         {
             ResourceType leftResource = left;
             ResourceType rightResource = right;
-            Assert.AreEqual(expected, leftResource != rightResource);
+            Assert.That(leftResource != rightResource, Is.EqualTo(expected));
         }
 
         [TestCase]
@@ -97,14 +100,17 @@ namespace Azure.Core.Tests
             ResourceType rt = left;
             ResourceType rightRt = right;
             object rightObject = rightRt;
-            Assert.AreEqual(expected, rt.Equals(rightObject));
-            Assert.AreEqual(expected, rt.GetHashCode() == rightRt.GetHashCode());
+            Assert.Multiple(() =>
+            {
+                Assert.That(rt.Equals(rightObject), Is.EqualTo(expected));
+                Assert.That(rt.GetHashCode() == rightRt.GetHashCode(), Is.EqualTo(expected));
+            });
 
             object sameRt = rt;
-            Assert.IsTrue(rt.Equals(sameRt));
+            Assert.That(rt, Is.EqualTo(sameRt));
 
             object intRt = 5;
-            Assert.IsFalse(rt.Equals(intRt));
+            Assert.That(rt.Equals(intRt), Is.False);
         }
 
         [Test]
@@ -112,13 +118,13 @@ namespace Azure.Core.Tests
         {
             ResourceType rt = "Microsoft.Network1/VirtualNetworks2/subnets1";
             object rightObject = null;
-            Assert.IsFalse(rt.Equals(rightObject));
+            Assert.That(rt.Equals(rightObject), Is.False);
 
             object sameRt = rt;
-            Assert.IsTrue(rt.Equals(sameRt));
+            Assert.That(rt, Is.EqualTo(sameRt));
 
             object intRt = 5;
-            Assert.IsFalse(rt.Equals(intRt));
+            Assert.That(rt.Equals(intRt), Is.False);
         }
 
         [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", null)]
@@ -127,7 +133,7 @@ namespace Azure.Core.Tests
         {
             ResourceType rt = left;
             object rightObject = right;
-            Assert.AreEqual(expected, rt.Equals(rightObject));
+            Assert.That(rt.Equals(rightObject), Is.EqualTo(expected));
         }
 
         [TestCase("Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
@@ -136,7 +142,7 @@ namespace Azure.Core.Tests
         {
             ResourceType rt = left;
             ResourceType rightRt = right;
-            Assert.AreEqual(rt.CompareTo(rightRt), 0);
+            Assert.That(rt.CompareTo(rightRt), Is.EqualTo(0));
         }
 
         [TestCase("Microsoft.Network1/VirtualNetworks2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
@@ -146,7 +152,7 @@ namespace Azure.Core.Tests
         {
             ResourceType rt = left;
             ResourceType rightRt = right;
-            Assert.Less(rt.CompareTo(rightRt), 0);
+            Assert.That(rt.CompareTo(rightRt), Is.LessThan(0));
         }
 
         [TestCase("Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2")]
@@ -156,7 +162,7 @@ namespace Azure.Core.Tests
         {
             ResourceType rt = left;
             ResourceType rightRt = right;
-            Assert.Greater(rt.CompareTo(rightRt), 0);
+            Assert.That(rt.CompareTo(rightRt), Is.GreaterThan(0));
         }
 
         [TestCase]
@@ -165,9 +171,12 @@ namespace Azure.Core.Tests
             ResourceType rt = "Microsoft.Network1/VirtualNetworks2/subnets1";
             ResourceType defaultRt = default;
             ResourceType defaultRt2 = default;
-            Assert.AreEqual(defaultRt.CompareTo(defaultRt2), 0);
-            Assert.Less(defaultRt.CompareTo(rt), 0); // default < non-default ResourceType
-            Assert.Greater(rt.CompareTo(defaultRt), 0); // non-default ResourceType > default
+            Assert.Multiple(() =>
+            {
+                Assert.That(defaultRt.CompareTo(defaultRt2), Is.EqualTo(0));
+                Assert.That(defaultRt.CompareTo(rt), Is.LessThan(0)); // default < non-default ResourceType
+                Assert.That(rt.CompareTo(defaultRt), Is.GreaterThan(0)); // non-default ResourceType > default
+            });
         }
 
         [TestCase("Microsoft.classicStorage/storageAccounts")]
@@ -179,7 +188,7 @@ namespace Azure.Core.Tests
             ResourceType type = expected;
             string actual = type;
 
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [TestCase("Microsoft.Compute/virtualMachines/myVmName", "Microsoft.Compute", "virtualMachines/myVmName", "myVmName")]
@@ -192,9 +201,12 @@ namespace Azure.Core.Tests
         public void ValidateParse(string idOrType, string expectedNamespace, string expectedType, string expectedLast)
         {
             ResourceType rt = idOrType;
-            Assert.AreEqual(expectedNamespace, rt.Namespace);
-            Assert.AreEqual(expectedType, rt.Type);
-            Assert.AreEqual(expectedLast, rt.GetLastType());
+            Assert.Multiple(() =>
+            {
+                Assert.That(rt.Namespace, Is.EqualTo(expectedNamespace));
+                Assert.That(rt.Type, Is.EqualTo(expectedType));
+                Assert.That(rt.GetLastType(), Is.EqualTo(expectedLast));
+            });
         }
     }
 }

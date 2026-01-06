@@ -99,16 +99,19 @@ namespace Azure.Data.Tables.Tests
 
             var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sasAuthedServiceDelete.CreateTableAsync(sasTableName).ConfigureAwait(false));
-            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
 
-            // Validate that we are able to create a table using the SAS URI with Write and Delete permissions.
+                // Validate that we are able to create a table using the SAS URI with Write and Delete permissions.
 
-            Assert.That(async () => await sasAuthedServiceWriteDelete.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+                Assert.That(async () => await sasAuthedServiceWriteDelete.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
 
-            // Validate that we are able to delete a table using the SAS URI with only Delete permissions.
+                // Validate that we are able to delete a table using the SAS URI with only Delete permissions.
 
-            Assert.That(async () => await sasAuthedServiceDelete.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+                Assert.That(async () => await sasAuthedServiceDelete.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+            });
         }
 
         [RecordedTest]
@@ -149,16 +152,19 @@ namespace Azure.Data.Tables.Tests
 
             var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sasAuthedServiceDelete.CreateTableAsync(sasTableName).ConfigureAwait(false));
-            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
 
-            // Validate that we are able to create a table using the SAS URI with Write and Delete permissions.
+                // Validate that we are able to create a table using the SAS URI with Write and Delete permissions.
 
-            Assert.That(async () => await sasAuthedServiceWriteDelete.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+                Assert.That(async () => await sasAuthedServiceWriteDelete.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
 
-            // Validate that we are able to delete a table using the SAS URI with only Delete permissions.
+                // Validate that we are able to delete a table using the SAS URI with only Delete permissions.
 
-            Assert.That(async () => await sasAuthedServiceDelete.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+                Assert.That(async () => await sasAuthedServiceDelete.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+            });
         }
 
         [RecordedTest]
@@ -199,16 +205,19 @@ namespace Azure.Data.Tables.Tests
 
             var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sasAuthedServiceClientService.CreateTableAsync(sasTableName).ConfigureAwait(false));
-            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationResourceTypeMismatch.ToString()));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationResourceTypeMismatch.ToString()));
 
-            // Validate that we are able to create a table using the SAS URI with access to Service and Container resource types.
+                // Validate that we are able to create a table using the SAS URI with access to Service and Container resource types.
 
-            Assert.That(async () => await sasAuthedServiceClientServiceContainer.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+                Assert.That(async () => await sasAuthedServiceClientServiceContainer.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
 
-            // Validate that we are able to get table service properties using the SAS URI with access to Service resource types.
+                // Validate that we are able to get table service properties using the SAS URI with access to Service resource types.
 
-            Assert.That(async () => await sasAuthedServiceClientService.GetPropertiesAsync().ConfigureAwait(false), Throws.Nothing);
+                Assert.That(async () => await sasAuthedServiceClientService.GetPropertiesAsync().ConfigureAwait(false), Throws.Nothing);
+            });
 
             // Validate that we are able to get table service properties using the SAS URI with access to Service and Container resource types.
 
@@ -245,11 +254,11 @@ namespace Azure.Data.Tables.Tests
                     Assert.That(page.Values, Is.Not.Empty);
                     if (pageCount.HasValue)
                     {
-                        Assert.That(page.Values.Count, Is.LessThanOrEqualTo(pageCount.Value));
+                        Assert.That(page.Values, Has.Count.LessThanOrEqualTo(pageCount.Value));
                     }
                     else
                     {
-                        Assert.That(page.Values.Count, Is.GreaterThanOrEqualTo(createdTables.Count));
+                        Assert.That(page.Values, Has.Count.GreaterThanOrEqualTo(createdTables.Count));
                     }
                 }
             }
@@ -287,14 +296,14 @@ namespace Azure.Data.Tables.Tests
                 var tableResponses = (await service.QueryAsync(filter: $"TableName eq '{tableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
-                Assert.AreEqual(tableName, tableResponses.Select(r => r.Name).SingleOrDefault());
+                Assert.That(tableResponses.Select(r => r.Name).SingleOrDefault(), Is.EqualTo(tableName));
 
                 // Query with a filter.
 
                 tableResponses = (await service.QueryAsync(filter: t => t.Name == tableName).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
-                Assert.AreEqual(tableName, tableResponses.Select(r => r.Name).SingleOrDefault());
+                Assert.That(tableResponses.Select(r => r.Name).SingleOrDefault(), Is.EqualTo(tableName));
             }
             finally
             {
@@ -344,35 +353,41 @@ namespace Azure.Data.Tables.Tests
 
         private void CompareServiceProperties(TableServiceProperties expected, TableServiceProperties actual)
         {
-            Assert.AreEqual(expected.Logging.Read, actual.Logging.Read);
-            Assert.AreEqual(expected.Logging.Version, actual.Logging.Version);
-            Assert.AreEqual(expected.Logging.Write, actual.Logging.Write);
-            Assert.AreEqual(expected.Logging.Delete, actual.Logging.Delete);
-            Assert.AreEqual(expected.Logging.RetentionPolicy.Enabled, actual.Logging.RetentionPolicy.Enabled);
-            Assert.AreEqual(expected.Logging.RetentionPolicy.Days, actual.Logging.RetentionPolicy.Days);
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Logging.Read, Is.EqualTo(expected.Logging.Read));
+                Assert.That(actual.Logging.Version, Is.EqualTo(expected.Logging.Version));
+                Assert.That(actual.Logging.Write, Is.EqualTo(expected.Logging.Write));
+                Assert.That(actual.Logging.Delete, Is.EqualTo(expected.Logging.Delete));
+                Assert.That(actual.Logging.RetentionPolicy.Enabled, Is.EqualTo(expected.Logging.RetentionPolicy.Enabled));
+                Assert.That(actual.Logging.RetentionPolicy.Days, Is.EqualTo(expected.Logging.RetentionPolicy.Days));
 
-            Assert.AreEqual(expected.HourMetrics.Enabled, actual.HourMetrics.Enabled);
-            Assert.AreEqual(expected.HourMetrics.Version, actual.HourMetrics.Version);
-            Assert.AreEqual(expected.HourMetrics.IncludeApis, actual.HourMetrics.IncludeApis);
-            Assert.AreEqual(expected.HourMetrics.RetentionPolicy.Enabled, actual.HourMetrics.RetentionPolicy.Enabled);
-            Assert.AreEqual(expected.HourMetrics.RetentionPolicy.Days, actual.HourMetrics.RetentionPolicy.Days);
+                Assert.That(actual.HourMetrics.Enabled, Is.EqualTo(expected.HourMetrics.Enabled));
+                Assert.That(actual.HourMetrics.Version, Is.EqualTo(expected.HourMetrics.Version));
+                Assert.That(actual.HourMetrics.IncludeApis, Is.EqualTo(expected.HourMetrics.IncludeApis));
+                Assert.That(actual.HourMetrics.RetentionPolicy.Enabled, Is.EqualTo(expected.HourMetrics.RetentionPolicy.Enabled));
+                Assert.That(actual.HourMetrics.RetentionPolicy.Days, Is.EqualTo(expected.HourMetrics.RetentionPolicy.Days));
 
-            Assert.AreEqual(expected.MinuteMetrics.Enabled, actual.MinuteMetrics.Enabled);
-            Assert.AreEqual(expected.MinuteMetrics.Version, actual.MinuteMetrics.Version);
-            Assert.AreEqual(expected.MinuteMetrics.IncludeApis, actual.MinuteMetrics.IncludeApis);
-            Assert.AreEqual(expected.MinuteMetrics.RetentionPolicy.Enabled, actual.MinuteMetrics.RetentionPolicy.Enabled);
-            Assert.AreEqual(expected.MinuteMetrics.RetentionPolicy.Days, actual.MinuteMetrics.RetentionPolicy.Days);
+                Assert.That(actual.MinuteMetrics.Enabled, Is.EqualTo(expected.MinuteMetrics.Enabled));
+                Assert.That(actual.MinuteMetrics.Version, Is.EqualTo(expected.MinuteMetrics.Version));
+                Assert.That(actual.MinuteMetrics.IncludeApis, Is.EqualTo(expected.MinuteMetrics.IncludeApis));
+                Assert.That(actual.MinuteMetrics.RetentionPolicy.Enabled, Is.EqualTo(expected.MinuteMetrics.RetentionPolicy.Enabled));
+                Assert.That(actual.MinuteMetrics.RetentionPolicy.Days, Is.EqualTo(expected.MinuteMetrics.RetentionPolicy.Days));
 
-            Assert.AreEqual(expected.Cors.Count, actual.Cors.Count);
+                Assert.That(actual.Cors, Has.Count.EqualTo(expected.Cors.Count));
+            });
             for (int i = 0; i < expected.Cors.Count; i++)
             {
                 TableCorsRule expectedRule = expected.Cors[i];
                 TableCorsRule actualRule = actual.Cors[i];
-                Assert.AreEqual(expectedRule.AllowedHeaders, actualRule.AllowedHeaders);
-                Assert.AreEqual(expectedRule.AllowedMethods, actualRule.AllowedMethods);
-                Assert.AreEqual(expectedRule.AllowedOrigins, actualRule.AllowedOrigins);
-                Assert.AreEqual(expectedRule.MaxAgeInSeconds, actualRule.MaxAgeInSeconds);
-                Assert.AreEqual(expectedRule.ExposedHeaders, actualRule.ExposedHeaders);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actualRule.AllowedHeaders, Is.EqualTo(expectedRule.AllowedHeaders));
+                    Assert.That(actualRule.AllowedMethods, Is.EqualTo(expectedRule.AllowedMethods));
+                    Assert.That(actualRule.AllowedOrigins, Is.EqualTo(expectedRule.AllowedOrigins));
+                    Assert.That(actualRule.MaxAgeInSeconds, Is.EqualTo(expectedRule.MaxAgeInSeconds));
+                    Assert.That(actualRule.ExposedHeaders, Is.EqualTo(expectedRule.ExposedHeaders));
+                });
             }
         }
     }

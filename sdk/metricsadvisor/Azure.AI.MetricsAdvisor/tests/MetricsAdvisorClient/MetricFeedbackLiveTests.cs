@@ -45,12 +45,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var anomalyFeedback = addedFeedback as MetricAnomalyFeedback;
 
             Assert.That(anomalyFeedback, Is.Not.Null);
-            Assert.That(anomalyFeedback.AnomalyValue, Is.EqualTo(AnomalyValue.AutoDetect));
-            Assert.That(anomalyFeedback.StartsOn, Is.EqualTo(CreatedFeedbackStartTime));
-            Assert.That(anomalyFeedback.EndsOn, Is.EqualTo(CreatedFeedbackEndTime));
-            Assert.That(anomalyFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
-            Assert.That(anomalyFeedback.DetectionConfigurationId, Is.Null);
-            Assert.That(anomalyFeedback.DetectionConfigurationSnapshot, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(anomalyFeedback.AnomalyValue, Is.EqualTo(AnomalyValue.AutoDetect));
+                Assert.That(anomalyFeedback.StartsOn, Is.EqualTo(CreatedFeedbackStartTime));
+                Assert.That(anomalyFeedback.EndsOn, Is.EqualTo(CreatedFeedbackEndTime));
+                Assert.That(anomalyFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+                Assert.That(anomalyFeedback.DetectionConfigurationId, Is.Null);
+                Assert.That(anomalyFeedback.DetectionConfigurationSnapshot, Is.Null);
+            });
         }
 
         [RecordedTest]
@@ -75,11 +78,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var anomalyFeedback = addedFeedback as MetricAnomalyFeedback;
 
             Assert.That(anomalyFeedback, Is.Not.Null);
-            Assert.That(anomalyFeedback.AnomalyValue, Is.EqualTo(AnomalyValue.AutoDetect));
-            Assert.That(anomalyFeedback.StartsOn, Is.EqualTo(CreatedFeedbackStartTime));
-            Assert.That(anomalyFeedback.EndsOn, Is.EqualTo(CreatedFeedbackEndTime));
-            Assert.That(anomalyFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
-            Assert.That(anomalyFeedback.DetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(anomalyFeedback.AnomalyValue, Is.EqualTo(AnomalyValue.AutoDetect));
+                Assert.That(anomalyFeedback.StartsOn, Is.EqualTo(CreatedFeedbackStartTime));
+                Assert.That(anomalyFeedback.EndsOn, Is.EqualTo(CreatedFeedbackEndTime));
+                Assert.That(anomalyFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+                Assert.That(anomalyFeedback.DetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
+            });
             // TODO: Add snapshot validation (https://github.com/azure/azure-sdk-for-net/issues/15915)
         }
 
@@ -102,10 +108,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var changePointFeedback = addedFeedback as MetricChangePointFeedback;
 
             Assert.That(changePointFeedback, Is.Not.Null);
-            Assert.That(changePointFeedback.ChangePointValue, Is.EqualTo(ChangePointValue.AutoDetect));
-            Assert.That(changePointFeedback.StartsOn, Is.EqualTo(CreatedFeedbackStartTime));
-            Assert.That(changePointFeedback.EndsOn, Is.EqualTo(CreatedFeedbackEndTime));
-            Assert.That(changePointFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(changePointFeedback.ChangePointValue, Is.EqualTo(ChangePointValue.AutoDetect));
+                Assert.That(changePointFeedback.StartsOn, Is.EqualTo(CreatedFeedbackStartTime));
+                Assert.That(changePointFeedback.EndsOn, Is.EqualTo(CreatedFeedbackEndTime));
+                Assert.That(changePointFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+            });
         }
 
         /// <param name="populateOptionalMembers">
@@ -134,10 +143,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var commentFeedback = addedFeedback as MetricCommentFeedback;
 
             Assert.That(commentFeedback, Is.Not.Null);
-            Assert.That(commentFeedback.Comment, Is.EqualTo(comment));
-            Assert.That(commentFeedback.StartsOn, Is.Null);
-            Assert.That(commentFeedback.EndsOn, Is.Null);
-            Assert.That(commentFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(commentFeedback.Comment, Is.EqualTo(comment));
+                Assert.That(commentFeedback.StartsOn, Is.Null);
+                Assert.That(commentFeedback.EndsOn, Is.Null);
+                Assert.That(commentFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+            });
         }
 
         [RecordedTest]
@@ -165,10 +177,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var commentFeedback = addedFeedback as MetricCommentFeedback;
 
             Assert.That(commentFeedback, Is.Not.Null);
-            Assert.That(commentFeedback.Comment, Is.EqualTo(comment));
-            Assert.That(commentFeedback.StartsOn, Is.EqualTo(CreatedFeedbackStartTime));
-            Assert.That(commentFeedback.EndsOn, Is.EqualTo(CreatedFeedbackEndTime));
-            Assert.That(commentFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(commentFeedback.Comment, Is.EqualTo(comment));
+                Assert.That(commentFeedback.StartsOn, Is.EqualTo(CreatedFeedbackStartTime));
+                Assert.That(commentFeedback.EndsOn, Is.EqualTo(CreatedFeedbackEndTime));
+                Assert.That(commentFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+            });
         }
 
         [RecordedTest]
@@ -192,9 +207,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var periodFeedback = addedFeedback as MetricPeriodFeedback;
 
             Assert.That(periodFeedback, Is.Not.Null);
-            Assert.That(periodFeedback.PeriodType, Is.EqualTo(MetricPeriodType.AutoDetect));
-            Assert.That(periodFeedback.PeriodValue, Is.EqualTo(periodValue));
-            Assert.That(periodFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(periodFeedback.PeriodType, Is.EqualTo(MetricPeriodType.AutoDetect));
+                Assert.That(periodFeedback.PeriodValue, Is.EqualTo(periodValue));
+                Assert.That(periodFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+            });
         }
 
         [RecordedTest]
@@ -209,12 +227,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (MetricFeedback feedback in client.GetAllFeedbackAsync(MetricId))
             {
                 Assert.That(feedback, Is.Not.Null);
-                Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
-                Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
-                Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
-                Assert.That(feedback.CreatedOn, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
+                    Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+                    Assert.That(feedback.CreatedOn, Is.Not.Null);
 
-                Assert.That(feedback.DimensionFilter, Is.Not.Null);
+                    Assert.That(feedback.DimensionFilter, Is.Not.Null);
+                });
                 Assert.That(feedback.DimensionFilter.DimensionKey, Is.Not.Null);
 
                 ValidateGroupKey(feedback.DimensionFilter.DimensionKey);
@@ -293,14 +314,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (MetricFeedback feedback in client.GetAllFeedbackAsync(MetricId, options))
             {
                 Assert.That(feedback, Is.Not.Null);
-                Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
-                Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
-                Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
-                Assert.That(feedback.CreatedOn, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
+                    Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+                    Assert.That(feedback.CreatedOn, Is.Not.Null);
+                });
                 Assert.That(feedback.CreatedOn, Is.GreaterThanOrEqualTo(feedbackSamplingStartTime));
-                Assert.That(feedback.CreatedOn, Is.LessThanOrEqualTo(feedbackSamplingEndTime));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(feedback.CreatedOn, Is.LessThanOrEqualTo(feedbackSamplingEndTime));
 
-                Assert.That(feedback.DimensionFilter, Is.Not.Null);
+                    Assert.That(feedback.DimensionFilter, Is.Not.Null);
+                });
 
                 DimensionKey dimensionKeyFilter = feedback.DimensionFilter.DimensionKey;
 
@@ -308,10 +335,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 ValidateGroupKey(dimensionKeyFilter);
 
-                Assert.That(dimensionKeyFilter.TryGetValue("Dim1", out string dim1));
-                Assert.That(dim1, Is.EqualTo("USD"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dimensionKeyFilter.TryGetValue("Dim1", out string dim1));
+                    Assert.That(dim1, Is.EqualTo("USD"));
 
-                Assert.That(feedback.FeedbackKind, Is.EqualTo(MetricFeedbackKind.Anomaly));
+                    Assert.That(feedback.FeedbackKind, Is.EqualTo(MetricFeedbackKind.Anomaly));
+                });
 
                 var anomalyFeedback = feedback as MetricAnomalyFeedback;
 
@@ -330,20 +360,29 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateMetricFeedback(MetricFeedback feedback)
         {
             Assert.That(feedback, Is.Not.Null);
-            Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
-            Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
+                Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
+            });
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
-            Assert.That(feedback.CreatedOn, Is.GreaterThan(justNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(feedback.CreatedOn, Is.GreaterThan(justNow));
 
-            Assert.That(feedback.DimensionFilter, Is.Not.Null);
+                Assert.That(feedback.DimensionFilter, Is.Not.Null);
+            });
 
             DimensionKey dimensionFilter = feedback.DimensionFilter.DimensionKey;
 
-            Assert.That(dimensionFilter, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dimensionFilter, Is.Not.Null);
 
-            Assert.That(Count(dimensionFilter), Is.EqualTo(2));
+                Assert.That(Count(dimensionFilter), Is.EqualTo(2));
+            });
             Assert.That(dimensionFilter.TryGetValue("Dim1", out string dim1));
             Assert.That(dimensionFilter.TryGetValue("Dim2", out string dim2));
             Assert.That(dim1, Is.EqualTo(ExpectedDim1));

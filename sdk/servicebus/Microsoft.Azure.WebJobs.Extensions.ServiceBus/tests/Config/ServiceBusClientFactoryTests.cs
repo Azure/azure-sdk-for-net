@@ -59,9 +59,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Tests.Config
             var client = factory.CreateClientFromSetting("connection");
             var adminClient = factory.CreateAdministrationClient("connection");
 
-            Assert.NotNull(client);
-            Assert.NotNull(adminClient);
-            Assert.AreEqual("test89123-ns-x.servicebus.windows.net", client.FullyQualifiedNamespace);
+            Assert.Multiple(() =>
+            {
+                Assert.That(client, Is.Not.Null);
+                Assert.That(adminClient, Is.Not.Null);
+            });
+            Assert.That(client.FullyQualifiedNamespace, Is.EqualTo("test89123-ns-x.servicebus.windows.net"));
         }
 
         [Test]
@@ -79,9 +82,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Tests.Config
             var client = factory.CreateClientFromSetting("connection");
             var adminClient = factory.CreateAdministrationClient("connection");
 
-            Assert.NotNull(client);
-            Assert.NotNull(adminClient);
-            Assert.AreEqual("test89123-ns-x.servicebus.windows.net", client.FullyQualifiedNamespace);
+            Assert.Multiple(() =>
+            {
+                Assert.That(client, Is.Not.Null);
+                Assert.That(adminClient, Is.Not.Null);
+            });
+            Assert.That(client.FullyQualifiedNamespace, Is.EqualTo("test89123-ns-x.servicebus.windows.net"));
         }
 
         [Test]
@@ -93,8 +99,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Tests.Config
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
             var errorMessage = Assert.Throws<InvalidOperationException>(() => factory.CreateClientFromSetting(ConnectionString)).Message;
-            StringAssert.DoesNotContain(ConnectionString, errorMessage);
-            StringAssert.Contains("REDACTED", errorMessage);
+            Assert.That(errorMessage, Does.Not.Contain(ConnectionString));
+            Assert.That(errorMessage, Does.Contain("REDACTED"));
         }
     }
 }

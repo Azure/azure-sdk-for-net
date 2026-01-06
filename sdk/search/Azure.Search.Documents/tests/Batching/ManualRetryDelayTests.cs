@@ -27,8 +27,9 @@ namespace Azure.Search.Documents.Tests
             await delay.WaitIfNeededAsync();
             watch.Stop();
 
-            Assert.IsTrue(
+            Assert.That(
                 70 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 500,
+                Is.True,
                 $"Expected a delay between 70ms and 500ms, not {watch.ElapsedMilliseconds}");
         }
 
@@ -50,8 +51,9 @@ namespace Azure.Search.Documents.Tests
             await delay.WaitIfNeededAsync();
             watch.Stop();
 
-            Assert.IsTrue(
+            Assert.That(
                 148 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 500,
+                Is.True,
                 $"Expected a delay between 148ms and 500ms, not {watch.ElapsedMilliseconds}");
         }
 
@@ -78,8 +80,9 @@ namespace Azure.Search.Documents.Tests
             await delay.WaitIfNeededAsync();
             watch.Stop();
 
-            Assert.IsTrue(
+            Assert.That(
                 248 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 500,
+                Is.True,
                 $"Expected a delay between 248ms and 500ms, not {watch.ElapsedMilliseconds}");
         }
 
@@ -97,8 +100,9 @@ namespace Azure.Search.Documents.Tests
             await delay.WaitIfNeededAsync();
             watch.Stop();
 
-            Assert.IsTrue(
-                watch.ElapsedMilliseconds < 100,
+            Assert.That(
+                watch.ElapsedMilliseconds,
+                Is.LessThan(100),
                 $"Expected a delay less than 100ms, not {watch.ElapsedMilliseconds}");
         }
 
@@ -122,8 +126,9 @@ namespace Azure.Search.Documents.Tests
             await delay.WaitIfNeededAsync();
             watch.Stop();
 
-            Assert.IsTrue(
-                watch.ElapsedMilliseconds < 100,
+            Assert.That(
+                watch.ElapsedMilliseconds,
+                Is.LessThan(100),
                 $"Expected a delay less than 100ms, not {watch.ElapsedMilliseconds}");
         }
 
@@ -144,8 +149,9 @@ namespace Azure.Search.Documents.Tests
             await delay.WaitIfNeededAsync();
             watch.Stop();
 
-            Assert.IsTrue(
-                watch.ElapsedMilliseconds < 100,
+            Assert.That(
+                watch.ElapsedMilliseconds,
+                Is.LessThan(100),
                 $"Expected a delay less than 100ms, not {watch.ElapsedMilliseconds}");
         }
     }

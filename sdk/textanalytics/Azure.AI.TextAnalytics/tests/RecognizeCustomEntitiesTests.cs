@@ -93,7 +93,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page.
             RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -122,7 +122,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page.
             RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -140,13 +140,19 @@ namespace Azure.AI.TextAnalytics.Tests
                 s_batchDocuments,
                 TestEnvironment.RecognizeCustomEntitiesProjectName,
                 TestEnvironment.RecognizeCustomEntitiesDeploymentName);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
         }
 
@@ -169,7 +175,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 options);
             ValidateOperationProperties(operation);
 
-            Assert.AreEqual("StartRecognizeCustomEntitiesWithName", operation.DisplayName);
+            Assert.That(operation.DisplayName, Is.EqualTo("StartRecognizeCustomEntitiesWithName"));
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
@@ -178,7 +184,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page.
             RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -198,7 +204,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     documents,
                     TestEnvironment.RecognizeCustomEntitiesProjectName,
                     TestEnvironment.RecognizeCustomEntitiesDeploymentName));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
         }
 
         [RecordedTest]
@@ -220,7 +226,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page.
             RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -251,10 +257,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            Assert.IsFalse(resultCollection[0].HasError);
-            Assert.IsTrue(resultCollection[1].HasError);
-            Assert.IsFalse(resultCollection[2].HasError);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[1].Error.ErrorCode.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultCollection[0].HasError, Is.False);
+                Assert.That(resultCollection[1].HasError, Is.True);
+                Assert.That(resultCollection[2].HasError, Is.False);
+                Assert.That(resultCollection[1].Error.ErrorCode.ToString(), Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
+            });
         }
 
         [RecordedTest]
@@ -271,7 +280,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page.
             RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -289,13 +298,19 @@ namespace Azure.AI.TextAnalytics.Tests
                 s_englishBatchConvenienceDocuments,
                 TestEnvironment.RecognizeCustomEntitiesProjectName,
                 TestEnvironment.RecognizeCustomEntitiesDeploymentName);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
         }
 
@@ -313,12 +328,12 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, s_englishBatchConvenienceDocuments, batchActions);
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
 
             // Take the first page.
             AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
             IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionsResults = actionsResult.RecognizeCustomEntitiesResults;
-            Assert.IsNotNull(recognizeCustomEntitiesActionsResults);
+            Assert.That(recognizeCustomEntitiesActionsResults, Is.Not.Null);
 
             RecognizeCustomEntitiesResultCollection resultCollection = recognizeCustomEntitiesActionsResults.FirstOrDefault().DocumentsResults;
             ValidateBatchResult(resultCollection, s_englishExpectedBatchOutput);
@@ -347,15 +362,15 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, s_englishBatchConvenienceDocuments, batchActions);
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
 
             // Take the first page.
             AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
             IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionsResults = actionsResult.RecognizeCustomEntitiesResults;
-            Assert.IsNotNull(recognizeCustomEntitiesActionsResults);
+            Assert.That(recognizeCustomEntitiesActionsResults, Is.Not.Null);
 
             IList<string> expected = new List<string> { "RecognizeCustomEntities", "RecognizeCustomEntitiesWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, recognizeCustomEntitiesActionsResults.Select(result => result.ActionName));
+            Assert.That(recognizeCustomEntitiesActionsResults.Select(result => result.ActionName), Is.EquivalentTo(expected));
         }
 
         [RecordedTest]
@@ -368,13 +383,19 @@ namespace Azure.AI.TextAnalytics.Tests
                 s_batchDocuments,
                 TestEnvironment.RecognizeCustomEntitiesProjectName,
                 TestEnvironment.RecognizeCustomEntitiesDeploymentName);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
 
             var expectedOutput = new Dictionary<string, List<string>>()
@@ -384,7 +405,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page.
             RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -401,17 +422,23 @@ namespace Azure.AI.TextAnalytics.Tests
                 s_englishBatchConvenienceDocuments,
                 TestEnvironment.RecognizeCustomEntitiesProjectName,
                 TestEnvironment.RecognizeCustomEntitiesDeploymentName);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
 
             List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page.
             RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -420,33 +447,42 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateOperationProperties(RecognizeCustomEntitiesOperation operation)
         {
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.CreatedOn, Is.Not.EqualTo(new DateTimeOffset()));
+            });
             // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
             // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
 
             if (operation.ExpiresOn.HasValue)
             {
-                Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn.Value);
+                Assert.That(operation.ExpiresOn.Value, Is.Not.EqualTo(new DateTimeOffset()));
             }
         }
 
         private void ValidateDocumentResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)
         {
-            Assert.IsNotNull(entities.Warnings);
-            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(entities.Warnings, Is.Not.Null);
+                Assert.That(entities, Has.Count.GreaterThanOrEqualTo(minimumExpectedOutput.Count));
+            });
             foreach (CategorizedEntity entity in entities)
             {
-                Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
-                Assert.IsTrue(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase));
-                Assert.IsNotNull(entity.Category);
-                Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
-                Assert.GreaterOrEqual(entity.Offset, 0);
-                Assert.Greater(entity.Length, 0);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
+                    Assert.That(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase), Is.True);
+                    Assert.That(entity.Category, Is.Not.Null);
+                    Assert.That(entity.ConfidenceScore, Is.GreaterThanOrEqualTo(0.0));
+                    Assert.That(entity.Offset, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(entity.Length, Is.GreaterThan(0));
+                });
 
                 if (entity.SubCategory != null)
                 {
-                    Assert.IsNotEmpty(entity.SubCategory);
+                    Assert.That(entity.SubCategory, Is.Not.Empty);
                 }
             }
         }
@@ -458,33 +494,45 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                });
             }
             else
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
 
             foreach (RecognizeEntitiesResult result in results)
             {
-                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
 
-                Assert.False(result.HasError);
+                    Assert.That(result.HasError, Is.False);
 
-                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(result.Statistics);
+                    //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
+                    Assert.That(result.Statistics, Is.Not.Null);
+                });
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                        Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
+                    });
                 }
                 else
                 {
-                    Assert.AreEqual(0, result.Statistics.CharacterCount);
-                    Assert.AreEqual(0, result.Statistics.TransactionCount);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(result.Statistics.CharacterCount, Is.EqualTo(0));
+                        Assert.That(result.Statistics.TransactionCount, Is.EqualTo(0));
+                    });
                 }
 
                 ValidateDocumentResult(result.Entities, minimumExpectedOutput[result.Id]);

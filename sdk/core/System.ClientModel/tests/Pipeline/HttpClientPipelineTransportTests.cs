@@ -43,7 +43,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual(expectedUri, requestUri);
+        Assert.That(requestUri, Is.EqualTo(expectedUri));
     }
 
     [Test]
@@ -72,7 +72,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
         response.ContentStream = new MemoryStream();
         response.Dispose();
 
-        Assert.False(disposeTrackingContent.IsDisposed);
+        Assert.That(disposeTrackingContent.IsDisposed, Is.False);
     }
 
     [TestCaseSource(nameof(HeadersWithValuesAndType))]
@@ -95,7 +95,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.Null(httpMessageContent);
+        Assert.That(httpMessageContent, Is.Null);
     }
 
     [TestCaseSource(nameof(HeadersWithValuesAndType))]
@@ -109,11 +109,11 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
                 if (contentHeader)
                 {
                     responseMessage.Content = new StreamContent(new MemoryStream());
-                    Assert.True(responseMessage.Content.Headers.TryAddWithoutValidation(headerName, headerValue));
+                    Assert.That(responseMessage.Content.Headers.TryAddWithoutValidation(headerName, headerValue), Is.True);
                 }
                 else
                 {
-                    Assert.True(responseMessage.Headers.TryAddWithoutValidation(headerName, headerValue));
+                    Assert.That(responseMessage.Headers.TryAddWithoutValidation(headerName, headerValue), Is.True);
                 }
 
                 return Task.FromResult(responseMessage);
@@ -130,13 +130,16 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
         using PipelineResponse response = message.Response!;
         response.ContentStream = new MemoryStream();
 
-        Assert.True(response.Headers.TryGetValue(headerName, out var value));
-        Assert.AreEqual(headerValue, value);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Headers.TryGetValue(headerName, out var value), Is.True);
+            Assert.That(value, Is.EqualTo(headerValue));
 
-        Assert.True(response.Headers.TryGetValues(headerName, out IEnumerable<string>? values));
+            Assert.That(response.Headers.TryGetValues(headerName, out IEnumerable<string>? values), Is.True);
+        });
         CollectionAssert.AreEqual(new[] { headerValue }, values);
 
-        CollectionAssert.Contains(response.Headers, new KeyValuePair<string, string>(headerName, headerValue));
+        Assert.That(response.Headers, Has.Member(new KeyValuePair<string, string>(headerName, headerValue)));
     }
 
     [Test]
@@ -164,7 +167,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         if (bufferResponse)
         {
-            Assert.AreEqual(message.Response!.Content.ToString(), "Mock content");
+            Assert.That(message.Response!.Content.ToString(), Is.EqualTo("Mock content"));
         }
         else
         {
@@ -192,7 +195,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual("Mock content", message.Response!.Content.ToString());
+        Assert.That(message.Response!.Content.ToString(), Is.EqualTo("Mock content"));
     }
 
     [Test]
@@ -210,7 +213,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual(0, message.Response!.Content.ToMemory().Length);
+        Assert.That(message.Response!.Content.ToMemory().Length, Is.EqualTo(0));
     }
 
     [Test]
@@ -233,7 +236,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+        Assert.That(BinaryData.FromStream(message.Response!.ContentStream!).ToString(), Is.EqualTo("Mock content"));
     }
 
     [Test]
@@ -251,7 +254,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual(0, message.Response!.ContentStream!.Length);
+        Assert.That(message.Response!.ContentStream!.Length, Is.EqualTo(0));
     }
 
     [Test]
@@ -274,9 +277,9 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
-        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
-        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+        Assert.That(BinaryData.FromStream(message.Response!.ContentStream!).ToString(), Is.EqualTo("Mock content"));
+        Assert.That(BinaryData.FromStream(message.Response!.ContentStream!).ToString(), Is.EqualTo("Mock content"));
+        Assert.That(BinaryData.FromStream(message.Response!.ContentStream!).ToString(), Is.EqualTo("Mock content"));
     }
 
     [Test]
@@ -301,8 +304,11 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         message.Response!.Dispose();
 
-        Assert.AreEqual("Mock content", message.Response!.Content.ToString());
-        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+        Assert.Multiple(() =>
+        {
+            Assert.That(message.Response!.Content.ToString(), Is.EqualTo("Mock content"));
+            Assert.That(BinaryData.FromStream(message.Response!.ContentStream!).ToString(), Is.EqualTo("Mock content"));
+        });
     }
 
     [Test]
@@ -350,10 +356,13 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+        Assert.Multiple(() =>
+        {
+            Assert.That(BinaryData.FromStream(message.Response!.ContentStream!).ToString(), Is.EqualTo("Mock content"));
 
-        // The second time it's read the stream's Position is at the end
-        Assert.AreEqual(0, BinaryData.FromStream(message.Response!.ContentStream!).ToArray().Length);
+            // The second time it's read the stream's Position is at the end
+            Assert.That(BinaryData.FromStream(message.Response!.ContentStream!).ToArray(), Is.Empty);
+        });
     }
 
     [Test]
@@ -372,7 +381,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual(0, BinaryData.FromStream(message.Response!.ContentStream!).ToArray().Length);
+        Assert.That(BinaryData.FromStream(message.Response!.ContentStream!).ToArray(), Is.Empty);
     }
 
     [Test]
@@ -398,7 +407,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         BinaryData content = await message.Response!.BufferContentSyncOrAsync(default, IsAsync);
 
-        Assert.AreEqual(message.Response!.Content, content);
+        Assert.That(content, Is.EqualTo(message.Response!.Content));
     }
 
     [Test]
@@ -418,7 +427,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         BinaryData content = await message.Response!.BufferContentSyncOrAsync(default, IsAsync);
 
-        Assert.AreEqual(0, content.ToMemory().Length);
+        Assert.That(content.ToMemory().Length, Is.EqualTo(0));
     }
 
     [Test]
@@ -441,7 +450,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         BinaryData content = await message.Response!.BufferContentSyncOrAsync(default, IsAsync);
 
-        Assert.AreEqual(0, content.ToMemory().Length);
+        Assert.That(content.ToMemory().Length, Is.EqualTo(0));
     }
 
     [Test]
@@ -493,8 +502,11 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
         // Explicitly assign ContentStream via property setter
         message.Response!.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes("Mock content - 2"));
 
-        Assert.AreEqual("Mock content - 2", message.Response!.Content.ToString());
-        Assert.AreEqual("Mock content - 2", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
+        Assert.Multiple(() =>
+        {
+            Assert.That(message.Response!.Content.ToString(), Is.EqualTo("Mock content - 2"));
+            Assert.That(BinaryData.FromStream(message.Response!.ContentStream!).ToString(), Is.EqualTo("Mock content - 2"));
+        });
     }
 
     #region Helpers

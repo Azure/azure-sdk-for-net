@@ -34,8 +34,11 @@ namespace Azure.Core.TestFramework.Tests
             MockClient client = CreateClient(responses);
             Response response = await client.GetResourceAsync("1");
 
-            Assert.That(response.Status, Is.EqualTo(200));
-            Assert.That(response.Content.ToObjectFromJson<MockResource>(), Has.Property("Id").EqualTo("1").And.Property("Value").EqualTo("resource1"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Status, Is.EqualTo(200));
+                Assert.That(response.Content.ToObjectFromJson<MockResource>(), Has.Property("Id").EqualTo("1").And.Property("Value").EqualTo("resource1"));
+            });
         }
 
         private class MockResource

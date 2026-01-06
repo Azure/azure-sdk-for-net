@@ -53,10 +53,13 @@ namespace Azure.Data.Tables.Tests
             }
             catch (RequestFailedException actualException)
             {
-                Assert.That(actualException.Message, Contains.Substring(expectedMessage));
-                Assert.That(actualException.Data.Keys, Is.EquivalentTo(expectedData.Keys));
-                Assert.That(actualException.Data.Values, Is.EquivalentTo(expectedData.Values));
-                Assert.That(actualException.ErrorCode, Is.EqualTo(expectedErrorCode.ToString()));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actualException.Message, Contains.Substring(expectedMessage));
+                    Assert.That(actualException.Data.Keys, Is.EquivalentTo(expectedData.Keys));
+                    Assert.That(actualException.Data.Values, Is.EquivalentTo(expectedData.Values));
+                    Assert.That(actualException.ErrorCode, Is.EqualTo(expectedErrorCode.ToString()));
+                });
             }
         }
     }

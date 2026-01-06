@@ -41,12 +41,12 @@ namespace Azure.Identity.Tests
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
 
-            Assert.IsNotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
 
             // ensure subsequent calls before the token expires are served from the token cache
             AccessToken cachedToken = await credential.GetTokenAsync(tokenRequestContext);
 
-            Assert.AreEqual(token.Token, cachedToken.Token);
+            Assert.That(cachedToken.Token, Is.EqualTo(token.Token));
 
             // ensure new credentials don't share tokens from the cache
             var credential2 = new ClientCertificateCredential(tenantId, clientId, certPath, options);
@@ -56,7 +56,7 @@ namespace Azure.Identity.Tests
             // this assert is conditional because the access token is scrubbed in the recording so they will never be different
             if (Mode != RecordedTestMode.Playback && Mode != RecordedTestMode.None)
             {
-                Assert.AreNotEqual(token.Token, token2.Token);
+                Assert.That(token2.Token, Is.Not.EqualTo(token.Token));
             }
         }
 
@@ -82,12 +82,12 @@ namespace Azure.Identity.Tests
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
 
-            Assert.IsNotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
 
             // ensure subsequent calls before the token expires are served from the token cache
             AccessToken cachedToken = await credential.GetTokenAsync(tokenRequestContext);
 
-            Assert.AreEqual(token.Token, cachedToken.Token);
+            Assert.That(cachedToken.Token, Is.EqualTo(token.Token));
 
             // ensure new credentials don't share tokens from the cache
             var credential2 = new ClientCertificateCredential(tenantId, clientId, cert, options);
@@ -97,7 +97,7 @@ namespace Azure.Identity.Tests
             // this assert is conditional because the access token is scrubbed in the recording so they will never be different
             if (Mode != RecordedTestMode.Playback && Mode != RecordedTestMode.None)
             {
-                Assert.AreNotEqual(token.Token, token2.Token);
+                Assert.That(token2.Token, Is.Not.EqualTo(token.Token));
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Identity.Tests
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
 
-            Assert.IsNotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]

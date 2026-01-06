@@ -73,9 +73,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature("hub-name", "keyName", "key", value, DateTimeOffset.UtcNow.AddHours(4));
             var credential = new SharedAccessCredential(signature);
 
-            Assert.That(GetSharedAccessSignature(credential), Is.SameAs(signature), "The credential should match.");
-            Assert.That(GetSourceSasCredential(credential), Is.Null, "The source SAS credential should not be populated.");
-            Assert.That(GetSourceKeyCredential(credential), Is.Null, "The source named key credential should not be populated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(GetSharedAccessSignature(credential), Is.SameAs(signature), "The credential should match.");
+                Assert.That(GetSourceSasCredential(credential), Is.Null, "The source SAS credential should not be populated.");
+                Assert.That(GetSourceKeyCredential(credential), Is.Null, "The source named key credential should not be populated.");
+            });
         }
 
         /// <summary>
@@ -89,9 +92,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var sourceCredential = new AzureSasCredential(signature.Value);
             var credential = new SharedAccessCredential(sourceCredential);
 
-            Assert.That(GetSharedAccessSignature(credential).Value, Is.EqualTo(sourceCredential.Signature), "The signature should match the source credential.");
-            Assert.That(GetSourceSasCredential(credential), Is.SameAs(sourceCredential), "The source SAS credential should match.");
-            Assert.That(GetSourceKeyCredential(credential), Is.Null, "The source named key credential should not be populated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(GetSharedAccessSignature(credential).Value, Is.EqualTo(sourceCredential.Signature), "The signature should match the source credential.");
+                Assert.That(GetSourceSasCredential(credential), Is.SameAs(sourceCredential), "The source SAS credential should match.");
+                Assert.That(GetSourceKeyCredential(credential), Is.Null, "The source named key credential should not be populated.");
+            });
         }
 
         /// <summary>
@@ -107,10 +113,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var credentialSignature = GetSharedAccessSignature(credential);
             var (signatureKeyName, signatureKeyValue) = sourceCredential;
 
-            Assert.That(credentialSignature.SharedAccessKeyName, Is.EqualTo(signatureKeyName), "The shared key name should match the source credential.");
-            Assert.That(credentialSignature.SharedAccessKey, Is.EqualTo(signatureKeyValue), "The shared key should match the source credential.");
-            Assert.That(GetSourceSasCredential(credential), Is.Null, "The source SAS credential should not be populated.");
-            Assert.That(GetSourceKeyCredential(credential), Is.SameAs(sourceCredential), "The source key credential should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(credentialSignature.SharedAccessKeyName, Is.EqualTo(signatureKeyName), "The shared key name should match the source credential.");
+                Assert.That(credentialSignature.SharedAccessKey, Is.EqualTo(signatureKeyValue), "The shared key should match the source credential.");
+                Assert.That(GetSourceSasCredential(credential), Is.Null, "The source SAS credential should not be populated.");
+                Assert.That(GetSourceKeyCredential(credential), Is.SameAs(sourceCredential), "The source key credential should match.");
+            });
         }
 
         /// <summary>
@@ -259,16 +268,22 @@ namespace Azure.Messaging.EventHubs.Tests
             var credentialSignature = GetSharedAccessSignature(credential);
             var (signatureKeyName, signatureKeyValue) = sourceCredential;
 
-            Assert.That(credentialSignature.SharedAccessKeyName, Is.EqualTo(signatureKeyName), "The shared key name should match the source credential.");
-            Assert.That(credentialSignature.SharedAccessKey, Is.EqualTo(signatureKeyValue), "The shared key should match the source credential.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(credentialSignature.SharedAccessKeyName, Is.EqualTo(signatureKeyName), "The shared key name should match the source credential.");
+                Assert.That(credentialSignature.SharedAccessKey, Is.EqualTo(signatureKeyValue), "The shared key should match the source credential.");
+            });
 
             sourceCredential.Update(updatedKeyName, updatedKey);
             _ = credential.GetToken(new TokenRequestContext(), CancellationToken.None);
 
             var newSignature = GetSharedAccessSignature(credential);
-            Assert.That(newSignature.SharedAccessKeyName, Is.EqualTo(updatedKeyName));
-            Assert.That(newSignature.SharedAccessKey, Is.EqualTo(updatedKey));
-            Assert.That(newSignature.SignatureExpiration, Is.EqualTo(signature.SignatureExpiration).Within(TimeSpan.FromMinutes(5)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(newSignature.SharedAccessKeyName, Is.EqualTo(updatedKeyName));
+                Assert.That(newSignature.SharedAccessKey, Is.EqualTo(updatedKey));
+                Assert.That(newSignature.SignatureExpiration, Is.EqualTo(signature.SignatureExpiration).Within(TimeSpan.FromMinutes(5)));
+            });
         }
 
         /// <summary>
@@ -289,8 +304,11 @@ namespace Azure.Messaging.EventHubs.Tests
             sourceCredential.Update(updatedSignature.Value);
 
             var accessToken = credential.GetToken(new TokenRequestContext(), CancellationToken.None);
-            Assert.That(accessToken.Token, Is.EqualTo(updatedSignature.Value));
-            Assert.That(accessToken.ExpiresOn, Is.EqualTo(updatedSignature.SignatureExpiration).Within(TimeSpan.FromMinutes(5)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(accessToken.Token, Is.EqualTo(updatedSignature.Value));
+                Assert.That(accessToken.ExpiresOn, Is.EqualTo(updatedSignature.SignatureExpiration).Within(TimeSpan.FromMinutes(5)));
+            });
         }
 
         /// <summary>

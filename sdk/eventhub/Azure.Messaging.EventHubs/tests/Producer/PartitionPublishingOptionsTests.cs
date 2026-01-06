@@ -32,9 +32,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
-            Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The owner level should have been copied.");
-            Assert.That(clone.ProducerGroupId, Is.EqualTo(options.ProducerGroupId), "The producer group identifier should have been copied.");
-            Assert.That(clone.StartingSequenceNumber, Is.EqualTo(options.StartingSequenceNumber), "The starting sequence number should have been copied.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The owner level should have been copied.");
+                Assert.That(clone.ProducerGroupId, Is.EqualTo(options.ProducerGroupId), "The producer group identifier should have been copied.");
+                Assert.That(clone.StartingSequenceNumber, Is.EqualTo(options.StartingSequenceNumber), "The starting sequence number should have been copied.");
+            });
         }
     }
 }

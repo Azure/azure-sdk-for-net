@@ -42,21 +42,24 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
             AnalyzeTextLanguageDetectionResult AnalyzeTextLanguageDetectionResult = (AnalyzeTextLanguageDetectionResult)response.Value;
 
-            Assert.IsNotNull(AnalyzeTextLanguageDetectionResult);
-            Assert.IsNotNull(AnalyzeTextLanguageDetectionResult.Results);
-            Assert.IsNotNull(AnalyzeTextLanguageDetectionResult.Results.Documents);
+            Assert.That(AnalyzeTextLanguageDetectionResult, Is.Not.Null);
+            Assert.That(AnalyzeTextLanguageDetectionResult.Results, Is.Not.Null);
+            Assert.That(AnalyzeTextLanguageDetectionResult.Results.Documents, Is.Not.Null);
             foreach (LanguageDetectionDocumentResult document in AnalyzeTextLanguageDetectionResult.Results.Documents)
             {
-                Assert.IsNotNull(document);
-                Assert.IsNotNull(document.DetectedLanguage);
-                Assert.IsNotNull(document.DetectedLanguage.Name);
-                Assert.IsNotNull(document.DetectedLanguage.Iso6391Name);
-                Assert.IsNotNull(document.DetectedLanguage.ConfidenceScore);
-                Assert.IsNotNull(document.Id);
+                Assert.That(document, Is.Not.Null);
+                Assert.That(document.DetectedLanguage, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(document.DetectedLanguage.Name, Is.Not.Null);
+                    Assert.That(document.DetectedLanguage.Iso6391Name, Is.Not.Null);
+                    Assert.That(document.DetectedLanguage.ConfidenceScore, Is.Not.Null);
+                    Assert.That(document.Id, Is.Not.Null);
+                });
             }
         }
 
@@ -80,34 +83,46 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
             AnalyzeTextSentimentResult AnalyzeTextSentimentResult = (AnalyzeTextSentimentResult)response.Value;
 
-            Assert.IsNotNull(AnalyzeTextSentimentResult);
-            Assert.IsNotNull(AnalyzeTextSentimentResult.Results);
-            Assert.IsNotNull(AnalyzeTextSentimentResult.Results.Documents);
+            Assert.That(AnalyzeTextSentimentResult, Is.Not.Null);
+            Assert.That(AnalyzeTextSentimentResult.Results, Is.Not.Null);
+            Assert.That(AnalyzeTextSentimentResult.Results.Documents, Is.Not.Null);
             foreach (SentimentActionResult sentimentResponseWithDocumentDetectedLanguage in AnalyzeTextSentimentResult.Results.Documents)
             {
-                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage);
-                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.Id);
-                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.Sentiment);
-                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores);
-                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Positive);
-                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Neutral);
-                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Negative);
-                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.Sentences);
+                Assert.That(sentimentResponseWithDocumentDetectedLanguage, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sentimentResponseWithDocumentDetectedLanguage.Id, Is.Not.Null);
+                    Assert.That(sentimentResponseWithDocumentDetectedLanguage.Sentiment, Is.Not.Null);
+                    Assert.That(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Positive, Is.Not.Null);
+                    Assert.That(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Neutral, Is.Not.Null);
+                    Assert.That(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Negative, Is.Not.Null);
+                    Assert.That(sentimentResponseWithDocumentDetectedLanguage.Sentences, Is.Not.Null);
+                });
                 foreach (SentenceSentiment sentenceSentiment in sentimentResponseWithDocumentDetectedLanguage.Sentences)
                 {
-                    Assert.IsNotNull(sentenceSentiment);
-                    Assert.IsNotNull(sentenceSentiment.Text);
-                    Assert.IsNotNull(sentenceSentiment.Sentiment);
-                    Assert.IsNotNull(sentenceSentiment.ConfidenceScores);
-                    Assert.IsNotNull(sentenceSentiment.ConfidenceScores.Positive);
-                    Assert.IsNotNull(sentenceSentiment.ConfidenceScores.Neutral);
-                    Assert.IsNotNull(sentenceSentiment.ConfidenceScores.Negative);
-                    Assert.IsNotNull(sentenceSentiment.Offset);
-                    Assert.IsNotNull(sentenceSentiment.Length);
+                    Assert.That(sentenceSentiment, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sentenceSentiment.Text, Is.Not.Null);
+                        Assert.That(sentenceSentiment.Sentiment, Is.Not.Null);
+                        Assert.That(sentenceSentiment.ConfidenceScores, Is.Not.Null);
+                    });
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sentenceSentiment.ConfidenceScores.Positive, Is.Not.Null);
+                        Assert.That(sentenceSentiment.ConfidenceScores.Neutral, Is.Not.Null);
+                        Assert.That(sentenceSentiment.ConfidenceScores.Negative, Is.Not.Null);
+                        Assert.That(sentenceSentiment.Offset, Is.Not.Null);
+                        Assert.That(sentenceSentiment.Length, Is.Not.Null);
+                    });
                 }
             }
         }
@@ -138,21 +153,24 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
             AnalyzeTextKeyPhraseResult keyPhraseTaskResult = (AnalyzeTextKeyPhraseResult)response.Value;
 
-            Assert.IsNotNull(keyPhraseTaskResult);
-            Assert.IsNotNull(keyPhraseTaskResult.Results);
-            Assert.IsNotNull(keyPhraseTaskResult.Results.Documents);
+            Assert.That(keyPhraseTaskResult, Is.Not.Null);
+            Assert.That(keyPhraseTaskResult.Results, Is.Not.Null);
+            Assert.That(keyPhraseTaskResult.Results.Documents, Is.Not.Null);
             foreach (KeyPhrasesActionResult kpeResult in keyPhraseTaskResult.Results.Documents)
             {
-                Assert.IsNotNull(kpeResult);
-                Assert.IsNotNull(kpeResult.Id);
-                Assert.IsNotNull(kpeResult.KeyPhrases);
+                Assert.That(kpeResult, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(kpeResult.Id, Is.Not.Null);
+                    Assert.That(kpeResult.KeyPhrases, Is.Not.Null);
+                });
                 foreach (string keyPhrase in kpeResult.KeyPhrases)
                 {
-                    Assert.IsNotNull(keyPhrase);
+                    Assert.That(keyPhrase, Is.Not.Null);
                 }
             }
         }
@@ -183,26 +201,32 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
             AnalyzeTextEntitiesResult entitiesTaskResult = (AnalyzeTextEntitiesResult)response.Value;
 
-            Assert.IsNotNull(entitiesTaskResult);
-            Assert.IsNotNull(entitiesTaskResult.Results);
-            Assert.IsNotNull(entitiesTaskResult.Results.Documents);
+            Assert.That(entitiesTaskResult, Is.Not.Null);
+            Assert.That(entitiesTaskResult.Results, Is.Not.Null);
+            Assert.That(entitiesTaskResult.Results.Documents, Is.Not.Null);
             foreach (EntityActionResult nerResult in entitiesTaskResult.Results.Documents)
             {
-                Assert.IsNotNull(nerResult);
-                Assert.IsNotNull(nerResult.Id);
-                Assert.IsNotNull(nerResult.Entities);
+                Assert.That(nerResult, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(nerResult.Id, Is.Not.Null);
+                    Assert.That(nerResult.Entities, Is.Not.Null);
+                });
                 foreach (NamedEntityWithMetadata entity in nerResult.Entities)
                 {
-                    Assert.IsNotNull(entity);
-                    Assert.IsNotNull(entity.Text);
-                    Assert.IsNotNull(entity.Category);
-                    Assert.IsNotNull(entity.Offset);
-                    Assert.IsNotNull(entity.Length);
-                    Assert.IsNotNull(entity.ConfidenceScore);
+                    Assert.That(entity, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(entity.Text, Is.Not.Null);
+                        Assert.That(entity.Category, Is.Not.Null);
+                        Assert.That(entity.Offset, Is.Not.Null);
+                        Assert.That(entity.Length, Is.Not.Null);
+                    });
+                    Assert.That(entity.ConfidenceScore, Is.Not.Null);
                 }
             }
         }
@@ -227,25 +251,31 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
             AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-            Assert.IsNotNull(piiTaskResult);
-            Assert.IsNotNull(piiTaskResult.Results);
-            Assert.IsNotNull(piiTaskResult.Results.Documents);
+            Assert.That(piiTaskResult, Is.Not.Null);
+            Assert.That(piiTaskResult.Results, Is.Not.Null);
+            Assert.That(piiTaskResult.Results.Documents, Is.Not.Null);
             foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
             {
-                Assert.IsNotNull(piiResult.Id);
-                Assert.IsNotNull(piiResult.Entities);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(piiResult.Id, Is.Not.Null);
+                    Assert.That(piiResult.Entities, Is.Not.Null);
+                });
                 foreach (PiiEntity entity in piiResult.Entities)
                 {
-                    Assert.IsNotNull(entity);
-                    Assert.IsNotNull(entity.Text);
-                    Assert.IsNotNull(entity.Category);
-                    Assert.IsNotNull(entity.Offset);
-                    Assert.IsNotNull(entity.Length);
-                    Assert.IsNotNull(entity.ConfidenceScore);
+                    Assert.That(entity, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(entity.Text, Is.Not.Null);
+                        Assert.That(entity.Category, Is.Not.Null);
+                        Assert.That(entity.Offset, Is.Not.Null);
+                        Assert.That(entity.Length, Is.Not.Null);
+                    });
+                    Assert.That(entity.ConfidenceScore, Is.Not.Null);
                 }
             }
         }
@@ -275,31 +305,40 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
             AnalyzeTextEntityLinkingResult entityLinkingTaskResult = (AnalyzeTextEntityLinkingResult)response.Value;
 
-            Assert.IsNotNull(entityLinkingTaskResult);
-            Assert.IsNotNull(entityLinkingTaskResult.Results);
-            Assert.IsNotNull(entityLinkingTaskResult.Results.Documents);
+            Assert.That(entityLinkingTaskResult, Is.Not.Null);
+            Assert.That(entityLinkingTaskResult.Results, Is.Not.Null);
+            Assert.That(entityLinkingTaskResult.Results.Documents, Is.Not.Null);
             foreach (EntityLinkingActionResult entityLinkingResult in entityLinkingTaskResult.Results.Documents)
             {
-                Assert.IsNotNull(entityLinkingResult.Id);
-                Assert.IsNotNull(entityLinkingResult.Entities);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entityLinkingResult.Id, Is.Not.Null);
+                    Assert.That(entityLinkingResult.Entities, Is.Not.Null);
+                });
                 foreach (LinkedEntity linkedEntity in entityLinkingResult.Entities)
                 {
-                    Assert.IsNotNull(linkedEntity.Name);
-                    Assert.IsNotNull(linkedEntity.Language);
-                    Assert.IsNotNull(linkedEntity.DataSource);
-                    Assert.IsNotNull(linkedEntity.Url);
-                    Assert.IsNotNull(linkedEntity.Id);
-                    Assert.IsNotNull(linkedEntity.Matches);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(linkedEntity.Name, Is.Not.Null);
+                        Assert.That(linkedEntity.Language, Is.Not.Null);
+                        Assert.That(linkedEntity.DataSource, Is.Not.Null);
+                        Assert.That(linkedEntity.Url, Is.Not.Null);
+                        Assert.That(linkedEntity.Id, Is.Not.Null);
+                        Assert.That(linkedEntity.Matches, Is.Not.Null);
+                    });
                     foreach (EntityLinkingMatch match in linkedEntity.Matches)
                     {
-                        Assert.NotNull(match.ConfidenceScore);
-                        Assert.NotNull(match.Text);
-                        Assert.NotNull(match.Offset);
-                        Assert.NotNull(match.Length);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(match.ConfidenceScore, Is.Not.Null);
+                            Assert.That(match.Text, Is.Not.Null);
+                            Assert.That(match.Offset, Is.Not.Null);
+                            Assert.That(match.Length, Is.Not.Null);
+                        });
                     }
                 }
             }
@@ -329,53 +368,71 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
             AnalyzeTextOperationState analyzeTextOperationState = response.Value;
 
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response, Is.Not.Null);
+                Assert.That(analyzeTextOperationState, Is.Not.Null);
+            });
+            Assert.That(analyzeTextOperationState.Actions, Is.Not.Null);
+            Assert.That(analyzeTextOperationState.Actions.Items, Is.Not.Null);
 
             foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
             {
                 if (analyzeTextOperationResult is HealthcareOperationResult)
                 {
                     HealthcareOperationResult healthcareLROResult = (HealthcareOperationResult)analyzeTextOperationResult;
-                    Assert.IsNotNull(healthcareLROResult);
-                    Assert.IsNotNull(healthcareLROResult.Results);
-                    Assert.IsNotNull(healthcareLROResult.Results.Documents);
+                    Assert.That(healthcareLROResult, Is.Not.Null);
+                    Assert.That(healthcareLROResult.Results, Is.Not.Null);
+                    Assert.That(healthcareLROResult.Results.Documents, Is.Not.Null);
 
                     foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
                     {
-                        Assert.IsNotNull(healthcareEntitiesDocument.Id);
-                        Assert.IsNotNull(healthcareEntitiesDocument.Entities);
-                        Assert.IsNotNull(healthcareEntitiesDocument.Relations);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(healthcareEntitiesDocument.Id, Is.Not.Null);
+                            Assert.That(healthcareEntitiesDocument.Entities, Is.Not.Null);
+                            Assert.That(healthcareEntitiesDocument.Relations, Is.Not.Null);
+                        });
                         foreach (HealthcareEntity healthcareEntity in healthcareEntitiesDocument.Entities)
                         {
-                            Assert.IsNotNull(healthcareEntity);
-                            Assert.IsNotNull(healthcareEntity.Text);
-                            Assert.IsNotNull(healthcareEntity.Category);
-                            Assert.IsNotNull(healthcareEntity.Offset);
-                            Assert.IsNotNull(healthcareEntity.Length);
-                            Assert.IsNotNull(healthcareEntity.ConfidenceScore);
+                            Assert.That(healthcareEntity, Is.Not.Null);
+                            Assert.Multiple(() =>
+                            {
+                                Assert.That(healthcareEntity.Text, Is.Not.Null);
+                                Assert.That(healthcareEntity.Category, Is.Not.Null);
+                                Assert.That(healthcareEntity.Offset, Is.Not.Null);
+                                Assert.That(healthcareEntity.Length, Is.Not.Null);
+                            });
+                            Assert.That(healthcareEntity.ConfidenceScore, Is.Not.Null);
 
                             if (healthcareEntity.Links is not null)
                             {
                                 foreach (HealthcareEntityLink healthcareEntityLink in healthcareEntity.Links)
                                 {
-                                    Assert.IsNotNull(healthcareEntityLink);
-                                    Assert.IsNotNull(healthcareEntityLink.Id);
-                                    Assert.IsNotNull(healthcareEntityLink.DataSource);
+                                    Assert.That(healthcareEntityLink, Is.Not.Null);
+                                    Assert.Multiple(() =>
+                                    {
+                                        Assert.That(healthcareEntityLink.Id, Is.Not.Null);
+                                        Assert.That(healthcareEntityLink.DataSource, Is.Not.Null);
+                                    });
                                 }
                             }
                         }
                         foreach (HealthcareRelation relation in healthcareEntitiesDocument.Relations)
                         {
-                            Assert.IsNotNull(relation);
-                            Assert.IsNotNull(relation.RelationType);
-                            Assert.IsNotNull(relation.Entities);
+                            Assert.That(relation, Is.Not.Null);
+                            Assert.Multiple(() =>
+                            {
+                                Assert.That(relation.RelationType, Is.Not.Null);
+                                Assert.That(relation.Entities, Is.Not.Null);
+                            });
                             foreach (HealthcareRelationEntity healthcareRelationEntity in relation.Entities)
                             {
-                                Assert.IsNotNull(healthcareRelationEntity.Role);
-                                Assert.IsNotNull(healthcareRelationEntity.Ref);
+                                Assert.Multiple(() =>
+                                {
+                                    Assert.That(healthcareRelationEntity.Role, Is.Not.Null);
+                                    Assert.That(healthcareRelationEntity.Ref, Is.Not.Null);
+                                });
                             }
                         }
                     }
@@ -417,33 +474,42 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
             AnalyzeTextOperationState analyzeTextOperationState = response.Value;
 
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response, Is.Not.Null);
+                Assert.That(analyzeTextOperationState, Is.Not.Null);
+            });
+            Assert.That(analyzeTextOperationState.Actions, Is.Not.Null);
+            Assert.That(analyzeTextOperationState.Actions.Items, Is.Not.Null);
 
             foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
             {
                 if (analyzeTextOperationResult is CustomEntityRecognitionOperationResult)
                 {
                     CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)analyzeTextOperationResult;
-                    Assert.IsNotNull(customClassificationResult);
-                    Assert.IsNotNull(customClassificationResult.Results);
-                    Assert.IsNotNull(customClassificationResult.Results.Documents);
+                    Assert.That(customClassificationResult, Is.Not.Null);
+                    Assert.That(customClassificationResult.Results, Is.Not.Null);
+                    Assert.That(customClassificationResult.Results.Documents, Is.Not.Null);
 
                     foreach (CustomEntityActionResult entitiesDocument in customClassificationResult.Results.Documents)
                     {
-                        Assert.IsNotNull(entitiesDocument.Id);
-                        Assert.IsNotNull(entitiesDocument.Entities);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(entitiesDocument.Id, Is.Not.Null);
+                            Assert.That(entitiesDocument.Entities, Is.Not.Null);
+                        });
 
                         foreach (NamedEntity entity in entitiesDocument.Entities)
                         {
-                            Assert.IsNotNull(entity);
-                            Assert.IsNotNull(entity.Text);
-                            Assert.IsNotNull(entity.Category);
-                            Assert.IsNotNull(entity.Offset);
-                            Assert.IsNotNull(entity.Length);
-                            Assert.IsNotNull(entity.ConfidenceScore);
+                            Assert.That(entity, Is.Not.Null);
+                            Assert.Multiple(() =>
+                            {
+                                Assert.That(entity.Text, Is.Not.Null);
+                                Assert.That(entity.Category, Is.Not.Null);
+                                Assert.That(entity.Offset, Is.Not.Null);
+                                Assert.That(entity.Length, Is.Not.Null);
+                            });
+                            Assert.That(entity.ConfidenceScore, Is.Not.Null);
                         }
                     }
                 }
@@ -482,29 +548,38 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
             AnalyzeTextOperationState analyzeTextOperationState = response.Value;
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response, Is.Not.Null);
+                Assert.That(analyzeTextOperationState, Is.Not.Null);
+            });
+            Assert.That(analyzeTextOperationState.Actions, Is.Not.Null);
+            Assert.That(analyzeTextOperationState.Actions.Items, Is.Not.Null);
 
             foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
             {
                 if (analyzeTextOperationResult is CustomSingleLabelClassificationOperationResult)
                 {
                     CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)analyzeTextOperationResult;
-                    Assert.IsNotNull(customClassificationResult);
-                    Assert.IsNotNull(customClassificationResult.Results);
-                    Assert.IsNotNull(customClassificationResult.Results.Documents);
+                    Assert.That(customClassificationResult, Is.Not.Null);
+                    Assert.That(customClassificationResult.Results, Is.Not.Null);
+                    Assert.That(customClassificationResult.Results.Documents, Is.Not.Null);
 
                     foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)
                     {
-                        Assert.IsNotNull(customClassificationDocument.Id);
-                        Assert.IsNotNull(customClassificationDocument.Class);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(customClassificationDocument.Id, Is.Not.Null);
+                            Assert.That(customClassificationDocument.Class, Is.Not.Null);
+                        });
 
                         foreach (ClassificationResult classification in customClassificationDocument.Class)
                         {
-                            Assert.IsNotNull(classification.Category);
-                            Assert.IsNotNull(classification.ConfidenceScore);
+                            Assert.Multiple(() =>
+                            {
+                                Assert.That(classification.Category, Is.Not.Null);
+                                Assert.That(classification.ConfidenceScore, Is.Not.Null);
+                            });
                         }
                     }
                 }
@@ -543,29 +618,38 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
             AnalyzeTextOperationState analyzeTextOperationState = response.Value;
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response, Is.Not.Null);
+                Assert.That(analyzeTextOperationState, Is.Not.Null);
+            });
+            Assert.That(analyzeTextOperationState.Actions, Is.Not.Null);
+            Assert.That(analyzeTextOperationState.Actions.Items, Is.Not.Null);
 
             foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
             {
                 if (analyzeTextOperationResult is CustomMultiLabelClassificationOperationResult)
                 {
                     CustomMultiLabelClassificationOperationResult customClassificationResult = (CustomMultiLabelClassificationOperationResult)analyzeTextOperationResult;
-                    Assert.IsNotNull(customClassificationResult);
-                    Assert.IsNotNull(customClassificationResult.Results);
-                    Assert.IsNotNull(customClassificationResult.Results.Documents);
+                    Assert.That(customClassificationResult, Is.Not.Null);
+                    Assert.That(customClassificationResult.Results, Is.Not.Null);
+                    Assert.That(customClassificationResult.Results.Documents, Is.Not.Null);
 
                     foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)
                     {
-                        Assert.IsNotNull(customClassificationDocument.Id);
-                        Assert.IsNotNull(customClassificationDocument.Class);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(customClassificationDocument.Id, Is.Not.Null);
+                            Assert.That(customClassificationDocument.Class, Is.Not.Null);
+                        });
 
                         foreach (ClassificationResult classification in customClassificationDocument.Class)
                         {
-                            Assert.IsNotNull(classification.Category);
-                            Assert.IsNotNull(classification.ConfidenceScore);
+                            Assert.Multiple(() =>
+                            {
+                                Assert.That(classification.Category, Is.Not.Null);
+                                Assert.That(classification.ConfidenceScore, Is.Not.Null);
+                            });
                         }
                     }
                 }
@@ -635,30 +719,39 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
             AnalyzeTextOperationState analyzeTextOperationState = response.Value;
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response, Is.Not.Null);
+                Assert.That(analyzeTextOperationState, Is.Not.Null);
+            });
+            Assert.That(analyzeTextOperationState.Actions, Is.Not.Null);
+            Assert.That(analyzeTextOperationState.Actions.Items, Is.Not.Null);
 
             foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
             {
                 if (analyzeTextOperationResult is ExtractiveSummarizationOperationResult)
                 {
                     ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)analyzeTextOperationResult;
-                    Assert.IsNotNull(extractiveSummarizationLROResult);
-                    Assert.IsNotNull(extractiveSummarizationLROResult.Results);
-                    Assert.IsNotNull(extractiveSummarizationLROResult.Results.Documents);
+                    Assert.That(extractiveSummarizationLROResult, Is.Not.Null);
+                    Assert.That(extractiveSummarizationLROResult.Results, Is.Not.Null);
+                    Assert.That(extractiveSummarizationLROResult.Results.Documents, Is.Not.Null);
 
                     foreach (ExtractedSummaryActionResult extractedSummaryDocument in extractiveSummarizationLROResult.Results.Documents)
                     {
-                        Assert.IsNotNull(extractedSummaryDocument.Id);
-                        Assert.IsNotNull(extractedSummaryDocument.Sentences);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(extractedSummaryDocument.Id, Is.Not.Null);
+                            Assert.That(extractedSummaryDocument.Sentences, Is.Not.Null);
+                        });
                         foreach (ExtractedSummarySentence sentence in extractedSummaryDocument.Sentences)
                         {
-                            Assert.IsNotNull(sentence.Text);
-                            Assert.IsNotNull(sentence.RankScore);
-                            Assert.IsNotNull(sentence.Offset);
-                            Assert.IsNotNull(sentence.Length);
+                            Assert.Multiple(() =>
+                            {
+                                Assert.That(sentence.Text, Is.Not.Null);
+                                Assert.That(sentence.RankScore, Is.Not.Null);
+                                Assert.That(sentence.Offset, Is.Not.Null);
+                                Assert.That(sentence.Length, Is.Not.Null);
+                            });
                         }
                     }
                 }
@@ -728,34 +821,43 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
             AnalyzeTextOperationState analyzeTextOperationState = response.Value;
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response, Is.Not.Null);
+                Assert.That(analyzeTextOperationState, Is.Not.Null);
+            });
+            Assert.That(analyzeTextOperationState.Actions, Is.Not.Null);
+            Assert.That(analyzeTextOperationState.Actions.Items, Is.Not.Null);
 
             foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
             {
                 if (analyzeTextOperationResult is AbstractiveSummarizationOperationResult)
                 {
                     AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextOperationResult;
-                    Assert.IsNotNull(abstractiveSummarizationLROResult);
-                    Assert.IsNotNull(abstractiveSummarizationLROResult.Results);
-                    Assert.IsNotNull(abstractiveSummarizationLROResult.Results.Documents);
+                    Assert.That(abstractiveSummarizationLROResult, Is.Not.Null);
+                    Assert.That(abstractiveSummarizationLROResult.Results, Is.Not.Null);
+                    Assert.That(abstractiveSummarizationLROResult.Results.Documents, Is.Not.Null);
 
                     foreach (AbstractiveSummaryActionResult extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)
                     {
-                        Assert.IsNotNull(extractedSummaryDocument.Id);
-                        Assert.IsNotNull(extractedSummaryDocument.Summaries);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(extractedSummaryDocument.Id, Is.Not.Null);
+                            Assert.That(extractedSummaryDocument.Summaries, Is.Not.Null);
+                        });
 
                         foreach (AbstractiveSummary summary in extractedSummaryDocument.Summaries)
                         {
-                            Assert.IsNotNull(summary.Text);
+                            Assert.That(summary.Text, Is.Not.Null);
                             if (summary.Contexts is not null)
                             {
                                 foreach (SummaryContext context in summary.Contexts)
                                 {
-                                    Assert.IsNotNull(context.Offset);
-                                    Assert.IsNotNull(context.Length);
+                                    Assert.Multiple(() =>
+                                    {
+                                        Assert.That(context.Offset, Is.Not.Null);
+                                        Assert.That(context.Length, Is.Not.Null);
+                                    });
                                 }
                             }
 
@@ -792,16 +894,22 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
-            Assert.IsNotNull(response?.Value);
+            Assert.That(response?.Value, Is.Not.Null);
 
             AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
             foreach (PiiActionResult result in piiTaskResult.Results.Documents)
             {
-                Assert.AreEqual("3", result.Id);
-                Assert.IsNotNull(result.Entities);
-                Assert.AreEqual(0, result.Entities.Count, "Expected no PII entities due to exclusion.");
-                Assert.AreEqual(text, result.RedactedText, "Expected redacted text to remain unchanged.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result.Id, Is.EqualTo("3"));
+                    Assert.That(result.Entities, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result.Entities, Is.Empty, "Expected no PII entities due to exclusion.");
+                    Assert.That(result.RedactedText, Is.EqualTo(text), "Expected redacted text to remain unchanged.");
+                });
             }
         }
 
@@ -837,36 +945,43 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(input);
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
 
             AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
             // Assert — Document 1
             var doc1 = piiResult.Results.Documents.Single(d => d.Id == "1");
-            Assert.IsTrue(doc1.Entities.Any(e =>
+            Assert.That(doc1.Entities.Any(e =>
                 e.Text == "281314478878" &&
                 e.Category == "USBankAccountNumber"),
+                Is.True,
                 "Doc 1 should contain USBankAccountNumber entity for FAN.");
 
             // Assert — Document 2
             var doc2 = piiResult.Results.Documents.Single(d => d.Id == "2");
-            Assert.IsTrue(doc2.Entities.Any(e =>
+            Assert.That(doc2.Entities.Any(e =>
                 e.Text == "281314478873" &&
                 e.Category == "USBankAccountNumber"),
+                Is.True,
                 "Doc 2 should contain USBankAccountNumber entity for a normal bank acct number.");
 
             // Assert — Document 3
             var doc3 = piiResult.Results.Documents.Single(d => d.Id == "3");
 
-            Assert.IsTrue(doc3.Entities.Any(e =>
-                e.Text == "281314478878" &&
-                e.Category == "USBankAccountNumber"),
-                "Doc 3 should contain USBankAccountNumber entity for FAN.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(doc3.Entities.Any(e =>
+                            e.Text == "281314478878" &&
+                            e.Category == "USBankAccountNumber"),
+                            Is.True,
+                            "Doc 3 should contain USBankAccountNumber entity for FAN.");
 
-            Assert.IsTrue(doc3.Entities.Any(e =>
-                e.Text == "281314478879" &&
-                e.Category == "USBankAccountNumber"),
-                "Doc 3 should contain USBankAccountNumber entity for RAN.");
+                Assert.That(doc3.Entities.Any(e =>
+                    e.Text == "281314478879" &&
+                    e.Category == "USBankAccountNumber"),
+                    Is.True,
+                    "Doc 3 should contain USBankAccountNumber entity for RAN.");
+            });
         }
 
         [RecordedTest]
@@ -890,7 +1005,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(input);
-            Assert.IsNotNull(response?.Value);
+            Assert.That(response?.Value, Is.Not.Null);
 
             AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
             // Assert: document 1 (Date of birth)
@@ -898,8 +1013,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             // The raw date string should not appear in redacted text.
             const string dobText = "May 15th, 2015";
-            Assert.IsTrue(
+            Assert.That(
                 doc1.RedactedText != null && !doc1.RedactedText.Contains(dobText),
+                Is.True,
                 "Document 1 redacted text should not contain the raw date of birth."
             );
 
@@ -907,15 +1023,17 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             PiiActionResult doc2 = piiResult.Results.Documents.Single(d => d.Id == "2");
 
             // There should be at least one PhoneNumber entity.
-            Assert.IsTrue(
+            Assert.That(
                 doc2.Entities.Any(e => e.Category == PiiCategory.PhoneNumber),
+                Is.True,
                 "Document 2 should contain a PhoneNumber entity."
             );
 
             // The raw phone number should not appear in redacted text.
             const string phoneText = "(555) 123-4567";
-            Assert.IsTrue(
+            Assert.That(
                 doc2.RedactedText != null && !doc2.RedactedText.Contains(phoneText),
+                Is.True,
                 "Document 2 redacted text should not contain the raw phone number."
             );
         }
@@ -977,38 +1095,47 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
             AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
 
-            // Basic sanity checks
-            Assert.AreEqual(2, piiResult.Results.Documents.Count, "Expected 2 document results.");
-            Assert.IsEmpty(piiResult.Results.Errors, "Did not expect any document errors.");
+            Assert.Multiple(() =>
+            {
+                // Basic sanity checks
+                Assert.That(piiResult.Results.Documents.Count, Is.EqualTo(2), "Expected 2 document results.");
+                Assert.That(piiResult.Results.Errors, Is.Empty, "Did not expect any document errors.");
+            });
 
             foreach (PiiActionResult doc in piiResult.Results.Documents)
             {
-                // 1. We should have at least these three PII categories recognized:
-                Assert.IsTrue(
-                    doc.Entities.Any(e => e.Category == PiiCategory.UsSocialSecurityNumber),
-                    $"Document {doc.Id} should contain a US SSN entity.");
+                Assert.Multiple(() =>
+                {
+                    // 1. We should have at least these three PII categories recognized:
+                    Assert.That(
+                        doc.Entities.Any(e => e.Category == PiiCategory.UsSocialSecurityNumber),
+                        Is.True,
+                        $"Document {doc.Id} should contain a US SSN entity.");
 
-                Assert.IsTrue(
-                    doc.Entities.Any(e => e.Category == PiiCategory.Person),
-                    $"Document {doc.Id} should contain a Person entity.");
+                    Assert.That(
+                        doc.Entities.Any(e => e.Category == PiiCategory.Person),
+                        Is.True,
+                        $"Document {doc.Id} should contain a Person entity.");
 
-                Assert.IsTrue(
-                    doc.Entities.Any(e => e.Category == PiiCategory.Email),
-                    $"Document {doc.Id} should contain an Email entity.");
+                    Assert.That(
+                        doc.Entities.Any(e => e.Category == PiiCategory.Email),
+                        Is.True,
+                        $"Document {doc.Id} should contain an Email entity.");
 
-                // 2. Check redaction behavior for Person and Email:
-                //    "John Doe" and "john@example.com" should not appear in the redacted text
-                Assert.IsNotNull(doc.RedactedText, "RedactedText should not be null.");
-                StringAssert.DoesNotContain("John Doe", doc.RedactedText, $"Document {doc.Id} redacted text should not contain the original person name.");
-                StringAssert.DoesNotContain("john@example.com", doc.RedactedText, $"Document {doc.Id} redacted text should not contain the original email.");
+                    // 2. Check redaction behavior for Person and Email:
+                    //    "John Doe" and "john@example.com" should not appear in the redacted text
+                    Assert.That(doc.RedactedText, Is.Not.Null, "RedactedText should not be null.");
+                });
+                Assert.That(doc.RedactedText, Does.Not.Contain("John Doe"), $"Document {doc.Id} redacted text should not contain the original person name.");
+                Assert.That(doc.RedactedText, Does.Not.Contain("john@example.com"), $"Document {doc.Id} redacted text should not contain the original email.");
 
                 // 3. Check SSN redaction behavior:
                 //    Full SSN should be masked, but the last 4 digits may remain visible due to CharacterMask policy.
                 const string fullSsn = "123-45-6789";
                 const string last4 = "6789";
 
-                StringAssert.DoesNotContain(fullSsn, doc.RedactedText, $"Document {doc.Id} redacted text should not contain the full SSN.");
-                StringAssert.Contains(last4, doc.RedactedText, $"Document {doc.Id} redacted text should still contain the last 4 digits of the SSN due to the custom mask policy.");
+                Assert.That(doc.RedactedText, Does.Not.Contain(fullSsn), $"Document {doc.Id} redacted text should not contain the full SSN.");
+                Assert.That(doc.RedactedText, Does.Contain(last4), $"Document {doc.Id} redacted text should still contain the last 4 digits of the SSN due to the custom mask policy.");
             }
         }
 
@@ -1061,48 +1188,56 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             var piiResult = (AnalyzeTextPiiResult)response.Value;
 
             // Basic shape checks
-            Assert.IsNotNull(piiResult);
-            Assert.IsNotNull(piiResult.Results);
-            Assert.IsNotNull(piiResult.Results.Documents);
-            Assert.AreEqual(1, piiResult.Results.Documents.Count);
+            Assert.That(piiResult, Is.Not.Null);
+            Assert.That(piiResult.Results, Is.Not.Null);
+            Assert.That(piiResult.Results.Documents, Is.Not.Null);
+            Assert.That(piiResult.Results.Documents.Count, Is.EqualTo(1));
 
             PiiActionResult doc = piiResult.Results.Documents[0];
             string redacted = doc.RedactedText;
 
             // Person should be masked out in text; SSN & Email should remain in the text
             // (but be filtered out as entities due to the 0.9 threshold overrides)
-            StringAssert.DoesNotContain("John Doe", redacted, "Person name should be masked in redacted text.");
-            StringAssert.Contains("222-45-6789", redacted, "SSN should remain visible in redacted text.");
-            StringAssert.Contains("john@example.com", redacted, "Email should remain visible in redacted text.");
+            Assert.That(redacted, Does.Not.Contain("John Doe"), "Person name should be masked in redacted text.");
+            Assert.That(redacted, Does.Contain("222-45-6789"), "SSN should remain visible in redacted text.");
+            Assert.That(redacted, Does.Contain("john@example.com"), "Email should remain visible in redacted text.");
 
             // Only Person entities should be returned (SSN & Email filtered by high thresholds)
-            Assert.AreEqual(2, doc.Entities.Count, "Expected exactly 2 entities to be returned.");
+            Assert.That(doc.Entities.Count, Is.EqualTo(2), "Expected exactly 2 entities to be returned.");
 
             var categories = new HashSet<string>(
             doc.Entities.Select(e => e.Category.ToString())
 );
 
-            CollectionAssert.AreEquivalent(
-                new[] { PiiCategory.Person.ToString() },
+            Assert.That(
                 categories,
+                Is.EquivalentTo(new[] { PiiCategory.Person.ToString() }),
                 "Only Person entities should be returned."
             );
 
-            // Ensure no SSN or Email entities are present
-            Assert.IsFalse(
-                doc.Entities.Any(e => e.Category == PiiCategory.UsSocialSecurityNumber),
-                "USSocialSecurityNumber entities should be filtered out by the confidence threshold override."
-            );
-            Assert.IsFalse(
-                doc.Entities.Any(e => e.Category == PiiCategory.Email),
-                "Email entities should be filtered out by the confidence threshold override."
-            );
+            Assert.Multiple(() =>
+            {
+                // Ensure no SSN or Email entities are present
+                Assert.That(
+                    doc.Entities.Any(e => e.Category == PiiCategory.UsSocialSecurityNumber),
+                    Is.False,
+                    "USSocialSecurityNumber entities should be filtered out by the confidence threshold override."
+                );
+                Assert.That(
+                    doc.Entities.Any(e => e.Category == PiiCategory.Email),
+                    Is.False,
+                    "Email entities should be filtered out by the confidence threshold override."
+                );
+            });
 
             // Quick sanity on confidence
             foreach (PiiEntity e in doc.Entities)
             {
-                Assert.AreEqual(PiiCategory.Person.ToString(), e.Category, "All returned entities should be Person.");
-                Assert.GreaterOrEqual(e.ConfidenceScore, 0.3, "Entities should respect the default confidence floor.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(e.Category, Is.EqualTo(PiiCategory.Person.ToString()), "All returned entities should be Person.");
+                    Assert.That(e.ConfidenceScore, Is.GreaterThanOrEqualTo(0.3), "Entities should respect the default confidence floor.");
+                });
             }
         }
     }

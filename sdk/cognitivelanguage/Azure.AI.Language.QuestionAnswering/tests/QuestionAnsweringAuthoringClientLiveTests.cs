@@ -33,8 +33,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Response createProjectResponse = await CreateProjectAsync(testProjectName);
             Response projectDetailsResponse = await client.GetProjectDetailsAsync(testProjectName);
 
-            Assert.AreEqual(201, createProjectResponse.Status);
-            Assert.AreEqual(200, projectDetailsResponse.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createProjectResponse.Status, Is.EqualTo(201));
+                Assert.That(projectDetailsResponse.Status, Is.EqualTo(200));
+            });
 
             await client.DeleteProjectAsync(WaitUntil.Completed, testProjectName);
         }
@@ -47,10 +50,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             AsyncPageable<BinaryData> projects = Client.GetProjectsAsync();
             Response projectDetailsResponse = await Client.GetProjectDetailsAsync(testProjectName);
 
-            Assert.AreEqual(201, createProjectResponse.Status);
-            Assert.AreEqual(200, projectDetailsResponse.Status);
-            Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ToString().Contains(testProjectName)));
-            Assert.That(projectDetailsResponse.Content.ToString().Contains(testProjectName));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(createProjectResponse.Status, Is.EqualTo(201));
+                Assert.That(projectDetailsResponse.Status, Is.EqualTo(200));
+                Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ToString().Contains(testProjectName)));
+                Assert.That(projectDetailsResponse.Content.ToString(), Does.Contain(testProjectName));
+            });
         }
 
         [RecordedTest]
@@ -83,8 +89,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(WaitUntil.Completed, testProjectName, testDeploymentName);
             BinaryData deployment = deploymentOperation.Value;
 
-            Assert.True(deploymentOperation.HasCompleted);
-            Assert.That(deployment.ToString(), Contains.Substring(testDeploymentName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(deploymentOperation.HasCompleted, Is.True);
+                Assert.That(deployment.ToString(), Contains.Substring(testDeploymentName));
+            });
         }
 
         [RecordedTest]
@@ -114,10 +123,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
             AsyncPageable<BinaryData> sources = updateQnasOperation.Value;
 
-            Assert.True(updateQnasOperation.HasCompleted);
-            Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
-            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
-            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(updateQnasOperation.HasCompleted, Is.True);
+                Assert.That(updateQnasOperation.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
+                Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
+            });
         }
 
         [RecordedTest]
@@ -147,9 +159,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
             AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
 
-            Assert.True(updateSourcesOperation.HasCompleted);
-            Assert.AreEqual(200, updateSourcesOperation.GetRawResponse().Status);
-            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(updateSourcesOperation.HasCompleted, Is.True);
+                Assert.That(updateSourcesOperation.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
+            });
         }
 
         [RecordedTest]
@@ -184,9 +199,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             // Synonyms can be retrieved as follows
             AsyncPageable<BinaryData> synonyms = Client.GetSynonymsAsync(testProjectName);
 
-            Assert.AreEqual(204, updateSynonymsResponse.Status);
-            Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
-            Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna")));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(updateSynonymsResponse.Status, Is.EqualTo(204));
+                Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
+                Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna")));
+            });
         }
 
         [RecordedTest]
@@ -201,9 +219,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
 
-            Assert.True(exportOperation.HasCompleted);
-            Assert.AreEqual(200, exportOperation.GetRawResponse().Status);
-            Assert.True(!String.IsNullOrEmpty(exportedFileUrl));
+            Assert.Multiple(() =>
+            {
+                Assert.That(exportOperation.HasCompleted, Is.True);
+                Assert.That(exportOperation.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(!String.IsNullOrEmpty(exportedFileUrl), Is.True);
+            });
         }
 
         [RecordedTest]
@@ -234,10 +255,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response projectDetails = await Client.GetProjectDetailsAsync(testProjectName);
 
-            Assert.True(importOperation.HasCompleted);
-            Assert.AreEqual(200, importOperation.GetRawResponse().Status);
-            Assert.AreEqual(200, projectDetails.Status);
-            Assert.That(projectDetails.Content.ToString().Contains(testProjectName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(importOperation.HasCompleted, Is.True);
+                Assert.That(importOperation.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(projectDetails.Status, Is.EqualTo(200));
+                Assert.That(projectDetails.Content.ToString(), Does.Contain(testProjectName));
+            });
         }
 
         [RecordedTest]
@@ -262,7 +286,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
 
-            Assert.AreEqual(204, addFeedbackResponse.Status);
+            Assert.That(addFeedbackResponse.Status, Is.EqualTo(204));
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
                 () => new QuestionAnsweringClient(null, (AzureKeyCredential)null));
-            Assert.AreEqual("endpoint", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("endpoint"));
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
                 () => new QuestionAnsweringClient(endpoint, (AzureKeyCredential)null));
-            Assert.AreEqual("credential", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("credential"));
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new QuestionAnsweringClient(null, (TokenCredential)null));
-            Assert.AreEqual("endpoint", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("endpoint"));
         }
 
         [Test]
@@ -46,89 +46,89 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new QuestionAnsweringClient(endpoint, (TokenCredential)null));
-            Assert.AreEqual("credential", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("credential"));
         }
 
         [Test]
         public void GetAnswersQuestionNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswers(null, null));
-            Assert.AreEqual("question", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("question"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersAsync(null, null));
-            Assert.AreEqual("question", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("question"));
         }
 
         [Test]
         public void GetAnswersQuestionEmpty()
         {
             ArgumentException ex = Assert.Throws<ArgumentException>(() => Client.GetAnswers(string.Empty, null));
-            Assert.AreEqual("question", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("question"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetAnswersAsync(string.Empty, null));
-            Assert.AreEqual("question", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("question"));
         }
 
         [Test]
         public void GetAnswersProjectNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswers("question", null));
-            Assert.AreEqual("project", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("project"));
 
             ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswers(1, null));
-            Assert.AreEqual("project", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("project"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersAsync("question", null));
-            Assert.AreEqual("project", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("project"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersAsync(1, null));
-            Assert.AreEqual("project", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("project"));
         }
 
         [Test]
         public void GetAnswersFromTextQuestionNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswersFromText(null, (string[])null));
-            Assert.AreEqual("question", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("question"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersFromTextAsync(null, (string[])null));
-            Assert.AreEqual("question", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("question"));
         }
 
         [Test]
         public void GetAnswersFromTextQuestionEmpty()
         {
             ArgumentException ex = Assert.Throws<ArgumentException>(() => Client.GetAnswersFromText(string.Empty, (string[])null));
-            Assert.AreEqual("question", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("question"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetAnswersFromTextAsync(string.Empty, (string[])null));
-            Assert.AreEqual("question", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("question"));
         }
 
         [Test]
         public void GetAnswersFromTextTextDocumentsNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswersFromText("question", (string[])null));
-            Assert.AreEqual("textDocuments", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("textDocuments"));
 
             ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswersFromText("question", (TextDocument[])null));
-            Assert.AreEqual("textDocuments", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("textDocuments"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersFromTextAsync("question", (string[])null));
-            Assert.AreEqual("textDocuments", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("textDocuments"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersFromTextAsync("question", (TextDocument[])null));
-            Assert.AreEqual("textDocuments", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("textDocuments"));
         }
 
         [Test]
         public void GetAnswersFromTextOptionsNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswersFromText(null));
-            Assert.AreEqual("options", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("options"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersFromTextAsync(null));
-            Assert.AreEqual("options", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("options"));
         }
     }
 }

@@ -34,26 +34,29 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
             CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
-            Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+            Assert.That(response.CallConnectionProperties.CallConnectionId, Is.Not.Empty);
 
             // wait for incomingcall context
             string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(incomingCallContext);
+            Assert.That(incomingCallContext, Is.Not.Null);
 
             // answer the call
             var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
             var answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
-            Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
+            Assert.That(answerResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status200OK));
 
             // wait for callConnected
             var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(connectedEvent);
-            Assert.IsTrue(connectedEvent is CallConnected);
-            Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+            Assert.That(connectedEvent, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectedEvent is CallConnected, Is.True);
+                Assert.That(((CallConnected)connectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
+            });
 
             // test get properties
             Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-            Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+            Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
 
             var serverCallId = properties.Value.ServerCallId;
 
@@ -63,30 +66,39 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                 RecordingStateCallbackUri = new Uri(TestEnvironment.DispatcherCallback),
             };
             var recordingResponse = await callRecording.StartAsync(recordingOptions).ConfigureAwait(false);
-            Assert.NotNull(recordingResponse.Value);
+            Assert.That(recordingResponse.Value, Is.Not.Null);
 
             var recordingId = recordingResponse.Value.RecordingId;
-            Assert.NotNull(recordingId);
+            Assert.That(recordingId, Is.Not.Null);
             await WaitForOperationCompletion().ConfigureAwait(false);
 
             recordingResponse = await callRecording.GetStateAsync(recordingId).ConfigureAwait(false);
-            Assert.NotNull(recordingResponse.Value);
-            Assert.NotNull(recordingResponse.Value.RecordingState);
-            Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Active);
+            Assert.That(recordingResponse.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(recordingResponse.Value.RecordingState, Is.Not.Null);
+                Assert.That(RecordingState.Active, Is.EqualTo(recordingResponse.Value.RecordingState));
+            });
 
             await callRecording.PauseAsync(recordingId);
             await WaitForOperationCompletion().ConfigureAwait(false);
             recordingResponse = await callRecording.GetStateAsync(recordingId).ConfigureAwait(false);
-            Assert.NotNull(recordingResponse.Value);
-            Assert.NotNull(recordingResponse.Value.RecordingState);
-            Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Inactive);
+            Assert.That(recordingResponse.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(recordingResponse.Value.RecordingState, Is.Not.Null);
+                Assert.That(RecordingState.Inactive, Is.EqualTo(recordingResponse.Value.RecordingState));
+            });
 
             await callRecording.ResumeAsync(recordingId);
             await WaitForOperationCompletion().ConfigureAwait(false);
             recordingResponse = await callRecording.GetStateAsync(recordingId).ConfigureAwait(false);
-            Assert.NotNull(recordingResponse.Value);
-            Assert.NotNull(recordingResponse.Value.RecordingState);
-            Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Active);
+            Assert.That(recordingResponse.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(recordingResponse.Value.RecordingState, Is.Not.Null);
+                Assert.That(RecordingState.Active, Is.EqualTo(recordingResponse.Value.RecordingState));
+            });
 
             await callRecording.StopAsync(recordingId);
             await WaitForOperationCompletion().ConfigureAwait(false);
@@ -143,26 +155,29 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
-                    Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+                    Assert.That(response.CallConnectionProperties.CallConnectionId, Is.Not.Empty);
 
                     // wait for incomingcall context
                     string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(incomingCallContext);
+                    Assert.That(incomingCallContext, Is.Not.Null);
 
                     // answer the call
                     var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
                     var answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
-                    Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
+                    Assert.That(answerResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status200OK));
 
                     // wait for callConnected
                     var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(connectedEvent);
-                    Assert.IsTrue(connectedEvent is CallConnected);
-                    Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+                    Assert.That(connectedEvent, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(connectedEvent is CallConnected, Is.True);
+                        Assert.That(((CallConnected)connectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
+                    });
 
                     // test get properties
                     Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                    Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+                    Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
 
                     // try start recording unmixed audio - no channel affinity
                     var startRecordingResponse = await client.GetCallRecording().StartAsync(
@@ -173,12 +188,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                             RecordingFormat = RecordingFormat.Wav,
                             RecordingStateCallbackUri = new Uri(TestEnvironment.DispatcherCallback),
                         });
-                    Assert.AreEqual(StatusCodes.Status200OK, startRecordingResponse.GetRawResponse().Status);
-                    Assert.NotNull(startRecordingResponse.Value.RecordingId);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(startRecordingResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status200OK));
+                        Assert.That(startRecordingResponse.Value.RecordingId, Is.Not.Null);
+                    });
 
                     // try stop recording
                     var stopRecordingResponse = await client.GetCallRecording().StopAsync(startRecordingResponse.Value.RecordingId);
-                    Assert.AreEqual(StatusCodes.Status204NoContent, stopRecordingResponse.Status);
+                    Assert.That(stopRecordingResponse.Status, Is.EqualTo(StatusCodes.Status204NoContent));
 
                     // wait for CallRecordingStateChanged event TODO: Figure out why this event not being received
                     // var recordingStartedEvent = await WaitForEvent<CallRecordingStateChanged>(callConnectionId, TimeSpan.FromSeconds(20));
@@ -189,9 +207,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     // try hangup
                     await response.CallConnection.HangUpAsync(true).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.IsTrue(((CallDisconnected)disconnectedEvent!).CallConnectionId == callConnectionId);
+                    Assert.That(disconnectedEvent, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(disconnectedEvent is CallDisconnected, Is.True);
+                        Assert.That(((CallDisconnected)disconnectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
+                    });
                     callConnectionId = null;
                 }
                 catch (Exception)
@@ -239,26 +260,29 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
-                    Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+                    Assert.That(response.CallConnectionProperties.CallConnectionId, Is.Not.Empty);
 
                     // wait for incomingcall context
                     string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(incomingCallContext);
+                    Assert.That(incomingCallContext, Is.Not.Null);
 
                     // answer the call
                     var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
                     var answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
-                    Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
+                    Assert.That(answerResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status200OK));
 
                     // wait for callConnected
                     var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(connectedEvent);
-                    Assert.IsTrue(connectedEvent is CallConnected);
-                    Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+                    Assert.That(connectedEvent, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(connectedEvent is CallConnected, Is.True);
+                        Assert.That(((CallConnected)connectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
+                    });
 
                     // test get properties
                     Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                    Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+                    Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
 
                     // try start recording unmixed audio with channel affinity
                     var startRecordingOptions =
@@ -272,12 +296,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     startRecordingOptions.AudioChannelParticipantOrdering.Add(user);
                     startRecordingOptions.AudioChannelParticipantOrdering.Add(target);
                     var startRecordingResponse = await client.GetCallRecording().StartAsync(startRecordingOptions);
-                    Assert.AreEqual(StatusCodes.Status200OK, startRecordingResponse.GetRawResponse().Status);
-                    Assert.NotNull(startRecordingResponse.Value.RecordingId);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(startRecordingResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status200OK));
+                        Assert.That(startRecordingResponse.Value.RecordingId, Is.Not.Null);
+                    });
 
                     // try stop recording
                     var stopRecordingResponse = await client.GetCallRecording().StopAsync(startRecordingResponse.Value.RecordingId);
-                    Assert.AreEqual(StatusCodes.Status204NoContent, stopRecordingResponse.Status);
+                    Assert.That(stopRecordingResponse.Status, Is.EqualTo(StatusCodes.Status204NoContent));
 
                     // wait for CallRecordingStateChanged event TODO: Figure out why event not received
                     // var recordingStartedEvent = await WaitForEvent<CallRecordingStateChanged>(callConnectionId, TimeSpan.FromSeconds(20));
@@ -288,9 +315,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     // try hangup
                     await response.CallConnection.HangUpAsync(true).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.IsTrue(((CallDisconnected)disconnectedEvent!).CallConnectionId == callConnectionId);
+                    Assert.That(disconnectedEvent, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(disconnectedEvent is CallDisconnected, Is.True);
+                        Assert.That(((CallDisconnected)disconnectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
+                    });
                     callConnectionId = null;
                 }
                 catch (Exception)
@@ -326,26 +356,29 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
             CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
-            Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+            Assert.That(response.CallConnectionProperties.CallConnectionId, Is.Not.Empty);
 
             // wait for incomingcall context
             string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(incomingCallContext);
+            Assert.That(incomingCallContext, Is.Not.Null);
 
             // answer the call
             var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
             var answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
-            Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
+            Assert.That(answerResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status200OK));
 
             // wait for callConnected
             var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(connectedEvent);
-            Assert.IsTrue(connectedEvent is CallConnected);
-            Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+            Assert.That(connectedEvent, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectedEvent is CallConnected, Is.True);
+                Assert.That(((CallConnected)connectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
+            });
 
             // test get properties
             Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-            Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+            Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
 
             var serverCallId = properties.Value.ServerCallId;
 
@@ -355,30 +388,39 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                 RecordingStateCallbackUri = new Uri(TestEnvironment.DispatcherCallback)
             };
             var recordingResponse = await callRecording.StartAsync(recordingOptions).ConfigureAwait(false);
-            Assert.NotNull(recordingResponse.Value);
+            Assert.That(recordingResponse.Value, Is.Not.Null);
 
             var recordingId = recordingResponse.Value.RecordingId;
-            Assert.NotNull(recordingId);
+            Assert.That(recordingId, Is.Not.Null);
             await WaitForOperationCompletion().ConfigureAwait(false);
 
             recordingResponse = await callRecording.GetStateAsync(recordingId).ConfigureAwait(false);
-            Assert.NotNull(recordingResponse.Value);
-            Assert.NotNull(recordingResponse.Value.RecordingState);
-            Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Active);
+            Assert.That(recordingResponse.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(recordingResponse.Value.RecordingState, Is.Not.Null);
+                Assert.That(RecordingState.Active, Is.EqualTo(recordingResponse.Value.RecordingState));
+            });
 
             await callRecording.PauseAsync(recordingId);
             await WaitForOperationCompletion().ConfigureAwait(false);
             recordingResponse = await callRecording.GetStateAsync(recordingId).ConfigureAwait(false);
-            Assert.NotNull(recordingResponse.Value);
-            Assert.NotNull(recordingResponse.Value.RecordingState);
-            Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Inactive);
+            Assert.That(recordingResponse.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(recordingResponse.Value.RecordingState, Is.Not.Null);
+                Assert.That(RecordingState.Inactive, Is.EqualTo(recordingResponse.Value.RecordingState));
+            });
 
             await callRecording.ResumeAsync(recordingId);
             await WaitForOperationCompletion().ConfigureAwait(false);
             recordingResponse = await callRecording.GetStateAsync(recordingId).ConfigureAwait(false);
-            Assert.NotNull(recordingResponse.Value);
-            Assert.NotNull(recordingResponse.Value.RecordingState);
-            Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Active);
+            Assert.That(recordingResponse.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(recordingResponse.Value.RecordingState, Is.Not.Null);
+                Assert.That(RecordingState.Active, Is.EqualTo(recordingResponse.Value.RecordingState));
+            });
 
             await callRecording.StopAsync(recordingId);
             await WaitForOperationCompletion().ConfigureAwait(false);

@@ -14,7 +14,7 @@ namespace TestProjects.Spector.Tests.Http.Serialization.EncodedName.Json
         public Task PropertySend() => Test(async (host) =>
         {
             var response = await new JsonClient(host, null).GetPropertyClient().SendAsync(new JsonEncodedNameModel(true));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -22,8 +22,11 @@ namespace TestProjects.Spector.Tests.Http.Serialization.EncodedName.Json
         {
             var response = await new JsonClient(host, null).GetPropertyClient().GetAsync();
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsTrue(response.Value.DefaultName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.DefaultName, Is.True);
+            });
         });
     }
 }

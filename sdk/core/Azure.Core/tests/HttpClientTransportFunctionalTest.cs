@@ -60,8 +60,11 @@ namespace Azure.Core.Tests
             var transport = (HttpClientTransport)GetTransport();
             HttpClient transportClient = transport.Client;
             var handler = (SocketsHttpHandler)GetHandler(transportClient);
-            Assert.AreEqual(TimeSpan.FromSeconds(300), handler.PooledConnectionLifetime);
-            Assert.GreaterOrEqual(handler.MaxConnectionsPerServer, 50);
+            Assert.Multiple(() =>
+            {
+                Assert.That(handler.PooledConnectionLifetime, Is.EqualTo(TimeSpan.FromSeconds(300)));
+                Assert.That(handler.MaxConnectionsPerServer, Is.GreaterThanOrEqualTo(50));
+            });
         }
 #else
         [Test]
@@ -70,7 +73,7 @@ namespace Azure.Core.Tests
             var transport = (HttpClientTransport)GetTransport();
             HttpClient transportClient = transport.Client;
             var handler = (HttpClientHandler)GetHandler(transportClient);
-            Assert.AreEqual(50, handler.MaxConnectionsPerServer);
+            Assert.That(handler.MaxConnectionsPerServer, Is.EqualTo(50));
         }
 #endif
 
@@ -114,9 +117,12 @@ namespace Azure.Core.Tests
                 {
                     if (requestCount++ == 1)
                     {
-                        Assert.IsTrue(context.Request.Headers.ContainsKey("cookie"));
-                        Assert.AreEqual("stsservicecookie=estsfd",
-                            context.Request.Headers["cookie"].First());
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(context.Request.Headers.ContainsKey("cookie"), Is.True);
+                            Assert.That(context.Request.Headers["cookie"].First(),
+                                Is.EqualTo("stsservicecookie=estsfd"));
+                        });
                     }
 
                     context.Response.StatusCode = 200;

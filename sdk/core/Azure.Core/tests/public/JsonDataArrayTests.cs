@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Public
             int i = 1;
             foreach (int item in data)
             {
-                Assert.AreEqual(i++, item);
+                Assert.That(item, Is.EqualTo(i++));
             }
         }
 
@@ -41,9 +41,12 @@ namespace Azure.Core.Tests.Public
 
             int[] array = data;
 
-            Assert.AreEqual(1, array[0]);
-            Assert.AreEqual(2, array[1]);
-            Assert.AreEqual(3, array[2]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(array[0], Is.EqualTo(1));
+                Assert.That(array[1], Is.EqualTo(2));
+                Assert.That(array[2], Is.EqualTo(3));
+            });
         }
 
         [Test]
@@ -144,9 +147,12 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
 
-            Assert.AreEqual(1, (int)data[0]);
-            Assert.AreEqual(2, (int)data[1]);
-            Assert.AreEqual(3, (int)data[2]);
+            Assert.Multiple(() =>
+            {
+                Assert.That((int)data[0], Is.EqualTo(1));
+                Assert.That((int)data[1], Is.EqualTo(2));
+                Assert.That((int)data[2], Is.EqualTo(3));
+            });
         }
 
         [Test]
@@ -154,9 +160,12 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
 
-            Assert.AreEqual(1, (int)data.value[0]);
-            Assert.AreEqual(2, (int)data.value[1]);
-            Assert.AreEqual(3, (int)data.value[2]);
+            Assert.Multiple(() =>
+            {
+                Assert.That((int)data.value[0], Is.EqualTo(1));
+                Assert.That((int)data.value[1], Is.EqualTo(2));
+                Assert.That((int)data.value[2], Is.EqualTo(3));
+            });
         }
 
         [Test]
@@ -166,7 +175,7 @@ namespace Azure.Core.Tests.Public
                 """{ "value": [ { "tag": "tagValue" }, 2, 3] }"""
             );
 
-            Assert.AreEqual("tagValue", (string)data.value[0].tag);
+            Assert.That((string)data.value[0].tag, Is.EqualTo("tagValue"));
         }
 
         #endregion
@@ -196,8 +205,11 @@ namespace Azure.Core.Tests.Public
             data[1] = "valid";
             data[2] = null;
 
-            Assert.AreEqual(5, (int)data[0]);
-            Assert.AreEqual("valid", (string)data[1]);
+            Assert.Multiple(() =>
+            {
+                Assert.That((int)data[0], Is.EqualTo(5));
+                Assert.That((string)data[1], Is.EqualTo("valid"));
+            });
             Assert.IsTrue(data[2] == null);
             Assert.AreEqual(null, data[2]);
         }
@@ -211,9 +223,9 @@ namespace Azure.Core.Tests.Public
             data.value[1] = "valid";
             data.value[2] = null;
 
-            Assert.AreEqual(5, (int)data.value[0]);
+            Assert.That((int)data.value[0], Is.EqualTo(5));
             Assert.IsTrue(5 == data.value[0]);
-            Assert.AreEqual("valid", (string)data.value[1]);
+            Assert.That((string)data.value[1], Is.EqualTo("valid"));
             Assert.IsTrue(data.value[2] == null);
         }
 
@@ -226,7 +238,7 @@ namespace Azure.Core.Tests.Public
 
             data.value[0].tag = "newValue";
 
-            Assert.AreEqual("newValue", (string)data.value[0].tag);
+            Assert.That((string)data.value[0].tag, Is.EqualTo("newValue"));
         }
 
         #endregion
@@ -291,7 +303,7 @@ namespace Azure.Core.Tests.Public
             int i = 1;
             foreach (int item in data)
             {
-                Assert.AreEqual(i++, item);
+                Assert.That(item, Is.EqualTo(i++));
             }
         }
 
@@ -303,7 +315,7 @@ namespace Azure.Core.Tests.Public
             int i = 1;
             foreach (int item in data.value)
             {
-                Assert.AreEqual(i++, item);
+                Assert.That(item, Is.EqualTo(i++));
             }
         }
 

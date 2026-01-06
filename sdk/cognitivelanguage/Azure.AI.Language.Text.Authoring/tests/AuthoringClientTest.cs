@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         [RecordedTest]
         public void TestOperation()
         {
-            Assert.IsTrue(true);
+            Assert.That(true, Is.True);
         }
 
         #region Helpers

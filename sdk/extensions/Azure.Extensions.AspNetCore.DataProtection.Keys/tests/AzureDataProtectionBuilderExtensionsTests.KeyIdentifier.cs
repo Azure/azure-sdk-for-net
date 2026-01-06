@@ -25,8 +25,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyIdentifier");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
         [Test]
@@ -41,8 +41,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyIdentifier");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
         [Test]
@@ -57,8 +57,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyIdentifier");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
         [Test]
@@ -73,8 +73,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyIdentifier");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
         [Test]
@@ -89,8 +89,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyIdentifier");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
         [Test]
@@ -105,8 +105,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyIdentifier");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
         [Test]
@@ -121,8 +121,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyIdentifierFactory");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyIdentifierFactory"));
         }
 
         [Test]
@@ -137,8 +137,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyIdentifierFactory");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyIdentifierFactory"));
         }
 
         [Test]
@@ -153,8 +153,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyIdentifier");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
 
         [Test]
@@ -169,8 +169,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyIdentifier");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyIdentifier"));
         }
     }
 }

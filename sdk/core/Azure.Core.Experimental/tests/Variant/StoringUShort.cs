@@ -13,13 +13,19 @@ namespace Azure.Core.Experimental.Tests
         public void UShortImplicit(ushort testValue)
         {
             Variant value = testValue;
-            Assert.AreEqual(testValue, value.As<ushort>());
-            Assert.AreEqual(typeof(ushort), value.Type);
+            Assert.Multiple(() =>
+            {
+                Assert.That(value.As<ushort>(), Is.EqualTo(testValue));
+                Assert.That(value.Type, Is.EqualTo(typeof(ushort)));
+            });
 
             ushort? source = testValue;
             value = source;
-            Assert.AreEqual(source, value.As<ushort?>());
-            Assert.AreEqual(typeof(ushort), value.Type);
+            Assert.Multiple(() =>
+            {
+                Assert.That(value.As<ushort?>(), Is.EqualTo(source));
+                Assert.That(value.Type, Is.EqualTo(typeof(ushort)));
+            });
         }
 
         [TestCase((ushort)42)]
@@ -33,8 +39,11 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(testValue);
             }
 
-            Assert.AreEqual(testValue, value.As<ushort>());
-            Assert.AreEqual(typeof(ushort), value.Type);
+            Assert.Multiple(() =>
+            {
+                Assert.That(value.As<ushort>(), Is.EqualTo(testValue));
+                Assert.That(value.Type, Is.EqualTo(typeof(ushort)));
+            });
 
             ushort? source = testValue;
 
@@ -43,8 +52,11 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(source);
             }
 
-            Assert.AreEqual(source, value.As<ushort?>());
-            Assert.AreEqual(typeof(ushort), value.Type);
+            Assert.Multiple(() =>
+            {
+                Assert.That(value.As<ushort?>(), Is.EqualTo(source));
+                Assert.That(value.Type, Is.EqualTo(typeof(ushort)));
+            });
         }
 
         [TestCase((ushort)42)]
@@ -54,11 +66,14 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             bool success = value.TryGetValue(out ushort result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.Multiple(() =>
+            {
+                Assert.That(success, Is.True);
+                Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<ushort>());
-            Assert.AreEqual(testValue, (ushort)value);
+                Assert.That(value.As<ushort>(), Is.EqualTo(testValue));
+                Assert.That((ushort)value, Is.EqualTo(testValue));
+            });
         }
 
         [TestCase((ushort)42)]
@@ -70,12 +85,15 @@ namespace Azure.Core.Experimental.Tests
             Variant value = new(source);
 
             bool success = value.TryGetValue(out ushort result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.Multiple(() =>
+            {
+                Assert.That(success, Is.True);
+                Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<ushort>());
+                Assert.That(value.As<ushort>(), Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (ushort)value);
+                Assert.That((ushort)value, Is.EqualTo(testValue));
+            });
         }
 
         [TestCase((ushort)42)]
@@ -86,10 +104,13 @@ namespace Azure.Core.Experimental.Tests
             ushort source = testValue;
             Variant value = new(source);
             bool success = value.TryGetValue(out ushort? result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.Multiple(() =>
+            {
+                Assert.That(success, Is.True);
+                Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (ushort?)value);
+                Assert.That((ushort?)value, Is.EqualTo(testValue));
+            });
         }
 
         [TestCase((ushort)42)]
@@ -101,21 +122,24 @@ namespace Azure.Core.Experimental.Tests
             object o = i;
             Variant value = new(o);
 
-            Assert.AreEqual(typeof(ushort), value.Type);
-            Assert.True(value.TryGetValue(out ushort result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out ushort? nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(value.Type, Is.EqualTo(typeof(ushort)));
+                Assert.That(value.TryGetValue(out ushort result), Is.True);
+                Assert.That(result, Is.EqualTo(testValue));
+                Assert.That(value.TryGetValue(out ushort? nullableResult), Is.True);
+                Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
+            });
 
             ushort? n = testValue;
             o = n;
             value = new(o);
 
-            Assert.AreEqual(typeof(ushort), value.Type);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.That(value.Type, Is.EqualTo(typeof(ushort)));
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -123,9 +147,12 @@ namespace Azure.Core.Experimental.Tests
         {
             ushort? source = null;
             Variant value = source;
-            Assert.Null(value.Type);
-            Assert.AreEqual(source, value.As<ushort?>());
-            Assert.False(value.As<ushort?>().HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(value.Type, Is.Null);
+                Assert.That(value.As<ushort?>(), Is.EqualTo(source));
+            });
+            Assert.That(value.As<ushort?>().HasValue, Is.False);
         }
 
         [TestCase((ushort)42)]
@@ -135,14 +162,20 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             object o = value.As<object>();
-            Assert.AreEqual(typeof(ushort), o.GetType());
-            Assert.AreEqual(testValue, (ushort)o);
+            Assert.Multiple(() =>
+            {
+                Assert.That(o.GetType(), Is.EqualTo(typeof(ushort)));
+                Assert.That((ushort)o, Is.EqualTo(testValue));
+            });
 
             ushort? n = testValue;
             value = new(n);
             o = value.As<object>();
-            Assert.AreEqual(typeof(ushort), o.GetType());
-            Assert.AreEqual(testValue, (ushort)o);
+            Assert.Multiple(() =>
+            {
+                Assert.That(o.GetType(), Is.EqualTo(typeof(ushort)));
+                Assert.That((ushort)o, Is.EqualTo(testValue));
+            });
         }
     }
 }

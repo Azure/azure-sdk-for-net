@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 // Check CanWrite to make sure we actually wrote it.
                 if (property.CanWrite && property.CanRead && ShouldSerialize(property, out var value))
                 {
-                    Assert.AreEqual(value, property.GetValue(obj, null));
+                    Assert.That(property.GetValue(obj, null), Is.EqualTo(value));
                 }
             }
         }

@@ -51,12 +51,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyDetectionConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
-            Assert.That(createdConfig.Name, Is.EqualTo(configName));
-            Assert.That(createdConfig.Description, Is.EqualTo(description));
-            Assert.That(createdConfig.SeriesGroupDetectionConditions, Is.Not.Null.And.Empty);
-            Assert.That(createdConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
+                Assert.That(createdConfig.Name, Is.EqualTo(configName));
+                Assert.That(createdConfig.Description, Is.EqualTo(description));
+                Assert.That(createdConfig.SeriesGroupDetectionConditions, Is.Not.Null.And.Empty);
+                Assert.That(createdConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
+            });
 
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
@@ -95,12 +98,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyDetectionConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
-            Assert.That(createdConfig.Name, Is.EqualTo(configName));
-            Assert.That(createdConfig.Description, Is.Empty);
-            Assert.That(createdConfig.SeriesGroupDetectionConditions, Is.Not.Null.And.Empty);
-            Assert.That(createdConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
+                Assert.That(createdConfig.Name, Is.EqualTo(configName));
+                Assert.That(createdConfig.Description, Is.Empty);
+                Assert.That(createdConfig.SeriesGroupDetectionConditions, Is.Not.Null.And.Empty);
+                Assert.That(createdConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
+            });
 
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
@@ -161,27 +167,33 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyDetectionConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
-            Assert.That(createdConfig.Name, Is.EqualTo(configName));
-            Assert.That(createdConfig.Description, Is.Empty);
-            Assert.That(createdConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
+                Assert.That(createdConfig.Name, Is.EqualTo(configName));
+                Assert.That(createdConfig.Description, Is.Empty);
+                Assert.That(createdConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
+            });
 
             // Validate whole series detection conditions.
 
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
             Assert.That(createdWholeConditions, Is.Not.Null);
-            Assert.That(createdWholeConditions.ConditionOperator, Is.Null);
-            Assert.That(createdWholeConditions.ChangeThresholdCondition, Is.Null);
-            Assert.That(createdWholeConditions.SmartDetectionCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdWholeConditions.ConditionOperator, Is.Null);
+                Assert.That(createdWholeConditions.ChangeThresholdCondition, Is.Null);
+                Assert.That(createdWholeConditions.SmartDetectionCondition, Is.Null);
+            });
 
             ValidateHardThresholdCondition(createdWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Down, null, 10.0, 1, 2.0);
 
             // Start series group conditions validation.
 
             Assert.That(createdConfig.SeriesGroupDetectionConditions, Is.Not.Null);
-            Assert.That(createdConfig.SeriesGroupDetectionConditions.Count, Is.EqualTo(2));
+            Assert.That(createdConfig.SeriesGroupDetectionConditions, Has.Count.EqualTo(2));
 
             // Validate first series group conditions.
 
@@ -191,9 +203,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(createdGroupConditions0.SeriesGroupKey, "Delhi");
 
-            Assert.That(createdGroupConditions0.ConditionOperator, Is.Null);
-            Assert.That(createdGroupConditions0.HardThresholdCondition, Is.Null);
-            Assert.That(createdGroupConditions0.ChangeThresholdCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdGroupConditions0.ConditionOperator, Is.Null);
+                Assert.That(createdGroupConditions0.HardThresholdCondition, Is.Null);
+                Assert.That(createdGroupConditions0.ChangeThresholdCondition, Is.Null);
+            });
 
             ValidateSmartDetectionCondition(createdGroupConditions0.SmartDetectionCondition, 30.0, AnomalyDetectorDirection.Both, 3, 4.0);
 
@@ -205,9 +220,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(createdGroupConditions1.SeriesGroupKey, "Kolkata");
 
-            Assert.That(createdGroupConditions1.ConditionOperator, Is.Null);
-            Assert.That(createdGroupConditions1.HardThresholdCondition, Is.Null);
-            Assert.That(createdGroupConditions1.SmartDetectionCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdGroupConditions1.ConditionOperator, Is.Null);
+                Assert.That(createdGroupConditions1.HardThresholdCondition, Is.Null);
+                Assert.That(createdGroupConditions1.SmartDetectionCondition, Is.Null);
+            });
 
             ValidateChangeThresholdCondition(createdGroupConditions1.ChangeThresholdCondition, 40.0, 12, false, AnomalyDetectorDirection.Up, 5, 6.0);
         }
@@ -262,27 +280,33 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyDetectionConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
-            Assert.That(createdConfig.Name, Is.EqualTo(configName));
-            Assert.That(createdConfig.Description, Is.Empty);
-            Assert.That(createdConfig.SeriesGroupDetectionConditions, Is.Not.Null.And.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
+                Assert.That(createdConfig.Name, Is.EqualTo(configName));
+                Assert.That(createdConfig.Description, Is.Empty);
+                Assert.That(createdConfig.SeriesGroupDetectionConditions, Is.Not.Null.And.Empty);
+            });
 
             // Validate whole series detection conditions.
 
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
             Assert.That(createdWholeConditions, Is.Not.Null);
-            Assert.That(createdWholeConditions.ConditionOperator, Is.Null);
-            Assert.That(createdWholeConditions.ChangeThresholdCondition, Is.Null);
-            Assert.That(createdWholeConditions.SmartDetectionCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdWholeConditions.ConditionOperator, Is.Null);
+                Assert.That(createdWholeConditions.ChangeThresholdCondition, Is.Null);
+                Assert.That(createdWholeConditions.SmartDetectionCondition, Is.Null);
+            });
 
             ValidateHardThresholdCondition(createdWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Both, 20.0, 10.0, 1, 2.0);
 
             // Start series conditions validation.
 
             Assert.That(createdConfig.SeriesDetectionConditions, Is.Not.Null);
-            Assert.That(createdConfig.SeriesDetectionConditions.Count, Is.EqualTo(2));
+            Assert.That(createdConfig.SeriesDetectionConditions, Has.Count.EqualTo(2));
 
             // Validate first series conditions.
 
@@ -292,9 +316,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(createdSeriesConditions0.SeriesKey, "Delhi", "Handmade");
 
-            Assert.That(createdSeriesConditions0.ConditionOperator, Is.Null);
-            Assert.That(createdSeriesConditions0.HardThresholdCondition, Is.Null);
-            Assert.That(createdSeriesConditions0.ChangeThresholdCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdSeriesConditions0.ConditionOperator, Is.Null);
+                Assert.That(createdSeriesConditions0.HardThresholdCondition, Is.Null);
+                Assert.That(createdSeriesConditions0.ChangeThresholdCondition, Is.Null);
+            });
 
             ValidateSmartDetectionCondition(createdSeriesConditions0.SmartDetectionCondition, 30.0, AnomalyDetectorDirection.Both, 3, 4.0);
 
@@ -306,9 +333,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(createdSeriesConditions1.SeriesKey, "Kolkata", "Grocery & Gourmet Food");
 
-            Assert.That(createdSeriesConditions1.ConditionOperator, Is.Null);
-            Assert.That(createdSeriesConditions1.HardThresholdCondition, Is.Null);
-            Assert.That(createdSeriesConditions1.SmartDetectionCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdSeriesConditions1.ConditionOperator, Is.Null);
+                Assert.That(createdSeriesConditions1.HardThresholdCondition, Is.Null);
+                Assert.That(createdSeriesConditions1.SmartDetectionCondition, Is.Null);
+            });
 
             ValidateChangeThresholdCondition(createdSeriesConditions1.ChangeThresholdCondition, 40.0, 12, false, AnomalyDetectorDirection.Up, 5, 6.0);
         }
@@ -373,20 +403,26 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
-            // Validate top-level members.
+            Assert.Multiple(() =>
+            {
+                // Validate top-level members.
 
-            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
-            Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
-            Assert.That(updatedConfig.Name, Is.EqualTo(configName));
-            Assert.That(updatedConfig.Description, Is.Empty);
+                Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
+                Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
+                Assert.That(updatedConfig.Name, Is.EqualTo(configName));
+                Assert.That(updatedConfig.Description, Is.Empty);
+            });
 
             // Validate whole series detection conditions.
 
             MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
 
             Assert.That(updatedWholeConditions, Is.Not.Null);
-            Assert.That(updatedWholeConditions.ConditionOperator, Is.EqualTo(DetectionConditionOperator.Or));
-            Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedWholeConditions.ConditionOperator, Is.EqualTo(DetectionConditionOperator.Or));
+                Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
+            });
 
             ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Down, null, 12.0, 1, 2.0);
             ValidateSmartDetectionCondition(updatedWholeConditions.SmartDetectionCondition, 60.0, AnomalyDetectorDirection.Up, 5, 6.0);
@@ -401,9 +437,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(updatedGroupConditions.SeriesGroupKey, "Kolkata");
 
-            Assert.That(updatedGroupConditions.ConditionOperator, Is.Null);
-            Assert.That(updatedGroupConditions.HardThresholdCondition, Is.Null);
-            Assert.That(updatedGroupConditions.SmartDetectionCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedGroupConditions.ConditionOperator, Is.Null);
+                Assert.That(updatedGroupConditions.HardThresholdCondition, Is.Null);
+                Assert.That(updatedGroupConditions.SmartDetectionCondition, Is.Null);
+            });
 
             ValidateChangeThresholdCondition(updatedGroupConditions.ChangeThresholdCondition, 40.0, 12, false, AnomalyDetectorDirection.Up, 5, 6.0);
 
@@ -499,21 +538,27 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
-            // Validate top-level members.
+            Assert.Multiple(() =>
+            {
+                // Validate top-level members.
 
-            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
-            Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
-            Assert.That(updatedConfig.Name, Is.EqualTo(configName));
-            Assert.That(updatedConfig.Description, Is.EqualTo(description));
-            Assert.That(updatedConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
+                Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
+                Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
+                Assert.That(updatedConfig.Name, Is.EqualTo(configName));
+                Assert.That(updatedConfig.Description, Is.EqualTo(description));
+                Assert.That(updatedConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
+            });
 
             // Validate whole series detection conditions.
 
             MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
 
             Assert.That(updatedWholeConditions, Is.Not.Null);
-            Assert.That(updatedWholeConditions.ConditionOperator, Is.EqualTo(DetectionConditionOperator.And));
-            Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedWholeConditions.ConditionOperator, Is.EqualTo(DetectionConditionOperator.And));
+                Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
+            });
 
             ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Up, 9.0, null, 11, 12.0);
             ValidateSmartDetectionCondition(updatedWholeConditions.SmartDetectionCondition, 75.0, AnomalyDetectorDirection.Both, 15, 16.0);
@@ -521,7 +566,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Start series group conditions validation.
 
             Assert.That(updatedConfig.SeriesGroupDetectionConditions, Is.Not.Null);
-            Assert.That(updatedConfig.SeriesGroupDetectionConditions.Count, Is.EqualTo(2));
+            Assert.That(updatedConfig.SeriesGroupDetectionConditions, Has.Count.EqualTo(2));
 
             // Validate first series group conditions.
 
@@ -531,9 +576,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(updatedGroupConditions0.SeriesGroupKey, "Kolkata");
 
-            Assert.That(updatedGroupConditions0.ConditionOperator, Is.Null);
-            Assert.That(updatedGroupConditions0.HardThresholdCondition, Is.Null);
-            Assert.That(updatedGroupConditions0.SmartDetectionCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedGroupConditions0.ConditionOperator, Is.Null);
+                Assert.That(updatedGroupConditions0.HardThresholdCondition, Is.Null);
+                Assert.That(updatedGroupConditions0.SmartDetectionCondition, Is.Null);
+            });
 
             ValidateChangeThresholdCondition(updatedGroupConditions0.ChangeThresholdCondition, 40.0, 12, false, AnomalyDetectorDirection.Up, 5, 6.0);
 
@@ -545,9 +593,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(updatedGroupConditions1.SeriesGroupKey, "Delhi");
 
-            Assert.That(updatedGroupConditions1.ConditionOperator, Is.Null);
-            Assert.That(updatedGroupConditions1.HardThresholdCondition, Is.Null);
-            Assert.That(updatedGroupConditions1.ChangeThresholdCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedGroupConditions1.ConditionOperator, Is.Null);
+                Assert.That(updatedGroupConditions1.HardThresholdCondition, Is.Null);
+                Assert.That(updatedGroupConditions1.ChangeThresholdCondition, Is.Null);
+            });
 
             ValidateSmartDetectionCondition(updatedGroupConditions1.SmartDetectionCondition, 95.0, AnomalyDetectorDirection.Both, 25, 26.0);
         }
@@ -703,12 +754,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (AnomalyDetectionConfiguration config in adminClient.GetDetectionConfigurationsAsync(MetricId))
             {
-                Assert.That(config.Id, Is.Not.Null.And.Not.Empty);
-                Assert.That(config.MetricId, Is.EqualTo(MetricId));
-                Assert.That(config.Name, Is.Not.Null.And.Not.Empty);
-                Assert.That(config.Description, Is.Not.Null);
-                Assert.That(config.SeriesGroupDetectionConditions, Is.Not.Null);
-                Assert.That(config.SeriesDetectionConditions, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(config.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(config.MetricId, Is.EqualTo(MetricId));
+                    Assert.That(config.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(config.Description, Is.Not.Null);
+                    Assert.That(config.SeriesGroupDetectionConditions, Is.Not.Null);
+                    Assert.That(config.SeriesDetectionConditions, Is.Not.Null);
+                });
 
                 ValidateGenericDetectionConditions(config.WholeSeriesDetectionConditions);
 
@@ -767,7 +821,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (Page<AnomalyDetectionConfiguration> page in configsWithMaxPageSize.AsPages())
             {
-                Assert.That(page.Values.Count, Is.LessThanOrEqualTo(MaxPageSizeSamples));
+                Assert.That(page.Values, Has.Count.LessThanOrEqualTo(MaxPageSizeSamples));
 
                 if (++configCount >= MaximumSamplesCount)
                 {
@@ -828,33 +882,48 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateHardThresholdCondition(HardThresholdCondition condition, AnomalyDetectorDirection direction, double? upperBound, double? lowerBound, int minimumNumber, double minimumRatio)
         {
             Assert.That(condition, Is.Not.Null);
-            Assert.That(condition.AnomalyDetectorDirection, Is.EqualTo(direction));
-            Assert.That(condition.UpperBound, Is.EqualTo(upperBound));
-            Assert.That(condition.LowerBound, Is.EqualTo(lowerBound));
-            Assert.That(condition.SuppressCondition, Is.Not.Null);
-            Assert.That(condition.SuppressCondition.MinimumNumber, Is.EqualTo(minimumNumber));
-            Assert.That(condition.SuppressCondition.MinimumRatio, Is.EqualTo(minimumRatio));
+            Assert.Multiple(() =>
+            {
+                Assert.That(condition.AnomalyDetectorDirection, Is.EqualTo(direction));
+                Assert.That(condition.UpperBound, Is.EqualTo(upperBound));
+                Assert.That(condition.LowerBound, Is.EqualTo(lowerBound));
+                Assert.That(condition.SuppressCondition, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(condition.SuppressCondition.MinimumNumber, Is.EqualTo(minimumNumber));
+                Assert.That(condition.SuppressCondition.MinimumRatio, Is.EqualTo(minimumRatio));
+            });
         }
 
         private void ValidateChangeThresholdCondition(ChangeThresholdCondition condition, double changePercentage, int shiftPoint, bool withinRange, AnomalyDetectorDirection direction, int minimumNumber, double minimumRatio)
         {
             Assert.That(condition, Is.Not.Null);
-            Assert.That(condition.AnomalyDetectorDirection, Is.EqualTo(direction));
-            Assert.That(condition.WithinRange, Is.EqualTo(withinRange));
-            Assert.That(condition.ChangePercentage, Is.EqualTo(changePercentage));
-            Assert.That(condition.ShiftPoint, Is.EqualTo(shiftPoint));
-            Assert.That(condition.SuppressCondition, Is.Not.Null);
-            Assert.That(condition.SuppressCondition.MinimumNumber, Is.EqualTo(minimumNumber));
-            Assert.That(condition.SuppressCondition.MinimumRatio, Is.EqualTo(minimumRatio));
+            Assert.Multiple(() =>
+            {
+                Assert.That(condition.AnomalyDetectorDirection, Is.EqualTo(direction));
+                Assert.That(condition.WithinRange, Is.EqualTo(withinRange));
+                Assert.That(condition.ChangePercentage, Is.EqualTo(changePercentage));
+                Assert.That(condition.ShiftPoint, Is.EqualTo(shiftPoint));
+                Assert.That(condition.SuppressCondition, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(condition.SuppressCondition.MinimumNumber, Is.EqualTo(minimumNumber));
+                Assert.That(condition.SuppressCondition.MinimumRatio, Is.EqualTo(minimumRatio));
+            });
         }
 
         private void ValidateSmartDetectionCondition(SmartDetectionCondition condition, double sensitivity, AnomalyDetectorDirection direction, int minimumNumber, double minimumRatio)
         {
             Assert.That(condition, Is.Not.Null);
-            Assert.That(condition.AnomalyDetectorDirection, Is.EqualTo(direction));
-            Assert.That(condition.Sensitivity, Is.EqualTo(sensitivity));
-            Assert.That(condition.SuppressCondition.MinimumNumber, Is.EqualTo(minimumNumber));
-            Assert.That(condition.SuppressCondition.MinimumRatio, Is.EqualTo(minimumRatio));
+            Assert.Multiple(() =>
+            {
+                Assert.That(condition.AnomalyDetectorDirection, Is.EqualTo(direction));
+                Assert.That(condition.Sensitivity, Is.EqualTo(sensitivity));
+                Assert.That(condition.SuppressCondition.MinimumNumber, Is.EqualTo(minimumNumber));
+                Assert.That(condition.SuppressCondition.MinimumRatio, Is.EqualTo(minimumRatio));
+            });
         }
 
         private void ValidateGenericDetectionConditions(MetricWholeSeriesDetectionCondition conditions)
@@ -873,18 +942,27 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (hardCondition.AnomalyDetectorDirection == AnomalyDetectorDirection.Up)
                 {
-                    Assert.That(hardCondition.UpperBound, Is.Not.Null);
-                    Assert.That(hardCondition.LowerBound, Is.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(hardCondition.UpperBound, Is.Not.Null);
+                        Assert.That(hardCondition.LowerBound, Is.Null);
+                    });
                 }
                 else if (hardCondition.AnomalyDetectorDirection == AnomalyDetectorDirection.Down)
                 {
-                    Assert.That(hardCondition.UpperBound, Is.Null);
-                    Assert.That(hardCondition.LowerBound, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(hardCondition.UpperBound, Is.Null);
+                        Assert.That(hardCondition.LowerBound, Is.Not.Null);
+                    });
                 }
                 else if (hardCondition.AnomalyDetectorDirection == AnomalyDetectorDirection.Both)
                 {
-                    Assert.That(hardCondition.UpperBound, Is.Not.Null);
-                    Assert.That(hardCondition.LowerBound, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(hardCondition.UpperBound, Is.Not.Null);
+                        Assert.That(hardCondition.LowerBound, Is.Not.Null);
+                    });
                 }
                 else
                 {
@@ -898,16 +976,22 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 conditionsCount++;
 
-                Assert.That(changeCondition.AnomalyDetectorDirection, Is.Not.EqualTo(default(AnomalyDetectorDirection)));
-                Assert.That(changeCondition.SuppressCondition, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(changeCondition.AnomalyDetectorDirection, Is.Not.EqualTo(default(AnomalyDetectorDirection)));
+                    Assert.That(changeCondition.SuppressCondition, Is.Not.Null);
+                });
             }
 
             if (smartCondition != null)
             {
                 conditionsCount++;
 
-                Assert.That(smartCondition.AnomalyDetectorDirection, Is.Not.EqualTo(default(AnomalyDetectorDirection)));
-                Assert.That(smartCondition.SuppressCondition, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(smartCondition.AnomalyDetectorDirection, Is.Not.EqualTo(default(AnomalyDetectorDirection)));
+                    Assert.That(smartCondition.SuppressCondition, Is.Not.Null);
+                });
             }
 
             Assert.That(conditionsCount, Is.GreaterThan(0));

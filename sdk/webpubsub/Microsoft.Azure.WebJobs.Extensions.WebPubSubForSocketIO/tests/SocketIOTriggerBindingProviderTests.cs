@@ -54,10 +54,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var attribute = new SocketIOTriggerAttribute("%testhub%", "testevent", "/ns");
             var paramInfo = GetType().GetMethod(nameof(TestMethod)).GetParameters()[0];
             var resolvedAttr = _provider.GetResolvedAttribute(attribute, paramInfo);
-            Assert.AreEqual(resolvedAttr.Hub, TestHub);
-            Assert.AreEqual(resolvedAttr.EventName, "testevent");
-            Assert.AreEqual("/ns", resolvedAttr.Namespace);
-            Assert.IsEmpty(resolvedAttr.ParameterNames);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resolvedAttr.Hub, Is.EqualTo(TestHub));
+                Assert.That(resolvedAttr.EventName, Is.EqualTo("testevent"));
+                Assert.That(resolvedAttr.Namespace, Is.EqualTo("/ns"));
+                Assert.That(resolvedAttr.ParameterNames, Is.Empty);
+            });
         }
 
         [TestCase]
@@ -66,10 +69,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var attribute = new SocketIOTriggerAttribute("defaulthub", "testevent");
             var paramInfo = GetType().GetMethod(nameof(TestMethod)).GetParameters()[0];
             var resolvedAttr = _provider.GetResolvedAttribute(attribute, paramInfo);
-            Assert.AreEqual(resolvedAttr.Hub, "defaulthub");
-            Assert.AreEqual(resolvedAttr.EventName, "testevent");
-            Assert.AreEqual("/", resolvedAttr.Namespace);
-            Assert.IsEmpty(resolvedAttr.ParameterNames);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resolvedAttr.Hub, Is.EqualTo("defaulthub"));
+                Assert.That(resolvedAttr.EventName, Is.EqualTo("testevent"));
+                Assert.That(resolvedAttr.Namespace, Is.EqualTo("/"));
+                Assert.That(resolvedAttr.ParameterNames, Is.Empty);
+            });
         }
 
         [TestCase]
@@ -78,11 +84,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var attribute = new SocketIOTriggerAttribute("defaulthub", "testevent", new[] {"param1", "param2"});
             var paramInfo = GetType().GetMethod(nameof(TestMethod)).GetParameters()[0];
             var resolvedAttr = _provider.GetResolvedAttribute(attribute, paramInfo);
-            Assert.AreEqual(resolvedAttr.Hub, "defaulthub");
-            Assert.AreEqual(resolvedAttr.EventName, "testevent");
-            Assert.AreEqual("/", resolvedAttr.Namespace);
-            Assert.AreEqual("param1", resolvedAttr.ParameterNames[0]);
-            Assert.AreEqual("param2", resolvedAttr.ParameterNames[1]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resolvedAttr.Hub, Is.EqualTo("defaulthub"));
+                Assert.That(resolvedAttr.EventName, Is.EqualTo("testevent"));
+                Assert.That(resolvedAttr.Namespace, Is.EqualTo("/"));
+                Assert.That(resolvedAttr.ParameterNames[0], Is.EqualTo("param1"));
+                Assert.That(resolvedAttr.ParameterNames[1], Is.EqualTo("param2"));
+            });
         }
 
         [TestCase]
@@ -91,13 +100,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var attribute = new SocketIOTriggerAttribute("defaulthub", "testevent");
             var paramInfo = GetType().GetMethod(nameof(TestMethodWithParam)).GetParameters()[0];
             var resolvedAttr = _provider.GetResolvedAttribute(attribute, paramInfo);
-            Assert.AreEqual(resolvedAttr.Hub, "defaulthub");
-            Assert.AreEqual(resolvedAttr.EventName, "testevent");
-            Assert.AreEqual("/", resolvedAttr.Namespace);
-            Assert.AreEqual(3, resolvedAttr.ParameterNames.Length);
-            Assert.AreEqual("param1", resolvedAttr.ParameterNames[0]);
-            Assert.AreEqual("param2", resolvedAttr.ParameterNames[1]);
-            Assert.AreEqual("param3", resolvedAttr.ParameterNames[2]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resolvedAttr.Hub, Is.EqualTo("defaulthub"));
+                Assert.That(resolvedAttr.EventName, Is.EqualTo("testevent"));
+                Assert.That(resolvedAttr.Namespace, Is.EqualTo("/"));
+                Assert.That(resolvedAttr.ParameterNames, Has.Length.EqualTo(3));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(resolvedAttr.ParameterNames[0], Is.EqualTo("param1"));
+                Assert.That(resolvedAttr.ParameterNames[1], Is.EqualTo("param2"));
+                Assert.That(resolvedAttr.ParameterNames[2], Is.EqualTo("param3"));
+            });
         }
 
         [TestCase]
@@ -125,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var context = new TriggerBindingProviderContext(parameter, CancellationToken.None);
             var binding = await _provider.TryCreateAsync(context);
 
-            Assert.NotNull(binding);
+            Assert.That(binding, Is.Not.Null);
         }
 
         public static void TestFunc(

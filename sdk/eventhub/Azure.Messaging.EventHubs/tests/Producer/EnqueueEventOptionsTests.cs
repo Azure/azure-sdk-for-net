@@ -29,8 +29,11 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             (var partitionId, var partitionKey) = options;
-            Assert.That(partitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the deconstruction should match.");
-            Assert.That(partitionKey, Is.EqualTo(options.PartitionKey), "The partition key of the deconstruction should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the deconstruction should match.");
+                Assert.That(partitionKey, Is.EqualTo(options.PartitionKey), "The partition key of the deconstruction should match.");
+            });
         }
 
         /// <summary>
@@ -48,8 +51,11 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             (var partitionId, var partitionKey) = EnqueueEventOptions.DeconstructOrUseDefaultAttributes(options);
-            Assert.That(partitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the deconstruction should match.");
-            Assert.That(partitionKey, Is.EqualTo(options.PartitionKey), "The partition key of the deconstruction should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the deconstruction should match.");
+                Assert.That(partitionKey, Is.EqualTo(options.PartitionKey), "The partition key of the deconstruction should match.");
+            });
         }
 
         /// <summary>
@@ -63,8 +69,11 @@ namespace Azure.Messaging.EventHubs.Tests
             (var defaultPartitionId, var defaultPartitionKey) = EnqueueEventOptions.DeconstructOrUseDefaultAttributes();
             (var newPartitionId, var newPartitionKey) = new EnqueueEventOptions();
 
-            Assert.That(defaultPartitionId, Is.EqualTo(newPartitionId), "The partition identifier of the default attributes should match empty deconstruction.");
-            Assert.That(defaultPartitionKey, Is.EqualTo(newPartitionKey), "The partition key of the default attributes should match empty deconstruction.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(defaultPartitionId, Is.EqualTo(newPartitionId), "The partition identifier of the default attributes should match empty deconstruction.");
+                Assert.That(defaultPartitionKey, Is.EqualTo(newPartitionKey), "The partition key of the default attributes should match empty deconstruction.");
+            });
         }
     }
 }

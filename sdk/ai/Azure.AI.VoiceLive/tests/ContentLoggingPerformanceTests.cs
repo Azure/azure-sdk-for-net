@@ -62,12 +62,15 @@ namespace Azure.AI.VoiceLive.Tests
             stopwatchEnabled.Stop();
 
             // Assert - Disabled should be significantly faster
-            Assert.LessOrEqual(stopwatchDisabled.ElapsedMilliseconds, stopwatchEnabled.ElapsedMilliseconds * 0.1,
+            Assert.That(stopwatchDisabled.ElapsedMilliseconds, Is.LessThanOrEqualTo(stopwatchEnabled.ElapsedMilliseconds * 0.1),
                 "Disabled logging should have minimal overhead");
 
-            // Both should be reasonably fast (less than 100ms for 1000 operations)
-            Assert.Less(stopwatchDisabled.ElapsedMilliseconds, 100, "Disabled logging should be very fast");
-            Assert.Less(stopwatchEnabled.ElapsedMilliseconds, 1000, "Enabled logging should still be reasonably fast");
+            Assert.Multiple(() =>
+            {
+                // Both should be reasonably fast (less than 100ms for 1000 operations)
+                Assert.That(stopwatchDisabled.ElapsedMilliseconds, Is.LessThan(100), "Disabled logging should be very fast");
+                Assert.That(stopwatchEnabled.ElapsedMilliseconds, Is.LessThan(1000), "Enabled logging should still be reasonably fast");
+            });
         }
 
         [Test]
@@ -97,7 +100,7 @@ namespace Azure.AI.VoiceLive.Tests
             stopwatch.Stop();
 
             // Assert - Should handle large content efficiently
-            Assert.Less(stopwatch.ElapsedMilliseconds, 1000,
+            Assert.That(stopwatch.ElapsedMilliseconds, Is.LessThan(1000),
                 "Large content truncation should be efficient (< 1 second for 100 operations with 1MB each)");
         }
 
@@ -131,7 +134,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             // Assert - Logging shouldn't add more than 50% overhead
             var overhead = (timeWithLogging - timeWithoutLogging) / (double)timeWithoutLogging;
-            Assert.LessOrEqual(overhead, 0.5, $"Content logging should add less than 50% overhead. Without: {timeWithoutLogging}ms, With: {timeWithLogging}ms, Overhead: {overhead:P}");
+            Assert.That(overhead, Is.LessThanOrEqualTo(0.5), $"Content logging should add less than 50% overhead. Without: {timeWithoutLogging}ms, With: {timeWithLogging}ms, Overhead: {overhead:P}");
         }
 
         [Ignore("Very inconsistent when run in batch of tests")]
@@ -156,7 +159,7 @@ namespace Azure.AI.VoiceLive.Tests
             stopwatch.Stop();
 
             // Assert - Should be very fast when events are disabled
-            Assert.Less(stopwatch.ElapsedMilliseconds, 500,
+            Assert.That(stopwatch.ElapsedMilliseconds, Is.LessThan(500),
                 $"EventSource calls should be very fast when disabled ({iterations} calls in < 500ms)");
         }
 

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var binding = await _provider.TryCreateAsync(context);
 
-            Assert.AreEqual(typeof(WebPubSubContextBinding), binding.GetType());
+            Assert.That(binding.GetType(), Is.EqualTo(typeof(WebPubSubContextBinding)));
 
             var wpsBinding = binding as WebPubSubContextBinding;
             var functionContext = new FunctionBindingContext(Guid.NewGuid(), CancellationToken.None);
@@ -48,15 +48,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var bindingContext = new BindingContext(valueBindingContext, bindingData);
             var result = await wpsBinding.BindAsync(bindingContext);
 
-            Assert.AreEqual(typeof(WebPubSubContextValueProvider), result.GetType());
+            Assert.That(result.GetType(), Is.EqualTo(typeof(WebPubSubContextValueProvider)));
 
             var valueProvider = result as WebPubSubContextValueProvider;
             var value = await valueProvider.GetValueAsync();
-            Assert.AreEqual(typeof(WebPubSubContext), value.GetType());
+            Assert.That(value.GetType(), Is.EqualTo(typeof(WebPubSubContext)));
 
             var request = value as WebPubSubContext;
-            Assert.AreEqual(typeof(PreflightRequest), request.Request.GetType());
-            Assert.True((request.Request as PreflightRequest).IsValid);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Request.GetType(), Is.EqualTo(typeof(PreflightRequest)));
+                Assert.That((request.Request as PreflightRequest).IsValid, Is.True);
+            });
         }
 
         public static void TestFunc(

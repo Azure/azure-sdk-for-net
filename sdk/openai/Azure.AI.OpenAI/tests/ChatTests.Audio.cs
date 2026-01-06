@@ -45,18 +45,24 @@ public partial class ChatTests
 
         ChatOutputAudio outputAudio = completion.OutputAudio;
         Assert.That(outputAudio, Is.Not.Null);
-        Assert.That(outputAudio.Id, Is.Not.Null.And.Not.Empty);
-        Assert.That(outputAudio.AudioBytes, Is.Not.Null);
-        Assert.That(outputAudio.Transcript, Is.Not.Null.And.Not.Empty);
-        Assert.That(outputAudio.ExpiresAt, Is.GreaterThan(new DateTimeOffset(2024, 11, 1, 0, 0, 0, TimeSpan.Zero)));
+        Assert.Multiple(() =>
+        {
+            Assert.That(outputAudio.Id, Is.Not.Null.And.Not.Empty);
+            Assert.That(outputAudio.AudioBytes, Is.Not.Null);
+            Assert.That(outputAudio.Transcript, Is.Not.Null.And.Not.Empty);
+            Assert.That(outputAudio.ExpiresAt, Is.GreaterThan(new DateTimeOffset(2024, 11, 1, 0, 0, 0, TimeSpan.Zero)));
+        });
 
         // Part 2: verify construction of conversation history with past response message audio (via ID)
 
         AssistantChatMessage audioHistoryMessage = ChatMessage.CreateAssistantMessage(completion);
         Assert.That(audioHistoryMessage, Is.InstanceOf<AssistantChatMessage>());
-        Assert.That(audioHistoryMessage.Content, Has.Count.EqualTo(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(audioHistoryMessage.Content, Has.Count.EqualTo(0));
 
-        Assert.That(audioHistoryMessage.OutputAudioReference?.Id, Is.EqualTo(completion.OutputAudio.Id));
+            Assert.That(audioHistoryMessage.OutputAudioReference?.Id, Is.EqualTo(completion.OutputAudio.Id));
+        });
         messages.Add(audioHistoryMessage);
 
         // Part 2b: add another, new audio content part (user message) afterwards
@@ -110,11 +116,15 @@ public partial class ChatTests
                 outputAudioStream.Write(audioUpdateBytes, 0, audioUpdateBytes.Length);
             }
         }
-        Assert.That(streamedCorrelationId, Is.Not.Null.And.Not.Empty);
-        Assert.That(streamedExpiresAt.HasValue, Is.True);
-        Assert.That(streamedTranscriptBuilder.ToString(), Is.Not.Null.And.Not.Empty);
-        Assert.That(outputAudioStream.Length, Is.GreaterThan(9000));
-        Assert.That(streamedUsage?.InputTokenDetails?.AudioTokenCount, Is.GreaterThan(0));
-        Assert.That(streamedUsage?.OutputTokenDetails?.AudioTokenCount, Is.GreaterThan(0));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(streamedCorrelationId, Is.Not.Null.And.Not.Empty);
+            Assert.That(streamedExpiresAt.HasValue, Is.True);
+            Assert.That(streamedTranscriptBuilder.ToString(), Is.Not.Null.And.Not.Empty);
+            Assert.That(outputAudioStream.Length, Is.GreaterThan(9000));
+            Assert.That(streamedUsage?.InputTokenDetails?.AudioTokenCount, Is.GreaterThan(0));
+            Assert.That(streamedUsage?.OutputTokenDetails?.AudioTokenCount, Is.GreaterThan(0));
+        });
     }
 }

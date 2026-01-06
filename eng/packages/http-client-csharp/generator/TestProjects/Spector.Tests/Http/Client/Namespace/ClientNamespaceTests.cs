@@ -14,16 +14,22 @@ namespace TestProjects.Spector.Tests.Http.Client.Namespace
         public Task FirstClient() => Test(async (host) =>
         {
             var response = await new ClientNamespaceFirstClient(host, null).GetFirstAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsNotNull(response.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value, Is.Not.Null);
+            });
         });
 
         [SpectorTest]
         public Task SecondClient() => Test(async (host) =>
         {
             var response = await new ClientNamespaceSecondClient(host, null).GetSecondAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsNotNull(response.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value, Is.Not.Null);
+            });
         });
     }
 }

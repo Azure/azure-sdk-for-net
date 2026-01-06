@@ -14,8 +14,11 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
             var client = new ServiceBusClient(
                 "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];");
             var ruleManager = client.CreateRuleManager("topic", "subscription");
-            Assert.AreEqual("topic/Subscriptions/subscription", ruleManager.SubscriptionPath);
-            Assert.AreEqual("not-real.servicebus.windows.net", ruleManager.FullyQualifiedNamespace);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ruleManager.SubscriptionPath, Is.EqualTo("topic/Subscriptions/subscription"));
+                Assert.That(ruleManager.FullyQualifiedNamespace, Is.EqualTo("not-real.servicebus.windows.net"));
+            });
         }
 
         [Test]
@@ -23,8 +26,11 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
         {
             var client = new ServiceBusClient("not-real.servicebus.windows.net", new MockCredential());
             var ruleManager = client.CreateRuleManager("topic", "subscription");
-            Assert.AreEqual("topic/Subscriptions/subscription", ruleManager.SubscriptionPath);
-            Assert.AreEqual("not-real.servicebus.windows.net", ruleManager.FullyQualifiedNamespace);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ruleManager.SubscriptionPath, Is.EqualTo("topic/Subscriptions/subscription"));
+                Assert.That(ruleManager.FullyQualifiedNamespace, Is.EqualTo("not-real.servicebus.windows.net"));
+            });
         }
     }
 }

@@ -14,15 +14,24 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.Recursive
         {
             var response = await new RecursiveClient(host, null).GetAsync();
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(0, response.Value.Level);
-            Assert.AreEqual(2, response.Value.Extension.Count);
-            Assert.AreEqual(1, response.Value.Extension[0].Level);
-            Assert.AreEqual(1, response.Value.Extension[0].Extension.Count);
-            Assert.AreEqual(2, response.Value.Extension[0].Extension[0].Level);
-            Assert.AreEqual(1, response.Value.Extension[1].Level);
-            Assert.AreEqual(0, response.Value.Extension[0].Extension[0].Extension.Count);
-            Assert.IsTrue(response.Value.Extension[1].Extension is null || response.Value.Extension[1].Extension.Count == 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Level, Is.EqualTo(0));
+                Assert.That(response.Value.Extension.Count, Is.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Extension[0].Level, Is.EqualTo(1));
+                Assert.That(response.Value.Extension[0].Extension.Count, Is.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Extension[0].Extension[0].Level, Is.EqualTo(2));
+                Assert.That(response.Value.Extension[1].Level, Is.EqualTo(1));
+                Assert.That(response.Value.Extension[0].Extension[0].Extension.Count, Is.EqualTo(0));
+                Assert.That(response.Value.Extension[1].Extension is null || response.Value.Extension[1].Extension.Count == 0, Is.True);
+            });
         });
 
         [SpectorTest]
@@ -37,7 +46,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.Recursive
             extensions.Add(item2);
 
             var response = await new RecursiveClient(host, null).PutAsync(data);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
     }

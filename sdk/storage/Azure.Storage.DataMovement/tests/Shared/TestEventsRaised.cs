@@ -108,7 +108,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         private void AssertTransferStatusCollection(TransferStatus[] expected, TransferStatus[] actual)
         {
-            Assert.AreEqual(expected.Length, actual.Length);
+            Assert.That(actual, Has.Length.EqualTo(expected.Length));
             Assert.Multiple(() =>
             {
                 for (int i = 0; i < expected.Length; i++)
@@ -151,8 +151,11 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.IsEmpty(SkippedEvents);
-            Assert.That(SingleCompletedEvents.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SkippedEvents, Is.Empty);
+                Assert.That(SingleCompletedEvents.Count, Is.EqualTo(1));
+            });
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -171,10 +174,16 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.IsEmpty(SingleCompletedEvents);
-            Assert.AreEqual(1, SkippedEvents.Count);
-            Assert.NotNull(SkippedEvents.First().Source.Uri);
-            Assert.NotNull(SkippedEvents.First().Destination.Uri);
+            Assert.Multiple(() =>
+            {
+                Assert.That(SingleCompletedEvents, Is.Empty);
+                Assert.That(SkippedEvents.Count, Is.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(SkippedEvents.First().Source.Uri, Is.Not.Null);
+                Assert.That(SkippedEvents.First().Destination.Uri, Is.Not.Null);
+            });
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -192,14 +201,20 @@ namespace Azure.Storage.DataMovement.Tests
         {
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
-            Assert.IsEmpty(SkippedEvents);
-            Assert.IsEmpty(SingleCompletedEvents);
-            Assert.AreEqual(failureCount, FailedEvents.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(SkippedEvents, Is.Empty);
+                Assert.That(SingleCompletedEvents, Is.Empty);
+                Assert.That(FailedEvents.Count, Is.EqualTo(failureCount));
+            });
             foreach (TransferItemFailedEventArgs args in FailedEvents)
             {
-                Assert.NotNull(args.Exception);
-                Assert.NotNull(args.Source.Uri);
-                Assert.NotNull(args.Destination.Uri);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(args.Exception, Is.Not.Null);
+                    Assert.That(args.Source.Uri, Is.Not.Null);
+                    Assert.That(args.Destination.Uri, Is.Not.Null);
+                });
             }
 
             AssertTransferStatusCollection(
@@ -224,8 +239,11 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.IsEmpty(SkippedEvents);
-            Assert.AreEqual(transferCount, SingleCompletedEvents.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(SkippedEvents, Is.Empty);
+                Assert.That(SingleCompletedEvents.Count, Is.EqualTo(transferCount));
+            });
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -253,10 +271,10 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.Multiple(() =>
                 {
                     AssertUnexpectedFailureCheck();
-                    Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
+                    Assert.That(FailedEvents.Count, Is.EqualTo(expectedFailureCount));
                 });
             }
-            Assert.IsEmpty(SkippedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -286,10 +304,10 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.Multiple(() =>
                 {
                     AssertUnexpectedFailureCheck();
-                    Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
+                    Assert.That(FailedEvents.Count, Is.EqualTo(expectedFailureCount));
                 });
             }
-            Assert.IsEmpty(SkippedEvents);
+            Assert.That(SkippedEvents, Is.Empty);
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -311,7 +329,7 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
 
             AssertUnexpectedFailureCheck();
-            Assert.AreEqual(expectedSkipCount, SkippedEvents.Count);
+            Assert.That(SkippedEvents.Count, Is.EqualTo(expectedSkipCount));
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -324,8 +342,11 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AssertPausedCheck()
         {
             await WaitForStatusEventsAsync().ConfigureAwait(false);
-            Assert.IsEmpty(SkippedEvents);
-            Assert.AreEqual(TransferState.Paused, StatusEvents.Last().TransferStatus.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(SkippedEvents, Is.Empty);
+                Assert.That(StatusEvents.Last().TransferStatus.State, Is.EqualTo(TransferState.Paused));
+            });
         }
 
         /// <summary>
@@ -353,7 +374,7 @@ namespace Azure.Storage.DataMovement.Tests
             else
             {
                 // If blobNames is populated make sure these number of blobs match
-                Assert.AreEqual(transferCount, listOptions.Count);
+                Assert.That(listOptions.Count, Is.EqualTo(transferCount));
                 // Add TestEventRaised to each option
                 foreach (TransferOptions currentOptions in listOptions)
                 {

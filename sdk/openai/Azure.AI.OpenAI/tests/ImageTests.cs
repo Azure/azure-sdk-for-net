@@ -70,7 +70,10 @@ public class ImageTests(bool isAsync) : AoaiTestBase<ImageClient>(isAsync)
         Assert.That(image.ImageUri, Is.Not.Null);
         RequestImageContentFilterResult promptResults = image.GetRequestContentFilterResult();
         ResponseImageContentFilterResult responseResults = image.GetResponseContentFilterResult();
-        Assert.That(promptResults?.Sexual?.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
-        Assert.That(responseResults?.Sexual?.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+        Assert.Multiple(() =>
+        {
+            Assert.That(promptResults?.Sexual?.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+            Assert.That(responseResults?.Sexual?.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+        });
     }
 }

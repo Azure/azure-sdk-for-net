@@ -92,11 +92,14 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
+                Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+                Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
+            });
 
             // Shut the processor down to ensure resource clean-up, but ignore any errors since it isn't the
             // subject of this test.
@@ -158,9 +161,12 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+            });
 
             mockLoadBalancer
                 .Verify(lb => lb.RunLoadBalancingAsync(
@@ -211,8 +217,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+            });
 
             // The processor is confirmed running; attempt to start again.
 
@@ -280,12 +289,18 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(capturedException, Is.Not.Null, "An exception should have been thrown.");
-            Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
-            Assert.That(((AggregateException)capturedException).InnerExceptions.Count, Is.EqualTo(1), "There should have been a single validation exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
+                Assert.That(((AggregateException)capturedException).InnerExceptions, Has.Count.EqualTo(1), "There should have been a single validation exception.");
+            });
 
             var innerException = ((AggregateException)capturedException).InnerExceptions.First();
-            Assert.That(innerException, Is.SameAs(expectedException), "The source of the validation exception should have been exposed.");
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(innerException, Is.SameAs(expectedException), "The source of the validation exception should have been exposed.");
+                Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+            });
         }
 
         /// <summary>
@@ -339,12 +354,18 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(capturedException, Is.Not.Null, "An exception should have been thrown.");
-            Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
-            Assert.That(((AggregateException)capturedException).InnerExceptions.Count, Is.EqualTo(1), "There should have been a single validation exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
+                Assert.That(((AggregateException)capturedException).InnerExceptions, Has.Count.EqualTo(1), "There should have been a single validation exception.");
+            });
 
             var innerException = ((AggregateException)capturedException).InnerExceptions.First();
-            Assert.That(innerException, Is.SameAs(expectedException), "The source of the validation exception should have been exposed.");
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(innerException, Is.SameAs(expectedException), "The source of the validation exception should have been exposed.");
+                Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+            });
         }
 
         /// <summary>
@@ -407,12 +428,18 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(capturedException, Is.Not.Null, "An exception should have been thrown.");
-            Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
-            Assert.That(((AggregateException)capturedException).InnerExceptions.Count, Is.EqualTo(1), "There should have been a single validation exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
+                Assert.That(((AggregateException)capturedException).InnerExceptions, Has.Count.EqualTo(1), "There should have been a single validation exception.");
+            });
 
             var innerException = ((AggregateException)capturedException).InnerExceptions.First();
-            Assert.That(innerException, Is.SameAs(expectedException), "The source of the validation exception should have been exposed.");
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(innerException, Is.SameAs(expectedException), "The source of the validation exception should have been exposed.");
+                Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+            });
         }
 
         /// <summary>
@@ -467,11 +494,14 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(capturedException, Is.Not.Null, "An exception should have been thrown.");
-            Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
+                Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+            });
 
             var aggregateException = (AggregateException)capturedException;
-            Assert.That(aggregateException.InnerExceptions.Count, Is.EqualTo(2), "There should have been two validation exceptions.");
+            Assert.That(aggregateException.InnerExceptions, Has.Count.EqualTo(2), "There should have been two validation exceptions.");
 
             var eventHubInnerException = aggregateException.InnerExceptions.Where(ex => ReferenceEquals(ex, eventHubException)).FirstOrDefault();
             Assert.That(eventHubInnerException, Is.Not.Null, "The Event Hub exception should have been surfaced.");
@@ -883,9 +913,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConsumer.Object);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+                Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
+            });
 
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
@@ -900,12 +933,15 @@ namespace Azure.Messaging.EventHubs.Tests
 
             stopCompleted = true;
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
-            Assert.That(GetActivePartitionProcessors(mockProcessor.Object).Count, Is.Zero, "No partition processor should be running.");
-            Assert.That(processInvokedAfterStop, Is.False, "No batches should be processed after stopping.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
+                Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+                Assert.That(GetActivePartitionProcessors(mockProcessor.Object).Count, Is.Zero, "No partition processor should be running.");
+                Assert.That(processInvokedAfterStop, Is.False, "No batches should be processed after stopping.");
+            });
         }
 
         /// <summary>
@@ -951,8 +987,11 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             await Task.WhenAny(startCompletionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+            });
 
             if (async)
             {
@@ -964,9 +1003,12 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             await Task.WhenAny(stopCompletionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
+            });
 
             mockLoadBalancer
                 .Verify(lb => lb.RelinquishOwnershipAsync(
@@ -1002,10 +1044,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(() => mockProcessor.Object.StopProcessing(cancellationSource.Token), Throws.Nothing, "The synchronous stop processing should be safe to call when not processing.");
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is running.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is running.");
+                Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+            });
         }
 
         /// <summary>
@@ -1028,9 +1073,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Mock.Of<EventHubConnection>());
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+                Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
+            });
 
             if (async)
             {
@@ -1041,9 +1089,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 mockProcessor.Object.StopProcessing(cancellationSource.Token);
             }
 
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
+                Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+            });
 
             if (async)
             {
@@ -1056,10 +1107,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(() => mockProcessor.Object.StopProcessing(cancellationSource.Token), Throws.Nothing, "The synchronous stop processing should be safe to call when not processing.");
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been triggered.");
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been triggered.");
+                Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
+                Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+            });
         }
 
         /// <summary>
@@ -1099,19 +1153,25 @@ namespace Azure.Messaging.EventHubs.Tests
                 await Task.Delay(75, cancellationSource.Token);
             }
 
-            // Starting the processor should result in an exception on the first call, which will fault and cause it to stop and
-            // reset state.
+            Assert.Multiple(() =>
+            {
+                // Starting the processor should result in an exception on the first call, which will fault and cause it to stop and
+                // reset state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation source should not have been triggered.");
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The start call should have triggered an exception.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation source should not have been triggered.");
+                Assert.That(mockProcessor.Object.IsRunning, Is.False, "The start call should have triggered an exception.");
+                Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+            });
 
             // After stopping, the processor state should be reset and it should be able to start.
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            Assert.That(mockProcessor.Object.IsRunning, Is.True, "The start call should succeed after stopping to reset the state.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockProcessor.Object.IsRunning, Is.True, "The start call should succeed after stopping to reset the state.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+                Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
+            });
 
             // Shut down the processor now that it is running and confirm that the second shutdown resets state.
 
@@ -1124,14 +1184,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 mockProcessor.Object.StopProcessing(cancellationSource.Token);
             }
 
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
+                Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
 
-            // Ensure that the cancellation token used to prevent test hangs didn't get signaled, which could invalidate the
-            // test results.
+                // Ensure that the cancellation token used to prevent test hangs didn't get signaled, which could invalidate the
+                // test results.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation source should not have been triggered.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation source should not have been triggered.");
+            });
         }
 
         /// <summary>
@@ -1157,8 +1220,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Mock.Of<EventHubConnection>());
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should have started.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should have started.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+            });
 
             if (async)
             {
@@ -1169,8 +1235,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 mockProcessor.Object.StopProcessing(cancellationSource.Token);
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
+            });
 
             mockEventSource
                 .Verify(log => log.EventProcessorStop(
@@ -1221,8 +1290,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.CompletedTask);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should be running.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should be running.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+            });
 
             if (async)
             {
@@ -1359,8 +1431,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     Times.Once);
             }
 
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor should not be running.");
-            Assert.That(capturedException, Is.Null, "No exception should have occurred when stopping the processor.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor should not be running.");
+                Assert.That(capturedException, Is.Null, "No exception should have occurred when stopping the processor.");
+            });
 
             cancellationSource.Cancel();
         }
@@ -1454,8 +1529,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should be running.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should be running.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+            });
 
             await Task.WhenAny(handlerCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1469,8 +1547,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 mockProcessor.Object.StopProcessing(cancellationSource.Token);
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
+            });
 
             mockEventSource
                 .Verify(log => log.ProcessorStoppingCancellationWarning(

@@ -86,7 +86,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -208,7 +208,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -271,7 +271,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -334,7 +334,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -395,7 +395,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -470,7 +470,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -543,7 +543,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -611,7 +611,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -670,9 +670,12 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
         private void AssertRequestsAreEqual(MockRequest left, MockRequest right)
         {
-            Assert.AreEqual(left.Uri.ToString(), right.Uri.ToString());
-            Assert.AreEqual(left.Method, right.Method);
-            Assert.AreEqual(GetString(left.Content), GetString(right.Content));
+            Assert.Multiple(() =>
+            {
+                Assert.That(right.Uri.ToString(), Is.EqualTo(left.Uri.ToString()));
+                Assert.That(right.Method, Is.EqualTo(left.Method));
+                Assert.That(GetString(right.Content), Is.EqualTo(GetString(left.Content)));
+            });
 
             var leftHeaders = left.Headers.ToDictionary(h => h.Name, h => h.Value);
             var rightHeaders = right.Headers.ToDictionary(h => h.Name, h => h.Value);
@@ -681,7 +684,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             leftHeaders.Remove("x-ms-client-request-id");
             rightHeaders.Remove("x-ms-client-request-id");
 
-            CollectionAssert.AreEquivalent(leftHeaders, rightHeaders);
+            Assert.That(rightHeaders, Is.EquivalentTo(leftHeaders));
         }
     }
 }

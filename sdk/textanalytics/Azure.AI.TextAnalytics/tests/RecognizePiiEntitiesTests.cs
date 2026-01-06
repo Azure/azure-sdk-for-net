@@ -110,7 +110,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, new List<string>() { "800-102-1100", "Microsoft" });
 
             entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.ABARoutingNumber } });
-            Assert.AreEqual(0, entities.Count);
+            Assert.That(entities.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -143,13 +143,16 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents);
 
-            Assert.IsFalse(results[0].HasError);
-            Assert.IsFalse(results[2].HasError);
+            Assert.Multiple(() =>
+            {
+                Assert.That(results[0].HasError, Is.False);
+                Assert.That(results[2].HasError, Is.False);
+            });
 
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[1].HasError);
+            Assert.That(results[1].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -267,33 +270,39 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesActionsResults = resultCollection.RecognizePiiEntitiesResults;
 
-            Assert.IsNotNull(RecognizePiiEntitiesActionsResults);
+            Assert.That(RecognizePiiEntitiesActionsResults, Is.Not.Null);
 
             IList<string> expected = new List<string> { "RecognizePiiEntities", "RecognizePiiEntitiesWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, RecognizePiiEntitiesActionsResults.Select(result => result.ActionName));
+            Assert.That(RecognizePiiEntitiesActionsResults.Select(result => result.ActionName), Is.EquivalentTo(expected));
         }
 
         private void ValidateInDocumenResult(PiiEntityCollection entities, List<string> minimumExpectedOutput)
         {
-            Assert.IsNotNull(entities.Warnings);
-            Assert.That(entities.RedactedText, Is.Not.Null.And.Not.Empty);
-            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(entities.Warnings, Is.Not.Null);
+                Assert.That(entities.RedactedText, Is.Not.Null.And.Not.Empty);
+                Assert.That(entities, Has.Count.GreaterThanOrEqualTo(minimumExpectedOutput.Count));
+            });
             foreach (PiiEntity entity in entities)
             {
-                Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
-                Assert.IsNotNull(entity.Category);
-                Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
-                Assert.GreaterOrEqual(entity.Offset, 0);
-                Assert.Greater(entity.Length, 0);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
+                    Assert.That(entity.Category, Is.Not.Null);
+                    Assert.That(entity.ConfidenceScore, Is.GreaterThanOrEqualTo(0.0));
+                    Assert.That(entity.Offset, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(entity.Length, Is.GreaterThan(0));
+                });
 
                 if (entity.SubCategory != null)
                 {
-                    Assert.IsNotEmpty(entity.SubCategory);
+                    Assert.That(entity.SubCategory, Is.Not.Empty);
                 }
             }
             foreach (var text in minimumExpectedOutput)
             {
-                Assert.IsTrue(entities.Any(e => e.Text == text));
+                Assert.That(entities.Any(e => e.Text == text), Is.True);
             }
         }
 
@@ -306,32 +315,44 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                });
             }
             else
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
 
             foreach (RecognizePiiEntitiesResult result in results)
             {
-                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
-                Assert.False(result.HasError);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.HasError, Is.False);
 
-                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(result.Statistics);
+                    //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
+                    Assert.That(result.Statistics, Is.Not.Null);
+                });
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                        Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
+                    });
                 }
                 else
                 {
-                    Assert.AreEqual(0, result.Statistics.CharacterCount);
-                    Assert.AreEqual(0, result.Statistics.TransactionCount);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(result.Statistics.CharacterCount, Is.EqualTo(0));
+                        Assert.That(result.Statistics.TransactionCount, Is.EqualTo(0));
+                    });
                 }
 
                 ValidateInDocumenResult(result.Entities, minimumExpectedOutput[result.Id]);

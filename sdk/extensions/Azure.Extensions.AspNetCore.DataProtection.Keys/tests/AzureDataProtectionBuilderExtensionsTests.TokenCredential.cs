@@ -23,8 +23,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "tokenCredential");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("tokenCredential"));
         }
 
         [Test]
@@ -39,8 +39,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "tokenCredential");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("tokenCredential"));
         }
 
         [Test]
@@ -55,8 +55,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "tokenCredentialFactory");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("tokenCredentialFactory"));
         }
 
         [Test]
@@ -71,8 +71,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "tokenCredentialFactory");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("tokenCredentialFactory"));
         }
 
         [Test]
@@ -87,8 +87,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "tokenCredentialFactory");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("tokenCredentialFactory"));
         }
 
         [Test]
@@ -103,8 +103,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "tokenCredentialFactory");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("tokenCredentialFactory"));
         }
     }
 }

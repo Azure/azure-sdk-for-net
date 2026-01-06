@@ -42,8 +42,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Config
                 Connection = connection
             }));
 
-            Assert.That(exception.Message, Is.EqualTo(message));
-            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.Message, Is.EqualTo(message));
+                Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            });
         }
 
         [Test]
@@ -73,8 +76,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Config
                 TopicEndpointUri = "https://foo.com"
             }));
 
-            Assert.That(exception.Message, Is.EqualTo("The 'TopicKeySetting' property must be the name of an application setting containing the Topic Key."));
-            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.Message, Is.EqualTo("The 'TopicKeySetting' property must be the name of an application setting containing the Topic Key."));
+                Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            });
         }
 
         [Test]
@@ -88,8 +94,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Config
                 TopicKeySetting = "Bar"
             }));
 
-            Assert.That(exception.Message, Is.EqualTo(EventGridAsyncCollectorFactory.MissingSettingsErrorMessage));
-            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.Message, Is.EqualTo(EventGridAsyncCollectorFactory.MissingSettingsErrorMessage));
+                Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            });
         }
 
         [Test]
@@ -106,8 +115,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Config
                 Connection = "MissingUri"
             }));
 
-            Assert.That(exception.Message, Is.EqualTo("The 'topicEndpointUri' was not specified in 'MissingUri'."));
-            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.Message, Is.EqualTo("The 'topicEndpointUri' was not specified in 'MissingUri'."));
+                Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            });
         }
 
         [Test]
@@ -124,8 +136,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Config
                 Connection = "InvalidUri"
             }));
 
-            Assert.That(exception.Message, Is.EqualTo("The 'topicEndpointUri' in 'InvalidUri' must be a valid absolute Uri."));
-            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.Message, Is.EqualTo("The 'topicEndpointUri' in 'InvalidUri' must be a valid absolute Uri."));
+                Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+            });
         }
 
         [Test]

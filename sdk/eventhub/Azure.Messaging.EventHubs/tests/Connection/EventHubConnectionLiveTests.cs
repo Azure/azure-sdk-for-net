@@ -207,9 +207,12 @@ namespace Azure.Messaging.EventHubs.Tests
                     EventHubProperties properties = await connection.GetPropertiesAsync();
 
                     Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
-                    Assert.That(properties.Name, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
-                    Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
-                    Assert.That(properties.CreatedOn, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(60)), "The Event Hub should have been created just about now.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(properties.Name, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
+                        Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
+                        Assert.That(properties.CreatedOn, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(60)), "The Event Hub should have been created just about now.");
+                    });
                 }
             }
         }
@@ -242,11 +245,14 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partitionProperties = await connection.GetPartitionPropertiesAsync(partition, cancellation.Token);
 
                     Assert.That(partitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
-                    Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
-                    Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
-                    Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedOffsetString, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
+                        Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
+                        Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
+                        Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
+                        Assert.That(partitionProperties.LastEnqueuedOffsetString, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+                    });
                 }
             }
         }
@@ -270,8 +276,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partitions = await connection.GetPartitionIdsAsync();
 
                     Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
-                    Assert.That(properties.PartitionIds, Is.Not.Null, "A set of partition identifiers for the properties should have been returned.");
-                    Assert.That(partitions, Is.Not.Null, "A set of partition identifiers should have been returned.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(properties.PartitionIds, Is.Not.Null, "A set of partition identifiers for the properties should have been returned.");
+                        Assert.That(partitions, Is.Not.Null, "A set of partition identifiers should have been returned.");
+                    });
                     Assert.That(partitions, Is.EquivalentTo(properties.PartitionIds), "The partition identifiers returned directly should match those returned with properties.");
                 }
             }

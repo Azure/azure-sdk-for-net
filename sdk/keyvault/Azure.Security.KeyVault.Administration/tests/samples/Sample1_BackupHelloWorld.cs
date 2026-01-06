@@ -49,10 +49,13 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             // Get the Uri for the location of your backup blob.
             Uri folderUri = backupResult.Value.FolderUri;
-            #endregion
+            Assert.Multiple(() =>
+            {
+                #endregion
 
-            Assert.That(folderUri, Is.Not.Null);
-            Assert.That(backupOperation.HasValue, Is.True);
+                Assert.That(folderUri, Is.Not.Null);
+                Assert.That(backupOperation.HasValue, Is.True);
+            });
 
             await WaitForOperationAsync();
 
@@ -62,11 +65,14 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             // Wait for completion of the RestoreOperation.
             Response<KeyVaultRestoreResult> restoreResult = await restoreOperation.WaitForCompletionAsync();
-            #endregion
+            Assert.Multiple(() =>
+            {
+                #endregion
 
-            Assert.That(restoreOperation.HasValue, Is.True);
-            Assert.That(restoreResult.Value.StartTime, Is.Not.EqualTo(default));
-            Assert.That(restoreResult.Value.EndTime, Is.Not.EqualTo(default));
+                Assert.That(restoreOperation.HasValue, Is.True);
+                Assert.That(restoreResult.Value.StartTime, Is.Not.EqualTo(default));
+                Assert.That(restoreResult.Value.EndTime, Is.Not.EqualTo(default));
+            });
 
             await WaitForOperationAsync();
         }
@@ -102,10 +108,13 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             // Get the Uri for the location of you backup blob.
             Uri folderUri = backupOperation.Value.FolderUri;
-            #endregion
+            Assert.Multiple(() =>
+            {
+                #endregion
 
-            Assert.That(folderUri, Is.Not.Null);
-            Assert.That(backupOperation.HasValue, Is.True);
+                Assert.That(folderUri, Is.Not.Null);
+                Assert.That(backupOperation.HasValue, Is.True);
+            });
 
             await WaitForOperationAsync();
 
@@ -124,10 +133,13 @@ namespace Azure.Security.KeyVault.Administration.Tests
 #endif
             }
             Uri restoreResult = backupOperation.Value.FolderUri;
-            #endregion
+            Assert.Multiple(() =>
+            {
+                #endregion
 
-            Assert.That(restoreResult, Is.Not.Null);
-            Assert.That(restoreOperation.HasValue, Is.True);
+                Assert.That(restoreResult, Is.Not.Null);
+                Assert.That(restoreOperation.HasValue, Is.True);
+            });
 
             await WaitForOperationAsync();
         }

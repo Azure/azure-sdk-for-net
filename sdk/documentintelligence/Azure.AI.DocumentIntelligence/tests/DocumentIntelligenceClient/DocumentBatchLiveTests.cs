@@ -32,8 +32,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var operation = await client.AnalyzeBatchDocumentsAsync(WaitUntil.Completed, options);
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             ValidateAcordAnalyzeBatchResult(operation.Value);
         }
@@ -55,12 +58,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var getResponse = await client.GetAnalyzeBatchResultAsync("prebuilt-read", operation.Id);
             var operationDetails = getResponse.Value;
 
-            Assert.That(operationDetails.ResultId, Is.EqualTo(operation.Id));
-            Assert.That(operationDetails.Status, Is.EqualTo(DocumentIntelligenceOperationStatus.Succeeded));
-            Assert.That(operationDetails.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(operationDetails.LastUpdatedOn, Is.GreaterThanOrEqualTo(operationDetails.CreatedOn));
-            Assert.That(operationDetails.PercentCompleted, Is.EqualTo(100));
-            Assert.That(operationDetails.Error, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operationDetails.ResultId, Is.EqualTo(operation.Id));
+                Assert.That(operationDetails.Status, Is.EqualTo(DocumentIntelligenceOperationStatus.Succeeded));
+                Assert.That(operationDetails.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+                Assert.That(operationDetails.LastUpdatedOn, Is.GreaterThanOrEqualTo(operationDetails.CreatedOn));
+                Assert.That(operationDetails.PercentCompleted, Is.EqualTo(100));
+                Assert.That(operationDetails.Error, Is.Null);
+            });
 
             DocumentAssert.AreEqual(operation.Value, operationDetails.Result);
         }
@@ -102,7 +108,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            Assert.That(idMapping.Count, Is.EqualTo(expectedIdMapping.Count));
+            Assert.That(idMapping, Has.Count.EqualTo(expectedIdMapping.Count));
 
             foreach (string id in expectedIdMapping.Keys)
             {
@@ -111,11 +117,14 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 AnalyzeBatchOperationDetails expected = expectedIdMapping[id];
                 AnalyzeBatchOperationDetails actual = idMapping[id];
 
-                Assert.That(actual.ResultId, Is.EqualTo(expected.ResultId));
-                Assert.That(actual.Status, Is.EqualTo(expected.Status));
-                Assert.That(actual.CreatedOn, Is.EqualTo(expected.CreatedOn));
-                Assert.That(actual.LastUpdatedOn, Is.EqualTo(expected.LastUpdatedOn));
-                Assert.That(actual.PercentCompleted, Is.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actual.ResultId, Is.EqualTo(expected.ResultId));
+                    Assert.That(actual.Status, Is.EqualTo(expected.Status));
+                    Assert.That(actual.CreatedOn, Is.EqualTo(expected.CreatedOn));
+                    Assert.That(actual.LastUpdatedOn, Is.EqualTo(expected.LastUpdatedOn));
+                    Assert.That(actual.PercentCompleted, Is.Null);
+                });
 
                 DocumentAssert.AreEqual(actual.Error, expected.Error);
             }
@@ -141,9 +150,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         private void ValidateAcordAnalyzeBatchResult(AnalyzeBatchResult result)
         {
-            Assert.That(result.SucceededCount, Is.EqualTo(6));
-            Assert.That(result.FailedCount, Is.EqualTo(0));
-            Assert.That(result.SkippedCount, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.SucceededCount, Is.EqualTo(6));
+                Assert.That(result.FailedCount, Is.EqualTo(0));
+                Assert.That(result.SkippedCount, Is.EqualTo(0));
+            });
 
             string expectedSourcePrefix = string.Empty;
             string expectedResultPrefix = string.Empty;
@@ -167,10 +179,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             foreach (var details in result.Details)
             {
-                Assert.That(details.SourceUri.AbsoluteUri, Does.StartWith(expectedSourcePrefix));
-                Assert.That(details.ResultUri.AbsoluteUri, Does.StartWith(expectedResultPrefix));
-                Assert.That(details.Status, Is.EqualTo(DocumentIntelligenceOperationStatus.Succeeded));
-                Assert.That(details.Error, Is.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(details.SourceUri.AbsoluteUri, Does.StartWith(expectedSourcePrefix));
+                    Assert.That(details.ResultUri.AbsoluteUri, Does.StartWith(expectedResultPrefix));
+                    Assert.That(details.Status, Is.EqualTo(DocumentIntelligenceOperationStatus.Succeeded));
+                    Assert.That(details.Error, Is.Null);
+                });
             }
         }
     }

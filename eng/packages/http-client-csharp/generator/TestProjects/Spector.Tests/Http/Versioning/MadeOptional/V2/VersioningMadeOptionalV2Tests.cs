@@ -15,10 +15,10 @@ namespace TestProjects.Spector.Tests.Http.Versioning.MadeOptional.V2
         public void CheckMadeOptionalMembers()
         {
             var constructors = typeof(TestModel).GetConstructors();
-            Assert.IsNotNull(constructors);
-            Assert.AreEqual(1, constructors.Length);
+            Assert.That(constructors, Is.Not.Null);
+            Assert.That(constructors, Has.Length.EqualTo(1));
             /* optional property will not show in public constructor signature. */
-            Assert.False(constructors[0].GetParameters().Any(p => p.Name == "changedProp"));
+            Assert.That(constructors[0].GetParameters().Any(p => p.Name == "changedProp"), Is.False);
         }
 
         [SpectorTest]
@@ -26,8 +26,11 @@ namespace TestProjects.Spector.Tests.Http.Versioning.MadeOptional.V2
         {
             TestModel body = new TestModel("foo");
             var response = await new MadeOptionalClient(host).TestAsync(body);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.Prop);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Prop, Is.EqualTo("foo"));
+            });
         });
     }
 }

@@ -30,12 +30,15 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var credential = new DefaultAzureCredential();
 
-            #endregion
+            Assert.Multiple(() =>
+            {
+                #endregion
 
-            Assert.That(fullyQualifiedNamespace, Is.Not.Null);
-            Assert.That(eventHubName, Is.Not.Null);
-            Assert.That(credential, Is.Not.Null);
-            Assert.That(consumerGroup, Is.Not.Null);
+                Assert.That(fullyQualifiedNamespace, Is.Not.Null);
+                Assert.That(eventHubName, Is.Not.Null);
+                Assert.That(credential, Is.Not.Null);
+                Assert.That(consumerGroup, Is.Not.Null);
+            });
         }
     }
 }

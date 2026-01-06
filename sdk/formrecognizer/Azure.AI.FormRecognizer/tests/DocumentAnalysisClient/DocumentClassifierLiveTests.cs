@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, stream);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             ValidateIrs1040ClassifierResult(operation.Value, classifierId);
         }
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, stream);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             ValidateGenericClassifierResult(operation.Value, classifierId);
         }
@@ -80,53 +80,59 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.Irs1040);
             var operation = await client.ClassifyDocumentFromUriAsync(WaitUntil.Completed, classifierId, uri);
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             ValidateIrs1040ClassifierResult(operation.Value, classifierId);
         }
 
         private void ValidateGenericClassifierResult(AnalyzeResult analyzeResult, string expectedClassifierId)
         {
-            Assert.AreEqual(expectedClassifierId, analyzeResult.ModelId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(analyzeResult.ModelId, Is.EqualTo(expectedClassifierId));
 
-            Assert.IsEmpty(analyzeResult.Content);
-            Assert.IsEmpty(analyzeResult.Paragraphs);
-            Assert.IsEmpty(analyzeResult.Tables);
-            Assert.IsEmpty(analyzeResult.KeyValuePairs);
-            Assert.IsEmpty(analyzeResult.Styles);
-            Assert.IsEmpty(analyzeResult.Languages);
+                Assert.That(analyzeResult.Content, Is.Empty);
+                Assert.That(analyzeResult.Paragraphs, Is.Empty);
+                Assert.That(analyzeResult.Tables, Is.Empty);
+                Assert.That(analyzeResult.KeyValuePairs, Is.Empty);
+                Assert.That(analyzeResult.Styles, Is.Empty);
+                Assert.That(analyzeResult.Languages, Is.Empty);
+            });
 
             for (int pageNumber = 1; pageNumber <= analyzeResult.Pages.Count; pageNumber++)
             {
                 var page = analyzeResult.Pages[pageNumber - 1];
 
-                Assert.IsEmpty(page.Words);
-                Assert.IsEmpty(page.SelectionMarks);
-                Assert.IsEmpty(page.Lines);
-                Assert.IsEmpty(page.Barcodes);
-                Assert.IsEmpty(page.Formulas);
+                Assert.That(page.Words, Is.Empty);
+                Assert.That(page.SelectionMarks, Is.Empty);
+                Assert.That(page.Lines, Is.Empty);
+                Assert.That(page.Barcodes, Is.Empty);
+                Assert.That(page.Formulas, Is.Empty);
 
                 AssertSingleEmptySpan(page.Spans);
 
-                Assert.AreEqual(pageNumber, page.PageNumber);
+                Assert.That(page.PageNumber, Is.EqualTo(pageNumber));
             }
 
             int expectedPageNumber = 1;
 
             foreach (var document in analyzeResult.Documents)
             {
-                Assert.IsEmpty(document.Fields);
+                Assert.That(document.Fields, Is.Empty);
 
                 AssertSingleEmptySpan(document.Spans);
 
                 foreach (var region in document.BoundingRegions)
                 {
-                    Assert.AreEqual(expectedPageNumber++, region.PageNumber);
-                    Assert.AreEqual(4, region.BoundingPolygon.Count);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(region.PageNumber, Is.EqualTo(expectedPageNumber++));
+                        Assert.That(region.BoundingPolygon, Has.Count.EqualTo(4));
+                    });
                 }
 
-                Assert.GreaterOrEqual(document.Confidence, 0f);
-                Assert.LessOrEqual(document.Confidence, 1f);
+                Assert.That(document.Confidence, Is.GreaterThanOrEqualTo(0f));
+                Assert.That(document.Confidence, Is.LessThanOrEqualTo(1f));
             }
         }
 
@@ -134,33 +140,42 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             ValidateGenericClassifierResult(analyzeResult, expectedClassifierId);
 
-            Assert.AreEqual(4, analyzeResult.Pages.Count);
+            Assert.That(analyzeResult.Pages, Has.Count.EqualTo(4));
 
             foreach (var page in analyzeResult.Pages)
             {
-                Assert.That(page.Angle, Is.EqualTo(0f).Within(0.05f));
-                Assert.AreEqual(8.5f, page.Width);
-                Assert.AreEqual(11f, page.Height);
-                Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(page.Angle, Is.EqualTo(0f).Within(0.05f));
+                    Assert.That(page.Width, Is.EqualTo(8.5f));
+                    Assert.That(page.Height, Is.EqualTo(11f));
+                    Assert.That(page.Unit, Is.EqualTo(DocumentPageLengthUnit.Inch));
+                });
             }
 
-            Assert.AreEqual(2, analyzeResult.Documents.Count);
+            Assert.That(analyzeResult.Documents, Has.Count.EqualTo(2));
 
             var document0 = analyzeResult.Documents[0];
             var document1 = analyzeResult.Documents[1];
 
-            Assert.AreEqual("IRS-1040-A", document0.DocumentType);
-            Assert.AreEqual("IRS-1040-C", document1.DocumentType);
-            Assert.AreEqual(2, document0.BoundingRegions.Count);
-            Assert.AreEqual(2, document1.BoundingRegions.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(document0.DocumentType, Is.EqualTo("IRS-1040-A"));
+                Assert.That(document1.DocumentType, Is.EqualTo("IRS-1040-C"));
+                Assert.That(document0.BoundingRegions, Has.Count.EqualTo(2));
+                Assert.That(document1.BoundingRegions, Has.Count.EqualTo(2));
+            });
         }
 
         private void AssertSingleEmptySpan(IReadOnlyList<DocumentSpan> spans)
         {
             var span = spans.Single();
 
-            Assert.AreEqual(0, span.Index);
-            Assert.AreEqual(0, span.Length);
+            Assert.Multiple(() =>
+            {
+                Assert.That(span.Index, Is.EqualTo(0));
+                Assert.That(span.Length, Is.EqualTo(0));
+            });
         }
     }
 }

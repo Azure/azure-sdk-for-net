@@ -51,12 +51,18 @@ namespace Azure.AI.Inference.Tests.Samples
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+                Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            });
             ChatCompletions result = response.Value;
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            });
         }
 
         [Test]
@@ -96,12 +102,18 @@ namespace Azure.AI.Inference.Tests.Samples
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+                Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            });
             ChatCompletions result = response.Value;
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            });
         }
 
         [Test]
@@ -139,12 +151,18 @@ namespace Azure.AI.Inference.Tests.Samples
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+                Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            });
             ChatCompletions result = response.Value;
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            });
         }
 
         [Test]
@@ -181,12 +199,18 @@ namespace Azure.AI.Inference.Tests.Samples
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+                Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            });
             ChatCompletions result = response.Value;
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            });
         }
 
         #region Snippet:Azure_AI_Inference_AoaiAuthHeaderPolicy

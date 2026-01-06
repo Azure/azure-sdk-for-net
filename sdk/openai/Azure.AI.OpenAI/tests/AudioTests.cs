@@ -87,22 +87,31 @@ public class AudioTests(bool isAsync) : AoaiTestBase<AudioClient>(isAsync)
 
         if (options.ResponseFormat == AudioTranscriptionFormat.Simple)
         {
-            Assert.That(transcription.Duration, Is.Null);
-            Assert.That(transcription.Language, Is.Null);
-            Assert.That(transcription.Segments, Is.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(transcription.Duration, Is.Null);
+                Assert.That(transcription.Language, Is.Null);
+                Assert.That(transcription.Segments, Is.Null.Or.Empty);
+            });
         }
         else if (options.ResponseFormat == AudioTranscriptionFormat.Verbose)
         {
-            Assert.That(transcription.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
-            Assert.That(transcription.Language, Is.Not.Null.Or.Empty);
-            Assert.That(transcription.Segments, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(transcription.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
+                Assert.That(transcription.Language, Is.Not.Null.Or.Empty);
+                Assert.That(transcription.Segments, Is.Not.Null.Or.Empty);
+            });
 
             TranscribedSegment firstSegment = transcription.Segments[0];
             Assert.That(firstSegment, Is.Not.Null);
-            Assert.That(firstSegment.Id, Is.EqualTo(0));
-            Assert.That(firstSegment.StartTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
-            Assert.That(firstSegment.EndTime, Is.GreaterThan(firstSegment.StartTime));
-            Assert.That(firstSegment.Text, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstSegment.Id, Is.EqualTo(0));
+                Assert.That(firstSegment.StartTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
+                Assert.That(firstSegment.EndTime, Is.GreaterThan(firstSegment.StartTime));
+                Assert.That(firstSegment.Text, Is.Not.Null.Or.Empty);
+            });
         }
     }
 
@@ -128,15 +137,18 @@ public class AudioTests(bool isAsync) : AoaiTestBase<AudioClient>(isAsync)
         PipelineResponse response = transcriptionResult.GetRawResponse();
         Assert.That(response, Is.Not.Null);
         AudioTranscription transcription = transcriptionResult.Value;
-        Assert.That(transcription.Text, Is.Not.Null.Or.Empty);
-        Assert.That(
-            transcription.Words?.Count > 0,
-            Is.EqualTo(granularityFlags.HasFlag(AudioTimestampGranularities.Word)),
-            "Word-level information should appear (and only appear) when requested");
-        Assert.That(
-            transcription.Segments?.Count > 0,
-            Is.EqualTo(granularityFlags.HasFlag(AudioTimestampGranularities.Segment) || granularityFlags == AudioTimestampGranularities.Default),
-            "Segment-level information should appear (and only appear) when requested or when no flags were provided");
+        Assert.Multiple(() =>
+        {
+            Assert.That(transcription.Text, Is.Not.Null.Or.Empty);
+            Assert.That(
+                transcription.Words?.Count > 0,
+                Is.EqualTo(granularityFlags.HasFlag(AudioTimestampGranularities.Word)),
+                "Word-level information should appear (and only appear) when requested");
+            Assert.That(
+                transcription.Segments?.Count > 0,
+                Is.EqualTo(granularityFlags.HasFlag(AudioTimestampGranularities.Segment) || granularityFlags == AudioTimestampGranularities.Default),
+                "Segment-level information should appear (and only appear) when requested or when no flags were provided");
+        });
     }
 
     [RecordedTest]
@@ -172,22 +184,31 @@ public class AudioTests(bool isAsync) : AoaiTestBase<AudioClient>(isAsync)
 
         if (options.ResponseFormat == AudioTranslationFormat.Simple)
         {
-            Assert.That(translation.Duration, Is.Null);
-            Assert.That(translation.Language, Is.Null);
-            Assert.That(translation.Segments, Is.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(translation.Duration, Is.Null);
+                Assert.That(translation.Language, Is.Null);
+                Assert.That(translation.Segments, Is.Null.Or.Empty);
+            });
         }
         else if (options.ResponseFormat == AudioTranslationFormat.Verbose)
         {
-            Assert.That(translation.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
-            Assert.That(translation.Language, Is.Not.Null.Or.Empty);
-            Assert.That(translation.Segments, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(translation.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
+                Assert.That(translation.Language, Is.Not.Null.Or.Empty);
+                Assert.That(translation.Segments, Is.Not.Null.Or.Empty);
+            });
 
             TranscribedSegment firstSegment = translation.Segments[0];
             Assert.That(firstSegment, Is.Not.Null);
-            Assert.That(firstSegment.Id, Is.EqualTo(0));
-            Assert.That(firstSegment.StartTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
-            Assert.That(firstSegment.EndTime, Is.GreaterThan(firstSegment.StartTime));
-            Assert.That(firstSegment.Text, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstSegment.Id, Is.EqualTo(0));
+                Assert.That(firstSegment.StartTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
+                Assert.That(firstSegment.EndTime, Is.GreaterThan(firstSegment.StartTime));
+                Assert.That(firstSegment.Text, Is.Not.Null.Or.Empty);
+            });
         }
     }
 }

@@ -30,15 +30,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(anomaly, Is.Not.Null);
-                Assert.That(anomaly.DataFeedId, Is.Null);
-                Assert.That(anomaly.MetricId, Is.Null);
-                Assert.That(anomaly.DetectionConfigurationId, Is.Null);
-                Assert.That(anomaly.CreatedOn, Is.Null);
-                Assert.That(anomaly.LastModified, Is.Null);
-                Assert.That(anomaly.Status, Is.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(anomaly.DataFeedId, Is.Null);
+                    Assert.That(anomaly.MetricId, Is.Null);
+                    Assert.That(anomaly.DetectionConfigurationId, Is.Null);
+                    Assert.That(anomaly.CreatedOn, Is.Null);
+                    Assert.That(anomaly.LastModified, Is.Null);
+                    Assert.That(anomaly.Status, Is.Null);
 
-                Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
-                Assert.That(anomaly.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
+                    Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
+                    Assert.That(anomaly.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
+                });
 
                 ValidateSeriesKey(anomaly.SeriesKey);
 
@@ -75,15 +78,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(anomaly, Is.Not.Null);
-                Assert.That(anomaly.DataFeedId, Is.Null);
-                Assert.That(anomaly.MetricId, Is.Null);
-                Assert.That(anomaly.DetectionConfigurationId, Is.Null);
-                Assert.That(anomaly.CreatedOn, Is.Null);
-                Assert.That(anomaly.LastModified, Is.Null);
-                Assert.That(anomaly.Status, Is.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(anomaly.DataFeedId, Is.Null);
+                    Assert.That(anomaly.MetricId, Is.Null);
+                    Assert.That(anomaly.DetectionConfigurationId, Is.Null);
+                    Assert.That(anomaly.CreatedOn, Is.Null);
+                    Assert.That(anomaly.LastModified, Is.Null);
+                    Assert.That(anomaly.Status, Is.Null);
 
-                Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
-                Assert.That(anomaly.Severity, Is.EqualTo(AnomalySeverity.High));
+                    Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
+                    Assert.That(anomaly.Severity, Is.EqualTo(AnomalySeverity.High));
+                });
 
                 ValidateSeriesKey(anomaly.SeriesKey);
 
@@ -115,15 +121,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (AnomalyIncident incident in client.GetIncidentsForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(incident, Is.Not.Null);
-                Assert.That(incident.DataFeedId, Is.Null);
-                Assert.That(incident.MetricId, Is.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(incident.DataFeedId, Is.Null);
+                    Assert.That(incident.MetricId, Is.Null);
 
-                Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);
-                Assert.That(incident.DetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
-                Assert.That(incident.StartedOn, Is.GreaterThanOrEqualTo(SamplingStartTime));
-                Assert.That(incident.LastDetectedOn, Is.LessThanOrEqualTo(SamplingEndTime));
-                Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
-                Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
+                    Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(incident.DetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
+                    Assert.That(incident.StartedOn, Is.GreaterThanOrEqualTo(SamplingStartTime));
+                    Assert.That(incident.LastDetectedOn, Is.LessThanOrEqualTo(SamplingEndTime));
+                    Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
+                    Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
+                });
 
                 ValidateSeriesKey(incident.RootSeriesKey);
 
@@ -153,15 +162,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (AnomalyIncident incident in client.GetIncidentsForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(incident, Is.Not.Null);
-                Assert.That(incident.DataFeedId, Is.Null);
-                Assert.That(incident.MetricId, Is.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(incident.DataFeedId, Is.Null);
+                    Assert.That(incident.MetricId, Is.Null);
 
-                Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);
-                Assert.That(incident.DetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
-                Assert.That(incident.StartedOn, Is.GreaterThanOrEqualTo(SamplingStartTime));
-                Assert.That(incident.LastDetectedOn, Is.LessThanOrEqualTo(SamplingEndTime));
-                Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
-                Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
+                    Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(incident.DetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
+                    Assert.That(incident.StartedOn, Is.GreaterThanOrEqualTo(SamplingStartTime));
+                    Assert.That(incident.LastDetectedOn, Is.LessThanOrEqualTo(SamplingEndTime));
+                    Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
+                    Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
+                });
 
                 ValidateSeriesKey(incident.RootSeriesKey);
 
@@ -345,23 +357,29 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(DetectionConfigurationId, seriesKeys, SamplingStartTime, SamplingEndTime))
             {
                 Assert.That(seriesData, Is.Not.Null);
-                Assert.That(seriesData.SeriesKey, Is.Not.Null);
-                Assert.That(seriesData.Timestamps, Is.Not.Null);
-                Assert.That(seriesData.MetricValues, Is.Not.Null);
-                Assert.That(seriesData.ExpectedMetricValues, Is.Not.Null);
-                Assert.That(seriesData.IsAnomaly, Is.Not.Null);
-                Assert.That(seriesData.Periods, Is.Not.Null);
-                Assert.That(seriesData.LowerBoundaryValues, Is.Not.Null);
-                Assert.That(seriesData.UpperBoundaryValues, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(seriesData.SeriesKey, Is.Not.Null);
+                    Assert.That(seriesData.Timestamps, Is.Not.Null);
+                    Assert.That(seriesData.MetricValues, Is.Not.Null);
+                    Assert.That(seriesData.ExpectedMetricValues, Is.Not.Null);
+                    Assert.That(seriesData.IsAnomaly, Is.Not.Null);
+                    Assert.That(seriesData.Periods, Is.Not.Null);
+                    Assert.That(seriesData.LowerBoundaryValues, Is.Not.Null);
+                    Assert.That(seriesData.UpperBoundaryValues, Is.Not.Null);
+                });
 
                 int pointsCount = seriesData.Timestamps.Count;
 
-                Assert.That(seriesData.MetricValues.Count, Is.EqualTo(pointsCount));
-                Assert.That(seriesData.ExpectedMetricValues.Count, Is.EqualTo(pointsCount));
-                Assert.That(seriesData.IsAnomaly.Count, Is.EqualTo(pointsCount));
-                Assert.That(seriesData.Periods.Count, Is.EqualTo(pointsCount));
-                Assert.That(seriesData.LowerBoundaryValues.Count, Is.EqualTo(pointsCount));
-                Assert.That(seriesData.UpperBoundaryValues.Count, Is.EqualTo(pointsCount));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(seriesData.MetricValues, Has.Count.EqualTo(pointsCount));
+                    Assert.That(seriesData.ExpectedMetricValues, Has.Count.EqualTo(pointsCount));
+                    Assert.That(seriesData.IsAnomaly, Has.Count.EqualTo(pointsCount));
+                    Assert.That(seriesData.Periods, Has.Count.EqualTo(pointsCount));
+                    Assert.That(seriesData.LowerBoundaryValues, Has.Count.EqualTo(pointsCount));
+                    Assert.That(seriesData.UpperBoundaryValues, Has.Count.EqualTo(pointsCount));
+                });
 
                 foreach (DateTimeOffset timestamp in seriesData.Timestamps)
                 {
@@ -371,9 +389,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 returnedKeys.Add(seriesData.SeriesKey);
             }
 
-            // Making sure count is exactly 2 because the logic below relies on that.
-            Assert.That(seriesKeys.Count, Is.EqualTo(2));
-            Assert.That(returnedKeys.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                // Making sure count is exactly 2 because the logic below relies on that.
+                Assert.That(seriesKeys, Has.Count.EqualTo(2));
+                Assert.That(returnedKeys, Has.Count.EqualTo(2));
+            });
 
             if (AreSame(seriesKeys[0], returnedKeys[0]))
             {
@@ -381,16 +402,22 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
             else
             {
-                Assert.That(seriesKeys[0], Is.EquivalentTo(returnedKeys[1]));
-                Assert.That(seriesKeys[1], Is.EquivalentTo(returnedKeys[0]));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(seriesKeys[0], Is.EquivalentTo(returnedKeys[1]));
+                    Assert.That(seriesKeys[1], Is.EquivalentTo(returnedKeys[0]));
+                });
             }
         }
 
         private void ValidateIncidentRootCause(IncidentRootCause rootCause)
         {
             Assert.That(rootCause, Is.Not.Null);
-            Assert.That(rootCause.Description, Is.Not.Null.And.Not.Empty);
-            Assert.That(rootCause.ContributionScore, Is.GreaterThan(0.0).And.LessThanOrEqualTo(1.0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(rootCause.Description, Is.Not.Null.And.Not.Empty);
+                Assert.That(rootCause.ContributionScore, Is.GreaterThan(0.0).And.LessThanOrEqualTo(1.0));
+            });
 
             foreach (string path in rootCause.Paths)
             {

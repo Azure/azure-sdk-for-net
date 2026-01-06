@@ -111,11 +111,14 @@ namespace Azure.AI.Inference.Tests
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             ChatCompletions result = response.Value;
-            Assert.That(result.Id, Is.Not.Null.Or.Empty);
-            Assert.That(result.Created, Is.Not.Null.Or.Empty);
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null.Or.Empty);
+                Assert.That(result.Created, Is.Not.Null.Or.Empty);
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            });
         }
 
         [RecordedTest]
@@ -151,17 +154,20 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             ChatCompletions result = response.Value;
-            Assert.That(result.Id, Is.Not.Null.Or.Empty);
-            Assert.That(result.Created, Is.Not.Null.Or.Empty);
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null.Or.Empty);
+                Assert.That(result.Created, Is.Not.Null.Or.Empty);
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            });
         }
 
         [RecordedTest]
@@ -197,7 +203,7 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
 
             Assert.That(response, Is.Not.Null);
@@ -233,8 +239,11 @@ namespace Azure.AI.Inference.Tests
                 }
                 if (chatUpdate.Role.HasValue)
                 {
-                    Assert.IsFalse(gotRole);
-                    Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(gotRole, Is.False);
+                        Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
+                    });
                     gotRole = true;
                 }
                 if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
@@ -243,9 +252,12 @@ namespace Azure.AI.Inference.Tests
                 }
             }
 
-            Assert.IsTrue(!string.IsNullOrEmpty(id));
-            Assert.IsTrue(!string.IsNullOrEmpty(model));
-            Assert.IsTrue(gotRole);
+            Assert.Multiple(() =>
+            {
+                Assert.That(!string.IsNullOrEmpty(id), Is.True);
+                Assert.That(!string.IsNullOrEmpty(model), Is.True);
+                Assert.That(gotRole, Is.True);
+            });
             var result = contentBuilder.ToString();
             Assert.That(result, Is.Not.Null.Or.Empty);
         }
@@ -281,12 +293,15 @@ namespace Azure.AI.Inference.Tests
             catch (Exception e)
             {
                 exceptionThrown = true;
-                Assert.IsTrue(e.Message.Contains("Extra inputs are not permitted"));
-                Assert.IsTrue(captureRequestPayloadPolicy._requestContent.Contains("foo"));
-                Assert.IsTrue(captureRequestPayloadPolicy._requestHeaders.ContainsKey("extra-parameters"));
-                Assert.IsTrue(captureRequestPayloadPolicy._requestHeaders["extra-parameters"] == ExtraParameters.PassThrough);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(e.Message, Does.Contain("Extra inputs are not permitted"));
+                    Assert.That(captureRequestPayloadPolicy._requestContent, Does.Contain("foo"));
+                    Assert.That(captureRequestPayloadPolicy._requestHeaders.ContainsKey("extra-parameters"), Is.True);
+                    Assert.That(captureRequestPayloadPolicy._requestHeaders["extra-parameters"], Is.EqualTo(ExtraParameters.PassThrough));
+                });
             }
-            Assert.IsTrue(exceptionThrown);
+            Assert.That(exceptionThrown, Is.True);
         }
 
         [RecordedTest]
@@ -385,19 +400,25 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             ChatCompletions result = response.Value;
-            Assert.That(result.Id, Is.Not.Null.Or.Empty);
-            Assert.That(result.Created, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null.Or.Empty);
+                Assert.That(result.Created, Is.Not.Null.Or.Empty);
+            });
 
             if (toolChoiceType == ToolChoiceTestType.UseNonePresetToolChoice)
             {
-                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-                Assert.That(result.ToolCalls, Is.Null.Or.Empty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                    Assert.That(result.ToolCalls, Is.Null.Or.Empty);
+                });
                 // We finish the test here as there's no further exercise for 'none' beyond ensuring we didn't do what we
                 // weren't meant to
                 return;
@@ -413,19 +434,28 @@ namespace Azure.AI.Inference.Tests
                 // and continue the test, as we will have tool_calls
             }
 
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Null.Or.Empty);
-            Assert.That(result.ToolCalls, Is.Not.Null.Or.Empty);
-            Assert.That(result.ToolCalls.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Null.Or.Empty);
+                Assert.That(result.ToolCalls, Is.Not.Null.Or.Empty);
+            });
+            Assert.That(result.ToolCalls, Has.Count.EqualTo(1));
             ChatCompletionsToolCall functionToolCall = result.ToolCalls[0] as ChatCompletionsToolCall;
             Assert.That(functionToolCall, Is.Not.Null);
-            Assert.That(functionToolCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
-            Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(functionToolCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
+                Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
+            });
 
             Dictionary<string, string> arguments
                 = JsonConvert.DeserializeObject<Dictionary<string, string>>(functionToolCall.Arguments);
-            Assert.That(arguments.ContainsKey("locationName"));
-            Assert.That(arguments.ContainsKey("daysInAdvance"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(arguments.ContainsKey("locationName"));
+                Assert.That(arguments.ContainsKey("daysInAdvance"));
+            });
 
             ChatCompletionsOptions followupOptions = new()
             {
@@ -461,14 +491,17 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
             var requestPayload1 = captureRequestPayloadPolicy._requestContent;
 
             Assert.That(followupResponse, Is.Not.Null);
             Assert.That(followupResponse.Value, Is.Not.Null);
-            Assert.That(followupResponse.Value.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(followupResponse.Value.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(followupResponse.Value.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(followupResponse.Value.Content, Is.Not.Null.Or.Empty);
+            });
         }
 
         [RecordedTest]
@@ -526,17 +559,20 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             ChatCompletions result = response.Value;
-            Assert.That(result.Id, Is.Not.Null.Or.Empty);
-            Assert.That(result.Created, Is.Not.Null.Or.Empty);
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null.Or.Empty);
+                Assert.That(result.Created, Is.Not.Null.Or.Empty);
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            });
         }
 
         [RecordedTest]
@@ -620,17 +656,20 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             ChatCompletions result = response.Value;
-            Assert.That(result.Id, Is.Not.Null.Or.Empty);
-            Assert.That(result.Created, Is.Not.Null.Or.Empty);
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null.Or.Empty);
+                Assert.That(result.Created, Is.Not.Null.Or.Empty);
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            });
         }
 
         [RecordedTest]
@@ -661,16 +700,19 @@ namespace Azure.AI.Inference.Tests
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             ChatCompletions result = response.Value;
-            Assert.That(result.Id, Is.Not.Null.Or.Empty);
-            Assert.That(result.Created, Is.Not.Null.Or.Empty);
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null.Or.Empty);
+                Assert.That(result.Created, Is.Not.Null.Or.Empty);
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            });
 
             string userAgent = null;
             captureRequestPayloadPolicy._requestHeaders.TryGetValue("User-Agent", out userAgent);
             Assert.That(userAgent, Is.Not.Null.Or.Empty);
-            Assert.That(userAgent.StartsWith("MyAppId"));
+            Assert.That(userAgent, Does.StartWith("MyAppId"));
         }
 
         [RecordedTest]
@@ -777,7 +819,7 @@ namespace Azure.AI.Inference.Tests
             }
             catch (Exception ex)
             {
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
             finally
             {
@@ -789,7 +831,7 @@ namespace Azure.AI.Inference.Tests
 
             if (toolChoiceType == ToolChoiceTestType.UseNonePresetToolChoice)
             {
-                Assert.That(messages.Count == 3);
+                Assert.That(messages, Has.Count.EqualTo(3));
                 // We finish the test here as there's no further exercise for 'none' beyond ensuring we didn't do what we
                 // weren't meant to
                 return;
@@ -812,7 +854,7 @@ namespace Azure.AI.Inference.Tests
             }
             catch (Exception ex)
             {
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
             finally
             {
@@ -823,7 +865,7 @@ namespace Azure.AI.Inference.Tests
             await ProcessStreamingResponse(response, messages);
             #endregion
 
-            Assert.That(messages.Count() > 4);
+            Assert.That(messages.Count(), Is.GreaterThan(4));
 
             #region
             foreach (ChatRequestMessage requestMessage in messages)
@@ -961,27 +1003,36 @@ namespace Azure.AI.Inference.Tests
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             ChatCompletions result = response.Value;
-            Assert.That(result.Id, Is.Not.Null.Or.Empty);
-            Assert.That(result.Created, Is.Not.Null.Or.Empty);
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null.Or.Empty);
+                Assert.That(result.Created, Is.Not.Null.Or.Empty);
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            });
 
             using JsonDocument structuredJson = JsonDocument.Parse(result.Content);
             structuredJson.RootElement.TryGetProperty("ingredients", out var ingredients);
             structuredJson.RootElement.TryGetProperty("steps", out var steps);
             structuredJson.RootElement.TryGetProperty("bake_time", out var bakeTime);
 
-            Assert.AreEqual(JsonValueKind.Array, ingredients.ValueKind);
-            Assert.AreEqual(JsonValueKind.Array, steps.ValueKind);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ingredients.ValueKind, Is.EqualTo(JsonValueKind.Array));
+                Assert.That(steps.ValueKind, Is.EqualTo(JsonValueKind.Array));
+            });
             foreach (JsonElement stepElement in steps.EnumerateArray())
             {
                 stepElement.TryGetProperty("ingredients", out var stepIngredients);
                 stepElement.TryGetProperty("directions", out var stepDirections);
-                Assert.AreEqual(JsonValueKind.Array, stepIngredients.ValueKind);
-                Assert.AreEqual(JsonValueKind.String, stepDirections.ValueKind);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(stepIngredients.ValueKind, Is.EqualTo(JsonValueKind.Array));
+                    Assert.That(stepDirections.ValueKind, Is.EqualTo(JsonValueKind.String));
+                });
             }
-            Assert.AreEqual(JsonValueKind.String, bakeTime.ValueKind);
+            Assert.That(bakeTime.ValueKind, Is.EqualTo(JsonValueKind.String));
         }
 
         #region Helpers

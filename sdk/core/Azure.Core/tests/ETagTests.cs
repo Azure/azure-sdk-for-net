@@ -15,8 +15,11 @@ namespace Azure.Core.Tests
         public void StringRoundtrips(string value)
         {
             var eTag = new ETag(value);
-            Assert.AreSame(value, eTag.ToString());
-            Assert.AreSame(value, eTag.ToString("G"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(eTag.ToString(), Is.SameAs(value));
+                Assert.That(eTag.ToString("G"), Is.SameAs(value));
+            });
         }
 
         [Test]
@@ -24,8 +27,11 @@ namespace Azure.Core.Tests
         {
             var eTag = new ETag("a");
 
-            Assert.AreEqual(eTag.GetHashCode(), new ETag("a").GetHashCode());
-            Assert.AreNotEqual(eTag.GetHashCode(), new ETag("A").GetHashCode());
+            Assert.Multiple(() =>
+            {
+                Assert.That(new ETag("a").GetHashCode(), Is.EqualTo(eTag.GetHashCode()));
+                Assert.That(new ETag("A").GetHashCode(), Is.Not.EqualTo(eTag.GetHashCode()));
+            });
         }
 
         [Test]
@@ -33,7 +39,7 @@ namespace Azure.Core.Tests
         {
             var eTag = new ETag();
 
-            Assert.AreEqual(eTag.GetHashCode(), new ETag(null).GetHashCode());
+            Assert.That(new ETag(null).GetHashCode(), Is.EqualTo(eTag.GetHashCode()));
         }
 
         [Test]
@@ -41,11 +47,14 @@ namespace Azure.Core.Tests
         {
             var eTag = new ETag("a");
 
-            Assert.True(eTag == new ETag("a"));
-            Assert.False(eTag == new ETag("A"));
+            Assert.That(eTag, Is.EqualTo(new ETag("a")));
+            Assert.Multiple(() =>
+            {
+                Assert.That(eTag == new ETag("A"), Is.False);
 
-            Assert.False(eTag != new ETag("a"));
-            Assert.True(eTag != new ETag("A"));
+                Assert.That(eTag, Is.EqualTo(new ETag("a")));
+            });
+            Assert.That(eTag != new ETag("A"), Is.True);
         }
 
         [Test]
@@ -53,8 +62,8 @@ namespace Azure.Core.Tests
         {
             ETag eTag = default;
 
-            Assert.True(eTag == new ETag(null));
-            Assert.True(eTag == default);
+            Assert.That(eTag, Is.EqualTo(new ETag(null)));
+            Assert.That(eTag, Is.EqualTo(default));
         }
 
         [Test]
@@ -62,11 +71,14 @@ namespace Azure.Core.Tests
         {
             var eTag = new ETag("a");
 
-            Assert.True(eTag.Equals(new ETag("a")));
-            Assert.False(eTag.Equals(new ETag("A")));
+            Assert.That(eTag, Is.EqualTo(new ETag("a")));
+            Assert.Multiple(() =>
+            {
+                Assert.That(eTag.Equals(new ETag("A")), Is.False);
 
-            Assert.True(eTag.Equals((object)new ETag("a")));
-            Assert.False(eTag.Equals((object)new ETag("A")));
+                Assert.That(eTag, Is.EqualTo((object)new ETag("a")));
+            });
+            Assert.That(eTag.Equals((object)new ETag("A")), Is.False);
         }
 
         [Test]
@@ -74,9 +86,9 @@ namespace Azure.Core.Tests
         {
             var eTag = new ETag();
 
-            Assert.True(eTag.Equals(new ETag(null)));
+            Assert.That(eTag, Is.EqualTo(new ETag(null)));
 
-            Assert.True(eTag.Equals((object)new ETag(null)));
+            Assert.That(eTag, Is.EqualTo((object)new ETag(null)));
         }
 
         [Theory]
@@ -98,8 +110,11 @@ namespace Azure.Core.Tests
         public void ParsesEtag(string value, string expectedValue)
         {
             ETag tag = ETag.Parse(value);
-            Assert.AreEqual(expectedValue, tag.ToString());
-            Assert.AreEqual(expectedValue, tag.ToString("G"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.ToString(), Is.EqualTo(expectedValue));
+                Assert.That(tag.ToString("G"), Is.EqualTo(expectedValue));
+            });
         }
 
         [Theory]
@@ -110,7 +125,7 @@ namespace Azure.Core.Tests
         public void ParsesEtagToFormattedString(string value, string expectedValue)
         {
             ETag tag = ETag.Parse(value);
-            Assert.AreEqual(expectedValue, tag.ToString("H"));
+            Assert.That(tag.ToString("H"), Is.EqualTo(expectedValue));
         }
 
         [Theory]

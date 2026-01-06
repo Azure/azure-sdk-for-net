@@ -347,13 +347,19 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
 
-            Assert.That(receiver.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
-            Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
-            Assert.That(GetRetryOptions(receiver).IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(receiver.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
+                Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
+                Assert.That(GetRetryOptions(receiver).IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            });
 
             var connectionOptions = GetConnectionOptions(receiver);
-            Assert.That(connectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
-            Assert.That(connectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
+                Assert.That(connectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            });
         }
 
         /// <summary>
@@ -366,13 +372,19 @@ namespace Azure.Messaging.EventHubs.Tests
             var defaultOptions = new PartitionReceiverOptions();
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>());
 
-            Assert.That(receiver.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
-            Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
-            Assert.That(GetRetryOptions(receiver).IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(receiver.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
+                Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
+                Assert.That(GetRetryOptions(receiver).IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            });
 
             var connectionOptions = GetConnectionOptions(receiver);
-            Assert.That(connectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
-            Assert.That(connectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
+                Assert.That(connectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            });
         }
 
         /// <summary>
@@ -385,13 +397,19 @@ namespace Azure.Messaging.EventHubs.Tests
             var defaultOptions = new PartitionReceiverOptions();
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", new AzureNamedKeyCredential("key", "value"));
 
-            Assert.That(receiver.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
-            Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
-            Assert.That(GetRetryOptions(receiver).IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(receiver.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
+                Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
+                Assert.That(GetRetryOptions(receiver).IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            });
 
             var connectionOptions = GetConnectionOptions(receiver);
-            Assert.That(connectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
-            Assert.That(connectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
+                Assert.That(connectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            });
         }
 
         /// <summary>
@@ -404,13 +422,19 @@ namespace Azure.Messaging.EventHubs.Tests
             var defaultOptions = new PartitionReceiverOptions();
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value));
 
-            Assert.That(receiver.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
-            Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
-            Assert.That(GetRetryOptions(receiver).IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(receiver.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
+                Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
+                Assert.That(GetRetryOptions(receiver).IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            });
 
             var connectionOptions = GetConnectionOptions(receiver);
-            Assert.That(connectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
-            Assert.That(connectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
+                Assert.That(connectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            });
         }
 
         /// <summary>
@@ -424,9 +448,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new Mock<EventHubConnection>();
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
 
-            Assert.That(receiver.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
-            Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
-            Assert.That(GetRetryOptions(receiver).IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(receiver.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
+                Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
+                Assert.That(GetRetryOptions(receiver).IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            });
 
             mockConnection
                 .Verify(connection => connection.CreateTransportConsumer(
@@ -797,10 +824,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
             var information = receiver.ReadLastEnqueuedEventProperties();
 
-            Assert.That(information.SequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
-            Assert.That(information.OffsetString, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
-            Assert.That(information.EnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The last enqueue time should match.");
-            Assert.That(information.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionPropertiesRetrievalTime), "The retrieval time should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(information.SequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
+                Assert.That(information.OffsetString, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
+                Assert.That(information.EnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The last enqueue time should match.");
+                Assert.That(information.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionPropertiesRetrievalTime), "The retrieval time should match.");
+            });
         }
 
         /// <summary>
@@ -833,10 +863,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
             var information = receiver.ReadLastEnqueuedEventProperties();
 
-            Assert.That(information.SequenceNumber, Is.EqualTo(defaultProperties.SequenceNumber), "The sequence number should match.");
-            Assert.That(information.OffsetString, Is.EqualTo(defaultProperties.OffsetString), "The offset should match.");
-            Assert.That(information.EnqueuedTime, Is.EqualTo(defaultProperties.EnqueuedTime), "The last enqueue time should match.");
-            Assert.That(information.LastReceivedTime, Is.EqualTo(defaultProperties.LastReceivedTime), "The retrieval time should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(information.SequenceNumber, Is.EqualTo(defaultProperties.SequenceNumber), "The sequence number should match.");
+                Assert.That(information.OffsetString, Is.EqualTo(defaultProperties.OffsetString), "The offset should match.");
+                Assert.That(information.EnqueuedTime, Is.EqualTo(defaultProperties.EnqueuedTime), "The last enqueue time should match.");
+                Assert.That(information.LastReceivedTime, Is.EqualTo(defaultProperties.LastReceivedTime), "The retrieval time should match.");
+            });
         }
 
         /// <summary>
@@ -1179,8 +1212,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await receiver.CloseAsync(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(receiver.IsClosed, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(receiver.IsClosed, Is.True);
+            });
         }
 
         /// <summary>
@@ -1263,8 +1299,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
 
             Assert.That(async () => await receiver.CloseAsync(cancellationSource.Token), Throws.TypeOf(expectedException.GetType()).And.EqualTo(expectedException));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(receiver.IsClosed, Is.True, "The partition receiver should have been closed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(receiver.IsClosed, Is.True, "The partition receiver should have been closed.");
+            });
         }
 
         /// <summary>
@@ -1285,8 +1324,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var connection = GetConnection(receiver);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(connection.IsClosed, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(connection.IsClosed, Is.True);
+            });
         }
 
         /// <summary>
@@ -1306,8 +1348,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await receiver.CloseAsync(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(connection.IsClosed, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(connection.IsClosed, Is.False);
+            });
         }
 
         /// <summary>

@@ -49,8 +49,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateInDocumenResult(keyPhrases, 2);
 
-            Assert.IsTrue(keyPhrases.Contains("cat"));
-            Assert.IsTrue(keyPhrases.Contains("veterinarian"));
+            Assert.That(keyPhrases, Does.Contain("cat"));
+            Assert.That(keyPhrases, Does.Contain("veterinarian"));
         }
 
         [RecordedTest]
@@ -63,8 +63,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateInDocumenResult(keyPhrases, 2);
 
-            Assert.IsTrue(keyPhrases.Contains("cat"));
-            Assert.IsTrue(keyPhrases.Contains("veterinarian"));
+            Assert.That(keyPhrases, Does.Contain("cat"));
+            Assert.That(keyPhrases, Does.Contain("veterinarian"));
         }
 
         [RecordedTest]
@@ -77,8 +77,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateInDocumenResult(keyPhrases, 2);
 
-            Assert.IsTrue(keyPhrases.Contains("perro"));
-            Assert.IsTrue(keyPhrases.Contains("veterinario"));
+            Assert.That(keyPhrases, Does.Contain("perro"));
+            Assert.That(keyPhrases, Does.Contain("veterinario"));
         }
 
         [RecordedTest]
@@ -94,13 +94,16 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents);
 
-            Assert.IsTrue(!results[0].HasError);
-            Assert.IsTrue(!results[2].HasError);
+            Assert.Multiple(() =>
+            {
+                Assert.That(!results[0].HasError, Is.True);
+                Assert.That(!results[2].HasError, Is.True);
+            });
 
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[1].HasError);
+            Assert.That(results[1].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].KeyPhrases.GetType());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -125,11 +128,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateBatchDocumentsResult(results, 3, includeStatistics: true);
 
-            Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(results.Statistics.DocumentCount, Is.EqualTo(documents.Count));
 
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
+                // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+                Assert.That(options.IncludeStatistics, Is.True);
+                Assert.That(options.ModelVersion, Is.Null);
+            });
         }
 
         [RecordedTest]
@@ -154,11 +160,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateBatchDocumentsResult(results, 3, includeStatistics: true);
 
-            Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(results.Statistics.DocumentCount, Is.EqualTo(documents.Count));
 
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
+                // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+                Assert.That(options.IncludeStatistics, Is.True);
+                Assert.That(options.ModelVersion, Is.Null);
+            });
         }
 
         [RecordedTest]
@@ -168,7 +177,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ExtractKeyPhrasesBatchAsync(documents));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
         }
 
         [RecordedTest]
@@ -179,9 +188,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents);
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[0].HasError);
+            Assert.That(results[0].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].KeyPhrases.Count());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -217,10 +226,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> ExtractKeyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
 
-            Assert.IsNotNull(ExtractKeyPhrasesActionsResults);
+            Assert.That(ExtractKeyPhrasesActionsResults, Is.Not.Null);
 
             IList<string> expected = new List<string> { "ExtractKeyPhrases", "ExtractKeyPhrasesWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, ExtractKeyPhrasesActionsResults.Select(result => result.ActionName));
+            Assert.That(ExtractKeyPhrasesActionsResults.Select(result => result.ActionName), Is.EquivalentTo(expected));
         }
 
         [RecordedTest]
@@ -241,13 +250,16 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsClient client = GetClient();
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.ExtractKeyPhrasesBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
-            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer."));
         }
 
         private void ValidateInDocumenResult(KeyPhraseCollection keyPhrases, int minKeyPhrasesCount = default)
         {
-            Assert.IsNotNull(keyPhrases.Warnings);
-            Assert.GreaterOrEqual(keyPhrases.Count, minKeyPhrasesCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keyPhrases.Warnings, Is.Not.Null);
+                Assert.That(keyPhrases, Has.Count.GreaterThanOrEqualTo(minKeyPhrasesCount));
+            });
         }
 
         private void ValidateBatchDocumentsResult(
@@ -259,32 +271,44 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                });
             }
             else
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
 
             foreach (ExtractKeyPhrasesResult result in results)
             {
-                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
-                Assert.False(result.HasError);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.HasError, Is.False);
 
-                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(result.Statistics);
+                    //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
+                    Assert.That(result.Statistics, Is.Not.Null);
+                });
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                        Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
+                    });
                 }
                 else
                 {
-                    Assert.AreEqual(0, result.Statistics.CharacterCount);
-                    Assert.AreEqual(0, result.Statistics.TransactionCount);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(result.Statistics.CharacterCount, Is.EqualTo(0));
+                        Assert.That(result.Statistics.TransactionCount, Is.EqualTo(0));
+                    });
                 }
 
                 ValidateInDocumenResult(result.KeyPhrases, minKeyPhrasesCount);

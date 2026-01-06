@@ -46,9 +46,13 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             {
                 exceptionThrown = true;
             }
-            Assert.IsTrue(exceptionThrown);
-            Assert.Greater(stream.Length, 0);
-            Assert.Less(stream.Length, length);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(exceptionThrown, Is.True);
+                Assert.That(stream.Length, Is.GreaterThan(0));
+            });
+            Assert.That(stream.Length, Is.LessThan(length));
         }
 
         [Test]
@@ -71,9 +75,13 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             {
                 exceptionThrown = true;
             }
-            Assert.IsTrue(exceptionThrown);
-            Assert.Greater(stream.Length, 0);
-            Assert.Less(stream.Length, length);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(exceptionThrown, Is.True);
+                Assert.That(stream.Length, Is.GreaterThan(0));
+            });
+            Assert.That(stream.Length, Is.LessThan(length));
         }
 
         [Test]
@@ -186,17 +194,24 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         private void VerifyStreams(byte[] buffer, long written1, long written2)
         {
             //verify the first copy completed successfully
-            Assert.Greater(written1, 0);
-            Assert.Less(written1, _bufferSize);
-            Assert.AreEqual(0xFF, buffer[written1 - 1]);
+            Assert.That(written1, Is.GreaterThan(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(written1, Is.LessThan(_bufferSize));
+                Assert.That(buffer[written1 - 1], Is.EqualTo(0xFF));
+            });
             if (buffer.Length > written1)
             {
-                Assert.AreEqual(0x00, buffer[written1]);
+                Assert.That(buffer[written1], Is.EqualTo(0x00));
             }
-            Assert.AreEqual(0xFF, buffer[0]);
 
-            //verify the second copy did not happen
-            Assert.AreEqual(0, written2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(buffer[0], Is.EqualTo(0xFF));
+
+                //verify the second copy did not happen
+                Assert.That(written2, Is.EqualTo(0));
+            });
         }
 
         private Task StartAsyncTask(Func<Task> func)
@@ -220,8 +235,12 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             {
                 Thread.Sleep(0);
             }
-            Assert.AreEqual(TaskStatus.Running, task.Status);
-            Assert.IsFalse(task.IsCompleted);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(task.Status, Is.EqualTo(TaskStatus.Running));
+                Assert.That(task.IsCompleted, Is.False);
+            });
         }
     }
 }

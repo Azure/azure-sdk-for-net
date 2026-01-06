@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             if (success == false)
             {
                 var ex = Assert.Throws<AuthenticationEventTriggerRequestValidationException>(() => AuthenticationEventBinding.GetEventAndValidateSchema(payload));
-                Assert.AreEqual(exceptionMessage, ex.Message);
+                Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
             }
             else
             {

@@ -155,9 +155,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions { Identifier = expectedIdentifier };
             var producer = new EventHubBufferedProducerClient(connectionString, options);
 
-            Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
-            Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
-            Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
+                Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
+                Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            });
         }
 
         /// <summary>
@@ -174,9 +177,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions { Identifier = expectedIdentifier };
             var producer = new EventHubBufferedProducerClient(connectionString, expectedEventHub, options);
 
-            Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
-            Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
-            Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
+                Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
+                Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            });
         }
 
         /// <summary>
@@ -193,9 +199,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions { Identifier = expectedIdentifier };
             var producer = new EventHubBufferedProducerClient(expectedNamespace, expectedEventHub, credential.Object, options);
 
-            Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
-            Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
-            Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
+                Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
+                Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            });
         }
 
         /// <summary>
@@ -227,9 +236,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions { Identifier = expectedIdentifier };
             var producer = new EventHubBufferedProducerClient(expectedNamespace, expectedEventHub, credential, options);
 
-            Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
-            Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
-            Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
+                Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
+                Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            });
         }
 
         /// <summary>
@@ -261,9 +273,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions { Identifier = expectedIdentifier };
             var producer = new EventHubBufferedProducerClient(expectedNamespace, expectedEventHub, credential, options);
 
-            Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
-            Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
-            Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
+                Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
+                Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            });
         }
 
         /// <summary>
@@ -295,9 +310,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var connection = new EventHubConnection(expectedNamespace, expectedEventHub, Mock.Of<TokenCredential>());
             var producer = new EventHubBufferedProducerClient(connection, options);
 
-            Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
-            Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
-            Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(producer.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should have been initialized.");
+                Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(expectedNamespace), "The fully qualified namespace should have been initialized.");
+                Assert.That(producer.EventHubName, Is.EqualTo(expectedEventHub), "The event hub name should have been initialized.");
+            });
         }
 
         /// <summary>
@@ -987,10 +1005,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token);
                 await mockBufferedProducer.Object.CloseAsync(flush);
 
-                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-                Assert.That(mockBufferedProducer.Object.IsClosed, Is.True, "The producer should be closed.");
-                Assert.That(mockBufferedProducer.Object.IsPublishing, Is.False, "The producer should report that it is not publishing.");
-                Assert.That(GetBackgroundPublishingTask(mockBufferedProducer.Object).IsCompleted, Is.True, "The publishing task should have been completed.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                    Assert.That(mockBufferedProducer.Object.IsClosed, Is.True, "The producer should be closed.");
+                    Assert.That(mockBufferedProducer.Object.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                    Assert.That(GetBackgroundPublishingTask(mockBufferedProducer.Object).IsCompleted, Is.True, "The publishing task should have been completed.");
+                });
             }
             finally
             {
@@ -1150,9 +1171,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await mockBufferedProducer.Object.FlushAsync(cancellationSource.Token);
 
-                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-                Assert.That(mockBufferedProducer.Object.IsPublishing, Is.False, "The producer should report that it is not publishing.");
-                Assert.That(GetBackgroundPublishingTask(mockBufferedProducer.Object).IsCompleted, Is.True, "The publishing task should have been completed.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                    Assert.That(mockBufferedProducer.Object.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                    Assert.That(GetBackgroundPublishingTask(mockBufferedProducer.Object).IsCompleted, Is.True, "The publishing task should have been completed.");
+                });
             }
             finally
             {
@@ -1331,10 +1355,13 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.FlushAsync(cancellationSource.Token).AwaitWithCancellation(cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "The buffered event count for the partition should reflect all events having been published.");
-            Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
-            Assert.That(handlerArgs.EventBatch.Count, Is.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "The buffered event count for the partition should reflect all events having been published.");
+                Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
+                Assert.That(handlerArgs.EventBatch, Has.Count.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
+            });
 
             mockBufferedProducer
                 .Verify(producer => producer.DrainAndPublishPartitionEvents(
@@ -1403,11 +1430,14 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.FlushAsync(cancellationSource.Token).AwaitWithCancellation(cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "The buffered event count for the partition should reflect all events having been published.");
-            Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
-            Assert.That(handlerArgs.EventBatch.Count, Is.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
-            Assert.That(handlerArgs.Exception, Is.EqualTo(expectedException), "The observed exception should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "The buffered event count for the partition should reflect all events having been published.");
+                Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
+                Assert.That(handlerArgs.EventBatch, Has.Count.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
+                Assert.That(handlerArgs.Exception, Is.EqualTo(expectedException), "The observed exception should match.");
+            });
 
             mockBufferedProducer
                 .Verify(producer => producer.DrainAndPublishPartitionEvents(
@@ -1471,8 +1501,11 @@ namespace Azure.Messaging.EventHubs.Tests
             // Flush and verify.
 
             Assert.That(async () => await mockBufferedProducer.Object.FlushAsync(cancellationSource.Token).AwaitWithCancellation(cancellationSource.Token), Throws.Nothing);
-            Assert.That(handlerWasCalled, Is.True, "The success handler should have been called.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(handlerWasCalled, Is.True, "The success handler should have been called.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+            });
         }
 
         /// <summary>
@@ -1529,8 +1562,11 @@ namespace Azure.Messaging.EventHubs.Tests
             // Flush and verify.
 
             Assert.That(async () => await mockBufferedProducer.Object.FlushAsync(cancellationSource.Token).AwaitWithCancellation(cancellationSource.Token), Throws.Nothing);
-            Assert.That(handlerWasCalled, Is.True, "The success handler should have been called.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(handlerWasCalled, Is.True, "The success handler should have been called.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+            });
         }
 
         /// <summary>
@@ -1571,11 +1607,14 @@ namespace Azure.Messaging.EventHubs.Tests
             try
             {
                 var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventsAsync(events, cancellationSource.Token);
-                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
 
-                Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
+                    Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
+                });
 
                 await mockBufferedProducer.Object.FlushAsync(cancellationSource.Token);
                 Assert.That(async () => await mockBufferedProducer.Object.EnqueueEventsAsync(new[] { new EventData("Three"), new EventData("Four") }, cancellationSource.Token), Throws.Nothing, "It should be possible to enqueue events after flushing.");
@@ -1683,8 +1722,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partition in partitions)
             {
-                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap[partition].BufferedEventCount, Is.EqualTo(0), $"Partition: [{ partition }] should have been cleared, but has a count.");
-                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap[partition].TryReadEvent(out _), Is.False, $"Partition: [{ partition }] should have been cleared, but had an event.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap[partition].BufferedEventCount, Is.EqualTo(0), $"Partition: [{partition}] should have been cleared, but has a count.");
+                    Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap[partition].TryReadEvent(out _), Is.False, $"Partition: [{partition}] should have been cleared, but had an event.");
+                });
             }
         }
 
@@ -1730,8 +1772,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await Task.Yield();
             var thrownException = Assert.ThrowsAsync<EventHubsException>(async () => await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), "The attempt to start publishing should have surfaced an exception.");
-            Assert.True(thrownException.IsTransient, "Exception thrown should be transient");
-            Assert.That(thrownException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceTimeout), "Exception thrown should have a reason of ServiceCommunicationProblem.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(thrownException.IsTransient, Is.True, "Exception thrown should be transient");
+                Assert.That(thrownException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceTimeout), "Exception thrown should have a reason of ServiceCommunicationProblem.");
+            });
         }
 
         /// <summary>
@@ -2163,11 +2208,14 @@ namespace Azure.Messaging.EventHubs.Tests
             try
             {
                 var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventsAsync(events, cancellationSource.Token);
-                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
 
-                Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
+                    Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
+                });
 
                 var readEventCount = 0;
 
@@ -2177,8 +2225,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         ++readEventCount;
 
-                        Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{ readEvent.EventBody }] was not in the source.");
-                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{readEvent.EventBody}] was not in the source.");
+                            Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{readEvent.EventBody}].");
+                        });
                     }
 
                     await Task.Delay(10, cancellationSource.Token);
@@ -2242,10 +2293,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 var options = new EnqueueEventOptions { PartitionKey = partitionKey };
                 var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventsAsync(events, options, cancellationSource.Token);
 
-                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
-                Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                    Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
+                });
 
                 var readEventCount = 0;
 
@@ -2255,8 +2309,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         ++readEventCount;
 
-                        Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{ readEvent.EventBody }] was not in the source.");
-                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.EqualTo(partitionKey), $"The partition key should have been preserved for the event with body: [{ readEvent.EventBody }].");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{readEvent.EventBody}] was not in the source.");
+                            Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.EqualTo(partitionKey), $"The partition key should have been preserved for the event with body: [{readEvent.EventBody}].");
+                        });
                     }
 
                     await Task.Delay(10, cancellationSource.Token);
@@ -2311,10 +2368,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 var options = new EnqueueEventOptions { PartitionId = partitionId };
                 var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventsAsync(events, options, cancellationSource.Token);
 
-                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
-                Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                    Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
+                });
 
                 var readEventCount = 0;
 
@@ -2324,8 +2384,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         ++readEventCount;
 
-                        Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{ readEvent.EventBody }] was not in the source.");
-                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{readEvent.EventBody}] was not in the source.");
+                            Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{readEvent.EventBody}].");
+                        });
                     }
 
                     await Task.Delay(10, cancellationSource.Token);
@@ -2389,15 +2452,21 @@ namespace Azure.Messaging.EventHubs.Tests
                 var enqueueTask = mockBufferedProducer.Object.EnqueueEventsAsync(events, cancellationSource.Token);
                 await Task.Delay(TimeSpan.FromSeconds(1), cancellationSource.Token);
 
-                Assert.That(enqueueTask.IsCompleted, Is.False, "The enqueue task should not be completed.");
-                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(enqueueTask.IsCompleted, Is.False, "The enqueue task should not be completed.");
+                    Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                });
 
                 // Read the blocking event to clear room.  This event shouldn't be in the expected list.
 
                 var readEventCount = 0;
 
-                Assert.That(partitionPublisher.TryReadEvent(out var blockerEvent), Is.True, "The blocking event should be available to read immediately.");
-                Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == blockerEvent.EventBody.ToString()), Is.Null, $"The blocking event should not be in the source.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(partitionPublisher.TryReadEvent(out var blockerEvent), Is.True, "The blocking event should be available to read immediately.");
+                    Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == blockerEvent.EventBody.ToString()), Is.Null, $"The blocking event should not be in the source.");
+                });
 
                 while (readEventCount < events.Length)
                 {
@@ -2405,8 +2474,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         ++readEventCount;
 
-                        Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{ readEvent.EventBody }] was not in the source.");
-                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(events.SingleOrDefault(item => item.EventBody.ToString() == readEvent.EventBody.ToString()), Is.Not.Null, $"The event with body: [{readEvent.EventBody}] was not in the source.");
+                            Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{readEvent.EventBody}].");
+                        });
                     }
 
                     await Task.Delay(10, cancellationSource.Token);
@@ -2686,21 +2758,30 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var options = new EnqueueEventOptions { PartitionId = firstPartitionId };
                 var count = await mockBufferedProducer.Object.EnqueueEventsAsync(new[] { new EventData("One") }, options, cancellationSource.Token);
-                Assert.That(count, Is.EqualTo(1), "One event has been enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(firstPartitionId), Is.EqualTo(1), $"One event has been enqueued for { firstPartitionId }.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(count, Is.EqualTo(1), "One event has been enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(firstPartitionId), Is.EqualTo(1), $"One event has been enqueued for {firstPartitionId}.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                });
 
                 options.PartitionId = secondPartitionId;
                 count = await mockBufferedProducer.Object.EnqueueEventsAsync(new[] { new EventData("Two") }, options, cancellationSource.Token);
-                Assert.That(count, Is.EqualTo(2), "Two events have been enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(secondPartitionId), Is.EqualTo(1), $"One event has been enqueued for { secondPartitionId }.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(count, Is.EqualTo(2), "Two events have been enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(secondPartitionId), Is.EqualTo(1), $"One event has been enqueued for {secondPartitionId}.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                });
 
                 options.PartitionId = secondPartitionId;
                 count = await mockBufferedProducer.Object.EnqueueEventsAsync(new[] { new EventData("Three") }, options, cancellationSource.Token);
-                Assert.That(count, Is.EqualTo(3), "Three events have been enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(secondPartitionId), Is.EqualTo(2), $"Two events have been enqueued for { secondPartitionId }.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(count, Is.EqualTo(3), "Three events have been enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(secondPartitionId), Is.EqualTo(2), $"Two events have been enqueued for {secondPartitionId}.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                });
             }
             finally
             {
@@ -2947,11 +3028,14 @@ namespace Azure.Messaging.EventHubs.Tests
             try
             {
                 var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, cancellationSource.Token);
-                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
 
-                Assert.That(enqueuedCount, Is.EqualTo(1), "The return value should indicate that a single event was enqueued.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(1), "The total event count should indicate that a single event was enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(1), "The partition event count should indicate that a single event was enqueued.");
+                    Assert.That(enqueuedCount, Is.EqualTo(1), "The return value should indicate that a single event was enqueued.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(1), "The total event count should indicate that a single event was enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(1), "The partition event count should indicate that a single event was enqueued.");
+                });
 
                 var readEventCount = 0;
 
@@ -2961,8 +3045,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         ++readEventCount;
 
-                        Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
-                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{readEvent.EventBody}] was not enqueued.");
+                            Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{readEvent.EventBody}].");
+                        });
                     }
 
                     await Task.Delay(10, cancellationSource.Token);
@@ -3027,10 +3114,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 var options = new EnqueueEventOptions { PartitionKey = partitionKey };
                 var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, options, cancellationSource.Token);
 
-                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
-                Assert.That(enqueuedCount, Is.EqualTo(1), "The return value should indicate that a single event was enqueued.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(1), "The total event count should indicate that a single event was enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(1), "The partition event count should indicate that a single event was enqueued.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                    Assert.That(enqueuedCount, Is.EqualTo(1), "The return value should indicate that a single event was enqueued.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(1), "The total event count should indicate that a single event was enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(1), "The partition event count should indicate that a single event was enqueued.");
+                });
 
                 var readEventCount = 0;
 
@@ -3040,8 +3130,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         ++readEventCount;
 
-                        Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
-                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.EqualTo(partitionKey), $"The partition key should have been preserved for the event with body: [{ readEvent.EventBody }].");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{readEvent.EventBody}] was not enqueued.");
+                            Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.EqualTo(partitionKey), $"The partition key should have been preserved for the event with body: [{readEvent.EventBody}].");
+                        });
                     }
 
                     await Task.Delay(10, cancellationSource.Token);
@@ -3097,10 +3190,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 var options = new EnqueueEventOptions { PartitionId = partitionId };
                 var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, options, cancellationSource.Token);
 
-                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
-                Assert.That(enqueuedCount, Is.EqualTo(1), "The return value should indicate that a single event was enqueued.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(1), "The total event count should indicate that a single event was enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(1), "The partition event count should indicate that a single event was enqueued.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                    Assert.That(enqueuedCount, Is.EqualTo(1), "The return value should indicate that a single event was enqueued.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(1), "The total event count should indicate that a single event was enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(1), "The partition event count should indicate that a single event was enqueued.");
+                });
 
                 var readEventCount = 0;
 
@@ -3110,8 +3206,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         ++readEventCount;
 
-                        Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
-                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{readEvent.EventBody}] was not enqueued.");
+                            Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{readEvent.EventBody}].");
+                        });
                     }
 
                     await Task.Delay(10, cancellationSource.Token);
@@ -3176,13 +3275,16 @@ namespace Azure.Messaging.EventHubs.Tests
                 var enqueueTask = mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, cancellationSource.Token);
                 await Task.Delay(TimeSpan.FromSeconds(1), cancellationSource.Token);
 
-                Assert.That(enqueueTask.IsCompleted, Is.False, "The enqueue task should not be completed.");
-                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(enqueueTask.IsCompleted, Is.False, "The enqueue task should not be completed.");
+                    Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
 
-                // Read the blocking event to clear room.  This event shouldn't be in the expected list.
+                    // Read the blocking event to clear room.  This event shouldn't be in the expected list.
 
-                Assert.That(partitionPublisher.TryReadEvent(out var readBlockerEvent), Is.True, "The blocking event should be available to read immediately.");
-                Assert.That(blockerEvent.EventBody.ToString(), Is.EqualTo(readBlockerEvent.EventBody.ToString()), $"The event with body: [{ readBlockerEvent.EventBody }] was not enqueued.");
+                    Assert.That(partitionPublisher.TryReadEvent(out var readBlockerEvent), Is.True, "The blocking event should be available to read immediately.");
+                    Assert.That(blockerEvent.EventBody.ToString(), Is.EqualTo(readBlockerEvent.EventBody.ToString()), $"The event with body: [{readBlockerEvent.EventBody}] was not enqueued.");
+                });
 
                 var readEventCount = 0;
 
@@ -3192,8 +3294,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         ++readEventCount;
 
-                        Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{ readEvent.EventBody }] was not enqueued.");
-                        Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{ readEvent.EventBody }].");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(expectedEvent.EventBody.ToString(), Is.EqualTo(readEvent.EventBody.ToString()), $"The event with body: [{readEvent.EventBody}] was not enqueued.");
+                            Assert.That(readEvent.GetRawAmqpMessage().GetPartitionKey(null), Is.Null, $"The partition key should not have been set for the event with body: [{readEvent.EventBody}].");
+                        });
                     }
 
                     await Task.Delay(10, cancellationSource.Token);
@@ -3480,21 +3585,30 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var options = new EnqueueEventOptions { PartitionId = firstPartitionId };
                 var count = await mockBufferedProducer.Object.EnqueueEventAsync(new EventData("One"), options, cancellationSource.Token);
-                Assert.That(count, Is.EqualTo(1), "One event has been enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(firstPartitionId), Is.EqualTo(1), $"One event has been enqueued for { firstPartitionId }.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(count, Is.EqualTo(1), "One event has been enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(firstPartitionId), Is.EqualTo(1), $"One event has been enqueued for {firstPartitionId}.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                });
 
                 options.PartitionId = secondPartitionId;
                 count = await mockBufferedProducer.Object.EnqueueEventAsync(new EventData("Two"), options, cancellationSource.Token);
-                Assert.That(count, Is.EqualTo(2), "Two events have been enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(secondPartitionId), Is.EqualTo(1), $"One event has been enqueued for { secondPartitionId }.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(count, Is.EqualTo(2), "Two events have been enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(secondPartitionId), Is.EqualTo(1), $"One event has been enqueued for {secondPartitionId}.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                });
 
                 options.PartitionId = secondPartitionId;
                 count = await mockBufferedProducer.Object.EnqueueEventAsync(new EventData("Three"), options, cancellationSource.Token);
-                Assert.That(count, Is.EqualTo(3), "Three events have been enqueued.");
-                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(secondPartitionId), Is.EqualTo(2), $"Two events have been enqueued for { secondPartitionId }.");
-                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(count, Is.EqualTo(3), "Three events have been enqueued.");
+                    Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(secondPartitionId), Is.EqualTo(2), $"Two events have been enqueued for {secondPartitionId}.");
+                    Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(count), "The count returned by enqueue and the total count should match.");
+                });
             }
             finally
             {
@@ -3907,8 +4021,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 readEvents.Add(readEvent);
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(readEvents.Count, Is.EqualTo(expectedEvents.Count), "The number of events read should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(readEvents, Has.Count.EqualTo(expectedEvents.Count), "The number of events read should match.");
+            });
             Assert.That(readEvents, Is.EquivalentTo(expectedEvents), "Events that were buffered should have been read back.");
         }
 
@@ -3945,8 +4062,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 readEvents.Add(readEvent);
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(readEvents.Count, Is.EqualTo(expectedEvents.Count), "The number of events read should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(readEvents, Has.Count.EqualTo(expectedEvents.Count), "The number of events read should match.");
+            });
             Assert.That(readEvents, Is.EquivalentTo(expectedEvents), "The read events should match the written events.");
         }
 
@@ -4021,8 +4141,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.Token.ThrowIfCancellationRequested();
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(readEventCount, Is.EqualTo(stashEvents.Count + channelEvents.Count), "The number of events read should match the source length.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(readEventCount, Is.EqualTo(stashEvents.Count + channelEvents.Count), "The number of events read should match the source length.");
+            });
         }
 
         /// <summary>
@@ -4075,9 +4198,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(1), "The buffered event count for the partition should have been decremented, but the extra event should remain.");
-            Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(1), "The buffered event count for the partition should have been decremented, but the extra event should remain.");
+                Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            });
 
             // Adding to the batch results in cloning the events; the data should match but the
             // reference will differ.
@@ -4150,9 +4276,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await publishingTask;
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(1), "The buffered event count for the partition should have been decremented, but the extra event should remain.");
-            Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(1), "The buffered event count for the partition should have been decremented, but the extra event should remain.");
+                Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            });
 
             // Adding to the batch results in cloning the events; the data should match but the
             // reference will differ.
@@ -4226,9 +4355,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await publishingTask;
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(1), "The buffered event count for the partition should have been decremented, but the extra event should remain.");
-            Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(1), "The buffered event count for the partition should have been decremented, but the extra event should remain.");
+                Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            });
 
             // Adding to the batch results in cloning the events; the data should match but the
             // reference will differ.
@@ -4279,9 +4411,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "No events should be buffered.");
-            Assert.That(publishedEventsCount, Is.EqualTo(0), "No events should have been published.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "No events should be buffered.");
+                Assert.That(publishedEventsCount, Is.EqualTo(0), "No events should have been published.");
+            });
 
             mockProducer
                 .Verify(producer => producer.SendAsync(
@@ -4338,10 +4473,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "No events should be buffered.");
-            Assert.That(successHandlerInvoked, Is.False, "The success handler should not be invoked when no events were published.");
-            Assert.That(failureHandlerInvoked, Is.False, "The failure handler should not be invoked when no events were published.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "No events should be buffered.");
+                Assert.That(successHandlerInvoked, Is.False, "The success handler should not be invoked when no events were published.");
+                Assert.That(failureHandlerInvoked, Is.False, "The failure handler should not be invoked when no events were published.");
+            });
         }
 
         /// <summary>
@@ -4406,10 +4544,13 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(1), "The buffered event count for the partition should have been decremented, but the extra event should remain.");
-            Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
-            Assert.That(handlerArgs.EventBatch.Count, Is.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(1), "The buffered event count for the partition should have been decremented, but the extra event should remain.");
+                Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
+                Assert.That(handlerArgs.EventBatch, Has.Count.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
+            });
 
             // Adding to the batch results in cloning the events; the data should match but the
             // reference will differ.
@@ -4487,10 +4628,13 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
-            Assert.That(handlerArgs.Exception, Is.SameAs(expectedException), "The exception should have been set for the handler arguments.");
-            Assert.That(handlerArgs.EventBatch.Count, Is.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
+                Assert.That(handlerArgs.Exception, Is.SameAs(expectedException), "The exception should have been set for the handler arguments.");
+                Assert.That(handlerArgs.EventBatch, Has.Count.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
+            });
 
             // Adding to the batch results in cloning the events; the data should match but the
             // reference will differ.
@@ -4570,11 +4714,14 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, publishCancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(publishCancellationSource.IsCancellationRequested, Is.True, "Publishing cancellation should have been requested.");
-            Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
-            Assert.That(handlerArgs.Exception, Is.InstanceOf<TaskCanceledException>(), "The exception should have been set for the handler arguments.");
-            Assert.That(handlerArgs.EventBatch.Count, Is.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(publishCancellationSource.IsCancellationRequested, Is.True, "Publishing cancellation should have been requested.");
+                Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
+                Assert.That(handlerArgs.Exception, Is.InstanceOf<TaskCanceledException>(), "The exception should have been set for the handler arguments.");
+                Assert.That(handlerArgs.EventBatch, Has.Count.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
+            });
 
             // Adding to the batch results in cloning the events; the data should match but the
             // reference will differ.
@@ -4656,10 +4803,13 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, publishCancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(publishCancellationSource.IsCancellationRequested, Is.True, "Publishing cancellation should have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(bufferedEvents.Count + 1), "The number of events in the buffer should not have changed.");
-            Assert.That(handlerInvoked, Is.False, "The handler should not have been invoked because no events were batched at the time of cancellation.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(publishCancellationSource.IsCancellationRequested, Is.True, "Publishing cancellation should have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(bufferedEvents.Count + 1), "The number of events in the buffer should not have changed.");
+                Assert.That(handlerInvoked, Is.False, "The handler should not have been invoked because no events were batched at the time of cancellation.");
+            });
         }
 
         /// <summary>
@@ -4729,11 +4879,14 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, publishCancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(publishCancellationSource.IsCancellationRequested, Is.True, "Publishing cancellation should have been requested.");
-            Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
-            Assert.That(handlerArgs.Exception, Is.InstanceOf<TaskCanceledException>(), "The exception should have been set for the handler arguments.");
-            Assert.That(handlerArgs.EventBatch.Count, Is.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(publishCancellationSource.IsCancellationRequested, Is.True, "Publishing cancellation should have been requested.");
+                Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
+                Assert.That(handlerArgs.Exception, Is.InstanceOf<TaskCanceledException>(), "The exception should have been set for the handler arguments.");
+                Assert.That(handlerArgs.EventBatch, Has.Count.EqualTo(expectedEvents.Count), "The number of events in the handler arguments should match.");
+            });
 
             // Adding to the batch results in cloning the events; the data should match but the
             // reference will differ.
@@ -4800,16 +4953,22 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "There should be no events in the buffer.");
-            Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
-            Assert.That(handlerArgs.EventBatch.Count, Is.EqualTo(1), "Only the poison event should be in the handler arguments.");
-            Assert.That(handlerArgs.Exception, Is.Not.Null, "An exception should have been set in the handler arguments.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "There should be no events in the buffer.");
+                Assert.That(handlerArgs.PartitionId, Is.EqualTo(expectedPartition), "The partition should have been set for the handler arguments.");
+                Assert.That(handlerArgs.EventBatch, Has.Count.EqualTo(1), "Only the poison event should be in the handler arguments.");
+                Assert.That(handlerArgs.Exception, Is.Not.Null, "An exception should have been set in the handler arguments.");
+            });
             Assert.That(handlerArgs.Exception, Is.InstanceOf<EventHubsException>(), "The exception reported should be an EventHubsException.");
 
             var eventHubsException = (EventHubsException)handlerArgs.Exception;
-            Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.MessageSizeExceeded), "The exception should indicate that the message is too large.");
-            Assert.That(eventHubsException.IsTransient, Is.False, "The exception should not be transient.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.MessageSizeExceeded), "The exception should indicate that the message is too large.");
+                Assert.That(eventHubsException.IsTransient, Is.False, "The exception should not be transient.");
+            });
 
             mockProducer
                 .Verify(producer => producer.SendAsync(
@@ -4891,9 +5050,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(throttled, Is.True, "The first send call should have throttled.");
-            Assert.That(handlerArgs.Exception, Is.SameAs(terminalException), "The terminal exception should have triggered a final failure.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(throttled, Is.True, "The first send call should have throttled.");
+                Assert.That(handlerArgs.Exception, Is.SameAs(terminalException), "The terminal exception should have triggered a final failure.");
+            });
 
             mockProducer
                 .Verify(producer => producer.SendAsync(
@@ -4955,8 +5117,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            });
 
             mockLogger
                 .Verify(log => log.BufferedProducerEventBatchPublishStart(
@@ -5025,8 +5190,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(publishedEventsCount, Is.EqualTo(0), "No events should have been published.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(publishedEventsCount, Is.EqualTo(0), "No events should have been published.");
+            });
 
             // The exact number of iterations for the wait time is non-deterministic; ensure at least
             // one "no event read" entry was logged.
@@ -5167,8 +5335,11 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "There should be no events in the buffer.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "There should be no events in the buffer.");
+            });
 
             mockLogger
                 .Verify(log => log.BufferedProducerEventBatchPublishError(
@@ -5254,8 +5425,11 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(throttled, Is.True, "The first send call should have throttled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(throttled, Is.True, "The first send call should have throttled.");
+            });
 
             mockLogger
                 .Verify(log => log.BufferedProducerThrottleDelay(
@@ -5325,8 +5499,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 await InvokeStopPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token).IgnoreExceptions();
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(state.BufferedEventCount, Is.EqualTo(0), "There should be no events in the buffer.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(state.BufferedEventCount, Is.EqualTo(0), "There should be no events in the buffer.");
+            });
 
             mockBufferedProducer
                 .Verify(producer => producer.PublishBatchToPartition(
@@ -5893,9 +6070,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 await startedCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
                 await Task.Delay(500);
 
-                Assert.That(executionLimitCancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested for the test time limit.");
-                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-                Assert.That(finishedCompletionSource.Task.IsCompleted, Is.False, "Publishing should not complete until cancellation is requested.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(executionLimitCancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested for the test time limit.");
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                    Assert.That(finishedCompletionSource.Task.IsCompleted, Is.False, "Publishing should not complete until cancellation is requested.");
+                });
 
                 cancellationSource.Cancel();
                 await finishedCompletionSource.Task.AwaitWithCancellation(executionLimitCancellationSource.Token);
@@ -5905,8 +6085,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 await InvokeStopPublishingAsync(mockBufferedProducer.Object, executionLimitCancellationSource.Token).AwaitWithCancellation(executionLimitCancellationSource.Token);
             }
 
-            Assert.That(executionLimitCancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested for the test time limit.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.True, "Cancellation should have been requested.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(executionLimitCancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested for the test time limit.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.True, "Cancellation should have been requested.");
+            });
 
             foreach (var partition in validPartitions)
             {
@@ -6107,8 +6290,11 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
             await completionSource.Task;
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            });
 
             // Adding to the batch results in cloning the events; the data should match but the
             // reference will differ.
@@ -6196,9 +6382,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
             await completionSource.Task;
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
-            Assert.That(handlerCallCount, Is.EqualTo(expectedPublishCalls), "The number of handler calls should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+                Assert.That(handlerCallCount, Is.EqualTo(expectedPublishCalls), "The number of handler calls should match.");
+            });
 
             // Adding to the batch results in cloning the events; the data should match but the
             // reference will differ.
@@ -6249,9 +6438,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "The partition state should have been drained, but has a count.");
-            Assert.That(partitionState.TryReadEvent(out _), Is.False, "The partition state should have been drained, but had an event.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "The partition state should have been drained, but has a count.");
+                Assert.That(partitionState.TryReadEvent(out _), Is.False, "The partition state should have been drained, but had an event.");
+            });
         }
 
         /// <summary>
@@ -6302,10 +6494,16 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
             await completionSource.Task;
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(capturedFailArgs, Is.Not.Null, "A set of failure args should have been captured.");
-            Assert.That(capturedFailArgs.EventBatch.Count, Is.EqualTo(expectedEvents.Count), "The number of events sent to the handler should match.");
-            Assert.That(capturedFailArgs.Exception, Is.SameAs(expectedException), "The exception sent to the handler should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(capturedFailArgs, Is.Not.Null, "A set of failure args should have been captured.");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(capturedFailArgs.EventBatch, Has.Count.EqualTo(expectedEvents.Count), "The number of events sent to the handler should match.");
+                Assert.That(capturedFailArgs.Exception, Is.SameAs(expectedException), "The exception sent to the handler should match.");
+            });
 
             // Adding to the batch results in cloning the events; the data should match but the
             // reference will differ.
@@ -6366,14 +6564,20 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
             await completionSource.Task;
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(capturedFailArgs, Is.Not.Null, "A set of failure args should have been captured.");
-            Assert.That(capturedFailArgs.EventBatch.Count, Is.EqualTo(1), "The number of events sent to the handler should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(capturedFailArgs, Is.Not.Null, "A set of failure args should have been captured.");
+            });
+            Assert.That(capturedFailArgs.EventBatch, Has.Count.EqualTo(1), "The number of events sent to the handler should match.");
             Assert.That(capturedFailArgs.EventBatch[0].IsEquivalentTo(expectedEvent), Is.True, "The failed event did not match the expected event.");
 
             var eventHubsException = (EventHubsException)capturedFailArgs.Exception;
-            Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.MessageSizeExceeded), "The exception should indicate that the message is too large.");
-            Assert.That(eventHubsException.IsTransient, Is.False, "The exception should not be transient.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.MessageSizeExceeded), "The exception should indicate that the message is too large.");
+                Assert.That(eventHubsException.IsTransient, Is.False, "The exception should not be transient.");
+            });
 
             mockProducer
                 .Verify(producer => producer.SendAsync(
@@ -6512,8 +6716,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockBufferedProducer.Object.DrainAndPublishPartitionEvents(partitionState, null, cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
+            });
 
             mockLogger
                 .Verify(log => log.BufferedProducerEventBatchPublishStart(

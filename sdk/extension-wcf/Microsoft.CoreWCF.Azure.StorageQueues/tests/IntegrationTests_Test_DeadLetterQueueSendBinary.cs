@@ -48,13 +48,13 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
             BinaryData queueBody = new BinaryData(encodedMessage);
             var receipt = await queue.SendMessageAsync(queueBody);
             var testService = host.Services.GetRequiredService<TestService>();
-            Assert.False(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)));
+            Assert.That(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)), Is.False);
             var connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
             QueueClient queueClient = TestHelper.GetQueueClient(AzuriteNUnitFixture.Instance.GetTransport(), connectionString, Startup_TextServiceQueueBinaryClientQueue.DlqQueueName, QueueMessageEncoding.Base64);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
             var response = await queueClient.ReceiveMessageAsync(default, cts.Token);
-            Assert.NotNull(response.Value);
-            Assert.AreEqual(queueBody.ToArray(), response.Value.Body.ToArray());
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Body.ToArray(), Is.EqualTo(queueBody.ToArray()));
         }
     }
 }

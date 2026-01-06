@@ -44,9 +44,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 var client2 = new ServiceBusClient(fullyQualifiedNamespace, credential);
                 ServiceBusReceiver receiver2 = client2.CreateReceiver(queueName);
                 await receiver2.CompleteMessageAsync(rehydratedMessage);
-#endregion
+                #endregion
 
-                Assert.AreEqual("some message", rehydratedMessage.Body.ToString());
+                Assert.That(rehydratedMessage.Body.ToString(), Is.EqualTo("some message"));
             }
         }
 

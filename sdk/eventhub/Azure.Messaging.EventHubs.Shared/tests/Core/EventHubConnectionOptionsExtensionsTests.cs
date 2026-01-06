@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var property in getterSetterProperties)
             {
-                Assert.That(knownMembers.Contains(property.Name), $"The property: { property.Name } of { nameof(EventHubConnectionOptions) } is not being cloned.");
+                Assert.That(knownMembers, Does.Contain(property.Name), $"The property: {property.Name} of {nameof(EventHubConnectionOptions)} is not being cloned.");
             }
         }
 
@@ -73,13 +73,16 @@ namespace Azure.Messaging.EventHubs.Tests
 
             EventHubConnectionOptions clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
-            Assert.That(clone.TransportType, Is.EqualTo(options.TransportType), "The connection type of the clone should match.");
-            Assert.That(clone.ConnectionIdleTimeout, Is.EqualTo(options.ConnectionIdleTimeout), "The connection idle timeout of the clone should match.");
-            Assert.That(clone.Proxy, Is.EqualTo(options.Proxy), "The proxy of the clone should match.");
-            Assert.That(clone.CustomEndpointAddress, Is.EqualTo(options.CustomEndpointAddress), "The custom endpoint address clone should match.");
-            Assert.That(clone.SendBufferSizeInBytes, Is.EqualTo(options.SendBufferSizeInBytes), "The send buffer size clone should match.");
-            Assert.That(clone.ReceiveBufferSizeInBytes, Is.EqualTo(options.ReceiveBufferSizeInBytes), "The receive buffer size clone should match.");
-            Assert.That(clone.CertificateValidationCallback, Is.SameAs(options.CertificateValidationCallback), "The validation callback clone should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.TransportType, Is.EqualTo(options.TransportType), "The connection type of the clone should match.");
+                Assert.That(clone.ConnectionIdleTimeout, Is.EqualTo(options.ConnectionIdleTimeout), "The connection idle timeout of the clone should match.");
+                Assert.That(clone.Proxy, Is.EqualTo(options.Proxy), "The proxy of the clone should match.");
+                Assert.That(clone.CustomEndpointAddress, Is.EqualTo(options.CustomEndpointAddress), "The custom endpoint address clone should match.");
+                Assert.That(clone.SendBufferSizeInBytes, Is.EqualTo(options.SendBufferSizeInBytes), "The send buffer size clone should match.");
+                Assert.That(clone.ReceiveBufferSizeInBytes, Is.EqualTo(options.ReceiveBufferSizeInBytes), "The receive buffer size clone should match.");
+                Assert.That(clone.CertificateValidationCallback, Is.SameAs(options.CertificateValidationCallback), "The validation callback clone should match.");
+            });
         }
     }
 }

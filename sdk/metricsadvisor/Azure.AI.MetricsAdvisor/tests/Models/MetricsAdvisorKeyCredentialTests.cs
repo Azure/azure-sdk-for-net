@@ -35,11 +35,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MockRequest request = mockTransport.Requests.First();
 
-            Assert.That(request.Headers.TryGetValue(Constants.SubscriptionAuthorizationHeader, out string subscriptionKey));
-            Assert.That(request.Headers.TryGetValue(Constants.ApiAuthorizationHeader, out string apiKey));
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue(Constants.SubscriptionAuthorizationHeader, out string subscriptionKey));
+                Assert.That(request.Headers.TryGetValue(Constants.ApiAuthorizationHeader, out string apiKey));
 
-            Assert.That(subscriptionKey, Is.EqualTo(expectedSubscriptionKey));
-            Assert.That(apiKey, Is.EqualTo(expectedApiKey));
+                Assert.That(subscriptionKey, Is.EqualTo(expectedSubscriptionKey));
+                Assert.That(apiKey, Is.EqualTo(expectedApiKey));
+            });
         }
 
         [Test]
@@ -58,11 +61,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MockRequest request = mockTransport.Requests.First();
 
-            Assert.That(request.Headers.TryGetValue(Constants.SubscriptionAuthorizationHeader, out string subscriptionKey));
-            Assert.That(request.Headers.TryGetValue(Constants.ApiAuthorizationHeader, out string apiKey));
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue(Constants.SubscriptionAuthorizationHeader, out string subscriptionKey));
+                Assert.That(request.Headers.TryGetValue(Constants.ApiAuthorizationHeader, out string apiKey));
 
-            Assert.That(subscriptionKey, Is.EqualTo(expectedSubscriptionKey));
-            Assert.That(apiKey, Is.EqualTo(expectedApiKey));
+                Assert.That(subscriptionKey, Is.EqualTo(expectedSubscriptionKey));
+                Assert.That(apiKey, Is.EqualTo(expectedApiKey));
+            });
         }
 
         [Test]
@@ -83,11 +89,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MockRequest request = mockTransport.Requests.First();
 
-            Assert.That(request.Headers.TryGetValue(Constants.SubscriptionAuthorizationHeader, out string subscriptionKey));
-            Assert.That(request.Headers.TryGetValue(Constants.ApiAuthorizationHeader, out string apiKey));
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue(Constants.SubscriptionAuthorizationHeader, out string subscriptionKey));
+                Assert.That(request.Headers.TryGetValue(Constants.ApiAuthorizationHeader, out string apiKey));
 
-            Assert.That(subscriptionKey, Is.EqualTo(expectedSubscriptionKey));
-            Assert.That(apiKey, Is.EqualTo(expectedApiKey));
+                Assert.That(subscriptionKey, Is.EqualTo(expectedSubscriptionKey));
+                Assert.That(apiKey, Is.EqualTo(expectedApiKey));
+            });
         }
     }
 }

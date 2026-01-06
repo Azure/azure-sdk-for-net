@@ -14,8 +14,11 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.SingleDiscrimi
         public Task GetModel() => Test(async (host) =>
         {
             var result = await new SingleDiscriminatorClient(host, null).GetModelAsync();
-            Assert.IsTrue(result.Value is Sparrow);
-            Assert.AreEqual(1, ((Sparrow)result.Value).Wingspan);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Value is Sparrow, Is.True);
+                Assert.That(((Sparrow)result.Value).Wingspan, Is.EqualTo(1));
+            });
         });
 
         [SpectorTest]
@@ -23,28 +26,40 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.SingleDiscrimi
         {
             var body = new Sparrow(1);
             var response = await new SingleDiscriminatorClient(host, null).PutModelAsync(body);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetRecursiveModel() => Test(async (host) =>
         {
             var result = await new SingleDiscriminatorClient(host, null).GetRecursiveModelAsync();
-            Assert.IsTrue(result.Value is Eagle);
+            Assert.That(result.Value is Eagle, Is.True);
             var eagle = (Eagle)result.Value;
-            Assert.AreEqual(5, eagle.Wingspan);
-            Assert.IsTrue(eagle.Partner is Goose);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eagle.Wingspan, Is.EqualTo(5));
+                Assert.That(eagle.Partner is Goose, Is.True);
+            });
             var goose = (Goose)eagle.Partner;
-            Assert.AreEqual(2, goose.Wingspan);
-            Assert.AreEqual(1, eagle.Friends.Count);
-            Assert.IsTrue(eagle.Friends[0] is SeaGull);
+            Assert.Multiple(() =>
+            {
+                Assert.That(goose.Wingspan, Is.EqualTo(2));
+                Assert.That(eagle.Friends.Count, Is.EqualTo(1));
+            });
+            Assert.That(eagle.Friends[0] is SeaGull, Is.True);
             var seaGull = (SeaGull)eagle.Friends[0];
-            Assert.AreEqual(2, seaGull.Wingspan);
-            Assert.AreEqual(1, eagle.Hate.Count);
-            Assert.IsTrue(eagle.Hate.ContainsKey("key3"));
-            Assert.IsTrue(eagle.Hate["key3"] is Sparrow);
+            Assert.Multiple(() =>
+            {
+                Assert.That(seaGull.Wingspan, Is.EqualTo(2));
+                Assert.That(eagle.Hate.Count, Is.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(eagle.Hate.ContainsKey("key3"), Is.True);
+                Assert.That(eagle.Hate["key3"] is Sparrow, Is.True);
+            });
             var sparrow = (Sparrow)eagle.Hate["key3"];
-            Assert.AreEqual(1, sparrow.Wingspan);
+            Assert.That(sparrow.Wingspan, Is.EqualTo(1));
         });
 
         [SpectorTest]
@@ -60,45 +75,54 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.SingleDiscrimi
                 Partner = new Goose(2)
             };
             var response = await new SingleDiscriminatorClient(host, null).PutRecursiveModelAsync(body);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetMissingDiscriminator() => Test(async (host) =>
         {
             var result = await new SingleDiscriminatorClient(host, null).GetMissingDiscriminatorAsync();
-            Assert.IsTrue(result.Value is Bird);
+            Assert.That(result.Value is Bird, Is.True);
 
             var unknownBirdType = typeof(Bird).Assembly.GetType("_Type.Model.Inheritance.SingleDiscriminator.UnknownBird");
-            Assert.IsNotNull(unknownBirdType);
-            Assert.AreEqual(unknownBirdType, result.Value.GetType());
-            Assert.AreEqual(1, result.Value.Wingspan);
+            Assert.Multiple(() =>
+            {
+                Assert.That(unknownBirdType, Is.Not.Null);
+                Assert.That(result.Value.GetType(), Is.EqualTo(unknownBirdType));
+                Assert.That(result.Value.Wingspan, Is.EqualTo(1));
+            });
 
             var kindProperty = result.Value.GetType().GetProperty("Kind", BindingFlags.Instance | BindingFlags.NonPublic);
-            Assert.AreEqual("unknown", kindProperty?.GetValue(result.Value));
+            Assert.That(kindProperty?.GetValue(result.Value), Is.EqualTo("unknown"));
         });
 
         [SpectorTest]
         public Task GetWrongDiscriminator() => Test(async (host) =>
         {
             var result = await new SingleDiscriminatorClient(host, null).GetWrongDiscriminatorAsync();
-            Assert.IsTrue(result.Value is Bird);
+            Assert.That(result.Value is Bird, Is.True);
 
             var unknownBirdType = typeof(Bird).Assembly.GetType("_Type.Model.Inheritance.SingleDiscriminator.UnknownBird");
-            Assert.IsNotNull(unknownBirdType);
-            Assert.AreEqual(unknownBirdType, result.Value.GetType());
-            Assert.AreEqual(1, result.Value.Wingspan);
+            Assert.Multiple(() =>
+            {
+                Assert.That(unknownBirdType, Is.Not.Null);
+                Assert.That(result.Value.GetType(), Is.EqualTo(unknownBirdType));
+                Assert.That(result.Value.Wingspan, Is.EqualTo(1));
+            });
 
             var kindProperty = result.Value.GetType().GetProperty("Kind", BindingFlags.Instance | BindingFlags.NonPublic);
-            Assert.AreEqual("wrongKind", kindProperty?.GetValue(result.Value));
+            Assert.That(kindProperty?.GetValue(result.Value), Is.EqualTo("wrongKind"));
         });
 
         [SpectorTest]
         public Task GetLegacyModel() => Test(async (host) =>
         {
             var result = await new SingleDiscriminatorClient(host, null).GetLegacyModelAsync();
-            Assert.IsTrue(result.Value is TRex);
-            Assert.AreEqual(20, ((TRex)result.Value).Size);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Value is TRex, Is.True);
+                Assert.That(((TRex)result.Value).Size, Is.EqualTo(20));
+            });
         });
     }
 }

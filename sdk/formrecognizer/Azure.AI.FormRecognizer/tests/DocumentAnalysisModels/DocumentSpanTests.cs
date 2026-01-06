@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var span = new DocumentSpan(10, 20);
 
-            Assert.False(span.Equals(null));
+            Assert.That(span, Is.Not.EqualTo(null));
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var span = new DocumentSpan(10, 20);
             var tuple = (10, 20);
 
-            Assert.False(span.Equals(tuple));
+            Assert.That(span, Is.Not.EqualTo(tuple));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var span = new DocumentSpan(10, 20);
             object objSpan = new DocumentSpan(11, 20);
 
-            Assert.False(span.Equals(objSpan));
+            Assert.That(span, Is.Not.EqualTo(objSpan));
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var span = new DocumentSpan(10, 20);
             object objSpan = new DocumentSpan(10, 21);
 
-            Assert.False(span.Equals(objSpan));
+            Assert.That(span, Is.Not.EqualTo(objSpan));
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var span = new DocumentSpan(10, 20);
             object objSpan = new DocumentSpan(10, 20);
 
-            Assert.True(span.Equals(objSpan));
+            Assert.That(span.Equals(objSpan), Is.True);
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var span1 = new DocumentSpan(10, 20);
             var span2 = new DocumentSpan(11, 20);
 
-            Assert.False(span1.Equals(span2));
+            Assert.That(span1, Is.Not.EqualTo(span2));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var span1 = new DocumentSpan(10, 20);
             var span2 = new DocumentSpan(10, 21);
 
-            Assert.False(span1.Equals(span2));
+            Assert.That(span1, Is.Not.EqualTo(span2));
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var span1 = new DocumentSpan(10, 20);
             var span2 = new DocumentSpan(10, 20);
 
-            Assert.True(span1.Equals(span2));
+            Assert.That(span1.Equals(span2), Is.True);
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var span1 = new DocumentSpan(10, 20);
             var span2 = new DocumentSpan(11, 20);
 
-            Assert.AreNotEqual(span1.GetHashCode(), span2.GetHashCode());
+            Assert.That(span2.GetHashCode(), Is.Not.EqualTo(span1.GetHashCode()));
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var span1 = new DocumentSpan(10, 20);
             var span2 = new DocumentSpan(10, 21);
 
-            Assert.AreNotEqual(span1.GetHashCode(), span2.GetHashCode());
+            Assert.That(span2.GetHashCode(), Is.Not.EqualTo(span1.GetHashCode()));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var span1 = new DocumentSpan(10, 20);
             var span2 = new DocumentSpan(10, 20);
 
-            Assert.AreEqual(span1.GetHashCode(), span2.GetHashCode());
+            Assert.That(span2.GetHashCode(), Is.EqualTo(span1.GetHashCode()));
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var span = new DocumentSpan(10, 20);
 
-            Assert.AreEqual("Index: 10, Length: 20", span.ToString());
+            Assert.That(span.ToString(), Is.EqualTo("Index: 10, Length: 20"));
         }
     }
 }

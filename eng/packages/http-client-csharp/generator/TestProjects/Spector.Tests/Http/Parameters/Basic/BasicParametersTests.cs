@@ -16,7 +16,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.Basic
             var client = new BasicClient(host, null).GetExplicitBodyClient();
             var body = new User("foo");
             var response = await client.SimpleAsync(body);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -25,7 +25,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.Basic
             var client = new BasicClient(host, null).GetImplicitBodyClient();
             var name = "foo";
             var response = await client.SimpleAsync(name);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

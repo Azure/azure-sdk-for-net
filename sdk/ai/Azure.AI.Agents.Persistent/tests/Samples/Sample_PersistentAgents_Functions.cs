@@ -160,9 +160,9 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
 
@@ -335,9 +335,9 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
 

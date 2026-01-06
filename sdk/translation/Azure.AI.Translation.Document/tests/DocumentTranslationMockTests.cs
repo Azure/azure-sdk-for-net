@@ -48,7 +48,7 @@ namespace Azure.AI.Translation.Document.Tests
             string category = contentString.Substring(contentString.IndexOf("category"), 23);
 
             var expectedContent = "category\":\"myCategoryId";
-            Assert.AreEqual(expectedContent, category);
+            Assert.That(category, Is.EqualTo(expectedContent));
         }
 
         private static string GetString(RequestContent content)

@@ -63,27 +63,33 @@ namespace Azure.AI.VoiceLive.Tests
             // Assert - Verify captured events match expected patterns
             var voiceLiveEvents = capturedEvents.Where(e => e.Source == "Azure-VoiceLive").ToList();
 
-            Assert.IsTrue(voiceLiveEvents.Count >= 4, "Should capture connection, send, receive, and close events");
+            Assert.That(voiceLiveEvents.Count, Is.GreaterThanOrEqualTo(4), "Should capture connection, send, receive, and close events");
 
             // Verify connection lifecycle
             var connectionClose = voiceLiveEvents.FirstOrDefault(e => e.EventType == "ConnectionClose");
-            Assert.IsNotNull(connectionClose, "Should capture connection close");
+            Assert.That(connectionClose, Is.Not.Null, "Should capture connection close");
 
             // Verify message operations
             var messageSent = voiceLiveEvents.FirstOrDefault(e => e.EventType == "MessageSent");
             var messageReceived = voiceLiveEvents.FirstOrDefault(e => e.EventType == "MessageReceived");
-            Assert.IsNotNull(messageSent, "Should capture message sent");
-            Assert.IsNotNull(messageReceived, "Should capture message received");
+            Assert.Multiple(() =>
+            {
+                Assert.That(messageSent, Is.Not.Null, "Should capture message sent");
+                Assert.That(messageReceived, Is.Not.Null, "Should capture message received");
+            });
 
             // Verify content logging
             var contentSent = voiceLiveEvents.FirstOrDefault(e => e.EventType == "ContentSent");
             var contentReceived = voiceLiveEvents.FirstOrDefault(e => e.EventType == "ContentReceived");
-            Assert.IsNotNull(contentSent, "Should capture sent content");
-            Assert.IsNotNull(contentReceived, "Should capture received content");
+            Assert.Multiple(() =>
+            {
+                Assert.That(contentSent, Is.Not.Null, "Should capture sent content");
+                Assert.That(contentReceived, Is.Not.Null, "Should capture received content");
+            });
 
             // Verify content includes expected data
-            Assert.IsTrue(contentSent?.Content?.Contains("hello") == true, "Sent content should contain expected data");
-            Assert.IsTrue(contentReceived?.Content?.Contains("world") == true, "Received content should contain expected data");
+            Assert.That(contentSent?.Content?.Contains("hello"), Is.EqualTo(true), "Sent content should contain expected data");
+            Assert.That(contentReceived?.Content?.Contains("world"), Is.EqualTo(true), "Received content should contain expected data");
         }
 
         [Test]
@@ -119,11 +125,14 @@ namespace Azure.AI.VoiceLive.Tests
             var errorEvent = events.FirstOrDefault(e => e.EventId == AzureVoiceLiveEventSource.WebSocketMessageErrorEvent);
             var errorContentEvent = events.FirstOrDefault(e => e.EventId == AzureVoiceLiveEventSource.WebSocketMessageErrorContentTextEvent);
 
-            Assert.AreEqual(EventLevel.Informational, connectionEvent?.Level, "Connection events should be Informational");
-            Assert.AreEqual(EventLevel.Informational, messageSentEvent?.Level, "Message events should be Informational");
-            Assert.AreEqual(EventLevel.Verbose, contentSentEvent?.Level, "Normal content should be Verbose");
-            Assert.AreEqual(EventLevel.Warning, errorEvent?.Level, "Error events should be Warning");
-            Assert.AreEqual(EventLevel.Informational, errorContentEvent?.Level, "Error content should be Informational (higher priority)");
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectionEvent?.Level, Is.EqualTo(EventLevel.Informational), "Connection events should be Informational");
+                Assert.That(messageSentEvent?.Level, Is.EqualTo(EventLevel.Informational), "Message events should be Informational");
+                Assert.That(contentSentEvent?.Level, Is.EqualTo(EventLevel.Verbose), "Normal content should be Verbose");
+                Assert.That(errorEvent?.Level, Is.EqualTo(EventLevel.Warning), "Error events should be Warning");
+                Assert.That(errorContentEvent?.Level, Is.EqualTo(EventLevel.Informational), "Error content should be Informational (higher priority)");
+            });
         }
 
         [Ignore("Timing issue")]
@@ -143,15 +152,21 @@ namespace Azure.AI.VoiceLive.Tests
                 }
             };
 
-            // Verify the configuration is accessible and works as expected
-            Assert.IsTrue(options.Diagnostics.IsLoggingEnabled);
-            Assert.IsTrue(options.Diagnostics.IsLoggingContentEnabled);
-            Assert.AreEqual(8192, options.Diagnostics.LoggedContentSizeLimit);
+            Assert.Multiple(() =>
+            {
+                // Verify the configuration is accessible and works as expected
+                Assert.That(options.Diagnostics.IsLoggingEnabled, Is.True);
+                Assert.That(options.Diagnostics.IsLoggingContentEnabled, Is.True);
+                Assert.That(options.Diagnostics.LoggedContentSizeLimit, Is.EqualTo(8192));
+            });
 
             // Verify it works with content logger
             var logger = new VoiceLiveWebSocketContentLogger(options.Diagnostics);
-            Assert.IsTrue(logger.IsContentLoggingEnabled);
-            Assert.IsTrue(logger.IsLoggingEnabled);
+            Assert.Multiple(() =>
+            {
+                Assert.That(logger.IsContentLoggingEnabled, Is.True);
+                Assert.That(logger.IsLoggingEnabled, Is.True);
+            });
         }
     }
 }

@@ -360,8 +360,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 var variance = TimeSpan.FromSeconds((policy.Options.Delay.TotalSeconds * index) * policy.JitterFactor);
                 TimeSpan? delay = policy.CalculateRetryDelay(Mock.Of<TimeoutException>(), index);
 
-                Assert.That(delay.HasValue, Is.True, $"Iteration: { index } did not have a value.");
-                Assert.That(delay.Value, Is.GreaterThan(previousDelay.Add(variance)), $"Iteration: { index } produced an unexpected delay.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(delay.HasValue, Is.True, $"Iteration: {index} did not have a value.");
+                    Assert.That(delay.Value, Is.GreaterThan(previousDelay.Add(variance)), $"Iteration: {index} produced an unexpected delay.");
+                });
 
                 previousDelay = delay.Value;
             }

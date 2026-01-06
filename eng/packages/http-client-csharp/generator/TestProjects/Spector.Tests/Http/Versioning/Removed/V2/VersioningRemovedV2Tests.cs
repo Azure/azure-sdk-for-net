@@ -16,46 +16,52 @@ namespace TestProjects.Spector.Tests.Http.Versioning.Removed.V2
         [SpectorTest]
         public void TestRemovedMembers()
         {
-            /* check existence of the removed model ModelV1. */
-            Assert.IsNull(Type.GetType("Versioning.Removed.V2.Models.ModelV1"));
+            Assert.Multiple(() =>
+            {
+                /* check existence of the removed model ModelV1. */
+                Assert.That(Type.GetType("Versioning.Removed.V2.Models.ModelV1"), Is.Null);
 
-            /* check existence of the removed enum EnumV1. */
-            Assert.IsNull(Type.GetType("Versioning.Removed.V2.Models.EnumV1"));
+                /* check existence of the removed enum EnumV1. */
+                Assert.That(Type.GetType("Versioning.Removed.V2.Models.EnumV1"), Is.Null);
+            });
 
             /* verify ModelV2. */
             var properties = typeof(ModelV2).GetProperties();
-            Assert.IsNotNull(properties);
-            Assert.AreEqual(3, properties.Length);
-            /* verify removed property RemovedProp in V2.*/
-            Assert.IsNull(typeof(ModelV2).GetProperty("RemovedProp"));
+            Assert.That(properties, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties, Has.Length.EqualTo(3));
+                /* verify removed property RemovedProp in V2.*/
+                Assert.That(typeof(ModelV2).GetProperty("RemovedProp"), Is.Null);
 
-            /* verify EnumV2 */
-            Assert.IsTrue(typeof(EnumV2).IsEnum);
+                /* verify EnumV2 */
+                Assert.That(typeof(EnumV2).IsEnum, Is.True);
+            });
             var enumValues = typeof(EnumV2).GetEnumNames();
-            Assert.IsNotNull(enumValues);
-            Assert.AreEqual(1, enumValues.Length);
+            Assert.That(enumValues, Is.Not.Null);
+            Assert.That(enumValues, Has.Length.EqualTo(1));
             /* verify added enum value EnumMemberV1. */
-            Assert.IsFalse(enumValues.Contains("EnumMemberV1"));
+            Assert.That(enumValues.Contains("EnumMemberV1"), Is.False);
 
             /* check existence of removed method V1 */
             var removedMethods = typeof(RemovedClient).GetMethods().Where(m => m.Name == "V1" || m.Name == "V1Async");
-            Assert.AreEqual(0, removedMethods.Count());
+            Assert.That(removedMethods.Count(), Is.EqualTo(0));
 
             /* check existence of removed parameter. */
             var v2Methods = typeof(RemovedClient).GetMethods().Where(m => m.Name == "V2" || m.Name == "V2Async");
-            Assert.IsNotNull(v2Methods);
-            Assert.AreEqual(4, v2Methods.Count());
+            Assert.That(v2Methods, Is.Not.Null);
+            Assert.That(v2Methods.Count(), Is.EqualTo(4));
             foreach (var method in v2Methods)
             {
-                Assert.False(method.GetParameters().Any(p => p.Name == "param"));
+                Assert.That(method.GetParameters().Any(p => p.Name == "param"), Is.False);
             }
 
             /* check existence of removed interface. */
-            Assert.IsNull(Type.GetType("Versioning.Removed.V2.InterfaceV1"));
+            Assert.That(Type.GetType("Versioning.Removed.V2.InterfaceV1"), Is.Null);
 
             // All 3 versions are defined
             var enumType = typeof(RemovedClientOptions.ServiceVersion);
-            Assert.AreEqual(new string[] { "V1", "V2preview", "V2" }, enumType.GetEnumNames());
+            Assert.That(enumType.GetEnumNames(), Is.EqualTo(new string[] { "V1", "V2preview", "V2" }));
         }
 
         [SpectorTest]
@@ -63,10 +69,13 @@ namespace TestProjects.Spector.Tests.Http.Versioning.Removed.V2
         {
             ModelV2 modelV2 = new ModelV2("foo", EnumV2.EnumMemberV2, BinaryData.FromObjectAsJson("bar"));
             var response = await new RemovedClient(host).V2Async(modelV2);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("foo", response.Value.Prop);
-            Assert.AreEqual(EnumV2.EnumMemberV2, response.Value.EnumProp);
-            Assert.AreEqual("bar", response.Value.UnionProp.ToObjectFromJson<string>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Prop, Is.EqualTo("foo"));
+                Assert.That(response.Value.EnumProp, Is.EqualTo(EnumV2.EnumMemberV2));
+                Assert.That(response.Value.UnionProp.ToObjectFromJson<string>(), Is.EqualTo("bar"));
+            });
         });
 
         [SpectorTest]
@@ -74,9 +83,12 @@ namespace TestProjects.Spector.Tests.Http.Versioning.Removed.V2
         {
             var model = new ModelV3("123", EnumV3.EnumMemberV1);
             var response = await new RemovedClient(host).ModelV3Async(model);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("123", response.Value.Id);
-            Assert.AreEqual(EnumV3.EnumMemberV1, response.Value.EnumProp);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Id, Is.EqualTo("123"));
+                Assert.That(response.Value.EnumProp, Is.EqualTo(EnumV3.EnumMemberV1));
+            });
         });
     }
 }

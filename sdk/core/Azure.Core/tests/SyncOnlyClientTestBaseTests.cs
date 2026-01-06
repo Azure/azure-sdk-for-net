@@ -11,13 +11,13 @@ namespace Azure.Core.Tests
     {
         public SyncOnlyClientTestBaseTests(bool isAsync) : base(isAsync)
         {
-            Assert.IsFalse(isAsync);
+            Assert.That(isAsync, Is.False);
         }
 
         [Test]
         public void ValidateAllTestsAreSync()
         {
-            Assert.IsFalse(IsAsync);
+            Assert.That(IsAsync, Is.False);
         }
     }
 }

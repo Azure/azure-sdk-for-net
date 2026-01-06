@@ -25,7 +25,7 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace Azure.Identity.Tests
             // this should not pop browser
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace Azure.Identity.Tests
             // this should not pop browser
             AccessToken token = await cred2.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace Azure.Identity.Tests
             // this should not pop browser
             AccessToken token = await cred2.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]
@@ -115,12 +115,12 @@ namespace Azure.Identity.Tests
             // this should pop browser
             var authRecord = await cred.AuthenticateAsync();
 
-            Assert.NotNull(authRecord);
+            Assert.That(authRecord, Is.Not.Null);
 
             // this should not pop browser
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
     }
 }

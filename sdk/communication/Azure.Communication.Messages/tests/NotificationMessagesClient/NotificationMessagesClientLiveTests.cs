@@ -562,9 +562,12 @@ namespace Azure.Communication.Messages.Tests
             // Act and Assert
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.SendAsync(content));
 
-            // Assert the expected error code and message
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("BadRequest", ex.ErrorCode);
+            Assert.Multiple(() =>
+            {
+                // Assert the expected error code and message
+                Assert.That(ex.Status, Is.EqualTo(400));
+                Assert.That(ex.ErrorCode, Is.EqualTo("BadRequest"));
+            });
 
             return Task.CompletedTask;
         }
@@ -585,10 +588,13 @@ namespace Azure.Communication.Messages.Tests
             // Act and Assert
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.SendAsync(content));
 
-            // Assert the expected error code and message
-            Assert.AreEqual(404, ex.Status);
-            Assert.AreEqual("TemplateNotFound", ex.ErrorCode);
-            Assert.IsTrue(ex.Message.Contains("Template does not exist"));
+            Assert.Multiple(() =>
+            {
+                // Assert the expected error code and message
+                Assert.That(ex.Status, Is.EqualTo(404));
+                Assert.That(ex.ErrorCode, Is.EqualTo("TemplateNotFound"));
+                Assert.That(ex.Message, Does.Contain("Template does not exist"));
+            });
             return Task.CompletedTask;
         }
 
@@ -623,10 +629,13 @@ namespace Azure.Communication.Messages.Tests
             // Act and Assert
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.SendAsync(content));
 
-            // Assert the expected error code and message
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("BadRequest", ex.ErrorCode);
-            Assert.IsTrue(ex.Message.Contains("InvalidParameter: (#100) Param text['body'] must be at most 4096 characters long."));
+            Assert.Multiple(() =>
+            {
+                // Assert the expected error code and message
+                Assert.That(ex.Status, Is.EqualTo(400));
+                Assert.That(ex.ErrorCode, Is.EqualTo("BadRequest"));
+                Assert.That(ex.Message, Does.Contain("InvalidParameter: (#100) Param text['body'] must be at most 4096 characters long."));
+            });
 
             return Task.CompletedTask;
         }
@@ -643,7 +652,7 @@ namespace Azure.Communication.Messages.Tests
 
             // Assert
             mediaStream.Position = 0; // Reset stream position for reading
-            Assert.IsTrue(mediaStream.Length > 0);
+            Assert.That(mediaStream.Length, Is.GreaterThan(0));
         }
 
         [Test]
@@ -657,8 +666,8 @@ namespace Azure.Communication.Messages.Tests
             Assert.ThrowsAsync<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync(string.Empty));
             Assert.ThrowsAsync<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync(""));
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.DownloadMediaAsync("  "));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 400);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [Test]
@@ -669,9 +678,12 @@ namespace Azure.Communication.Messages.Tests
 
             // Act & Assert
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.DownloadMediaAsync("test"));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
-            Assert.AreEqual(ex?.ErrorCode, "MediaNotFound");
+            Assert.That(ex, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex?.Status, Is.EqualTo(404));
+                Assert.That(ex?.ErrorCode, Is.EqualTo("MediaNotFound"));
+            });
         }
 
         [Test]
@@ -686,9 +698,9 @@ namespace Azure.Communication.Messages.Tests
             Response downloadResponse = await notificationMessagesClient.DownloadMediaToAsync(mediaContentId, destinationStream);
 
             // Assert
-            Assert.AreEqual(200, downloadResponse.Status);
+            Assert.That(downloadResponse.Status, Is.EqualTo(200));
             destinationStream.Position = 0; // Reset stream position for reading
-            Assert.IsTrue(destinationStream.Length > 0);
+            Assert.That(destinationStream.Length, Is.GreaterThan(0));
         }
 
         [Test]
@@ -702,17 +714,23 @@ namespace Azure.Communication.Messages.Tests
             // Act
             Response downloadResponse = await notificationMessagesClient.DownloadMediaToAsync(mediaContentId, destinationPath);
 
-            // Assert
-            Assert.AreEqual(200, downloadResponse.Status);
-            Assert.IsTrue(File.Exists(destinationPath));
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(downloadResponse.Status, Is.EqualTo(200));
+                Assert.That(File.Exists(destinationPath), Is.True);
+            });
         }
 
         private void validateResponse(Response<SendMessageResult> response)
         {
-            Assert.AreEqual(202, response.GetRawResponse().Status);
-            Assert.IsNotNull(response.Value.Receipts[0].MessageId);
-            Assert.IsNotNull(response.Value.Receipts[0].To);
-            Assert.AreEqual(TestEnvironment.RecipientIdentifier, response.Value.Receipts[0].To);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(202));
+                Assert.That(response.Value.Receipts[0].MessageId, Is.Not.Null);
+                Assert.That(response.Value.Receipts[0].To, Is.Not.Null);
+            });
+            Assert.That(response.Value.Receipts[0].To, Is.EqualTo(TestEnvironment.RecipientIdentifier));
         }
     }
 }

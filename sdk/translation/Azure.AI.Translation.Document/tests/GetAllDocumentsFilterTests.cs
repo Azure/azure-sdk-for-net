@@ -99,11 +99,14 @@ namespace Azure.AI.Translation.Document.Tests
             var docsAfterLastDate = operation.GetDocumentStatuses(options: optionsCreatedAfterLastDate).ToList();
             var docsAfterIndex2Date = operation.GetDocumentStatuses(options: optionsCreatedAfterIndex2).ToList();
 
-            // Asserting that only the last document is returned
-            Assert.AreEqual(1, docsAfterLastDate.Count());
+            Assert.Multiple(() =>
+            {
+                // Asserting that only the last document is returned
+                Assert.That(docsAfterLastDate.Count(), Is.EqualTo(1));
 
-            // Asserting that the last 3/5 docs are returned
-             Assert.AreEqual(3, docsAfterIndex2Date.Count());
+                // Asserting that the last 3/5 docs are returned
+                Assert.That(docsAfterIndex2Date.Count(), Is.EqualTo(3));
+            });
         }
 
         [RecordedTest]
@@ -137,11 +140,14 @@ namespace Azure.AI.Translation.Document.Tests
             var docsBeforeFirstDate = operation.GetDocumentStatuses(options: optionsCreatedBeforeFirstDate).ToList();
             var docsBeforeIndex3Date = operation.GetDocumentStatuses(options: optionsCreatedBeforeIndex3).ToList();
 
-            // Asserting that only the first document is returned
-            Assert.AreEqual(1, docsBeforeFirstDate.Count());
+            Assert.Multiple(() =>
+            {
+                // Asserting that only the first document is returned
+                Assert.That(docsBeforeFirstDate.Count(), Is.EqualTo(1));
 
-            // Asserting that the first 4/5 docs are returned
-            Assert.AreEqual(4, docsBeforeIndex3Date.Count());
+                // Asserting that the first 4/5 docs are returned
+                Assert.That(docsBeforeIndex3Date.Count(), Is.EqualTo(4));
+            });
         }
 
         [RecordedTest]
@@ -166,7 +172,7 @@ namespace Azure.AI.Translation.Document.Tests
             var timestamp = Recording.UtcNow;
             foreach (var result in filterResults)
             {
-                Assert.IsTrue(result.CreatedOn <= timestamp);
+                Assert.That(result.CreatedOn, Is.LessThanOrEqualTo(timestamp));
                 timestamp = result.CreatedOn;
             }
         }

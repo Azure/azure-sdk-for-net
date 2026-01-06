@@ -95,13 +95,16 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeEntitiesResultCollection result = await client.RecognizeEntitiesBatchAsync(new List<string>() { document });
 
             RecognizeEntitiesResult documentResult = result.FirstOrDefault();
-            Assert.IsFalse(documentResult.HasError);
-            Assert.GreaterOrEqual(documentResult.Entities.Count, 3);
+            Assert.Multiple(() =>
+            {
+                Assert.That(documentResult.HasError, Is.False);
+                Assert.That(documentResult.Entities, Has.Count.GreaterThanOrEqualTo(3));
+            });
 
             foreach (CategorizedEntity entity in documentResult.Entities)
             {
                 if (entity.Text == "last week")
-                    Assert.AreEqual("DateRange", entity.SubCategory);
+                    Assert.That(entity.SubCategory, Is.EqualTo("DateRange"));
             }
         }
 
@@ -118,13 +121,16 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents);
 
-            Assert.IsTrue(!results[0].HasError);
-            Assert.IsTrue(!results[2].HasError);
+            Assert.Multiple(() =>
+            {
+                Assert.That(!results[0].HasError, Is.True);
+                Assert.That(!results[2].HasError, Is.True);
+            });
 
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[1].HasError);
+            Assert.That(results[1].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -143,8 +149,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.RecognizeEntitiesBatchAsync(documents));
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocumentBatch, ex.ErrorCode);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.Status, Is.EqualTo(400));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TextAnalyticsErrorCode.InvalidDocumentBatch));
+            });
         }
 
         [RecordedTest]
@@ -167,9 +176,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
 
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
+            Assert.Multiple(() =>
+            {
+                // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+                Assert.That(options.IncludeStatistics, Is.True);
+                Assert.That(options.ModelVersion, Is.Null);
+            });
         }
 
         [RecordedTest]
@@ -202,9 +214,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
 
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
+            Assert.Multiple(() =>
+            {
+                // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+                Assert.That(options.IncludeStatistics, Is.True);
+                Assert.That(options.ModelVersion, Is.Null);
+            });
         }
 
         [RecordedTest]
@@ -214,7 +229,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.RecognizeEntitiesBatchAsync(documents));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
         }
 
         [RecordedTest]
@@ -225,9 +240,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents);
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[0].HasError);
+            Assert.That(results[0].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].Entities.Count());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -263,10 +278,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<RecognizeEntitiesActionResult> RecognizeEntitiesActionsResults = resultCollection.RecognizeEntitiesResults;
 
-            Assert.IsNotNull(RecognizeEntitiesActionsResults);
+            Assert.That(RecognizeEntitiesActionsResults, Is.Not.Null);
 
             IList<string> expected = new List<string> { "RecognizeEntities", "RecognizeEntitiesWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, RecognizeEntitiesActionsResults.Select(result => result.ActionName));
+            Assert.That(RecognizeEntitiesActionsResults.Select(result => result.ActionName), Is.EquivalentTo(expected));
         }
 
         [RecordedTest]
@@ -288,25 +303,31 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsClient client = GetClient();
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
-            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer."));
         }
 
         private void ValidateInDocumenResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)
         {
-            Assert.IsNotNull(entities.Warnings);
-            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(entities.Warnings, Is.Not.Null);
+                Assert.That(entities, Has.Count.GreaterThanOrEqualTo(minimumExpectedOutput.Count));
+            });
             foreach (CategorizedEntity entity in entities)
             {
-                Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
-                Assert.IsTrue(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase));
-                Assert.IsNotNull(entity.Category);
-                Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
-                Assert.GreaterOrEqual(entity.Offset, 0);
-                Assert.Greater(entity.Length, 0);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
+                    Assert.That(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase), Is.True);
+                    Assert.That(entity.Category, Is.Not.Null);
+                    Assert.That(entity.ConfidenceScore, Is.GreaterThanOrEqualTo(0.0));
+                    Assert.That(entity.Offset, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(entity.Length, Is.GreaterThan(0));
+                });
 
                 if (entity.SubCategory != null)
                 {
-                    Assert.IsNotEmpty(entity.SubCategory);
+                    Assert.That(entity.SubCategory, Is.Not.Empty);
                 }
             }
         }
@@ -320,32 +341,44 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                });
             }
             else
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
 
             foreach (RecognizeEntitiesResult result in results)
             {
-                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
-                Assert.False(result.HasError);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.HasError, Is.False);
 
-                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(result.Statistics);
+                    //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
+                    Assert.That(result.Statistics, Is.Not.Null);
+                });
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                        Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
+                    });
                 }
                 else
                 {
-                    Assert.AreEqual(0, result.Statistics.CharacterCount);
-                    Assert.AreEqual(0, result.Statistics.TransactionCount);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(result.Statistics.CharacterCount, Is.EqualTo(0));
+                        Assert.That(result.Statistics.TransactionCount, Is.EqualTo(0));
+                    });
                 }
 
                 ValidateInDocumenResult(result.Entities, minimumExpectedOutput[result.Id]);

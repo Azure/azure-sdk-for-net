@@ -93,21 +93,27 @@ public class AssistantsModelFactoryTests
             assistantIds[assistantIds.Length - 1],
             hasMore: false);
 
-        Assert.That(assistants.FirstId, Is.EqualTo(assistantIds[0]));
-        Assert.That(assistants.LastId, Is.EqualTo(assistantIds[assistantIds.Length - 1]));
-        Assert.That(assistants.HasMore, Is.EqualTo(false));
+        Assert.Multiple(() =>
+        {
+            Assert.That(assistants.FirstId, Is.EqualTo(assistantIds[0]));
+            Assert.That(assistants.LastId, Is.EqualTo(assistantIds[assistantIds.Length - 1]));
+            Assert.That(assistants.HasMore, Is.EqualTo(false));
 
-        Assert.That(assistants.Data.Count, Is.EqualTo(assistantIds.Length));
+            Assert.That(assistants.Data, Has.Count.EqualTo(assistantIds.Length));
+        });
         for (int i = 0; i < assistants.Data.Count; i++)
         {
             Assert.That(assistants[i], Is.EqualTo(assistants.Data[i]));
-            Assert.That(assistants[i].Id, Is.EqualTo(assistantIds[i]));
-            Assert.That(assistants[i].Name, Is.EqualTo(assistantNames[i]));
-            Assert.That(assistants[i].Description, Is.EqualTo(assistantDescriptions[i]));
-            Assert.That(assistants[i].CreatedAt.ToString("o"), Is.EqualTo(assistantCreationTimes[i].ToString("o")));
-            Assert.That(assistants[i].Instructions, Is.EqualTo(assistantInstructions[i]));
-            Assert.That(assistants[i].Model, Is.EqualTo(assistantModels[i]));
-            Assert.That(assistants[i].FileIds?.Count ?? 0, Is.EqualTo(assistantFileIds[i]?.Length ?? 0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(assistants[i].Id, Is.EqualTo(assistantIds[i]));
+                Assert.That(assistants[i].Name, Is.EqualTo(assistantNames[i]));
+                Assert.That(assistants[i].Description, Is.EqualTo(assistantDescriptions[i]));
+                Assert.That(assistants[i].CreatedAt.ToString("o"), Is.EqualTo(assistantCreationTimes[i].ToString("o")));
+                Assert.That(assistants[i].Instructions, Is.EqualTo(assistantInstructions[i]));
+                Assert.That(assistants[i].Model, Is.EqualTo(assistantModels[i]));
+                Assert.That(assistants[i].FileIds?.Count ?? 0, Is.EqualTo(assistantFileIds[i]?.Length ?? 0));
+            });
             if (assistants[i].FileIds != null)
             {
                 for (int fileIdIndex = 0; fileIdIndex < assistants[i].FileIds.Count; fileIdIndex++)
@@ -120,23 +126,29 @@ public class AssistantsModelFactoryTests
             {
                 foreach (KeyValuePair<string, string> expectedKeyValuePair in assistantMetadata[i])
                 {
-                    Assert.That(assistants[i].Metadata.ContainsKey(expectedKeyValuePair.Key), Is.True);
-                    Assert.That(assistants[i].Metadata[expectedKeyValuePair.Key], Is.EqualTo(expectedKeyValuePair.Value));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(assistants[i].Metadata.ContainsKey(expectedKeyValuePair.Key), Is.True);
+                        Assert.That(assistants[i].Metadata[expectedKeyValuePair.Key], Is.EqualTo(expectedKeyValuePair.Value));
+                    });
                 }
             }
             Assert.That(assistants[i].Tools?.Count ?? 0, Is.EqualTo(assistantTools[i]?.Length ?? 0));
             if (assistantTools[i] != null)
             {
-                Assert.That(assistants[i].Tools.Count, Is.EqualTo(assistantTools[i].Length));
+                Assert.That(assistants[i].Tools, Has.Count.EqualTo(assistantTools[i].Length));
                 for (int toolIndex = 0; toolIndex < assistants[i].Tools.Count; toolIndex++)
                 {
                     if (assistants[i].Tools[toolIndex] is FunctionToolDefinition functionTool)
                     {
                         FunctionToolDefinition expectedFunctionTool = assistantTools[i][toolIndex] as FunctionToolDefinition;
-                        Assert.That(expectedFunctionTool, Is.Not.Null);
-                        Assert.That(functionTool.Name, Is.EqualTo(expectedFunctionTool.Name));
-                        Assert.That(functionTool.Description, Is.EqualTo(expectedFunctionTool.Description));
-                        Assert.That(functionTool.Parameters.ToString(), Is.EqualTo(expectedFunctionTool.Parameters.ToString()));
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(expectedFunctionTool, Is.Not.Null);
+                            Assert.That(functionTool.Name, Is.EqualTo(expectedFunctionTool.Name));
+                            Assert.That(functionTool.Description, Is.EqualTo(expectedFunctionTool.Description));
+                            Assert.That(functionTool.Parameters.ToString(), Is.EqualTo(expectedFunctionTool.Parameters.ToString()));
+                        });
                     }
                     else if (assistants[i].Tools[toolIndex] is RetrievalToolDefinition retrievalTool)
                     {
@@ -170,12 +182,18 @@ public class AssistantsModelFactoryTests
         AssistantThread mockThread = AssistantsModelFactory.AssistantThread(
             id: threadId,
             metadata: threadMetadata);
-        Assert.That(mockThread.Id, Is.EqualTo(threadId));
-        Assert.That(mockThread.Metadata?.Count ?? 0, Is.EqualTo(threadMetadata?.Count ?? 0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(mockThread.Id, Is.EqualTo(threadId));
+            Assert.That(mockThread.Metadata?.Count ?? 0, Is.EqualTo(threadMetadata?.Count ?? 0));
+        });
         foreach (KeyValuePair<string, string> expectedKeyValuePair in threadMetadata)
         {
-            Assert.That(mockThread.Metadata.ContainsKey(expectedKeyValuePair.Key), Is.True);
-            Assert.That(mockThread.Metadata[expectedKeyValuePair.Key], Is.EqualTo(expectedKeyValuePair.Value));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockThread.Metadata.ContainsKey(expectedKeyValuePair.Key), Is.True);
+                Assert.That(mockThread.Metadata[expectedKeyValuePair.Key], Is.EqualTo(expectedKeyValuePair.Value));
+            });
         }
     }
 
@@ -191,10 +209,13 @@ public class AssistantsModelFactoryTests
             functionCallName,
             functionCallArguments,
             functionCallOutput);
-        Assert.That(mockFunctionToolCall.Id, Is.EqualTo(functionToolCallId));
-        Assert.That(mockFunctionToolCall.Name, Is.EqualTo(functionCallName));
-        Assert.That(mockFunctionToolCall.Arguments, Is.EqualTo(functionCallArguments));
-        Assert.That(mockFunctionToolCall.Output, Is.EqualTo(functionCallOutput));
+        Assert.Multiple(() =>
+        {
+            Assert.That(mockFunctionToolCall.Id, Is.EqualTo(functionToolCallId));
+            Assert.That(mockFunctionToolCall.Name, Is.EqualTo(functionCallName));
+            Assert.That(mockFunctionToolCall.Arguments, Is.EqualTo(functionCallArguments));
+            Assert.That(mockFunctionToolCall.Output, Is.EqualTo(functionCallOutput));
+        });
 
         string codeInterpreterToolCallId = "code_interpreter_tool_call_id";
         string codeInterpreterToolCallInput = "code_interprter_tool_call_input";
@@ -210,9 +231,12 @@ public class AssistantsModelFactoryTests
             codeInterpreterToolCallId,
             codeInterpreterToolCallInput,
             codeInterpreterOutputs);
-        Assert.That(mockCodeInterpreterToolCall.Id, Is.EqualTo(codeInterpreterToolCallId));
-        Assert.That(mockCodeInterpreterToolCall.Input, Is.EqualTo(codeInterpreterToolCallInput));
-        Assert.That(mockCodeInterpreterToolCall.Outputs.Count, Is.EqualTo(codeInterpreterOutputs.Length));
+        Assert.Multiple(() =>
+        {
+            Assert.That(mockCodeInterpreterToolCall.Id, Is.EqualTo(codeInterpreterToolCallId));
+            Assert.That(mockCodeInterpreterToolCall.Input, Is.EqualTo(codeInterpreterToolCallInput));
+            Assert.That(mockCodeInterpreterToolCall.Outputs, Has.Count.EqualTo(codeInterpreterOutputs.Length));
+        });
         foreach (RunStepCodeInterpreterToolCallOutput callOutput in mockCodeInterpreterToolCall.Outputs)
         {
             if (callOutput is RunStepCodeInterpreterLogOutput logOutput)
@@ -235,12 +259,18 @@ public class AssistantsModelFactoryTests
             ["retrieval_key"] = "retrieval_value",
         };
         RunStepRetrievalToolCall mockRetrievalToolCall = AssistantsModelFactory.RunStepRetrievalToolCall(retrievalToolCallId, retrievalToolCallRetrievals);
-        Assert.That(mockRetrievalToolCall.Id, Is.EqualTo(retrievalToolCallId));
-        Assert.That(mockRetrievalToolCall.Retrieval.Count, Is.EqualTo(retrievalToolCallRetrievals.Count));
+        Assert.Multiple(() =>
+        {
+            Assert.That(mockRetrievalToolCall.Id, Is.EqualTo(retrievalToolCallId));
+            Assert.That(mockRetrievalToolCall.Retrieval, Has.Count.EqualTo(retrievalToolCallRetrievals.Count));
+        });
         foreach (KeyValuePair<string, string> expectedRetrievalKeyValuePair in retrievalToolCallRetrievals)
         {
-            Assert.That(mockRetrievalToolCall.Retrieval.ContainsKey(expectedRetrievalKeyValuePair.Key));
-            Assert.That(mockRetrievalToolCall.Retrieval[expectedRetrievalKeyValuePair.Key], Is.EqualTo(expectedRetrievalKeyValuePair.Value));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockRetrievalToolCall.Retrieval.ContainsKey(expectedRetrievalKeyValuePair.Key));
+                Assert.That(mockRetrievalToolCall.Retrieval[expectedRetrievalKeyValuePair.Key], Is.EqualTo(expectedRetrievalKeyValuePair.Value));
+            });
         }
     }
 

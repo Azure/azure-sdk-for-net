@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             };
 
             await host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTrigger", args);
-            Assert.True(triggerEvent.TaskCompletionSource.Task.IsCompleted);
+            Assert.That(triggerEvent.TaskCompletionSource.Task.IsCompleted, Is.True);
         }
 
         [TestCase]
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             };
 
             await host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTrigger", args);
-            Assert.True(triggerEvent.TaskCompletionSource.Task.IsCompleted);
+            Assert.That(triggerEvent.TaskCompletionSource.Task.IsCompleted, Is.True);
         }
 
         [TestCase]
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             };
 
             await host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTriggerWith2Param", args);
-            Assert.True(triggerEvent.TaskCompletionSource.Task.IsCompleted);
+            Assert.That(triggerEvent.TaskCompletionSource.Task.IsCompleted, Is.True);
         }
 
         [TestCase]
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             };
 
             await host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTriggerWith2ParamAndParameterAttr", args);
-            Assert.True(triggerEvent.TaskCompletionSource.Task.IsCompleted);
+            Assert.That(triggerEvent.TaskCompletionSource.Task.IsCompleted, Is.True);
         }
 
         [TestCase]
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var task = host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTriggerInvalid", args);
             var exception = Assert.ThrowsAsync<FunctionInvocationException>(() => task);
-            Assert.AreEqual("Exception while executing function: SocketIOFuncs.TestSocketIOTriggerInvalid", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("Exception while executing function: SocketIOFuncs.TestSocketIOTriggerInvalid"));
         }
 
         [TestCase]
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var task = host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTriggerWith3Param", args);
             var exception = Assert.ThrowsAsync<FunctionInvocationException>(() => task);
-            Assert.AreEqual("Exception while executing function: SocketIOFuncs.TestSocketIOTriggerWith3Param", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("Exception while executing function: SocketIOFuncs.TestSocketIOTriggerWith3Param"));
         }
 
         [TestCase("SocketIOFuncs.TestSocketIOInputConnection")]
@@ -131,9 +131,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         {
             var host = TestHelpers.NewHost(typeof(SocketIOFuncs));
             var exception = Assert.ThrowsAsync<InvalidOperationException>(() => host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOInputConnection"));
-            Assert.AreEqual($"SocketIO connection string 'WebPubSubForSocketIOConnectionString' does not exist. Please set either 'WebPubSubForSocketIOConnectionString' to use access key based connection. "
+            Assert.That(exception.Message, Is.EqualTo($"SocketIO connection string 'WebPubSubForSocketIOConnectionString' does not exist. Please set either 'WebPubSubForSocketIOConnectionString' to use access key based connection. "
                 + $"Or set `WebPubSubForSocketIOConnectionString:credential`, `WebPubSubForSocketIOConnectionString:clientId` and `WebPubSubForSocketIOConnectionString:endpoint` to use identity-based connection. "
-                + $"See https://learn.microsoft.com/azure/azure-functions/functions-reference#common-properties-for-identity-based-connections for more details.", exception.Message);
+                + $"See https://learn.microsoft.com/azure/azure-functions/functions-reference#common-properties-for-identity-based-connections for more details."));
         }
 
         [TestCase]
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         {
             var host = TestHelpers.NewHost(typeof(SocketIOFuncs), configuration: IdentityBasedConfigurationMissingEndpoint);
             var exception = Assert.ThrowsAsync<InvalidOperationException>(() => host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOInputConnection"));
-            Assert.AreEqual("SocketIO connection should have an 'WebPubSubForSocketIOConnectionString:endpoint' propert when it uses identity-based authentication, or it should set `WebPubSubForSocketIOConnectionString` setting to use access key based authentication.", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("SocketIO connection should have an 'WebPubSubForSocketIOConnectionString:endpoint' propert when it uses identity-based authentication, or it should set `WebPubSubForSocketIOConnectionString` setting to use access key based authentication."));
         }
 
         [TestCase]
@@ -184,8 +184,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
                 SocketIOSocketContext connectionContext)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual(TestContext, connectionContext);
-                Assert.AreEqual("uid", connectionContext.UserId);
+                Assert.That(connectionContext, Is.EqualTo(TestContext));
+                Assert.That(connectionContext.UserId, Is.EqualTo("uid"));
             }
 
             public static void TestSocketIOTriggerWith2Param(
@@ -194,12 +194,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
                 string arg1,
                 string arg2)
             {
-                // Valid case use default url for verification.
-                Assert.AreEqual(TestContext, connectionContext);
-                Assert.AreEqual("msgEvent", request.EventName);
-                Assert.AreEqual("d1", arg1);
-                Assert.AreEqual("d2", arg2);
-                Assert.AreEqual("uid", connectionContext.UserId);
+                Assert.Multiple(() =>
+                {
+                    // Valid case use default url for verification.
+                    Assert.That(connectionContext, Is.EqualTo(TestContext));
+                    Assert.That(request.EventName, Is.EqualTo("msgEvent"));
+                    Assert.That(arg1, Is.EqualTo("d1"));
+                    Assert.That(arg2, Is.EqualTo("d2"));
+                });
+                Assert.That(connectionContext.UserId, Is.EqualTo("uid"));
             }
 
             public static void TestSocketIOTriggerWith3Param(
@@ -209,12 +212,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
                 string arg2,
                 string arg3)
             {
-                // Valid case use default url for verification.
-                Assert.AreEqual(TestContext, connectionContext);
-                Assert.AreEqual("msgEvent", request.EventName);
-                Assert.AreEqual("d1", arg1);
-                Assert.AreEqual("d2", arg2);
-                Assert.AreEqual("uid", connectionContext.UserId);
+                Assert.Multiple(() =>
+                {
+                    // Valid case use default url for verification.
+                    Assert.That(connectionContext, Is.EqualTo(TestContext));
+                    Assert.That(request.EventName, Is.EqualTo("msgEvent"));
+                    Assert.That(arg1, Is.EqualTo("d1"));
+                    Assert.That(arg2, Is.EqualTo("d2"));
+                });
+                Assert.That(connectionContext.UserId, Is.EqualTo("uid"));
             }
 
             public static void TestSocketIOTriggerWith2ParamAndParameterAttr(
@@ -223,12 +229,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
                 [SocketIOParameter] string arg2,
                 [SocketIOParameter] string arg1)
             {
-                // Valid case use default url for verification.
-                Assert.AreEqual(TestContext, connectionContext);
-                Assert.AreEqual("msgEvent", request.EventName);
-                Assert.AreEqual("d1", arg2);
-                Assert.AreEqual("d2", arg1);
-                Assert.AreEqual("uid", connectionContext.UserId);
+                Assert.Multiple(() =>
+                {
+                    // Valid case use default url for verification.
+                    Assert.That(connectionContext, Is.EqualTo(TestContext));
+                    Assert.That(request.EventName, Is.EqualTo("msgEvent"));
+                    Assert.That(arg2, Is.EqualTo("d1"));
+                    Assert.That(arg1, Is.EqualTo("d2"));
+                });
+                Assert.That(connectionContext.UserId, Is.EqualTo("uid"));
             }
 
             public static void TestSocketIOTriggerInvalid(
@@ -240,16 +249,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
                 [SocketIONegotiation(Hub = "chat")] SocketIONegotiationResult connection)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual("https://abc/", connection.Endpoint.AbsoluteUri);
+                Assert.That(connection.Endpoint.AbsoluteUri, Is.EqualTo("https://abc/"));
             }
 
             public static void TestSocketIOInputConnectionWithUserId(
                 [SocketIONegotiation(Hub = "chat", UserId = "uid")] SocketIONegotiationResult connection)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual("https://abc/", connection.Endpoint.AbsoluteUri);
+                Assert.That(connection.Endpoint.AbsoluteUri, Is.EqualTo("https://abc/"));
                 var jwt = new JwtSecurityTokenHandler().ReadJwtToken(connection.Token);
-                Assert.AreEqual("uid", jwt.Subject);
+                Assert.That(jwt.Subject, Is.EqualTo("uid"));
             }
 
             public static async Task TestSocketIOOutput(

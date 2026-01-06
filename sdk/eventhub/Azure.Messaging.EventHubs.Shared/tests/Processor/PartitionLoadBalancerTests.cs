@@ -149,8 +149,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
-            Assert.That(loadBalancer.IsBalanced, Is.True, "The load balancer should believe the state is balanced when it owns all partitions.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
+                Assert.That(loadBalancer.IsBalanced, Is.True, "The load balancer should believe the state is balanced when it owns all partitions.");
+            });
         }
 
         /// <summary>
@@ -206,10 +209,13 @@ namespace Azure.Messaging.EventHubs.Tests
             completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
             unownedPartitions = partitionIds.Except(completeOwnership.Select(p => p.PartitionId));
 
-            Assert.That(unownedPartitions.Count(), Is.EqualTo(0), "There no partitions left unowned.");
-            Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
-            Assert.That(loadBalancer.IsBalanced, Is.True, "The load balancer should believe the state is balanced when it owns the correct number of partitions.");
-            Assert.That(cycleCount, Is.EqualTo(MinimumPartitionCount + 1), "The load balancer should have reached a balanced state once all partitions were owned and the next cycle claimed none.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(unownedPartitions.Count(), Is.EqualTo(0), "There no partitions left unowned.");
+                Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
+                Assert.That(loadBalancer.IsBalanced, Is.True, "The load balancer should believe the state is balanced when it owns the correct number of partitions.");
+                Assert.That(cycleCount, Is.EqualTo(MinimumPartitionCount + 1), "The load balancer should have reached a balanced state once all partitions were owned and the next cycle claimed none.");
+            });
         }
 
         /// <summary>
@@ -265,10 +271,13 @@ namespace Azure.Messaging.EventHubs.Tests
             completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
             unownedPartitions = partitionIds.Except(completeOwnership.Select(p => p.PartitionId));
 
-            Assert.That(unownedPartitions.Count(), Is.EqualTo(0), "There no partitions left unowned.");
-            Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
-            Assert.That(loadBalancer.IsBalanced, Is.True, "The load balancer should believe the state is balanced when it owns the correct number of partitions.");
-            Assert.That(cycleCount, Is.EqualTo(MinimumPartitionCount + 2), "The load balancer should have reached a balanced state once all partitions were owned and the next cycle claimed none.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(unownedPartitions.Count(), Is.EqualTo(0), "There no partitions left unowned.");
+                Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
+                Assert.That(loadBalancer.IsBalanced, Is.True, "The load balancer should believe the state is balanced when it owns the correct number of partitions.");
+                Assert.That(cycleCount, Is.EqualTo(MinimumPartitionCount + 2), "The load balancer should have reached a balanced state once all partitions were owned and the next cycle claimed none.");
+            });
         }
 
         /// <summary>
@@ -315,10 +324,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var totalOwnedPartitions = await storageManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
             var ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
 
-            // Verify owned partitionIds match the owned partitions.
+            Assert.Multiple(() =>
+            {
+                // Verify owned partitionIds match the owned partitions.
 
-            Assert.That(ownedByloadbalancer1.Count(), Is.EqualTo(MinimumPartitionCount));
-            Assert.That(ownedByloadbalancer1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.False);
+                Assert.That(ownedByloadbalancer1.Count(), Is.EqualTo(MinimumPartitionCount));
+                Assert.That(ownedByloadbalancer1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.False);
+            });
 
             // Start the load balancer to claim ownership from of a Partition even though ownedPartitionCount == MinimumOwnedPartitionsCount.
 
@@ -329,10 +341,13 @@ namespace Azure.Messaging.EventHubs.Tests
             totalOwnedPartitions = await storageManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
             ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
 
-            // Verify that we took ownership of the additional partition.
+            Assert.Multiple(() =>
+            {
+                // Verify that we took ownership of the additional partition.
 
-            Assert.That(ownedByloadbalancer1.Count(), Is.GreaterThan(MinimumPartitionCount));
-            Assert.That(ownedByloadbalancer1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.True);
+                Assert.That(ownedByloadbalancer1.Count(), Is.GreaterThan(MinimumPartitionCount));
+                Assert.That(ownedByloadbalancer1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.True);
+            });
         }
 
         /// <summary>
@@ -380,13 +395,16 @@ namespace Azure.Messaging.EventHubs.Tests
             var ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
             var ownedByloadbalancer3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer3Id);
 
-            // Verify owned partitionIds match the owned partitions.
+            Assert.Multiple(() =>
+            {
+                // Verify owned partitionIds match the owned partitions.
 
-            Assert.That(ownedByloadbalancer1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.False);
+                Assert.That(ownedByloadbalancer1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.False);
 
-            // Verify load balancer 3 has stealable partitions.
+                // Verify load balancer 3 has stealable partitions.
 
-            Assert.That(ownedByloadbalancer3.Count(), Is.GreaterThan(MaximumpartitionCount));
+                Assert.That(ownedByloadbalancer3.Count(), Is.GreaterThan(MaximumpartitionCount));
+            });
 
             // Start the load balancer to steal ownership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a load balancer owns > MaximumPartitionCount.
 
@@ -398,13 +416,16 @@ namespace Azure.Messaging.EventHubs.Tests
             ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
             ownedByloadbalancer3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer3Id);
 
-            // Verify that we took ownership of the additional partition.
+            Assert.Multiple(() =>
+            {
+                // Verify that we took ownership of the additional partition.
 
-            Assert.That(ownedByloadbalancer1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.True);
+                Assert.That(ownedByloadbalancer1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.True);
 
-            // Verify load balancer 3 now does not own > MaximumPartitionCount.
+                // Verify load balancer 3 now does not own > MaximumPartitionCount.
 
-            Assert.That(ownedByloadbalancer3.Count(), Is.EqualTo(MaximumpartitionCount));
+                Assert.That(ownedByloadbalancer3.Count(), Is.EqualTo(MaximumpartitionCount));
+            });
         }
 
         /// <summary>
@@ -452,13 +473,16 @@ namespace Azure.Messaging.EventHubs.Tests
             var ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
             var ownedByloadbalancer3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer3Id);
 
-            // Verify owned partitionIds match the owned partitions.
+            Assert.Multiple(() =>
+            {
+                // Verify owned partitionIds match the owned partitions.
 
-            Assert.That(ownedByloadbalancer1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.False);
+                Assert.That(ownedByloadbalancer1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.False);
 
-            // Verify load balancer 3 has stealable partitions.
+                // Verify load balancer 3 has stealable partitions.
 
-            Assert.That(ownedByloadbalancer3.Count(), Is.EqualTo(MaximumpartitionCount));
+                Assert.That(ownedByloadbalancer3.Count(), Is.EqualTo(MaximumpartitionCount));
+            });
 
             // Start the load balancer to steal ownership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a load balancer owns > MaximumPartitionCount.
 
@@ -470,13 +494,16 @@ namespace Azure.Messaging.EventHubs.Tests
             ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
             ownedByloadbalancer3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer3Id);
 
-            // Verify that we took ownership of the additional partition.
+            Assert.Multiple(() =>
+            {
+                // Verify that we took ownership of the additional partition.
 
-            Assert.That(ownedByloadbalancer1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.True);
+                Assert.That(ownedByloadbalancer1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.True);
 
-            // Verify load balancer 3 now does not own > MaximumPartitionCount.
+                // Verify load balancer 3 now does not own > MaximumPartitionCount.
 
-            Assert.That(ownedByloadbalancer3.Count(), Is.LessThan(MaximumpartitionCount));
+                Assert.That(ownedByloadbalancer3.Count(), Is.LessThan(MaximumpartitionCount));
+            });
         }
 
         /// <summary>
@@ -510,10 +537,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var totalOwnedPartitions = await storageManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
             var ownedByloadbalancer = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer.OwnerIdentifier);
 
-            // Verify number of owned partitions match the number of total partitions.
+            Assert.Multiple(() =>
+            {
+                // Verify number of owned partitions match the number of total partitions.
 
-            Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(MinimumpartitionCount), "The minimum number of partitions should be owned.");
-            Assert.That(ownedByloadbalancer, Is.EquivalentTo(loadbalancerPartitionIds), "The minimum number of partitions should be owned by the load balancer.");
+                Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(MinimumpartitionCount), "The minimum number of partitions should be owned.");
+                Assert.That(ownedByloadbalancer, Is.EquivalentTo(loadbalancerPartitionIds), "The minimum number of partitions should be owned by the load balancer.");
+            });
 
             // The load balancing state is not yet equally distributed.  Run several load balancing cycles; balance should be reached and
             // then remain stable.
@@ -535,8 +565,11 @@ namespace Azure.Messaging.EventHubs.Tests
             totalOwnedPartitions = await storageManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
             ownedByloadbalancer = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer.OwnerIdentifier);
 
-            Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
-            Assert.That(ownedByloadbalancer, Is.EquivalentTo(totalOwnedPartitions.Select(ownership => int.Parse(ownership.PartitionId))), "The load balancer should own all partitions.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
+                Assert.That(ownedByloadbalancer, Is.EquivalentTo(totalOwnedPartitions.Select(ownership => int.Parse(ownership.PartitionId))), "The load balancer should own all partitions.");
+            });
 
             // Verify that no attempts to steal were logged.
 
@@ -574,8 +607,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var totalOwnedPartitions = await storageManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
             var ownedByloadbalancer = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer.OwnerIdentifier);
 
-            Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
-            Assert.That(ownedByloadbalancer, Is.Empty, "All partitions should be owned by other load balancers.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
+                Assert.That(ownedByloadbalancer, Is.Empty, "All partitions should be owned by other load balancers.");
+            });
 
             // The load balancing state should be final and remain stable.  Run several load balancing cycles and validate that the state has
             // not changed.
@@ -592,8 +628,11 @@ namespace Azure.Messaging.EventHubs.Tests
             totalOwnedPartitions = await storageManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
             ownedByloadbalancer = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer.OwnerIdentifier);
 
-            Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
-            Assert.That(ownedByloadbalancer, Is.Empty, "All partitions should be owned by other load balancers.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
+                Assert.That(ownedByloadbalancer, Is.Empty, "All partitions should be owned by other load balancers.");
+            });
 
             // Verify that no attempts to steal were logged.
 
@@ -652,12 +691,15 @@ namespace Azure.Messaging.EventHubs.Tests
             var ownedByloadbalancer2 = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer2Id);
             var ownedByloadbalancer3 = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer3Id);
 
-            // Verify number of owned partitions match the number of total partitions.
+            Assert.Multiple(() =>
+            {
+                // Verify number of owned partitions match the number of total partitions.
 
-            Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(numberOfPartitions), "All partitions should be owned.");
-            Assert.That(ownedByloadbalancer1, Is.EquivalentTo(loadbalancer1PartitionIds), "The correct set of partitions should be owned by the first load balancer.");
-            Assert.That(ownedByloadbalancer2, Is.EquivalentTo(loadbalancer2PartitionIds), "The correct set of partitions should be owned by the first load balancer.");
-            Assert.That(ownedByloadbalancer3, Is.EquivalentTo(loadbalancer3PartitionIds), "The correct set of partitions should be owned by the first load balancer.");
+                Assert.That(totalOwnedPartitions.Count(), Is.EqualTo(numberOfPartitions), "All partitions should be owned.");
+                Assert.That(ownedByloadbalancer1, Is.EquivalentTo(loadbalancer1PartitionIds), "The correct set of partitions should be owned by the first load balancer.");
+                Assert.That(ownedByloadbalancer2, Is.EquivalentTo(loadbalancer2PartitionIds), "The correct set of partitions should be owned by the first load balancer.");
+                Assert.That(ownedByloadbalancer3, Is.EquivalentTo(loadbalancer3PartitionIds), "The correct set of partitions should be owned by the first load balancer.");
+            });
 
             // The load balancing state is equally distributed.  Run several load balancing cycles; ownership should remain stable.
 
@@ -672,9 +714,12 @@ namespace Azure.Messaging.EventHubs.Tests
             ownedByloadbalancer2 = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer2Id);
             ownedByloadbalancer3 = GetOwnedPartitionIds(totalOwnedPartitions, loadbalancer3Id);
 
-            Assert.That(ownedByloadbalancer1, Is.EquivalentTo(loadbalancer1PartitionIds), "The correct set of partitions should for the first load balancer should not have changed.");
-            Assert.That(ownedByloadbalancer2, Is.EquivalentTo(loadbalancer2PartitionIds), "The correct set of partitions should for the second load balancer should not have changed.");
-            Assert.That(ownedByloadbalancer3, Is.EquivalentTo(loadbalancer3PartitionIds), "The correct set of partitions should for the third load balancer should not have changed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(ownedByloadbalancer1, Is.EquivalentTo(loadbalancer1PartitionIds), "The correct set of partitions should for the first load balancer should not have changed.");
+                Assert.That(ownedByloadbalancer2, Is.EquivalentTo(loadbalancer2PartitionIds), "The correct set of partitions should for the second load balancer should not have changed.");
+                Assert.That(ownedByloadbalancer3, Is.EquivalentTo(loadbalancer3PartitionIds), "The correct set of partitions should for the third load balancer should not have changed.");
+            });
 
             // Verify that no attempts to steal were logged.
 
@@ -699,8 +744,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(0), "Storage should be tracking no ownership to start.");
-            Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should start with no ownership.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(0), "Storage should be tracking no ownership to start.");
+                Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should start with no ownership.");
+            });
 
             // Mimic the state of a processor when recovering from a crash; storage says that the processor has ownership of some
             // number of partitions, but the processor state does not reflect that ownership.
@@ -710,8 +758,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var orphanedPartitions = partitionIds.Take(OrphanedPartitionCount);
             completeOwnership = await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(orphanedPartitions, loadBalancer.OwnerIdentifier));
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount), "Storage should be tracking half the partitions as orphaned.");
-            Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should have no ownership of orphaned partitions.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount), "Storage should be tracking half the partitions as orphaned.");
+                Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should have no ownership of orphaned partitions.");
+            });
 
             // Run one load balancing cycle.  At the end of the cycle, it should have claimed a random partition
             // and recovered ownership of the orphans.
@@ -719,8 +770,11 @@ namespace Azure.Messaging.EventHubs.Tests
             await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
             completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount + 1), "Storage should be tracking the orphaned partitions and one additional as owned.");
-            Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(OrphanedPartitionCount + 1), "The load balancer should have ownership of all orphaned partitions and one additional.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount + 1), "Storage should be tracking the orphaned partitions and one additional as owned.");
+                Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(OrphanedPartitionCount + 1), "The load balancer should have ownership of all orphaned partitions and one additional.");
+            });
 
             // Run load balancing cycles until the load balancer believes that the state is balanced or the partition count is quadrupled.
 
@@ -756,8 +810,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var completeOwnership = await mockStorageManager.Object.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(0), "Storage should be tracking no ownership to start.");
-            Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should start with no ownership.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(0), "Storage should be tracking no ownership to start.");
+                Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should start with no ownership.");
+            });
 
             // Mimic the state of a processor when recovering from a crash; storage says that the processor has ownership of some
             // number of partitions, but the processor state does not reflect that ownership.
@@ -767,8 +824,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var orphanedPartitions = partitionIds.Take(OrphanedPartitionCount);
             completeOwnership = await mockStorageManager.Object.ClaimOwnershipAsync(CreatePartitionOwnership(orphanedPartitions, loadBalancer.OwnerIdentifier));
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount), "Storage should be tracking half the partitions as orphaned.");
-            Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should have no ownership of orphaned partitions.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount), "Storage should be tracking half the partitions as orphaned.");
+                Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should have no ownership of orphaned partitions.");
+            });
 
             // Configure the Storage Manager to fail all claim attempts moving forward.
 
@@ -782,8 +842,11 @@ namespace Azure.Messaging.EventHubs.Tests
             await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
             completeOwnership = await mockStorageManager.Object.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount), "Storage should be tracking the orphaned partitions as owned.");
-            Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(OrphanedPartitionCount), "The load balancer should have ownership of all orphaned partitions and none additional.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount), "Storage should be tracking the orphaned partitions as owned.");
+                Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(OrphanedPartitionCount), "The load balancer should have ownership of all orphaned partitions and none additional.");
+            });
 
             // Run load balancing cycles until the load balancer believes that the state is balanced or the partition count is quadrupled.
 
@@ -799,8 +862,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             completeOwnership = await mockStorageManager.Object.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount), "Storage should be tracking the orphaned partitions as owned.");
-            Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(OrphanedPartitionCount), "The load balancer should have ownership of all orphaned partitions and none additional.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount), "Storage should be tracking the orphaned partitions as owned.");
+                Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(OrphanedPartitionCount), "The load balancer should have ownership of all orphaned partitions and none additional.");
+            });
         }
 
         /// <summary>
@@ -823,15 +889,21 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(0), "Storage should be tracking no ownership to start.");
-            Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should start with no ownership.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(0), "Storage should be tracking no ownership to start.");
+                Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should start with no ownership.");
+            });
 
             // Claim the minimum set of partitions for the "other" load balancer.
 
             completeOwnership = await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(partitionIds.Take(MinimumPartitionCount), otherLoadBalancerIdentifier));
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(MinimumPartitionCount), "Storage should be tracking half the partitions as owned by another processor.");
-            Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should have no ownership of any partitions.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(MinimumPartitionCount), "Storage should be tracking half the partitions as owned by another processor.");
+                Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should have no ownership of any partitions.");
+            });
 
             // Mimic the state of a processor when recovering from a crash; storage says that the processor has ownership of some
             // number of partitions, but the processor state does not reflect that ownership.
@@ -841,8 +913,11 @@ namespace Azure.Messaging.EventHubs.Tests
             await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(partitionIds.Skip(MinimumPartitionCount).Take(OrphanedPartitionCount), loadBalancer.OwnerIdentifier));
             completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount + MinimumPartitionCount), "Storage should be tracking half the partitions as owned by another processor as well as some orphans.");
-            Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should have no ownership of orphaned or otherwise owned partitions.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount + MinimumPartitionCount), "Storage should be tracking half the partitions as owned by another processor as well as some orphans.");
+                Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(0), "The load balancer should have no ownership of orphaned or otherwise owned partitions.");
+            });
 
             // Run one load balancing cycle.  At the end of the cycle, it should have claimed a random partition
             // and recovered ownership of the orphans.
@@ -850,8 +925,11 @@ namespace Azure.Messaging.EventHubs.Tests
             await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
             completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
-            Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount + MinimumPartitionCount + 1), "Storage should be tracking the orphaned partitions, other processor partitions, and one additional as owned.");
-            Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(OrphanedPartitionCount + 1), "The load balancer should have ownership of all orphaned partitions and one additional.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount + MinimumPartitionCount + 1), "Storage should be tracking the orphaned partitions, other processor partitions, and one additional as owned.");
+                Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(OrphanedPartitionCount + 1), "The load balancer should have ownership of all orphaned partitions and one additional.");
+            });
 
             // Run load balancing cycles until the load balancer believes that the state is balanced or the partition count is quadrupled.
 
@@ -964,8 +1042,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (int i = 0; i < NumberOfPartitions; i++)
             {
-                Assert.That(claimedVersions[i], Is.Not.EqualTo(renewedVersions[i]), "Partitions should've been claimed");
-                Assert.That(renewedVersions[i], Is.EqualTo(notRenewedVersions[i]), "Partitions should've been skipped during renewal");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(claimedVersions[i], Is.Not.EqualTo(renewedVersions[i]), "Partitions should've been claimed");
+                    Assert.That(renewedVersions[i], Is.EqualTo(notRenewedVersions[i]), "Partitions should've been skipped during renewal");
+                });
             }
 
             Assert.That(storageManager.TotalRenewals, Is.EqualTo(8), "There should be 4 initial claims and 4 renew claims");

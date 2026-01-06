@@ -32,11 +32,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var dimensions = new Dictionary<string, string>() { { "name1", "value1" }, { "name2", "value2" } };
             var dimensionKey = new DimensionKey(dimensions);
 
-            Assert.That(dimensionKey.TryGetValue("name1", out string value1));
-            Assert.That(dimensionKey.TryGetValue("name2", out string value2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dimensionKey.TryGetValue("name1", out string value1));
+                Assert.That(dimensionKey.TryGetValue("name2", out string value2));
 
-            Assert.That(value1, Is.EqualTo("value1"));
-            Assert.That(value2, Is.EqualTo("value2"));
+                Assert.That(value1, Is.EqualTo("value1"));
+                Assert.That(value2, Is.EqualTo("value2"));
+            });
         }
 
         [Test]
@@ -45,8 +48,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var dimensions = new Dictionary<string, string>() { { "name", "value" } };
             var dimensionKey = new DimensionKey(dimensions);
 
-            Assert.That(dimensionKey.TryGetValue("otherName", out string value), Is.False);
-            Assert.That(value, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dimensionKey.TryGetValue("otherName", out string value), Is.False);
+                Assert.That(value, Is.Null);
+            });
         }
 
         [Test]
@@ -65,8 +71,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var dimensions = new Dictionary<string, string>() { { "name", "value" } };
             var dimensionKey = new DimensionKey(dimensions);
 
-            Assert.That(dimensionKey.Contains("name"));
-            Assert.That(dimensionKey.Contains("otherName"), Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dimensionKey.Contains("name"));
+                Assert.That(dimensionKey.Contains("otherName"), Is.False);
+            });
         }
 
         [Test]

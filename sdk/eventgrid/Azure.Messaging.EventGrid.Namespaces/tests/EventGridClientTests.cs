@@ -92,33 +92,39 @@ namespace Azure.Messaging.EventGrid.Tests
                 IDictionary<string, object> cloudEventAttr = cloudEnum.Current.ExtensionAttributes;
                 if (inclTraceparent && inclTracestate && i % 2 == 0)
                 {
-                    Assert.AreEqual(
-                        "traceparentValue",
-                        cloudEventAttr[TraceParentHeaderName]);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(
+                                            cloudEventAttr[TraceParentHeaderName],
+                                            Is.EqualTo("traceparentValue"));
 
-                    Assert.AreEqual(
-                        "param:value",
-                        cloudEventAttr[TraceStateHeaderName]);
+                        Assert.That(
+                            cloudEventAttr[TraceStateHeaderName],
+                            Is.EqualTo("param:value"));
+                    });
                 }
                 else if (inclTraceparent && i % 2 == 0)
                 {
-                    Assert.AreEqual(
-                        "traceparentValue",
-                        cloudEventAttr[TraceParentHeaderName]);
+                    Assert.That(
+                        cloudEventAttr[TraceParentHeaderName],
+                        Is.EqualTo("traceparentValue"));
                 }
                 else if (inclTracestate && i % 2 == 0)
                 {
-                    Assert.AreEqual(
-                       "param:value",
-                       cloudEventAttr[TraceStateHeaderName]);
+                    Assert.That(
+                       cloudEventAttr[TraceStateHeaderName],
+                       Is.EqualTo("param:value"));
                 }
                 else
                 {
-                    Assert.IsTrue(mockTransport.SingleRequest.Headers.TryGetValue(TraceParentHeaderName, out string requestHeader));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(mockTransport.SingleRequest.Headers.TryGetValue(TraceParentHeaderName, out string requestHeader), Is.True);
 
-                    Assert.AreEqual(
-                        requestHeader,
-                        cloudEventAttr[TraceParentHeaderName]);
+                        Assert.That(
+                            cloudEventAttr[TraceParentHeaderName],
+                            Is.EqualTo(requestHeader));
+                    });
                 }
             }
         }
@@ -182,33 +188,39 @@ namespace Azure.Messaging.EventGrid.Tests
             IDictionary<string, object> cloudEventAttr = cloudEvent.ExtensionAttributes;
             if (inclTraceparent && inclTracestate)
             {
-                Assert.AreEqual(
-                    "traceparentValue",
-                    cloudEventAttr[TraceParentHeaderName]);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(
+                                    cloudEventAttr[TraceParentHeaderName],
+                                    Is.EqualTo("traceparentValue"));
 
-                Assert.AreEqual(
-                    "param:value",
-                    cloudEventAttr[TraceStateHeaderName]);
+                    Assert.That(
+                        cloudEventAttr[TraceStateHeaderName],
+                        Is.EqualTo("param:value"));
+                });
             }
             else if (inclTraceparent)
             {
-                Assert.AreEqual(
-                    "traceparentValue",
-                    cloudEventAttr[TraceParentHeaderName]);
+                Assert.That(
+                    cloudEventAttr[TraceParentHeaderName],
+                    Is.EqualTo("traceparentValue"));
             }
             else if (inclTracestate)
             {
-                Assert.AreEqual(
-                   "param:value",
-                   cloudEventAttr[TraceStateHeaderName]);
+                Assert.That(
+                   cloudEventAttr[TraceStateHeaderName],
+                   Is.EqualTo("param:value"));
             }
             else
             {
-                Assert.IsTrue(mockTransport.SingleRequest.Headers.TryGetValue(TraceParentHeaderName, out string requestHeader));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(mockTransport.SingleRequest.Headers.TryGetValue(TraceParentHeaderName, out string requestHeader), Is.True);
 
-                Assert.AreEqual(
-                    requestHeader,
-                    cloudEventAttr[TraceParentHeaderName]);
+                    Assert.That(
+                        cloudEventAttr[TraceParentHeaderName],
+                        Is.EqualTo(requestHeader));
+                });
             }
         }
 
@@ -250,8 +262,11 @@ namespace Azure.Messaging.EventGrid.Tests
 
             activity.Stop();
 
-            Assert.False(cloudEvent.ExtensionAttributes.ContainsKey("traceparent"));
-            Assert.False(cloudEvent.ExtensionAttributes.ContainsKey("tracestate"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(cloudEvent.ExtensionAttributes.ContainsKey("traceparent"), Is.False);
+                Assert.That(cloudEvent.ExtensionAttributes.ContainsKey("tracestate"), Is.False);
+            });
         }
 
         [Test]
@@ -302,8 +317,11 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 10; i++)
             {
                 cloudEnum.MoveNext();
-                Assert.False(cloudEnum.Current.ExtensionAttributes.ContainsKey("traceparent"));
-                Assert.False(cloudEnum.Current.ExtensionAttributes.ContainsKey("tracestate"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cloudEnum.Current.ExtensionAttributes.ContainsKey("traceparent"), Is.False);
+                    Assert.That(cloudEnum.Current.ExtensionAttributes.ContainsKey("tracestate"), Is.False);
+                });
             }
         }
 
@@ -388,37 +406,43 @@ namespace Azure.Messaging.EventGrid.Tests
                 IDictionary<string, object> cloudEventAttr = cloudEnum.Current.ExtensionAttributes;
                 if (inclTraceparent && inclTracestate && i % 2 == 0)
                 {
-                    Assert.AreEqual(
-                        "traceparentValue",
-                        cloudEventAttr[TraceParentHeaderName]);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(
+                                            cloudEventAttr[TraceParentHeaderName],
+                                            Is.EqualTo("traceparentValue"));
 
-                    Assert.AreEqual(
-                        "param:value",
-                        cloudEventAttr[TraceStateHeaderName]);
+                        Assert.That(
+                            cloudEventAttr[TraceStateHeaderName],
+                            Is.EqualTo("param:value"));
+                    });
                 }
                 else if (inclTraceparent && i % 2 == 0)
                 {
-                    Assert.AreEqual(
-                        "traceparentValue",
-                        cloudEventAttr[TraceParentHeaderName]);
+                    Assert.That(
+                        cloudEventAttr[TraceParentHeaderName],
+                        Is.EqualTo("traceparentValue"));
                 }
                 else if (inclTracestate && i % 2 == 0)
                 {
-                    Assert.AreEqual(
-                       "param:value",
-                       cloudEventAttr[TraceStateHeaderName]);
+                    Assert.That(
+                       cloudEventAttr[TraceStateHeaderName],
+                       Is.EqualTo("param:value"));
                 }
                 else
                 {
-                    Assert.IsTrue(mockTransport.Requests[1].Headers.TryGetValue(TraceParentHeaderName, out string traceParent));
-                    Assert.AreEqual(
-                        traceParent,
-                        cloudEventAttr[TraceParentHeaderName]);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(mockTransport.Requests[1].Headers.TryGetValue(TraceParentHeaderName, out string traceParent), Is.True);
+                        Assert.That(
+                            cloudEventAttr[TraceParentHeaderName],
+                            Is.EqualTo(traceParent));
 
-                    Assert.IsTrue(mockTransport.Requests[1].Headers.TryGetValue(TraceStateHeaderName, out string traceState));
-                    Assert.AreEqual(
-                        traceState,
-                        cloudEventAttr[TraceStateHeaderName]);
+                        Assert.That(mockTransport.Requests[1].Headers.TryGetValue(TraceStateHeaderName, out string traceState), Is.True);
+                        Assert.That(
+                            cloudEventAttr[TraceStateHeaderName],
+                            Is.EqualTo(traceState));
+                    });
                 }
             }
         }
@@ -495,37 +519,43 @@ namespace Azure.Messaging.EventGrid.Tests
             IDictionary<string, object> cloudEventAttr = cloudEvent.ExtensionAttributes;
             if (inclTraceparent && inclTracestate)
             {
-                Assert.AreEqual(
-                    "traceparentValue",
-                    cloudEventAttr[TraceParentHeaderName]);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(
+                                    cloudEventAttr[TraceParentHeaderName],
+                                    Is.EqualTo("traceparentValue"));
 
-                Assert.AreEqual(
-                    "param:value",
-                    cloudEventAttr[TraceStateHeaderName]);
+                    Assert.That(
+                        cloudEventAttr[TraceStateHeaderName],
+                        Is.EqualTo("param:value"));
+                });
             }
             else if (inclTraceparent)
             {
-                Assert.AreEqual(
-                    "traceparentValue",
-                    cloudEventAttr[TraceParentHeaderName]);
+                Assert.That(
+                    cloudEventAttr[TraceParentHeaderName],
+                    Is.EqualTo("traceparentValue"));
             }
             else if (inclTracestate)
             {
-                Assert.AreEqual(
-                    "param:value",
-                    cloudEventAttr[TraceStateHeaderName]);
+                Assert.That(
+                    cloudEventAttr[TraceStateHeaderName],
+                    Is.EqualTo("param:value"));
             }
             else
             {
-                Assert.IsTrue(mockTransport.Requests[1].Headers.TryGetValue(TraceParentHeaderName, out string traceParent));
-                Assert.AreEqual(
-                    traceParent,
-                    cloudEventAttr[TraceParentHeaderName]);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(mockTransport.Requests[1].Headers.TryGetValue(TraceParentHeaderName, out string traceParent), Is.True);
+                    Assert.That(
+                        cloudEventAttr[TraceParentHeaderName],
+                        Is.EqualTo(traceParent));
 
-                Assert.IsTrue(mockTransport.Requests[1].Headers.TryGetValue(TraceStateHeaderName, out string traceState));
-                Assert.AreEqual(
-                    traceState,
-                    cloudEventAttr[TraceStateHeaderName]);
+                    Assert.That(mockTransport.Requests[1].Headers.TryGetValue(TraceStateHeaderName, out string traceState), Is.True);
+                    Assert.That(
+                        cloudEventAttr[TraceStateHeaderName],
+                        Is.EqualTo(traceState));
+                });
             }
         }
 

@@ -56,7 +56,7 @@ namespace Azure.AI.VoiceLive.Tests
             var sessionEl = last.RootElement.GetProperty("session");
             Assert.That(sessionEl.TryGetProperty("tools", out var toolsEl), Is.True, "tools array missing in session.update payload");
             var toolNames = toolsEl.EnumerateArray().Select(t => t.GetProperty("name").GetString()).Where(n => n != null).ToArray();
-            Assert.That(toolNames.Length, Is.EqualTo(5), "Expected all 5 tools to be serialized.");
+            Assert.That(toolNames, Has.Length.EqualTo(5), "Expected all 5 tools to be serialized.");
             Assert.That(toolNames, Is.EquivalentTo(new[]
             {
                 "get_account_balance",
@@ -90,8 +90,11 @@ namespace Azure.AI.VoiceLive.Tests
             var serverEvent = SessionUpdate.DeserializeSessionUpdate(JsonDocument.Parse(eventJson).RootElement, ModelSerializationExtensions.WireOptions);
             Assert.That(serverEvent, Is.TypeOf<SessionUpdateResponseFunctionCallArgumentsDone>());
             var fDone = (SessionUpdateResponseFunctionCallArgumentsDone)serverEvent;
-            Assert.That(fDone.Name, Is.EqualTo(functionName));
-            Assert.That(fDone.CallId, Is.EqualTo(callId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fDone.Name, Is.EqualTo(functionName));
+                Assert.That(fDone.CallId, Is.EqualTo(callId));
+            });
 
             // Simulate executing the function locally -> returns object { success = true, value = 42 }
             var functionResultJson = JsonSerializer.Serialize(new { success = true, value = 42 });
@@ -120,11 +123,14 @@ namespace Azure.AI.VoiceLive.Tests
                     if (typeVal == "conversation.item.create" && createIndex == -1)
                     {
                         createIndex = i;
-                        // Validate this is the function_call_output item with our call id
-                        Assert.That(doc.RootElement.TryGetProperty("item", out var itemEl), Is.True, "item missing in create payload");
-                        Assert.That(itemEl.TryGetProperty("call_id", out var callIdEl), Is.True, "call_id missing in item");
-                        Assert.That(callIdEl.GetString(), Is.EqualTo(callId));
-                        Assert.That(itemEl.TryGetProperty("output", out var outputEl), Is.True, "output missing");
+                        Assert.Multiple(() =>
+                        {
+                            // Validate this is the function_call_output item with our call id
+                            Assert.That(doc.RootElement.TryGetProperty("item", out var itemEl), Is.True, "item missing in create payload");
+                            Assert.That(itemEl.TryGetProperty("call_id", out var callIdEl), Is.True, "call_id missing in item");
+                            Assert.That(callIdEl.GetString(), Is.EqualTo(callId));
+                            Assert.That(itemEl.TryGetProperty("output", out var outputEl), Is.True, "output missing");
+                        });
                         // Basic structural assertion on output JSON string contents
                         StringAssert.Contains("\"value\":42", outputEl.GetString());
                     }

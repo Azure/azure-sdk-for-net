@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.Tests
             RecognizedFormCollection formCollection = await operation.WaitForCompletionAsync();
 
             RecognizedForm form = formCollection.Single();
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
             ValidatePrebuiltForm(
                 form,
@@ -75,49 +75,61 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await operation.WaitForCompletionAsync();
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             var form = operation.Value.Single();
 
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
 
-            // The expected values are based on the values returned by the service, and not the actual
-            // values present in the ID document. We are not testing the service here, but the SDK.
+            Assert.Multiple(() =>
+            {
+                // The expected values are based on the values returned by the service, and not the actual
+                // values present in the ID document. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("prebuilt:idDocument:driverLicense", form.FormType);
-            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+                Assert.That(form.FormType, Is.EqualTo("prebuilt:idDocument:driverLicense"));
+                Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
+                Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(1));
 
-            Assert.NotNull(form.Fields);
+                Assert.That(form.Fields, Is.Not.Null);
+            });
 
-            Assert.True(form.Fields.ContainsKey("Address"));
-            Assert.True(form.Fields.ContainsKey("CountryRegion"));
-            Assert.True(form.Fields.ContainsKey("DateOfBirth"));
-            Assert.True(form.Fields.ContainsKey("DateOfExpiration"));
-            Assert.True(form.Fields.ContainsKey("DocumentNumber"));
-            Assert.True(form.Fields.ContainsKey("FirstName"));
-            Assert.True(form.Fields.ContainsKey("LastName"));
-            Assert.True(form.Fields.ContainsKey("Region"));
-            Assert.True(form.Fields.ContainsKey("Sex"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(form.Fields.ContainsKey("Address"), Is.True);
+                Assert.That(form.Fields.ContainsKey("CountryRegion"), Is.True);
+                Assert.That(form.Fields.ContainsKey("DateOfBirth"), Is.True);
+                Assert.That(form.Fields.ContainsKey("DateOfExpiration"), Is.True);
+                Assert.That(form.Fields.ContainsKey("DocumentNumber"), Is.True);
+                Assert.That(form.Fields.ContainsKey("FirstName"), Is.True);
+                Assert.That(form.Fields.ContainsKey("LastName"), Is.True);
+                Assert.That(form.Fields.ContainsKey("Region"), Is.True);
+                Assert.That(form.Fields.ContainsKey("Sex"), Is.True);
 
-            Assert.AreEqual("123 STREET ADDRESS YOUR CITY WA 99999-1234", form.Fields["Address"].Value.AsString());
-            Assert.AreEqual("WDLABCD456DG", form.Fields["DocumentNumber"].Value.AsString());
-            Assert.AreEqual("LIAM R.", form.Fields["FirstName"].Value.AsString());
-            Assert.AreEqual("TALBOT", form.Fields["LastName"].Value.AsString());
-            Assert.AreEqual("Washington", form.Fields["Region"].Value.AsString());
-            Assert.AreEqual("M", form.Fields["Sex"].Value.AsString());
+                Assert.That(form.Fields["Address"].Value.AsString(), Is.EqualTo("123 STREET ADDRESS YOUR CITY WA 99999-1234"));
+                Assert.That(form.Fields["DocumentNumber"].Value.AsString(), Is.EqualTo("WDLABCD456DG"));
+                Assert.That(form.Fields["FirstName"].Value.AsString(), Is.EqualTo("LIAM R."));
+                Assert.That(form.Fields["LastName"].Value.AsString(), Is.EqualTo("TALBOT"));
+                Assert.That(form.Fields["Region"].Value.AsString(), Is.EqualTo("Washington"));
+                Assert.That(form.Fields["Sex"].Value.AsString(), Is.EqualTo("M"));
 
-            Assert.That(form.Fields["CountryRegion"].Value.AsCountryRegion(), Is.EqualTo("USA"));
+                Assert.That(form.Fields["CountryRegion"].Value.AsCountryRegion(), Is.EqualTo("USA"));
+            });
 
             var dateOfBirth = form.Fields["DateOfBirth"].Value.AsDate();
-            Assert.AreEqual(6, dateOfBirth.Day);
-            Assert.AreEqual(1, dateOfBirth.Month);
-            Assert.AreEqual(1958, dateOfBirth.Year);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dateOfBirth.Day, Is.EqualTo(6));
+                Assert.That(dateOfBirth.Month, Is.EqualTo(1));
+                Assert.That(dateOfBirth.Year, Is.EqualTo(1958));
+            });
 
             var dateOfExpiration = form.Fields["DateOfExpiration"].Value.AsDate();
-            Assert.AreEqual(12, dateOfExpiration.Day);
-            Assert.AreEqual(8, dateOfExpiration.Month);
-            Assert.AreEqual(2020, dateOfExpiration.Year);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dateOfExpiration.Day, Is.EqualTo(12));
+                Assert.That(dateOfExpiration.Month, Is.EqualTo(8));
+                Assert.That(dateOfExpiration.Year, Is.EqualTo(2020));
+            });
         }
 
         [RecordedTest]
@@ -158,7 +170,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
-            Assert.IsEmpty(recognizedForms);
+            Assert.That(recognizedForms, Is.Empty);
         }
 
         /// <summary>
@@ -172,7 +184,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var invalidUri = new Uri("https://idont.ex.ist");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeIdentityDocumentsFromUriAsync(invalidUri));
-            Assert.AreEqual("InvalidImage", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidImage"));
         }
     }
 }

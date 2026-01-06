@@ -20,10 +20,10 @@ namespace Azure.Search.Documents.Tests
         {
             if (expected == null)
             {
-                Assert.IsNull(actual);
+                Assert.That(actual, Is.Null);
                 return;
             }
-            Assert.IsNotNull(actual);
+            Assert.That(actual, Is.Not.Null);
 
             IEnumerator exp = expected.GetEnumerator();
             IEnumerator act = actual.GetEnumerator();
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Tests
                     SearchTestBase.AssertApproximate(exp.Current, act.Current);
                 }
             } while (moved == 2);
-            Assert.Zero(moved);
+            Assert.That(moved, Is.Zero);
         }
 
         private static string ToJson(string value, string name = "Value") =>
@@ -146,12 +146,12 @@ namespace Azure.Search.Documents.Tests
                 {
                     if (!isCollection)
                     {
-                        Assert.IsInstanceOf<T>(actual);
+                        Assert.That(actual, Is.InstanceOf<T>());
                     }
                     else
                     {
                         // Note: Arrays returned by the indexer are object[], not T[]
-                        Assert.IsInstanceOf<object[]>(actual);
+                        Assert.That(actual, Is.InstanceOf<object[]>());
                     }
                 }
 
@@ -163,7 +163,7 @@ namespace Azure.Search.Documents.Tests
                 {
                     if (actual != null)
                     {
-                        CollectionAssert.AllItemsAreInstancesOfType(actual as IEnumerable, typeof(T).GetGenericArguments()[0]);
+                        Assert.That(actual as IEnumerable, Is.All.InstanceOf(typeof(T).GetGenericArguments()[0]));
                     }
                     AssertCollectionEqual(Expected as IEnumerable, actual as IEnumerable);
                 }
@@ -174,11 +174,11 @@ namespace Azure.Search.Documents.Tests
                 if (!IsCollection<T>())
                 {
                     object actual = doc["Value"];
-                    Assert.IsNotInstanceOf<T>(actual);
+                    Assert.That(actual, Is.Not.InstanceOf<T>());
                 }
                 else if (doc["Value"] is object[] actual && actual?.Length > 0)
                 {
-                    Assert.IsTrue(actual.Any(e => !(e is T)));
+                    Assert.That(actual.Any(e => !(e is T)), Is.True);
                 }
             }
 
@@ -204,18 +204,18 @@ namespace Azure.Search.Documents.Tests
                 object actual = dyn.Value;
                 if (actual != null && IsCollection<T>())
                 {
-                    Assert.IsNotInstanceOf<T>(actual);
+                    Assert.That(actual, Is.Not.InstanceOf<T>());
                 }
                 // TODO: Change from object[] to T when DynamicData has better conversions
                 else if (actual is object[] values && values?.Length > 0)
                 {
-                    Assert.IsTrue(values.Any(e => !(e is T)));
+                    Assert.That(values.Any(e => !(e is T)), Is.True);
                 }
             }
 
             private void AssertReadGetter(SearchDocument doc, Func<SearchDocument, string, T> getter)
             {
-                Assert.IsNotNull(getter);
+                Assert.That(getter, Is.Not.Null);
                 T actual = getter(doc, "Value");
                 if (!IsCollection<T>())
                 {
@@ -229,7 +229,7 @@ namespace Azure.Search.Documents.Tests
 
             private static void AssertReadGetterFails(SearchDocument doc, Func<SearchDocument, string, T> getter)
             {
-                Assert.IsNotNull(getter);
+                Assert.That(getter, Is.Not.Null);
                 bool throws = false;
                 try
                 {
@@ -239,7 +239,7 @@ namespace Azure.Search.Documents.Tests
                 {
                     throws = true;
                 }
-                Assert.IsTrue(throws, "Expected an exception to be thrown!");
+                Assert.That(throws, Is.True, "Expected an exception to be thrown!");
             }
         }
 
@@ -730,16 +730,16 @@ namespace Azure.Search.Documents.Tests
                 new SearchDocument(),
                 new SearchDocument());
 
-            Assert.AreNotEqual(
-                new SearchDocument(),
-                new Complex().ToDocument());
+            Assert.That(
+                new Complex().ToDocument(),
+                Is.Not.EqualTo(new SearchDocument()));
             SearchTestBase.AssertApproximate(
                 new Complex().ToDocument(),
                 new Complex().ToDocument());
 
-            Assert.AreNotEqual(
-                new Complex(1, false, "hi").ToDocument(),
-                new NestedComplex(1, false, "hi").ToDocument());
+            Assert.That(
+                new NestedComplex(1, false, "hi").ToDocument(),
+                Is.Not.EqualTo(new Complex(1, false, "hi").ToDocument()));
             SearchTestBase.AssertApproximate(
                 new NestedComplex(1, false, "hi").ToDocument(),
                 new NestedComplex(1, false, "hi").ToDocument());
@@ -753,8 +753,8 @@ namespace Azure.Search.Documents.Tests
 #endif
         public void NoDynamicObjectMembers()
         {
-            Assert.IsInstanceOf<IDynamicMetaObjectProvider>(new SearchDocument());
-            Assert.IsNotInstanceOf<DynamicObject>(new SearchDocument());
+            Assert.That(new SearchDocument(), Is.InstanceOf<IDynamicMetaObjectProvider>());
+            Assert.That(new SearchDocument(), Is.Not.InstanceOf<DynamicObject>());
         }
 
         [Test]

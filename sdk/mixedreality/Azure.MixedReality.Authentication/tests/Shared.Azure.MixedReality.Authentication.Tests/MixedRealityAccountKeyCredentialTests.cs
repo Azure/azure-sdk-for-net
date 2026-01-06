@@ -29,16 +29,16 @@ namespace Azure.MixedReality.Authentication.Tests
         public void CreateWithInvalidParameters()
         {
             ArgumentException? ex = Assert.Throws<ArgumentException>(() => new MixedRealityAccountKeyCredential(Guid.Empty, s_testAccountKey));
-            Assert.AreEqual("accountId", ex!.ParamName);
+            Assert.That(ex!.ParamName, Is.EqualTo("accountId"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new MixedRealityAccountKeyCredential(s_testAccountId, (string)null!));
-            Assert.AreEqual("key", ex!.ParamName);
+            Assert.That(ex!.ParamName, Is.EqualTo("key"));
 
             ex = Assert.Throws<ArgumentException>(() => new MixedRealityAccountKeyCredential(s_testAccountId, ""));
-            Assert.AreEqual("key", ex!.ParamName);
+            Assert.That(ex!.ParamName, Is.EqualTo("key"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new MixedRealityAccountKeyCredential(s_testAccountId, (AzureKeyCredential)null!));
-            Assert.AreEqual("keyCredential", ex!.ParamName);
+            Assert.That(ex!.ParamName, Is.EqualTo("keyCredential"));
         }
 
         [Test]
@@ -46,8 +46,11 @@ namespace Azure.MixedReality.Authentication.Tests
         {
             MixedRealityAccountKeyCredential credential = new MixedRealityAccountKeyCredential(s_testAccountId, s_testKeyCredential);
             AccessToken token = credential.GetToken(default, default);
-            Assert.AreEqual(ExpectedTestToken, token.Token);
-            Assert.AreEqual(DateTimeOffset.MaxValue, token.ExpiresOn);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(ExpectedTestToken));
+                Assert.That(token.ExpiresOn, Is.EqualTo(DateTimeOffset.MaxValue));
+            });
         }
 
         [Test]
@@ -55,8 +58,11 @@ namespace Azure.MixedReality.Authentication.Tests
         {
             MixedRealityAccountKeyCredential credential = new MixedRealityAccountKeyCredential(s_testAccountId, s_testKeyCredential);
             AccessToken token = await credential.GetTokenAsync(default, default);
-            Assert.AreEqual(ExpectedTestToken, token.Token);
-            Assert.AreEqual(DateTimeOffset.MaxValue, token.ExpiresOn);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(ExpectedTestToken));
+                Assert.That(token.ExpiresOn, Is.EqualTo(DateTimeOffset.MaxValue));
+            });
         }
     }
 }

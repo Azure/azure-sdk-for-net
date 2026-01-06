@@ -64,7 +64,7 @@ namespace Azure.Core.Tests
             var timeoutStream = new ReadTimeoutStream(testStream, _defaultTimeout);
             timeoutStream.Dispose();
 
-            Assert.True(testStream.IsDisposed);
+            Assert.That(testStream.IsDisposed, Is.True);
         }
 
         private class TestStream : ReadOnlyStream

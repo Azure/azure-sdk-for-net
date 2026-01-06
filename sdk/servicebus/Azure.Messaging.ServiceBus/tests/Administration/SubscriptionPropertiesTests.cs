@@ -25,8 +25,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardTo = $"{baseUrl}{longName}");
 
-            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
-            Assert.AreEqual($"ForwardTo", ex.ParamName);
+            Assert.That(ex.Message, Does.StartWith($"Entity path '{longName}' exceeds the '260' character limit."));
+            Assert.That(ex.ParamName, Is.EqualTo($"ForwardTo"));
         }
 
         [Test]
@@ -39,8 +39,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardDeadLetteredMessagesTo = $"{baseUrl}{longName}");
 
-            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
-            Assert.AreEqual($"ForwardDeadLetteredMessagesTo", ex.ParamName);
+            Assert.That(ex.Message, Does.StartWith($"Entity path '{longName}' exceeds the '260' character limit."));
+            Assert.That(ex.ParamName, Is.EqualTo($"ForwardDeadLetteredMessagesTo"));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var longName = string.Join(string.Empty, Enumerable.Repeat('a', lengthOfName));
             var sub = new SubscriptionProperties("sb://fakeservicebus", "Fake SubscriptionName");
             sub.ForwardTo = $"{baseUrl}{longName}";
-            Assert.AreEqual($"{baseUrl}{longName}", sub.ForwardTo);
+            Assert.That(sub.ForwardTo, Is.EqualTo($"{baseUrl}{longName}"));
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var longName = string.Join(string.Empty, Enumerable.Repeat('a', lengthOfName));
             var sub = new SubscriptionProperties("sb://fakeservicebus", "Fake SubscriptionName");
             sub.ForwardDeadLetteredMessagesTo = $"{baseUrl}{longName}";
-            Assert.AreEqual($"{baseUrl}{longName}", sub.ForwardDeadLetteredMessagesTo);
+            Assert.That(sub.ForwardDeadLetteredMessagesTo, Is.EqualTo($"{baseUrl}{longName}"));
         }
 
         [Test]
@@ -84,19 +84,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 "forward",
                 "dlq",
                 "metadata");
-            Assert.AreEqual("topicName", properties.TopicName);
-            Assert.AreEqual("subscriptionName", properties.SubscriptionName);
-            Assert.AreEqual(TimeSpan.FromSeconds(30), properties.LockDuration);
-            Assert.IsTrue(properties.RequiresSession);
-            Assert.AreEqual(TimeSpan.FromSeconds(10), properties.DefaultMessageTimeToLive);
-            Assert.AreEqual(TimeSpan.FromMinutes(5), properties.AutoDeleteOnIdle);
-            Assert.IsTrue(properties.DeadLetteringOnMessageExpiration);
-            Assert.AreEqual(5, properties.MaxDeliveryCount);
-            Assert.IsFalse(properties.EnableBatchedOperations);
-            Assert.AreEqual(EntityStatus.Active, properties.Status);
-            Assert.AreEqual("forward", properties.ForwardTo);
-            Assert.AreEqual("dlq", properties.ForwardDeadLetteredMessagesTo);
-            Assert.AreEqual("metadata", properties.UserMetadata);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.TopicName, Is.EqualTo("topicName"));
+                Assert.That(properties.SubscriptionName, Is.EqualTo("subscriptionName"));
+                Assert.That(properties.LockDuration, Is.EqualTo(TimeSpan.FromSeconds(30)));
+                Assert.That(properties.RequiresSession, Is.True);
+                Assert.That(properties.DefaultMessageTimeToLive, Is.EqualTo(TimeSpan.FromSeconds(10)));
+                Assert.That(properties.AutoDeleteOnIdle, Is.EqualTo(TimeSpan.FromMinutes(5)));
+                Assert.That(properties.DeadLetteringOnMessageExpiration, Is.True);
+                Assert.That(properties.MaxDeliveryCount, Is.EqualTo(5));
+                Assert.That(properties.EnableBatchedOperations, Is.False);
+                Assert.That(properties.Status, Is.EqualTo(EntityStatus.Active));
+                Assert.That(properties.ForwardTo, Is.EqualTo("forward"));
+                Assert.That(properties.ForwardDeadLetteredMessagesTo, Is.EqualTo("dlq"));
+                Assert.That(properties.UserMetadata, Is.EqualTo("metadata"));
+            });
         }
 
         [Test]
@@ -116,16 +119,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 twoDaysAgo,
                 yesterday,
                 today);
-            Assert.AreEqual("topicName", properties.TopicName);
-            Assert.AreEqual("subscriptionName", properties.SubscriptionName);
-            Assert.AreEqual(10, properties.ActiveMessageCount);
-            Assert.AreEqual(1, properties.DeadLetterMessageCount);
-            Assert.AreEqual(5, properties.TransferDeadLetterMessageCount);
-            Assert.AreEqual(2, properties.TransferMessageCount);
-            Assert.AreEqual(18, properties.TotalMessageCount);
-            Assert.AreEqual(twoDaysAgo, properties.CreatedAt);
-            Assert.AreEqual(yesterday, properties.UpdatedAt);
-            Assert.AreEqual(today, properties.AccessedAt);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.TopicName, Is.EqualTo("topicName"));
+                Assert.That(properties.SubscriptionName, Is.EqualTo("subscriptionName"));
+                Assert.That(properties.ActiveMessageCount, Is.EqualTo(10));
+                Assert.That(properties.DeadLetterMessageCount, Is.EqualTo(1));
+                Assert.That(properties.TransferDeadLetterMessageCount, Is.EqualTo(5));
+                Assert.That(properties.TransferMessageCount, Is.EqualTo(2));
+                Assert.That(properties.TotalMessageCount, Is.EqualTo(18));
+                Assert.That(properties.CreatedAt, Is.EqualTo(twoDaysAgo));
+                Assert.That(properties.UpdatedAt, Is.EqualTo(yesterday));
+                Assert.That(properties.AccessedAt, Is.EqualTo(today));
+            });
         }
 
         [Test]
@@ -147,7 +153,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             };
             var properties = new SubscriptionProperties(options);
 
-            Assert.AreEqual(options, new CreateSubscriptionOptions(properties));
+            Assert.That(new CreateSubscriptionOptions(properties), Is.EqualTo(options));
         }
 
         [Test]
@@ -178,7 +184,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             MockResponse response = new MockResponse(200);
             response.SetContent(subscriptionDescriptionXml);
             SubscriptionProperties subscriptionDesc = await SubscriptionPropertiesExtensions.ParseResponseAsync("abcd", response);
-            Assert.NotNull(subscriptionDesc.UnknownProperties);
+            Assert.That(subscriptionDesc.UnknownProperties, Is.Not.Null);
             XDocument doc = SubscriptionPropertiesExtensions.Serialize(subscriptionDesc);
 
             XName subscriptionDescriptionElementName = XName.Get("SubscriptionDescription", AdministrationClientConstants.ServiceBusNamespace);
@@ -188,8 +194,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             XNode actualChildNode = serializedSubscriptionDescritionElement.FirstNode;
             while (expectedChildNode != null)
             {
-                Assert.NotNull(actualChildNode);
-                Assert.True(XNode.DeepEquals(expectedChildNode, actualChildNode), $"SubscriptionDescrition parsing and serialization combo didn't work as expected. {expectedChildNode.ToString()}");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actualChildNode, Is.Not.Null);
+                    Assert.That(XNode.DeepEquals(expectedChildNode, actualChildNode), Is.True, $"SubscriptionDescrition parsing and serialization combo didn't work as expected. {expectedChildNode.ToString()}");
+                });
                 expectedChildNode = expectedChildNode.NextNode;
                 actualChildNode = actualChildNode.NextNode;
             }

@@ -68,70 +68,70 @@ namespace TestProjects.Spector.Tests.Http.Parameters.Spread
         public Task Model_SpreadAsRequestBody() => Test(async (host) =>
         {
             Response response = await new SpreadClient(host, null).GetModelClient().SpreadAsRequestBodyAsync("foo");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Model_SpreadCompositeRequest() => Test(async (host) =>
         {
             Response response = await new SpreadClient(host, null).GetModelClient().SpreadCompositeRequestAsync("foo", "bar", new BodyParameter("foo"));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Model_SpreadCompositeRequestMix() => Test(async (host) =>
         {
             Response response = await new SpreadClient(host, null).GetModelClient().SpreadCompositeRequestMixAsync("foo", "bar", "foo");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Model_SpreadCompositeRequestOnlyWithBody() => Test(async (host) =>
         {
             Response response = await new SpreadClient(host, null).GetModelClient().SpreadCompositeRequestOnlyWithBodyAsync(new BodyParameter("foo"));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Model_SpreadCompositeRequestOnlyWithoutBody() => Test(async (host) =>
         {
             Response response = await new SpreadClient(host, null).GetModelClient().SpreadCompositeRequestWithoutBodyAsync("foo", "bar");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Alias_SpreadAsRequestBody() => Test(async (host) =>
         {
             Response response = await new SpreadClient(host, null).GetAliasClient().SpreadAsRequestBodyAsync("foo");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Alias_SpreadAsRequestParameter() => Test(async (host) =>
         {
             Response response = await new SpreadClient(host, null).GetAliasClient().SpreadAsRequestParameterAsync("1", "bar", "foo");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Alias_SpreadWithMultipleParameters() => Test(async (host) =>
         {
             Response response = await new SpreadClient(host, null).GetAliasClient().SpreadWithMultipleParametersAsync("1", "bar", "foo", new[] { 1, 2 }, 1, new[] { "foo", "bar" });
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Alias_SpreadWithModel() => Test(async (host) =>
         {
             Response response = await new SpreadClient(host, null).GetAliasClient().SpreadParameterWithInnerModelAsync("1", "bar", "foo");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Alias_SpreadAliasinAlias() => Test(async (host) =>
         {
             Response response = await new SpreadClient(host, null).GetAliasClient().SpreadParameterWithInnerAliasAsync("1", "bar", "foo", 1);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         private static void ValidateConvenienceMethod(Type clientType, string methodName, IEnumerable<(Type ParameterType, string Name, bool IsRequired)> expected)
@@ -167,9 +167,9 @@ namespace TestProjects.Spector.Tests.Http.Parameters.Spread
             var expectedNames = expected.Select(p => p.Name);
             var expectedRequiredness = expected.Select(p => p.IsRequired);
 
-            CollectionAssert.AreEqual(expectedTypes, parameterTypes);
-            CollectionAssert.AreEqual(expectedNames, parameterNames);
-            CollectionAssert.AreEqual(expectedRequiredness, parameterRequiredness);
+            Assert.That(parameterTypes, Is.EqualTo(expectedTypes).AsCollection);
+            Assert.That(parameterNames, Is.EqualTo(expectedNames).AsCollection);
+            Assert.That(parameterRequiredness, Is.EqualTo(expectedRequiredness).AsCollection);
         }
 
         private static bool IsProtocolMethod(MethodInfo method)

@@ -45,13 +45,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyAlertConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(createdConfig.Name, Is.EqualTo(configName));
-            Assert.That(createdConfig.Description, Is.Empty);
-            Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
-            Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
-            Assert.That(createdConfig.DimensionsToSplitAlert.Single(), Is.EqualTo(TempDataFeedDimensionNameA));
-            Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(createdConfig.Name, Is.EqualTo(configName));
+                Assert.That(createdConfig.Description, Is.Empty);
+                Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
+                Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
+                Assert.That(createdConfig.DimensionsToSplitAlert.Single(), Is.EqualTo(TempDataFeedDimensionNameA));
+                Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
+            });
 
             MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
 
@@ -63,11 +66,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig.AlertScope.TopNGroupInScope, Is.Null);
 
             Assert.That(createdMetricAlertConfig.AlertConditions, Is.Not.Null);
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition, Is.Null);
-            Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition, Is.Null);
+                Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition, Is.Null);
 
-            Assert.That(createdMetricAlertConfig.AlertSnoozeCondition, Is.Null);
-            Assert.That(createdMetricAlertConfig.UseDetectionResultToFilterAnomalies, Is.False);
+                Assert.That(createdMetricAlertConfig.AlertSnoozeCondition, Is.Null);
+                Assert.That(createdMetricAlertConfig.UseDetectionResultToFilterAnomalies, Is.False);
+            });
         }
 
         [RecordedTest]
@@ -97,13 +103,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyAlertConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(createdConfig.Name, Is.EqualTo(configName));
-            Assert.That(createdConfig.Description, Is.Empty);
-            Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
-            Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
-            Assert.That(createdConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
-            Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(createdConfig.Name, Is.EqualTo(configName));
+                Assert.That(createdConfig.Description, Is.Empty);
+                Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
+                Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
+                Assert.That(createdConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
+                Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
+            });
 
             MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
 
@@ -116,11 +125,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             ValidateTempDataFeedDimensionKey(createdMetricAlertConfig.AlertScope.SeriesGroupInScope, "Delhi");
 
             Assert.That(createdMetricAlertConfig.AlertConditions, Is.Not.Null);
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition, Is.Null);
-            Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition, Is.Null);
+                Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition, Is.Null);
 
-            Assert.That(createdMetricAlertConfig.AlertSnoozeCondition, Is.Null);
-            Assert.That(createdMetricAlertConfig.UseDetectionResultToFilterAnomalies, Is.False);
+                Assert.That(createdMetricAlertConfig.AlertSnoozeCondition, Is.Null);
+                Assert.That(createdMetricAlertConfig.UseDetectionResultToFilterAnomalies, Is.False);
+            });
         }
 
         [RecordedTest]
@@ -147,13 +159,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyAlertConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(createdConfig.Name, Is.EqualTo(configName));
-            Assert.That(createdConfig.Description, Is.Empty);
-            Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
-            Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
-            Assert.That(createdConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
-            Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(createdConfig.Name, Is.EqualTo(configName));
+                Assert.That(createdConfig.Description, Is.Empty);
+                Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
+                Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
+                Assert.That(createdConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
+                Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
+            });
 
             MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
 
@@ -164,16 +179,22 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig.AlertScope.SeriesGroupInScope, Is.Null);
 
             Assert.That(createdMetricAlertConfig.AlertScope.TopNGroupInScope, Is.Not.Null);
-            Assert.That(createdMetricAlertConfig.AlertScope.TopNGroupInScope.Top, Is.EqualTo(30));
-            Assert.That(createdMetricAlertConfig.AlertScope.TopNGroupInScope.Period, Is.EqualTo(20));
-            Assert.That(createdMetricAlertConfig.AlertScope.TopNGroupInScope.MinimumTopCount, Is.EqualTo(10));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdMetricAlertConfig.AlertScope.TopNGroupInScope.Top, Is.EqualTo(30));
+                Assert.That(createdMetricAlertConfig.AlertScope.TopNGroupInScope.Period, Is.EqualTo(20));
+                Assert.That(createdMetricAlertConfig.AlertScope.TopNGroupInScope.MinimumTopCount, Is.EqualTo(10));
 
-            Assert.That(createdMetricAlertConfig.AlertConditions, Is.Not.Null);
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition, Is.Null);
-            Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition, Is.Null);
+                Assert.That(createdMetricAlertConfig.AlertConditions, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition, Is.Null);
+                Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition, Is.Null);
 
-            Assert.That(createdMetricAlertConfig.AlertSnoozeCondition, Is.Null);
-            Assert.That(createdMetricAlertConfig.UseDetectionResultToFilterAnomalies, Is.False);
+                Assert.That(createdMetricAlertConfig.AlertSnoozeCondition, Is.Null);
+                Assert.That(createdMetricAlertConfig.UseDetectionResultToFilterAnomalies, Is.False);
+            });
         }
 
         [RecordedTest]
@@ -230,11 +251,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyAlertConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(createdConfig.Name, Is.EqualTo(configName));
-            Assert.That(createdConfig.Description, Is.EqualTo(description));
-            Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
-            Assert.That(createdConfig.IdsOfHooksToAlert.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(createdConfig.Name, Is.EqualTo(configName));
+                Assert.That(createdConfig.Description, Is.EqualTo(description));
+                Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
+                Assert.That(createdConfig.IdsOfHooksToAlert, Has.Count.EqualTo(2));
+            });
             Assert.That(createdConfig.IdsOfHooksToAlert.Contains(disposableHook0.Hook.Id));
             Assert.That(createdConfig.IdsOfHooksToAlert.Contains(disposableHook1.Hook.Id));
             Assert.That(createdConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
@@ -251,22 +275,31 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdMetricAlertConfig.AlertConditions, Is.Not.Null);
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition, Is.Not.Null);
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Both));
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(metricId));
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.MeasureType, Is.EqualTo(BoundaryMeasureType.Mean));
-            Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition, Is.Not.Null);
-            Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
-            Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Both));
+                Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
+                Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
+                Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(metricId));
+                Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
+                Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.MeasureType, Is.EqualTo(BoundaryMeasureType.Mean));
+                Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
+                Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
 
-            Assert.That(createdMetricAlertConfig.AlertSnoozeCondition, Is.Not.Null);
-            Assert.That(createdMetricAlertConfig.AlertSnoozeCondition.AutoSnooze, Is.EqualTo(12));
-            Assert.That(createdMetricAlertConfig.AlertSnoozeCondition.SnoozeScope, Is.EqualTo(SnoozeScope.Series));
-            Assert.That(createdMetricAlertConfig.AlertSnoozeCondition.IsOnlyForSuccessive, Is.True);
+                Assert.That(createdMetricAlertConfig.AlertSnoozeCondition, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdMetricAlertConfig.AlertSnoozeCondition.AutoSnooze, Is.EqualTo(12));
+                Assert.That(createdMetricAlertConfig.AlertSnoozeCondition.SnoozeScope, Is.EqualTo(SnoozeScope.Series));
+                Assert.That(createdMetricAlertConfig.AlertSnoozeCondition.IsOnlyForSuccessive, Is.True);
 
-            Assert.That(createdMetricAlertConfig.UseDetectionResultToFilterAnomalies, Is.False);
+                Assert.That(createdMetricAlertConfig.UseDetectionResultToFilterAnomalies, Is.False);
+            });
         }
 
         [RecordedTest]
@@ -314,14 +347,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyAlertConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(createdConfig.Name, Is.EqualTo(configName));
-            Assert.That(createdConfig.Description, Is.Empty);
-            Assert.That(createdConfig.CrossMetricsOperator, Is.EqualTo(MetricAlertConfigurationsOperator.Xor));
-            Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
-            Assert.That(createdConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
-            Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
-            Assert.That(createdConfig.MetricAlertConfigurations.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(createdConfig.Name, Is.EqualTo(configName));
+                Assert.That(createdConfig.Description, Is.Empty);
+                Assert.That(createdConfig.CrossMetricsOperator, Is.EqualTo(MetricAlertConfigurationsOperator.Xor));
+                Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
+                Assert.That(createdConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
+                Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
+            });
+            Assert.That(createdConfig.MetricAlertConfigurations, Has.Count.EqualTo(2));
 
             // Validate the first Metric Alert Configuration.
 
@@ -336,40 +372,52 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdMetricAlertConfig0.AlertConditions, Is.Not.Null);
             Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition, Is.Not.Null);
-            Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Up));
-            Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
-            Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.Null);
-            Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
-            Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
-            Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.MeasureType, Is.EqualTo(BoundaryMeasureType.Value));
-            Assert.That(createdMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Up));
+                Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
+                Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.Null);
+                Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
+                Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
+                Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.MeasureType, Is.EqualTo(BoundaryMeasureType.Value));
+                Assert.That(createdMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Null);
 
-            Assert.That(createdMetricAlertConfig0.AlertSnoozeCondition, Is.Null);
-            Assert.That(createdMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.True);
+                Assert.That(createdMetricAlertConfig0.AlertSnoozeCondition, Is.Null);
+                Assert.That(createdMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.True);
+            });
 
             // Validate the second Metric Alert Configuration.
 
             MetricAlertConfiguration createdMetricAlertConfig1 = createdConfig.MetricAlertConfigurations[1];
 
-            Assert.That(createdMetricAlertConfig1.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdMetricAlertConfig1.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
-            Assert.That(createdMetricAlertConfig1.AlertScope, Is.Not.Null);
-            Assert.That(createdMetricAlertConfig1.AlertScope.ScopeType, Is.EqualTo(MetricAnomalyAlertScopeType.WholeSeries));
-            Assert.That(createdMetricAlertConfig1.AlertScope.SeriesGroupInScope, Is.Null);
-            Assert.That(createdMetricAlertConfig1.AlertScope.TopNGroupInScope, Is.Null);
+                Assert.That(createdMetricAlertConfig1.AlertScope, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdMetricAlertConfig1.AlertScope.ScopeType, Is.EqualTo(MetricAnomalyAlertScopeType.WholeSeries));
+                Assert.That(createdMetricAlertConfig1.AlertScope.SeriesGroupInScope, Is.Null);
+                Assert.That(createdMetricAlertConfig1.AlertScope.TopNGroupInScope, Is.Null);
 
-            Assert.That(createdMetricAlertConfig1.AlertConditions, Is.Not.Null);
+                Assert.That(createdMetricAlertConfig1.AlertConditions, Is.Not.Null);
+            });
             Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition, Is.Not.Null);
-            Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Down));
-            Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.UpperBound, Is.Null);
-            Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
-            Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
-            Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
-            Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.MeasureType, Is.EqualTo(BoundaryMeasureType.Value));
-            Assert.That(createdMetricAlertConfig1.AlertConditions.SeverityCondition, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Down));
+                Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.UpperBound, Is.Null);
+                Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
+                Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
+                Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
+                Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.MeasureType, Is.EqualTo(BoundaryMeasureType.Value));
+                Assert.That(createdMetricAlertConfig1.AlertConditions.SeverityCondition, Is.Null);
 
-            Assert.That(createdMetricAlertConfig1.AlertSnoozeCondition, Is.Null);
-            Assert.That(createdMetricAlertConfig1.UseDetectionResultToFilterAnomalies, Is.False);
+                Assert.That(createdMetricAlertConfig1.AlertSnoozeCondition, Is.Null);
+                Assert.That(createdMetricAlertConfig1.UseDetectionResultToFilterAnomalies, Is.False);
+            });
         }
 
         [RecordedTest]
@@ -434,63 +482,90 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
-            // Validate top-level members.
+            Assert.Multiple(() =>
+            {
+                // Validate top-level members.
 
-            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
-            Assert.That(updatedConfig.Name, Is.EqualTo(configName));
-            Assert.That(updatedConfig.Description, Is.Empty);
-            Assert.That(updatedConfig.CrossMetricsOperator, Is.EqualTo(MetricAlertConfigurationsOperator.Or));
-            Assert.That(updatedConfig.IdsOfHooksToAlert, Is.EqualTo(hookIds));
-            Assert.That(updatedConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
-            Assert.That(updatedConfig.MetricAlertConfigurations, Is.Not.Null);
-            Assert.That(updatedConfig.MetricAlertConfigurations.Count, Is.EqualTo(2));
+                Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
+                Assert.That(updatedConfig.Name, Is.EqualTo(configName));
+                Assert.That(updatedConfig.Description, Is.Empty);
+                Assert.That(updatedConfig.CrossMetricsOperator, Is.EqualTo(MetricAlertConfigurationsOperator.Or));
+                Assert.That(updatedConfig.IdsOfHooksToAlert, Is.EqualTo(hookIds));
+                Assert.That(updatedConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
+                Assert.That(updatedConfig.MetricAlertConfigurations, Is.Not.Null);
+            });
+            Assert.That(updatedConfig.MetricAlertConfigurations, Has.Count.EqualTo(2));
 
             // Validate the first Metric Alert Configuration.
 
             MetricAlertConfiguration updatedMetricAlertConfig0 = updatedConfig.MetricAlertConfigurations[0];
 
-            Assert.That(updatedMetricAlertConfig0.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig0.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
-            Assert.That(updatedMetricAlertConfig0.AlertScope, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertScope.ScopeType, Is.EqualTo(MetricAnomalyAlertScopeType.WholeSeries));
-            Assert.That(updatedMetricAlertConfig0.AlertScope.SeriesGroupInScope, Is.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertScope.TopNGroupInScope, Is.Null);
+                Assert.That(updatedMetricAlertConfig0.AlertScope, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig0.AlertScope.ScopeType, Is.EqualTo(MetricAnomalyAlertScopeType.WholeSeries));
+                Assert.That(updatedMetricAlertConfig0.AlertScope.SeriesGroupInScope, Is.Null);
+                Assert.That(updatedMetricAlertConfig0.AlertScope.TopNGroupInScope, Is.Null);
 
-            Assert.That(updatedMetricAlertConfig0.AlertConditions, Is.Not.Null);
+                Assert.That(updatedMetricAlertConfig0.AlertConditions, Is.Not.Null);
+            });
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Both));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(metricId));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.MeasureType, Is.EqualTo(BoundaryMeasureType.Value));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Both));
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(metricId));
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.MeasureType, Is.EqualTo(BoundaryMeasureType.Value));
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
 
-            Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition.AutoSnooze, Is.EqualTo(12));
-            Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition.SnoozeScope, Is.EqualTo(SnoozeScope.Series));
-            Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition.IsOnlyForSuccessive, Is.True);
+                Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition.AutoSnooze, Is.EqualTo(12));
+                Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition.SnoozeScope, Is.EqualTo(SnoozeScope.Series));
+                Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition.IsOnlyForSuccessive, Is.True);
 
-            Assert.That(updatedMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.False);
+                Assert.That(updatedMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.False);
+            });
 
             // Validate the second Metric Alert Configuration.
 
             MetricAlertConfiguration updatedMetricAlertConfig1 = updatedConfig.MetricAlertConfigurations[1];
 
-            Assert.That(updatedMetricAlertConfig1.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig1.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
-            Assert.That(updatedMetricAlertConfig1.AlertScope, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig1.AlertScope.ScopeType, Is.EqualTo(MetricAnomalyAlertScopeType.WholeSeries));
-            Assert.That(updatedMetricAlertConfig1.AlertScope.SeriesGroupInScope, Is.Null);
-            Assert.That(updatedMetricAlertConfig1.AlertScope.TopNGroupInScope, Is.Null);
+                Assert.That(updatedMetricAlertConfig1.AlertScope, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig1.AlertScope.ScopeType, Is.EqualTo(MetricAnomalyAlertScopeType.WholeSeries));
+                Assert.That(updatedMetricAlertConfig1.AlertScope.SeriesGroupInScope, Is.Null);
+                Assert.That(updatedMetricAlertConfig1.AlertScope.TopNGroupInScope, Is.Null);
 
-            Assert.That(updatedMetricAlertConfig1.AlertConditions, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig1.AlertConditions.MetricBoundaryCondition, Is.Null);
-            Assert.That(updatedMetricAlertConfig1.AlertConditions.SeverityCondition, Is.Null);
-            Assert.That(updatedMetricAlertConfig1.AlertSnoozeCondition, Is.Null);
-            Assert.That(updatedMetricAlertConfig1.UseDetectionResultToFilterAnomalies, Is.True);
+                Assert.That(updatedMetricAlertConfig1.AlertConditions, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig1.AlertConditions.MetricBoundaryCondition, Is.Null);
+                Assert.That(updatedMetricAlertConfig1.AlertConditions.SeverityCondition, Is.Null);
+                Assert.That(updatedMetricAlertConfig1.AlertSnoozeCondition, Is.Null);
+                Assert.That(updatedMetricAlertConfig1.UseDetectionResultToFilterAnomalies, Is.True);
+            });
         }
 
         [RecordedTest]
@@ -579,66 +654,96 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
-            // Validate top-level members.
+            Assert.Multiple(() =>
+            {
+                // Validate top-level members.
 
-            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
-            Assert.That(updatedConfig.Name, Is.EqualTo(configName));
-            Assert.That(updatedConfig.Description, Is.EqualTo(description));
-            Assert.That(updatedConfig.CrossMetricsOperator, Is.EqualTo(MetricAlertConfigurationsOperator.And));
-            Assert.That(updatedConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
-            Assert.That(updatedConfig.DimensionsToSplitAlert.Single(), Is.EqualTo(TempDataFeedDimensionNameA));
-            Assert.That(updatedConfig.MetricAlertConfigurations, Is.Not.Null);
+                Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
+                Assert.That(updatedConfig.Name, Is.EqualTo(configName));
+                Assert.That(updatedConfig.Description, Is.EqualTo(description));
+                Assert.That(updatedConfig.CrossMetricsOperator, Is.EqualTo(MetricAlertConfigurationsOperator.And));
+                Assert.That(updatedConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
+                Assert.That(updatedConfig.DimensionsToSplitAlert.Single(), Is.EqualTo(TempDataFeedDimensionNameA));
+                Assert.That(updatedConfig.MetricAlertConfigurations, Is.Not.Null);
+            });
 
             // Validate the first Metric Alert Configuration.
 
             MetricAlertConfiguration updatedMetricAlertConfig0 = updatedConfig.MetricAlertConfigurations[0];
 
-            Assert.That(updatedMetricAlertConfig0.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig0.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
-            Assert.That(updatedMetricAlertConfig0.AlertScope, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertScope.ScopeType, Is.EqualTo(MetricAnomalyAlertScopeType.WholeSeries));
-            Assert.That(updatedMetricAlertConfig0.AlertScope.SeriesGroupInScope, Is.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertScope.TopNGroupInScope, Is.Null);
+                Assert.That(updatedMetricAlertConfig0.AlertScope, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig0.AlertScope.ScopeType, Is.EqualTo(MetricAnomalyAlertScopeType.WholeSeries));
+                Assert.That(updatedMetricAlertConfig0.AlertScope.SeriesGroupInScope, Is.Null);
+                Assert.That(updatedMetricAlertConfig0.AlertScope.TopNGroupInScope, Is.Null);
 
-            Assert.That(updatedMetricAlertConfig0.AlertConditions, Is.Not.Null);
+                Assert.That(updatedMetricAlertConfig0.AlertConditions, Is.Not.Null);
+            });
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Both));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(15.0));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(5.0));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.MeasureType, Is.EqualTo(BoundaryMeasureType.Mean));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.High));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Both));
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(15.0));
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(5.0));
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.MeasureType, Is.EqualTo(BoundaryMeasureType.Mean));
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
+                Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.High));
 
-            Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition, Is.Null);
-            Assert.That(updatedMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.False);
+                Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition, Is.Null);
+                Assert.That(updatedMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.False);
+            });
 
             // Validate the second Metric Alert Configuration.
 
             MetricAlertConfiguration updatedMetricAlertConfig1 = updatedConfig.MetricAlertConfigurations[1];
 
-            Assert.That(updatedMetricAlertConfig1.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig1.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
-            Assert.That(updatedMetricAlertConfig1.AlertScope, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig1.AlertScope.ScopeType, Is.EqualTo(MetricAnomalyAlertScopeType.TopN));
-            Assert.That(updatedMetricAlertConfig1.AlertScope.SeriesGroupInScope, Is.Null);
-            Assert.That(updatedMetricAlertConfig1.AlertScope.TopNGroupInScope, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig1.AlertScope.TopNGroupInScope.Top, Is.EqualTo(50));
-            Assert.That(updatedMetricAlertConfig1.AlertScope.TopNGroupInScope.Period, Is.EqualTo(40));
-            Assert.That(updatedMetricAlertConfig1.AlertScope.TopNGroupInScope.MinimumTopCount, Is.EqualTo(30));
+                Assert.That(updatedMetricAlertConfig1.AlertScope, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig1.AlertScope.ScopeType, Is.EqualTo(MetricAnomalyAlertScopeType.TopN));
+                Assert.That(updatedMetricAlertConfig1.AlertScope.SeriesGroupInScope, Is.Null);
+                Assert.That(updatedMetricAlertConfig1.AlertScope.TopNGroupInScope, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig1.AlertScope.TopNGroupInScope.Top, Is.EqualTo(50));
+                Assert.That(updatedMetricAlertConfig1.AlertScope.TopNGroupInScope.Period, Is.EqualTo(40));
+                Assert.That(updatedMetricAlertConfig1.AlertScope.TopNGroupInScope.MinimumTopCount, Is.EqualTo(30));
 
-            Assert.That(updatedMetricAlertConfig1.AlertConditions, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig1.AlertConditions.MetricBoundaryCondition, Is.Null);
-            Assert.That(updatedMetricAlertConfig1.AlertConditions.SeverityCondition, Is.Null);
+                Assert.That(updatedMetricAlertConfig1.AlertConditions, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig1.AlertConditions.MetricBoundaryCondition, Is.Null);
+                Assert.That(updatedMetricAlertConfig1.AlertConditions.SeverityCondition, Is.Null);
 
-            Assert.That(updatedMetricAlertConfig1.AlertSnoozeCondition, Is.Not.Null);
-            Assert.That(updatedMetricAlertConfig1.AlertSnoozeCondition.AutoSnooze, Is.EqualTo(4));
-            Assert.That(updatedMetricAlertConfig1.AlertSnoozeCondition.SnoozeScope, Is.EqualTo(SnoozeScope.Metric));
-            Assert.That(updatedMetricAlertConfig1.AlertSnoozeCondition.IsOnlyForSuccessive, Is.True);
+                Assert.That(updatedMetricAlertConfig1.AlertSnoozeCondition, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetricAlertConfig1.AlertSnoozeCondition.AutoSnooze, Is.EqualTo(4));
+                Assert.That(updatedMetricAlertConfig1.AlertSnoozeCondition.SnoozeScope, Is.EqualTo(SnoozeScope.Metric));
+                Assert.That(updatedMetricAlertConfig1.AlertSnoozeCondition.IsOnlyForSuccessive, Is.True);
 
-            Assert.That(updatedMetricAlertConfig1.UseDetectionResultToFilterAnomalies, Is.True);
+                Assert.That(updatedMetricAlertConfig1.UseDetectionResultToFilterAnomalies, Is.True);
+            });
         }
 
         [RecordedTest]
@@ -684,12 +789,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (AnomalyAlertConfiguration config in adminClient.GetAlertConfigurationsAsync(DetectionConfigurationId))
             {
-                Assert.That(config.Id, Is.Not.Null.And.Not.Empty);
-                Assert.That(config.Name, Is.Not.Null.And.Not.Empty);
-                Assert.That(config.Description, Is.Not.Null);
-                Assert.That(config.IdsOfHooksToAlert, Is.Not.Null);
-                Assert.That(config.DimensionsToSplitAlert, Is.Not.Null);
-                Assert.That(config.MetricAlertConfigurations, Is.Not.Null.And.Not.Empty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(config.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(config.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(config.Description, Is.Not.Null);
+                    Assert.That(config.IdsOfHooksToAlert, Is.Not.Null);
+                    Assert.That(config.DimensionsToSplitAlert, Is.Not.Null);
+                    Assert.That(config.MetricAlertConfigurations, Is.Not.Null.And.Not.Empty);
+                });
 
                 if (config.MetricAlertConfigurations.Count == 1)
                 {
@@ -760,7 +868,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (Page<AnomalyAlertConfiguration> page in configsWithMaxPageSize.AsPages())
             {
-                Assert.That(page.Values.Count, Is.LessThanOrEqualTo(MaxPageSizeSamples));
+                Assert.That(page.Values, Has.Count.LessThanOrEqualTo(MaxPageSizeSamples));
 
                 if (++configCount >= MaximumSamplesCount)
                 {
@@ -813,13 +921,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         private void ValidateMetricAlertConfiguration(MetricAlertConfiguration configuration)
         {
-            Assert.That(configuration.DetectionConfigurationId, Is.Not.Null.And.Not.Empty);
-            Assert.That(configuration.AlertScope, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(configuration.DetectionConfigurationId, Is.Not.Null.And.Not.Empty);
+                Assert.That(configuration.AlertScope, Is.Not.Null);
+            });
 
             if (configuration.AlertScope.ScopeType == MetricAnomalyAlertScopeType.WholeSeries)
             {
-                Assert.That(configuration.AlertScope.SeriesGroupInScope, Is.Null);
-                Assert.That(configuration.AlertScope.TopNGroupInScope, Is.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(configuration.AlertScope.SeriesGroupInScope, Is.Null);
+                    Assert.That(configuration.AlertScope.TopNGroupInScope, Is.Null);
+                });
             }
             else if (configuration.AlertScope.ScopeType == MetricAnomalyAlertScopeType.SeriesGroup)
             {
@@ -828,8 +942,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
             else if (configuration.AlertScope.ScopeType == MetricAnomalyAlertScopeType.TopN)
             {
-                Assert.That(configuration.AlertScope.SeriesGroupInScope, Is.Null);
-                Assert.That(configuration.AlertScope.TopNGroupInScope, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(configuration.AlertScope.SeriesGroupInScope, Is.Null);
+                    Assert.That(configuration.AlertScope.TopNGroupInScope, Is.Not.Null);
+                });
             }
             else
             {
@@ -845,18 +962,27 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 if (boundaryCondition.Direction == BoundaryDirection.Up)
                 {
-                    Assert.That(boundaryCondition.UpperBound, Is.Not.Null);
-                    Assert.That(boundaryCondition.LowerBound, Is.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(boundaryCondition.UpperBound, Is.Not.Null);
+                        Assert.That(boundaryCondition.LowerBound, Is.Null);
+                    });
                 }
                 else if (boundaryCondition.Direction == BoundaryDirection.Down)
                 {
-                    Assert.That(boundaryCondition.UpperBound, Is.Null);
-                    Assert.That(boundaryCondition.LowerBound, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(boundaryCondition.UpperBound, Is.Null);
+                        Assert.That(boundaryCondition.LowerBound, Is.Not.Null);
+                    });
                 }
                 else if (boundaryCondition.Direction == BoundaryDirection.Both)
                 {
-                    Assert.That(boundaryCondition.UpperBound, Is.Not.Null);
-                    Assert.That(boundaryCondition.LowerBound, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(boundaryCondition.UpperBound, Is.Not.Null);
+                        Assert.That(boundaryCondition.LowerBound, Is.Not.Null);
+                    });
                 }
                 else
                 {
@@ -873,8 +999,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             if (severityCondition != null)
             {
-                Assert.That(severityCondition.MinimumAlertSeverity, Is.Not.EqualTo(default(AnomalySeverity)));
-                Assert.That(severityCondition.MaximumAlertSeverity, Is.Not.EqualTo(default(AnomalySeverity)));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(severityCondition.MinimumAlertSeverity, Is.Not.EqualTo(default(AnomalySeverity)));
+                    Assert.That(severityCondition.MaximumAlertSeverity, Is.Not.EqualTo(default(AnomalySeverity)));
+                });
             }
 
             if (configuration.AlertSnoozeCondition != null)

@@ -40,8 +40,8 @@ namespace Azure.MixedReality.Authentication.Tests
             MixedRealityStsClient client = CreateClient();
 
             AccessToken token = await client.GetTokenAsync();
-            Assert.NotNull(token);
-            Assert.NotNull(token.Token);
+            Assert.That(token, Is.Not.Null);
+            Assert.That(token.Token, Is.Not.Null);
         }
     }
 }

@@ -123,15 +123,21 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var scopes = listener.Scopes.ToList();
-            Assert.AreEqual(eventBatch.Length, listener.Scopes.Count);
+            Assert.That(listener.Scopes, Has.Count.EqualTo(eventBatch.Length));
 
             foreach (var scope in scopes)
             {
-                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, scope.Name);
-                Assert.That(scope.LinkedActivities, Has.Exactly(1).Items);
-                Assert.That(scope.LinkedActivities.Select(a => a.ParentId), Has.One.EqualTo(scope.Activity.ParentId));
-                Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
-                Assert.AreEqual(ActivityStatusCode.Unset, scope.Activity.Status);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
+                    Assert.That(scope.LinkedActivities, Has.Exactly(1).Items);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(scope.LinkedActivities.Select(a => a.ParentId), Has.One.EqualTo(scope.Activity.ParentId));
+                    Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
+                    Assert.That(scope.Activity.Status, Is.EqualTo(ActivityStatusCode.Unset));
+                });
             }
             cancellationSource.Cancel();
         }
@@ -173,13 +179,16 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var scopes = listener.Scopes.ToList();
-            Assert.AreEqual(eventBatch.Length, listener.Scopes.Count);
+            Assert.That(listener.Scopes, Has.Count.EqualTo(eventBatch.Length));
 
             foreach (var scope in scopes)
             {
-                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, scope.Name);
-                Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
-                Assert.AreEqual(ActivityStatusCode.Error, scope.Activity.Status);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
+                    Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
+                    Assert.That(scope.Activity.Status, Is.EqualTo(ActivityStatusCode.Error));
+                });
             }
             cancellationSource.Cancel();
         }
@@ -223,13 +232,16 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var scopes = listener.Scopes.ToList();
-            Assert.AreEqual(eventBatch.Length, listener.Scopes.Count);
+            Assert.That(listener.Scopes, Has.Count.EqualTo(eventBatch.Length));
 
             foreach (var scope in scopes)
             {
-                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, scope.Name);
-                Assert.IsEmpty(scope.LinkedActivities);
-                Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
+                    Assert.That(scope.LinkedActivities, Is.Empty);
+                    Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
+                });
             }
             cancellationSource.Cancel();
         }

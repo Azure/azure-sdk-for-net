@@ -25,8 +25,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var folderUri = new Uri(uri);
             KeyVaultBackupClient.ParseFolderName(folderUri, out string containerUriString, out string folderName);
 
-            Assert.That(containerUriString, Is.EqualTo(expectedUri));
-            Assert.That(folderName, Is.EqualTo(expectedFolder));
+            Assert.Multiple(() =>
+            {
+                Assert.That(containerUriString, Is.EqualTo(expectedUri));
+                Assert.That(folderName, Is.EqualTo(expectedFolder));
+            });
         }
     }
 }

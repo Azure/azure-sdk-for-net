@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 #endregion
 
-                Assert.AreEqual(42, value);
+                Assert.That(value, Is.EqualTo(42));
             }
         }
 
@@ -114,13 +114,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string customFooterValue = (string)receivedAmqpMessage.Footer["custom-footer-property"];
                 string customMessageAnnotation = (string)receivedAmqpMessage.MessageAnnotations["custom-message-annotation"];
                 string customDeliveryAnnotation = (string)receivedAmqpMessage.DeliveryAnnotations["custom-delivery-annotation"];
-                #endregion
+                Assert.Multiple(() =>
+                {
+                    #endregion
 
-                Assert.IsTrue(durable);
-                Assert.AreEqual(1, priority);
-                Assert.AreEqual("custom-footer-value", customFooterValue);
-                Assert.AreEqual("custom-message-annotation-value", customMessageAnnotation);
-                Assert.AreEqual("custom-delivery-annotation-value", customDeliveryAnnotation);
+                    Assert.That(durable, Is.True);
+                    Assert.That(priority, Is.EqualTo(1));
+                    Assert.That(customFooterValue, Is.EqualTo("custom-footer-value"));
+                    Assert.That(customMessageAnnotation, Is.EqualTo("custom-message-annotation-value"));
+                    Assert.That(customDeliveryAnnotation, Is.EqualTo("custom-delivery-annotation-value"));
+                });
             }
         }
     }

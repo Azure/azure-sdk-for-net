@@ -44,7 +44,7 @@ namespace Azure.Core.Tests.Public
         {
             dynamic json = new BinaryData(expected).ToDynamicFromJson();
 
-            Assert.AreEqual(value, (T)json);
+            Assert.That((T)json, Is.EqualTo(value));
         }
 
         [Test]
@@ -102,11 +102,11 @@ namespace Azure.Core.Tests.Public
             json.a.b = value;
 
             Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":" + expected + "}}");
-            Assert.AreEqual(value, (T)json.a.b);
+            Assert.That((T)json.a.b, Is.EqualTo(value));
 
             dynamic reparsedJson = new BinaryData(json.ToString()).ToDynamicFromJson();
 
-            Assert.AreEqual(value, (T)reparsedJson.a.b);
+            Assert.That((T)reparsedJson.a.b, Is.EqualTo(value));
         }
 
         public static IEnumerable<object[]> PrimitiveValues()

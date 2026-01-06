@@ -67,8 +67,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var request = mockTransport.Requests.Single();
 
-            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
-            Assert.AreEqual("application/octet-stream", contentType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+                Assert.That(contentType, Is.EqualTo("application/octet-stream"));
+            });
         }
 
         [Test]
@@ -90,7 +93,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"locale={locale}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -112,7 +115,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"locale={locale}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -134,7 +137,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -156,7 +159,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -178,7 +181,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -200,7 +203,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -220,7 +223,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"features=formulas";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -240,7 +243,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"features=formulas";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -260,7 +263,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"features=formulas%2CstyleFont";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -280,7 +283,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"features=formulas%2CstyleFont";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -299,14 +302,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(encodedUriString));
             await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(decodedUriString));
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(2));
 
             foreach (var request in mockTransport.Requests)
             {
                 var requestBody = GetString(request.Content);
 
-                Assert.True(requestBody.Contains(encodedUriString));
-                Assert.False(requestBody.Contains(decodedUriString));
+                Assert.That(requestBody, Does.Contain(encodedUriString));
+                Assert.That(requestBody.Contains(decodedUriString), Is.False);
             }
         }
 
@@ -326,14 +329,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await client.ClassifyDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(encodedUriString));
             await client.ClassifyDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(decodedUriString));
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(2));
 
             foreach (var request in mockTransport.Requests)
             {
                 var requestBody = GetString(request.Content);
 
-                Assert.True(requestBody.Contains(encodedUriString));
-                Assert.False(requestBody.Contains(decodedUriString));
+                Assert.That(requestBody, Does.Contain(encodedUriString));
+                Assert.That(requestBody.Contains(decodedUriString), Is.False);
             }
         }
 
@@ -369,12 +372,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var result = operation.Value;
             var field = result.Documents[0].Fields["booleanField"];
 
-            Assert.AreEqual(DocumentFieldType.Boolean, field.FieldType);
-            Assert.AreEqual(DocumentFieldType.Boolean, field.ExpectedFieldType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(field.FieldType, Is.EqualTo(DocumentFieldType.Boolean));
+                Assert.That(field.ExpectedFieldType, Is.EqualTo(DocumentFieldType.Boolean));
+            });
 
             var fieldValue = field.Value.AsBoolean();
 
-            Assert.True(fieldValue);
+            Assert.That(fieldValue, Is.True);
         }
 
         [Test]
@@ -416,17 +422,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var result = operation.Value;
             var field = result.Documents[0].Fields["addressField"];
 
-            Assert.AreEqual(DocumentFieldType.Address, field.FieldType);
-            Assert.AreEqual(DocumentFieldType.Address, field.ExpectedFieldType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(field.FieldType, Is.EqualTo(DocumentFieldType.Address));
+                Assert.That(field.ExpectedFieldType, Is.EqualTo(DocumentFieldType.Address));
+            });
 
             var fieldValue = field.Value.AsAddress();
 
-            Assert.AreEqual("unitValue", fieldValue.Unit);
-            Assert.AreEqual("cityDistrictValue", fieldValue.CityDistrict);
-            Assert.AreEqual("stateDistrictValue", fieldValue.StateDistrict);
-            Assert.AreEqual("suburbValue", fieldValue.Suburb);
-            Assert.AreEqual("houseValue", fieldValue.House);
-            Assert.AreEqual("levelValue", fieldValue.Level);
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldValue.Unit, Is.EqualTo("unitValue"));
+                Assert.That(fieldValue.CityDistrict, Is.EqualTo("cityDistrictValue"));
+                Assert.That(fieldValue.StateDistrict, Is.EqualTo("stateDistrictValue"));
+                Assert.That(fieldValue.Suburb, Is.EqualTo("suburbValue"));
+                Assert.That(fieldValue.House, Is.EqualTo("houseValue"));
+                Assert.That(fieldValue.Level, Is.EqualTo("levelValue"));
+            });
         }
 
         [Test]
@@ -460,11 +472,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var result = operation.Value;
             var style = result.Styles[0];
 
-            Assert.AreEqual("similarFontFamilyValue", style.SimilarFontFamily);
-            Assert.AreEqual(DocumentFontStyle.Italic, style.FontStyle);
-            Assert.AreEqual(DocumentFontWeight.Bold, style.FontWeight);
-            Assert.AreEqual("colorValue", style.Color);
-            Assert.AreEqual("backgroundColorValue", style.BackgroundColor);
+            Assert.Multiple(() =>
+            {
+                Assert.That(style.SimilarFontFamily, Is.EqualTo("similarFontFamilyValue"));
+                Assert.That(style.FontStyle, Is.EqualTo(DocumentFontStyle.Italic));
+                Assert.That(style.FontWeight, Is.EqualTo(DocumentFontWeight.Bold));
+                Assert.That(style.Color, Is.EqualTo("colorValue"));
+                Assert.That(style.BackgroundColor, Is.EqualTo("backgroundColorValue"));
+            });
         }
 
         [Test]
@@ -506,12 +521,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var barcode = result.Pages[0].Barcodes[0];
             var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
 
-            Assert.AreEqual(DocumentBarcodeKind.QrCode, barcode.Kind);
-            Assert.AreEqual("barcodeValue", barcode.Value);
-            CollectionAssert.AreEqual(expectedPolygon, barcode.BoundingPolygon);
-            Assert.AreEqual(10, barcode.Span.Index);
-            Assert.AreEqual(12, barcode.Span.Length);
-            Assert.AreEqual(0.75f, barcode.Confidence);
+            Assert.Multiple(() =>
+            {
+                Assert.That(barcode.Kind, Is.EqualTo(DocumentBarcodeKind.QrCode));
+                Assert.That(barcode.Value, Is.EqualTo("barcodeValue"));
+            });
+            Assert.That(barcode.BoundingPolygon, Is.EqualTo(expectedPolygon).AsCollection);
+            Assert.Multiple(() =>
+            {
+                Assert.That(barcode.Span.Index, Is.EqualTo(10));
+                Assert.That(barcode.Span.Length, Is.EqualTo(12));
+                Assert.That(barcode.Confidence, Is.EqualTo(0.75f));
+            });
         }
 
         [Test]
@@ -553,12 +574,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var formula = result.Pages[0].Formulas[0];
             var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
 
-            Assert.AreEqual(DocumentFormulaKind.Display, formula.Kind);
-            Assert.AreEqual("formulaValue", formula.Value);
-            CollectionAssert.AreEqual(expectedPolygon, formula.BoundingPolygon);
-            Assert.AreEqual(10, formula.Span.Index);
-            Assert.AreEqual(12, formula.Span.Length);
-            Assert.AreEqual(0.75f, formula.Confidence);
+            Assert.Multiple(() =>
+            {
+                Assert.That(formula.Kind, Is.EqualTo(DocumentFormulaKind.Display));
+                Assert.That(formula.Value, Is.EqualTo("formulaValue"));
+            });
+            Assert.That(formula.BoundingPolygon, Is.EqualTo(expectedPolygon).AsCollection);
+            Assert.Multiple(() =>
+            {
+                Assert.That(formula.Span.Index, Is.EqualTo(10));
+                Assert.That(formula.Span.Length, Is.EqualTo(12));
+                Assert.That(formula.Confidence, Is.EqualTo(0.75f));
+            });
         }
 
         #endregion

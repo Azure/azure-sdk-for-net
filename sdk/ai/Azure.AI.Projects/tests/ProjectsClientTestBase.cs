@@ -82,8 +82,8 @@ namespace Azure.AI.Projects.Tests
         /// </summary>
         protected static void ValidateNotNullOrEmpty(string value, string propertyName)
         {
-            Assert.IsNotNull(value, $"{propertyName} should not be null");
-            Assert.IsNotEmpty(value, $"{propertyName} should not be empty");
+            Assert.That(value, Is.Not.Null, $"{propertyName} should not be null");
+            Assert.That(value, Is.Not.Empty, $"{propertyName} should not be empty");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.AI.Projects.Tests
         /// </summary>
         protected static void ValidateResponse<T>(T response, string responseName = null) where T : class
         {
-            Assert.IsNotNull(response, $"{responseName ?? typeof(T).Name} response should not be null");
+            Assert.That(response, Is.Not.Null, $"{responseName ?? typeof(T).Name} response should not be null");
         }
 
         // Regular expression describing the pattern of an Application Insights connection string
@@ -172,10 +172,13 @@ namespace Azure.AI.Projects.Tests
             Assert.That(deployment, Is.TypeOf<ModelDeployment>(), "Deployment should be of type ModelDeployment");
 
             var modelDeployment = deployment as ModelDeployment;
-            Assert.That(modelDeployment.ModelVersion, Is.Not.Null, "Model version should not be null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(modelDeployment.ModelVersion, Is.Not.Null, "Model version should not be null");
 
-            // Check if the deployment has a valid SKU (non-empty)
-            Assert.That(modelDeployment.Sku, Is.Not.Null, "SKU should not be null");
+                // Check if the deployment has a valid SKU (non-empty)
+                Assert.That(modelDeployment.Sku, Is.Not.Null, "SKU should not be null");
+            });
 
             AssertEqualOrNotNull(modelDeployment.ModelName, expectedModelName);
             AssertEqualOrNotNull(modelDeployment.Name, expectedModelDeploymentName);
@@ -248,18 +251,24 @@ namespace Azure.AI.Projects.Tests
         public static void ValidateAssetCredential(DatasetCredential assetCredential)
         {
             Assert.That(assetCredential.BlobReference, Is.Not.Null, "Blob reference should not be null");
-            Assert.That(assetCredential.BlobReference.BlobUri, Is.Not.Null, "Blob URI should not be null");
-            Assert.That(assetCredential.BlobReference.StorageAccountArmId, Is.Not.Null,
-                "Storage account ARM ID should not be null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(assetCredential.BlobReference.BlobUri, Is.Not.Null, "Blob URI should not be null");
+                Assert.That(assetCredential.BlobReference.StorageAccountArmId, Is.Not.Null,
+                    "Storage account ARM ID should not be null");
 
-            Assert.That(assetCredential.BlobReference.Credential, Is.Not.Null,
-                "Blob reference credential should not be null");
+                Assert.That(assetCredential.BlobReference.Credential, Is.Not.Null,
+                    "Blob reference credential should not be null");
+            });
 
-            // Check credential type - note: using string comparison since the exact type structure may vary
-            Assert.That(assetCredential.BlobReference.Credential.Type, Is.EqualTo("SAS"),
-                "Credential type should be SAS");
-            Assert.That(assetCredential.BlobReference.Credential.SasUri, Is.Not.Null,
-                "SAS URI should not be null");
+            Assert.Multiple(() =>
+            {
+                // Check credential type - note: using string comparison since the exact type structure may vary
+                Assert.That(assetCredential.BlobReference.Credential.Type, Is.EqualTo("SAS"),
+                    "Credential type should be SAS");
+                Assert.That(assetCredential.BlobReference.Credential.SasUri, Is.Not.Null,
+                    "SAS URI should not be null");
+            });
         }
 
         /// <summary>

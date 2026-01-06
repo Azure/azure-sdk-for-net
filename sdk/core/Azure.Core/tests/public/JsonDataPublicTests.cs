@@ -19,32 +19,32 @@ namespace Azure.Core.Tests.Public
         {
             dynamic jsonData = new BinaryData("\"string\"").ToDynamicFromJson();
 
-            Assert.AreEqual("string", (string)jsonData);
+            Assert.That((string)jsonData, Is.EqualTo("string"));
         }
 
         [Test]
-        public void DynamicCanConvertToString() => Assert.AreEqual("string", JsonDataTestHelpers.JsonAsType<string>("\"string\""));
+        public void DynamicCanConvertToString() => Assert.That(JsonDataTestHelpers.JsonAsType<string>("\"string\""), Is.EqualTo("string"));
 
         [Test]
-        public void DynamicCanConvertToInt() => Assert.AreEqual(5, JsonDataTestHelpers.JsonAsType<int>("5"));
+        public void DynamicCanConvertToInt() => Assert.That(JsonDataTestHelpers.JsonAsType<int>("5"), Is.EqualTo(5));
 
         [Test]
-        public void DynamicCanConvertToLong() => Assert.AreEqual(5L, JsonDataTestHelpers.JsonAsType<long>("5"));
+        public void DynamicCanConvertToLong() => Assert.That(JsonDataTestHelpers.JsonAsType<long>("5"), Is.EqualTo(5L));
 
         [Test]
-        public void DynamicCanConvertToBool() => Assert.AreEqual(true, JsonDataTestHelpers.JsonAsType<bool>("true"));
+        public void DynamicCanConvertToBool() => Assert.That(JsonDataTestHelpers.JsonAsType<bool>("true"), Is.EqualTo(true));
 
         [Test]
-        public void DynamicCanConvertToNullAsString() => Assert.AreEqual(null, JsonDataTestHelpers.JsonAsType<string>("null"));
+        public void DynamicCanConvertToNullAsString() => Assert.That(JsonDataTestHelpers.JsonAsType<string>("null"), Is.EqualTo(null));
 
         [Test]
-        public void DynamicCanConvertToNullAsNullableInt() => Assert.AreEqual(null, JsonDataTestHelpers.JsonAsType<int?>("null"));
+        public void DynamicCanConvertToNullAsNullableInt() => Assert.That(JsonDataTestHelpers.JsonAsType<int?>("null"), Is.EqualTo(null));
 
         [Test]
-        public void DynamicCanConvertToNullAsNullableLong() => Assert.AreEqual(null, JsonDataTestHelpers.JsonAsType<long?>("null"));
+        public void DynamicCanConvertToNullAsNullableLong() => Assert.That(JsonDataTestHelpers.JsonAsType<long?>("null"), Is.EqualTo(null));
 
         [Test]
-        public void DynamicCanConvertToNullAsNullableBool() => Assert.AreEqual(null, JsonDataTestHelpers.JsonAsType<bool?>("null"));
+        public void DynamicCanConvertToNullAsNullableBool() => Assert.That(JsonDataTestHelpers.JsonAsType<bool?>("null"), Is.EqualTo(null));
 
         [Test]
         public void CanForeachOverHeterogenousArrayValues()
@@ -56,13 +56,13 @@ namespace Azure.Core.Tests.Public
                 switch (i)
                 {
                     case 0:
-                        Assert.AreEqual(1, (int)dynamicItem);
+                        Assert.That((int)dynamicItem, Is.EqualTo(1));
                         break;
                     case 1:
-                        Assert.AreEqual(null, (string)dynamicItem);
+                        Assert.That((string)dynamicItem, Is.EqualTo(null));
                         break;
                     case 2:
-                        Assert.AreEqual("s", (string)dynamicItem);
+                        Assert.That((string)dynamicItem, Is.EqualTo("s"));
                         break;
                     default:
                         Assert.Fail();
@@ -71,7 +71,7 @@ namespace Azure.Core.Tests.Public
 
                 i++;
             }
-            Assert.AreEqual(3, i);
+            Assert.That(i, Is.EqualTo(3));
         }
 
         [Test]
@@ -81,18 +81,18 @@ namespace Azure.Core.Tests.Public
             int i = 0;
             foreach (int dynamicItem in jsonData)
             {
-                Assert.AreEqual(i, dynamicItem);
+                Assert.That(dynamicItem, Is.EqualTo(i));
 
                 i++;
             }
-            Assert.AreEqual(4, i);
+            Assert.That(i, Is.EqualTo(4));
         }
 
         [Test]
         public void DynamicArrayHasLength()
         {
             dynamic jsonData = new BinaryData("[0, 1, 2, 3]").ToDynamicFromJson();
-            Assert.AreEqual(4, ((int[])jsonData).Length);
+            Assert.That(((int[])jsonData).Length, Is.EqualTo(4));
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace Azure.Core.Tests.Public
             int expected = 0;
             foreach (int i in jsonData)
             {
-                Assert.AreEqual(expected++, i);
+                Assert.That(i, Is.EqualTo(expected++));
             }
         }
 
@@ -111,8 +111,11 @@ namespace Azure.Core.Tests.Public
         {
             dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamicFromJson();
 
-            Assert.AreEqual("Hello", (string)jsonData.primitive);
-            Assert.AreEqual(true, (bool)jsonData.nested.nestedPrimitive);
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)jsonData.primitive, Is.EqualTo("Hello"));
+                Assert.That((bool)jsonData.nested.nestedPrimitive, Is.EqualTo(true));
+            });
         }
 
         [Test]
@@ -120,9 +123,12 @@ namespace Azure.Core.Tests.Public
         {
             dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamicFromJson();
 
-            Assert.IsNull((int?)jsonData.OptionalInt);
-            Assert.IsNull((string)jsonData.OptionalString);
-            Assert.AreEqual("Hello", (string)jsonData.primitive);
+            Assert.Multiple(() =>
+            {
+                Assert.That((int?)jsonData.OptionalInt, Is.Null);
+                Assert.That((string)jsonData.OptionalString, Is.Null);
+                Assert.That((string)jsonData.primitive, Is.EqualTo("Hello"));
+            });
         }
 
         [Test]
@@ -133,8 +139,8 @@ namespace Azure.Core.Tests.Public
             List<string> list = new();
             list.Add(jsonData.value);
 
-            Assert.AreEqual(1, list.Count);
-            Assert.AreEqual("foo", list[0]);
+            Assert.That(list, Has.Count.EqualTo(1));
+            Assert.That(list[0], Is.EqualTo("foo"));
         }
 
         [Test]
@@ -145,8 +151,8 @@ namespace Azure.Core.Tests.Public
             List<int> list = new();
             list.Add(jsonData.value);
 
-            Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(5, list[0]);
+            Assert.That(list, Has.Count.EqualTo(1));
+            Assert.That(list[0], Is.EqualTo(5));
         }
 
         [Test]
@@ -155,14 +161,17 @@ namespace Azure.Core.Tests.Public
             var json = new BinaryData("5").ToDynamicFromJson();
             dynamic jsonData = json;
 
-            Assert.AreEqual(5, (float)jsonData);
-            Assert.AreEqual(5, (double)jsonData);
-            Assert.AreEqual(5, (int)jsonData);
-            Assert.AreEqual(5, (long)jsonData);
-            Assert.AreEqual(5, (float)json);
-            Assert.AreEqual(5, (double)json);
-            Assert.AreEqual(5, (int)json);
-            Assert.AreEqual(5, (long)json);
+            Assert.Multiple(() =>
+            {
+                Assert.That((float)jsonData, Is.EqualTo(5));
+                Assert.That((double)jsonData, Is.EqualTo(5));
+                Assert.That((int)jsonData, Is.EqualTo(5));
+                Assert.That((long)jsonData, Is.EqualTo(5));
+                Assert.That((float)json, Is.EqualTo(5));
+                Assert.That((double)json, Is.EqualTo(5));
+                Assert.That((int)json, Is.EqualTo(5));
+                Assert.That((long)json, Is.EqualTo(5));
+            });
         }
 
         [Test]
@@ -181,9 +190,12 @@ namespace Azure.Core.Tests.Public
         {
             dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } , \"array\": [1, 2, 3] }").ToDynamicFromJson();
 
-            Assert.AreEqual(1, (int)jsonData.array[0]);
-            Assert.AreEqual(2, (int)jsonData.array[1]);
-            Assert.AreEqual(3, (int)jsonData.array[2]);
+            Assert.Multiple(() =>
+            {
+                Assert.That((int)jsonData.array[0], Is.EqualTo(1));
+                Assert.That((int)jsonData.array[1], Is.EqualTo(2));
+                Assert.That((int)jsonData.array[2], Is.EqualTo(3));
+            });
         }
 
         [Test]
@@ -191,7 +203,7 @@ namespace Azure.Core.Tests.Public
         {
             dynamic jsonData = new BinaryData("{ \"$foo\":\"Hello\" }").ToDynamicFromJson();
 
-            Assert.AreEqual("Hello", (string)jsonData["$foo"]);
+            Assert.That((string)jsonData["$foo"], Is.EqualTo("Hello"));
         }
 
         [Test]
@@ -201,8 +213,11 @@ namespace Azure.Core.Tests.Public
             var json = new BinaryData("34028234663852885981170418348451692544000").ToDynamicFromJson();
 
             dynamic jsonData = json;
-            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)jsonData);
-            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)json);
+            Assert.Multiple(() =>
+            {
+                Assert.That((double)jsonData, Is.EqualTo(34028234663852885981170418348451692544000d));
+                Assert.That((double)json, Is.EqualTo(34028234663852885981170418348451692544000d));
+            });
             Assert.Throws<InvalidCastException>(() => _ = (float)json);
             Assert.Throws<InvalidCastException>(() => _ = (float)jsonData);
         }
@@ -214,12 +229,15 @@ namespace Azure.Core.Tests.Public
             dynamic jsonData = json;
             Assert.Throws<InvalidCastException>(() => _ = (int)json);
             Assert.Throws<InvalidCastException>(() => _ = (int)jsonData);
-            Assert.AreEqual(3402823466385288598L, (long)jsonData);
-            Assert.AreEqual(3402823466385288598L, (long)json);
-            Assert.AreEqual(3402823466385288598D, (double)jsonData);
-            Assert.AreEqual(3402823466385288598D, (double)json);
-            Assert.AreEqual(3402823466385288598F, (float)jsonData);
-            Assert.AreEqual(3402823466385288598F, (float)json);
+            Assert.Multiple(() =>
+            {
+                Assert.That((long)jsonData, Is.EqualTo(3402823466385288598L));
+                Assert.That((long)json, Is.EqualTo(3402823466385288598L));
+                Assert.That((double)jsonData, Is.EqualTo(3402823466385288598D));
+                Assert.That((double)json, Is.EqualTo(3402823466385288598D));
+                Assert.That((float)jsonData, Is.EqualTo(3402823466385288598F));
+                Assert.That((float)json, Is.EqualTo(3402823466385288598F));
+            });
         }
 
         [Test]
@@ -234,8 +252,11 @@ namespace Azure.Core.Tests.Public
 
             Assert.Throws<InvalidCastException>(() => _ = (float)json);
             Assert.Throws<InvalidCastException>(() => _ = (float)jsonData);
-            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)jsonData);
-            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
+            Assert.Multiple(() =>
+            {
+                Assert.That((double)jsonData, Is.EqualTo(-34028234663852885981170418348451692544000d));
+                Assert.That((double)json, Is.EqualTo(-34028234663852885981170418348451692544000d));
+            });
         }
 
         [Test]
@@ -245,12 +266,15 @@ namespace Azure.Core.Tests.Public
             dynamic jsonData = json;
             Assert.Throws<InvalidCastException>(() => _ = (int)json);
             Assert.Throws<InvalidCastException>(() => _ = (int)jsonData);
-            Assert.AreEqual(-3402823466385288598L, (long)jsonData);
-            Assert.AreEqual(-3402823466385288598L, (long)json);
-            Assert.AreEqual(-3402823466385288598D, (double)jsonData);
-            Assert.AreEqual(-3402823466385288598D, (double)json);
-            Assert.AreEqual(-3402823466385288598F, (float)jsonData);
-            Assert.AreEqual(-3402823466385288598F, (float)json);
+            Assert.Multiple(() =>
+            {
+                Assert.That((long)jsonData, Is.EqualTo(-3402823466385288598L));
+                Assert.That((long)json, Is.EqualTo(-3402823466385288598L));
+                Assert.That((double)jsonData, Is.EqualTo(-3402823466385288598D));
+                Assert.That((double)json, Is.EqualTo(-3402823466385288598D));
+                Assert.That((float)jsonData, Is.EqualTo(-3402823466385288598F));
+                Assert.That((float)json, Is.EqualTo(-3402823466385288598F));
+            });
         }
 
         [Test]
@@ -269,7 +293,7 @@ namespace Azure.Core.Tests.Public
             var model = new SampleModel("Hello World", 5);
             var roundtripped = (SampleModel)new BinaryData(model).ToDynamicFromJson();
 
-            Assert.AreEqual(model, roundtripped);
+            Assert.That(roundtripped, Is.EqualTo(model));
         }
 
         [Test]
@@ -283,7 +307,7 @@ namespace Azure.Core.Tests.Public
 
             var cast = (DateTimeOffset)nowJson;
 
-            Assert.AreEqual(now, cast);
+            Assert.That(cast, Is.EqualTo(now));
         }
 
         [Test]
@@ -297,7 +321,7 @@ namespace Azure.Core.Tests.Public
             int i = 0;
             foreach (var item in enumerable)
             {
-                Assert.AreEqual(++i, item);
+                Assert.That(item, Is.EqualTo(++i));
             }
         }
 
@@ -498,8 +522,11 @@ namespace Azure.Core.Tests.Public
 
             var model = (SampleModel)await JsonSerializer.DeserializeAsync(stream, typeof(SampleModel));
 
-            Assert.AreEqual("Hi!", model.Message);
-            Assert.AreEqual(5, model.Number);
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.Message, Is.EqualTo("Hi!"));
+                Assert.That(model.Number, Is.EqualTo(5));
+            });
         }
 
         [Test]

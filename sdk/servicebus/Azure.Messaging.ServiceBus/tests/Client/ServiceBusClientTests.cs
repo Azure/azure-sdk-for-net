@@ -242,8 +242,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             ServiceBusClientOptions options = client.Options;
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
-            Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
-            Assert.That(client.Identifier, Is.Not.Null, $"The {constructorDescription} constructor should have set the Identifier.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(options, Is.Not.SameAs(defaultOptions), $"The {constructorDescription} constructor should not have the same options instance.");
+                Assert.That(client.Identifier, Is.Not.Null, $"The {constructorDescription} constructor should have set the Identifier.");
+            });
             Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
             Assert.That(options.WebProxy, Is.EqualTo(defaultOptions.WebProxy), $"The { constructorDescription } constructor should have the correct proxy.");
             Assert.That(options.CustomEndpointAddress, Is.EqualTo(defaultOptions.CustomEndpointAddress), $"The {constructorDescription} constructor should have the correct custom endpoint.");
@@ -264,10 +267,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
-            Assert.That(options.Identifier, Is.EqualTo(constructorOptions.Identifier), $"The {constructorDescription} constructor should have the correct Identifier.");
-            Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.WebProxy, Is.EqualTo(constructorOptions.WebProxy), $"The { constructorDescription } constructor should have the correct proxy.");
-            Assert.That(options.CustomEndpointAddress, Is.EqualTo(constructorOptions.CustomEndpointAddress), $"The {constructorDescription} constructor should have the correct custom endpoint.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(options.Identifier, Is.EqualTo(constructorOptions.Identifier), $"The {constructorDescription} constructor should have the correct Identifier.");
+                Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The {constructorDescription} constructor should have the correct connection type.");
+                Assert.That(options.WebProxy, Is.EqualTo(constructorOptions.WebProxy), $"The {constructorDescription} constructor should have the correct proxy.");
+                Assert.That(options.CustomEndpointAddress, Is.EqualTo(constructorOptions.CustomEndpointAddress), $"The {constructorDescription} constructor should have the correct custom endpoint.");
+            });
         }
 
         /// <summary>
@@ -489,9 +495,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             var entityName = "myQueue";
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ entityName }";
             ServiceBusClient client = new ServiceBusClient(fakeConnection);
-            Assert.AreEqual("not-real.servicebus.windows.net", client.FullyQualifiedNamespace);
-            Assert.IsNotNull(client.Identifier);
-            Assert.IsFalse(client.IsClosed);
+            Assert.Multiple(() =>
+            {
+                Assert.That(client.FullyQualifiedNamespace, Is.EqualTo("not-real.servicebus.windows.net"));
+                Assert.That(client.Identifier, Is.Not.Null);
+                Assert.That(client.IsClosed, Is.False);
+            });
         }
 
         [Test]

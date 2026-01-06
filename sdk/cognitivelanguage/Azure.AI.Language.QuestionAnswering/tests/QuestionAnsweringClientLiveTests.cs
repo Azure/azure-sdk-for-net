@@ -40,7 +40,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                     "The USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface.",
                 });
 
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
+            Assert.That(response.Value.Answers, Has.Count.EqualTo(3));
 
             IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.9).ToList();
             Assert.That(answers, Has.Count.AtLeast(2));
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<AnswersResult> response = await Client.GetAnswersAsync("How long should my Surface battery last?", TestEnvironment.Project, options);
 
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
+            Assert.That(response.Value.Answers, Has.Count.EqualTo(3));
 
             IList<KnowledgeBaseAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.7).ToList();
             Assert.That(answers, Has.Count.EqualTo(1));
@@ -94,7 +94,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<AnswersResult> response = await Client.GetAnswersAsync("How long it takes to charge Surface?", TestEnvironment.Project, options);
 
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(1));
+            Assert.That(response.Value.Answers, Has.Count.EqualTo(1));
 
             IList<KnowledgeBaseAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.6).ToList();
             Assert.That(answers, Has.Count.EqualTo(1));
@@ -123,7 +123,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<AnswersResult> response = await Client.GetAnswersAsync("Battery life", TestEnvironment.Project, options);
 
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(2));
+            Assert.That(response.Value.Answers, Has.Count.EqualTo(2));
             Assert.That(response.Value.Answers, Has.Some.Matches<KnowledgeBaseAnswer>(answer => answer.Metadata.TryGetValue("explicitlytaggedheading", out var value) && value == "check the battery level"));
             Assert.That(response.Value.Answers, Has.Some.Matches<KnowledgeBaseAnswer>(answer => answer.Metadata.TryGetValue("explicitlytaggedheading", out var value) && value == "make your battery last"));
         }
@@ -136,21 +136,30 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 await Client.GetAnswersAsync(" ", TestEnvironment.Project);
             });
 
-            Assert.That(ex.Status, Is.EqualTo(400));
-            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidArgument"));
-       }
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.Status, Is.EqualTo(400));
+                Assert.That(ex.ErrorCode, Is.EqualTo("InvalidArgument"));
+            });
+        }
 
         [RecordedTest]
         public async Task GetsKnowledgeBaseQuestion()
         {
             Response<AnswersResult> response = await Client.GetAnswersAsync(24, TestEnvironment.Project);
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Answers, Has.Count.EqualTo(1));
+            });
 
             KnowledgeBaseAnswer answer = response.Value.Answers[0];
-            Assert.That(answer.QnaId, Is.EqualTo(24));
-            Assert.That(answer.Questions, Has.All.EqualTo("Check the battery level"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(answer.QnaId, Is.EqualTo(24));
+                Assert.That(answer.Questions, Has.All.EqualTo("Check the battery level"));
+            });
         }
 
         [RecordedTest]
@@ -169,7 +178,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<AnswersFromTextResult> response = await Client.GetAnswersFromTextAsync(options);
 
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
+            Assert.That(response.Value.Answers, Has.Count.EqualTo(3));
 
             IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.9).ToList();
             Assert.That(answers, Has.Count.AtLeast(2));
@@ -202,7 +211,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<AnswersFromTextResult> response = await client.GetAnswersFromTextAsync(options);
 
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
+            Assert.That(response.Value.Answers, Has.Count.EqualTo(3));
 
             IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.9).ToList();
             Assert.That(answers, Has.Count.AtLeast(2));
@@ -232,7 +241,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<AnswersFromTextResult> response = await client.GetAnswersFromTextAsync(options);
 
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
+            Assert.That(response.Value.Answers, Has.Count.EqualTo(3));
 
             IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.9).ToList();
             Assert.That(answers, Has.Count.AtLeast(2));
@@ -261,7 +270,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 },
                 "en");
 
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
+            Assert.That(response.Value.Answers, Has.Count.EqualTo(3));
 
             IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.9).ToList();
             Assert.That(answers, Has.Count.AtLeast(2));
@@ -289,7 +298,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                     "The USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface.",
                 });
 
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
+            Assert.That(response.Value.Answers, Has.Count.EqualTo(3));
 
             IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.9).ToList();
             Assert.That(answers, Has.Count.AtLeast(2));

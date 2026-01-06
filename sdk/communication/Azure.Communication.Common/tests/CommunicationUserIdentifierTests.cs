@@ -23,8 +23,11 @@ namespace Azure.Communication
             CommunicationUserIdentifier identifier1 = new(_id);
             CommunicationUserIdentifier identifier2 = new(_id);
 
-            Assert.True(identifier1.Equals(identifier1));
-            Assert.True(identifier1.Equals(identifier2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(identifier1.Equals(identifier1), Is.True);
+                Assert.That(identifier1.Equals(identifier2), Is.True);
+            });
         }
 
         [Test]
@@ -32,15 +35,18 @@ namespace Azure.Communication
         {
             CommunicationUserIdentifier identifier1 = new(_id);
             object identifier2 = new();
-            Assert.False(identifier1.Equals(identifier2));
+            Assert.That(identifier1, Is.Not.EqualTo(identifier2));
         }
 
         [Test]
         public void constructWithValidId()
         {
             CommunicationUserIdentifier result = new(_id);
-            Assert.NotNull(result.Id);
-            Assert.NotNull(result.GetHashCode());
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null);
+                Assert.That(result.GetHashCode(), Is.Not.Null);
+            });
         }
     }
 }

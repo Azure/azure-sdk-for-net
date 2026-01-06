@@ -59,8 +59,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
         Assert.That(assistant.Name, Is.EqualTo("test assistant name"));
         AssistantDeletionResult deletionResult = await client.DeleteAssistantAsync(assistant.Id);
-        Assert.That(deletionResult.AssistantId, Is.EqualTo(assistant.Id));
-        Assert.That(deletionResult.Deleted, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(deletionResult.AssistantId, Is.EqualTo(assistant.Id));
+            Assert.That(deletionResult.Deleted, Is.True);
+        });
         assistant = await client.CreateAssistantAsync(modelName, new AssistantCreationOptions()
         {
             Metadata =
@@ -70,8 +73,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
         Validate(assistant);
         Assistant retrievedAssistant = await client.GetAssistantAsync(assistant.Id);
-        Assert.That(retrievedAssistant.Id, Is.EqualTo(assistant.Id));
-        Assert.That(retrievedAssistant.Metadata.TryGetValue("testkey", out string metadataValue) && metadataValue == "hello!");
+        Assert.Multiple(() =>
+        {
+            Assert.That(retrievedAssistant.Id, Is.EqualTo(assistant.Id));
+            Assert.That(retrievedAssistant.Metadata.TryGetValue("testkey", out string metadataValue) && metadataValue == "hello!");
+        });
         Assistant modifiedAssistant = await client.ModifyAssistantAsync(assistant.Id, new AssistantModificationOptions()
         {
             Metadata =
@@ -94,8 +100,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Validate(thread);
         Assert.That(thread.CreatedAt, Is.GreaterThan(s_2024));
         ThreadDeletionResult deletionResult = await client.DeleteThreadAsync(thread.Id);
-        Assert.That(deletionResult.ThreadId, Is.EqualTo(thread.Id));
-        Assert.That(deletionResult.Deleted, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(deletionResult.ThreadId, Is.EqualTo(thread.Id));
+            Assert.That(deletionResult.Deleted, Is.True);
+        });
 
         ThreadCreationOptions options = new()
         {
@@ -202,8 +211,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
                 }
                 if (update is RequiredActionUpdate requiredActionUpdate)
                 {
-                    Assert.That(requiredActionUpdate.FunctionName, Is.EqualTo(getWeatherTool.FunctionName));
-                    Assert.That(requiredActionUpdate.GetThreadRun().Status, Is.EqualTo(RunStatus.RequiresAction));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(requiredActionUpdate.FunctionName, Is.EqualTo(getWeatherTool.FunctionName));
+                        Assert.That(requiredActionUpdate.GetThreadRun().Status, Is.EqualTo(RunStatus.RequiresAction));
+                    });
                     toolOutputs.Add(new(requiredActionUpdate.ToolCallId, "warm and sunny"));
                 }
                 if (update is MessageContentUpdate contentUpdate)
@@ -228,16 +240,22 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Validate(thread);
         ThreadMessage message = await client.CreateMessageAsync(thread.Id, MessageRole.User, ["Hello, world!"]);
         Validate(message);
-        Assert.That(message.CreatedAt, Is.GreaterThan(s_2024));
-        Assert.That(message.Content?.Count, Is.EqualTo(1));
-        Assert.That(message.Content[0], Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(message.CreatedAt, Is.GreaterThan(s_2024));
+            Assert.That(message.Content?.Count, Is.EqualTo(1));
+            Assert.That(message.Content[0], Is.Not.Null);
+        });
         Assert.That(message.Content[0].Text, Is.EqualTo("Hello, world!"));
 
         if (aoaiDeleteBugFixed)
         {
             MessageDeletionResult deletionResult = await client.DeleteMessageAsync(message.ThreadId, message.Id);
-            Assert.That(deletionResult.MessageId, Is.EqualTo(message.Id));
-            Assert.That(deletionResult.Deleted, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(deletionResult.MessageId, Is.EqualTo(message.Id));
+                Assert.That(deletionResult.Deleted, Is.True);
+            });
         }
 
         message = await client.CreateMessageAsync(thread.Id, MessageRole.User, ["Goodbye, world!"], new MessageCreationOptions()
@@ -265,15 +283,18 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         var messagePage = await client.GetMessagesAsync(thread.Id).ToFxListAsync();
         if (aoaiDeleteBugFixed)
         {
-            Assert.That(messagePage.Count, Is.EqualTo(1));
+            Assert.That(messagePage, Has.Count.EqualTo(1));
         }
         else
         {
-            Assert.That(messagePage.Count, Is.EqualTo(2));
+            Assert.That(messagePage, Has.Count.EqualTo(2));
         }
 
-        Assert.That(messagePage.ElementAt(0).Id, Is.EqualTo(message.Id));
-        Assert.That(messagePage.ElementAt(0).Metadata.TryGetValue("messageMetadata", out metadataValue) && metadataValue == "newValue");
+        Assert.Multiple(() =>
+        {
+            Assert.That(messagePage.ElementAt(0).Id, Is.EqualTo(message.Id));
+            Assert.That(messagePage.ElementAt(0).Metadata.TryGetValue("messageMetadata", out metadataValue) && metadataValue == "newValue");
+        });
     }
 
     [RecordedTest]
@@ -300,11 +321,14 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         AssistantThread thread = await client.CreateThreadAsync(options);
         Validate(thread);
         List<ThreadMessage> messageList = await client.GetMessagesAsync(thread.Id, new() { Order = MessageCollectionOrder.Ascending }).ToFxListAsync();
-        Assert.That(messageList.Count, Is.EqualTo(2));
-        Assert.That(messageList[0].Role, Is.EqualTo(MessageRole.User));
-        Assert.That(messageList[0].Content?.Count, Is.EqualTo(1));
-        Assert.That(messageList[0].Content[0].Text, Is.EqualTo(userGreeting));
-        Assert.That(messageList[1].Content[0], Is.Not.Null);
+        Assert.That(messageList, Has.Count.EqualTo(2));
+        Assert.Multiple(() =>
+        {
+            Assert.That(messageList[0].Role, Is.EqualTo(MessageRole.User));
+            Assert.That(messageList[0].Content?.Count, Is.EqualTo(1));
+            Assert.That(messageList[0].Content[0].Text, Is.EqualTo(userGreeting));
+            Assert.That(messageList[1].Content[0], Is.Not.Null);
+        });
         Assert.That(messageList[1].Content[0].Text, Is.EqualTo(userQuestion));
     }
 
@@ -328,7 +352,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         ThreadRun retrievedRun = await client.GetRunAsync(thread.Id, run.Id);
         Assert.That(retrievedRun.Id, Is.EqualTo(run.Id));
         runPage = await client.GetRunsAsync(thread.Id).ToFxListAsync();
-        Assert.That(runPage.Count, Is.EqualTo(1));
+        Assert.That(runPage, Has.Count.EqualTo(1));
         Assert.That(runPage.ElementAt(0).Id, Is.EqualTo(run.Id));
 
         List<ThreadMessage> messages = await client.GetMessagesAsync(thread.Id).ToFxListAsync();
@@ -350,7 +374,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             Assert.That(run.IncompleteDetails, Is.Null);
         });
         messages = await client.GetMessagesAsync(thread.Id).ToFxListAsync();
-        Assert.That(messages.Count, Is.EqualTo(2));
+        Assert.That(messages, Has.Count.EqualTo(2));
 
         Assert.That(messages.ElementAt(0).Role, Is.EqualTo(MessageRole.Assistant));
         Assert.That(messages.ElementAt(1).Role, Is.EqualTo(MessageRole.User));
@@ -442,8 +466,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assert.That(assistant.Tools?.Count, Is.EqualTo(1));
 
         FunctionToolDefinition responseToolDefinition = assistant.Tools[0] as FunctionToolDefinition;
-        Assert.That(responseToolDefinition?.FunctionName, Is.EqualTo(s_getFoodForDayOfWeekTool.FunctionName));
-        Assert.That(responseToolDefinition?.Parameters, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(responseToolDefinition?.FunctionName, Is.EqualTo(s_getFoodForDayOfWeekTool.FunctionName));
+            Assert.That(responseToolDefinition?.Parameters, Is.Not.Null);
+        });
 
         ThreadRun run = await client.CreateThreadAndRunAsync(
             assistant.Id,
@@ -464,11 +491,14 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             () => client.GetRunAsync(run.ThreadId, run.Id),
             r => r.Status.IsTerminal || r.Status.Equals(RunStatus.RequiresAction));
 
-        Assert.That(run.Status, Is.EqualTo(RunStatus.RequiresAction));
-        Assert.That(run.RequiredActions?.Count, Is.EqualTo(1));
-        Assert.That(run.RequiredActions[0].ToolCallId, Is.Not.Null.Or.Empty);
-        Assert.That(run.RequiredActions[0].FunctionName, Is.EqualTo("get_favorite_food_for_day_of_week"));
-        Assert.That(run.RequiredActions[0].FunctionArguments, Is.Not.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(run.Status, Is.EqualTo(RunStatus.RequiresAction));
+            Assert.That(run.RequiredActions?.Count, Is.EqualTo(1));
+            Assert.That(run.RequiredActions[0].ToolCallId, Is.Not.Null.Or.Empty);
+            Assert.That(run.RequiredActions[0].FunctionName, Is.EqualTo("get_favorite_food_for_day_of_week"));
+            Assert.That(run.RequiredActions[0].FunctionArguments, Is.Not.Null.Or.Empty);
+        });
 
         run = await client.SubmitToolOutputsToRunAsync(run.ThreadId, run.Id, [new(run.RequiredActions[0].ToolCallId, "tacos")]);
         Assert.That(run.Status.IsTerminal, Is.False);
@@ -481,9 +511,12 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
 
         List<ThreadMessage> messages = await client.GetMessagesAsync(run.ThreadId, new() { Order = MessageCollectionOrder.Descending })
             .ToFxListAsync();
-        Assert.That(messages.Count, Is.GreaterThan(1));
-        Assert.That(messages.ElementAt(0).Role, Is.EqualTo(MessageRole.Assistant));
-        Assert.That(messages.ElementAt(0).Content?[0], Is.Not.Null);
+        Assert.That(messages, Has.Count.GreaterThan(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(messages.ElementAt(0).Role, Is.EqualTo(MessageRole.Assistant));
+            Assert.That(messages.ElementAt(0).Content?[0], Is.Not.Null);
+        });
         Assert.That(messages.ElementAt(0).Content?[0].Text, Does.Contain("tacos"));
     }
 
@@ -538,8 +571,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
                 },
             },
         });
-        Assert.That(assistant.ToolResources?.FileSearch?.VectorStoreIds, Has.Count.EqualTo(1));
-        Assert.That(assistant.ToolResources.FileSearch.VectorStoreIds[0], Is.EqualTo(createdVectorStoreId));
+        Assert.Multiple(() =>
+        {
+            Assert.That(assistant.ToolResources?.FileSearch?.VectorStoreIds, Has.Count.EqualTo(1));
+            Assert.That(assistant.ToolResources.FileSearch.VectorStoreIds[0], Is.EqualTo(createdVectorStoreId));
+        });
 
         // Create a thread with an override vector store
         AssistantThread thread = await client.CreateThreadAsync(new ThreadCreationOptions()
@@ -572,8 +608,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
                 }
             }
         });
-        Assert.That(thread.ToolResources?.FileSearch?.VectorStoreIds, Has.Count.EqualTo(1));
-        Assert.That(thread.ToolResources.FileSearch.VectorStoreIds[0], Is.EqualTo(createdVectorStoreId));
+        Assert.Multiple(() =>
+        {
+            Assert.That(thread.ToolResources?.FileSearch?.VectorStoreIds, Has.Count.EqualTo(1));
+            Assert.That(thread.ToolResources.FileSearch.VectorStoreIds[0], Is.EqualTo(createdVectorStoreId));
+        });
 
         ThreadRun run = await client.CreateRunAsync(thread.Id, assistant.Id);
         Validate(run);
@@ -594,14 +633,20 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
                 hasCake |= content.Text?.ToLowerInvariant().Contains("cake") == true;
                 foreach (TextAnnotation annotation in content.TextAnnotations)
                 {
-                    Assert.That(annotation.InputFileId, Is.Not.Null.And.Not.Empty);
-                    Assert.That(annotation.TextToReplace, Is.Not.Null.And.Not.Empty);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(annotation.InputFileId, Is.Not.Null.And.Not.Empty);
+                        Assert.That(annotation.TextToReplace, Is.Not.Null.And.Not.Empty);
+                    });
                 }
             }
         }
 
-        Assert.That(numThreads, Is.GreaterThan(0));
-        Assert.That(hasCake, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(numThreads, Is.GreaterThan(0));
+            Assert.That(hasCake, Is.True);
+        });
     }
 
     [RecordedTest]
@@ -648,9 +693,12 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             }
         }
 
-        Assert.That(lastUpdateReason, Is.EqualTo(StreamingUpdateReason.RunCompleted));
-        Assert.That(lastUpdate, Is.Not.Null.And.GreaterThan(s_2024));
-        Assert.That(content, Has.Length.GreaterThan(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(lastUpdateReason, Is.EqualTo(StreamingUpdateReason.RunCompleted));
+            Assert.That(lastUpdate, Is.Not.Null.And.GreaterThan(s_2024));
+            Assert.That(content, Has.Length.GreaterThan(0));
+        });
     }
 
     private static readonly DateTimeOffset s_2024 = new(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);

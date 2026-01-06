@@ -28,8 +28,11 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var eventData = new EventData(new BinaryData(Array.Empty<byte>()));
 
-            Assert.That(eventData.GetRawAmqpMessage().HasSection(AmqpMessageSection.ApplicationProperties), Is.False, "The user properties should be created lazily.");
-            Assert.That(GetSystemPropertiesBackingStore(eventData), Is.Null, "The system properties should be the static empty set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventData.GetRawAmqpMessage().HasSection(AmqpMessageSection.ApplicationProperties), Is.False, "The user properties should be created lazily.");
+                Assert.That(GetSystemPropertiesBackingStore(eventData), Is.Null, "The system properties should be the static empty set.");
+            });
         }
 
         /// <summary>
@@ -47,8 +50,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 properties: properties,
                 systemProperties: systemProperties);
 
-            Assert.That(eventData.Properties, Is.EquivalentTo(properties), "The passed properties dictionary should have been used.");
-            Assert.That(eventData.SystemProperties, Is.SameAs(systemProperties), "The system properties dictionary should have been used.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventData.Properties, Is.EquivalentTo(properties), "The passed properties dictionary should have been used.");
+                Assert.That(eventData.SystemProperties, Is.SameAs(systemProperties), "The system properties dictionary should have been used.");
+            });
         }
 
         /// <summary>
@@ -76,10 +82,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var amqpMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new[] { ReadOnlyMemory<byte>.Empty }));
             var eventData = new EventData(amqpMessage);
 
-            Assert.That(eventData.MessageId, Is.Null, "The message identifier should not be populated.");
-            Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Reading the message identifier should not create the section.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventData.MessageId, Is.Null, "The message identifier should not be populated.");
+                Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Reading the message identifier should not create the section.");
 
-            Assert.That(eventData.CorrelationId, Is.Null, "The correlation identifier should not be populated.");
+                Assert.That(eventData.CorrelationId, Is.Null, "The correlation identifier should not be populated.");
+            });
             Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Reading the correlation identifier should not create the section.");
 
             Assert.That(eventData.ContentType, Is.Null, "The content type should not be populated.");
@@ -100,16 +109,25 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData = new EventData(amqpMessage);
 
             eventData.MessageId = null;
-            Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Setting an empty value for the message identifier should not create the section.");
-            Assert.That(eventData.MessageId, Is.Null, "The message identifier should not be populated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Setting an empty value for the message identifier should not create the section.");
+                Assert.That(eventData.MessageId, Is.Null, "The message identifier should not be populated.");
+            });
 
             eventData.CorrelationId = null;
-            Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Setting an empty value for the correlation identifier should not create the section.");
-            Assert.That(eventData.CorrelationId, Is.Null, "The correlation identifier should not be populated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Setting an empty value for the correlation identifier should not create the section.");
+                Assert.That(eventData.CorrelationId, Is.Null, "The correlation identifier should not be populated.");
+            });
 
             eventData.ContentType = null;
-            Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Setting an empty value for the content type should not create the section.");
-            Assert.That(eventData.ContentType, Is.Null, "The content type should not be populated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Setting an empty value for the content type should not create the section.");
+                Assert.That(eventData.ContentType, Is.Null, "The content type should not be populated.");
+            });
         }
 
         /// <summary>
@@ -155,20 +173,23 @@ namespace Azure.Messaging.EventHubs.Tests
             var message = CreateFullyPopulatedAmqpMessage(sequenceNumber, lastSequence, offset, lastOffset, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
             var eventData = new EventData(message);
 
-            Assert.That(message.Body.TryGetData(out var messageBody), Is.True, "The message body should have been read.");
-            Assert.That(eventData.EventBody.ToArray(), Is.EquivalentTo(messageBody.First().ToArray()), "The message body should match.");
-            Assert.That(eventData.Properties, Is.EquivalentTo(message.ApplicationProperties), "The application properties should match.");
-            Assert.That(eventData.OffsetString, Is.EqualTo(offset), "The offset should match.");
-            Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
-            Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueueTime), "The enqueued time should match.");
-            Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");
-            Assert.That(eventData.LastPartitionOffset, Is.EqualTo(lastOffset), "The last offset should match.");
-            Assert.That(eventData.LastPartitionSequenceNumber, Is.EqualTo(lastSequence), "The last sequence number should match.");
-            Assert.That(eventData.LastPartitionEnqueuedTime, Is.EqualTo(lastEnqueue), "The last enqueued time should match.");
-            Assert.That(eventData.LastPartitionPropertiesRetrievalTime, Is.EqualTo(lastRetrieve), "The last retrieval time should match.");
-            Assert.That(eventData.MessageId, Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier should match.");
-            Assert.That(eventData.CorrelationId, Is.EqualTo(message.Properties.CorrelationId.ToString()), "The correlation identifier should match.");
-            Assert.That(eventData.ContentType, Is.EqualTo(message.Properties.ContentType), "The content type should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(message.Body.TryGetData(out var messageBody), Is.True, "The message body should have been read.");
+                Assert.That(eventData.EventBody.ToArray(), Is.EquivalentTo(messageBody.First().ToArray()), "The message body should match.");
+                Assert.That(eventData.Properties, Is.EquivalentTo(message.ApplicationProperties), "The application properties should match.");
+                Assert.That(eventData.OffsetString, Is.EqualTo(offset), "The offset should match.");
+                Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
+                Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueueTime), "The enqueued time should match.");
+                Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");
+                Assert.That(eventData.LastPartitionOffset, Is.EqualTo(lastOffset), "The last offset should match.");
+                Assert.That(eventData.LastPartitionSequenceNumber, Is.EqualTo(lastSequence), "The last sequence number should match.");
+                Assert.That(eventData.LastPartitionEnqueuedTime, Is.EqualTo(lastEnqueue), "The last enqueued time should match.");
+                Assert.That(eventData.LastPartitionPropertiesRetrievalTime, Is.EqualTo(lastRetrieve), "The last retrieval time should match.");
+                Assert.That(eventData.MessageId, Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier should match.");
+                Assert.That(eventData.CorrelationId, Is.EqualTo(message.Properties.CorrelationId.ToString()), "The correlation identifier should match.");
+                Assert.That(eventData.ContentType, Is.EqualTo(message.Properties.ContentType), "The content type should match.");
+            });
         }
 
         /// <summary>
@@ -228,8 +249,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             eventData.CommitPublishingState();
 
-            Assert.That(eventData.PublishedSequenceNumber, Is.EqualTo(expectedSequence), "The published sequence number should have been set.");
-            Assert.That(eventData.PendingPublishSequenceNumber, Is.EqualTo(default(int?)), "The pending sequence number should have been cleared.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventData.PublishedSequenceNumber, Is.EqualTo(expectedSequence), "The published sequence number should have been set.");
+                Assert.That(eventData.PendingPublishSequenceNumber, Is.EqualTo(default(int?)), "The pending sequence number should have been cleared.");
+            });
         }
 
         /// <summary>
@@ -257,9 +281,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var clone = sourceEvent.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
-            Assert.That(clone.IsEquivalentTo(sourceEvent, true), Is.True, "The clone should be equivalent to the source event.");
-            Assert.That(clone, Is.Not.SameAs(sourceEvent), "The clone should be a distinct reference.");
-            Assert.That(object.ReferenceEquals(clone.Properties, sourceEvent.Properties), Is.False, "The clone's property bag should be a distinct reference.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.IsEquivalentTo(sourceEvent, true), Is.True, "The clone should be equivalent to the source event.");
+                Assert.That(clone, Is.Not.SameAs(sourceEvent), "The clone should be a distinct reference.");
+                Assert.That(object.ReferenceEquals(clone.Properties, sourceEvent.Properties), Is.False, "The clone's property bag should be a distinct reference.");
+            });
         }
 
         /// <summary>
@@ -287,8 +314,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var clone = sourceEvent.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
-            Assert.That(clone.IsEquivalentTo(sourceEvent, false), Is.True, "The clone should be equivalent to the source event.");
-            Assert.That(clone, Is.Not.SameAs(sourceEvent), "The clone should be a distinct reference.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.IsEquivalentTo(sourceEvent, false), Is.True, "The clone should be equivalent to the source event.");
+                Assert.That(clone, Is.Not.SameAs(sourceEvent), "The clone should be a distinct reference.");
+            });
         }
 
         /// <summary>

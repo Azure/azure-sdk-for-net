@@ -42,9 +42,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 
-            Assert.IsNotNull(deserializedEmployee);
-            Assert.AreEqual("Bob", deserializedEmployee.Name);
-            Assert.AreEqual(62, deserializedEmployee.Age);
+            Assert.That(deserializedEmployee, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserializedEmployee.Name, Is.EqualTo("Bob"));
+                Assert.That(deserializedEmployee.Age, Is.EqualTo(62));
+            });
         }
 
         [RecordedTest]
@@ -65,9 +68,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 
-            Assert.IsNotNull(deserializedEmployee);
-            Assert.AreEqual("Bob", deserializedEmployee.Name);
-            Assert.AreEqual(62, deserializedEmployee.Age);
+            Assert.That(deserializedEmployee, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserializedEmployee.Name, Is.EqualTo("Bob"));
+                Assert.That(deserializedEmployee.Age, Is.EqualTo(62));
+            });
         }
 
         [RecordedTest]
@@ -89,9 +95,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 
-            Assert.IsNotNull(deserializedEmployee);
-            Assert.AreEqual("Name", deserializedEmployee.Name);
-            Assert.AreEqual(25, deserializedEmployee.Age);
+            Assert.That(deserializedEmployee, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserializedEmployee.Name, Is.EqualTo("Name"));
+                Assert.That(deserializedEmployee.Age, Is.EqualTo(25));
+            });
         }
 
         [RecordedTest]
@@ -110,9 +119,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator());
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 
-            Assert.IsNotNull(deserializedEmployee);
-            Assert.AreEqual("Caketown", deserializedEmployee.Name);
-            Assert.AreEqual(42, deserializedEmployee.Age);
+            Assert.That(deserializedEmployee, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserializedEmployee.Name, Is.EqualTo("Caketown"));
+                Assert.That(deserializedEmployee.Age, Is.EqualTo(42));
+            });
         }
 
         [RecordedTest]
@@ -132,16 +144,22 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             var deserializedObject = await serializer.DeserializeAsync<Employee>(content);
             var readEmployee = deserializedObject as Employee;
-            Assert.IsNotNull(readEmployee);
-            Assert.AreEqual("Caketown", readEmployee.Name);
-            Assert.AreEqual(42, readEmployee.Age);
+            Assert.That(readEmployee, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(readEmployee.Name, Is.EqualTo("Caketown"));
+                Assert.That(readEmployee.Age, Is.EqualTo(42));
+            });
 
             // deserialize using the new schema to make sure we are respecting it
             var readEmployeeV2 = await serializer.DeserializeAsync<EmployeeV2>(content);
-            Assert.IsNotNull(readEmployee);
-            Assert.AreEqual("Caketown", readEmployeeV2.Name);
-            Assert.AreEqual(42, readEmployeeV2.Age);
-            Assert.AreEqual("Redmond", readEmployeeV2.City);
+            Assert.Multiple(() =>
+            {
+                Assert.That(readEmployee, Is.Not.Null);
+                Assert.That(readEmployeeV2.Name, Is.EqualTo("Caketown"));
+                Assert.That(readEmployeeV2.Age, Is.EqualTo(42));
+                Assert.That(readEmployeeV2.City, Is.EqualTo("Redmond"));
+            });
         }
 
         [RecordedTest]
@@ -158,10 +176,13 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             // Since the serializer does not have built-in validation, deserialize is able to fill undefined properties with null values.
             var deserialized = await serializer.DeserializeAsync<EmployeeV2>(content);
-            Assert.IsNotNull(deserialized);
-            Assert.AreEqual("Caketown", deserialized.Name);
-            Assert.AreEqual(42, deserialized.Age);
-            Assert.AreEqual(null, deserialized.City);
+            Assert.That(deserialized, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserialized.Name, Is.EqualTo("Caketown"));
+                Assert.That(deserialized.Age, Is.EqualTo(42));
+                Assert.That(deserialized.City, Is.EqualTo(null));
+            });
         }
 
         [RecordedTest]
@@ -201,11 +222,14 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
             await producer.SendAsync(new EventData[] { eventData });
 
-            Assert.IsFalse(eventData.IsReadOnly);
+            Assert.That(eventData.IsReadOnly, Is.False);
             string[] contentType = eventData.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("application/json", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
+            Assert.That(contentType, Has.Length.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contentType[0], Is.EqualTo("application/json"));
+                Assert.That(contentType[1], Is.Not.Empty);
+            });
 
             // construct a consumer and consume the event from our event hub
             await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
@@ -215,14 +239,20 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
                 // decoding should not alter the message
                 contentType = eventData.ContentType.Split('+');
-                Assert.AreEqual(2, contentType.Length);
-                Assert.AreEqual("application/json", contentType[0]);
-                Assert.IsNotEmpty(contentType[1]);
+                Assert.That(contentType, Has.Length.EqualTo(2));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(contentType[0], Is.EqualTo("application/json"));
+                    Assert.That(contentType[1], Is.Not.Empty);
 
-                // verify the payload was decoded correctly
-                Assert.IsNotNull(deserialized);
-                Assert.AreEqual("Caketown", deserialized.Name);
-                Assert.AreEqual(42, deserialized.Age);
+                    // verify the payload was decoded correctly
+                    Assert.That(deserialized, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(deserialized.Name, Is.EqualTo("Caketown"));
+                    Assert.That(deserialized.Age, Is.EqualTo(42));
+                });
                 break;
             }
         }
@@ -240,24 +270,33 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var employee = new Employee { Age = 42, Name = "Caketown" };
             EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
 
-            Assert.IsFalse(eventData.IsReadOnly);
+            Assert.That(eventData.IsReadOnly, Is.False);
             string[] contentType = eventData.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("application/json", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
+            Assert.That(contentType, Has.Length.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contentType[0], Is.EqualTo("application/json"));
+                Assert.That(contentType[1], Is.Not.Empty);
+            });
 
             Employee deserialized = await serializer.DeserializeAsync<Employee>(eventData);
 
             // decoding should not alter the message
             contentType = eventData.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("application/json", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
+            Assert.That(contentType, Has.Length.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contentType[0], Is.EqualTo("application/json"));
+                Assert.That(contentType[1], Is.Not.Empty);
 
-            // verify the payload was decoded correctly
-            Assert.IsNotNull(deserialized);
-            Assert.AreEqual("Caketown", deserialized.Name);
-            Assert.AreEqual(42, deserialized.Age);
+                // verify the payload was decoded correctly
+                Assert.That(deserialized, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserialized.Name, Is.EqualTo("Caketown"));
+                Assert.That(deserialized.Age, Is.EqualTo(42));
+            });
         }
 
         [RecordedTest]
@@ -356,9 +395,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
             {
-                Assert.That(data, Is.TypeOf<Employee>());
-                Assert.AreEqual(dataType.Name, "Employee");
-                Assert.AreEqual(schemaDefinition, s_customSchema);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(data, Is.TypeOf<Employee>());
+                    Assert.That(dataType.Name, Is.EqualTo("Employee"));
+                    Assert.That(s_customSchema, Is.EqualTo(schemaDefinition));
+                });
 
                 validationErrors = new List<Exception>();
 

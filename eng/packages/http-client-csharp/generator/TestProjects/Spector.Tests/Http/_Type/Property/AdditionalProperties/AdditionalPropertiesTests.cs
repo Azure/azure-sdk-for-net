@@ -21,12 +21,15 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
             var client = new AdditionalPropertiesClient(host, null);
             var response = await client.GetExtendsFloatClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(43.125f, value.Id);
-            CollectionAssert.AreEquivalent(new Dictionary<string, float>
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.Id, Is.EqualTo(43.125f));
+            });
+            Assert.That(value.AdditionalProperties, Is.EquivalentTo(new Dictionary<string, float>
             {
                 ["prop"] = 43.125f,
-            }, value.AdditionalProperties);
+            }));
         });
 
         [SpectorTest]
@@ -40,20 +43,20 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsFloatClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task IsFloatGet() => Test(async (host) =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetIsFloatClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             var value = response.Value;
-            Assert.AreEqual(43.125f, value.Id);
-            CollectionAssert.AreEquivalent(new Dictionary<string, float>
+            Assert.That(value.Id, Is.EqualTo(43.125f));
+            Assert.That(value.AdditionalProperties, Is.EquivalentTo(new Dictionary<string, float>
             {
                 ["prop"] = 43.125f,
-            }, value.AdditionalProperties);
+            }));
         });
 
         [SpectorTest]
@@ -67,7 +70,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetIsFloatClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -75,11 +78,14 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
         {
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsModelClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(1, value.AdditionalProperties.Count);
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
+            Assert.That(value.AdditionalProperties.ContainsKey("prop"), Is.True);
             var model = ModelReaderWriter.Read<ModelForRecord>(value.AdditionalProperties["prop"]);
-            Assert.AreEqual("ok", model!.State);
+            Assert.That(model!.State, Is.EqualTo("ok"));
         });
 
         [SpectorTest]
@@ -93,7 +99,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsModelClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -101,11 +107,14 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
         {
             var response = await new AdditionalPropertiesClient(host, null).GetIsModelClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(1, value.AdditionalProperties.Count);
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
+            Assert.That(value.AdditionalProperties.ContainsKey("prop"), Is.True);
             var model = ModelReaderWriter.Read<ModelForRecord>(value.AdditionalProperties["prop"]);
-            Assert.AreEqual("ok", model!.State);
+            Assert.That(model!.State, Is.EqualTo("ok"));
         });
 
         [SpectorTest]
@@ -119,7 +128,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetIsModelClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -127,13 +136,19 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
         {
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsModelArrayClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(1, value.AdditionalProperties.Count);
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
+            Assert.That(value.AdditionalProperties.ContainsKey("prop"), Is.True);
             var prop = value.AdditionalProperties["prop"].Select(item => ModelReaderWriter.Read<ModelForRecord>(item)).ToList();
-            Assert.AreEqual(2, prop.Count);
-            Assert.AreEqual("ok", prop[0]!.State);
-            Assert.AreEqual("ok", prop[1]!.State);
+            Assert.That(prop.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(prop[0]!.State, Is.EqualTo("ok"));
+                Assert.That(prop[1]!.State, Is.EqualTo("ok"));
+            });
         });
 
         [SpectorTest]
@@ -151,23 +166,26 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsModelArrayClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task IsModelArrayGet() => Test(async (host) =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetIsModelArrayClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
 
             var value = response.Value;
-            Assert.AreEqual(1, value.AdditionalProperties.Count);
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop"));
+            Assert.That(value.AdditionalProperties.Count, Is.EqualTo(1));
+            Assert.That(value.AdditionalProperties.ContainsKey("prop"), Is.True);
 
             var prop = value.AdditionalProperties["prop"].Select(item => ModelReaderWriter.Read<ModelForRecord>(item)).ToList();
-            Assert.AreEqual(2, prop.Count);
-            Assert.AreEqual("ok", prop[0]!.State);
-            Assert.AreEqual("ok", prop[1]!.State);
+            Assert.That(prop.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(prop[0]!.State, Is.EqualTo("ok"));
+                Assert.That(prop[1]!.State, Is.EqualTo("ok"));
+            });
         });
 
         [SpectorTest]
@@ -185,7 +203,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetIsModelArrayClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -193,12 +211,15 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
         {
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsStringClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("ExtendsStringAdditionalProperties", value.Name);
-            CollectionAssert.AreEquivalent(new Dictionary<string, string>
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.Name, Is.EqualTo("ExtendsStringAdditionalProperties"));
+            });
+            Assert.That(value.AdditionalProperties, Is.EquivalentTo(new Dictionary<string, string>
             {
                 ["prop"] = "abc"
-            }, value.AdditionalProperties);
+            }));
         });
 
         [SpectorTest]
@@ -212,7 +233,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsStringClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -220,12 +241,15 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
         {
             var response = await new AdditionalPropertiesClient(host, null).GetIsStringClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("IsStringAdditionalProperties", value.Name);
-            CollectionAssert.AreEquivalent(new Dictionary<string, string>
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.Name, Is.EqualTo("IsStringAdditionalProperties"));
+            });
+            Assert.That(value.AdditionalProperties, Is.EquivalentTo(new Dictionary<string, string>
             {
                 ["prop"] = "abc"
-            }, value.AdditionalProperties);
+            }));
         });
 
         [SpectorTest]
@@ -239,7 +263,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetIsStringClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -247,14 +271,17 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
         {
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsUnknownClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("ExtendsUnknownAdditionalProperties", value.Name);
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop1"));
-            Assert.AreEqual(32, value.AdditionalProperties["prop1"].ToObjectFromJson<int>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop2"));
-            Assert.AreEqual(true, value.AdditionalProperties["prop2"].ToObjectFromJson<bool>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop3"));
-            Assert.AreEqual("abc", value.AdditionalProperties["prop3"].ToObjectFromJson<string>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.Name, Is.EqualTo("ExtendsUnknownAdditionalProperties"));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop1"), Is.True);
+                Assert.That(value.AdditionalProperties["prop1"].ToObjectFromJson<int>(), Is.EqualTo(32));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop2"), Is.True);
+                Assert.That(value.AdditionalProperties["prop2"].ToObjectFromJson<bool>(), Is.EqualTo(true));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop3"), Is.True);
+                Assert.That(value.AdditionalProperties["prop3"].ToObjectFromJson<string>(), Is.EqualTo("abc"));
+            });
         });
 
         [SpectorTest]
@@ -270,7 +297,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsUnknownClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -278,16 +305,19 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
         {
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsUnknownDerivedClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("ExtendsUnknownAdditionalProperties", value.Name);
-            Assert.AreEqual(314, value.Index);
-            Assert.AreEqual(2.71875f, value.Age);
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop1"));
-            Assert.AreEqual(32, value.AdditionalProperties["prop1"].ToObjectFromJson<int>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop2"));
-            Assert.AreEqual(true, value.AdditionalProperties["prop2"].ToObjectFromJson<bool>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop3"));
-            Assert.AreEqual("abc", value.AdditionalProperties["prop3"].ToObjectFromJson<string>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.Name, Is.EqualTo("ExtendsUnknownAdditionalProperties"));
+                Assert.That(value.Index, Is.EqualTo(314));
+                Assert.That(value.Age, Is.EqualTo(2.71875f));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop1"), Is.True);
+                Assert.That(value.AdditionalProperties["prop1"].ToObjectFromJson<int>(), Is.EqualTo(32));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop2"), Is.True);
+                Assert.That(value.AdditionalProperties["prop2"].ToObjectFromJson<bool>(), Is.EqualTo(true));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop3"), Is.True);
+                Assert.That(value.AdditionalProperties["prop3"].ToObjectFromJson<string>(), Is.EqualTo("abc"));
+            });
         });
 
         [SpectorTest]
@@ -304,7 +334,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsUnknownDerivedClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -312,20 +342,26 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
         {
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsUnknownDiscriminatedClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("Derived", value.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.Name, Is.EqualTo("Derived"));
+            });
             var kindProperty = value.GetType().GetProperty("Kind", BindingFlags.Instance | BindingFlags.NonPublic);
-            Assert.AreEqual("derived", kindProperty?.GetValue(value));
+            Assert.That(kindProperty?.GetValue(value), Is.EqualTo("derived"));
             var derived = value as ExtendsUnknownAdditionalPropertiesDiscriminatedDerived;
-            Assert.IsNotNull(derived);
-            Assert.AreEqual(314, derived!.Index);
-            Assert.AreEqual(2.71875f, derived.Age);
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop1"));
-            Assert.AreEqual(32, value.AdditionalProperties["prop1"].ToObjectFromJson<int>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop2"));
-            Assert.AreEqual(true, value.AdditionalProperties["prop2"].ToObjectFromJson<bool>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop3"));
-            Assert.AreEqual("abc", value.AdditionalProperties["prop3"].ToObjectFromJson<string>());
+            Assert.That(derived, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(derived!.Index, Is.EqualTo(314));
+                Assert.That(derived.Age, Is.EqualTo(2.71875f));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop1"), Is.True);
+                Assert.That(value.AdditionalProperties["prop1"].ToObjectFromJson<int>(), Is.EqualTo(32));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop2"), Is.True);
+                Assert.That(value.AdditionalProperties["prop2"].ToObjectFromJson<bool>(), Is.EqualTo(true));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop3"), Is.True);
+                Assert.That(value.AdditionalProperties["prop3"].ToObjectFromJson<string>(), Is.EqualTo("abc"));
+            });
         });
 
         [SpectorTest]
@@ -342,7 +378,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsUnknownDiscriminatedClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -350,14 +386,17 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
         {
             var response = await new AdditionalPropertiesClient(host, null).GetIsUnknownClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("IsUnknownAdditionalProperties", value.Name);
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop1"));
-            Assert.AreEqual(32, value.AdditionalProperties["prop1"].ToObjectFromJson<int>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop2"));
-            Assert.AreEqual(true, value.AdditionalProperties["prop2"].ToObjectFromJson<bool>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop3"));
-            Assert.AreEqual("abc", value.AdditionalProperties["prop3"].ToObjectFromJson<string>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.Name, Is.EqualTo("IsUnknownAdditionalProperties"));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop1"), Is.True);
+                Assert.That(value.AdditionalProperties["prop1"].ToObjectFromJson<int>(), Is.EqualTo(32));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop2"), Is.True);
+                Assert.That(value.AdditionalProperties["prop2"].ToObjectFromJson<bool>(), Is.EqualTo(true));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop3"), Is.True);
+                Assert.That(value.AdditionalProperties["prop3"].ToObjectFromJson<string>(), Is.EqualTo("abc"));
+            });
         });
 
         [SpectorTest]
@@ -373,7 +412,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetIsUnknownClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -381,16 +420,19 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
         {
             var response = await new AdditionalPropertiesClient(host, null).GetIsUnknownDerivedClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("IsUnknownAdditionalProperties", value.Name);
-            Assert.AreEqual(314, value.Index);
-            Assert.AreEqual(2.71875f, value.Age);
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop1"));
-            Assert.AreEqual(32, value.AdditionalProperties["prop1"].ToObjectFromJson<int>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop2"));
-            Assert.AreEqual(true, value.AdditionalProperties["prop2"].ToObjectFromJson<bool>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop3"));
-            Assert.AreEqual("abc", value.AdditionalProperties["prop3"].ToObjectFromJson<string>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.Name, Is.EqualTo("IsUnknownAdditionalProperties"));
+                Assert.That(value.Index, Is.EqualTo(314));
+                Assert.That(value.Age, Is.EqualTo(2.71875f));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop1"), Is.True);
+                Assert.That(value.AdditionalProperties["prop1"].ToObjectFromJson<int>(), Is.EqualTo(32));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop2"), Is.True);
+                Assert.That(value.AdditionalProperties["prop2"].ToObjectFromJson<bool>(), Is.EqualTo(true));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop3"), Is.True);
+                Assert.That(value.AdditionalProperties["prop3"].ToObjectFromJson<string>(), Is.EqualTo("abc"));
+            });
         });
 
         [SpectorTest]
@@ -407,7 +449,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetIsUnknownDerivedClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -415,20 +457,26 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
         {
             var response = await new AdditionalPropertiesClient(host, null).GetIsUnknownDiscriminatedClient().GetAsync();
             var value = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("Derived", value.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(value.Name, Is.EqualTo("Derived"));
+            });
             var kindProperty = value.GetType().GetProperty("Kind", BindingFlags.Instance | BindingFlags.NonPublic);
-            Assert.AreEqual("derived", kindProperty?.GetValue(value));
+            Assert.That(kindProperty?.GetValue(value), Is.EqualTo("derived"));
             var derived = value as IsUnknownAdditionalPropertiesDiscriminatedDerived;
-            Assert.IsNotNull(derived);
-            Assert.AreEqual(314, derived!.Index);
-            Assert.AreEqual(2.71875f, derived.Age);
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop1"));
-            Assert.AreEqual(32, value.AdditionalProperties["prop1"].ToObjectFromJson<int>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop2"));
-            Assert.AreEqual(true, value.AdditionalProperties["prop2"].ToObjectFromJson<bool>());
-            Assert.IsTrue(value.AdditionalProperties.ContainsKey("prop3"));
-            Assert.AreEqual("abc", value.AdditionalProperties["prop3"].ToObjectFromJson<string>());
+            Assert.That(derived, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(derived!.Index, Is.EqualTo(314));
+                Assert.That(derived.Age, Is.EqualTo(2.71875f));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop1"), Is.True);
+                Assert.That(value.AdditionalProperties["prop1"].ToObjectFromJson<int>(), Is.EqualTo(32));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop2"), Is.True);
+                Assert.That(value.AdditionalProperties["prop2"].ToObjectFromJson<bool>(), Is.EqualTo(true));
+                Assert.That(value.AdditionalProperties.ContainsKey("prop3"), Is.True);
+                Assert.That(value.AdditionalProperties["prop3"].ToObjectFromJson<string>(), Is.EqualTo("abc"));
+            });
         });
 
         [SpectorTest]
@@ -445,18 +493,21 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetIsUnknownDiscriminatedClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task ExtendsDifferentSpreadFloatGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsDifferentSpreadFloatClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("abc", response.Value.Name);
-            Assert.AreEqual(43.125f, response.Value.DerivedProp);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
-            Assert.AreEqual(43.125f, response.Value.AdditionalProperties["prop"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Name, Is.EqualTo("abc"));
+                Assert.That(response.Value.DerivedProp, Is.EqualTo(43.125f));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
+            Assert.That(response.Value.AdditionalProperties["prop"], Is.EqualTo(43.125f));
         });
 
         [SpectorTest]
@@ -470,20 +521,26 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsDifferentSpreadFloatClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task ExtendsDifferentSpreadModelGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsDifferentSpreadModelClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("abc", response.Value.KnownProp);
-            Assert.IsNotNull(response.Value.DerivedProp);
-            Assert.AreEqual("ok", response.Value.DerivedProp.State);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.KnownProp, Is.EqualTo("abc"));
+                Assert.That(response.Value.DerivedProp, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.DerivedProp.State, Is.EqualTo("ok"));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
             var prop = ModelReaderWriter.Read<ModelForRecord>(response.Value.AdditionalProperties["prop"]);
-            Assert.AreEqual("ok", prop!.State);
+            Assert.That(prop!.State, Is.EqualTo("ok"));
         });
 
         [SpectorTest]
@@ -497,25 +554,31 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsDifferentSpreadModelClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task ExtendsDifferentSpreadModelArrayGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsDifferentSpreadModelArrayClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("abc", response.Value.KnownProp);
-            Assert.AreEqual(2, response.Value.DerivedProp.Count);
-            Assert.AreEqual("ok", response.Value.DerivedProp[0].State);
-            Assert.AreEqual("ok", response.Value.DerivedProp[1].State);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.KnownProp, Is.EqualTo("abc"));
+                Assert.That(response.Value.DerivedProp.Count, Is.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.DerivedProp[0].State, Is.EqualTo("ok"));
+                Assert.That(response.Value.DerivedProp[1].State, Is.EqualTo("ok"));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
             var list = response.Value.AdditionalProperties["prop"];
-            Assert.AreEqual(2, list.Count);
+            Assert.That(list.Count, Is.EqualTo(2));
             var prop1 = ModelReaderWriter.Read<ModelForRecord>(list[0]);
-            Assert.AreEqual("ok", prop1!.State);
+            Assert.That(prop1!.State, Is.EqualTo("ok"));
             var prop2 = ModelReaderWriter.Read<ModelForRecord>(list[1]);
-            Assert.AreEqual("ok", prop2!.State);
+            Assert.That(prop2!.State, Is.EqualTo("ok"));
         });
 
         [SpectorTest]
@@ -529,18 +592,21 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsDifferentSpreadModelArrayClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task ExtendsDifferentSpreadStringGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsDifferentSpreadStringClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(43.125f, response.Value.Id);
-            Assert.AreEqual("abc", response.Value.DerivedProp);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
-            Assert.AreEqual("abc", response.Value.AdditionalProperties["prop"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Id, Is.EqualTo(43.125f));
+                Assert.That(response.Value.DerivedProp, Is.EqualTo("abc"));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
+            Assert.That(response.Value.AdditionalProperties["prop"], Is.EqualTo("abc"));
         });
 
         [SpectorTest]
@@ -554,19 +620,22 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetExtendsDifferentSpreadStringClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task MultipleSpreadGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetMultipleSpreadClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsTrue(response.Value.Flag);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
-            Assert.AreEqual(1, response.Value.AdditionalSingleProperties.Count);
-            Assert.AreEqual("abc", response.Value.AdditionalProperties["prop1"]);
-            Assert.AreEqual(43.125f, response.Value.AdditionalSingleProperties["prop2"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Flag, Is.True);
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+                Assert.That(response.Value.AdditionalSingleProperties.Count, Is.EqualTo(1));
+            });
+            Assert.That(response.Value.AdditionalProperties["prop1"], Is.EqualTo("abc"));
+            Assert.That(response.Value.AdditionalSingleProperties["prop2"], Is.EqualTo(43.125f));
         });
 
         [SpectorTest]
@@ -584,17 +653,20 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetMultipleSpreadClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task SpreadDifferentFloatGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadDifferentFloatClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("abc", response.Value.Name);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
-            Assert.AreEqual(43.125f, response.Value.AdditionalProperties["prop"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Name, Is.EqualTo("abc"));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
+            Assert.That(response.Value.AdditionalProperties["prop"], Is.EqualTo(43.125f));
         });
 
         [SpectorTest]
@@ -608,18 +680,21 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadDifferentFloatClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task SpreadDifferentModelGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadDifferentModelClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("abc", response.Value.KnownProp);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.KnownProp, Is.EqualTo("abc"));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
             var model = ModelReaderWriter.Read<ModelForRecord>(response.Value.AdditionalProperties["prop"]);
-            Assert.AreEqual("ok", model!.State);
+            Assert.That(model!.State, Is.EqualTo("ok"));
         });
 
         [SpectorTest]
@@ -633,22 +708,28 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadDifferentModelClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task SpreadDifferentModelArrayGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadDifferentModelArrayClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("abc", response.Value.KnownProp);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.KnownProp, Is.EqualTo("abc"));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
             var list = response.Value.AdditionalProperties["prop"];
-            Assert.AreEqual(2, list.Count);
+            Assert.That(list.Count, Is.EqualTo(2));
             var first = ModelReaderWriter.Read<ModelForRecord>(list[0]);
             var second = ModelReaderWriter.Read<ModelForRecord>(list[1]);
-            Assert.AreEqual("ok", first!.State);
-            Assert.AreEqual("ok", second!.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(first!.State, Is.EqualTo("ok"));
+                Assert.That(second!.State, Is.EqualTo("ok"));
+            });
         });
 
         [SpectorTest]
@@ -666,17 +747,20 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadDifferentModelArrayClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task SpreadDifferentStringGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadDifferentStringClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(43.125f, response.Value.Id);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
-            Assert.AreEqual("abc", response.Value.AdditionalProperties["prop"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Id, Is.EqualTo(43.125f));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
+            Assert.That(response.Value.AdditionalProperties["prop"], Is.EqualTo("abc"));
         });
 
         [SpectorTest]
@@ -690,17 +774,20 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadDifferentStringClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task SpreadFloatGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadFloatClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(43.125f, response.Value.Id);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
-            Assert.AreEqual(43.125f, response.Value.AdditionalProperties["prop"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Id, Is.EqualTo(43.125f));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
+            Assert.That(response.Value.AdditionalProperties["prop"], Is.EqualTo(43.125f));
         });
 
         [SpectorTest]
@@ -714,18 +801,21 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadFloatClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task SpreadModelGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadModelClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("ok", response.Value.KnownProp.State);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.KnownProp.State, Is.EqualTo("ok"));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
             var model = ModelReaderWriter.Read<ModelForRecord>(response.Value.AdditionalProperties["prop"]);
-            Assert.AreEqual("ok", model!.State);
+            Assert.That(model!.State, Is.EqualTo("ok"));
         });
 
         [SpectorTest]
@@ -739,24 +829,33 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadModelClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task SpreadModelArrayGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadModelArrayClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(2, response.Value.KnownProp.Count);
-            Assert.AreEqual("ok", response.Value.KnownProp[0].State);
-            Assert.AreEqual("ok", response.Value.KnownProp[1].State);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.KnownProp.Count, Is.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.KnownProp[0].State, Is.EqualTo("ok"));
+                Assert.That(response.Value.KnownProp[1].State, Is.EqualTo("ok"));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
             var list = response.Value.AdditionalProperties["prop"];
-            Assert.AreEqual(2, list.Count);
+            Assert.That(list.Count, Is.EqualTo(2));
             var first = ModelReaderWriter.Read<ModelForRecord>(list[0]);
             var second = ModelReaderWriter.Read<ModelForRecord>(list[1]);
-            Assert.AreEqual("ok", first!.State);
-            Assert.AreEqual("ok", second!.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(first!.State, Is.EqualTo("ok"));
+                Assert.That(second!.State, Is.EqualTo("ok"));
+            });
         });
 
         [SpectorTest]
@@ -774,21 +873,27 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadModelArrayClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task SpreadRecordNonDiscriminatedUnionGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadRecordNonDiscriminatedUnionClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("abc", response.Value.Name);
-            Assert.AreEqual(2, response.Value.AdditionalProperties.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Name, Is.EqualTo("abc"));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(2));
+            });
             var prop1 = ModelReaderWriter.Read<WidgetData0>(response.Value.AdditionalProperties["prop1"]);
-            Assert.AreEqual("abc", prop1!.FooProp);
+            Assert.That(prop1!.FooProp, Is.EqualTo("abc"));
             var prop2 = ModelReaderWriter.Read<WidgetData1>(response.Value.AdditionalProperties["prop2"]);
-            Assert.AreEqual(new DateTimeOffset(2021, 1, 1, 0, 0, 0, TimeSpan.Zero), prop2!.Start);
-            Assert.AreEqual(new DateTimeOffset(2021, 1, 2, 0, 0, 0, TimeSpan.Zero), prop2.End);
+            Assert.Multiple(() =>
+            {
+                Assert.That(prop2!.Start, Is.EqualTo(new DateTimeOffset(2021, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+                Assert.That(prop2.End, Is.EqualTo(new DateTimeOffset(2021, 1, 2, 0, 0, 0, TimeSpan.Zero)));
+            });
         });
 
         [SpectorTest]
@@ -806,21 +911,27 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadRecordNonDiscriminatedUnionClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task SpreadRecordNonDiscriminatedUnion2Get() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadRecordNonDiscriminatedUnion2Client().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("abc", response.Value.Name);
-            Assert.AreEqual(2, response.Value.AdditionalProperties.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Name, Is.EqualTo("abc"));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(2));
+            });
             var prop1 = ModelReaderWriter.Read<WidgetData2>(response.Value.AdditionalProperties["prop1"]);
-            Assert.AreEqual("2021-01-01T00:00:00Z", prop1!.Start);
+            Assert.That(prop1!.Start, Is.EqualTo("2021-01-01T00:00:00Z"));
             var prop2 = ModelReaderWriter.Read<WidgetData1>(response.Value.AdditionalProperties["prop2"]);
-            Assert.AreEqual(new DateTimeOffset(2021, 1, 1, 0, 0, 0, TimeSpan.Zero), prop2!.Start);
-            Assert.AreEqual(new DateTimeOffset(2021, 1, 2, 0, 0, 0, TimeSpan.Zero), prop2.End);
+            Assert.Multiple(() =>
+            {
+                Assert.That(prop2!.Start, Is.EqualTo(new DateTimeOffset(2021, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+                Assert.That(prop2.End, Is.EqualTo(new DateTimeOffset(2021, 1, 2, 0, 0, 0, TimeSpan.Zero)));
+            });
         });
 
         [SpectorTest]
@@ -838,19 +949,22 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadRecordNonDiscriminatedUnion2Client().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task SpreadRecordUnionGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadRecordUnionClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsTrue(response.Value.Flag);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
-            Assert.AreEqual(1, response.Value.AdditionalSingleProperties.Count);
-            Assert.AreEqual("abc", response.Value.AdditionalProperties["prop1"]);
-            Assert.AreEqual(43.125f, response.Value.AdditionalSingleProperties["prop2"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Flag, Is.True);
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+                Assert.That(response.Value.AdditionalSingleProperties.Count, Is.EqualTo(1));
+            });
+            Assert.That(response.Value.AdditionalProperties["prop1"], Is.EqualTo("abc"));
+            Assert.That(response.Value.AdditionalSingleProperties["prop2"], Is.EqualTo(43.125f));
         });
 
         [SpectorTest]
@@ -868,17 +982,20 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadRecordUnionClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task SpreadStringGet() => Test(async host =>
         {
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadStringClient().GetAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("SpreadSpringRecord", response.Value.Name);
-            Assert.AreEqual(1, response.Value.AdditionalProperties.Count);
-            Assert.AreEqual("abc", response.Value.AdditionalProperties["prop"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Name, Is.EqualTo("SpreadSpringRecord"));
+                Assert.That(response.Value.AdditionalProperties.Count, Is.EqualTo(1));
+            });
+            Assert.That(response.Value.AdditionalProperties["prop"], Is.EqualTo("abc"));
         });
 
         [SpectorTest]
@@ -892,7 +1009,7 @@ namespace TestProjects.Spector.Tests.Http._Type.Property.AdditionalProperties
                 }
             };
             var response = await new AdditionalPropertiesClient(host, null).GetSpreadStringClient().PutAsync(value);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
     }

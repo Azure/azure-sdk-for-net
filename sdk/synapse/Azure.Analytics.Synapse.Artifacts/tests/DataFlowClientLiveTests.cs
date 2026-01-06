@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableDataFlow flow = await DisposableDataFlow.Create (client, this.Recording);
 
             AsyncPageable<DataFlowResource> dataFlows = client.GetDataFlowsByWorkspaceAsync ();
-            Assert.GreaterOrEqual((await dataFlows.ToListAsync()).Count, 1);
+            Assert.That((await dataFlows.ToListAsync()), Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableDataFlow flow = await DisposableDataFlow.Create (client, this.Recording);
 
             DataFlowResource dataFlow = await client.GetDataFlowAsync (flow.Name);
-            Assert.AreEqual (flow.Name, dataFlow.Name);
+            Assert.That(dataFlow.Name, Is.EqualTo(flow.Name));
         }
 
         [RecordedTest]
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await renameOperation.WaitForCompletionResponseAsync();
 
             DataFlowResource dataFlow = await client.GetDataFlowAsync (newFlowName);
-            Assert.AreEqual (newFlowName, dataFlow.Name);
+            Assert.That(dataFlow.Name, Is.EqualTo(newFlowName));
 
             DataFlowDeleteDataFlowOperation operation = await client.StartDeleteDataFlowAsync (newFlowName);
             await operation.WaitForCompletionResponseAsync();

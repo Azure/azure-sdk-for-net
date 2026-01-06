@@ -59,7 +59,7 @@ public class PipelineTransportLoggerTests : SyncAsyncPolicyTestBase
         logger.SingleEventById(7); // ResponseDelay
         logger.SingleEventById(18); // ExceptionResponse
 
-        CollectionAssert.IsEmpty(listener.EventData);
+        Assert.That(listener.EventData, Is.Empty);
     }
 
     [Test]
@@ -76,7 +76,7 @@ public class PipelineTransportLoggerTests : SyncAsyncPolicyTestBase
         TestLogger logger = factory.GetLogger(PipelineTransportCategoryName);
         logger.SingleEventById(7); // ResponseDelay
 
-        CollectionAssert.IsEmpty(listener.EventData);
+        Assert.That(listener.EventData, Is.Empty);
     }
 
     #endregion
@@ -109,7 +109,7 @@ public class PipelineTransportLoggerTests : SyncAsyncPolicyTestBase
         Assert.ThrowsAsync<InvalidOperationException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
 
         EventWrittenEventArgs log = listener.GetAndValidateSingleEvent(LoggingEventIds.ExceptionResponseEvent, "ExceptionResponse", EventLevel.Informational, SystemClientModelEventSourceName);
-        Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0], log.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0]);
+        Assert.That(log.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0], Is.EqualTo(exception.ToString().Split(Environment.NewLine.ToCharArray())[0]));
     }
 
     [Test]
@@ -141,7 +141,7 @@ public class PipelineTransportLoggerTests : SyncAsyncPolicyTestBase
         TestLogger logger = factory.GetLogger(PipelineTransportCategoryName);
 
         LoggerEvent log = logger.GetAndValidateSingleEvent(LoggingEventIds.ExceptionResponseEvent, "ExceptionResponse", LogLevel.Information);
-        Assert.AreEqual(exception, log.Exception);
+        Assert.That(log.Exception, Is.EqualTo(exception));
     }
 
     [Test]
@@ -174,7 +174,7 @@ public class PipelineTransportLoggerTests : SyncAsyncPolicyTestBase
         // Assert that the response delay log message is written and formatted correctly
 
         EventWrittenEventArgs log = listener.GetAndValidateSingleEvent(LoggingEventIds.ResponseDelayEvent, "ResponseDelay", EventLevel.Warning, SystemClientModelEventSourceName);
-        Assert.Greater(log.GetProperty<double>("seconds"), 3);
+        Assert.That(log.GetProperty<double>("seconds"), Is.GreaterThan(3));
     }
 
     [Test]
@@ -214,7 +214,7 @@ public class PipelineTransportLoggerTests : SyncAsyncPolicyTestBase
         // Assert that the response log message is written and formatted correctly
 
         LoggerEvent log = logger.GetAndValidateSingleEvent(LoggingEventIds.ResponseDelayEvent, "ResponseDelay", LogLevel.Warning);
-        Assert.Greater(log.GetValueFromArguments<double>("seconds"), 3);
+        Assert.That(log.GetValueFromArguments<double>("seconds"), Is.GreaterThan(3));
     }
 
     #endregion

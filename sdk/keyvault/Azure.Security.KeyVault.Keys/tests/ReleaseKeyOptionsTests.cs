@@ -12,16 +12,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void ConstructorArgumentValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new ReleaseKeyOptions(null, null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.Throws<ArgumentException>(() => new ReleaseKeyOptions(string.Empty, null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new ReleaseKeyOptions("test", null));
-            Assert.AreEqual("targetAttestationToken", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("targetAttestationToken"));
 
             ex = Assert.Throws<ArgumentException>(() => new ReleaseKeyOptions("test", string.Empty));
-            Assert.AreEqual("targetAttestationToken", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("targetAttestationToken"));
         }
     }
 }

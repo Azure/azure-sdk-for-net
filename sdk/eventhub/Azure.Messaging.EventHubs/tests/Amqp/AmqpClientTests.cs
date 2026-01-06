@@ -104,8 +104,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient(endpoint.Host, "somePath", TimeSpan.FromDays(1), credential.Object, options);
 
-            Assert.That(client.ConnectionEndpoint.Host, Is.EqualTo(endpoint.Host), "The connection endpoint should have used the namespace URI.");
-            Assert.That(client.ServiceEndpoint.Host, Is.EqualTo(endpoint.Host), "The service endpoint should have used the namespace URI.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(client.ConnectionEndpoint.Host, Is.EqualTo(endpoint.Host), "The connection endpoint should have used the namespace URI.");
+                Assert.That(client.ServiceEndpoint.Host, Is.EqualTo(endpoint.Host), "The service endpoint should have used the namespace URI.");
+            });
         }
 
         /// <summary>
@@ -120,8 +123,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient(endpoint.Host, "somePath", TimeSpan.FromDays(1), credential.Object, options);
 
-            Assert.That(client.ConnectionEndpoint.Host, Is.EqualTo(options.CustomEndpointAddress.Host), "The connection endpoint should have used the custom endpoint URI from the options.");
-            Assert.That(client.ServiceEndpoint.Host, Is.EqualTo(endpoint.Host), "The service endpoint should have used the namespace URI.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(client.ConnectionEndpoint.Host, Is.EqualTo(options.CustomEndpointAddress.Host), "The connection endpoint should have used the custom endpoint URI from the options.");
+                Assert.That(client.ServiceEndpoint.Host, Is.EqualTo(endpoint.Host), "The service endpoint should have used the namespace URI.");
+            });
         }
 
         /// <summary>
@@ -143,8 +149,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.endpoint.com", "somePath", TimeSpan.FromDays(1), credential.Object, options, useTls);
 
-            Assert.That(client.ConnectionEndpoint.Host, Is.EqualTo(options.CustomEndpointAddress.Host), "The connection endpoint should have used the custom endpoint URI from the options.");
-            Assert.That(client.ConnectionEndpoint.Scheme, Is.EqualTo(expectedScheme), "The connection endpoint scheme should reflect the TLS setting.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(client.ConnectionEndpoint.Host, Is.EqualTo(options.CustomEndpointAddress.Host), "The connection endpoint should have used the custom endpoint URI from the options.");
+                Assert.That(client.ConnectionEndpoint.Scheme, Is.EqualTo(expectedScheme), "The connection endpoint scheme should reflect the TLS setting.");
+            });
         }
 
         /// <summary>

@@ -28,10 +28,10 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
 
-            Assert.IsNotNull(builderExtensions);
+            Assert.That(builderExtensions, Is.Not.Null);
             var writer = new TypeProviderWriter(builderExtensions!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -45,10 +45,10 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
 
-            Assert.IsNotNull(builderExtensions);
+            Assert.That(builderExtensions, Is.Not.Null);
             var writer = new TypeProviderWriter(builderExtensions!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -63,10 +63,10 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
 
-            Assert.IsNotNull(builderExtensions);
+            Assert.That(builderExtensions, Is.Not.Null);
             var writer = new TypeProviderWriter(builderExtensions!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -82,10 +82,10 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
 
-            Assert.IsNotNull(builderExtensions);
+            Assert.That(builderExtensions, Is.Not.Null);
             var writer = new TypeProviderWriter(builderExtensions!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -98,16 +98,16 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
 
             var client = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientProvider>().Single();
-            Assert.IsNotNull(client);
+            Assert.That(client, Is.Not.Null);
             MockHelpers.SetCustomCodeView(client, new TestCustomCodeView(client));
 
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
 
-            Assert.IsNotNull(builderExtensions);
+            Assert.That(builderExtensions, Is.Not.Null);
             var writer = new TypeProviderWriter(builderExtensions!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
 
-            Assert.IsNull(builderExtensions);
+            Assert.That(builderExtensions, Is.Null);
         }
 
         [Test]
@@ -154,11 +154,11 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
 
-            Assert.IsNotNull(builderExtensions);
-            Assert.AreEqual(3, builderExtensions!.Methods.Count);
+            Assert.That(builderExtensions, Is.Not.Null);
+            Assert.That(builderExtensions!.Methods, Has.Count.EqualTo(3));
             foreach (var method in builderExtensions.Methods)
             {
-                Assert.IsTrue(method.Signature.Name.EndsWith("TestClient2", StringComparison.Ordinal));
+                Assert.That(method.Signature.Name.EndsWith("TestClient2", StringComparison.Ordinal), Is.True);
             }
         }
 

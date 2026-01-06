@@ -29,7 +29,7 @@ namespace Azure.Maps.Weather.Tests
             };
             Response<DailyAirQualityForecastResult> response = await client.GetAirQualityDailyForecastsAsync(options);
             Console.WriteLine("Description: " + response.Value.AirQualityResults[0].Description);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -43,7 +43,7 @@ namespace Azure.Maps.Weather.Tests
             };
             Response<AirQualityResult> response = await client.GetAirQualityHourlyForecastsAsync(options);
             Console.WriteLine("Description: " + response.Value.AirQualityResults[0].Description);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -57,7 +57,7 @@ namespace Azure.Maps.Weather.Tests
             };
             Response<AirQualityResult> response = await client.GetCurrentAirQualityAsync(options);
             Console.WriteLine("Description: " + response.Value.AirQualityResults[0].Description);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -71,7 +71,7 @@ namespace Azure.Maps.Weather.Tests
             };
             Response<CurrentConditionsResult> response = await client.GetCurrentWeatherConditionsAsync(options);
             Console.WriteLine("Temperature: " + response.Value.Results[0].Temperature.Value);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -86,7 +86,7 @@ namespace Azure.Maps.Weather.Tests
             Response<DailyForecastResult> response = await client.GetDailyWeatherForecastAsync(options);
             Console.WriteLine("Minimum temperatrue: " + response.Value.Forecasts[0].Temperature.Minimum.Value);
             Console.WriteLine("Maximum temperatrue: " + response.Value.Forecasts[0].Temperature.Maximum.Value);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -102,7 +102,7 @@ namespace Azure.Maps.Weather.Tests
             Response<DailyHistoricalActualsResult> response = await client.GetDailyHistoricalActualsAsync(options);
             Console.WriteLine("Minimum temperature: " + response.Value.HistoricalActuals[0].Temperature.Minimum.Value);
             Console.WriteLine("Maximum temperature: " + response.Value.HistoricalActuals[0].Temperature.Maximum.Value);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -118,7 +118,7 @@ namespace Azure.Maps.Weather.Tests
             Response<DailyHistoricalNormalsResult> response = await client.GetDailyHistoricalNormalsAsync(options);
             Console.WriteLine("Minimum temperature: " + response.Value.HistoricalNormals[0].Temperature.Minimum.Value);
             Console.WriteLine("Maximum temperature: " + response.Value.HistoricalNormals[0].Temperature.Maximum.Value);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -134,7 +134,7 @@ namespace Azure.Maps.Weather.Tests
             Response<DailyHistoricalRecordsResult> response = await client.GetDailyHistoricalRecordsAsync(options);
             Console.WriteLine("Minimum temperature: " + response.Value.HistoricalRecords[0].Temperature.Minimum.Value);
             Console.WriteLine("Maximum temperature: " + response.Value.HistoricalRecords[0].Temperature.Maximum.Value);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -148,7 +148,7 @@ namespace Azure.Maps.Weather.Tests
             };
             Response<DailyIndicesResult> response = await client.GetDailyIndicesAsync(options);
             Console.WriteLine("Description: " + response.Value.Results[0].Description);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -162,7 +162,7 @@ namespace Azure.Maps.Weather.Tests
             };
             Response<HourlyForecastResult> response = await client.GetHourlyWeatherForecastAsync(options);
             Console.WriteLine("Temperature: " + response.Value.Forecasts[0].Temperature.Value);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -176,7 +176,7 @@ namespace Azure.Maps.Weather.Tests
             };
             Response<MinuteForecastResult> response = await client.GetMinuteWeatherForecastAsync(options);
             Console.WriteLine("Summary: " + response.Value.Summary.LongPhrase);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -191,7 +191,7 @@ namespace Azure.Maps.Weather.Tests
             Response<QuarterDayForecastResult> response = await client.GetQuarterDayWeatherForecastAsync(options);
             Console.WriteLine("Minimum temperature: " + response.Value.Forecasts[0].Temperature.Minimum.Value);
             Console.WriteLine("Maximum temperature: " + response.Value.Forecasts[0].Temperature.Maximum.Value);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -207,7 +207,7 @@ namespace Azure.Maps.Weather.Tests
             if (response.Value.Results.Count > 0) {
                 Console.WriteLine("Description: " + response.Value.Results[0].Description);
             }
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -216,7 +216,7 @@ namespace Azure.Maps.Weather.Tests
             MapsWeatherClient client = CreateClient();
             Response<ActiveStormResult> response = await client.GetTropicalStormActiveAsync();
             Console.WriteLine("Name: " + response.Value.ActiveStorms[0].Name);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -243,7 +243,7 @@ namespace Azure.Maps.Weather.Tests
                 response.Value.StormForecasts[0].WindRadiiSummary[0].WindSpeed.Value,
                 response.Value.StormForecasts[0].WindRadiiSummary[0].WindSpeed.UnitLabel
             );
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -262,7 +262,7 @@ namespace Azure.Maps.Weather.Tests
                 response.Value.StormLocations[0].Coordinates.Longitude,
                 response.Value.StormLocations[0].Coordinates.Latitude
             );
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -277,7 +277,7 @@ namespace Azure.Maps.Weather.Tests
             };
             Response<StormSearchResult> response = await client.GetTropicalStormSearchAsync(options);
             Console.WriteLine("Name: " + response.Value.Storms[0].Name);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -306,7 +306,7 @@ namespace Azure.Maps.Weather.Tests
                 WeatherLanguage.EnglishUsa
             );
             Console.WriteLine("Temperature: " + response.Value.Waypoints[0].Temperature.Value);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
     }
 }

@@ -13,24 +13,24 @@ public class PipelineResponseTests
     public void ContentPropertyGetsContent()
     {
         var response = new MockPipelineResponse(200);
-        Assert.AreEqual(0, response.Content.ToArray().Length);
+        Assert.That(response.Content.ToArray(), Is.Empty);
 
         var responseWithBody = new MockPipelineResponse(200);
         responseWithBody.SetContent("body content");
-        Assert.AreEqual("body content", responseWithBody.Content.ToString());
+        Assert.That(responseWithBody.Content.ToString(), Is.EqualTo("body content"));
 
         // Ensure that the BinaryData is formed over the used portion of the memory stream, not the entire buffer.
         MemoryStream ms = new MemoryStream(50);
         var responseWithEmptyBody = new MockPipelineResponse(200);
         responseWithEmptyBody.ContentStream = ms;
-        Assert.AreEqual(0, response.Content.ToArray().Length);
+        Assert.That(response.Content.ToArray(), Is.Empty);
 
         // Ensure that even if the stream has been read and the cursor is sitting at the end of stream, the
         // `Content` property still contains the entire response.
         var responseWithBodyFullyRead = new MockPipelineResponse(200);
         responseWithBodyFullyRead.SetContent("body content");
         responseWithBodyFullyRead.ContentStream!.Seek(0, SeekOrigin.End);
-        Assert.AreEqual("body content", responseWithBody.Content.ToString());
+        Assert.That(responseWithBody.Content.ToString(), Is.EqualTo("body content"));
     }
 
     [Test]

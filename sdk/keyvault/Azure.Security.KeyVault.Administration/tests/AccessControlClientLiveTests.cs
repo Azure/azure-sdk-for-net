@@ -24,15 +24,18 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             List<KeyVaultRoleDefinition> results = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.Not.Zero);
-            Assert.That(results[0].AssignableScopes, Is.Not.Empty);
-            Assert.That(results[0].Description, Is.Not.Null);
-            Assert.That(results[0].Id, Is.Not.Null);
-            Assert.That(results[0].Name, Is.Not.Null);
-            Assert.That(results[0].Permissions, Is.Not.Empty);
-            Assert.That(results[0].RoleName, Is.Not.Null);
-            Assert.That(results[0].RoleType, Is.Not.Null);
-            Assert.That(results[0].Type, Is.Not.Null);
+            Assert.That(results, Is.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(results[0].AssignableScopes, Is.Not.Empty);
+                Assert.That(results[0].Description, Is.Not.Null);
+                Assert.That(results[0].Id, Is.Not.Null);
+                Assert.That(results[0].Name, Is.Not.Null);
+                Assert.That(results[0].Permissions, Is.Not.Empty);
+                Assert.That(results[0].RoleName, Is.Not.Null);
+                Assert.That(results[0].RoleType, Is.Not.Null);
+                Assert.That(results[0].Type, Is.Not.Null);
+            });
         }
 
         [RecordedTest]
@@ -63,11 +66,14 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             KeyVaultRoleDefinition fetchedRoleDefinition = await Client.GetRoleDefinitionAsync(KeyVaultRoleScope.Global, name);
 
-            Assert.That(fetchedRoleDefinition.AssignableScopes, Is.EqualTo(new[] { KeyVaultRoleScope.Global }));
-            Assert.That(fetchedRoleDefinition.Description, Is.EqualTo(description));
-            Assert.That(fetchedRoleDefinition.Name, Is.EqualTo(name.ToString()));
-            Assert.That(fetchedRoleDefinition.Permissions.First().DataActions, Is.EquivalentTo(options.Permissions[0].DataActions));
-            Assert.That(fetchedRoleDefinition.Type, Is.EqualTo(KeyVaultRoleDefinitionType.MicrosoftAuthorizationRoleDefinitions));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fetchedRoleDefinition.AssignableScopes, Is.EqualTo(new[] { KeyVaultRoleScope.Global }));
+                Assert.That(fetchedRoleDefinition.Description, Is.EqualTo(description));
+                Assert.That(fetchedRoleDefinition.Name, Is.EqualTo(name.ToString()));
+                Assert.That(fetchedRoleDefinition.Permissions.First().DataActions, Is.EquivalentTo(options.Permissions[0].DataActions));
+                Assert.That(fetchedRoleDefinition.Type, Is.EqualTo(KeyVaultRoleDefinitionType.MicrosoftAuthorizationRoleDefinitions));
+            });
         }
 
         [RecordedTest]
@@ -96,11 +102,14 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             RegisterForCleanup(createdDefinition);
 
-            Assert.That(createdDefinition.AssignableScopes, Is.EqualTo(new[] { KeyVaultRoleScope.Global }));
-            Assert.That(createdDefinition.Description, Is.EqualTo(description));
-            Assert.That(createdDefinition.Name, Is.EqualTo(name.ToString()));
-            Assert.That(createdDefinition.Permissions.First().DataActions, Is.EquivalentTo(options.Permissions[0].DataActions));
-            Assert.That(createdDefinition.Type, Is.EqualTo(KeyVaultRoleDefinitionType.MicrosoftAuthorizationRoleDefinitions));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdDefinition.AssignableScopes, Is.EqualTo(new[] { KeyVaultRoleScope.Global }));
+                Assert.That(createdDefinition.Description, Is.EqualTo(description));
+                Assert.That(createdDefinition.Name, Is.EqualTo(name.ToString()));
+                Assert.That(createdDefinition.Permissions.First().DataActions, Is.EquivalentTo(options.Permissions[0].DataActions));
+                Assert.That(createdDefinition.Type, Is.EqualTo(KeyVaultRoleDefinitionType.MicrosoftAuthorizationRoleDefinitions));
+            });
 
             options.Permissions[0].DataActions.Clear();
             options.Permissions[0].DataActions.Add(KeyVaultDataAction.CreateHsmKey);
@@ -156,9 +165,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             RegisterForCleanup(result);
 
-            Assert.That(result.Id, Is.Not.Null);
-            Assert.That(result.Name, Is.Not.Null);
-            Assert.That(result.Type, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null);
+                Assert.That(result.Name, Is.Not.Null);
+                Assert.That(result.Type, Is.Not.Null);
+            });
             if (Mode == RecordedTestMode.Live)
             {
                 Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
@@ -178,9 +190,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             RegisterForCleanup(result);
 
-            Assert.That(result.Id, Is.Not.Null);
-            Assert.That(result.Name, Is.Not.Null);
-            Assert.That(result.Type, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null);
+                Assert.That(result.Name, Is.Not.Null);
+                Assert.That(result.Type, Is.Not.Null);
+            });
             if (Mode == RecordedTestMode.Live)
             {
                 Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
@@ -203,9 +218,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             RegisterForCleanup(result);
 
-            Assert.That(result.Id, Is.Not.Null);
-            Assert.That(result.Name, Is.Not.Null);
-            Assert.That(result.Type, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null);
+                Assert.That(result.Name, Is.Not.Null);
+                Assert.That(result.Type, Is.Not.Null);
+            });
             if (Mode == RecordedTestMode.Live)
             {
                 Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
@@ -227,12 +245,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             KeyVaultRoleAssignment result = await Client.GetRoleAssignmentAsync(KeyVaultRoleScope.Global, assignment.Name).ConfigureAwait(false);
 
-            Assert.That(result.Id, Is.EqualTo(assignment.Id));
-            Assert.That(result.Name, Is.EqualTo(assignment.Name));
-            Assert.That(result.Type, Is.EqualTo(assignment.Type));
-            Assert.That(result.Properties.PrincipalId, Is.EqualTo(assignment.Properties.PrincipalId));
-            Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(assignment.Properties.RoleDefinitionId));
-            Assert.That(result.Properties.Scope, Is.EqualTo(assignment.Properties.Scope));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.EqualTo(assignment.Id));
+                Assert.That(result.Name, Is.EqualTo(assignment.Name));
+                Assert.That(result.Type, Is.EqualTo(assignment.Type));
+                Assert.That(result.Properties.PrincipalId, Is.EqualTo(assignment.Properties.PrincipalId));
+                Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(assignment.Properties.RoleDefinitionId));
+                Assert.That(result.Properties.Scope, Is.EqualTo(assignment.Properties.Scope));
+            });
         }
 
         [RecordedTest]
@@ -253,11 +274,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Guid name = Recording.Random.NewGuid();
 
             Response response = await Client.DeleteRoleAssignmentAsync(KeyVaultRoleScope.Global, name.ToString());
-            Assert.AreEqual(404, response.Status);
+            Assert.That(response.Status, Is.EqualTo(404));
 
             JsonDocument json = JsonDocument.Parse(response.Content);
             KeyVaultServiceError error = KeyVaultServiceError.DeserializeKeyVaultServiceError(json.RootElement.GetProperty("error"), ModelSerializationExtensions.WireOptions);
-            Assert.AreEqual("RoleAssignmentNotFound", error.Code);
+            Assert.That(error.Code, Is.EqualTo("RoleAssignmentNotFound"));
         }
 
         [RecordedTest]
@@ -266,11 +287,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Guid name = Recording.Random.NewGuid();
 
             Response response = await Client.DeleteRoleDefinitionAsync(KeyVaultRoleScope.Global, name);
-            Assert.AreEqual(404, response.Status);
+            Assert.That(response.Status, Is.EqualTo(404));
 
             JsonDocument json = JsonDocument.Parse(response.Content);
             KeyVaultServiceError error = KeyVaultServiceError.DeserializeKeyVaultServiceError(json.RootElement.GetProperty("error"), ModelSerializationExtensions.WireOptions);
-            Assert.AreEqual("RoleDefinitionNotFound", error.Code);
+            Assert.That(error.Code, Is.EqualTo("RoleDefinitionNotFound"));
         }
     }
 }

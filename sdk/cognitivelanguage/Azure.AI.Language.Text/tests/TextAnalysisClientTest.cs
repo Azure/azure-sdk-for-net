@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Text.Tests
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new TextAnalysisClient(null, (AzureKeyCredential)null));
-            Assert.AreEqual("endpoint", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("endpoint"));
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Text.Tests
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new TextAnalysisClient(endpoint, (AzureKeyCredential)null));
-            Assert.AreEqual("credential", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("credential"));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text.Tests
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new TextAnalysisClient(null, (TokenCredential)null));
-            Assert.AreEqual("endpoint", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("endpoint"));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Text.Tests
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new TextAnalysisClient(endpoint, (TokenCredential)null));
-            Assert.AreEqual("credential", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("credential"));
         }
 
         #region Helpers

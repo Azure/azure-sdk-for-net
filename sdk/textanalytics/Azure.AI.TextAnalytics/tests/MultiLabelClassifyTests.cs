@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ClassifyDocumentResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page
             ClassifyDocumentResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -83,13 +83,19 @@ namespace Azure.AI.TextAnalytics.Tests
                 s_batchDocuments,
                 TestEnvironment.MultiClassificationProjectName,
                 TestEnvironment.MultiClassificationDeploymentName);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
         }
 
@@ -112,10 +118,10 @@ namespace Azure.AI.TextAnalytics.Tests
                 options);
             ValidateOperationProperties(operation);
 
-            Assert.AreEqual("MultiLabelClassifyWithName", operation.DisplayName);
+            Assert.That(operation.DisplayName, Is.EqualTo("MultiLabelClassifyWithName"));
 
             List<ClassifyDocumentResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page.
             ClassifyDocumentResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -142,7 +148,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ClassifyDocumentResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page
             ClassifyDocumentResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -169,7 +175,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ClassifyDocumentResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page
             ClassifyDocumentResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -198,9 +204,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ClassifyDocumentResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            Assert.IsFalse(resultCollection[0].HasError);
-            Assert.IsTrue(resultCollection[1].HasError);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[1].Error.ErrorCode.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultCollection[0].HasError, Is.False);
+                Assert.That(resultCollection[1].HasError, Is.True);
+                Assert.That(resultCollection[1].Error.ErrorCode.ToString(), Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
+            });
         }
 
         [RecordedTest]
@@ -217,7 +226,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ClassifyDocumentResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page
             ClassifyDocumentResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -235,13 +244,19 @@ namespace Azure.AI.TextAnalytics.Tests
                 s_batchConvenienceDocuments,
                 TestEnvironment.MultiClassificationProjectName,
                 TestEnvironment.MultiClassificationDeploymentName);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
         }
 
@@ -266,7 +281,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ClassifyDocumentResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page
             ClassifyDocumentResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -287,12 +302,12 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, s_batchDocuments, batchActions);
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
 
             // Take the first page
             AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults = actionsResult.MultiLabelClassifyResults;
-            Assert.IsNotNull(multiLabelClassifyActionResults);
+            Assert.That(multiLabelClassifyActionResults, Is.Not.Null);
 
             ClassifyDocumentResultCollection resultCollection = multiLabelClassifyActionResults.FirstOrDefault().DocumentsResults;
             ValidateBatchResult(resultCollection);
@@ -321,15 +336,15 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, s_batchConvenienceDocuments, batchActions);
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
 
             // Take the first page
             AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults = actionsResult.MultiLabelClassifyResults;
-            Assert.IsNotNull(multiLabelClassifyActionResults);
+            Assert.That(multiLabelClassifyActionResults, Is.Not.Null);
 
             IList<string> expected = new List<string> { "MultiLabelClassify", "MultiLabelClassifyWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, multiLabelClassifyActionResults.Select(result => result.ActionName));
+            Assert.That(multiLabelClassifyActionResults.Select(result => result.ActionName), Is.EquivalentTo(expected));
         }
 
         [RecordedTest]
@@ -342,17 +357,23 @@ namespace Azure.AI.TextAnalytics.Tests
                 s_batchDocuments,
                 TestEnvironment.MultiClassificationProjectName,
                 TestEnvironment.MultiClassificationDeploymentName);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
 
             List<ClassifyDocumentResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page
             ClassifyDocumentResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -369,17 +390,23 @@ namespace Azure.AI.TextAnalytics.Tests
                 s_batchConvenienceDocuments,
                 TestEnvironment.MultiClassificationProjectName,
                 TestEnvironment.MultiClassificationDeploymentName);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.False);
+                Assert.That(operation.HasValue, Is.False);
+            });
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
             ValidateOperationProperties(operation);
 
             List<ClassifyDocumentResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages, Has.Count.EqualTo(1));
 
             // Take the first page
             ClassifyDocumentResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -388,62 +415,83 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateOperationProperties(ClassifyDocumentOperation operation)
         {
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.CreatedOn, Is.Not.EqualTo(new DateTimeOffset()));
+            });
             // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
             // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
 
             if (operation.ExpiresOn.HasValue)
             {
-                Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn.Value);
+                Assert.That(operation.ExpiresOn.Value, Is.Not.EqualTo(new DateTimeOffset()));
             }
         }
 
         private void ValidateDocumentResult(ClassificationCategoryCollection classificationCollection)
         {
-            Assert.IsNotNull(classificationCollection.Warnings);
+            Assert.That(classificationCollection.Warnings, Is.Not.Null);
 
             foreach (var classification in classificationCollection)
             {
-                Assert.GreaterOrEqual(classification.ConfidenceScore, 0);
-                Assert.LessOrEqual(classification.ConfidenceScore, 1);
-                Assert.NotNull(classification.Category);
+                Assert.That(classification.ConfidenceScore, Is.GreaterThanOrEqualTo(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(classification.ConfidenceScore, Is.LessThanOrEqualTo(1));
+                    Assert.That(classification.Category, Is.Not.Null);
+                });
             }
         }
 
         private void ValidateBatchResult(ClassifyDocumentResultCollection results, bool includeStatistics = default)
         {
-            Assert.AreEqual(results.ProjectName, TestEnvironment.MultiClassificationProjectName);
-            Assert.AreEqual(results.DeploymentName, TestEnvironment.MultiClassificationDeploymentName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(TestEnvironment.MultiClassificationProjectName, Is.EqualTo(results.ProjectName));
+                Assert.That(TestEnvironment.MultiClassificationDeploymentName, Is.EqualTo(results.DeploymentName));
+            });
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                });
             }
             else
             {
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
             }
 
             foreach (ClassifyDocumentResult result in results)
             {
-                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
-                Assert.False(result.HasError);
-                Assert.IsNotNull(result.Warnings);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.HasError, Is.False);
+                    Assert.That(result.Warnings, Is.Not.Null);
+                });
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(result.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                        Assert.That(result.Statistics.TransactionCount, Is.GreaterThan(0));
+                    });
                 }
                 else
                 {
-                    Assert.AreEqual(0, result.Statistics.CharacterCount);
-                    Assert.AreEqual(0, result.Statistics.TransactionCount);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(result.Statistics.CharacterCount, Is.EqualTo(0));
+                        Assert.That(result.Statistics.TransactionCount, Is.EqualTo(0));
+                    });
                 }
 
                 ValidateDocumentResult(result.ClassificationCategories);

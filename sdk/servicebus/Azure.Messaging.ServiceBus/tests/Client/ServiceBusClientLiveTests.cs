@@ -244,10 +244,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                     receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 }
                 var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
-                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message.Body.ToString()));
 
                 await client.DisposeAsync();
-                Assert.IsTrue(client.IsClosed);
+                Assert.That(client.IsClosed, Is.True);
                 if (!useSessions)
                 {
                     Assert.Throws<ObjectDisposedException>(() => client.CreateReceiver(scope.QueueName));
@@ -288,7 +288,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                     receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 }
                 var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
-                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message.Body.ToString()));
 
                 if (!useSessions)
                 {
@@ -319,14 +319,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 Assert.ThrowsAsync<TaskCanceledException>(async () => await client.AcceptNextSessionAsync(scope.QueueName, cancellationToken: cancellationTokenSource.Token));
                 var stop = DateTime.UtcNow;
 
-                Assert.Less(stop - start, duration.Add(duration));
+                Assert.That(stop - start, Is.LessThan(duration.Add(duration)));
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
 
                 start = DateTime.UtcNow;
                 var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 stop = DateTime.UtcNow;
-                Assert.Less(stop - start, duration.Add(duration));
+                Assert.That(stop - start, Is.LessThan(duration.Add(duration)));
             }
         }
 
@@ -337,7 +337,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             {
                 var client = CreateClient();
                 var receiver = await client.AcceptSessionAsync(scope.QueueName, "");
-                Assert.AreEqual("", receiver.SessionId);
+                Assert.That(receiver.SessionId, Is.EqualTo(""));
             }
         }
     }

@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             IReadOnlyList<long> sequenceNums = await mock.Object.ScheduleMessagesAsync(
                 new List<ServiceBusMessage>(),
                 default);
-            Assert.IsEmpty(sequenceNums);
+            Assert.That(sequenceNums, Is.Empty);
         }
 
         [Test]
@@ -118,9 +118,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
             var queueName = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var sender = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>()).CreateSender(queueName);
-            Assert.AreEqual(queueName, sender.EntityPath);
-            Assert.AreEqual(fullyQualifiedNamespace, sender.FullyQualifiedNamespace);
-            Assert.IsNotNull(sender.Identifier);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sender.EntityPath, Is.EqualTo(queueName));
+                Assert.That(sender.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace));
+                Assert.That(sender.Identifier, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -176,8 +179,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             completionSource.TrySetResult(true);
 
             await sendTask;
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
+            });
 
             cancellationSource.Cancel();
         }
@@ -308,7 +314,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             await using var sender = client.CreateSender("fake", options);
 
             var identifier = sender.Identifier;
-            Assert.AreEqual(setIdentifier, identifier);
+            Assert.That(identifier, Is.EqualTo(setIdentifier));
         }
     }
 }

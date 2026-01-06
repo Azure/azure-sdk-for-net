@@ -14,8 +14,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var input = "2022-05-13T16:59:04.531199+00:00";
             var sampleAsDateTimeOffset = DateTimeOffsetParser.ParseAndGetDateTimeOffset(input);
 
-            Assert.NotNull(sampleAsDateTimeOffset);
-            Assert.AreEqual(new TimeSpan(0,0,0), sampleAsDateTimeOffset.Offset);
+            Assert.That(sampleAsDateTimeOffset, Is.Not.Null);
+            Assert.That(sampleAsDateTimeOffset.Offset, Is.EqualTo(new TimeSpan(0, 0, 0)));
         }
 
         [Test]
@@ -24,8 +24,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var input = "2022-05-13T12:30:39.0516617-07:00";
             var sampleAsDateTimeOffset = DateTimeOffsetParser.ParseAndGetDateTimeOffset(input);
 
-            Assert.NotNull(sampleAsDateTimeOffset);
-            Assert.AreEqual(new TimeSpan(0, 0, 0), sampleAsDateTimeOffset.Offset);
+            Assert.That(sampleAsDateTimeOffset, Is.Not.Null);
+            Assert.That(sampleAsDateTimeOffset.Offset, Is.EqualTo(new TimeSpan(0, 0, 0)));
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var input = "2022-05-13T16:59:04.531199Z";
             var sampleAsDateTimeOffset = DateTimeOffsetParser.ParseAndGetDateTimeOffset(input);
 
-            Assert.NotNull(sampleAsDateTimeOffset);
-            Assert.AreEqual(new TimeSpan(0, 0, 0), sampleAsDateTimeOffset.Offset);
+            Assert.That(sampleAsDateTimeOffset, Is.Not.Null);
+            Assert.That(sampleAsDateTimeOffset.Offset, Is.EqualTo(new TimeSpan(0, 0, 0)));
         }
     }
 }

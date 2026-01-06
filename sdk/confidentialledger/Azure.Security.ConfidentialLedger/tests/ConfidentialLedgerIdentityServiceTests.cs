@@ -24,7 +24,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             var cert = ConfidentialLedgerCertificateClient.ParseCertificate(response);
 
-            Assert.AreEqual("5D2E98B216B73220C960EE2978E56EEFEEACA30D", cert.Thumbprint);
+            Assert.That(cert.Thumbprint, Is.EqualTo("5D2E98B216B73220C960EE2978E56EEFEEACA30D"));
         }
 
         public class LedgerIdentityResponse

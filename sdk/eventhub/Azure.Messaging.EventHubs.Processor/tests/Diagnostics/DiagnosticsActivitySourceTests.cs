@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, "998", default);
             await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, "1:0:556", default);
 
-            Assert.IsEmpty(listener.Activities);
+            Assert.That(listener.Activities, Is.Empty);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             var checkpointActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.EventProcessorCheckpointActivityName);
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, "host"));
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, "hub"));
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, "host")));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, "hub")));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext)));
             cancellationSource.Cancel();
         }
 
@@ -171,16 +171,22 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var activities = listener.Activities.ToList();
-            Assert.AreEqual(eventBatch.Length, activities.Count);
+            Assert.That(activities, Has.Count.EqualTo(eventBatch.Length));
 
             foreach (var activity in activities)
             {
-                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, activity.OperationName);
-                Assert.That(activity.Links, Has.Exactly(1).Items);
-                Assert.That(activity.Links.Select(a => a.Context.SpanId), Has.One.EqualTo(activity.ParentSpanId));
-                Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
-                Assert.AreEqual(ActivityStatusCode.Unset, activity.Status);
-                Assert.AreEqual(ActivityKind.Consumer, activity.Kind);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(activity.OperationName, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
+                    Assert.That(activity.Links, Has.Exactly(1).Items);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(activity.Links.Select(a => a.Context.SpanId), Has.One.EqualTo(activity.ParentSpanId));
+                    Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
+                    Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Unset));
+                    Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Consumer));
+                });
             }
             cancellationSource.Cancel();
         }
@@ -224,15 +230,18 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var activities = listener.Activities.ToList();
-            Assert.AreEqual(eventBatch.Length, activities.Count);
+            Assert.That(activities, Has.Count.EqualTo(eventBatch.Length));
 
             foreach (var activity in activities)
             {
-                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, activity.OperationName);
-                Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
-                Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
-                Assert.AreEqual(ActivityKind.Consumer, activity.Kind);
-                Assert.IsEmpty(activity.TagObjects.Where(t => t.Key == DiagnosticProperty.EnqueuedTimeAttribute));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(activity.OperationName, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
+                    Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
+                    Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Error));
+                    Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Consumer));
+                    Assert.That(activity.TagObjects.Where(t => t.Key == DiagnosticProperty.EnqueuedTimeAttribute), Is.Empty);
+                });
             }
             cancellationSource.Cancel();
         }
@@ -277,14 +286,17 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var activities = listener.Activities.ToList();
-            Assert.AreEqual(eventBatch.Length, activities.Count);
+            Assert.That(activities, Has.Count.EqualTo(eventBatch.Length));
 
             foreach (var activity in activities)
             {
-                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, activity.OperationName);
-                Assert.IsEmpty(activity.Links);
-                Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
-                Assert.AreEqual(ActivityKind.Consumer, activity.Kind);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(activity.OperationName, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
+                    Assert.That(activity.Links, Is.Empty);
+                    Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
+                    Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Consumer));
+                });
             }
             cancellationSource.Cancel();
         }

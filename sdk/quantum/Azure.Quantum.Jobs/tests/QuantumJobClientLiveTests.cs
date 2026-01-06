@@ -150,34 +150,46 @@ namespace Azure.Quantum.Jobs.Tests
             };
             var jobDetails = (await client.CreateJobAsync(jobId, createJobDetails)).Value;
 
-            // Check if job was created correctly
-            Assert.AreEqual(inputDataFormat, jobDetails.InputDataFormat);
-            Assert.AreEqual(outputDataFormat, jobDetails.OutputDataFormat);
-            Assert.AreEqual(providerId, jobDetails.ProviderId);
-            Assert.AreEqual(target, jobDetails.Target);
-            Assert.IsNotEmpty(jobDetails.Id);
-            Assert.IsNotEmpty(jobDetails.Name);
-            Assert.IsNotEmpty(jobDetails.InputDataUri);
+            Assert.Multiple(() =>
+            {
+                // Check if job was created correctly
+                Assert.That(jobDetails.InputDataFormat, Is.EqualTo(inputDataFormat));
+                Assert.That(jobDetails.OutputDataFormat, Is.EqualTo(outputDataFormat));
+                Assert.That(jobDetails.ProviderId, Is.EqualTo(providerId));
+                Assert.That(jobDetails.Target, Is.EqualTo(target));
+                Assert.That(jobDetails.Id, Is.Not.Empty);
+                Assert.That(jobDetails.Name, Is.Not.Empty);
+                Assert.That(jobDetails.InputDataUri, Is.Not.Empty);
+            });
             if (Mode == RecordedTestMode.Playback)
             {
-                Assert.IsTrue(jobDetails.Id.StartsWith("job-"));
-                Assert.IsTrue(jobDetails.Name.StartsWith("jobName-"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(jobDetails.Id, Does.StartWith("job-"));
+                    Assert.That(jobDetails.Name, Does.StartWith("jobName-"));
+                });
             }
             else
             {
-                Assert.AreEqual(jobId, jobDetails.Id);
-                Assert.AreEqual(jobName, jobDetails.Name);
-                Assert.AreEqual(inputDataUri, jobDetails.InputDataUri);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(jobDetails.Id, Is.EqualTo(jobId));
+                    Assert.That(jobDetails.Name, Is.EqualTo(jobName));
+                    Assert.That(jobDetails.InputDataUri, Is.EqualTo(inputDataUri));
+                });
             }
 
             // Get the job that we've just created based on the jobId
             var gotJob = (await client.GetJobAsync(jobId)).Value;
-            Assert.AreEqual(jobDetails.InputDataFormat, gotJob.InputDataFormat);
-            Assert.AreEqual(jobDetails.OutputDataFormat, gotJob.OutputDataFormat);
-            Assert.AreEqual(jobDetails.ProviderId, gotJob.ProviderId);
-            Assert.AreEqual(jobDetails.Target, gotJob.Target);
-            Assert.AreEqual(jobDetails.Id, gotJob.Id);
-            Assert.AreEqual(jobDetails.Name, gotJob.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(gotJob.InputDataFormat, Is.EqualTo(jobDetails.InputDataFormat));
+                Assert.That(gotJob.OutputDataFormat, Is.EqualTo(jobDetails.OutputDataFormat));
+                Assert.That(gotJob.ProviderId, Is.EqualTo(jobDetails.ProviderId));
+                Assert.That(gotJob.Target, Is.EqualTo(jobDetails.Target));
+                Assert.That(gotJob.Id, Is.EqualTo(jobDetails.Id));
+                Assert.That(gotJob.Name, Is.EqualTo(jobDetails.Name));
+            });
         }
 
         [RecordedTest]
@@ -188,15 +200,18 @@ namespace Azure.Quantum.Jobs.Tests
             int index = 0;
             await foreach (ProviderStatus status in client.GetProviderStatusAsync(CancellationToken.None))
             {
-                Assert.IsNotEmpty(status.Id);
-                Assert.IsNotNull(status.Targets);
-                Assert.IsNotNull(status.CurrentAvailability);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(status.Id, Is.Not.Empty);
+                    Assert.That(status.Targets, Is.Not.Null);
+                    Assert.That(status.CurrentAvailability, Is.Not.Null);
+                });
 
                 ++index;
             }
 
             // Should have at least one in the list.
-            Assert.GreaterOrEqual(index, 1);
+            Assert.That(index, Is.GreaterThanOrEqualTo(1));
         }
 
         [RecordedTest]
@@ -207,17 +222,20 @@ namespace Azure.Quantum.Jobs.Tests
             int index = 0;
             await foreach (QuantumJobQuota quota in client.GetQuotasAsync(CancellationToken.None))
             {
-                Assert.IsNotEmpty(quota.Dimension);
-                Assert.IsNotNull(quota.Scope);
-                Assert.IsNotEmpty(quota.ProviderId);
-                Assert.IsNotNull(quota.Utilization);
-                Assert.IsNotNull(quota.Holds);
-                Assert.IsNotNull(quota.Period);
-               ++index;
+                Assert.Multiple(() =>
+                {
+                    Assert.That(quota.Dimension, Is.Not.Empty);
+                    Assert.That(quota.Scope, Is.Not.Null);
+                    Assert.That(quota.ProviderId, Is.Not.Empty);
+                    Assert.That(quota.Utilization, Is.Not.Null);
+                    Assert.That(quota.Holds, Is.Not.Null);
+                    Assert.That(quota.Period, Is.Not.Null);
+                });
+                ++index;
             }
 
             // Should have at least a couple in the list.
-            Assert.GreaterOrEqual(index, 2);
+            Assert.That(index, Is.GreaterThanOrEqualTo(2));
         }
     }
 }

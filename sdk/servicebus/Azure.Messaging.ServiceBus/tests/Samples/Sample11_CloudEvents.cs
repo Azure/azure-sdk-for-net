@@ -65,12 +65,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // complete the message, thereby deleting it from the service
                 await receiver.CompleteMessageAsync(receivedMessage);
-                #endregion
+                Assert.Multiple(async () =>
+                {
+                    #endregion
 
-                Assert.AreEqual("Homer", receivedEmployee.Name);
-                Assert.AreEqual("application/cloudevents+json", receivedMessage.ContentType);
-                Assert.AreEqual(39, receivedEmployee.Age);
-                Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                    Assert.That(receivedEmployee.Name, Is.EqualTo("Homer"));
+                    Assert.That(receivedMessage.ContentType, Is.EqualTo("application/cloudevents+json"));
+                    Assert.That(receivedEmployee.Age, Is.EqualTo(39));
+                    Assert.That(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync(), Is.Null);
+                });
             }
         }
 

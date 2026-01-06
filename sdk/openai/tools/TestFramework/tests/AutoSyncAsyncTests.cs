@@ -31,13 +31,19 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
         MockClient original = new MockClient();
 
         MockClient instrumented = WrapClient(original);
-        Assert.That(instrumented, Is.Not.Null);
-        Assert.That(ReferenceEquals(original, instrumented), Is.False);
-        Assert.That(typeof(MockClient).IsAssignableFrom(instrumented.GetType()), Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(instrumented, Is.Not.Null);
+            Assert.That(ReferenceEquals(original, instrumented), Is.False);
+            Assert.That(typeof(MockClient).IsAssignableFrom(instrumented.GetType()), Is.True);
+        });
 
         MockClient recovered = UnWrap(instrumented);
-        Assert.That(recovered, Is.Not.Null);
-        Assert.That(ReferenceEquals(original, recovered), Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(recovered, Is.Not.Null);
+            Assert.That(ReferenceEquals(original, recovered), Is.True);
+        });
     }
 
     [Test]
@@ -50,8 +56,11 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
 
         var recoveredContext = GetClientContext(client) as MockClientContext;
         Assert.That(recoveredContext, Is.Not.Null);
-        Assert.That(recoveredContext!.Id, Is.EqualTo(context.Id));
-        Assert.That(ReferenceEquals(recoveredContext, context), Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(recoveredContext!.Id, Is.EqualTo(context.Id));
+            Assert.That(ReferenceEquals(recoveredContext, context), Is.True);
+        });
     }
 
     [Test]
@@ -100,7 +109,7 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
         MockClient client = WrapClient(new MockClient());
         AsyncCollectionResult<int> coll = client.ResultCollectionAsync(num, increment);
 
-        Assert.IsNotNull(coll);
+        Assert.That(coll, Is.Not.Null);
 
         int numResults = 0;
         await foreach (int i in coll)
@@ -135,13 +144,19 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
     {
         if (IsAsync)
         {
-            Assert.That(client.AsyncHit, Is.EqualTo(expectedCalls));
-            Assert.That(client.SyncHit, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(client.AsyncHit, Is.EqualTo(expectedCalls));
+                Assert.That(client.SyncHit, Is.EqualTo(0));
+            });
         }
         else
         {
-            Assert.That(client.AsyncHit, Is.EqualTo(0));
-            Assert.That(client.SyncHit, Is.EqualTo(expectedCalls));
+            Assert.Multiple(() =>
+            {
+                Assert.That(client.AsyncHit, Is.EqualTo(0));
+                Assert.That(client.SyncHit, Is.EqualTo(expectedCalls));
+            });
         }
     }
 }

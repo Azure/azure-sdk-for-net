@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-businessCard", uri);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             AnalyzeResult result = operation.Value;
 
@@ -66,93 +66,105 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            Assert.AreEqual(4, result.Paragraphs.Count);
+            Assert.That(result.Paragraphs, Has.Count.EqualTo(4));
 
             // Check just one paragraph to make sure we're parsing them.
 
             DocumentParagraph sampleParagraph = result.Paragraphs[0];
 
-            Assert.AreEqual("Dr. Avery Smith Senior Researcher Cloud & Al Department", sampleParagraph.Content);
-            Assert.IsNull(sampleParagraph.Role);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sampleParagraph.Content, Is.EqualTo("Dr. Avery Smith Senior Researcher Cloud & Al Department"));
+                Assert.That(sampleParagraph.Role, Is.Null);
+            });
 
             AnalyzedDocument document = operation.Value.Documents.Single();
 
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
 
-            // The expected values are based on the values returned by the service, and not the actual
-            // values present in the business card. We are not testing the service here, but the SDK.
+            Assert.Multiple(() =>
+            {
+                // The expected values are based on the values returned by the service, and not the actual
+                // values present in the business card. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("businessCard", document.DocumentType);
+                Assert.That(document.DocumentType, Is.EqualTo("businessCard"));
 
-            Assert.NotNull(document.Fields);
+                Assert.That(document.Fields, Is.Not.Null);
+            });
 
-            Assert.True(document.Fields.ContainsKey("ContactNames"));
-            Assert.True(document.Fields.ContainsKey("JobTitles"));
-            Assert.True(document.Fields.ContainsKey("Departments"));
-            Assert.True(document.Fields.ContainsKey("Emails"));
-            Assert.True(document.Fields.ContainsKey("Websites"));
-            Assert.True(document.Fields.ContainsKey("MobilePhones"));
-            Assert.True(document.Fields.ContainsKey("WorkPhones"));
-            Assert.True(document.Fields.ContainsKey("Faxes"));
-            Assert.True(document.Fields.ContainsKey("Addresses"));
-            Assert.True(document.Fields.ContainsKey("CompanyNames"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(document.Fields.ContainsKey("ContactNames"), Is.True);
+                Assert.That(document.Fields.ContainsKey("JobTitles"), Is.True);
+                Assert.That(document.Fields.ContainsKey("Departments"), Is.True);
+                Assert.That(document.Fields.ContainsKey("Emails"), Is.True);
+                Assert.That(document.Fields.ContainsKey("Websites"), Is.True);
+                Assert.That(document.Fields.ContainsKey("MobilePhones"), Is.True);
+                Assert.That(document.Fields.ContainsKey("WorkPhones"), Is.True);
+                Assert.That(document.Fields.ContainsKey("Faxes"), Is.True);
+                Assert.That(document.Fields.ContainsKey("Addresses"), Is.True);
+                Assert.That(document.Fields.ContainsKey("CompanyNames"), Is.True);
+            });
 
             var contactNames = document.Fields["ContactNames"].Value.AsList();
-            Assert.AreEqual(1, contactNames.Count);
-            Assert.AreEqual("Dr. Avery Smith", contactNames.FirstOrDefault().Content);
+            Assert.That(contactNames, Has.Count.EqualTo(1));
+            Assert.That(contactNames.FirstOrDefault().Content, Is.EqualTo("Dr. Avery Smith"));
 
             var contactNamesDict = contactNames.FirstOrDefault().Value.AsDictionary();
 
-            Assert.True(contactNamesDict.ContainsKey("FirstName"));
-            Assert.AreEqual("Avery", contactNamesDict["FirstName"].Value.AsString());
+            Assert.That(contactNamesDict.ContainsKey("FirstName"), Is.True);
+            Assert.That(contactNamesDict["FirstName"].Value.AsString(), Is.EqualTo("Avery"));
 
-            Assert.True(contactNamesDict.ContainsKey("LastName"));
-            Assert.AreEqual("Smith", contactNamesDict["LastName"].Value.AsString());
+            Assert.That(contactNamesDict.ContainsKey("LastName"), Is.True);
+            Assert.That(contactNamesDict["LastName"].Value.AsString(), Is.EqualTo("Smith"));
 
             var jobTitles = document.Fields["JobTitles"].Value.AsList();
-            Assert.AreEqual(1, jobTitles.Count);
-            Assert.AreEqual("Senior Researcher", jobTitles.FirstOrDefault().Value.AsString());
+            Assert.That(jobTitles, Has.Count.EqualTo(1));
+            Assert.That(jobTitles.FirstOrDefault().Value.AsString(), Is.EqualTo("Senior Researcher"));
 
             var departments = document.Fields["Departments"].Value.AsList();
             Assert.AreEqual(1, departments.Count);
-            Assert.AreEqual("Cloud & Al Department", departments.FirstOrDefault().Value.AsString());
+            Assert.That(departments.FirstOrDefault().Value.AsString(), Is.EqualTo("Cloud & Al Department"));
 
             var emails = document.Fields["Emails"].Value.AsList();
             Assert.AreEqual(1, emails.Count);
-            Assert.AreEqual("avery.smith@contoso.com", emails.FirstOrDefault().Value.AsString());
+            Assert.That(emails.FirstOrDefault().Value.AsString(), Is.EqualTo("avery.smith@contoso.com"));
 
             var websites = document.Fields["Websites"].Value.AsList();
             Assert.AreEqual(1, websites.Count);
-            Assert.AreEqual("https://www.contoso.com/", websites.FirstOrDefault().Value.AsString());
+            Assert.That(websites.FirstOrDefault().Value.AsString(), Is.EqualTo("https://www.contoso.com/"));
 
             var mobilePhones = document.Fields["MobilePhones"].Value.AsList();
             Assert.AreEqual(1, mobilePhones.Count);
-            Assert.AreEqual(DocumentFieldType.PhoneNumber, mobilePhones.FirstOrDefault().FieldType);
+            Assert.That(mobilePhones.FirstOrDefault().FieldType, Is.EqualTo(DocumentFieldType.PhoneNumber));
 
             var otherPhones = document.Fields["WorkPhones"].Value.AsList();
-            Assert.AreEqual(1, otherPhones.Count);
-            Assert.AreEqual(DocumentFieldType.PhoneNumber, otherPhones.FirstOrDefault().FieldType);
+            Assert.That(otherPhones, Has.Count.EqualTo(1));
+            Assert.That(otherPhones.FirstOrDefault().FieldType, Is.EqualTo(DocumentFieldType.PhoneNumber));
 
             var faxes = document.Fields["Faxes"].Value.AsList();
-            Assert.AreEqual(1, faxes.Count);
-            Assert.AreEqual(DocumentFieldType.PhoneNumber, faxes.FirstOrDefault().FieldType);
+            Assert.That(faxes, Has.Count.EqualTo(1));
+            Assert.That(faxes.FirstOrDefault().FieldType, Is.EqualTo(DocumentFieldType.PhoneNumber));
 
             var addresses = document.Fields["Addresses"].Value.AsList();
-            Assert.AreEqual(1, addresses.Count);
+            Assert.That(addresses, Has.Count.EqualTo(1));
 
             AddressValue address = addresses.First().Value.AsAddress();
-            Assert.AreEqual("London", address.City);
-            Assert.Null(address.CountryRegion);
-            Assert.AreEqual("2", address.HouseNumber);
-            Assert.Null(address.PoBox);
-            Assert.AreEqual("W2 6BD", address.PostalCode);
-            Assert.AreEqual("Kingdom Street", address.Road);
-            Assert.Null(address.State);
-            Assert.AreEqual("2 Kingdom Street", address.StreetAddress);
+            Assert.Multiple(() =>
+            {
+                Assert.That(address.City, Is.EqualTo("London"));
+                Assert.That(address.CountryRegion, Is.Null);
+                Assert.That(address.HouseNumber, Is.EqualTo("2"));
+                Assert.That(address.PoBox, Is.Null);
+                Assert.That(address.PostalCode, Is.EqualTo("W2 6BD"));
+                Assert.That(address.Road, Is.EqualTo("Kingdom Street"));
+                Assert.That(address.State, Is.Null);
+                Assert.That(address.StreetAddress, Is.EqualTo("2 Kingdom Street"));
+            });
 
             var companyNames = document.Fields["CompanyNames"].Value.AsList();
-            Assert.AreEqual(1, companyNames.Count);
-            Assert.AreEqual("Contoso", companyNames.FirstOrDefault().Value.AsString());
+            Assert.That(companyNames, Has.Count.EqualTo(1));
+            Assert.That(companyNames.FirstOrDefault().Value.AsString(), Is.EqualTo("Contoso"));
         }
 
         [RecordedTest]
@@ -179,14 +191,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             AnalyzeResult result = operation.Value;
 
-            Assert.AreEqual(2, result.Documents.Count);
+            Assert.That(result.Documents, Has.Count.EqualTo(2));
 
             for (int documentIndex = 0; documentIndex < result.Documents.Count; documentIndex++)
             {
                 var analyzedDocument = result.Documents[documentIndex];
                 var expectedPageNumber = documentIndex + 1;
 
-                Assert.NotNull(analyzedDocument);
+                Assert.That(analyzedDocument, Is.Not.Null);
 
                 ValidateAnalyzedDocument(
                     analyzedDocument,
@@ -194,21 +206,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
-                Assert.IsTrue(analyzedDocument.Fields.ContainsKey("Emails"));
+                Assert.That(analyzedDocument.Fields.ContainsKey("Emails"), Is.True);
 
                 DocumentField sampleField = analyzedDocument.Fields["Emails"];
 
-                Assert.AreEqual(DocumentFieldType.List, sampleField.FieldType);
+                Assert.That(sampleField.FieldType, Is.EqualTo(DocumentFieldType.List));
 
                 var field = sampleField.Value.AsList().Single();
 
                 if (documentIndex == 0)
                 {
-                    Assert.AreEqual("johnsinger@contoso.com", field.Content);
+                    Assert.That(field.Content, Is.EqualTo("johnsinger@contoso.com"));
                 }
                 else if (documentIndex == 1)
                 {
-                    Assert.AreEqual("avery.smith@contoso.com", field.Content);
+                    Assert.That(field.Content, Is.EqualTo("avery.smith@contoso.com"));
                 }
             }
         }
@@ -241,7 +253,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, customModel.ModelId, uri);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             AnalyzeResult result = operation.Value;
             AnalyzedDocument document = result.Documents.Single();
@@ -253,19 +265,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            // Testing that we shuffle things around correctly so checking only once per property.
+            Assert.Multiple(() =>
+            {
+                // Testing that we shuffle things around correctly so checking only once per property.
 
-            Assert.IsNotEmpty(document.DocumentType);
-            Assert.AreEqual(2200, page.Height);
-            Assert.AreEqual(1, page.PageNumber);
-            Assert.AreEqual(DocumentPageLengthUnit.Pixel, page.Unit);
-            Assert.AreEqual(1700, page.Width);
+                Assert.That(document.DocumentType, Is.Not.Empty);
+                Assert.That(page.Height, Is.EqualTo(2200));
+                Assert.That(page.PageNumber, Is.EqualTo(1));
+                Assert.That(page.Unit, Is.EqualTo(DocumentPageLengthUnit.Pixel));
+                Assert.That(page.Width, Is.EqualTo(1700));
 
-            Assert.IsNotNull(document.Fields);
+                Assert.That(document.Fields, Is.Not.Null);
+            });
             var name = "PurchaseOrderNumber";
-            Assert.IsNotNull(document.Fields[name]);
-            Assert.AreEqual(DocumentFieldType.String, document.Fields[name].FieldType);
-            Assert.AreEqual("948284", document.Fields[name].Content);
+            Assert.That(document.Fields[name], Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(document.Fields[name].FieldType, Is.EqualTo(DocumentFieldType.String));
+                Assert.That(document.Fields[name].Content, Is.EqualTo("948284"));
+            });
         }
 
         [RecordedTest]
@@ -282,7 +300,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             AnalyzeResult result = operation.Value;
             AnalyzedDocument document = result.Documents.Single();
@@ -294,13 +312,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            // Testing that we shuffle things around correctly so checking only once per property.
-            Assert.IsNotEmpty(document.DocumentType);
-            Assert.IsNotNull(document.Fields);
+            Assert.Multiple(() =>
+            {
+                // Testing that we shuffle things around correctly so checking only once per property.
+                Assert.That(document.DocumentType, Is.Not.Empty);
+                Assert.That(document.Fields, Is.Not.Null);
+            });
             var name = "AMEX_SELECTION_MARK";
-            Assert.IsNotNull(document.Fields[name]);
-            Assert.AreEqual(DocumentFieldType.SelectionMark, document.Fields[name].FieldType);
-            Assert.AreEqual(DocumentSelectionMarkState.Selected, document.Fields[name].Value.AsSelectionMarkState());
+            Assert.That(document.Fields[name], Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(document.Fields[name].FieldType, Is.EqualTo(DocumentFieldType.SelectionMark));
+                Assert.That(document.Fields[name].Value.AsSelectionMarkState(), Is.EqualTo(DocumentSelectionMarkState.Selected));
+            });
         }
 
         [RecordedTest]
@@ -336,14 +360,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 2);
 
-            // Check some values to make sure that fields from both pages are being populated.
+            Assert.Multiple(() =>
+            {
+                // Check some values to make sure that fields from both pages are being populated.
 
-            Assert.AreEqual("Jamie@southridgevideo.com", document.Fields["Contact"].Value.AsString());
-            Assert.AreEqual("Southridge Video", document.Fields["CompanyName"].Value.AsString());
-            Assert.AreEqual("$1,500", document.Fields["Gold"].Value.AsString());
-            Assert.AreEqual("$1,000", document.Fields["Bronze"].Value.AsString());
+                Assert.That(document.Fields["Contact"].Value.AsString(), Is.EqualTo("Jamie@southridgevideo.com"));
+                Assert.That(document.Fields["CompanyName"].Value.AsString(), Is.EqualTo("Southridge Video"));
+                Assert.That(document.Fields["Gold"].Value.AsString(), Is.EqualTo("$1,500"));
+                Assert.That(document.Fields["Bronze"].Value.AsString(), Is.EqualTo("$1,000"));
 
-            Assert.AreEqual(2, result.Pages.Count);
+                Assert.That(result.Pages, Has.Count.EqualTo(2));
+            });
 
             for (int pageIndex = 0; pageIndex < result.Pages.Count; pageIndex++)
             {
@@ -354,7 +381,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 DocumentLine sampleLine = page.Lines[1];
                 var expectedContent = pageIndex == 0 ? "Vendor Registration" : "Vendor Details:";
 
-                Assert.AreEqual(expectedContent, sampleLine.Content);
+                Assert.That(sampleLine.Content, Is.EqualTo(expectedContent));
             }
         }
 
@@ -398,14 +425,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     var page = result.Pages[pageIndex];
                     var expectedContent = pageIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
 
-                    Assert.True(page.Lines.Any(l => l.Content.Contains(expectedContent)));
+                    Assert.That(page.Lines.Any(l => l.Content.Contains(expectedContent)), Is.True);
                 }
             }
 
             DocumentPage blankPage = result.Pages[1];
 
-            Assert.AreEqual(0, blankPage.Lines.Count);
-            Assert.AreEqual(0, blankPage.Words.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(blankPage.Lines.Count, Is.EqualTo(0));
+                Assert.That(blankPage.Words.Count, Is.EqualTo(0));
+            });
         }
 
         [RecordedTest]
@@ -433,8 +463,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // Verify that we got back at least one missing field to make sure we hit the code path we want to test.
             // The missing field is returned with its type set to Unknown.
 
-            Assert.IsTrue(fields.Values.Any(field =>
-                field.FieldType == DocumentFieldType.Unknown && field.ExpectedFieldType == DocumentFieldType.String));
+            Assert.That(fields.Values.Any(field =>
+                field.FieldType == DocumentFieldType.Unknown && field.ExpectedFieldType == DocumentFieldType.String), Is.True);
         }
 
         [RecordedTest]
@@ -460,20 +490,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            Assert.IsEmpty(result.Paragraphs);
-            Assert.IsEmpty(result.KeyValuePairs);
-            Assert.IsEmpty(result.Styles);
-            Assert.IsEmpty(result.Tables);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Paragraphs, Is.Empty);
+                Assert.That(result.KeyValuePairs, Is.Empty);
+                Assert.That(result.Styles, Is.Empty);
+                Assert.That(result.Tables, Is.Empty);
+            });
 
             AnalyzedDocument blankDocument = result.Documents.Single();
 
-            Assert.IsEmpty(blankDocument.Spans);
+            Assert.That(blankDocument.Spans, Is.Empty);
 
             DocumentPage blankPage = result.Pages.Single();
 
-            Assert.IsEmpty(blankPage.Lines);
-            Assert.IsEmpty(blankPage.Words);
-            Assert.IsEmpty(blankPage.SelectionMarks);
+            Assert.Multiple(() =>
+            {
+                Assert.That(blankPage.Lines, Is.Empty);
+                Assert.That(blankPage.Words, Is.Empty);
+                Assert.That(blankPage.SelectionMarks, Is.Empty);
+            });
         }
 
         [RecordedTest]
@@ -489,7 +525,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = new MemoryStream(damagedFile);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, customModel.ModelId, stream));
-            Assert.AreEqual("InvalidRequest", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
 
         [RecordedTest]
@@ -502,7 +538,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var invalidUri = new Uri("https://idont.ex.ist");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, customModel.ModelId, invalidUri));
-            Assert.AreEqual("InvalidRequest", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
 
         #endregion
@@ -531,59 +567,71 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-document", uri);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             AnalyzeResult result = operation.Value;
             DocumentPage page = result.Pages.Single();
 
-            // The expected values are based on the values returned by the service, and not the actual
-            // values present in the document. We are not testing the service here, but the SDK.
+            Assert.Multiple(() =>
+            {
+                // The expected values are based on the values returned by the service, and not the actual
+                // values present in the document. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(DocumentPageLengthUnit.Pixel, page.Unit);
-            Assert.AreEqual(1700, page.Width);
-            Assert.AreEqual(2200, page.Height);
-            Assert.AreEqual(0, page.Angle);
-            Assert.AreEqual(54, page.Lines.Count);
+                Assert.That(page.Unit, Is.EqualTo(DocumentPageLengthUnit.Pixel));
+                Assert.That(page.Width, Is.EqualTo(1700));
+                Assert.That(page.Height, Is.EqualTo(2200));
+                Assert.That(page.Angle, Is.EqualTo(0));
+                Assert.That(page.Lines, Has.Count.EqualTo(54));
+            });
 
             foreach (DocumentLine line in page.Lines)
             {
-                Assert.NotNull(line.Content);
+                Assert.That(line.Content, Is.Not.Null);
             }
 
             foreach (DocumentWord word in page.Words)
             {
-                Assert.NotNull(word.Content);
-                Assert.GreaterOrEqual(word.Confidence, 0);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(word.Content, Is.Not.Null);
+                    Assert.That(word.Confidence, Is.GreaterThanOrEqualTo(0));
+                });
             }
 
             DocumentStyle style = result.Styles.First();
 
-            Assert.True(style.IsHandwritten);
+            Assert.That(style.IsHandwritten, Is.True);
 
             if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
-                Assert.AreEqual(52, result.Paragraphs.Count);
+                Assert.That(result.Paragraphs, Has.Count.EqualTo(52));
             }
             else
             {
-                Assert.AreEqual(38, result.Paragraphs.Count);
+                Assert.That(result.Paragraphs, Has.Count.EqualTo(38));
             }
 
             DocumentParagraph sampleParagraph = result.Paragraphs[1];
 
-            Assert.AreEqual("Hero Limited", sampleParagraph.Content);
-            Assert.AreEqual(ParagraphRole.Title, sampleParagraph.Role);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sampleParagraph.Content, Is.EqualTo("Hero Limited"));
+                Assert.That(sampleParagraph.Role, Is.EqualTo(ParagraphRole.Title));
 
-            Assert.AreEqual(2, result.Tables.Count);
+                Assert.That(result.Tables, Has.Count.EqualTo(2));
+            });
 
             DocumentTable sampleTable = result.Tables[1];
 
-            Assert.AreEqual(3, sampleTable.RowCount);
-            Assert.AreEqual(2, sampleTable.ColumnCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sampleTable.RowCount, Is.EqualTo(3));
+                Assert.That(sampleTable.ColumnCount, Is.EqualTo(2));
+            });
 
             var cells = sampleTable.Cells.ToList();
 
-            Assert.AreEqual(6, cells.Count);
+            Assert.That(cells, Has.Count.EqualTo(6));
 
             var expectedContent = new string[3, 2]
             {
@@ -594,15 +642,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             for (int i = 0; i < cells.Count; i++)
             {
-                Assert.GreaterOrEqual(cells[i].RowIndex, 0, $"Cell with content {cells[i].Content} should have row index greater than or equal to zero.");
-                Assert.Less(cells[i].RowIndex, sampleTable.RowCount, $"Cell with content {cells[i].Content} should have row index less than {sampleTable.RowCount}.");
-                Assert.GreaterOrEqual(cells[i].ColumnIndex, 0, $"Cell with content {cells[i].Content} should have column index greater than or equal to zero.");
-                Assert.Less(cells[i].ColumnIndex, sampleTable.ColumnCount, $"Cell with content {cells[i].Content} should have column index less than {sampleTable.ColumnCount}.");
+                Assert.That(cells[i].RowIndex, Is.GreaterThanOrEqualTo(0), $"Cell with content {cells[i].Content} should have row index greater than or equal to zero.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cells[i].RowIndex, Is.LessThan(sampleTable.RowCount), $"Cell with content {cells[i].Content} should have row index less than {sampleTable.RowCount}.");
+                    Assert.That(cells[i].ColumnIndex, Is.GreaterThanOrEqualTo(0), $"Cell with content {cells[i].Content} should have column index greater than or equal to zero.");
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cells[i].ColumnIndex, Is.LessThan(sampleTable.ColumnCount), $"Cell with content {cells[i].Content} should have column index less than {sampleTable.ColumnCount}.");
 
-                Assert.AreEqual(1, cells[i].RowSpan, $"Cell with content {cells[i].Content} should have a row span of 1.");
-                Assert.AreEqual(1, cells[i].ColumnSpan, $"Cell with content {cells[i].Content} should have a column span of 1.");
+                    Assert.That(cells[i].RowSpan, Is.EqualTo(1), $"Cell with content {cells[i].Content} should have a row span of 1.");
+                    Assert.That(cells[i].ColumnSpan, Is.EqualTo(1), $"Cell with content {cells[i].Content} should have a column span of 1.");
 
-                Assert.AreEqual(expectedContent[cells[i].RowIndex, cells[i].ColumnIndex], cells[i].Content);
+                    Assert.That(cells[i].Content, Is.EqualTo(expectedContent[cells[i].RowIndex, cells[i].ColumnIndex]));
+                });
             }
 
             ValidateAnalyzeResult(
@@ -638,7 +692,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-idDocument", uri);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             ValidateAnalyzeResult(
                 operation.Value,
@@ -648,46 +702,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var document = operation.Value.Documents.Single();
 
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
 
-            // The expected values are based on the values returned by the service, and not the actual
-            // values present in the ID document. We are not testing the service here, but the SDK.
+            Assert.Multiple(() =>
+            {
+                // The expected values are based on the values returned by the service, and not the actual
+                // values present in the ID document. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("idDocument.driverLicense", document.DocumentType);
+                Assert.That(document.DocumentType, Is.EqualTo("idDocument.driverLicense"));
 
-            Assert.NotNull(document.Fields);
+                Assert.That(document.Fields, Is.Not.Null);
+            });
 
-            Assert.True(document.Fields.ContainsKey("Address"));
-            Assert.True(document.Fields.ContainsKey("CountryRegion"));
-            Assert.True(document.Fields.ContainsKey("DateOfBirth"));
-            Assert.True(document.Fields.ContainsKey("DateOfExpiration"));
-            Assert.True(document.Fields.ContainsKey("DocumentNumber"));
-            Assert.True(document.Fields.ContainsKey("FirstName"));
-            Assert.True(document.Fields.ContainsKey("LastName"));
-            Assert.True(document.Fields.ContainsKey("Region"));
-            Assert.True(document.Fields.ContainsKey("Sex"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(document.Fields.ContainsKey("Address"), Is.True);
+                Assert.That(document.Fields.ContainsKey("CountryRegion"), Is.True);
+                Assert.That(document.Fields.ContainsKey("DateOfBirth"), Is.True);
+                Assert.That(document.Fields.ContainsKey("DateOfExpiration"), Is.True);
+                Assert.That(document.Fields.ContainsKey("DocumentNumber"), Is.True);
+                Assert.That(document.Fields.ContainsKey("FirstName"), Is.True);
+                Assert.That(document.Fields.ContainsKey("LastName"), Is.True);
+                Assert.That(document.Fields.ContainsKey("Region"), Is.True);
+                Assert.That(document.Fields.ContainsKey("Sex"), Is.True);
+            });
 
             AddressValue address = document.Fields["Address"].Value.AsAddress();
-            Assert.AreEqual("YOUR CITY", address.City);
-            Assert.Null(address.CountryRegion);
-            Assert.Null(address.HouseNumber);
-            Assert.Null(address.PoBox);
-            Assert.AreEqual("99999-1234", address.PostalCode);
-            Assert.AreEqual("123 STREET ADDRESS", address.Road);
-            Assert.AreEqual("WA", address.State);
-            Assert.AreEqual("123 STREET ADDRESS", address.StreetAddress);
+            Assert.Multiple(() =>
+            {
+                Assert.That(address.City, Is.EqualTo("YOUR CITY"));
+                Assert.That(address.CountryRegion, Is.Null);
+                Assert.That(address.HouseNumber, Is.Null);
+                Assert.That(address.PoBox, Is.Null);
+                Assert.That(address.PostalCode, Is.EqualTo("99999-1234"));
+                Assert.That(address.Road, Is.EqualTo("123 STREET ADDRESS"));
+                Assert.That(address.State, Is.EqualTo("WA"));
+                Assert.That(address.StreetAddress, Is.EqualTo("123 STREET ADDRESS"));
 
-            Assert.That(document.Fields["CountryRegion"].Value.AsCountryRegion(), Is.EqualTo("USA"));
+                Assert.That(document.Fields["CountryRegion"].Value.AsCountryRegion(), Is.EqualTo("USA"));
+            });
 
             var dateOfBirth = document.Fields["DateOfBirth"].Value.AsDate();
-            Assert.AreEqual(6, dateOfBirth.Day);
-            Assert.AreEqual(1, dateOfBirth.Month);
-            Assert.AreEqual(1958, dateOfBirth.Year);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dateOfBirth.Day, Is.EqualTo(6));
+                Assert.That(dateOfBirth.Month, Is.EqualTo(1));
+                Assert.That(dateOfBirth.Year, Is.EqualTo(1958));
+            });
 
             var dateOfExpiration = document.Fields["DateOfExpiration"].Value.AsDate();
-            Assert.AreEqual(12, dateOfExpiration.Day);
-            Assert.AreEqual(8, dateOfExpiration.Month);
-            Assert.AreEqual(2020, dateOfExpiration.Year);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dateOfExpiration.Day, Is.EqualTo(12));
+                Assert.That(dateOfExpiration.Month, Is.EqualTo(8));
+                Assert.That(dateOfExpiration.Year, Is.EqualTo(2020));
+            });
         }
 
         #endregion
@@ -716,7 +785,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-invoice", uri);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             ValidateAnalyzeResult(
                 operation.Value,
@@ -726,145 +795,172 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             AnalyzedDocument document = operation.Value.Documents.Single();
 
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
 
-            // The expected values are based on the values returned by the service, and not the actual
-            // values present in the invoice. We are not testing the service here, but the SDK.
+            Assert.Multiple(() =>
+            {
+                // The expected values are based on the values returned by the service, and not the actual
+                // values present in the invoice. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("invoice", document.DocumentType);
+                Assert.That(document.DocumentType, Is.EqualTo("invoice"));
 
-            Assert.NotNull(document.Fields);
+                Assert.That(document.Fields, Is.Not.Null);
+            });
 
-            Assert.True(document.Fields.ContainsKey("AmountDue"));
-            Assert.True(document.Fields.ContainsKey("BillingAddress"));
-            Assert.True(document.Fields.ContainsKey("BillingAddressRecipient"));
-            Assert.True(document.Fields.ContainsKey("CustomerAddress"));
-            Assert.True(document.Fields.ContainsKey("CustomerAddressRecipient"));
-            Assert.True(document.Fields.ContainsKey("CustomerId"));
-            Assert.True(document.Fields.ContainsKey("CustomerName"));
-            Assert.True(document.Fields.ContainsKey("DueDate"));
-            Assert.True(document.Fields.ContainsKey("InvoiceDate"));
-            Assert.True(document.Fields.ContainsKey("InvoiceId"));
-            Assert.True(document.Fields.ContainsKey("InvoiceTotal"));
-            Assert.True(document.Fields.ContainsKey("Items"));
-            Assert.True(document.Fields.ContainsKey("PreviousUnpaidBalance"));
-            Assert.True(document.Fields.ContainsKey("PurchaseOrder"));
-            Assert.True(document.Fields.ContainsKey("RemittanceAddress"));
-            Assert.True(document.Fields.ContainsKey("RemittanceAddressRecipient"));
-            Assert.True(document.Fields.ContainsKey("ServiceAddress"));
-            Assert.True(document.Fields.ContainsKey("ServiceAddressRecipient"));
-            Assert.True(document.Fields.ContainsKey("ServiceEndDate"));
-            Assert.True(document.Fields.ContainsKey("ServiceStartDate"));
-            Assert.True(document.Fields.ContainsKey("ShippingAddress"));
-            Assert.True(document.Fields.ContainsKey("ShippingAddressRecipient"));
-            Assert.True(document.Fields.ContainsKey("SubTotal"));
-            Assert.True(document.Fields.ContainsKey("TotalTax"));
-            Assert.True(document.Fields.ContainsKey("VendorAddress"));
-            Assert.True(document.Fields.ContainsKey("VendorAddressRecipient"));
-            Assert.True(document.Fields.ContainsKey("VendorName"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(document.Fields.ContainsKey("AmountDue"), Is.True);
+                Assert.That(document.Fields.ContainsKey("BillingAddress"), Is.True);
+                Assert.That(document.Fields.ContainsKey("BillingAddressRecipient"), Is.True);
+                Assert.That(document.Fields.ContainsKey("CustomerAddress"), Is.True);
+                Assert.That(document.Fields.ContainsKey("CustomerAddressRecipient"), Is.True);
+                Assert.That(document.Fields.ContainsKey("CustomerId"), Is.True);
+                Assert.That(document.Fields.ContainsKey("CustomerName"), Is.True);
+                Assert.That(document.Fields.ContainsKey("DueDate"), Is.True);
+                Assert.That(document.Fields.ContainsKey("InvoiceDate"), Is.True);
+                Assert.That(document.Fields.ContainsKey("InvoiceId"), Is.True);
+                Assert.That(document.Fields.ContainsKey("InvoiceTotal"), Is.True);
+                Assert.That(document.Fields.ContainsKey("Items"), Is.True);
+                Assert.That(document.Fields.ContainsKey("PreviousUnpaidBalance"), Is.True);
+                Assert.That(document.Fields.ContainsKey("PurchaseOrder"), Is.True);
+                Assert.That(document.Fields.ContainsKey("RemittanceAddress"), Is.True);
+                Assert.That(document.Fields.ContainsKey("RemittanceAddressRecipient"), Is.True);
+                Assert.That(document.Fields.ContainsKey("ServiceAddress"), Is.True);
+                Assert.That(document.Fields.ContainsKey("ServiceAddressRecipient"), Is.True);
+                Assert.That(document.Fields.ContainsKey("ServiceEndDate"), Is.True);
+                Assert.That(document.Fields.ContainsKey("ServiceStartDate"), Is.True);
+                Assert.That(document.Fields.ContainsKey("ShippingAddress"), Is.True);
+                Assert.That(document.Fields.ContainsKey("ShippingAddressRecipient"), Is.True);
+                Assert.That(document.Fields.ContainsKey("SubTotal"), Is.True);
+                Assert.That(document.Fields.ContainsKey("TotalTax"), Is.True);
+                Assert.That(document.Fields.ContainsKey("VendorAddress"), Is.True);
+                Assert.That(document.Fields.ContainsKey("VendorAddressRecipient"), Is.True);
+                Assert.That(document.Fields.ContainsKey("VendorName"), Is.True);
+            });
 
             ValidateCurrencyValue(document.Fields["AmountDue"].Value.AsCurrency(), 610.00, "$", "USD");
 
             AddressValue billingAddress = document.Fields["BillingAddress"].Value.AsAddress();
-            Assert.AreEqual("Redmond", billingAddress.City);
-            Assert.Null(billingAddress.CountryRegion);
-            Assert.AreEqual("123", billingAddress.HouseNumber);
-            Assert.Null(billingAddress.PoBox);
-            Assert.AreEqual("98052", billingAddress.PostalCode);
-            Assert.AreEqual("Bill St", billingAddress.Road);
-            Assert.AreEqual("WA", billingAddress.State);
-            Assert.AreEqual("123 Bill St", billingAddress.StreetAddress);
+            Assert.That(billingAddress.City, Is.EqualTo("Redmond"));
+            Assert.That(billingAddress.CountryRegion, Is.Null);
+            Assert.That(billingAddress.HouseNumber, Is.EqualTo("123"));
+            Assert.That(billingAddress.PoBox, Is.Null);
+            Assert.That(billingAddress.PostalCode, Is.EqualTo("98052"));
+            Assert.That(billingAddress.Road, Is.EqualTo("Bill St"));
+            Assert.That(billingAddress.State, Is.EqualTo("WA"));
+            Assert.That(billingAddress.StreetAddress, Is.EqualTo("123 Bill St"));
 
             AddressValue customerAddress = document.Fields["CustomerAddress"].Value.AsAddress();
-            Assert.AreEqual("Redmond", customerAddress.City);
-            Assert.Null(customerAddress.CountryRegion);
-            Assert.AreEqual("123", customerAddress.HouseNumber);
-            Assert.Null(customerAddress.PoBox);
-            Assert.AreEqual("98052", customerAddress.PostalCode);
-            Assert.AreEqual("Other St", customerAddress.Road);
-            Assert.AreEqual("WA", customerAddress.State);
-            Assert.AreEqual("123 Other St", customerAddress.StreetAddress);
+            Assert.That(customerAddress.City, Is.EqualTo("Redmond"));
+            Assert.That(customerAddress.CountryRegion, Is.Null);
+            Assert.That(customerAddress.HouseNumber, Is.EqualTo("123"));
+            Assert.That(customerAddress.PoBox, Is.Null);
+            Assert.That(customerAddress.PostalCode, Is.EqualTo("98052"));
+            Assert.That(customerAddress.Road, Is.EqualTo("Other St"));
+            Assert.That(customerAddress.State, Is.EqualTo("WA"));
+            Assert.That(customerAddress.StreetAddress, Is.EqualTo("123 Other St"));
 
-            Assert.AreEqual("Microsoft Finance", document.Fields["BillingAddressRecipient"].Value.AsString());
-            Assert.AreEqual("Microsoft Corp", document.Fields["CustomerAddressRecipient"].Value.AsString());
-            Assert.AreEqual("CID-12345", document.Fields["CustomerId"].Value.AsString());
-            Assert.AreEqual("MICROSOFT CORPORATION", document.Fields["CustomerName"].Value.AsString());
+            Assert.That(document.Fields["BillingAddressRecipient"].Value.AsString(), Is.EqualTo("Microsoft Finance"));
+            Assert.That(document.Fields["CustomerAddressRecipient"].Value.AsString(), Is.EqualTo("Microsoft Corp"));
+            Assert.That(document.Fields["CustomerId"].Value.AsString(), Is.EqualTo("CID-12345"));
+            Assert.That(document.Fields["CustomerName"].Value.AsString(), Is.EqualTo("MICROSOFT CORPORATION"));
 
             var dueDate = document.Fields["DueDate"].Value.AsDate();
-            Assert.AreEqual(15, dueDate.Day);
-            Assert.AreEqual(12, dueDate.Month);
-            Assert.AreEqual(2019, dueDate.Year);
+            Assert.That(dueDate.Day, Is.EqualTo(15));
+            Assert.That(dueDate.Month, Is.EqualTo(12));
+            Assert.That(dueDate.Year, Is.EqualTo(2019));
 
             var invoiceDate = document.Fields["InvoiceDate"].Value.AsDate();
-            Assert.AreEqual(15, invoiceDate.Day);
-            Assert.AreEqual(11, invoiceDate.Month);
-            Assert.AreEqual(2019, invoiceDate.Year);
+            Assert.Multiple(() =>
+            {
+                Assert.That(invoiceDate.Day, Is.EqualTo(15));
+                Assert.That(invoiceDate.Month, Is.EqualTo(11));
+                Assert.That(invoiceDate.Year, Is.EqualTo(2019));
 
-            Assert.AreEqual("INV-100", document.Fields["InvoiceId"].Value.AsString());
+                Assert.That(document.Fields["InvoiceId"].Value.AsString(), Is.EqualTo("INV-100"));
+            });
             ValidateCurrencyValue(document.Fields["InvoiceTotal"].Value.AsCurrency(), 110.00, "$", "USD");
             ValidateCurrencyValue(document.Fields["PreviousUnpaidBalance"].Value.AsCurrency(), 500.00, "$", "USD");
-            Assert.AreEqual("PO-3333", document.Fields["PurchaseOrder"].Value.AsString());
+            Assert.That(document.Fields["PurchaseOrder"].Value.AsString(), Is.EqualTo("PO-3333"));
 
             AddressValue remittanceAddress = document.Fields["RemittanceAddress"].Value.AsAddress();
-            Assert.AreEqual("New York", remittanceAddress.City);
-            Assert.Null(remittanceAddress.CountryRegion);
-            Assert.AreEqual("123", remittanceAddress.HouseNumber);
-            Assert.Null(remittanceAddress.PoBox);
-            Assert.AreEqual("10001", remittanceAddress.PostalCode);
-            Assert.AreEqual("Remit St", remittanceAddress.Road);
-            Assert.AreEqual("NY", remittanceAddress.State);
-            Assert.AreEqual("123 Remit St", remittanceAddress.StreetAddress);
+            Assert.Multiple(() =>
+            {
+                Assert.That(remittanceAddress.City, Is.EqualTo("New York"));
+                Assert.That(remittanceAddress.CountryRegion, Is.Null);
+                Assert.That(remittanceAddress.HouseNumber, Is.EqualTo("123"));
+                Assert.That(remittanceAddress.PoBox, Is.Null);
+                Assert.That(remittanceAddress.PostalCode, Is.EqualTo("10001"));
+                Assert.That(remittanceAddress.Road, Is.EqualTo("Remit St"));
+                Assert.That(remittanceAddress.State, Is.EqualTo("NY"));
+                Assert.That(remittanceAddress.StreetAddress, Is.EqualTo("123 Remit St"));
 
-            Assert.AreEqual("Contoso Billing", document.Fields["RemittanceAddressRecipient"].Value.AsString());
+                Assert.That(document.Fields["RemittanceAddressRecipient"].Value.AsString(), Is.EqualTo("Contoso Billing"));
+            });
 
             AddressValue serviceAddress = document.Fields["ServiceAddress"].Value.AsAddress();
-            Assert.AreEqual("Redmond", serviceAddress.City);
-            Assert.Null(serviceAddress.CountryRegion);
-            Assert.AreEqual("123", serviceAddress.HouseNumber);
-            Assert.Null(serviceAddress.PoBox);
-            Assert.AreEqual("98052", serviceAddress.PostalCode);
-            Assert.AreEqual("Service St", serviceAddress.Road);
-            Assert.AreEqual("WA", serviceAddress.State);
-            Assert.AreEqual("123 Service St", serviceAddress.StreetAddress);
+            Assert.Multiple(() =>
+            {
+                Assert.That(serviceAddress.City, Is.EqualTo("Redmond"));
+                Assert.That(serviceAddress.CountryRegion, Is.Null);
+                Assert.That(serviceAddress.HouseNumber, Is.EqualTo("123"));
+                Assert.That(serviceAddress.PoBox, Is.Null);
+                Assert.That(serviceAddress.PostalCode, Is.EqualTo("98052"));
+                Assert.That(serviceAddress.Road, Is.EqualTo("Service St"));
+                Assert.That(serviceAddress.State, Is.EqualTo("WA"));
+                Assert.That(serviceAddress.StreetAddress, Is.EqualTo("123 Service St"));
 
-            Assert.AreEqual("Microsoft Services", document.Fields["ServiceAddressRecipient"].Value.AsString());
+                Assert.That(document.Fields["ServiceAddressRecipient"].Value.AsString(), Is.EqualTo("Microsoft Services"));
+            });
 
             var serviceEndDate = document.Fields["ServiceEndDate"].Value.AsDate();
-            Assert.AreEqual(14, serviceEndDate.Day);
-            Assert.AreEqual(11, serviceEndDate.Month);
-            Assert.AreEqual(2019, serviceEndDate.Year);
+            Assert.Multiple(() =>
+            {
+                Assert.That(serviceEndDate.Day, Is.EqualTo(14));
+                Assert.That(serviceEndDate.Month, Is.EqualTo(11));
+                Assert.That(serviceEndDate.Year, Is.EqualTo(2019));
+            });
 
             var serviceStartDate = document.Fields["ServiceStartDate"].Value.AsDate();
-            Assert.AreEqual(14, serviceStartDate.Day);
-            Assert.AreEqual(10, serviceStartDate.Month);
-            Assert.AreEqual(2019, serviceStartDate.Year);
+            Assert.Multiple(() =>
+            {
+                Assert.That(serviceStartDate.Day, Is.EqualTo(14));
+                Assert.That(serviceStartDate.Month, Is.EqualTo(10));
+                Assert.That(serviceStartDate.Year, Is.EqualTo(2019));
+            });
 
             AddressValue shippingAddress = document.Fields["ShippingAddress"].Value.AsAddress();
-            Assert.AreEqual("Redmond", shippingAddress.City);
-            Assert.Null(shippingAddress.CountryRegion);
-            Assert.AreEqual("123", shippingAddress.HouseNumber);
-            Assert.Null(shippingAddress.PoBox);
-            Assert.AreEqual("98052", shippingAddress.PostalCode);
-            Assert.AreEqual("Ship St", shippingAddress.Road);
-            Assert.AreEqual("WA", shippingAddress.State);
-            Assert.AreEqual("123 Ship St", shippingAddress.StreetAddress);
+            Assert.Multiple(() =>
+            {
+                Assert.That(shippingAddress.City, Is.EqualTo("Redmond"));
+                Assert.That(shippingAddress.CountryRegion, Is.Null);
+                Assert.That(shippingAddress.HouseNumber, Is.EqualTo("123"));
+                Assert.That(shippingAddress.PoBox, Is.Null);
+                Assert.That(shippingAddress.PostalCode, Is.EqualTo("98052"));
+                Assert.That(shippingAddress.Road, Is.EqualTo("Ship St"));
+                Assert.That(shippingAddress.State, Is.EqualTo("WA"));
+                Assert.That(shippingAddress.StreetAddress, Is.EqualTo("123 Ship St"));
 
-            Assert.AreEqual("Microsoft Delivery", document.Fields["ShippingAddressRecipient"].Value.AsString());
+                Assert.That(document.Fields["ShippingAddressRecipient"].Value.AsString(), Is.EqualTo("Microsoft Delivery"));
+            });
             ValidateCurrencyValue(document.Fields["SubTotal"].Value.AsCurrency(), 100.00, "$", "USD");
             ValidateCurrencyValue(document.Fields["TotalTax"].Value.AsCurrency(), 10.00, "$", "USD");
 
             AddressValue vendorAddress = document.Fields["VendorAddress"].Value.AsAddress();
-            Assert.AreEqual("New York", vendorAddress.City);
-            Assert.Null(vendorAddress.CountryRegion);
-            Assert.AreEqual("123", vendorAddress.HouseNumber);
-            Assert.Null(vendorAddress.PoBox);
-            Assert.AreEqual("10001", vendorAddress.PostalCode);
-            Assert.AreEqual("456th St", vendorAddress.Road);
-            Assert.AreEqual("NY", vendorAddress.State);
-            Assert.AreEqual("123 456th St", vendorAddress.StreetAddress);
+            Assert.Multiple(() =>
+            {
+                Assert.That(vendorAddress.City, Is.EqualTo("New York"));
+                Assert.That(vendorAddress.CountryRegion, Is.Null);
+                Assert.That(vendorAddress.HouseNumber, Is.EqualTo("123"));
+                Assert.That(vendorAddress.PoBox, Is.Null);
+                Assert.That(vendorAddress.PostalCode, Is.EqualTo("10001"));
+                Assert.That(vendorAddress.Road, Is.EqualTo("456th St"));
+                Assert.That(vendorAddress.State, Is.EqualTo("NY"));
+                Assert.That(vendorAddress.StreetAddress, Is.EqualTo("123 456th St"));
 
-            Assert.AreEqual("Contoso Headquarters", document.Fields["VendorAddressRecipient"].Value.AsString());
-            Assert.AreEqual("CONTOSO LTD.", document.Fields["VendorName"].Value.AsString());
+                Assert.That(document.Fields["VendorAddressRecipient"].Value.AsString(), Is.EqualTo("Contoso Headquarters"));
+                Assert.That(document.Fields["VendorName"].Value.AsString(), Is.EqualTo("CONTOSO LTD."));
+            });
 
             var expectedItems = new List<(double Amount, DateTimeOffset Date, string Description, string ProductCode, double Quantity, string Unit, double UnitPrice, string UnitPriceCode)>()
             {
@@ -877,7 +973,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var items = document.Fields["Items"].Value.AsList();
 
-            Assert.AreEqual(expectedItems.Count, items.Count);
+            Assert.That(items, Has.Count.EqualTo(expectedItems.Count));
 
             for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
             {
@@ -898,17 +994,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 CurrencyValue unitPrice = unitPricefield.Value.AsCurrency();
                 string unit = unitfield?.Value.AsString();
 
-                Assert.IsNotNull(dateField);
+                Assert.That(dateField, Is.Not.Null);
                 DateTimeOffset date = dateField.Value.AsDate();
 
                 var expectedItem = expectedItems[itemIndex];
 
                 ValidateCurrencyValue(amount, expectedItem.Amount, "$", "USD", $"Amount mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Date, date, $"Date mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Description, description, $"Description mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.ProductCode, productCode, $"ProductCode mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Unit, unit, $"Unit mismatch in item with index {itemIndex}.");
-                Assert.That(quantity, Is.EqualTo(expectedItem.Quantity).Within(0.0001), $"Quantity mismatch in item with index {itemIndex}.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(date, Is.EqualTo(expectedItem.Date), $"Date mismatch in item with index {itemIndex}.");
+                    Assert.That(description, Is.EqualTo(expectedItem.Description), $"Description mismatch in item with index {itemIndex}.");
+                    Assert.That(productCode, Is.EqualTo(expectedItem.ProductCode), $"ProductCode mismatch in item with index {itemIndex}.");
+                    Assert.That(unit, Is.EqualTo(expectedItem.Unit), $"Unit mismatch in item with index {itemIndex}.");
+                    Assert.That(quantity, Is.EqualTo(expectedItem.Quantity).Within(0.0001), $"Quantity mismatch in item with index {itemIndex}.");
+                });
                 ValidateCurrencyValue(unitPrice, expectedItem.UnitPrice, "$", expectedItem.UnitPriceCode, $"UnitPrice mismatch in item with index {itemIndex}.");
             }
         }
@@ -946,39 +1045,54 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var document = result.Documents.Single();
 
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
 
-            // The expected values are based on the values returned by the service, and not the actual
-            // values present in the invoice. We are not testing the service here, but the SDK.
+            Assert.Multiple(() =>
+            {
+                // The expected values are based on the values returned by the service, and not the actual
+                // values present in the invoice. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("invoice", document.DocumentType);
+                Assert.That(document.DocumentType, Is.EqualTo("invoice"));
 
-            Assert.NotNull(document.Fields);
+                Assert.That(document.Fields, Is.Not.Null);
+            });
 
-            Assert.True(document.Fields.ContainsKey("VendorName"));
-            Assert.True(document.Fields.ContainsKey("RemittanceAddressRecipient"));
-            Assert.True(document.Fields.ContainsKey("RemittanceAddress"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(document.Fields.ContainsKey("VendorName"), Is.True);
+                Assert.That(document.Fields.ContainsKey("RemittanceAddressRecipient"), Is.True);
+                Assert.That(document.Fields.ContainsKey("RemittanceAddress"), Is.True);
+            });
 
             DocumentField vendorName = document.Fields["VendorName"];
-            Assert.AreEqual(2, vendorName.BoundingRegions.First().PageNumber);
-            Assert.AreEqual("Southridge Video", vendorName.Value.AsString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(vendorName.BoundingRegions.First().PageNumber, Is.EqualTo(2));
+                Assert.That(vendorName.Value.AsString(), Is.EqualTo("Southridge Video"));
+            });
 
             DocumentField addressRecipient = document.Fields["RemittanceAddressRecipient"];
-            Assert.AreEqual(1, addressRecipient.BoundingRegions.First().PageNumber);
-            Assert.AreEqual("Contoso Ltd.", addressRecipient.Value.AsString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(addressRecipient.BoundingRegions.First().PageNumber, Is.EqualTo(1));
+                Assert.That(addressRecipient.Value.AsString(), Is.EqualTo("Contoso Ltd."));
+            });
 
             DocumentField addressField = document.Fields["RemittanceAddress"];
-            Assert.AreEqual(1, addressField.BoundingRegions.First().PageNumber);
+            Assert.That(addressField.BoundingRegions.First().PageNumber, Is.EqualTo(1));
 
             AddressValue address = addressField.Value.AsAddress();
-            Assert.AreEqual("Birch", address.City);
-            Assert.Null(address.CountryRegion);
-            Assert.AreEqual("2345", address.HouseNumber);
-            Assert.Null(address.PoBox);
-            Assert.AreEqual("98123", address.PostalCode);
-            Assert.AreEqual("Dogwood Lane", address.Road);
-            Assert.AreEqual("Kansas", address.State);
-            Assert.AreEqual("2345 Dogwood Lane", address.StreetAddress);
+            Assert.Multiple(() =>
+            {
+                Assert.That(address.City, Is.EqualTo("Birch"));
+                Assert.That(address.CountryRegion, Is.Null);
+                Assert.That(address.HouseNumber, Is.EqualTo("2345"));
+                Assert.That(address.PoBox, Is.Null);
+                Assert.That(address.PostalCode, Is.EqualTo("98123"));
+                Assert.That(address.Road, Is.EqualTo("Dogwood Lane"));
+                Assert.That(address.State, Is.EqualTo("Kansas"));
+                Assert.That(address.StreetAddress, Is.EqualTo("2345 Dogwood Lane"));
+            });
         }
 
         #endregion
@@ -1007,7 +1121,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", uri);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             AnalyzeResult result = operation.Value;
 
@@ -1019,36 +1133,42 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentPage page = result.Pages.Single();
 
-            // The expected values are based on the values returned by the service, and not the actual
-            // values present in the document. We are not testing the service here, but the SDK.
+            Assert.Multiple(() =>
+            {
+                // The expected values are based on the values returned by the service, and not the actual
+                // values present in the document. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);
-            Assert.AreEqual(8.5, page.Width);
-            Assert.AreEqual(11, page.Height);
-            Assert.AreEqual(0, page.Angle);
-            Assert.AreEqual(18, page.Lines.Count);
+                Assert.That(page.Unit, Is.EqualTo(DocumentPageLengthUnit.Inch));
+                Assert.That(page.Width, Is.EqualTo(8.5));
+                Assert.That(page.Height, Is.EqualTo(11));
+                Assert.That(page.Angle, Is.EqualTo(0));
+                Assert.That(page.Lines, Has.Count.EqualTo(18));
+            });
 
             DocumentParagraph sampleParagraph = result.Paragraphs[0];
 
-            Assert.AreEqual("Contoso", sampleParagraph.Content);
-            Assert.IsNull(sampleParagraph.Role);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sampleParagraph.Content, Is.EqualTo("Contoso"));
+                Assert.That(sampleParagraph.Role, Is.Null);
+            });
 
             DocumentTable table = result.Tables.Single();
 
             if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
-                Assert.AreEqual(2, table.RowCount);
+                Assert.That(table.RowCount, Is.EqualTo(2));
             }
             else
             {
-                Assert.AreEqual(3, table.RowCount);
+                Assert.That(table.RowCount, Is.EqualTo(3));
             }
 
-            Assert.AreEqual(5, table.ColumnCount);
+            Assert.That(table.ColumnCount, Is.EqualTo(5));
 
             var cells = table.Cells.ToList();
 
-            Assert.AreEqual(10, cells.Count);
+            Assert.That(cells, Has.Count.EqualTo(10));
 
             var expectedContent = new string[2, 5]
             {
@@ -1058,25 +1178,31 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (DocumentTableCell cell in cells)
             {
-                Assert.GreaterOrEqual(cell.RowIndex, 0, $"Cell with content {cell.Content} should have row index greater than or equal to zero.");
-                Assert.Less(cell.RowIndex, table.RowCount, $"Cell with content {cell.Content} should have row index less than {table.RowCount}.");
-                Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with content {cell.Content} should have column index greater than or equal to zero.");
-                Assert.Less(cell.ColumnIndex, table.ColumnCount, $"Cell with content {cell.Content} should have column index less than {table.ColumnCount}.");
+                Assert.That(cell.RowIndex, Is.GreaterThanOrEqualTo(0), $"Cell with content {cell.Content} should have row index greater than or equal to zero.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cell.RowIndex, Is.LessThan(table.RowCount), $"Cell with content {cell.Content} should have row index less than {table.RowCount}.");
+                    Assert.That(cell.ColumnIndex, Is.GreaterThanOrEqualTo(0), $"Cell with content {cell.Content} should have column index greater than or equal to zero.");
+                });
+                Assert.That(cell.ColumnIndex, Is.LessThan(table.ColumnCount), $"Cell with content {cell.Content} should have column index less than {table.ColumnCount}.");
 
                 if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
                 {
-                    Assert.AreEqual(1, cell.RowSpan, $"Cell with content {cell.Content} should have a row span of 1.");
+                    Assert.That(cell.RowSpan, Is.EqualTo(1), $"Cell with content {cell.Content} should have a row span of 1.");
                 }
                 else
                 {
                     // Row = 1 has a row span of 2.
                     var expectedRowSpan = cell.RowIndex == 1 ? 2 : 1;
 
-                    Assert.AreEqual(expectedRowSpan, cell.RowSpan, $"Cell with content {cell.Content} should have a row span of {expectedRowSpan}.");
+                    Assert.That(cell.RowSpan, Is.EqualTo(expectedRowSpan), $"Cell with content {cell.Content} should have a row span of {expectedRowSpan}.");
                 }
 
-                Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with content {cell.Content} should have a row index less than or equal to two.");
-                Assert.AreEqual(expectedContent[cell.RowIndex, cell.ColumnIndex], cell.Content);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cell.RowIndex, Is.LessThanOrEqualTo(2), $"Cell with content {cell.Content} should have a row index less than or equal to two.");
+                    Assert.That(cell.Content, Is.EqualTo(expectedContent[cell.RowIndex, cell.ColumnIndex]));
+                });
             }
         }
 
@@ -1104,7 +1230,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             AnalyzeResult result = operation.Value;
 
-            Assert.AreEqual(2, result.Pages.Count);
+            Assert.That(result.Pages, Has.Count.EqualTo(2));
 
             for (int pageIndex = 0; pageIndex < result.Pages.Count; pageIndex++)
             {
@@ -1119,7 +1245,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 var sampleLine = page.Lines[1];
                 var expectedContent = pageIndex == 0 ? "Vendor Registration" : "Vendor Details:";
 
-                Assert.AreEqual(expectedContent, sampleLine.Content);
+                Assert.That(sampleLine.Content, Is.EqualTo(expectedContent));
             }
         }
 
@@ -1137,7 +1263,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             AnalyzeResult result = operation.Value;
 
-            Assert.AreEqual(3, result.Pages.Count);
+            Assert.That(result.Pages, Has.Count.EqualTo(3));
 
             for (int pageIndex = 0; pageIndex < result.Pages.Count; pageIndex++)
             {
@@ -1153,14 +1279,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 {
                     var expectedContent = pageIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
 
-                    Assert.True(page.Lines.Any(l => l.Content.Contains(expectedContent)));
+                    Assert.That(page.Lines.Any(l => l.Content.Contains(expectedContent)), Is.True);
                 }
             }
 
             var blankPage = result.Pages[1];
 
-            Assert.AreEqual(0, blankPage.Lines.Count);
-            Assert.AreEqual(0, blankPage.Words.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(blankPage.Lines.Count, Is.EqualTo(0));
+                Assert.That(blankPage.Words.Count, Is.EqualTo(0));
+            });
         }
 
         [RecordedTest]
@@ -1175,7 +1304,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             AnalyzeResult result = operation.Value;
 
@@ -1214,7 +1343,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", uri, options);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             AnalyzeResult result = operation.Value;
 
@@ -1226,17 +1355,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentPage page = result.Pages.Single();
 
-            // The expected values are based on the values returned by the service, and not the actual
-            // values present in the document. We are not testing the service here, but the SDK.
+            Assert.Multiple(() =>
+            {
+                // The expected values are based on the values returned by the service, and not the actual
+                // values present in the document. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);
-            Assert.AreEqual(8.5, page.Width);
-            Assert.AreEqual(11, page.Height);
-            Assert.AreEqual(0, page.Angle);
-            Assert.AreEqual(18, page.Lines.Count);
-            Assert.IsEmpty(result.Tables);
+                Assert.That(page.Unit, Is.EqualTo(DocumentPageLengthUnit.Inch));
+                Assert.That(page.Width, Is.EqualTo(8.5));
+                Assert.That(page.Height, Is.EqualTo(11));
+                Assert.That(page.Angle, Is.EqualTo(0));
+                Assert.That(page.Lines, Has.Count.EqualTo(18));
+                Assert.That(result.Tables, Is.Empty);
 
-            Assert.IsNotEmpty(result.Languages);
+                Assert.That(result.Languages, Is.Not.Empty);
+            });
         }
 
         #endregion
@@ -1265,7 +1397,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-receipt", uri);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             ValidateAnalyzeResult(
                 operation.Value,
@@ -1275,49 +1407,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             AnalyzedDocument document = operation.Value.Documents.Single();
 
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
 
-            // The expected values are based on the values returned by the service, and not the actual
-            // values present in the receipt. We are not testing the service here, but the SDK.
+            Assert.Multiple(() =>
+            {
+                // The expected values are based on the values returned by the service, and not the actual
+                // values present in the receipt. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("receipt.retailMeal", document.DocumentType);
+                Assert.That(document.DocumentType, Is.EqualTo("receipt.retailMeal"));
 
-            Assert.NotNull(document.Fields);
+                Assert.That(document.Fields, Is.Not.Null);
+            });
 
-            Assert.True(document.Fields.ContainsKey("MerchantAddress"));
-            Assert.True(document.Fields.ContainsKey("MerchantName"));
-            Assert.True(document.Fields.ContainsKey("MerchantPhoneNumber"));
-            Assert.True(document.Fields.ContainsKey("TransactionDate"));
-            Assert.True(document.Fields.ContainsKey("TransactionTime"));
-            Assert.True(document.Fields.ContainsKey("Items"));
-            Assert.True(document.Fields.ContainsKey("Subtotal"));
-            Assert.True(document.Fields.ContainsKey("TotalTax"));
-            Assert.True(document.Fields.ContainsKey("Total"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(document.Fields.ContainsKey("MerchantAddress"), Is.True);
+                Assert.That(document.Fields.ContainsKey("MerchantName"), Is.True);
+                Assert.That(document.Fields.ContainsKey("MerchantPhoneNumber"), Is.True);
+                Assert.That(document.Fields.ContainsKey("TransactionDate"), Is.True);
+                Assert.That(document.Fields.ContainsKey("TransactionTime"), Is.True);
+                Assert.That(document.Fields.ContainsKey("Items"), Is.True);
+                Assert.That(document.Fields.ContainsKey("Subtotal"), Is.True);
+                Assert.That(document.Fields.ContainsKey("TotalTax"), Is.True);
+                Assert.That(document.Fields.ContainsKey("Total"), Is.True);
 
-            Assert.AreEqual("Contoso", document.Fields["MerchantName"].Value.AsString());
+                Assert.That(document.Fields["MerchantName"].Value.AsString(), Is.EqualTo("Contoso"));
+            });
 
             AddressValue merchantAddress = document.Fields["MerchantAddress"].Value.AsAddress();
-            Assert.AreEqual("Redmond", merchantAddress.City);
-            Assert.Null(merchantAddress.CountryRegion);
-            Assert.AreEqual("123", merchantAddress.HouseNumber);
-            Assert.Null(merchantAddress.PoBox);
-            Assert.AreEqual("98052", merchantAddress.PostalCode);
-            Assert.AreEqual("Main Street", merchantAddress.Road);
-            Assert.AreEqual("WA", merchantAddress.State);
-            Assert.AreEqual("123 Main Street", merchantAddress.StreetAddress);
+            Assert.Multiple(() =>
+            {
+                Assert.That(merchantAddress.City, Is.EqualTo("Redmond"));
+                Assert.That(merchantAddress.CountryRegion, Is.Null);
+                Assert.That(merchantAddress.HouseNumber, Is.EqualTo("123"));
+                Assert.That(merchantAddress.PoBox, Is.Null);
+                Assert.That(merchantAddress.PostalCode, Is.EqualTo("98052"));
+                Assert.That(merchantAddress.Road, Is.EqualTo("Main Street"));
+                Assert.That(merchantAddress.State, Is.EqualTo("WA"));
+                Assert.That(merchantAddress.StreetAddress, Is.EqualTo("123 Main Street"));
 
-            Assert.AreEqual("123-456-7890", document.Fields["MerchantPhoneNumber"].Content);
+                Assert.That(document.Fields["MerchantPhoneNumber"].Content, Is.EqualTo("123-456-7890"));
+            });
 
             var date = document.Fields["TransactionDate"].Value.AsDate();
             var time = document.Fields["TransactionTime"].Value.AsTime();
 
-            Assert.AreEqual(10, date.Day);
-            Assert.AreEqual(6, date.Month);
-            Assert.AreEqual(2019, date.Year);
+            Assert.Multiple(() =>
+            {
+                Assert.That(date.Day, Is.EqualTo(10));
+                Assert.That(date.Month, Is.EqualTo(6));
+                Assert.That(date.Year, Is.EqualTo(2019));
 
-            Assert.AreEqual(13, time.Hours);
-            Assert.AreEqual(59, time.Minutes);
-            Assert.AreEqual(0, time.Seconds);
+                Assert.That(time.Hours, Is.EqualTo(13));
+                Assert.That(time.Minutes, Is.EqualTo(59));
+                Assert.That(time.Seconds, Is.EqualTo(0));
+            });
 
             var expectedItems = new List<(int? Quantity, string Description, double? Price, double? TotalPrice)>()
             {
@@ -1329,7 +1473,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var items = document.Fields["Items"].Value.AsList();
 
-            Assert.AreEqual(expectedItems.Count, items.Count);
+            Assert.That(items, Has.Count.EqualTo(expectedItems.Count));
 
             for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
             {
@@ -1347,15 +1491,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 var expectedItem = expectedItems[itemIndex];
 
-                Assert.AreEqual(expectedItem.Quantity, quantity, $"Quantity mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Description, description, $"Description mismatch in item with index {itemIndex}.");
-                Assert.That(price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"Price mismatch in item with index {itemIndex}.");
-                Assert.That(totalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"Total price mismatch in item with index {itemIndex}.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(quantity, Is.EqualTo(expectedItem.Quantity), $"Quantity mismatch in item with index {itemIndex}.");
+                    Assert.That(description, Is.EqualTo(expectedItem.Description), $"Description mismatch in item with index {itemIndex}.");
+                    Assert.That(price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"Price mismatch in item with index {itemIndex}.");
+                    Assert.That(totalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"Total price mismatch in item with index {itemIndex}.");
+                });
             }
 
-            Assert.That(document.Fields["Subtotal"].Value.AsDouble(), Is.EqualTo(1098.99).Within(0.0001));
-            Assert.That(document.Fields["TotalTax"].Value.AsDouble(), Is.EqualTo(104.40).Within(0.0001));
-            Assert.That(document.Fields["Total"].Value.AsDouble(), Is.EqualTo(1203.39).Within(0.0001));
+            Assert.Multiple(() =>
+            {
+                Assert.That(document.Fields["Subtotal"].Value.AsDouble(), Is.EqualTo(1098.99).Within(0.0001));
+                Assert.That(document.Fields["TotalTax"].Value.AsDouble(), Is.EqualTo(104.40).Within(0.0001));
+                Assert.That(document.Fields["Total"].Value.AsDouble(), Is.EqualTo(1203.39).Within(0.0001));
+            });
         }
 
         [RecordedTest]
@@ -1382,14 +1532,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             AnalyzeResult result = operation.Value;
 
-            Assert.AreEqual(2, result.Documents.Count);
+            Assert.That(result.Documents, Has.Count.EqualTo(2));
 
             for (int documentIndex = 0; documentIndex < result.Documents.Count; documentIndex++)
             {
                 var analyzedDocument = result.Documents[documentIndex];
                 var expectedPageNumber = documentIndex + 1;
 
-                Assert.NotNull(analyzedDocument);
+                Assert.That(analyzedDocument, Is.Not.Null);
 
                 ValidateAnalyzedDocument(
                     analyzedDocument,
@@ -1398,15 +1548,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 // Basic sanity test to make sure pages are ordered correctly.
                 var sampleField = analyzedDocument.Fields["Total"];
-                Assert.IsNotNull(sampleField.Content);
+                Assert.That(sampleField.Content, Is.Not.Null);
 
                 if (documentIndex == 0)
                 {
-                    Assert.AreEqual("$14.50", sampleField.Content);
+                    Assert.That(sampleField.Content, Is.EqualTo("$14.50"));
                 }
                 else if (documentIndex == 1)
                 {
-                    Assert.AreEqual("$ 1203.39", sampleField.Content);
+                    Assert.That(sampleField.Content, Is.EqualTo("$ 1203.39"));
                 }
             }
         }
@@ -1431,14 +1581,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 3);
 
-            Assert.AreEqual(3, result.Pages.Count);
+            Assert.That(result.Pages, Has.Count.EqualTo(3));
 
             for (int pageIndex = 0; pageIndex < result.Pages.Count; pageIndex++)
             {
                 var page = result.Pages[pageIndex];
                 var expectedPageNumber = pageIndex + 1;
 
-                Assert.NotNull(page);
+                Assert.That(page, Is.Not.Null);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
@@ -1446,14 +1596,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 {
                     var expectedContent = pageIndex == 0 ? "$14.50" : "1203.39";
 
-                    Assert.True(page.Words.Any(w => w.Content == expectedContent));
+                    Assert.That(page.Words.Any(w => w.Content == expectedContent), Is.True);
                 }
             }
 
             var blankPage = result.Pages[1];
 
-            Assert.AreEqual(0, blankPage.Lines.Count);
-            Assert.AreEqual(0, blankPage.Words.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(blankPage.Lines.Count, Is.EqualTo(0));
+                Assert.That(blankPage.Words.Count, Is.EqualTo(0));
+            });
         }
 
         #endregion
@@ -1471,22 +1624,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             AnalyzeResult result = operation.Value;
 
             DocumentLine line = result.Pages[0].Lines[45];
             IReadOnlyList<DocumentWord> words = line.GetWords();
 
-            Assert.AreEqual("Do not Jostle Box. Unpack carefully. Enjoy.", line.Content);
-            Assert.AreEqual(7, words.Count);
-            Assert.AreEqual("Do", words[0].Content);
-            Assert.AreEqual("not", words[1].Content);
-            Assert.AreEqual("Jostle", words[2].Content);
-            Assert.AreEqual("Box.", words[3].Content);
-            Assert.AreEqual("Unpack", words[4].Content);
-            Assert.AreEqual("carefully.", words[5].Content);
-            Assert.AreEqual("Enjoy.", words[6].Content);
+            Assert.Multiple(() =>
+            {
+                Assert.That(line.Content, Is.EqualTo("Do not Jostle Box. Unpack carefully. Enjoy."));
+                Assert.That(words, Has.Count.EqualTo(7));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(words[0].Content, Is.EqualTo("Do"));
+                Assert.That(words[1].Content, Is.EqualTo("not"));
+                Assert.That(words[2].Content, Is.EqualTo("Jostle"));
+                Assert.That(words[3].Content, Is.EqualTo("Box."));
+                Assert.That(words[4].Content, Is.EqualTo("Unpack"));
+                Assert.That(words[5].Content, Is.EqualTo("carefully."));
+                Assert.That(words[6].Content, Is.EqualTo("Enjoy."));
+            });
 
             if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
@@ -1499,25 +1658,31 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             words = line.GetWords();
 
-            Assert.AreEqual("Jupiter Book Supply will refund you 50% per book if returned within 60 days of reading and", line.Content);
-            Assert.AreEqual(17, words.Count);
-            Assert.AreEqual("Jupiter", words[0].Content);
-            Assert.AreEqual("Book", words[1].Content);
-            Assert.AreEqual("Supply", words[2].Content);
-            Assert.AreEqual("will", words[3].Content);
-            Assert.AreEqual("refund", words[4].Content);
-            Assert.AreEqual("you", words[5].Content);
-            Assert.AreEqual("50%", words[6].Content);
-            Assert.AreEqual("per", words[7].Content);
-            Assert.AreEqual("book", words[8].Content);
-            Assert.AreEqual("if", words[9].Content);
-            Assert.AreEqual("returned", words[10].Content);
-            Assert.AreEqual("within", words[11].Content);
-            Assert.AreEqual("60", words[12].Content);
-            Assert.AreEqual("days", words[13].Content);
-            Assert.AreEqual("of", words[14].Content);
-            Assert.AreEqual("reading", words[15].Content);
-            Assert.AreEqual("and", words[16].Content);
+            Assert.Multiple(() =>
+            {
+                Assert.That(line.Content, Is.EqualTo("Jupiter Book Supply will refund you 50% per book if returned within 60 days of reading and"));
+                Assert.That(words, Has.Count.EqualTo(17));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(words[0].Content, Is.EqualTo("Jupiter"));
+                Assert.That(words[1].Content, Is.EqualTo("Book"));
+                Assert.That(words[2].Content, Is.EqualTo("Supply"));
+                Assert.That(words[3].Content, Is.EqualTo("will"));
+                Assert.That(words[4].Content, Is.EqualTo("refund"));
+                Assert.That(words[5].Content, Is.EqualTo("you"));
+                Assert.That(words[6].Content, Is.EqualTo("50%"));
+                Assert.That(words[7].Content, Is.EqualTo("per"));
+                Assert.That(words[8].Content, Is.EqualTo("book"));
+                Assert.That(words[9].Content, Is.EqualTo("if"));
+                Assert.That(words[10].Content, Is.EqualTo("returned"));
+                Assert.That(words[11].Content, Is.EqualTo("within"));
+                Assert.That(words[12].Content, Is.EqualTo("60"));
+                Assert.That(words[13].Content, Is.EqualTo("days"));
+                Assert.That(words[14].Content, Is.EqualTo("of"));
+                Assert.That(words[15].Content, Is.EqualTo("reading"));
+                Assert.That(words[16].Content, Is.EqualTo("and"));
+            });
         }
         #endregion
 
@@ -1558,7 +1723,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedLastPageNumber: 1);
 
             AnalyzedDocument document = result.Documents.Single();
-            Assert.NotNull(document);
+            Assert.That(document, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -1587,22 +1752,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            Assert.IsEmpty(result.KeyValuePairs);
-            Assert.IsEmpty(result.Styles);
-            Assert.IsEmpty(result.Tables);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.KeyValuePairs, Is.Empty);
+                Assert.That(result.Styles, Is.Empty);
+                Assert.That(result.Tables, Is.Empty);
+            });
 
             if (result.Documents.Count > 0)
             {
                 AnalyzedDocument blankDocument = result.Documents.Single();
 
-                Assert.IsEmpty(blankDocument.Fields);
+                Assert.That(blankDocument.Fields, Is.Empty);
             }
 
             DocumentPage blankPage = result.Pages.Single();
 
-            Assert.IsEmpty(blankPage.Lines);
-            Assert.IsEmpty(blankPage.Words);
-            Assert.IsEmpty(blankPage.SelectionMarks);
+            Assert.Multiple(() =>
+            {
+                Assert.That(blankPage.Lines, Is.Empty);
+                Assert.That(blankPage.Words, Is.Empty);
+                Assert.That(blankPage.SelectionMarks, Is.Empty);
+            });
         }
 
         [RecordedTest]
@@ -1622,7 +1793,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = new MemoryStream(damagedFile);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, modelId, stream));
-            Assert.AreEqual("InvalidRequest", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
 
         [RecordedTest]
@@ -1638,7 +1809,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var invalidUri = new Uri("https://idont.ex.ist");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, modelId, invalidUri));
-            Assert.AreEqual("InvalidRequest", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
 
         [RecordedTest]
@@ -1661,14 +1832,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, modelId, stream, options));
             }
 
-            Assert.AreEqual("InvalidArgument", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidArgument"));
         }
 
         #endregion
 
         private void ValidateAnalyzeResult(AnalyzeResult result, string modelId, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
-            Assert.AreEqual(modelId, result.ModelId);
+            Assert.That(result.ModelId, Is.EqualTo(modelId));
 
             // Check Analyzed Documents.
 
@@ -1682,9 +1853,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
             {
                 Assert.That(kvp.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
-                Assert.That(kvp.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(kvp.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
 
-                Assert.NotNull(kvp.Key);
+                    Assert.That(kvp.Key, Is.Not.Null);
+                });
 
                 foreach (BoundingRegion region in kvp.Key.BoundingRegions)
                 {
@@ -1709,7 +1883,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ValidatePage(page, currentPageNumber++);
             }
 
-            Assert.AreEqual(expectedLastPageNumber, currentPageNumber - 1);
+            Assert.That(currentPageNumber - 1, Is.EqualTo(expectedLastPageNumber));
 
             // Check Paragraphs.
 
@@ -1741,22 +1915,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             foreach (DocumentLanguage language in result.Languages)
             {
                 Assert.That(language.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
-                Assert.That(language.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
-                Assert.NotNull(language.Locale);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(language.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
+                    Assert.That(language.Locale, Is.Not.Null);
+                });
             }
         }
 
         private void ValidateAnalyzedDocument(AnalyzedDocument document, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
-            Assert.NotNull(document.DocumentType);
-            Assert.That(document.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.005));
+            Assert.Multiple(() =>
+            {
+                Assert.That(document.DocumentType, Is.Not.Null);
+                Assert.That(document.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.005));
+            });
 
             foreach (BoundingRegion region in document.BoundingRegions)
             {
                 ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
             }
 
-            Assert.NotNull(document.Fields);
+            Assert.That(document.Fields, Is.Not.Null);
 
             foreach (DocumentField field in document.Fields.Values)
             {
@@ -1781,12 +1961,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         private void ValidateBoundingRegion(BoundingRegion region, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
-            Assert.NotNull(region);
-            Assert.NotNull(region.BoundingPolygon);
+            Assert.That(region, Is.Not.Null);
+            Assert.That(region.BoundingPolygon, Is.Not.Null);
 
             if (region.BoundingPolygon.Count != 0)
             {
-                Assert.AreEqual(4, region.BoundingPolygon.Count);
+                Assert.That(region.BoundingPolygon, Has.Count.EqualTo(4));
             }
 
             Assert.That(region.PageNumber, Is.GreaterThanOrEqualTo(expectedFirstPageNumber).Or.LessThanOrEqualTo(expectedLastPageNumber));
@@ -1794,45 +1974,54 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         private void ValidatePage(DocumentPage page, int expectedPageNumber)
         {
-            Assert.AreEqual(expectedPageNumber, page.PageNumber);
+            Assert.Multiple(() =>
+            {
+                Assert.That(page.PageNumber, Is.EqualTo(expectedPageNumber));
 
-            Assert.Greater(page.Width, 0.0);
-            Assert.Greater(page.Height, 0.0);
+                Assert.That(page.Width, Is.GreaterThan(0.0));
+                Assert.That(page.Height, Is.GreaterThan(0.0));
 
-            Assert.That(page.Angle, Is.GreaterThan(-180.0).Within(0.01));
+                Assert.That(page.Angle, Is.GreaterThan(-180.0).Within(0.01));
+            });
             Assert.That(page.Angle, Is.LessThanOrEqualTo(180.0).Within(0.01));
 
-            Assert.NotNull(page.Lines);
+            Assert.That(page.Lines, Is.Not.Null);
 
             foreach (DocumentLine line in page.Lines)
             {
-                Assert.NotNull(line.BoundingPolygon);
-                Assert.AreEqual(4, line.BoundingPolygon.Count);
+                Assert.That(line.BoundingPolygon, Is.Not.Null);
+                Assert.That(line.BoundingPolygon, Has.Count.EqualTo(4));
             }
 
             ValidateSpanListsAreSortedAndDontOverlap(page.Lines.Select(l => l.Spans).ToList());
 
-            Assert.NotNull(page.Words);
+            Assert.That(page.Words, Is.Not.Null);
 
             foreach (DocumentWord word in page.Words)
             {
-                Assert.NotNull(word.BoundingPolygon);
-                Assert.AreEqual(4, word.BoundingPolygon.Count);
+                Assert.That(word.BoundingPolygon, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(word.BoundingPolygon, Has.Count.EqualTo(4));
 
-                Assert.That(word.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
+                    Assert.That(word.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
+                });
                 Assert.That(word.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
             }
 
             ValidateSpansAreSortedAndDontOverlap(page.Words.Select(w => w.Span).ToList());
 
-            Assert.NotNull(page.SelectionMarks);
+            Assert.That(page.SelectionMarks, Is.Not.Null);
 
             foreach (DocumentSelectionMark selectionMark in page.SelectionMarks)
             {
-                Assert.NotNull(selectionMark.BoundingPolygon);
-                Assert.AreEqual(4, selectionMark.BoundingPolygon.Count);
+                Assert.That(selectionMark.BoundingPolygon, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(selectionMark.BoundingPolygon, Has.Count.EqualTo(4));
 
-                Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
+                    Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
+                });
                 Assert.That(selectionMark.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
             }
         }
@@ -1844,8 +2033,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
             }
 
-            Assert.Greater(table.ColumnCount, 0);
-            Assert.Greater(table.RowCount, 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(table.ColumnCount, Is.GreaterThan(0));
+                Assert.That(table.RowCount, Is.GreaterThan(0));
+            });
 
             foreach (DocumentTableCell cell in table.Cells)
             {
@@ -1854,11 +2046,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
                 }
 
-                Assert.GreaterOrEqual(cell.ColumnIndex, 0);
-                Assert.GreaterOrEqual(cell.RowIndex, 0);
-                Assert.GreaterOrEqual(cell.ColumnSpan, 1);
-                Assert.GreaterOrEqual(cell.RowSpan, 1);
-                Assert.NotNull(cell.Content);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cell.ColumnIndex, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(cell.RowIndex, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(cell.ColumnSpan, Is.GreaterThanOrEqualTo(1));
+                    Assert.That(cell.RowSpan, Is.GreaterThanOrEqualTo(1));
+                    Assert.That(cell.Content, Is.Not.Null);
+                });
             }
         }
 
@@ -1866,7 +2061,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             for (int i = 0; i < spans.Count - 1; i++)
             {
-                Assert.GreaterOrEqual(spans[i + 1].Index, spans[i].Index + spans[i].Length);
+                Assert.That(spans[i + 1].Index, Is.GreaterThanOrEqualTo(spans[i].Index + spans[i].Length));
             }
         }
 
@@ -1882,7 +2077,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 DocumentSpan lastCurrentSpan = currentSpans.Last();
                 DocumentSpan firstNextSpan = nextSpans.First();
 
-                Assert.GreaterOrEqual(firstNextSpan.Index, lastCurrentSpan.Index + lastCurrentSpan.Length);
+                Assert.That(firstNextSpan.Index, Is.GreaterThanOrEqualTo(lastCurrentSpan.Index + lastCurrentSpan.Length));
             }
 
             // Could be empty if document page contained no lines, for example.
@@ -1894,16 +2089,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         private void ValidateCurrencyValue(CurrencyValue value, double expectedAmount, string expectedSymbol, string expectedCode, string message = null)
         {
-            Assert.That(value.Amount, Is.EqualTo(expectedAmount).Within(0.0001), message);
-            Assert.AreEqual(expectedSymbol, value.Symbol, message);
+            Assert.Multiple(() =>
+            {
+                Assert.That(value.Amount, Is.EqualTo(expectedAmount).Within(0.0001), message);
+                Assert.That(value.Symbol, Is.EqualTo(expectedSymbol), message);
+            });
 
             if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
-                Assert.AreEqual(expectedCode, value.Code, message);
+                Assert.That(value.Code, Is.EqualTo(expectedCode), message);
             }
             else
             {
-                Assert.Null(value.Code, message);
+                Assert.That(value.Code, Is.Null, message);
             }
         }
     }

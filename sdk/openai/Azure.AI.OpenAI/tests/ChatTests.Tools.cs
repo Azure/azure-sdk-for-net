@@ -88,26 +88,35 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response, Is.Not.Null);
 
             ChatCompletion completion = response.Value;
-            Assert.IsNotNull(completion);
+            Assert.That(completion, Is.Not.Null);
             Assert.That(completion.Id, Is.Not.Null.Or.Empty);
 
             RequestContentFilterResult filter = completion.GetRequestContentFilterResult();
-            Assert.IsNotNull(filter);
+            Assert.That(filter, Is.Not.Null);
             Assert.That(filter.SelfHarm, Is.Not.Null);
-            Assert.That(filter.SelfHarm.Filtered, Is.False);
-            Assert.That(filter.SelfHarm.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+            Assert.Multiple(() =>
+            {
+                Assert.That(filter.SelfHarm.Filtered, Is.False);
+                Assert.That(filter.SelfHarm.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+            });
 
             if (toolChoice == ToolChoiceTestType.None)
             {
-                Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
-                Assert.That(completion.ToolCalls, Has.Count.EqualTo(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
+                    Assert.That(completion.ToolCalls, Has.Count.EqualTo(0));
 
-                Assert.That(completion.Content, Has.Count.GreaterThan(0));
+                    Assert.That(completion.Content, Has.Count.GreaterThan(0));
+                });
                 Assert.That(completion.Content, Has.All.Not.Null);
 
                 ChatMessageContentPart content = completion.Content[0];
-                Assert.That(content.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
-                Assert.That(content.Text, Is.Not.Null.Or.Empty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(content.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+                    Assert.That(content.Text, Is.Not.Null.Or.Empty);
+                });
 
                 // test complete, as we were merely validating that we didn't get what we shouldn't
                 return;
@@ -124,19 +133,28 @@ namespace Azure.AI.OpenAI.Tests
                 Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
             }
 
-            Assert.That(completion.Content, Has.Count.EqualTo(0));
-            Assert.That(completion.ToolCalls, Has.Count.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(completion.Content, Has.Count.EqualTo(0));
+                Assert.That(completion.ToolCalls, Has.Count.EqualTo(1));
+            });
             Assert.That(completion.ToolCalls, Has.All.Not.Null);
 
             ChatToolCall toolCall = completion.ToolCalls[0];
-            Assert.That(toolCall.Id, Is.Not.Null.Or.Empty);
-            Assert.That(toolCall.Kind, Is.EqualTo(ChatToolCallKind.Function));
-            Assert.That(toolCall.FunctionName, Is.EqualTo(TOOL_TEMPERATURE.FunctionName));
-            Assert.That(toolCall.FunctionArguments, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(toolCall.Id, Is.Not.Null.Or.Empty);
+                Assert.That(toolCall.Kind, Is.EqualTo(ChatToolCallKind.Function));
+                Assert.That(toolCall.FunctionName, Is.EqualTo(TOOL_TEMPERATURE.FunctionName));
+                Assert.That(toolCall.FunctionArguments, Is.Not.Null);
+            });
             var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(toolCall.FunctionArguments, SERIALIZER_OPTIONS)!;
             Assert.That(parsedArgs, Is.Not.Null);
-            Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
-            Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
+                Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
+            });
 
             // Complete the tool call
             messages.Add(new AssistantChatMessage([toolCall]));
@@ -159,19 +177,28 @@ namespace Azure.AI.OpenAI.Tests
             RequestContentFilterResult promptFilter = completion.GetRequestContentFilterResult();
             Assert.That(promptFilter, Is.Not.Null);
             Assert.That(promptFilter.Hate, Is.Not.Null);
-            Assert.That(promptFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
-            Assert.That(promptFilter.Hate.Filtered, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(promptFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                Assert.That(promptFilter.Hate.Filtered, Is.False);
+            });
 
             ResponseContentFilterResult responseFilter = completion.GetResponseContentFilterResult();
             Assert.That(responseFilter, Is.Not.Null);
             Assert.That(responseFilter.Hate, Is.Not.Null);
-            Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
-            Assert.That(responseFilter.Hate.Filtered, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                Assert.That(responseFilter.Hate.Filtered, Is.False);
 
-            Assert.That(completion.Content, Has.Count.GreaterThan(0));
+                Assert.That(completion.Content, Has.Count.GreaterThan(0));
+            });
             Assert.That(completion.Content, Has.All.Not.Null);
-            Assert.That(completion.Content[0].Text, Is.Not.Null.Or.Empty);
-            Assert.That(completion.Content[0].Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+            Assert.Multiple(() =>
+            {
+                Assert.That(completion.Content[0].Text, Is.Not.Null.Or.Empty);
+                Assert.That(completion.Content[0].Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+            });
         }
 
         [RecordedTest]
@@ -212,8 +239,11 @@ namespace Azure.AI.OpenAI.Tests
             Action<StreamingChatCompletionUpdate> validateUpdate = (update) =>
             {
                 Assert.That(update.ContentUpdate, Is.Not.Null);
-                Assert.That(update.ContentUpdate, Has.All.Not.Null);
-                Assert.That(update.ToolCallUpdates, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(update.ContentUpdate, Has.All.Not.Null);
+                    Assert.That(update.ToolCallUpdates, Is.Not.Null);
+                });
                 Assert.That(update.ToolCallUpdates, Has.All.Not.Null);
 
                 if (update.ToolCallUpdates.Count > 0)
@@ -236,8 +266,11 @@ namespace Azure.AI.OpenAI.Tests
 
                 foreach (var part in update.ContentUpdate)
                 {
-                    Assert.That(part.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
-                    Assert.That(part.Text, Is.Not.Null); // Could be empty string
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(part.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+                        Assert.That(part.Text, Is.Not.Null); // Could be empty string
+                    });
 
                     content.Append(part.Text);
                 }
@@ -245,16 +278,22 @@ namespace Azure.AI.OpenAI.Tests
                 var promptFilter = update.GetRequestContentFilterResult();
                 if (!foundPromptFilter && promptFilter?.Hate != null)
                 {
-                    Assert.That(promptFilter.Hate.Filtered, Is.False);
-                    Assert.That(promptFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(promptFilter.Hate.Filtered, Is.False);
+                        Assert.That(promptFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    });
                     foundPromptFilter = true;
                 }
 
                 var responseFilter = update.GetResponseContentFilterResult();
                 if (!foundResponseFilter && responseFilter?.Hate != null)
                 {
-                    Assert.That(responseFilter.Hate.Filtered, Is.False);
-                    Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(responseFilter.Hate.Filtered, Is.False);
+                        Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    });
                     foundResponseFilter = true;
                 }
             };
@@ -271,14 +310,20 @@ namespace Azure.AI.OpenAI.Tests
 
             if (toolChoice != ToolChoiceTestType.None)
             {
-                Assert.That(content, Has.Length.EqualTo(0));
-                Assert.That(toolId, Is.Not.Null);
-                Assert.That(toolName, Is.Not.Null);
-                Assert.That(toolArgs, Has.Length.GreaterThan(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(content, Has.Length.EqualTo(0));
+                    Assert.That(toolId, Is.Not.Null);
+                    Assert.That(toolName, Is.Not.Null);
+                    Assert.That(toolArgs, Has.Length.GreaterThan(0));
+                });
                 var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(toolArgs.ToString(), SERIALIZER_OPTIONS)!;
                 Assert.That(parsedArgs, Is.Not.Null);
-                Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
-                Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
+                    Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
+                });
 
                 // Complete the tool call
                 messages.Add(
@@ -320,12 +365,15 @@ namespace Azure.AI.OpenAI.Tests
                 }
             }
 
-            Assert.That(foundPromptFilter, Is.True);
-            Assert.That(foundResponseFilter, Is.True);
-            Assert.That(content.ToString(), Is.Not.Null.Or.Empty);
-            Assert.That(toolId, Is.Null);
-            Assert.That(toolName, Is.Null);
-            Assert.That(toolArgs, Has.Length.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(foundPromptFilter, Is.True);
+                Assert.That(foundResponseFilter, Is.True);
+                Assert.That(content.ToString(), Is.Not.Null.Or.Empty);
+                Assert.That(toolId, Is.Null);
+                Assert.That(toolName, Is.Null);
+                Assert.That(toolArgs, Has.Length.EqualTo(0));
+            });
         }
     }
 }

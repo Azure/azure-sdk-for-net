@@ -55,7 +55,7 @@ namespace Azure.Core.Tests
                 builder.AppendPath(pathPart, false);
             }
 
-            Assert.AreEqual(expected, builder.ToUri().ToString());
+            Assert.That(builder.ToUri().ToString(), Is.EqualTo(expected));
         }
 
         [Theory]
@@ -89,7 +89,7 @@ namespace Azure.Core.Tests
                 builder.AppendRaw(c, false);
             }
 
-            Assert.AreEqual(expected, builder.ToUri().ToString());
+            Assert.That(builder.ToUri().ToString(), Is.EqualTo(expected));
         }
 
         [Theory]
@@ -120,7 +120,7 @@ namespace Azure.Core.Tests
                 builder.AppendRaw(c, false);
             }
 
-            Assert.AreEqual(expected, builder.ToUri().ToString());
+            Assert.That(builder.ToUri().ToString(), Is.EqualTo(expected));
         }
 
         [Theory]
@@ -135,7 +135,7 @@ namespace Azure.Core.Tests
             builder.AppendRaw(Endpoint, false);
             builder.AppendPath(longPathPart, true);
 
-            Assert.AreEqual($"{Endpoint}{longPathPart:G}", builder.ToUri().ToString());
+            Assert.That(builder.ToUri().ToString(), Is.EqualTo($"{Endpoint}{longPathPart:G}"));
         }
     }
 }

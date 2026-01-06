@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
 
             // Sanity check to make sure we got an actual response back from the service.
-            Assert.AreEqual(modelId, operation.Value.ModelId);
+            Assert.That(operation.Value.ModelId, Is.EqualTo(modelId));
         }
 
         [RecordedTest]
@@ -101,63 +101,75 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 }
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             DocumentModelDetails model = operation.Value;
 
-            Assert.AreEqual(modelId, model.ModelId);
-            Assert.AreEqual(options.Description, model.Description);
-            Assert.AreEqual(ServiceVersionString, model.ServiceVersion);
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.ModelId, Is.EqualTo(modelId));
+                Assert.That(model.Description, Is.EqualTo(options.Description));
+                Assert.That(model.ServiceVersion, Is.EqualTo(ServiceVersionString));
 
-            // Add a 4-hour tolerance because model could have been cached before this test.
-            Assert.Greater(model.CreatedOn, startTime - TimeSpan.FromHours(4));
+                // Add a 4-hour tolerance because model could have been cached before this test.
+                Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+            });
 
             if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
-                Assert.Greater(model.ExpiresOn, model.CreatedOn);
+                Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
             }
             else
             {
-                Assert.IsNull(model.ExpiresOn);
+                Assert.That(model.ExpiresOn, Is.Null);
             }
 
-            CollectionAssert.AreEquivalent(options.Tags, model.Tags);
+            Assert.That(model.Tags, Is.EquivalentTo(options.Tags));
 
-            Assert.AreEqual(1, model.DocumentTypes.Count);
+            Assert.That(model.DocumentTypes, Has.Count.EqualTo(1));
 
             DocumentTypeDetails documentType = model.DocumentTypes[modelId];
 
-            Assert.IsNull(documentType.Description);
-            Assert.AreEqual(buildMode, documentType.BuildMode);
+            Assert.Multiple(() =>
+            {
+                Assert.That(documentType.Description, Is.Null);
+                Assert.That(documentType.BuildMode, Is.EqualTo(buildMode));
+            });
 
             if (buildMode == DocumentBuildMode.Template)
             {
-                CollectionAssert.AreEquivalent(documentType.FieldConfidence.Keys, documentType.FieldSchema.Keys);
+                Assert.That(documentType.FieldSchema.Keys, Is.EquivalentTo(documentType.FieldConfidence.Keys));
 
                 foreach (float confidence in documentType.FieldConfidence.Values)
                 {
-                    Assert.GreaterOrEqual(confidence, 0f);
-                    Assert.LessOrEqual(confidence, 1f);
+                    Assert.That(confidence, Is.GreaterThanOrEqualTo(0f));
+                    Assert.That(confidence, Is.LessThanOrEqualTo(1f));
                 }
             }
             else
             {
-                Assert.IsEmpty(documentType.FieldConfidence);
+                Assert.That(documentType.FieldConfidence, Is.Empty);
             }
 
             foreach (DocumentFieldSchema fieldSchema in documentType.FieldSchema.Values)
             {
-                Assert.IsNull(fieldSchema.Description);
-                Assert.IsNull(fieldSchema.Example);
-                Assert.IsNull(fieldSchema.Items);
-                Assert.IsEmpty(fieldSchema.Properties);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(fieldSchema.Description, Is.Null);
+                    Assert.That(fieldSchema.Example, Is.Null);
+                    Assert.That(fieldSchema.Items, Is.Null);
+                    Assert.That(fieldSchema.Properties, Is.Empty);
+                });
             }
 
             DocumentFieldSchema merchantSchema = documentType.FieldSchema["Merchant"];
             DocumentFieldSchema quantitySchema = documentType.FieldSchema["Quantity"];
 
-            Assert.AreEqual(DocumentFieldType.String, merchantSchema.Type);
-            Assert.AreEqual(DocumentFieldType.Double, quantitySchema.Type);
+            Assert.Multiple(() =>
+            {
+                Assert.That(merchantSchema.Type, Is.EqualTo(DocumentFieldType.String));
+                Assert.That(quantitySchema.Type, Is.EqualTo(DocumentFieldType.Double));
+            });
         }
 
         [RecordedTest]
@@ -169,7 +181,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var prefix = "testfolder"; // folder exists but most training files are missing
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildDocumentModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, prefix));
-            Assert.AreEqual("InvalidRequest", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
 
         #endregion
@@ -204,20 +216,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 }
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             DocumentModelDetails sourceModel = disposableModel.Value;
             DocumentModelDetails model = operation.Value;
 
-            Assert.AreEqual(modelId, model.ModelId);
-            Assert.AreEqual(description, model.Description);
-            Assert.AreEqual(ServiceVersionString, model.ServiceVersion);
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.ModelId, Is.EqualTo(modelId));
+                Assert.That(model.Description, Is.EqualTo(description));
+                Assert.That(model.ServiceVersion, Is.EqualTo(ServiceVersionString));
 
-            // Add a 4-hour tolerance because model could have been cached before this test.
-            Assert.Greater(model.CreatedOn, startTime - TimeSpan.FromHours(4));
-            Assert.Greater(model.ExpiresOn, model.CreatedOn);
+                // Add a 4-hour tolerance because model could have been cached before this test.
+                Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+                Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
+            });
 
-            CollectionAssert.AreEquivalent(tags, model.Tags);
+            Assert.That(model.Tags, Is.EquivalentTo(tags));
 
             // (TODO) Reenable validation once the following service issue has been fixed: https://github.com/Azure/azure-sdk-for-net/issues/37172
             // AssertDocumentTypeDictionariesAreEquivalent(sourceModel.DocumentTypes, model.DocumentTypes);
@@ -256,31 +271,34 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 }
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             DocumentModelDetails componentModel0 = disposableModel0.Value;
             DocumentModelDetails componentModel1 = disposableModel1.Value;
             DocumentModelDetails model = operation.Value;
 
-            Assert.AreEqual(modelId, model.ModelId);
-            Assert.AreEqual(description, model.Description);
-            Assert.AreEqual(ServiceVersionString, model.ServiceVersion);
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.ModelId, Is.EqualTo(modelId));
+                Assert.That(model.Description, Is.EqualTo(description));
+                Assert.That(model.ServiceVersion, Is.EqualTo(ServiceVersionString));
 
-            // Add a 4-hour tolerance because model could have been cached before this test.
-            Assert.Greater(model.CreatedOn, startTime - TimeSpan.FromHours(4));
+                // Add a 4-hour tolerance because model could have been cached before this test.
+                Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+            });
 
             if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
-                Assert.Greater(model.ExpiresOn, model.CreatedOn);
+                Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
             }
             else
             {
-                Assert.IsNull(model.ExpiresOn);
+                Assert.That(model.ExpiresOn, Is.Null);
             }
 
-            CollectionAssert.AreEquivalent(tags, model.Tags);
+            Assert.That(model.Tags, Is.EquivalentTo(tags));
 
-            Assert.AreEqual(2, model.DocumentTypes.Count);
+            Assert.That(model.DocumentTypes, Has.Count.EqualTo(2));
 
             DocumentTypeDetails expectedDocumentType0 = componentModel0.DocumentTypes[componentModel0.ModelId];
             DocumentTypeDetails expectedDocumentType1 = componentModel1.DocumentTypes[componentModel1.ModelId];
@@ -299,7 +317,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ComposeDocumentModelAsync(WaitUntil.Started, fakeComponentModelIds, modelId));
-            Assert.AreEqual("InvalidRequest", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
 
         #endregion
@@ -332,7 +350,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var fakeId = "00000000-0000-0000-0000-000000000000";
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetDocumentModelAsync(fakeId));
-            Assert.AreEqual("NotFound", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("NotFound"));
         }
 
         #endregion
@@ -377,18 +395,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (string id in expectedIdMapping.Keys)
             {
-                Assert.True(idMapping.ContainsKey(id));
+                Assert.That(idMapping.ContainsKey(id), Is.True);
 
                 DocumentModelSummary model = idMapping[id];
                 DocumentModelDetails expected = expectedIdMapping[id];
 
-                Assert.AreEqual(expected.ModelId, model.ModelId);
-                Assert.AreEqual(expected.Description, model.Description);
-                Assert.AreEqual(expected.ServiceVersion, model.ServiceVersion);
-                Assert.AreEqual(expected.CreatedOn, model.CreatedOn);
-                Assert.AreEqual(expected.ExpiresOn, model.ExpiresOn);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.ModelId, Is.EqualTo(expected.ModelId));
+                    Assert.That(model.Description, Is.EqualTo(expected.Description));
+                    Assert.That(model.ServiceVersion, Is.EqualTo(expected.ServiceVersion));
+                    Assert.That(model.CreatedOn, Is.EqualTo(expected.CreatedOn));
+                    Assert.That(model.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
+                });
 
-                CollectionAssert.AreEquivalent(expected.Tags, model.Tags);
+                Assert.That(model.Tags, Is.EquivalentTo(expected.Tags));
             }
         }
 
@@ -407,7 +428,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var response = await client.DeleteDocumentModelAsync(disposableModel.ModelId);
 
-            Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         [RecordedTest]
@@ -417,7 +438,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var fakeModelId = "00000000-0000-0000-0000-000000000000";
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeleteDocumentModelAsync(fakeModelId));
-            Assert.AreEqual("NotFound", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("NotFound"));
         }
 
         #endregion
@@ -430,12 +451,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentModelCopyAuthorization copyAuthorization = await client.GetCopyAuthorizationAsync(modelId);
 
-            Assert.AreEqual(modelId, copyAuthorization.TargetModelId);
-            Assert.AreEqual(TestEnvironment.ResourceId, copyAuthorization.TargetResourceId);
-            Assert.AreEqual(TestEnvironment.ResourceRegion, copyAuthorization.TargetResourceRegion);
-            Assert.IsNotNull(copyAuthorization.AccessToken);
-            Assert.IsNotEmpty(copyAuthorization.AccessToken);
-            Assert.Greater(copyAuthorization.ExpiresOn, Recording.UtcNow);
+            Assert.Multiple(() =>
+            {
+                Assert.That(copyAuthorization.TargetModelId, Is.EqualTo(modelId));
+                Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo(TestEnvironment.ResourceId));
+                Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo(TestEnvironment.ResourceRegion));
+                Assert.That(copyAuthorization.AccessToken, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(copyAuthorization.AccessToken, Is.Not.Empty);
+                Assert.That(copyAuthorization.ExpiresOn, Is.GreaterThan(Recording.UtcNow));
+            });
         }
     }
 }

@@ -153,8 +153,8 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
             };
             foreach (var pet in result)
             {
-                Assert.IsNotNull(pet);
-                Assert.AreEqual((++count).ToString(), pet.Id);
+                Assert.That(pet, Is.Not.Null);
+                Assert.That(pet.Id, Is.EqualTo((++count).ToString()));
                 Assert.AreEqual(expectedPets[pet.Id], pet.Name);
             }
             return Task.CompletedTask;
@@ -177,12 +177,12 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
             };
             foreach (var page in result.AsPages())
             {
-                Assert.IsNotNull(page);
+                Assert.That(page, Is.Not.Null);
                 var pageResult = JsonNode.Parse(page.GetRawResponse().Content.ToString())!;
                 foreach (var pet in (pageResult["pets"] as JsonArray)!)
                 {
-                    Assert.IsNotNull(pet);
-                    Assert.IsNotNull(pet);
+                    Assert.That(pet, Is.Not.Null);
+                    Assert.That(pet, Is.Not.Null);
                     Assert.AreEqual((++count).ToString(), pet!["id"]!.ToString());
                     Assert.AreEqual(expectedPets[pet["id"]!.ToString()], pet["name"]!.ToString());
                 }
@@ -202,17 +202,20 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
             };
             await foreach (var page in result.AsPages())
             {
-                Assert.IsNotNull(page);
+                Assert.That(page, Is.Not.Null);
                 var pageResult = JsonNode.Parse(page.GetRawResponse().Content.ToString())!;
                 var items = isNested
                     ? pageResult["nestedItems"]!["pets"] as JsonArray
                     : pageResult["pets"] as JsonArray;
                 foreach (var pet in items!)
                 {
-                    Assert.IsNotNull(pet);
-                    Assert.IsNotNull(pet);
-                    Assert.AreEqual((++count).ToString(), pet!["id"]!.ToString());
-                    Assert.AreEqual(expectedPets[pet["id"]!.ToString()], pet["name"]!.ToString());
+                    Assert.That(pet, Is.Not.Null);
+                    Assert.That(pet, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(pet!["id"]!.ToString(), Is.EqualTo((++count).ToString()));
+                        Assert.That(pet["name"]!.ToString(), Is.EqualTo(expectedPets[pet["id"]!.ToString()]));
+                    });
                 }
             }
         }
@@ -229,15 +232,18 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
             };
             await foreach (var pet in result)
             {
-                Assert.IsNotNull(pet);
-                Assert.AreEqual((++count).ToString(), pet.Id);
-                Assert.AreEqual(expectedPets[pet.Id], pet.Name);
+                Assert.That(pet, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(pet.Id, Is.EqualTo((++count).ToString()));
+                    Assert.That(pet.Name, Is.EqualTo(expectedPets[pet.Id]));
+                });
             }
 
             count = 0;
             await foreach (var page in result.AsPages())
             {
-                Assert.IsNotNull(page);
+                Assert.That(page, Is.Not.Null);
                 var response = page.GetRawResponse();
                 var pageResult = JsonNode.Parse(response.Content.ToString())!;
                 var items = isNested
@@ -245,14 +251,17 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
                     : pageResult["pets"] as JsonArray;
                 foreach (var pet in items!)
                 {
-                    Assert.IsNotNull(pet);
-                    Assert.IsNotNull(pet);
-                    Assert.AreEqual((++count).ToString(), pet!["id"]!.ToString());
-                    Assert.AreEqual(expectedPets[pet["id"]!.ToString()], pet["name"]!.ToString());
+                    Assert.That(pet, Is.Not.Null);
+                    Assert.That(pet, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(pet!["id"]!.ToString(), Is.EqualTo((++count).ToString()));
+                        Assert.That(pet["name"]!.ToString(), Is.EqualTo(expectedPets[pet["id"]!.ToString()]));
+                    });
                 }
             }
 
-            Assert.AreEqual(4, count);
+            Assert.That(count, Is.EqualTo(4));
         }
     }
 }

@@ -423,8 +423,11 @@ namespace Azure.Messaging.EventHubs.Tests
             using TransportEventBatch batch = await producer.Object.CreateBatchAsync(options, default);
 
             Assert.That(batch, Is.Not.Null, "The created batch should be populated.");
-            Assert.That(batch, Is.InstanceOf<AmqpEventBatch>(), $"The created batch should be an { nameof(AmqpEventBatch) }.");
-            Assert.That(GetEventBatchOptions((AmqpEventBatch)batch), Is.SameAs(options), "The provided options should have been used.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(batch, Is.InstanceOf<AmqpEventBatch>(), $"The created batch should be an {nameof(AmqpEventBatch)}.");
+                Assert.That(GetEventBatchOptions((AmqpEventBatch)batch), Is.SameAs(options), "The provided options should have been used.");
+            });
         }
 
         /// <summary>
@@ -1210,7 +1213,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.Object.SendAsync(events, new SendEventOptions { PartitionKey = partitionKey }, CancellationToken.None);
 
             Assert.That(amqpMessages, Is.Not.Null, "The AMQP messages should have been set.");
-            Assert.That(amqpMessages.Count, Is.EqualTo(events.Count), "An AMQP message should exist for each source event.");
+            Assert.That(amqpMessages, Has.Count.EqualTo(events.Count), "An AMQP message should exist for each source event.");
 
             using var batchMessage = converter.CreateBatchFromEvents(events, partitionKey);
             using var amqpSourceMessage = converter.CreateBatchFromMessages(amqpMessages, partitionKey);
@@ -1605,7 +1608,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.Object.SendAsync(batch, CancellationToken.None);
 
             Assert.That(amqpMessages, Is.Not.Null, "The AMQP messages should have been set.");
-            Assert.That(amqpMessages.Count, Is.EqualTo(messages.Count), "An AMQP message should exist for each source event.");
+            Assert.That(amqpMessages, Has.Count.EqualTo(messages.Count), "An AMQP message should exist for each source event.");
 
             using var batchMessage = converter.CreateBatchFromMessages(messages, partitionKey);
             using var amqpSourceMessage = converter.CreateBatchFromMessages(amqpMessages, partitionKey);

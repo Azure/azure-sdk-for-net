@@ -23,8 +23,11 @@ namespace Azure.Analytics.Purview.Administration.Tests
             Response fetchResponse = await client.GetMetadataPolicyAsync("d04a7fad-ff6c-44f4-8fb4-0d007a8c01f8", new());
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
             JsonElement fetchBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual("policy_dotnetLLCPurviewAccount", fetchBodyJson.GetProperty("name").GetString());
-            Assert.GreaterOrEqual(fetchBodyJson.GetProperty("properties").GetProperty("attributeRules").GetArrayLength(),1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(fetchBodyJson.GetProperty("name").GetString(), Is.EqualTo("policy_dotnetLLCPurviewAccount"));
+                Assert.That(fetchBodyJson.GetProperty("properties").GetProperty("attributeRules").GetArrayLength(), Is.GreaterThanOrEqualTo(1));
+            });
         }
 
         private static BinaryData GetContentFromResponse(Response r)

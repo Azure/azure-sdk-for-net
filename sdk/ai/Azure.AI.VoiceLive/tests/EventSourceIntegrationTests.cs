@@ -54,11 +54,11 @@ namespace Azure.AI.VoiceLive.Tests
             var eventSource = AzureVoiceLiveEventSource.Singleton;
 
             // Assert
-            Assert.IsTrue(eventSource.Name.StartsWith("Azure-"), "EventSource name should start with 'Azure-' following Azure SDK conventions");
+            Assert.That(eventSource.Name, Does.StartWith("Azure-"), "EventSource name should start with 'Azure-' following Azure SDK conventions");
 
             // Verify it has Azure SDK traits (inherited from AzureEventSource)
             // These traits make it discoverable by Azure SDK diagnostic tooling
-            Assert.IsNotNull(eventSource.Name);
+            Assert.That(eventSource.Name, Is.Not.Null);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Azure.AI.VoiceLive.Tests
             }
 
             // Assert
-            Assert.Contains("Azure-VoiceLive", azureEventSources, "Azure-VoiceLive EventSource should be discoverable via Azure- pattern");
+            Assert.That(azureEventSources, Does.Contain("Azure-VoiceLive"), "Azure-VoiceLive EventSource should be discoverable via Azure- pattern");
         }
 
         [Test]
@@ -105,13 +105,16 @@ namespace Azure.AI.VoiceLive.Tests
             // Assert
             var events = _capturedEvents.Where(e => e.EventSource.Name == "Azure-VoiceLive").ToList();
 
-            // Should have connection open (Informational) and error events (Warning + Informational for content)
-            Assert.IsTrue(events.Any(e => e.EventId == AzureVoiceLiveEventSource.WebSocketConnectionOpeningEvent && e.Level == EventLevel.Informational), "Should have connection open event");
-            Assert.IsTrue(events.Any(e => e.EventId == AzureVoiceLiveEventSource.WebSocketMessageErrorEvent && e.Level == EventLevel.Warning), "Should have error event");
-            Assert.IsTrue(events.Any(e => e.EventId == AzureVoiceLiveEventSource.WebSocketMessageErrorContentTextEvent && e.Level == EventLevel.Informational), "Should have error content event");
+            Assert.Multiple(() =>
+            {
+                // Should have connection open (Informational) and error events (Warning + Informational for content)
+                Assert.That(events.Any(e => e.EventId == AzureVoiceLiveEventSource.WebSocketConnectionOpeningEvent && e.Level == EventLevel.Informational), Is.True, "Should have connection open event");
+                Assert.That(events.Any(e => e.EventId == AzureVoiceLiveEventSource.WebSocketMessageErrorEvent && e.Level == EventLevel.Warning), Is.True, "Should have error event");
+                Assert.That(events.Any(e => e.EventId == AzureVoiceLiveEventSource.WebSocketMessageErrorContentTextEvent && e.Level == EventLevel.Informational), Is.True, "Should have error content event");
 
-            // Should NOT have sent message content (Verbose level)
-            Assert.IsFalse(events.Any(e => e.EventId == AzureVoiceLiveEventSource.WebSocketMessageReceivedContentTextEvent), "Should NOT have verbose content events when listening at Informational level");
+                // Should NOT have sent message content (Verbose level)
+                Assert.That(events.Any(e => e.EventId == AzureVoiceLiveEventSource.WebSocketMessageReceivedContentTextEvent), Is.False, "Should NOT have verbose content events when listening at Informational level");
+            });
         }
 
         [Test]
@@ -135,27 +138,33 @@ namespace Azure.AI.VoiceLive.Tests
             foreach (var evt in events)
             {
                 // Verify connection ID is in the payload (first parameter for all our events)
-                Assert.IsNotNull(evt.Payload, "Event should have payload");
-                Assert.IsTrue(evt.Payload?.Count > 0, "Event payload should have at least one item");
-                Assert.AreEqual("abc12345", evt.Payload?[0], $"First payload item should be connection ID for event {evt.EventId}");
+                Assert.That(evt.Payload, Is.Not.Null, "Event should have payload");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(evt.Payload?.Count > 0, Is.True, "Event payload should have at least one item");
+                    Assert.That(evt.Payload?[0], Is.EqualTo("abc12345"), $"First payload item should be connection ID for event {evt.EventId}");
+                });
 
                 // Verify message templates follow Azure SDK patterns
                 if (evt.EventId == AzureVoiceLiveEventSource.WebSocketConnectionOpeningEvent) // Connection open
                 {
-                    Assert.IsNotNull(evt.Message, "Event message should not be null");
-                    Assert.IsTrue(evt.Message is not null && evt.Message.Contains("VoiceLive WebSocket") && evt.Message.Contains("opening"),
+                    Assert.That(evt.Message, Is.Not.Null, "Event message should not be null");
+                    Assert.That(evt.Message is not null && evt.Message.Contains("VoiceLive WebSocket") && evt.Message.Contains("opening"),
+                        Is.True,
                         $"Connection open message template should follow expected pattern: \"{evt.Message}\"");
                 }
                 else if (evt.EventId == AzureVoiceLiveEventSource.WebSocketMessageSentContentTextEvent) // Content sent (text)
                 {
-                    Assert.IsNotNull(evt.Message, "Event message should not be null");
-                    Assert.IsTrue(evt.Message?.Contains("sent content"),
+                    Assert.That(evt.Message, Is.Not.Null, "Event message should not be null");
+                    Assert.That(evt.Message?.Contains("sent content"),
+                        Is.True,
                         $"Content message template should follow expected pattern: \"{evt.Message}\"");
                 }
                 else if (evt.EventId == AzureVoiceLiveEventSource.WebSocketMessageErrorContentTextEvent) // Error
                 {
-                    Assert.IsNotNull(evt.Message, "Event message should not be null");
-                    Assert.IsTrue(evt.Message?.Contains("error"),
+                    Assert.That(evt.Message, Is.Not.Null, "Event message should not be null");
+                    Assert.That(evt.Message?.Contains("error"),
+                        Is.True,
                         $"Error message template should follow expected pattern: \"{evt.Message}\"");
                 }
             }
@@ -182,13 +191,13 @@ namespace Azure.AI.VoiceLive.Tests
             var contentEvent = _capturedEvents.FirstOrDefault(e =>
                 e.EventSource.Name == "Azure-VoiceLive" && e.EventId == AzureVoiceLiveEventSource.WebSocketMessageSentContentTextEvent);
 
-            Assert.IsNotNull(contentEvent, "Content event should be logged");
-            Assert.IsNotNull(contentEvent?.Payload, "Event payload should not be null");
-            Assert.IsTrue(contentEvent?.Payload?.Count > 1, "Event payload should have at least 2 items");
+            Assert.That(contentEvent, Is.Not.Null, "Content event should be logged");
+            Assert.That(contentEvent?.Payload, Is.Not.Null, "Event payload should not be null");
+            Assert.That(contentEvent?.Payload?.Count > 1, Is.True, "Event payload should have at least 2 items");
             var loggedContent = (string)contentEvent?.Payload?[1]!;
 
             // Content should be truncated but properly encoded
-            Assert.IsTrue(loggedContent.Length <= 50, $"Logged content should be truncated to 50 chars or less, was {loggedContent.Length}");
+            Assert.That(loggedContent.Length <= 50, Is.True, $"Logged content should be truncated to 50 chars or less, was {loggedContent.Length}");
         }
 
         [Test]
@@ -217,11 +226,14 @@ namespace Azure.AI.VoiceLive.Tests
             var errorContentEvent = _capturedEvents.FirstOrDefault(e =>
                 e.EventSource.Name == "Azure-VoiceLive" && e.EventId == AzureVoiceLiveEventSource.WebSocketMessageErrorContentTextEvent);
 
-            Assert.IsNotNull(errorEvent, "Error event should be logged");
-            Assert.AreEqual(EventLevel.Warning, errorEvent?.Level);
+            Assert.That(errorEvent, Is.Not.Null, "Error event should be logged");
+            Assert.Multiple(() =>
+            {
+                Assert.That(errorEvent?.Level, Is.EqualTo(EventLevel.Warning));
 
-            Assert.IsNotNull(errorContentEvent, "Error content should be logged at Informational level");
-            Assert.AreEqual(EventLevel.Informational, errorContentEvent?.Level);
+                Assert.That(errorContentEvent, Is.Not.Null, "Error content should be logged at Informational level");
+            });
+            Assert.That(errorContentEvent?.Level, Is.EqualTo(EventLevel.Informational));
         }
 
         [Test]

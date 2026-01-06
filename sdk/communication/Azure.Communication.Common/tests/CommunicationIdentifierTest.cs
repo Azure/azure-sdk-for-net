@@ -13,33 +13,36 @@ namespace Azure.Communication
         [Test]
         public void RawIdTakesPrecendenceInEqualityCheck()
         {
-            // Teams users
-            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true), new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true));
-            Assert.AreNotEqual(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true, rawId: "Raw Id"), new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true, rawId: "Another Raw Id"));
+            Assert.Multiple(() =>
+            {
+                // Teams users
+                Assert.That(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true), Is.EqualTo(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true)));
+                Assert.That(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true, rawId: "Another Raw Id"), Is.Not.EqualTo(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true, rawId: "Raw Id")));
+            });
 
-            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("override", isAnonymous: true, rawId: "8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130"), new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true));
-            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true), new MicrosoftTeamsUserIdentifier("override", isAnonymous: true, rawId: "8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130"));
+            Assert.That(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true), Is.EqualTo(new MicrosoftTeamsUserIdentifier("override", isAnonymous: true, rawId: "8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(new MicrosoftTeamsUserIdentifier("override", isAnonymous: true, rawId: "8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130"), Is.EqualTo(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true)));
 
             // Phone numbers
-            Assert.AreEqual(new PhoneNumberIdentifier("+14255550123"), new PhoneNumberIdentifier("+14255550123"));
-            Assert.AreNotEqual(new PhoneNumberIdentifier("+14255550123", "Raw Id"), new PhoneNumberIdentifier("+14255550123", "Another Raw Id"));
+            Assert.That(new PhoneNumberIdentifier("+14255550123"), Is.EqualTo(new PhoneNumberIdentifier("+14255550123")));
+            Assert.That(new PhoneNumberIdentifier("+14255550123", "Another Raw Id"), Is.Not.EqualTo(new PhoneNumberIdentifier("+14255550123", "Raw Id")));
 
-            Assert.AreEqual(new PhoneNumberIdentifier("+override", "4:14255550123"), new PhoneNumberIdentifier("14255550123"));
-            Assert.AreEqual(new PhoneNumberIdentifier("14255550123"), new PhoneNumberIdentifier("+override", "4:14255550123"));
+            Assert.That(new PhoneNumberIdentifier("14255550123"), Is.EqualTo(new PhoneNumberIdentifier("+override", "4:14255550123")));
+            Assert.That(new PhoneNumberIdentifier("+override", "4:14255550123"), Is.EqualTo(new PhoneNumberIdentifier("14255550123")));
 
             // Teams app
-            Assert.AreEqual(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130"), new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            Assert.AreEqual(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130"), new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", cloud: CommunicationCloudEnvironment.Public));
-            Assert.AreNotEqual(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130"), new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", cloud: CommunicationCloudEnvironment.Dod));
-            Assert.AreNotEqual(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130"), new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", cloud: CommunicationCloudEnvironment.Gcch));
+            Assert.That(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130"), Is.EqualTo(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", cloud: CommunicationCloudEnvironment.Public), Is.EqualTo(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", cloud: CommunicationCloudEnvironment.Dod), Is.Not.EqualTo(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", cloud: CommunicationCloudEnvironment.Gcch), Is.Not.EqualTo(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130")));
 
-            Assert.AreNotEqual(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130"), new MicrosoftTeamsAppIdentifier("override"));
+            Assert.That(new MicrosoftTeamsAppIdentifier("override"), Is.Not.EqualTo(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130")));
 
             // Teams extension user
-            Assert.AreEqual(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd"), new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd"));
-            Assert.AreEqual(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd"), new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd", CommunicationCloudEnvironment.Public));
-            Assert.AreNotEqual(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd"), new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd", CommunicationCloudEnvironment.Gcch));
-            Assert.AreNotEqual(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd"), new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd", CommunicationCloudEnvironment.Dod));
+            Assert.That(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd"), Is.EqualTo(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd")));
+            Assert.That(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd", CommunicationCloudEnvironment.Public), Is.EqualTo(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd")));
+            Assert.That(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd", CommunicationCloudEnvironment.Gcch), Is.Not.EqualTo(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd")));
+            Assert.That(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd", CommunicationCloudEnvironment.Dod), Is.Not.EqualTo(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd")));
         }
 
         [Test]
@@ -63,37 +66,43 @@ namespace Azure.Communication
         [Test]
         public void DefaultCloudIsPublic()
         {
-            Assert.AreEqual(CommunicationCloudEnvironment.Public, new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true, rawId: "Raw Id").Cloud);
-            Assert.AreEqual(CommunicationCloudEnvironment.Public, new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130").Cloud);
-            Assert.AreEqual(CommunicationCloudEnvironment.Public, new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd").Cloud);
+            Assert.Multiple(() =>
+            {
+                Assert.That(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true, rawId: "Raw Id").Cloud, Is.EqualTo(CommunicationCloudEnvironment.Public));
+                Assert.That(new MicrosoftTeamsAppIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130").Cloud, Is.EqualTo(CommunicationCloudEnvironment.Public));
+                Assert.That(new TeamsExtensionUserIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768", "45ab2481-1c1c-4005-be24-0ffb879b1130", "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd").Cloud, Is.EqualTo(CommunicationCloudEnvironment.Public));
+            });
         }
 
         [Test]
         public void PhoneNumberIdentifier_ComputedProperties()
         {
-            Assert.AreEqual(false, new PhoneNumberIdentifier("14255550123").IsAnonymous);
-            Assert.AreEqual(true, new PhoneNumberIdentifier("anonymous").IsAnonymous);
-            Assert.AreEqual(true, new PhoneNumberIdentifier("override", "4:anonymous").IsAnonymous);
-            Assert.AreEqual(false, new PhoneNumberIdentifier("override", "4:anonymous123").IsAnonymous);
-            Assert.AreEqual(false, new PhoneNumberIdentifier("override", "4:_anonymous").IsAnonymous);
+            Assert.Multiple(() =>
+            {
+                Assert.That(new PhoneNumberIdentifier("14255550123").IsAnonymous, Is.EqualTo(false));
+                Assert.That(new PhoneNumberIdentifier("anonymous").IsAnonymous, Is.EqualTo(true));
+                Assert.That(new PhoneNumberIdentifier("override", "4:anonymous").IsAnonymous, Is.EqualTo(true));
+                Assert.That(new PhoneNumberIdentifier("override", "4:anonymous123").IsAnonymous, Is.EqualTo(false));
+                Assert.That(new PhoneNumberIdentifier("override", "4:_anonymous").IsAnonymous, Is.EqualTo(false));
 
-            Assert.AreEqual(null, new PhoneNumberIdentifier("14255550121").AssertedId);
-            Assert.AreEqual(null, new PhoneNumberIdentifier("14255550121.123").AssertedId);
-            Assert.AreEqual(null, new PhoneNumberIdentifier("14255550121-123").AssertedId);
-            Assert.AreEqual("123", new PhoneNumberIdentifier("14255550121_123").AssertedId);
-            Assert.AreEqual("123", new PhoneNumberIdentifier("14255550121", "4:14255550121_123").AssertedId);
-            Assert.AreEqual("456", new PhoneNumberIdentifier("14255550121_123_456").AssertedId);
-            Assert.AreEqual("456", new PhoneNumberIdentifier("14255550121", "4:14255550121_123_456").AssertedId);
+                Assert.That(new PhoneNumberIdentifier("14255550121").AssertedId, Is.EqualTo(null));
+                Assert.That(new PhoneNumberIdentifier("14255550121.123").AssertedId, Is.EqualTo(null));
+                Assert.That(new PhoneNumberIdentifier("14255550121-123").AssertedId, Is.EqualTo(null));
+                Assert.That(new PhoneNumberIdentifier("14255550121_123").AssertedId, Is.EqualTo("123"));
+                Assert.That(new PhoneNumberIdentifier("14255550121", "4:14255550121_123").AssertedId, Is.EqualTo("123"));
+                Assert.That(new PhoneNumberIdentifier("14255550121_123_456").AssertedId, Is.EqualTo("456"));
+                Assert.That(new PhoneNumberIdentifier("14255550121", "4:14255550121_123_456").AssertedId, Is.EqualTo("456"));
+            });
 
             var staticPhoneNumberIdentifier = new PhoneNumberIdentifier("14255550121_123");
-            Assert.AreEqual("123", staticPhoneNumberIdentifier.AssertedId); // first use: compute assertedId
-            Assert.AreEqual("123", staticPhoneNumberIdentifier.AssertedId); // second use: reuse previously computed assertedId
+            Assert.That(staticPhoneNumberIdentifier.AssertedId, Is.EqualTo("123")); // first use: compute assertedId
+            Assert.That(staticPhoneNumberIdentifier.AssertedId, Is.EqualTo("123")); // second use: reuse previously computed assertedId
         }
 
         [Test]
         public void GetRawIdOfIdentifier()
         {
-            static void AssertRawId(CommunicationIdentifier identifier, string expectedRawId) => Assert.AreEqual(expectedRawId, identifier.RawId);
+            static void AssertRawId(CommunicationIdentifier identifier, string expectedRawId) => Assert.That(identifier.RawId, Is.EqualTo(expectedRawId));
 
             AssertRawId(new CommunicationUserIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"), "8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
             AssertRawId(new CommunicationUserIdentifier("8:gcch-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"), "8:gcch-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
@@ -127,10 +136,13 @@ namespace Azure.Communication
         {
             static void AssertIdentifier(string rawId, CommunicationIdentifier expectedIdentifier)
             {
-                Assert.AreEqual(expectedIdentifier,CommunicationIdentifier.FromRawId(rawId));
-                Assert.AreEqual(expectedIdentifier.GetHashCode(), CommunicationIdentifier.FromRawId(rawId).GetHashCode());
-                Assert.IsTrue(CommunicationIdentifier.FromRawId(rawId) == expectedIdentifier);
-                Assert.IsFalse(CommunicationIdentifier.FromRawId(rawId) != expectedIdentifier);
+                Assert.That(CommunicationIdentifier.FromRawId(rawId), Is.EqualTo(expectedIdentifier));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(CommunicationIdentifier.FromRawId(rawId).GetHashCode(), Is.EqualTo(expectedIdentifier.GetHashCode()));
+                    Assert.That(CommunicationIdentifier.FromRawId(rawId) == expectedIdentifier, Is.True);
+                    Assert.That(CommunicationIdentifier.FromRawId(rawId) != expectedIdentifier, Is.False);
+                });
             }
 
              AssertIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130", new CommunicationUserIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
@@ -166,7 +178,7 @@ namespace Azure.Communication
         [Test]
         public void RawIdStaysTheSameAfterConversionToIdentifierAndBack()
         {
-            static void AssertRoundtrip(string rawId) => Assert.AreEqual(rawId,CommunicationIdentifier.FromRawId(rawId).RawId);
+            static void AssertRoundtrip(string rawId) => Assert.That(CommunicationIdentifier.FromRawId(rawId).RawId, Is.EqualTo(rawId));
 
             AssertRoundtrip("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
             AssertRoundtrip("8:spool:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
@@ -196,7 +208,7 @@ namespace Azure.Communication
             IEnumerable<Type>? implementations = baseType.Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(CommunicationIdentifier)));
             foreach (Type implementation in implementations)
             {
-                Assert.AreNotEqual(baseType, implementation.GetProperty(nameof(CommunicationIdentifier.RawId))?.DeclaringType);
+                Assert.That(implementation.GetProperty(nameof(CommunicationIdentifier.RawId))?.DeclaringType, Is.Not.EqualTo(baseType));
             }
         }
 
@@ -240,19 +252,19 @@ namespace Azure.Communication
             Assert.That(dictionary, Does.ContainKey(CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130_207ffef6-9444-41fb-92ab-20eacaae2768")).WithValue(nameof(TeamsExtensionUserIdentifier)));
             Assert.That(dictionary, Does.ContainKey(CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130")).WithValue(nameof(UnknownIdentifier)));
 
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("4:+14255550123"));
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("28:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130_207ffef6-9444-41fb-92ab-20eacaae2768"));
-            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130"));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("4:+14255550123")));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("28:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130_207ffef6-9444-41fb-92ab-20eacaae2768")));
+            Assert.That(hashSet, Has.Member(CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130")));
 
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("4:+14255550123"));
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("28:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130"));
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130_207ffef6-9444-41fb-92ab-20eacaae2768"));
-            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130"));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("4:+14255550123")));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("28:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130")));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130_207ffef6-9444-41fb-92ab-20eacaae2768")));
+            Assert.That(list, Has.Member(CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130")));
         }
 
         [Test]
@@ -264,31 +276,37 @@ namespace Azure.Communication
             var otherTypeIdentifier = new MicrosoftTeamsUserIdentifier("123");
             CommunicationIdentifier? nullIdentifier = null;
 
-            Assert.False(identifier == null);
-            Assert.False(null == identifier);
-            Assert.True(identifier != null);
-            Assert.True(null != identifier);
+            Assert.Multiple(() =>
+            {
+                Assert.That(identifier, Is.Not.EqualTo(null));
+                Assert.That(null, Is.Not.EqualTo(identifier));
+            });
+            Assert.That(identifier, Is.Not.EqualTo(null));
+            Assert.That(null, Is.Not.EqualTo(identifier));
 
-            Assert.True(null as CommunicationIdentifier == null as CommunicationIdentifier);
-            Assert.False(identifier == null as CommunicationIdentifier);
-            Assert.False(null as CommunicationIdentifier == identifier);
-            Assert.True(identifier != null as CommunicationIdentifier);
-            Assert.True(null as CommunicationIdentifier != identifier);
+            Assert.Multiple(() =>
+            {
+                Assert.That(null as CommunicationIdentifier == null as CommunicationIdentifier, Is.True);
+                Assert.That(identifier, Is.Not.EqualTo(null as CommunicationIdentifier));
+                Assert.That(null as CommunicationIdentifier, Is.Not.EqualTo(identifier));
+            });
+            Assert.That(identifier, Is.Not.EqualTo(null as CommunicationIdentifier));
+            Assert.That(null as CommunicationIdentifier, Is.Not.EqualTo(identifier));
 
-            Assert.True(null == nullIdentifier);
-            Assert.False(nullIdentifier == identifier);
+            Assert.That(null == nullIdentifier, Is.True);
+            Assert.That(nullIdentifier, Is.Not.EqualTo(identifier));
 
 #pragma warning disable CS1718 // Comparison made to same variable
-            Assert.True(identifier == identifier);
+            Assert.That(identifier == identifier, Is.True);
 #pragma warning restore CS1718 // Comparison made to same variable
-            Assert.True(identifier == sameIdentifier);
-            Assert.False(identifier != sameIdentifier);
-            Assert.True(sameIdentifier == identifier);
-            Assert.False(sameIdentifier != identifier);
-            Assert.False(identifier == otherIdentifier);
-            Assert.True(identifier != otherIdentifier);
-            Assert.False(identifier == otherTypeIdentifier);
-            Assert.True(identifier != otherTypeIdentifier);
+            Assert.That(identifier == sameIdentifier, Is.True);
+            Assert.That(identifier != sameIdentifier, Is.False);
+            Assert.That(sameIdentifier == identifier, Is.True);
+            Assert.That(sameIdentifier != identifier, Is.False);
+            Assert.That(identifier, Is.Not.EqualTo(otherIdentifier));
+            Assert.That(identifier, Is.Not.EqualTo(otherIdentifier));
+            Assert.That(identifier, Is.Not.EqualTo(otherTypeIdentifier));
+            Assert.That(identifier, Is.Not.EqualTo(otherTypeIdentifier));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>latest</LangVersion>
@@ -10,7 +10,9 @@
     <ProjectReference Include="../src/Azure.Generator.csproj" />
     <ProjectReference Include="common\Azure.Generator.Tests.Common.csproj" />
     <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
+    
+    <PackageReference Include="NUnit.Analyzers" />
+<PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>

@@ -73,10 +73,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     Console.WriteLine(answer.Answer?.ToString());
                 }
             }
-            #endregion
 
-            Assert.That(targetIntentResult is QuestionAnsweringTargetIntentResult);
-            Assert.That(respondingProjectName, Is.EqualTo("ChitChat-QnA"));
+            Assert.Multiple(() =>
+            {
+                #endregion
+
+                Assert.That(targetIntentResult is QuestionAnsweringTargetIntentResult);
+                Assert.That(respondingProjectName, Is.EqualTo("ChitChat-QnA"));
+            });
         }
 
         [SyncOnly]
@@ -120,10 +124,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     Console.WriteLine();
                 }
             }
-            #endregion
 
-            Assert.That(targetIntentResult is QuestionAnsweringTargetIntentResult);
-            Assert.That(orchestrationPrediction.TopIntent?.ToString(), Is.EqualTo("ChitChat-QnA"));
+            Assert.Multiple(() =>
+            {
+                #endregion
+
+                Assert.That(targetIntentResult is QuestionAnsweringTargetIntentResult);
+                Assert.That(orchestrationPrediction.TopIntent?.ToString(), Is.EqualTo("ChitChat-QnA"));
+            });
         }
 
         [SyncOnly]
@@ -215,8 +223,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
 
-            Assert.That(targetIntentResult is QuestionAnsweringTargetIntentResult);
-            Assert.That(respondingProjectName, Is.EqualTo("ChitChat-QnA"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetIntentResult is QuestionAnsweringTargetIntentResult);
+                Assert.That(respondingProjectName, Is.EqualTo("ChitChat-QnA"));
+            });
         }
 
         [AsyncOnly]
@@ -281,8 +292,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
 
-            Assert.That(targetIntentResult is ConversationTargetIntentResult);
-            Assert.That(orchestrationPrediction.TopIntent?.ToString(), Is.EqualTo("EmailIntent"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetIntentResult is ConversationTargetIntentResult);
+                Assert.That(orchestrationPrediction.TopIntent?.ToString(), Is.EqualTo("EmailIntent"));
+            });
         }
 
         [AsyncOnly]

@@ -42,9 +42,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             foreach (IntegrationRuntimeResource integration in integrations.Value)
             {
                 IntegrationRuntimeResource fetchedIntegration = await client.GetAsync (integration.Name);
-                Assert.AreEqual (integration.Name, fetchedIntegration.Name);
-                Assert.AreEqual (integration.Id, fetchedIntegration.Id);
-                Assert.AreEqual (integration.Type, fetchedIntegration.Type);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(fetchedIntegration.Name, Is.EqualTo(integration.Name));
+                    Assert.That(fetchedIntegration.Id, Is.EqualTo(integration.Id));
+                    Assert.That(fetchedIntegration.Type, Is.EqualTo(integration.Type));
+                });
             }
         }
 
@@ -55,8 +58,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             IntegrationRuntimeListResponse integrations = await client.ListAsync ();
             foreach (IntegrationRuntimeResource integration in integrations.Value)
             {
-                Assert.NotNull (integration.Id);
-                Assert.NotNull (integration.Name);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(integration.Id, Is.Not.Null);
+                    Assert.That(integration.Name, Is.Not.Null);
+                });
             }
         }
     }

@@ -13,27 +13,33 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.NotDiscriminat
         public Task PostValid() => Test(async (host) =>
         {
             var response = await new NotDiscriminatedClient(host, null).PostValidAsync(new Siamese("abc", 32, true));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetValid() => Test(async (host) =>
         {
             var response = await new NotDiscriminatedClient(host, null).GetValidAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("abc", response.Value.Name);
-            Assert.AreEqual(32, response.Value.Age);
-            Assert.True(response.Value.Smart);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Name, Is.EqualTo("abc"));
+                Assert.That(response.Value.Age, Is.EqualTo(32));
+                Assert.That(response.Value.Smart, Is.True);
+            });
         });
 
         [SpectorTest]
         public Task PutValid() => Test(async (host) =>
         {
             var response = await new NotDiscriminatedClient(host, null).PutValidAsync(new Siamese("abc", 32, true));
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("abc", response.Value.Name);
-            Assert.AreEqual(32, response.Value.Age);
-            Assert.IsTrue(response.Value.Smart);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Name, Is.EqualTo("abc"));
+                Assert.That(response.Value.Age, Is.EqualTo(32));
+                Assert.That(response.Value.Smart, Is.True);
+            });
         });
     }
 }

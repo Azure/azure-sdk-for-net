@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             message.TryGetData(out var body);
             ReadOnlyMemory<byte> fromReadOnlyMemorySegments = MessageBody.FromReadOnlyMemorySegments(body);
 
-            Assert.IsTrue(singleReadOnlyMemory.Equals(fromReadOnlyMemorySegments));
+            Assert.That(singleReadOnlyMemory, Is.EqualTo(fromReadOnlyMemorySegments));
         }
 
         [Test]
@@ -49,14 +49,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var firstSegmentAfterConversion = body.ElementAt(0);
             var secondSegmentAfterConversion = body.ElementAt(1);
 
-            Assert.IsTrue(firstSegment.Equals(firstSegmentBeforeConversion));
-            Assert.IsTrue(secondSegment.Equals(secondSegmentBeforeConversion));
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstSegment, Is.EqualTo(firstSegmentBeforeConversion));
+                Assert.That(secondSegment, Is.EqualTo(secondSegmentBeforeConversion));
+            });
 
-            Assert.IsFalse(firstSegment.Equals(firstSegmentAfterConversion));
-            Assert.IsFalse(secondSegment.Equals(secondSegmentAfterConversion));
+            Assert.That(firstSegment.Equals(firstSegmentAfterConversion), Is.False);
+            Assert.That(secondSegment.Equals(secondSegmentAfterConversion), Is.False);
 
-            Assert.AreEqual(new byte[] { 1, 2, 3, 4, 5, 6 }, fromReadOnlyMemorySegments.ToArray());
-            Assert.IsTrue(fromReadOnlyMemorySegments.Equals(convertedASecondTime));
+            Assert.That(fromReadOnlyMemorySegments.ToArray(), Is.EqualTo(new byte[] { 1, 2, 3, 4, 5, 6 }));
+            Assert.That(fromReadOnlyMemorySegments, Is.EqualTo(convertedASecondTime));
         }
 
         [Test]
@@ -80,14 +83,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var firstSegmentAfterConversion = body.ElementAt(0);
             var secondSegmentAfterConversion = body.ElementAt(1);
 
-            Assert.IsFalse(firstSegment.Equals(firstSegmentBeforeConversion));
-            Assert.IsFalse(secondSegment.Equals(secondSegmentBeforeConversion));
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstSegment.Equals(firstSegmentBeforeConversion), Is.False);
+                Assert.That(secondSegment.Equals(secondSegmentBeforeConversion), Is.False);
 
-            Assert.IsFalse(firstSegment.Equals(firstSegmentAfterConversion));
-            Assert.IsFalse(secondSegment.Equals(secondSegmentAfterConversion));
+                Assert.That(firstSegment.Equals(firstSegmentAfterConversion), Is.False);
+                Assert.That(secondSegment.Equals(secondSegmentAfterConversion), Is.False);
 
-            Assert.AreEqual(new byte[] { 1, 2, 3, 4, 5, 6 }, fromReadOnlyMemorySegments.ToArray());
-            Assert.IsTrue(fromReadOnlyMemorySegments.Equals(convertedASecondTime));
+                Assert.That(fromReadOnlyMemorySegments.ToArray(), Is.EqualTo(new byte[] { 1, 2, 3, 4, 5, 6 }));
+                Assert.That(fromReadOnlyMemorySegments, Is.EqualTo(convertedASecondTime));
+            });
         }
     }
 }

@@ -26,10 +26,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = EventPosition.Earliest;
             var second = EventPosition.Latest;
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -43,10 +46,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = EventPosition.FromOffset("12");
             var second = EventPosition.FromOffset("12");
 
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            Assert.That(first, Is.EqualTo((object)second), "The default Equals comparison is incorrect.");
+            Assert.That(first, Is.EqualTo(second), "The IEquatable comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -60,10 +66,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = EventPosition.FromOffset("12");
             var second = EventPosition.FromOffset("34");
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -77,10 +86,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
             var second = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
 
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            Assert.That(first, Is.EqualTo((object)second), "The default Equals comparison is incorrect.");
+            Assert.That(first, Is.EqualTo(second), "The IEquatable comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -94,10 +106,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
             var second = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2012-03-04T08:39:00Z"));
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -111,10 +126,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = EventPosition.FromSequenceNumber(12);
             var second = EventPosition.FromSequenceNumber(12);
 
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            Assert.That(first, Is.EqualTo((object)second), "The default Equals comparison is incorrect.");
+            Assert.That(first, Is.EqualTo(second), "The IEquatable comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -128,10 +146,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = EventPosition.FromSequenceNumber(234234);
             var second = EventPosition.FromSequenceNumber(234234234);
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -147,10 +168,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = EventPosition.FromSequenceNumber(234234, isInclusive);
             var second = EventPosition.FromSequenceNumber(234234, isInclusive);
 
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            Assert.That(first, Is.EqualTo((object)second), "The default Equals comparison is incorrect.");
+            Assert.That(first, Is.EqualTo(second), "The IEquatable comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -164,10 +188,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = EventPosition.FromSequenceNumber(234234, true);
             var second = EventPosition.FromSequenceNumber(234234, false);
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -181,10 +208,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = EventPosition.FromSequenceNumber(234234);
             var second = EventPosition.FromOffset("12");
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -214,13 +244,16 @@ namespace Azure.Messaging.EventHubs.Tests
             var sequence = 778;
             var enqueued = DateTimeOffset.Now.AddHours(1);
 
-            Assert.That(EventPosition.Earliest.ToString(), Contains.Substring(nameof(EventPosition.Earliest)), "Earliest should be represented.");
-            Assert.That(EventPosition.Latest.ToString(), Contains.Substring(nameof(EventPosition.Latest)), "Latest should be represented.");
-            Assert.That(EventPosition.FromOffset(offset).ToString(), Contains.Substring($"[{ offset }]"), "The offset should be represented.");
-            Assert.That(EventPosition.FromSequenceNumber(sequence).ToString(), Contains.Substring($"[{ sequence }]"), "The sequence should be represented.");
-            Assert.That(EventPosition.FromEnqueuedTime(enqueued).ToString(), Contains.Substring($"[{ enqueued }]"), "The enqueued time should be represented.");
-            Assert.That(EventPosition.FromOffset(offset, inclusive).ToString(), Contains.Substring($"[{ inclusive }]"), "The inclusive flag should be represented for the offset.");
-            Assert.That(EventPosition.FromSequenceNumber(sequence, inclusive).ToString(), Contains.Substring($"[{ inclusive }]"), "The inclusive flag should be represented for the sequence number.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(EventPosition.Earliest.ToString(), Contains.Substring(nameof(EventPosition.Earliest)), "Earliest should be represented.");
+                Assert.That(EventPosition.Latest.ToString(), Contains.Substring(nameof(EventPosition.Latest)), "Latest should be represented.");
+                Assert.That(EventPosition.FromOffset(offset).ToString(), Contains.Substring($"[{offset}]"), "The offset should be represented.");
+                Assert.That(EventPosition.FromSequenceNumber(sequence).ToString(), Contains.Substring($"[{sequence}]"), "The sequence should be represented.");
+                Assert.That(EventPosition.FromEnqueuedTime(enqueued).ToString(), Contains.Substring($"[{enqueued}]"), "The enqueued time should be represented.");
+                Assert.That(EventPosition.FromOffset(offset, inclusive).ToString(), Contains.Substring($"[{inclusive}]"), "The inclusive flag should be represented for the offset.");
+                Assert.That(EventPosition.FromSequenceNumber(sequence, inclusive).ToString(), Contains.Substring($"[{inclusive}]"), "The inclusive flag should be represented for the sequence number.");
+            });
         }
     }
 }

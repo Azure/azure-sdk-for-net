@@ -148,17 +148,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Identifier = identifier
             };
             var processor = client.CreateSessionProcessor("queueName", options);
-            Assert.AreEqual(options.AutoCompleteMessages, processor.AutoCompleteMessages);
-            Assert.AreEqual(options.MaxConcurrentSessions, processor.MaxConcurrentSessions);
-            Assert.AreEqual(options.MaxConcurrentCallsPerSession, processor.MaxConcurrentCallsPerSession);
-            Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
-            Assert.AreEqual(options.ReceiveMode, processor.ReceiveMode);
-            Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
-            Assert.AreEqual(options.SessionIdleTimeout, processor.SessionIdleTimeout);
-            Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
-            Assert.AreEqual(identifier, processor.Identifier);
-            Assert.IsFalse(processor.IsClosed);
-            Assert.IsFalse(processor.IsProcessing);
+            Assert.Multiple(() =>
+            {
+                Assert.That(processor.AutoCompleteMessages, Is.EqualTo(options.AutoCompleteMessages));
+                Assert.That(processor.MaxConcurrentSessions, Is.EqualTo(options.MaxConcurrentSessions));
+                Assert.That(processor.MaxConcurrentCallsPerSession, Is.EqualTo(options.MaxConcurrentCallsPerSession));
+                Assert.That(processor.PrefetchCount, Is.EqualTo(options.PrefetchCount));
+                Assert.That(processor.ReceiveMode, Is.EqualTo(options.ReceiveMode));
+                Assert.That(processor.MaxAutoLockRenewalDuration, Is.EqualTo(options.MaxAutoLockRenewalDuration));
+                Assert.That(processor.SessionIdleTimeout, Is.EqualTo(options.SessionIdleTimeout));
+                Assert.That(processor.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace));
+                Assert.That(processor.Identifier, Is.EqualTo(identifier));
+                Assert.That(processor.IsClosed, Is.False);
+                Assert.That(processor.IsProcessing, Is.False);
+            });
         }
 
         [Test]
@@ -200,35 +203,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 new Mock<ServiceBusSessionReceiver>().Object,
                 CancellationToken.None);
 
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             msg.IsSettled = false;
             await args.AbandonMessageAsync(msg);
-            Assert.IsTrue(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.True);
 
             await args.CompleteMessageAsync(msg);
-            Assert.IsTrue(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.True);
 
             msg.IsSettled = false;
             await args.DeadLetterMessageAsync(msg);
-            Assert.IsTrue(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.True);
 
             msg.IsSettled = false;
             await args.DeadLetterMessageAsync(msg, "reason");
-            Assert.IsTrue(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.True);
 
             msg.IsSettled = false;
             await args.DeferMessageAsync(msg);
-            Assert.IsTrue(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.True);
 
             // getting or setting session state doesn't count as settling
             msg.IsSettled = false;
             await args.GetSessionStateAsync();
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             msg.IsSettled = false;
             await args.SetSessionStateAsync(default);
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
         }
 
         [Test]
@@ -277,31 +280,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 mockReceiver.Object,
                 CancellationToken.None);
 
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             msg.IsSettled = false;
             Assert.That(async () => await args.AbandonMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             Assert.That(async () => await args.CompleteMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             msg.IsSettled = false;
             Assert.That(async () => await args.DeadLetterMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             msg.IsSettled = false;
             Assert.That(async () => await args.DeadLetterMessageAsync(msg, "reason"),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             msg.IsSettled = false;
             Assert.That(async () => await args.DeferMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
         }
 
         [Test]
@@ -336,40 +339,52 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockProcessor.ProcessMessageAsync += args =>
             {
                 processMessageCalled = true;
-                Assert.AreEqual("1", args.Message.MessageId);
-                Assert.AreEqual("sessionId", args.SessionId);
-                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
-                Assert.AreEqual("entityPath", args.EntityPath);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(args.Message.MessageId, Is.EqualTo("1"));
+                    Assert.That(args.SessionId, Is.EqualTo("sessionId"));
+                    Assert.That(args.FullyQualifiedNamespace, Is.EqualTo("namespace"));
+                    Assert.That(args.EntityPath, Is.EqualTo("entityPath"));
+                });
                 return Task.CompletedTask;
             };
 
             mockProcessor.ProcessErrorAsync += args =>
             {
                 processErrorCalled = true;
-                Assert.AreEqual(
-                    ServiceBusFailureReason.MessageSizeExceeded,
-                    ((ServiceBusException)args.Exception).Reason);
-                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
-                Assert.AreEqual("entityPath", args.EntityPath);
-                Assert.AreEqual(ServiceBusErrorSource.Abandon, args.ErrorSource);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(
+                                    ((ServiceBusException)args.Exception).Reason,
+                                    Is.EqualTo(ServiceBusFailureReason.MessageSizeExceeded));
+                    Assert.That(args.FullyQualifiedNamespace, Is.EqualTo("namespace"));
+                    Assert.That(args.EntityPath, Is.EqualTo("entityPath"));
+                    Assert.That(args.ErrorSource, Is.EqualTo(ServiceBusErrorSource.Abandon));
+                });
                 return Task.CompletedTask;
             };
 
             mockProcessor.SessionInitializingAsync += args =>
             {
                 sessionOpenCalled = true;
-                Assert.AreEqual("sessionId", args.SessionId);
-                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
-                Assert.AreEqual("entityPath", args.EntityPath);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(args.SessionId, Is.EqualTo("sessionId"));
+                    Assert.That(args.FullyQualifiedNamespace, Is.EqualTo("namespace"));
+                    Assert.That(args.EntityPath, Is.EqualTo("entityPath"));
+                });
                 return Task.CompletedTask;
             };
 
             mockProcessor.SessionClosingAsync += args =>
             {
                 sessionCloseCalled = true;
-                Assert.AreEqual("sessionId", args.SessionId);
-                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
-                Assert.AreEqual("entityPath", args.EntityPath);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(args.SessionId, Is.EqualTo("sessionId"));
+                    Assert.That(args.FullyQualifiedNamespace, Is.EqualTo("namespace"));
+                    Assert.That(args.EntityPath, Is.EqualTo("entityPath"));
+                });
                 return Task.CompletedTask;
             };
 
@@ -378,10 +393,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await mockProcessor.OnSessionInitializingAsync(processSessionArgs);
             await mockProcessor.OnSessionClosingAsync(processSessionArgs);
 
-            Assert.IsTrue(processMessageCalled);
-            Assert.IsTrue(processErrorCalled);
-            Assert.IsTrue(sessionOpenCalled);
-            Assert.IsTrue(sessionCloseCalled);
+            Assert.Multiple(() =>
+            {
+                Assert.That(processMessageCalled, Is.True);
+                Assert.That(processErrorCalled, Is.True);
+                Assert.That(sessionOpenCalled, Is.True);
+                Assert.That(sessionCloseCalled, Is.True);
+            });
         }
 
         [Test]
@@ -408,7 +426,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 args.SessionLockLostAsync += (lockLostArgs) =>
                 {
                     sessionLockLostEventRaised = true;
-                    Assert.IsNull(lockLostArgs.Exception);
+                    Assert.That(lockLostArgs.Exception, Is.Null);
                     return Task.CompletedTask;
                 };
                 processMessageCalled = true;
@@ -435,15 +453,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await mockProcessor.OnProcessSessionMessageAsync(processArgs);
             await mockProcessor.OnSessionInitializingAsync(processSessionArgs);
 
-            Assert.IsFalse(sessionLockLostEventRaised);
+            Assert.That(sessionLockLostEventRaised, Is.False);
             await processArgs.OnSessionLockLostAsync(new SessionLockLostEventArgs(message, DateTimeOffset.Now, null));
-            Assert.IsTrue(sessionLockLostEventRaised);
+            Assert.That(sessionLockLostEventRaised, Is.True);
 
             await mockProcessor.OnSessionClosingAsync(processSessionArgs);
 
-            Assert.IsTrue(processMessageCalled);
-            Assert.IsTrue(sessionOpenCalled);
-            Assert.IsTrue(sessionCloseCalled);
+            Assert.Multiple(() =>
+            {
+                Assert.That(processMessageCalled, Is.True);
+                Assert.That(sessionOpenCalled, Is.True);
+                Assert.That(sessionCloseCalled, Is.True);
+            });
         }
 
         [Test]
@@ -451,8 +472,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             var mockProcessor = new MockSessionProcessor();
             mockProcessor.UpdateConcurrency(5, 2);
-            Assert.AreEqual(5, mockProcessor.MaxConcurrentSessions);
-            Assert.AreEqual(2, mockProcessor.MaxConcurrentCallsPerSession);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockProcessor.MaxConcurrentSessions, Is.EqualTo(5));
+                Assert.That(mockProcessor.MaxConcurrentCallsPerSession, Is.EqualTo(2));
+            });
         }
 
         [Test]
@@ -460,7 +484,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             var mockProcessor = new MockSessionProcessor();
             mockProcessor.UpdatePrefetchCount(10);
-            Assert.AreEqual(10, mockProcessor.PrefetchCount);
+            Assert.That(mockProcessor.PrefetchCount, Is.EqualTo(10));
         }
 
         [Test]

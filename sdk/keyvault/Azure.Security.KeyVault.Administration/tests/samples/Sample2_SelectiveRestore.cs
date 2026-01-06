@@ -42,8 +42,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             // Get the Uri for the location of you backup blob.
             Uri folderUri = backupResult.Value.FolderUri;
 
-            Assert.That(folderUri, Is.Not.Null);
-            Assert.That(backupOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(folderUri, Is.Not.Null);
+                Assert.That(backupOperation.HasValue, Is.True);
+            });
 
             #region Snippet:SelectiveRestoreAsync
 #if SNIPPET
@@ -59,11 +62,14 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             // Wait for completion of the RestoreOperation.
             KeyVaultSelectiveKeyRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
-            #endregion
+            Assert.Multiple(() =>
+            {
+                #endregion
 
-            Assert.That(restoreOperation.HasValue, Is.True);
-            Assert.That(restoreResult.StartTime, Is.Not.EqualTo(default));
-            Assert.That(restoreResult.EndTime, Is.Not.EqualTo(default));
+                Assert.That(restoreOperation.HasValue, Is.True);
+                Assert.That(restoreResult.StartTime, Is.Not.EqualTo(default));
+                Assert.That(restoreResult.EndTime, Is.Not.EqualTo(default));
+            });
 
             await WaitForOperationAsync();
         }

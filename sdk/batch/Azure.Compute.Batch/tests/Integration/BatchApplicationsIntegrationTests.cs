@@ -42,11 +42,11 @@ namespace Azure.Compute.Batch.Tests.Integration
             {
                 appID = item.Id;
             }
-            Assert.NotNull(appID);
+            Assert.That(appID, Is.Not.Null);
 
             // verify we can get an application
             var application = await client.GetApplicationAsync(appID);
-            Assert.AreEqual(appID, application.Value.Id);
+            Assert.That(application.Value.Id, Is.EqualTo(appID));
         }
     }
 }

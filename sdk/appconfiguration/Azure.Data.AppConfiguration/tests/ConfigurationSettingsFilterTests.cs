@@ -17,17 +17,20 @@ namespace Azure.Data.AppConfiguration.Tests
             // Act
             var filter = ConfigurationSettingsFilter.DeserializeConfigurationSettingsFilter(element, ModelSerializationExtensions.WireOptions);
 
-            // Assert
-            Assert.AreEqual("testKey", filter.Key);
-            Assert.AreEqual("testLabel", filter.Label);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(filter.Key, Is.EqualTo("testKey"));
+                Assert.That(filter.Label, Is.EqualTo("testLabel"));
+            });
             if (hasTags)
             {
-                Assert.IsNotNull(filter.Tags);
-                Assert.AreEqual(new List<string> { "tag1=value1", "tag2=value2" }, filter.Tags);
+                Assert.That(filter.Tags, Is.Not.Null);
+                Assert.That(filter.Tags, Is.EqualTo(new List<string> { "tag1=value1", "tag2=value2" }));
             }
             else
             {
-                Assert.AreEqual(0, filter.Tags.Count);
+                Assert.That(filter.Tags, Is.Empty);
             }
         }
 

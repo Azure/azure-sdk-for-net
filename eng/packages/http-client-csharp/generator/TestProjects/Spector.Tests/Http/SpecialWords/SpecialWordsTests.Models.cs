@@ -17,7 +17,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithAndAsync(new And("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -25,7 +25,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithAsAsync(new As("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -33,7 +33,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithAssertAsync(new SpecialWordsAssert("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -41,7 +41,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithAsyncAsync(new Async("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -49,7 +49,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithAwaitAsync(new Await("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -57,7 +57,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithBreakAsync(new Break("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -65,7 +65,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithClassAsync(new Class("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -73,7 +73,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithConstructorAsync(new Constructor("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -81,7 +81,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithContinueAsync(new Continue("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -89,7 +89,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithDefAsync(new Def("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -97,7 +97,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithDelAsync(new Del("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -105,7 +105,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithElifAsync(new Elif("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -113,7 +113,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithElseAsync(new Else("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -121,7 +121,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithExceptAsync(new Except("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -129,7 +129,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithExecAsync(new Exec("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -137,7 +137,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithFinallyAsync(new Finally("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -145,7 +145,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithFromAsync(new From("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -153,7 +153,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithGlobalAsync(new Global("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -161,7 +161,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithImportAsync(new Import("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -169,7 +169,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithInAsync(new In("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -177,7 +177,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithIsAsync(new SpecialWordsIs("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -185,7 +185,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithLambdaAsync(new Lambda("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -193,7 +193,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithNotAsync(new Not("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
 
@@ -202,7 +202,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithOrAsync(new Or("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -210,7 +210,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithPassAsync(new Pass("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -218,7 +218,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithRaiseAsync(new Raise("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -226,7 +226,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithReturnAsync(new Return("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -234,7 +234,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithTryAsync(new Try("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -242,7 +242,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithIfAsync(new If("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -250,7 +250,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithForAsync(new For("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -258,7 +258,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithWithAsync(new With("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -266,7 +266,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithWhileAsync(new While("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -274,7 +274,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
         {
             var client = new SpecialWordsClient(host, null).GetModelsClient();
             var response = await client.WithYieldAsync(new Yield("ok"));
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -283,7 +283,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
             SameAsModel body = new SameAsModel("ok");
             var client = new SpecialWordsClient(host, null).GetModelPropertiesClient();
             var response = await client.SameAsModelAsync(body);
-            NUnit.Framework.Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

@@ -56,7 +56,7 @@ namespace Azure.AI.Personalizer.Tests
                         "]" +
                     "}]" +
                 "}";
-            Assert.IsTrue(contextJson.Equals(expectedJson));
+            Assert.That(contextJson, Is.EqualTo(expectedJson));
         }
 
         [Test]
@@ -75,19 +75,25 @@ namespace Azure.AI.Personalizer.Tests
             PersonalizerRankMultiSlotOptions request = new PersonalizerRankMultiSlotOptions(
                 MultiSlotTests.actions, MultiSlotTests.slots, MultiSlotTests.contextFeatures, "testEventId");
             int[] baselineActions = RlObjectConverter.ExtractBaselineActionsFromRankRequest(request);
-            Assert.AreEqual(2, baselineActions.Length);
-            Assert.AreEqual(0, baselineActions[0]);
-            Assert.AreEqual(1, baselineActions[1]);
+            Assert.That(baselineActions.Length, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(baselineActions[0], Is.EqualTo(0));
+                Assert.That(baselineActions[1], Is.EqualTo(1));
+            });
         }
 
         [Test]
         public void GetActionIdToIndexMappingTest()
         {
             Dictionary<string, int> idToIndex = RlObjectConverter.GetActionIdToIndexMapping(MultiSlotTests.actions);
-            Assert.AreEqual(3, idToIndex.Keys.Count);
-            Assert.AreEqual(idToIndex["NewsArticle"], 0);
-            Assert.AreEqual(idToIndex["SportsArticle"], 1);
-            Assert.AreEqual(idToIndex["EntertainmentArticle"], 2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(idToIndex.Keys, Has.Count.EqualTo(3));
+                Assert.That(idToIndex["NewsArticle"], Is.EqualTo(0));
+                Assert.That(idToIndex["SportsArticle"], Is.EqualTo(1));
+                Assert.That(idToIndex["EntertainmentArticle"], Is.EqualTo(2));
+            });
         }
 
         [Test]
@@ -113,11 +119,14 @@ namespace Azure.AI.Personalizer.Tests
             string eventId = "testEventId";
 
             PersonalizerRankResult rankResponse = RlObjectConverter.GenerateRankResult(originalActions, rankableActions, excludedActions, responseWrapper, eventId);
-            Assert.AreEqual("action1", rankResponse.RewardActionId);
-            Assert.AreEqual(originalActions.Count, rankResponse.Ranking.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(rankResponse.RewardActionId, Is.EqualTo("action1"));
+                Assert.That(rankResponse.Ranking, Has.Count.EqualTo(originalActions.Count));
+            });
             for (int i = 0; i < rankResponse.Ranking.Count; i++)
             {
-                Assert.AreEqual(originalActions[i].Id, rankResponse.Ranking[i].Id);
+                Assert.That(rankResponse.Ranking[i].Id, Is.EqualTo(originalActions[i].Id));
             }
         }
 
@@ -158,15 +167,15 @@ namespace Azure.AI.Personalizer.Tests
             PersonalizerMultiSlotRankResult response = RlObjectConverter.GenerateMultiSlotRankResponse(actions, multiSlotResponseWrapper, eventId);
 
             int actionCount = rankedSlots.Count;
-            Assert.AreEqual(actionCount, response.Slots.Count);
+            Assert.That(response.Slots, Has.Count.EqualTo(actionCount));
             for (int i = 0; i < actionCount; i++)
             {
                 // Assert indices were assigned correctly
                 var rankedAction = actions[(int)rankedSlots[i].ChosenAction];
-                Assert.AreEqual(rankedAction.Id, response.Slots[i].RewardActionId);
+                Assert.That(response.Slots[i].RewardActionId, Is.EqualTo(rankedAction.Id));
             }
 
-            Assert.AreEqual(eventId, response.EventId);
+            Assert.That(response.EventId, Is.EqualTo(eventId));
         }
 
         private List<PersonalizerRankableAction> GetActions()

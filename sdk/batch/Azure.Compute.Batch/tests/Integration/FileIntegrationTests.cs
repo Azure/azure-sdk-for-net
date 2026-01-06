@@ -64,15 +64,15 @@ namespace Azure.Compute.Batch.Tests.Integration
                     var outputFileName = t.ExecutionInfo.ExitCode == 0 ? "stdout.txt" : "stderr.txt";
 
                     BatchFileProperties batchFilePropertiesesponse = await client.GetTaskFilePropertiesAsync(jobId, t.Id, outputFileName);
-                    Assert.IsNotNull(batchFilePropertiesesponse);
-                    Assert.IsNotEmpty(batchFilePropertiesesponse.FileUrl);
+                    Assert.That(batchFilePropertiesesponse, Is.Not.Null);
+                    Assert.That(batchFilePropertiesesponse.FileUrl, Is.Not.Empty);
 
                     BinaryData fileContents = await client.GetTaskFileAsync(jobId, t.Id, outputFileName);
                     using (var reader = new StreamReader(fileContents.ToStream()))
                     {
                         string line = await reader.ReadLineAsync();
-                        Assert.IsNotEmpty(line);
-                        Assert.AreEqual($"Hello World task-{index++}", line);
+                        Assert.That(line, Is.Not.Empty);
+                        Assert.That(line, Is.EqualTo($"Hello World task-{index++}"));
                     }
 
                     await foreach (BatchNodeFile item in client.GetTaskFilesAsync(jobId, t.Id))
@@ -114,13 +114,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                 using (var reader = new StreamReader(fileContents.ToStream()))
                 {
                     string line = await reader.ReadLineAsync();
-                    Assert.IsNotEmpty(line);
-                    Assert.AreEqual($"Hello World", line);
+                    Assert.That(line, Is.Not.Empty);
+                    Assert.That(line, Is.EqualTo($"Hello World"));
                 }
 
                 // delete the file
                 Response response = await client.DeleteTaskFileAsync(jobId, taskId, outputFileName);
-                Assert.AreEqual(response.Status, 200);
+                Assert.That(response.Status, Is.EqualTo(200));
 
                 //verify deleted, we should get an exception because the file is not found
                 var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetTaskFileAsync(jobId, taskId, outputFileName));
@@ -158,14 +158,14 @@ namespace Azure.Compute.Batch.Tests.Integration
                 await foreach (BatchNode item in client.GetNodesAsync(poolId))
                 {
                     BatchFileProperties batchFileProperties = await client.GetNodeFilePropertiesAsync(poolId, item.Id, file);
-                    Assert.IsNotNull(batchFileProperties);
-                    Assert.IsNotEmpty(batchFileProperties.FileUrl);
+                    Assert.That(batchFileProperties, Is.Not.Null);
+                    Assert.That(batchFileProperties.FileUrl, Is.Not.Empty);
 
                     BinaryData fileContents = await client.GetNodeFileAsync(poolId, item.Id, file);
                     using (var reader = new StreamReader(fileContents.ToStream()))
                     {
                         string line = await reader.ReadLineAsync();
-                        Assert.IsNotEmpty(line);
+                        Assert.That(line, Is.Not.Empty);
                         //Assert.AreEqual($"Hello World task-{index++}", line);
                     }
 

@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");
             #endregion
 
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful swap.");
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate successful swap.");
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");
             #endregion
 
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful swap.");
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate successful swap.");
         }
     }
 }

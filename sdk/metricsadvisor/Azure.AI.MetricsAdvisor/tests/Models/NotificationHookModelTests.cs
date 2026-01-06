@@ -38,11 +38,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(getResponse);
             NotificationHook hook = await adminClient.GetHookAsync(FakeGuid);
 
-            Assert.That(hook.Id, Is.EqualTo(FakeGuid));
-            Assert.That(hook.Name, Is.EqualTo("unknownHookName"));
-            Assert.That(hook.ExternalUri.AbsoluteUri, Is.EqualTo("https://fakeuri.com/"));
-            Assert.That(hook.Description, Is.EqualTo("unknown hook description"));
-            Assert.That(hook.Administrators.Single(), Is.EqualTo("foo@contoso.com"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(hook.Id, Is.EqualTo(FakeGuid));
+                Assert.That(hook.Name, Is.EqualTo("unknownHookName"));
+                Assert.That(hook.ExternalUri.AbsoluteUri, Is.EqualTo("https://fakeuri.com/"));
+                Assert.That(hook.Description, Is.EqualTo("unknown hook description"));
+                Assert.That(hook.Administrators.Single(), Is.EqualTo("foo@contoso.com"));
+            });
         }
 
         [Test]
@@ -67,8 +70,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockRequest request = mockTransport.Requests.Last();
             string content = ReadContent(request);
 
-            Assert.That(request.Uri.Path, Contains.Substring(FakeGuid));
-            Assert.That(content, ContainsJsonString("hookName", "newHookName"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Uri.Path, Contains.Substring(FakeGuid));
+                Assert.That(content, ContainsJsonString("hookName", "newHookName"));
+            });
             Assert.That(content, ContainsJsonString("hookType", "unknownType"));
             Assert.That(content, ContainsJsonString("externalLink", "https://newfakeuri.com/"));
             Assert.That(content, ContainsJsonString("description", "new description"));

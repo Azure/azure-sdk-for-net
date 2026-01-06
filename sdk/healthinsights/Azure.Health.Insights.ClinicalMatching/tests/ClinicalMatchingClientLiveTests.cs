@@ -39,14 +39,14 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests
             var request = GetRequestContent("ClinicalMatchingClientTest.request.json");
             var operation = await client.MatchTrialsAsync(WaitUntil.Completed, request);
 
-            Assert.IsNotNull(operation);
+            Assert.That(operation, Is.Not.Null);
             Response response = operation.GetRawResponse();
-            Assert.IsNotNull(response);
-            Assert.IsTrue(response.Status == (int)HttpStatusCode.OK);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.OK));
             TrialMatcherResults results = FetchResults(response);
-            Assert.IsNotEmpty(results.Patients);
+            Assert.That(results.Patients, Is.Not.Empty);
             var patient = results.Patients[0];
-            Assert.IsNotEmpty(patient.Inferences);
+            Assert.That(patient.Inferences, Is.Not.Empty);
         }
 
         private RequestContent GetRequestContent(string resourceName)

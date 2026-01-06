@@ -68,14 +68,17 @@ public class CodeInterpreterTests : AssistantsTestBase
         }
         while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
-        Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
-        Assert.That(run.AssistantId, Is.EqualTo(assistant.Id));
+        Assert.Multiple(() =>
+        {
+            Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
+            Assert.That(run.AssistantId, Is.EqualTo(assistant.Id));
+        });
 
         // List the messages on the thread, now updated from the completed run
         Response<PageableList<ThreadMessage>> messageListResponse = await client.GetMessagesAsync(run.ThreadId);
         AssertSuccessfulResponse(messageListResponse);
         IReadOnlyList<ThreadMessage> messages = messageListResponse.Value.Data;
-        Assert.That(messages.Count, Is.GreaterThan(1));
+        Assert.That(messages, Has.Count.GreaterThan(1));
 
         // Get an assistant-provided file ID
         string imageFileId = null;
@@ -99,8 +102,11 @@ public class CodeInterpreterTests : AssistantsTestBase
         // Ensure we can get the file metadata for the ID provided
         Response<OpenAIFile> imageFileResponse = await client.GetFileAsync(imageFileId);
         AssertSuccessfulResponse(imageFileResponse);
-        Assert.That(imageFileResponse.Value.Filename, Is.Not.Null.Or.Empty);
-        Assert.That(imageFileResponse.Value.Purpose, Is.EqualTo(OpenAIFilePurpose.AssistantsOutput));
+        Assert.Multiple(() =>
+        {
+            Assert.That(imageFileResponse.Value.Filename, Is.Not.Null.Or.Empty);
+            Assert.That(imageFileResponse.Value.Purpose, Is.EqualTo(OpenAIFilePurpose.AssistantsOutput));
+        });
 
         // Ensure we can get some binary image data for the ID provided
         Response<BinaryData> imageDataResponse = await client.GetFileContentAsync(imageFileId);

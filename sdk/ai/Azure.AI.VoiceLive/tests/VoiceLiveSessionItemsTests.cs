@@ -116,9 +116,12 @@ namespace Azure.AI.VoiceLive.Tests
             using var last = GetLastMessageOfType(fake, "conversation.item.create");
             Assert.That(last, Is.Not.Null, "Expected conversation.item.create message to be sent.");
             var root = last!.RootElement;
-            Assert.That(root.TryGetProperty("item", out var itemProp), Is.True, "item property missing");
-            Assert.That(itemProp.TryGetProperty("id", out var idProp), Is.True, "id missing inside item");
-            Assert.That(idProp.GetString(), Is.EqualTo("item1"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(root.TryGetProperty("item", out var itemProp), Is.True, "item property missing");
+                Assert.That(itemProp.TryGetProperty("id", out var idProp), Is.True, "id missing inside item");
+                Assert.That(idProp.GetString(), Is.EqualTo("item1"));
+            });
         }
 
         [Test]
@@ -132,8 +135,11 @@ namespace Azure.AI.VoiceLive.Tests
             using var last = GetLastMessageOfType(fake, "conversation.item.create");
             Assert.That(last, Is.Not.Null, "Expected conversation.item.create message to be sent.");
             var rootEl = last!.RootElement;
-            Assert.That(rootEl.TryGetProperty("previous_item_id", out var prevProp), Is.True, "previous_item_id missing");
-            Assert.That(prevProp.GetString(), Is.EqualTo("root"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(rootEl.TryGetProperty("previous_item_id", out var prevProp), Is.True, "previous_item_id missing");
+                Assert.That(prevProp.GetString(), Is.EqualTo("root"));
+            });
         }
 
         [Test]
@@ -145,8 +151,11 @@ namespace Azure.AI.VoiceLive.Tests
             using var last = GetLastMessageOfType(fake, "conversation.item.delete");
             Assert.That(last, Is.Not.Null, "Expected conversation.item.delete message.");
             var root = last!.RootElement;
-            Assert.That(root.TryGetProperty("item_id", out var idProp), Is.True, "item_id missing");
-            Assert.That(idProp.GetString(), Is.EqualTo("dead-item"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(root.TryGetProperty("item_id", out var idProp), Is.True, "item_id missing");
+                Assert.That(idProp.GetString(), Is.EqualTo("dead-item"));
+            });
         }
 
         [Test]
@@ -158,8 +167,11 @@ namespace Azure.AI.VoiceLive.Tests
             using var last = GetLastMessageOfType(fake, "conversation.item.retrieve");
             Assert.That(last, Is.Not.Null, "Expected conversation.item.retrieve message.");
             var root = last!.RootElement;
-            Assert.That(root.TryGetProperty("item_id", out var idProp), Is.True, "item_id missing");
-            Assert.That(idProp.GetString(), Is.EqualTo("item123"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(root.TryGetProperty("item_id", out var idProp), Is.True, "item_id missing");
+                Assert.That(idProp.GetString(), Is.EqualTo("item123"));
+            });
         }
 
         [Test]
@@ -171,12 +183,15 @@ namespace Azure.AI.VoiceLive.Tests
             using var last = GetLastMessageOfType(fake, "conversation.item.truncate");
             Assert.That(last, Is.Not.Null, "Expected conversation.item.truncate message.");
             var root = last!.RootElement;
-            Assert.That(root.TryGetProperty("item_id", out var idProp), Is.True, "item_id missing");
-            Assert.That(idProp.GetString(), Is.EqualTo("assistant-msg-1"));
-            Assert.That(root.TryGetProperty("content_index", out var ciProp), Is.True, "content_index missing");
-            Assert.That(ciProp.GetInt32(), Is.EqualTo(0));
-            Assert.That(root.TryGetProperty("audio_end_ms", out var aProp), Is.True, "audio_end_ms missing");
-            Assert.That(aProp.GetInt32(), Is.EqualTo(0)); // VoiceLiveSession currently always uses 0
+            Assert.Multiple(() =>
+            {
+                Assert.That(root.TryGetProperty("item_id", out var idProp), Is.True, "item_id missing");
+                Assert.That(idProp.GetString(), Is.EqualTo("assistant-msg-1"));
+                Assert.That(root.TryGetProperty("content_index", out var ciProp), Is.True, "content_index missing");
+                Assert.That(ciProp.GetInt32(), Is.EqualTo(0));
+                Assert.That(root.TryGetProperty("audio_end_ms", out var aProp), Is.True, "audio_end_ms missing");
+                Assert.That(aProp.GetInt32(), Is.EqualTo(0)); // VoiceLiveSession currently always uses 0
+            });
         }
 
         [Test]

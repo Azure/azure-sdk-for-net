@@ -43,19 +43,19 @@ namespace Azure.Core.Tests
         [Test]
         public void IncludesNamedEnumValues([EnumValues(nameof(DataEnum.A))]DataEnum data)
         {
-            Assert.AreEqual(DataEnum.A, data);
+            Assert.That(data, Is.EqualTo(DataEnum.A));
         }
 
         [Test]
         public void ExcludesNamedEnumValues([EnumValues(Exclude = new[] { nameof(DataEnum.B) })]DataEnum data)
         {
-            Assert.AreEqual(DataEnum.A, data);
+            Assert.That(data, Is.EqualTo(DataEnum.A));
         }
 
         [Test]
         public void ExcludesNamedEnumValuesOverride([EnumValues(nameof(DataEnum.A), nameof(DataEnum.B), Exclude = new[] { nameof(DataEnum.B) })]DataEnum data)
         {
-            Assert.AreEqual(DataEnum.A, data);
+            Assert.That(data, Is.EqualTo(DataEnum.A));
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Azure.Core.Tests
             EnumValuesAttribute sut = new EnumValuesAttribute();
 
             Exception ex = Assert.Throws<InvalidDataSourceException>(() => sut.GetMembers(GetType(), "source"));
-            Assert.AreEqual(@"No enumeration members found on parameter ""source"".", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(@"No enumeration members found on parameter ""source""."));
         }
 
         // Should work for fields and properties alike.

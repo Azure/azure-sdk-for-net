@@ -42,7 +42,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             {
                 count++;
             }
-            Assert.NotZero(count);
+            Assert.That(count, Is.Not.Zero);
         }
     }
 }

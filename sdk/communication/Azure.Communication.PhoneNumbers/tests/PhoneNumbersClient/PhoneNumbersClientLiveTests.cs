@@ -39,7 +39,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var numbersPagable = client.GetPurchasedPhoneNumbersAsync();
             var numbers = await numbersPagable.ToEnumerableAsync();
 
-            Assert.IsNotNull(numbers);
+            Assert.That(numbers, Is.Not.Null);
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPurchasedPhoneNumbersUsingConnectionString")]
@@ -53,7 +53,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var numbersPagable = client.GetPurchasedPhoneNumbers();
             var numbers = numbersPagable.AsPages().ToList();
 
-            Assert.IsNotNull(numbers);
+            Assert.That(numbers, Is.Not.Null);
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPhoneNumberUsingConnectionString")]
@@ -67,9 +67,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient(authMethod);
             var phoneNumber = await client.GetPurchasedPhoneNumberAsync(number);
 
-            Assert.IsNotNull(phoneNumber);
-            Assert.IsNotNull(phoneNumber.Value);
-            Assert.AreEqual(number, phoneNumber.Value.PhoneNumber);
+            Assert.That(phoneNumber, Is.Not.Null);
+            Assert.That(phoneNumber.Value, Is.Not.Null);
+            Assert.That(phoneNumber.Value.PhoneNumber, Is.EqualTo(number));
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPhoneNumberUsingConnectionString")]
@@ -83,9 +83,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient(authMethod);
             var phoneNumber = client.GetPurchasedPhoneNumber(number);
 
-            Assert.IsNotNull(phoneNumber);
-            Assert.IsNotNull(phoneNumber.Value);
-            Assert.AreEqual(number, phoneNumber.Value.PhoneNumber);
+            Assert.That(phoneNumber, Is.Not.Null);
+            Assert.That(phoneNumber.Value, Is.Not.Null);
+            Assert.That(phoneNumber.Value.PhoneNumber, Is.EqualTo(number));
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("phoneNumber", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("phoneNumber"));
                 return;
             }
 
@@ -119,7 +119,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("phoneNumber", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("phoneNumber"));
                 return;
             }
 
@@ -138,7 +138,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("phoneNumber", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("phoneNumber"));
                 return;
             }
 
@@ -157,7 +157,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("phoneNumber", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("phoneNumber"));
                 return;
             }
 
@@ -178,7 +178,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
                 return;
             }
 
@@ -199,7 +199,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
                 return;
             }
 
@@ -218,7 +218,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("twoLetterIsoCountryName", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("twoLetterIsoCountryName"));
                 return;
             }
 
@@ -237,7 +237,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("twoLetterIsoCountryName", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("twoLetterIsoCountryName"));
                 return;
             }
 
@@ -258,22 +258,25 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             await searchOperation.WaitForCompletionAsync();
 
-            Assert.IsTrue(searchOperation.HasCompleted);
-            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
-            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
-            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(searchOperation.HasCompleted, Is.True);
+                Assert.That(searchOperation.Value.PhoneNumbers, Has.Count.EqualTo(1));
+                Assert.That(searchOperation.Value.AssignmentType, Is.EqualTo(PhoneNumberAssignmentType.Application));
+                Assert.That(searchOperation.Value.Capabilities.Calling, Is.EqualTo(PhoneNumberCapabilityType.Outbound));
+                Assert.That(searchOperation.Value.Capabilities.Sms, Is.EqualTo(PhoneNumberCapabilityType.None));
+                Assert.That(searchOperation.Value.PhoneNumberType, Is.EqualTo(PhoneNumberType.TollFree));
+            });
 
             var searchId = searchOperation.Value.SearchId;
 
             var response = await client.GetPhoneNumberSearchResultAsync(searchId);
 
-            Assert.AreEqual(1, response.Value.PhoneNumbers.Count);
-            Assert.AreEqual(PhoneNumberAssignmentType.Application, response.Value.AssignmentType);
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, response.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityType.None, response.Value.Capabilities.Sms);
-            Assert.AreEqual(PhoneNumberType.TollFree, response.Value.PhoneNumberType);
+            Assert.That(response.Value.PhoneNumbers, Has.Count.EqualTo(1));
+            Assert.That(response.Value.AssignmentType, Is.EqualTo(PhoneNumberAssignmentType.Application));
+            Assert.That(response.Value.Capabilities.Calling, Is.EqualTo(PhoneNumberCapabilityType.Outbound));
+            Assert.That(response.Value.Capabilities.Sms, Is.EqualTo(PhoneNumberCapabilityType.None));
+            Assert.That(response.Value.PhoneNumberType, Is.EqualTo(PhoneNumberType.TollFree));
         }
 
         [Test]
@@ -294,22 +297,25 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 searchOperation.UpdateStatus();
             }
 
-            Assert.IsTrue(searchOperation.HasCompleted);
-            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
-            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
-            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(searchOperation.HasCompleted, Is.True);
+                Assert.That(searchOperation.Value.PhoneNumbers, Has.Count.EqualTo(1));
+                Assert.That(searchOperation.Value.AssignmentType, Is.EqualTo(PhoneNumberAssignmentType.Application));
+                Assert.That(searchOperation.Value.Capabilities.Calling, Is.EqualTo(PhoneNumberCapabilityType.Outbound));
+                Assert.That(searchOperation.Value.Capabilities.Sms, Is.EqualTo(PhoneNumberCapabilityType.None));
+                Assert.That(searchOperation.Value.PhoneNumberType, Is.EqualTo(PhoneNumberType.TollFree));
+            });
 
             var searchId = searchOperation.Value.SearchId;
 
             var response = client.GetPhoneNumberSearchResult(searchId);
 
-            Assert.AreEqual(1, response.Value.PhoneNumbers.Count);
-            Assert.AreEqual(PhoneNumberAssignmentType.Application, response.Value.AssignmentType);
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, response.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityType.None, response.Value.Capabilities.Sms);
-            Assert.AreEqual(PhoneNumberType.TollFree, response.Value.PhoneNumberType);
+            Assert.That(response.Value.PhoneNumbers, Has.Count.EqualTo(1));
+            Assert.That(response.Value.AssignmentType, Is.EqualTo(PhoneNumberAssignmentType.Application));
+            Assert.That(response.Value.Capabilities.Calling, Is.EqualTo(PhoneNumberCapabilityType.Outbound));
+            Assert.That(response.Value.Capabilities.Sms, Is.EqualTo(PhoneNumberCapabilityType.None));
+            Assert.That(response.Value.PhoneNumberType, Is.EqualTo(PhoneNumberType.TollFree));
         }
 
         [Test]
@@ -323,7 +329,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (Exception ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.That(ex.Message, Is.Not.Null);
             }
         }
 
@@ -338,7 +344,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (Exception ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.That(ex.Message, Is.Not.Null);
             }
         }
 
@@ -353,8 +359,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
-                Assert.NotNull(ex.Message);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
+                    Assert.That(ex.Message, Is.Not.Null);
+                });
             }
         }
 
@@ -369,8 +378,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
-                Assert.NotNull(ex.Message);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
+                    Assert.That(ex.Message, Is.Not.Null);
+                });
             }
         }
 
@@ -385,8 +397,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
-                Assert.NotNull(ex.Message);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
+                    Assert.That(ex.Message, Is.Not.Null);
+                });
             }
         }
 
@@ -401,8 +416,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
-                Assert.NotNull(ex.Message);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
+                    Assert.That(ex.Message, Is.Not.Null);
+                });
             }
         }
 
@@ -417,7 +435,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (Exception ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.That(ex.Message, Is.Not.Null);
             }
         }
 
@@ -432,7 +450,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (Exception ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.That(ex.Message, Is.Not.Null);
             }
         }
 
@@ -447,7 +465,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (Exception ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.That(ex.Message, Is.Not.Null);
             }
         }
 
@@ -462,7 +480,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (Exception ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.That(ex.Message, Is.Not.Null);
             }
         }
 
@@ -477,8 +495,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
-                Assert.NotNull(ex.Message);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
+                    Assert.That(ex.Message, Is.Not.Null);
+                });
             }
         }
 
@@ -493,8 +514,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
-                Assert.NotNull(ex.Message);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
+                    Assert.That(ex.Message, Is.Not.Null);
+                });
             }
         }
 
@@ -515,12 +539,15 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             await searchOperation.WaitForCompletionAsync();
 
-            Assert.IsTrue(searchOperation.HasCompleted);
-            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
-            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
-            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(searchOperation.HasCompleted, Is.True);
+                Assert.That(searchOperation.Value.PhoneNumbers, Has.Count.EqualTo(1));
+                Assert.That(searchOperation.Value.AssignmentType, Is.EqualTo(PhoneNumberAssignmentType.Application));
+                Assert.That(searchOperation.Value.Capabilities.Calling, Is.EqualTo(PhoneNumberCapabilityType.Outbound));
+                Assert.That(searchOperation.Value.Capabilities.Sms, Is.EqualTo(PhoneNumberCapabilityType.None));
+                Assert.That(searchOperation.Value.PhoneNumberType, Is.EqualTo(PhoneNumberType.TollFree));
+            });
 
             var searchId = searchOperation.Value.SearchId;
 
@@ -530,8 +557,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
-                Assert.NotNull(ex.Message);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
+                    Assert.That(ex.Message, Is.Not.Null);
+                });
             }
         }
 
@@ -556,12 +586,15 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 searchOperation.UpdateStatus();
             }
 
-            Assert.IsTrue(searchOperation.HasCompleted);
-            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
-            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
-            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(searchOperation.HasCompleted, Is.True);
+                Assert.That(searchOperation.Value.PhoneNumbers, Has.Count.EqualTo(1));
+                Assert.That(searchOperation.Value.AssignmentType, Is.EqualTo(PhoneNumberAssignmentType.Application));
+                Assert.That(searchOperation.Value.Capabilities.Calling, Is.EqualTo(PhoneNumberCapabilityType.Outbound));
+                Assert.That(searchOperation.Value.Capabilities.Sms, Is.EqualTo(PhoneNumberCapabilityType.None));
+                Assert.That(searchOperation.Value.PhoneNumberType, Is.EqualTo(PhoneNumberType.TollFree));
+            });
 
             var searchId = searchOperation.Value.SearchId;
 
@@ -571,8 +604,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
-                Assert.NotNull(ex.Message);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
+                    Assert.That(ex.Message, Is.Not.Null);
+                });
             }
         }
 
@@ -588,7 +624,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Console.WriteLine("phone " + purchasedPhone.PhoneNumber);
             }
 
-            Assert.NotNull(purchasedPhoneNumbers);
+            Assert.That(purchasedPhoneNumbers, Is.Not.Null);
         }
 
         [Test]
@@ -603,7 +639,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Console.WriteLine("phone " + purchasedPhone.PhoneNumber);
             }
 
-            Assert.NotNull(purchasedPhoneNumbers);
+            Assert.That(purchasedPhoneNumbers, Is.Not.Null);
         }
 
         [Test]
@@ -632,7 +668,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -640,7 +676,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(phoneNumbersCount, actual);
+            Assert.That(actual, Is.EqualTo(phoneNumbersCount));
         }
 
         [Test]
@@ -669,7 +705,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -677,7 +713,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(phoneNumbersCount, actual);
+            Assert.That(actual, Is.EqualTo(phoneNumbersCount));
         }
 
         [Test]
@@ -698,10 +734,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var updateOperation = await client.StartUpdateCapabilitiesAsync(number, callingCapabilityType, smsCapabilityType);
             await updateOperation.WaitForCompletionAsync();
 
-            Assert.IsTrue(updateOperation.HasCompleted);
-            Assert.IsNotNull(updateOperation.Value);
-            Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status), $"Status code {updateOperation.GetRawResponse().Status} does not indicate success");
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateOperation.HasCompleted, Is.True);
+                Assert.That(updateOperation.Value, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateOperation.Value.PhoneNumber, Is.EqualTo(number));
+                Assert.That(IsSuccess(updateOperation.GetRawResponse().Status), Is.True, $"Status code {updateOperation.GetRawResponse().Status} does not indicate success");
+            });
         }
 
         [Test]
@@ -727,10 +769,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 updateOperation.UpdateStatus();
             }
 
-            Assert.IsTrue(updateOperation.HasCompleted);
-            Assert.IsNotNull(updateOperation.Value);
-            Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status), $"Status code {updateOperation.GetRawResponse().Status} does not indicate success");
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateOperation.HasCompleted, Is.True);
+                Assert.That(updateOperation.Value, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateOperation.Value.PhoneNumber, Is.EqualTo(number));
+                Assert.That(IsSuccess(updateOperation.GetRawResponse().Status), Is.True, $"Status code {updateOperation.GetRawResponse().Status} does not indicate success");
+            });
         }
 
         [Test]
@@ -744,8 +792,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
-                Assert.NotNull(ex.Message);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
+                    Assert.That(ex.Message, Is.Not.Null);
+                });
             }
         }
 
@@ -760,8 +811,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
-                Assert.NotNull(ex.Message);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
+                    Assert.That(ex.Message, Is.Not.Null);
+                });
             }
         }
 
@@ -775,9 +829,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var areaCodes = client.GetAvailableAreaCodesTollFreeAsync("US");
             await foreach (PhoneNumberAreaCode areaCode in areaCodes)
             {
-                Assert.Contains(areaCode.AreaCode, expectedAreaCodes);
+                Assert.That(expectedAreaCodes, Does.Contain(areaCode.AreaCode));
             }
-            Assert.IsNotNull(areaCodes);
+            Assert.That(areaCodes, Is.Not.Null);
         }
 
         [Test]
@@ -790,9 +844,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var areaCodes = client.GetAvailableAreaCodesTollFree("US");
             foreach (PhoneNumberAreaCode areaCode in areaCodes)
             {
-                Assert.Contains(areaCode.AreaCode, expectedAreaCodes);
+                Assert.That(expectedAreaCodes, Does.Contain(areaCode.AreaCode));
             }
-            Assert.IsNotNull(areaCodes);
+            Assert.That(areaCodes, Is.Not.Null);
         }
 
         [Test]
@@ -820,7 +874,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -828,7 +882,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(areaCodesCount, actual);
+            Assert.That(actual, Is.EqualTo(areaCodesCount));
         }
 
         [Test]
@@ -857,7 +911,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -865,7 +919,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(areaCodesCount, actual);
+            Assert.That(actual, Is.EqualTo(areaCodesCount));
         }
 
         [Test]
@@ -881,7 +935,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 {
                     Console.WriteLine("Area Code " + areaCode.AreaCode);
                 }
-                Assert.IsNotNull(areaCodes);
+                Assert.That(areaCodes, Is.Not.Null);
                 break;
             }
         }
@@ -899,7 +953,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 {
                     Console.WriteLine("Area Code " + areaCode.AreaCode);
                 }
-                Assert.IsNotNull(areaCodes);
+                Assert.That(areaCodes, Is.Not.Null);
                 break;
             }
         }
@@ -930,7 +984,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -938,7 +992,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(areaCodesCount, actual);
+            Assert.That(actual, Is.EqualTo(areaCodesCount));
         }
 
         [Test]
@@ -968,7 +1022,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -976,7 +1030,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(areaCodesCount, actual);
+            Assert.That(actual, Is.EqualTo(areaCodesCount));
         }
 
         [Test]
@@ -992,7 +1046,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 {
                     Console.WriteLine("Mobile Area Code " + areaCode.AreaCode);
                 }
-                Assert.IsNotNull(areaCodes);
+                Assert.That(areaCodes, Is.Not.Null);
                 break;
             }
         }
@@ -1010,7 +1064,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 {
                     Console.WriteLine("Mobile Area Code " + areaCode.AreaCode);
                 }
-                Assert.IsNotNull(areaCodes);
+                Assert.That(areaCodes, Is.Not.Null);
                 break;
             }
         }
@@ -1031,9 +1085,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             foreach (string country in expectedCountries)
             {
-                Assert.Contains(country, countriesResponse);
+                Assert.That(countriesResponse, Does.Contain(country));
             }
-            Assert.IsNotNull(countries);
+            Assert.That(countries, Is.Not.Null);
         }
 
         [Test]
@@ -1052,9 +1106,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             foreach (string country in expectedCountries)
             {
-                Assert.Contains(country, countriesResponse);
+                Assert.That(countriesResponse, Does.Contain(country));
             }
-            Assert.IsNotNull(countries);
+            Assert.That(countries, Is.Not.Null);
         }
 
         [Test]
@@ -1083,7 +1137,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -1091,7 +1145,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(countriesCount, actual);
+            Assert.That(actual, Is.EqualTo(countriesCount));
         }
 
         [Test]
@@ -1120,7 +1174,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -1128,7 +1182,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(countriesCount, actual);
+            Assert.That(actual, Is.EqualTo(countriesCount));
         }
 
         [Test]
@@ -1142,7 +1196,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             {
                 Console.WriteLine("Locality " + locality.LocalizedName);
             }
-            Assert.IsNotNull(localities);
+            Assert.That(localities, Is.Not.Null);
         }
 
         [Test]
@@ -1156,7 +1210,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             {
                 Console.WriteLine("Locality " + locality.LocalizedName);
             }
-            Assert.IsNotNull(localities);
+            Assert.That(localities, Is.Not.Null);
         }
 
         [Test]
@@ -1170,7 +1224,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             {
                 Console.WriteLine("Locality " + locality.LocalizedName);
             }
-            Assert.IsNotNull(localities);
+            Assert.That(localities, Is.Not.Null);
         }
 
         [Test]
@@ -1184,7 +1238,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             {
                 Console.WriteLine("Locality " + locality.LocalizedName);
             }
-            Assert.IsNotNull(localities);
+            Assert.That(localities, Is.Not.Null);
         }
 
         [Test]
@@ -1210,7 +1264,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -1218,7 +1272,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(localitiesCount, actual);
+            Assert.That(actual, Is.EqualTo(localitiesCount));
         }
 
         [Test]
@@ -1244,7 +1298,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -1252,7 +1306,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(localitiesCount, actual);
+            Assert.That(actual, Is.EqualTo(localitiesCount));
         }
 
         [Test]
@@ -1280,7 +1334,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -1288,7 +1342,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(localitiesCount, actual);
+            Assert.That(actual, Is.EqualTo(localitiesCount));
         }
 
         [Test]
@@ -1316,7 +1370,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -1324,7 +1378,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(localitiesCount, actual);
+            Assert.That(actual, Is.EqualTo(localitiesCount));
         }
 
         [Test]
@@ -1339,9 +1393,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 await foreach (PhoneNumberLocality locality in localities)
                 {
                     Console.WriteLine("Locality " + locality.LocalizedName);
-                    Assert.AreEqual(locality.AdministrativeDivision.AbbreviatedName, firstLocality.AdministrativeDivision.AbbreviatedName);
+                    Assert.That(firstLocality.AdministrativeDivision.AbbreviatedName, Is.EqualTo(locality.AdministrativeDivision.AbbreviatedName));
                 }
-                Assert.IsNotNull(localities);
+                Assert.That(localities, Is.Not.Null);
                 break;
             }
         }
@@ -1358,9 +1412,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 foreach (PhoneNumberLocality locality in localities)
                 {
                     Console.WriteLine("Locality " + locality.LocalizedName);
-                    Assert.AreEqual(locality.AdministrativeDivision.AbbreviatedName, firstLocality.AdministrativeDivision.AbbreviatedName);
+                    Assert.That(firstLocality.AdministrativeDivision.AbbreviatedName, Is.EqualTo(locality.AdministrativeDivision.AbbreviatedName));
                 }
-                Assert.IsNotNull(localities);
+                Assert.That(localities, Is.Not.Null);
                 break;
             }
         }
@@ -1376,7 +1430,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             {
                 Console.WriteLine("Offering " + offering.ToString());
             }
-            Assert.IsNotNull(offerings);
+            Assert.That(offerings, Is.Not.Null);
         }
 
         [Test]
@@ -1390,7 +1444,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             {
                 Console.WriteLine("Offering " + offering.ToString());
             }
-            Assert.IsNotNull(offerings);
+            Assert.That(offerings, Is.Not.Null);
         }
 
         [Test]
@@ -1418,7 +1472,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -1426,7 +1480,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(offeringsCount, actual);
+            Assert.That(actual, Is.EqualTo(offeringsCount));
         }
 
         [Test]
@@ -1454,7 +1508,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
                 {
-                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                    Assert.That(page.Values, Has.Count.EqualTo(expectedPageSize));
                 }
                 foreach (var phoneNumber in page.Values)
                 {
@@ -1462,7 +1516,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 }
             }
 
-            Assert.AreEqual(offeringsCount, actual);
+            Assert.That(actual, Is.EqualTo(offeringsCount));
         }
 
         [Test]
@@ -1476,7 +1530,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             {
                 Console.WriteLine("Offering " + offering.ToString());
             }
-            Assert.IsNotNull(offerings);
+            Assert.That(offerings, Is.Not.Null);
         }
 
         [Test]
@@ -1490,7 +1544,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             {
                 Console.WriteLine("Offering " + offering.ToString());
             }
-            Assert.IsNotNull(offerings);
+            Assert.That(offerings, Is.Not.Null);
         }
 
         [Test]
@@ -1503,7 +1557,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
 
             var results = await client.SearchOperatorInformationAsync(phoneNumbers);
-            Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
+            Assert.That(results.Value.Values[0].PhoneNumber, Is.EqualTo(phoneNumber));
         }
 
         [Test]
@@ -1516,7 +1570,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
 
             var results = client.SearchOperatorInformation(phoneNumbers);
-            Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
+            Assert.That(results.Value.Values[0].PhoneNumber, Is.EqualTo(phoneNumber));
         }
 
         [Test]
@@ -1534,7 +1588,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
                 return;
             }
 
@@ -1556,7 +1610,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.That(IsClientError(ex.Status), Is.True, $"Status code {ex.Status} does not indicate a client error.");
                 return;
             }
 
@@ -1574,19 +1628,22 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var results = await client.SearchOperatorInformationAsync(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = false });
             var operatorInformation = results.Value.Values[0];
-            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
-            Assert.IsNotNull(operatorInformation.InternationalFormat);
-            Assert.IsNotNull(operatorInformation.NationalFormat);
-            Assert.IsNull(operatorInformation.IsoCountryCode);
-            Assert.IsNull(operatorInformation.OperatorDetails);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operatorInformation.PhoneNumber, Is.EqualTo(phoneNumber));
+                Assert.That(operatorInformation.InternationalFormat, Is.Not.Null);
+                Assert.That(operatorInformation.NationalFormat, Is.Not.Null);
+                Assert.That(operatorInformation.IsoCountryCode, Is.Null);
+                Assert.That(operatorInformation.OperatorDetails, Is.Null);
+            });
 
             results = await client.SearchOperatorInformationAsync(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = true });
             operatorInformation = results.Value.Values[0];
-            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
-            Assert.IsNotNull(operatorInformation.InternationalFormat);
-            Assert.IsNotNull(operatorInformation.NationalFormat);
-            Assert.IsNotNull(operatorInformation.IsoCountryCode);
-            Assert.IsNotNull(operatorInformation.OperatorDetails);
+            Assert.That(operatorInformation.PhoneNumber, Is.EqualTo(phoneNumber));
+            Assert.That(operatorInformation.InternationalFormat, Is.Not.Null);
+            Assert.That(operatorInformation.NationalFormat, Is.Not.Null);
+            Assert.That(operatorInformation.IsoCountryCode, Is.Not.Null);
+            Assert.That(operatorInformation.OperatorDetails, Is.Not.Null);
         }
 
         [Test]
@@ -1600,19 +1657,22 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var results = client.SearchOperatorInformation(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = false });
             var operatorInformation = results.Value.Values[0];
-            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
-            Assert.IsNotNull(operatorInformation.InternationalFormat);
-            Assert.IsNotNull(operatorInformation.NationalFormat);
-            Assert.IsNull(operatorInformation.IsoCountryCode);
-            Assert.IsNull(operatorInformation.OperatorDetails);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operatorInformation.PhoneNumber, Is.EqualTo(phoneNumber));
+                Assert.That(operatorInformation.InternationalFormat, Is.Not.Null);
+                Assert.That(operatorInformation.NationalFormat, Is.Not.Null);
+                Assert.That(operatorInformation.IsoCountryCode, Is.Null);
+                Assert.That(operatorInformation.OperatorDetails, Is.Null);
+            });
 
             results = client.SearchOperatorInformation(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = true });
             operatorInformation = results.Value.Values[0];
-            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
-            Assert.IsNotNull(operatorInformation.InternationalFormat);
-            Assert.IsNotNull(operatorInformation.NationalFormat);
-            Assert.IsNotNull(operatorInformation.IsoCountryCode);
-            Assert.IsNotNull(operatorInformation.OperatorDetails);
+            Assert.That(operatorInformation.PhoneNumber, Is.EqualTo(phoneNumber));
+            Assert.That(operatorInformation.InternationalFormat, Is.Not.Null);
+            Assert.That(operatorInformation.NationalFormat, Is.Not.Null);
+            Assert.That(operatorInformation.IsoCountryCode, Is.Not.Null);
+            Assert.That(operatorInformation.OperatorDetails, Is.Not.Null);
         }
 
         private static bool IsSuccess(int statusCode)

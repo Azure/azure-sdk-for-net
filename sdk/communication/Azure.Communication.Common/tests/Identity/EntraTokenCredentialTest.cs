@@ -115,7 +115,7 @@ namespace Azure.Communication.Identity
                 _resourceEndpoint,
                 _mockTokenCredential.Object);
             var scopes = new[] { "https://communication.azure.com/clients/.default" };
-            Assert.AreEqual(credential.Scopes, scopes);
+            Assert.That(scopes, Is.EqualTo(credential.Scopes));
         }
 
         [Test]
@@ -151,16 +151,19 @@ namespace Azure.Communication.Identity
             // Act
             var token = await entraTokenCredential.GetTokenAsync(CancellationToken.None);
 
-            // Assert
-            Assert.AreEqual(SampleToken, token.Token);
-            Assert.AreEqual(token.ExpiresOn, expiryTime);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(token.Token, Is.EqualTo(SampleToken));
+                Assert.That(expiryTime, Is.EqualTo(token.ExpiresOn));
+            });
             if (scopes.Contains(teamsExtensionScope))
             {
-                Assert.AreEqual(teamsExtensionEndpoint, mockTransport.SingleRequest.Uri.Path);
+                Assert.That(mockTransport.SingleRequest.Uri.Path, Is.EqualTo(teamsExtensionEndpoint));
             }
             else
             {
-                Assert.AreEqual(communicationClientsEndpoint, mockTransport.SingleRequest.Uri.Path);
+                Assert.That(mockTransport.SingleRequest.Uri.Path, Is.EqualTo(communicationClientsEndpoint));
             }
             _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
         }
@@ -177,10 +180,13 @@ namespace Azure.Communication.Identity
             // Act
             var token = await entraTokenCredential.GetTokenAsync(CancellationToken.None);
 
-            // Assert
-            Assert.AreEqual(SampleToken, token.Token);
-            Assert.AreEqual(token.ExpiresOn, expiryTime);
-            Assert.AreEqual(communicationClientsEndpoint, mockTransport.SingleRequest.Uri.Path);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(token.Token, Is.EqualTo(SampleToken));
+                Assert.That(expiryTime, Is.EqualTo(token.ExpiresOn));
+                Assert.That(mockTransport.SingleRequest.Uri.Path, Is.EqualTo(communicationClientsEndpoint));
+            });
             _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -206,7 +212,7 @@ namespace Azure.Communication.Identity
             var token = await entraTokenCredential.GetTokenAsync(CancellationToken.None);
 
             // Assert for cached tokens are updated
-            Assert.AreEqual(newToken, token.Token);
+            Assert.That(token.Token, Is.EqualTo(newToken));
             _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 
@@ -225,7 +231,7 @@ namespace Azure.Communication.Identity
                 token = await entraTokenCredential.GetTokenAsync(CancellationToken.None);
             }
             // Assert
-            Assert.AreEqual(SampleToken, token.Token);
+            Assert.That(token.Token, Is.EqualTo(SampleToken));
             _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -290,7 +296,7 @@ namespace Azure.Communication.Identity
 
             // Act & Assert
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
-            StringAssert.Contains(lastRetryErrorMessage, ex?.Message);
+            Assert.That(ex?.Message, Does.Contain(lastRetryErrorMessage));
         }
 
         [Test, TestCaseSource(nameof(invalidScopes))]
@@ -313,7 +319,7 @@ namespace Azure.Communication.Identity
 
             // Act & Assert
             var ex = Assert.ThrowsAsync<ArgumentException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
-            StringAssert.Contains("Scopes validation failed. Ensure all scopes start with either", ex?.Message);
+            Assert.That(ex?.Message, Does.Contain("Scopes validation failed. Ensure all scopes start with either"));
         }
 
         [Test]
@@ -344,7 +350,7 @@ namespace Azure.Communication.Identity
             var token = await entraTokenCredential.GetTokenAsync(CancellationToken.None);
 
             // Assert for cached tokens are updated
-            Assert.AreEqual(newToken, token.Token);
+            Assert.That(token.Token, Is.EqualTo(newToken));
             _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 

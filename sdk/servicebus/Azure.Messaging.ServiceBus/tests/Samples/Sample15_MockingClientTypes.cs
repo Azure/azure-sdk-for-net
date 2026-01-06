@@ -134,13 +134,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             foreach (var message in sourceMessages)
             {
-                Assert.True(batch.TryAddMessage(message));
+                Assert.That(batch.TryAddMessage(message), Is.True);
             }
 
             // Since there are already batchCountThreshold number of messages in the batch,
             // this message will be rejected from the batch.
 
-            Assert.IsFalse(batch.TryAddMessage(new ServiceBusMessage("Too Many Messages.")));
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage("Too Many Messages.")), Is.False);
 
             // For illustrative purposes we are calling SendMessagesAsync. Application-defined methods
             // would be called here instead.
@@ -158,9 +158,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             foreach (ServiceBusMessage message in backingList)
             {
-                Assert.IsTrue(sourceMessages.Contains(message));
+                Assert.That(sourceMessages, Does.Contain(message));
             }
-            Assert.AreEqual(backingList.Count, sourceMessages.Count);
+            Assert.That(sourceMessages, Has.Count.EqualTo(backingList.Count));
             #endregion
         }
 
@@ -464,7 +464,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             // For illustrative purposes, make sure all deferred messages were received.
 
-            Assert.IsEmpty(deferredMessages);
+            Assert.That(deferredMessages, Is.Empty);
 
             #endregion
         }
@@ -771,7 +771,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             foreach (ServiceBusReceivedMessage message in receivedMessages)
             {
-                Assert.That(deadLetteredMessages.Contains(message));
+                Assert.That(deadLetteredMessages, Does.Contain(message));
             }
 
             mockReceiver
@@ -919,7 +919,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             // For illustrative purposes, verify that the state of the session is what we expect.
 
-            Assert.AreEqual(setState, state);
+            Assert.That(state, Is.EqualTo(setState));
 
             #endregion
         }

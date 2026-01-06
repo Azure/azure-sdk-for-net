@@ -92,11 +92,14 @@ namespace Azure.AI.Inference.Tests.Samples
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             ChatCompletions result = response.Value;
-            Assert.That(result.Id, Is.Not.Null.Or.Empty);
-            Assert.That(result.Created, Is.Not.Null.Or.Empty);
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.Null.Or.Empty);
+                Assert.That(result.Created, Is.Not.Null.Or.Empty);
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            });
 
             #region Snippet:Azure_AI_Inference_SampleStructuredOutputParseJson
             using JsonDocument structuredJson = JsonDocument.Parse(result.Content);
@@ -105,16 +108,19 @@ namespace Azure.AI.Inference.Tests.Samples
             structuredJson.RootElement.TryGetProperty("bake_time", out var bakeTime);
             #endregion
 
-            Assert.AreEqual(ingredients.ValueKind, JsonValueKind.Array);
-            Assert.AreEqual(steps.ValueKind, JsonValueKind.Array);
+            Assert.That(JsonValueKind.Array, Is.EqualTo(ingredients.ValueKind));
+            Assert.That(JsonValueKind.Array, Is.EqualTo(steps.ValueKind));
             foreach (JsonElement stepElement in steps.EnumerateArray())
             {
                 stepElement.TryGetProperty("ingredients", out var stepIngredients);
                 stepElement.TryGetProperty("directions", out var stepDirections);
-                Assert.AreEqual(stepIngredients.ValueKind, JsonValueKind.Array);
-                Assert.AreEqual(stepDirections.ValueKind, JsonValueKind.String);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(JsonValueKind.Array, Is.EqualTo(stepIngredients.ValueKind));
+                    Assert.That(JsonValueKind.String, Is.EqualTo(stepDirections.ValueKind));
+                });
             }
-            Assert.AreEqual(bakeTime.ValueKind, JsonValueKind.String);
+            Assert.That(JsonValueKind.String, Is.EqualTo(bakeTime.ValueKind));
 
             #region Snippet:Azure_AI_Inference_SampleStructuredOutputPrintOutput
             var options = new JsonSerializerOptions

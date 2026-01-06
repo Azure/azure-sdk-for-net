@@ -39,7 +39,7 @@ namespace Azure.Identity.Tests
 
                 KeyVaultSecret secret = await kvclient.SetSecretAsync("identitytestsecret", "value");
 
-                Assert.IsNotNull(secret);
+                Assert.That(secret, Is.Not.Null);
             }
         }
 

@@ -88,9 +88,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventHubsException = translated as EventHubsException;
             Assert.That(eventHubsException, Is.Not.Null, "The exception type should be appropriate for the `Server Busy` scenario.");
-            Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceBusy), "The exception reason should indicate `Server Busy`.");
-            Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
-            Assert.That(eventHubsException.InnerException, Is.EqualTo(exception), "The original exception should have been embedded.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceBusy), "The exception reason should indicate `Server Busy`.");
+                Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
+                Assert.That(eventHubsException.InnerException, Is.EqualTo(exception), "The original exception should have been embedded.");
+            });
         }
 
         /// <summary>
@@ -109,9 +112,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventHubsException = translated as EventHubsException;
             Assert.That(eventHubsException, Is.Not.Null, "The exception type should be appropriate for the `Server Busy` scenario.");
-            Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceTimeout), "The exception reason should indicate a service timeout.");
-            Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
-            Assert.That(eventHubsException.InnerException, Is.EqualTo(exception), "The original exception should have been embedded.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceTimeout), "The exception reason should indicate a service timeout.");
+                Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
+                Assert.That(eventHubsException.InnerException, Is.EqualTo(exception), "The original exception should have been embedded.");
+            });
         }
 
         /// <summary>
@@ -130,9 +136,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventHubsException = translated as EventHubsException;
             Assert.That(eventHubsException, Is.Not.Null, "The exception type should be appropriate for the `Server Busy` scenario.");
-            Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceBusy), "The exception reason should indicate `Server Busy`.");
-            Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
-            Assert.That(eventHubsException.InnerException, Is.EqualTo(exception.InnerException), "The AMQP exception should have been embedded.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceBusy), "The exception reason should indicate `Server Busy`.");
+                Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
+                Assert.That(eventHubsException.InnerException, Is.EqualTo(exception.InnerException), "The AMQP exception should have been embedded.");
+            });
         }
 
         /// <summary>
@@ -191,9 +200,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var exception = (sourceException.TranslateConnectionCloseDuringLinkCreationException("dummy") as EventHubsException);
 
             Assert.That(exception, Is.Not.Null, "The exception should have been translated to an Event Hubs exception.");
-            Assert.That(exception.IsTransient, Is.True, "The translation exception should allow retries.");
-            Assert.That(exception.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The translated exception should have the correct failure reason.");
-            Assert.That(exception.InnerException, Is.EqualTo(sourceException), "The translated exception should wrap the source exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.IsTransient, Is.True, "The translation exception should allow retries.");
+                Assert.That(exception.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The translated exception should have the correct failure reason.");
+                Assert.That(exception.InnerException, Is.EqualTo(sourceException), "The translated exception should wrap the source exception.");
+            });
         }
 
         /// <summary>
@@ -208,9 +220,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var exception = (sourceException.TranslateConnectionCloseDuringLinkCreationException("dummy") as EventHubsException);
 
             Assert.That(exception, Is.Not.Null, "The exception should have been translated to an Event Hubs exception.");
-            Assert.That(exception.IsTransient, Is.True, "The translation exception should allow retries.");
-            Assert.That(exception.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The translated exception should have the correct failure reason.");
-            Assert.That(exception.InnerException, Is.EqualTo(sourceException), "The translated exception should wrap the source exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.IsTransient, Is.True, "The translation exception should allow retries.");
+                Assert.That(exception.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The translated exception should have the correct failure reason.");
+                Assert.That(exception.InnerException, Is.EqualTo(sourceException), "The translated exception should wrap the source exception.");
+            });
         }
 
         /// <summary>
@@ -244,9 +259,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var exception = (sourceException.TranslateConnectionCloseDuringLinkCreationException("dummy") as EventHubsException);
 
             Assert.That(exception, Is.Not.Null, "The exception should have been translated to an Event Hubs exception.");
-            Assert.That(exception.IsTransient, Is.False, "The translation exception should not allow retries.");
-            Assert.That(exception.Reason, Is.EqualTo(EventHubsException.FailureReason.ClientClosed), "The translated exception should have the correct failure reason.");
-            Assert.That(exception.InnerException, Is.EqualTo(sourceException), "The translated exception should wrap the source exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.IsTransient, Is.False, "The translation exception should not allow retries.");
+                Assert.That(exception.Reason, Is.EqualTo(EventHubsException.FailureReason.ClientClosed), "The translated exception should have the correct failure reason.");
+                Assert.That(exception.InnerException, Is.EqualTo(sourceException), "The translated exception should wrap the source exception.");
+            });
         }
 
         /// <summary>

@@ -26,8 +26,8 @@ namespace Azure.Communication.CallingServer
             Uri contentEndpoint = new Uri($"https://us-storage.asm.skype.com/v1/objects/{documentId}");
             CallRecording callRecordingClient = client.GetCallRecording();
             Response response = await callRecordingClient.DeleteRecordingAsync(contentEndpoint);
-            Assert.IsNotNull(response);
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Status, Is.EqualTo(200));
         }
 
         [Test]

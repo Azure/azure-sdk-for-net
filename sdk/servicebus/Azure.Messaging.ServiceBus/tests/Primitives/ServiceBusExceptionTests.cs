@@ -23,11 +23,11 @@ namespace Azure.Messaging.ServiceBus.Tests
         public void MessageIncludesTroubleshootingGuideLink(ServiceBusFailureReason reason, bool includeEntityPath)
         {
             var exception = new ServiceBusException("test", reason, entityPath: includeEntityPath ? "entityPath" : null);
-            StringAssert.Contains(Constants.TroubleshootingMessage, exception.Message);
+            Assert.That(exception.Message, Does.Contain(Constants.TroubleshootingMessage));
 
             // test the other constructor
             exception = new ServiceBusException(true, "test", reason: reason);
-            StringAssert.Contains(Constants.TroubleshootingMessage, exception.Message);
+            Assert.That(exception.Message, Does.Contain(Constants.TroubleshootingMessage));
         }
     }
 }

@@ -38,9 +38,9 @@ namespace Azure.Core.Tests
                 await SendGetRequest(transport, _policyMock.Object);
             }
 
-            Assert.AreEqual(1, _messages.Count);
+            Assert.That(_messages, Has.Count.EqualTo(1));
             _messages[0].TryGetProperty("foo", out var fooProperty);
-            Assert.AreEqual("bar", fooProperty);
+            Assert.That(fooProperty, Is.EqualTo("bar"));
         }
 
         [Test]
@@ -55,9 +55,12 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, _policyMock.Object);
 
-            Assert.AreEqual(2, _messages.Count);
-            Assert.IsTrue(_messages[0].TryGetProperty("foo", out var _));
-            Assert.IsFalse(_messages[1].TryGetProperty("foo", out var _));
+            Assert.That(_messages, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_messages[0].TryGetProperty("foo", out var _), Is.True);
+                Assert.That(_messages[1].TryGetProperty("foo", out var _), Is.False);
+            });
         }
 
         [Test]
@@ -71,11 +74,14 @@ namespace Azure.Core.Tests
                 await SendGetRequest(transport, _policyMock.Object);
             }
 
-            Assert.AreEqual(1, _messages.Count);
+            Assert.That(_messages, Has.Count.EqualTo(1));
             _messages[0].TryGetProperty("foo1", out var foo1Property);
             _messages[0].TryGetProperty("foo2", out var foo2Property);
-            Assert.AreEqual("bar1", foo1Property);
-            Assert.AreEqual("bar2", foo2Property);
+            Assert.Multiple(() =>
+            {
+                Assert.That(foo1Property, Is.EqualTo("bar1"));
+                Assert.That(foo2Property, Is.EqualTo("bar2"));
+            });
         }
 
         [Test]
@@ -89,9 +95,9 @@ namespace Azure.Core.Tests
                 await SendGetRequest(transport, _policyMock.Object);
             }
 
-            Assert.AreEqual(1, _messages.Count);
+            Assert.That(_messages, Has.Count.EqualTo(1));
             _messages[0].TryGetProperty("foo", out var fooProperty);
-            Assert.AreEqual("bar2", fooProperty);
+            Assert.That(fooProperty, Is.EqualTo("bar2"));
         }
 
         [Test]
@@ -105,8 +111,8 @@ namespace Azure.Core.Tests
                 await SendGetRequest(transport, _policyMock.Object);
             }
 
-            Assert.AreEqual(1, _messages.Count);
-            Assert.IsFalse(_messages[0].TryGetProperty("foo", out var _));
+            Assert.That(_messages, Has.Count.EqualTo(1));
+            Assert.That(_messages[0].TryGetProperty("foo", out var _), Is.False);
         }
     }
 }

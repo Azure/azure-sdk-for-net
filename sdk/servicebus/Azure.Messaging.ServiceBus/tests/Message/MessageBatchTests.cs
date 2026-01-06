@@ -28,12 +28,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new BinaryData("Test"))), Is.True, $"The batch contains { store.Count } events; adding another should be permitted.");
             }
 
-            Assert.That(store.Count, Is.EqualTo(eventLimit), "The batch should be at its limit.");
+            Assert.That(store, Has.Count.EqualTo(eventLimit), "The batch should be at its limit.");
             Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new BinaryData("Too many"))), Is.False, "The batch is full; it should not be possible to add a new event.");
             Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new BinaryData("Too many"))), Is.False, "The batch is full; a second attempt to add a new event should not succeed.");
 
-            Assert.That(store.Count, Is.EqualTo(eventLimit), "The batch should be at its limit after the failed TryAdd attempts.");
-            Assert.That(batch.AsReadOnly<ServiceBusMessage>(), Is.EquivalentTo(store), "The batch enumerable should reflect the events in the backing store.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(store, Has.Count.EqualTo(eventLimit), "The batch should be at its limit after the failed TryAdd attempts.");
+                Assert.That(batch.AsReadOnly<ServiceBusMessage>(), Is.EquivalentTo(store), "The batch enumerable should reflect the events in the backing store.");
+            });
         }
 
         /// <summary>
@@ -74,12 +77,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 amqpMessages.Add(converter.SBMessageToAmqpMessage(serviceBusMessage));
             }
 
-            Assert.That(store.Count, Is.EqualTo(numMessages), "The batch should be at its limit.");
+            Assert.That(store, Has.Count.EqualTo(numMessages), "The batch should be at its limit.");
             Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new BinaryData("Too many"))), Is.False, "The batch is full; it should not be possible to add a new event.");
             Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new BinaryData("Too many"))), Is.False, "The batch is full; a second attempt to add a new event should not succeed.");
 
-            Assert.That(store.Count, Is.EqualTo(numMessages), "The batch should be at its limit after the failed TryAdd attempts.");
-            Assert.That(batch.AsReadOnly<AmqpMessage>().Count, Is.EqualTo(numMessages), "The messages produced by the batch should match the limit.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(store, Has.Count.EqualTo(numMessages), "The batch should be at its limit after the failed TryAdd attempts.");
+                Assert.That(batch.AsReadOnly<AmqpMessage>(), Has.Count.EqualTo(numMessages), "The messages produced by the batch should match the limit.");
+            });
         }
 
         /// <summary>

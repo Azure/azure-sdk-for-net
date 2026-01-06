@@ -25,34 +25,37 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
 
             var modelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-            Assert.IsNotNull(modelProvider);
+            Assert.That(modelProvider, Is.Not.Null);
 
             // Act
             var updatedModel = visitor.InvokePreVisitModel(inputModel, modelProvider);
 
             // Assert
-            Assert.IsNotNull(updatedModel);
+            Assert.That(updatedModel, Is.Not.Null);
             var serializationProvider = updatedModel!.SerializationProviders[0];
-            Assert.IsNotNull(serializationProvider);
+            Assert.That(serializationProvider, Is.Not.Null);
 
             // Check that JsonConverter attribute is added
             var jsonConverterAttribute = serializationProvider.Attributes
                 .FirstOrDefault(a => a.Type.Name == nameof(JsonConverter));
-            Assert.IsNotNull(jsonConverterAttribute, "JsonConverter attribute should be added");
+            Assert.That(jsonConverterAttribute, Is.Not.Null, "JsonConverter attribute should be added");
 
             // Check that converter type is added as nested type
             var converterType = serializationProvider.NestedTypes
                 .FirstOrDefault(t => t.Name.EndsWith("Converter"));
-            Assert.IsNotNull(converterType, "Converter type should be added as nested type");
-            Assert.AreEqual($"{serializationProvider.Name}Converter", converterType!.Name);
+            Assert.That(converterType, Is.Not.Null, "Converter type should be added as nested type");
+            Assert.Multiple(() =>
+            {
+                Assert.That(converterType!.Name, Is.EqualTo($"{serializationProvider.Name}Converter"));
 
-            // Converter namespace should match the serialization provider's namespace
-            Assert.AreEqual(serializationProvider.Type.Namespace, converterType.Type.Namespace,
-                "Converter type should be in the same namespace as the serialization provider");
+                // Converter namespace should match the serialization provider's namespace
+                Assert.That(converterType.Type.Namespace, Is.EqualTo(serializationProvider.Type.Namespace),
+                    "Converter type should be in the same namespace as the serialization provider");
 
-            // Converter should have the correct declaring type
-            Assert.AreEqual(serializationProvider, converterType.DeclaringTypeProvider,
-                "Converter type should be declared in the serialization provider");
+                // Converter should have the correct declaring type
+                Assert.That(converterType.DeclaringTypeProvider, Is.EqualTo(serializationProvider),
+                    "Converter type should be declared in the serialization provider");
+            });
         }
 
         [Test]
@@ -64,24 +67,24 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
 
             var modelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-            Assert.IsNotNull(modelProvider);
+            Assert.That(modelProvider, Is.Not.Null);
 
             // Act
             var updatedModel = visitor.InvokePreVisitModel(inputModel, modelProvider);
 
             // Assert
-            Assert.IsNotNull(updatedModel);
+            Assert.That(updatedModel, Is.Not.Null);
             var serializationProvider = updatedModel!.SerializationProviders[0];
 
             // Check that JsonConverter attribute is not added
             var jsonConverterAttribute = serializationProvider.Attributes
                 .FirstOrDefault(a => a.Type.Name == nameof(JsonConverter));
-            Assert.IsNull(jsonConverterAttribute, "JsonConverter attribute should not be added without decorator");
+            Assert.That(jsonConverterAttribute, Is.Null, "JsonConverter attribute should not be added without decorator");
 
             // Check that no converter type is added
             var converterType = serializationProvider.NestedTypes
                 .FirstOrDefault(t => t.Name.EndsWith("Converter"));
-            Assert.IsNull(converterType, "Converter type should not be added without decorator");
+            Assert.That(converterType, Is.Null, "Converter type should not be added without decorator");
         }
 
         [Test]
@@ -94,36 +97,46 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
 
             var modelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-            Assert.IsNotNull(modelProvider);
+            Assert.That(modelProvider, Is.Not.Null);
 
             // Act
             var updatedModel = visitor.InvokePreVisitModel(inputModel, modelProvider);
 
             // Assert
-            Assert.IsNotNull(updatedModel);
+            Assert.That(updatedModel, Is.Not.Null);
             var serializationProvider = updatedModel!.SerializationProviders[0];
             var converterType = serializationProvider.NestedTypes
                 .FirstOrDefault(t => t.Name.EndsWith("Converter"));
 
-            Assert.IsNotNull(converterType);
+            Assert.That(converterType, Is.Not.Null);
 
             // Check Write method signature
             var writeMethod = converterType!.Methods.FirstOrDefault(m => m.Signature.Name == "Write");
-            Assert.IsNotNull(writeMethod);
-            Assert.AreEqual(3, writeMethod!.Signature.Parameters.Count, "Write method should have 3 parameters");
-            Assert.IsTrue(writeMethod.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public),
-                "Write method should be public");
-            Assert.IsTrue(writeMethod.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override),
-                "Write method should be override");
+            Assert.That(writeMethod, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(writeMethod!.Signature.Parameters, Has.Count.EqualTo(3), "Write method should have 3 parameters");
+                Assert.That(writeMethod.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                    Is.True,
+                    "Write method should be public");
+                Assert.That(writeMethod.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override),
+                    Is.True,
+                    "Write method should be override");
+            });
 
             // Check Read method signature
             var readMethod = converterType.Methods.FirstOrDefault(m => m.Signature.Name == "Read");
-            Assert.IsNotNull(readMethod);
-            Assert.AreEqual(3, readMethod!.Signature.Parameters.Count, "Read method should have 3 parameters");
-            Assert.IsTrue(readMethod.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public),
-                "Read method should be public");
-            Assert.IsTrue(readMethod.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override),
-                "Read method should be override");
+            Assert.That(readMethod, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(readMethod!.Signature.Parameters, Has.Count.EqualTo(3), "Read method should have 3 parameters");
+                Assert.That(readMethod.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                    Is.True,
+                    "Read method should be public");
+                Assert.That(readMethod.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override),
+                    Is.True,
+                    "Read method should be override");
+            });
         }
 
         [Test]
@@ -136,23 +149,23 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
 
             var modelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-            Assert.IsNotNull(modelProvider);
+            Assert.That(modelProvider, Is.Not.Null);
 
             // Act
             var updatedModel = visitor.InvokePreVisitModel(inputModel, modelProvider);
 
             // Assert
-            Assert.IsNotNull(updatedModel);
+            Assert.That(updatedModel, Is.Not.Null);
             var serializationProvider = updatedModel!.SerializationProviders[0];
             var converterType = serializationProvider.NestedTypes
                 .FirstOrDefault(t => t.Name.EndsWith("Converter"));
 
-            Assert.IsNotNull(converterType);
+            Assert.That(converterType, Is.Not.Null);
 
             var readMethod = converterType!.Methods.FirstOrDefault(m => m.Signature.Name == "Read");
-            Assert.IsNotNull(readMethod);
+            Assert.That(readMethod, Is.Not.Null);
             var readMethodBody = readMethod!.BodyStatements!.ToDisplayString();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), readMethodBody);
+            Assert.That(readMethodBody, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -165,23 +178,23 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
 
             var modelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-            Assert.IsNotNull(modelProvider);
+            Assert.That(modelProvider, Is.Not.Null);
 
             // Act
             var updatedModel = visitor.InvokePreVisitModel(inputModel, modelProvider);
 
             // Assert
-            Assert.IsNotNull(updatedModel);
+            Assert.That(updatedModel, Is.Not.Null);
             var serializationProvider = updatedModel!.SerializationProviders[0];
             var converterType = serializationProvider.NestedTypes
                 .FirstOrDefault(t => t.Name.EndsWith("Converter"));
 
-            Assert.IsNotNull(converterType);
+            Assert.That(converterType, Is.Not.Null);
 
             var writeMethod = converterType!.Methods.FirstOrDefault(m => m.Signature.Name == "Write");
-            Assert.IsNotNull(writeMethod);
+            Assert.That(writeMethod, Is.Not.Null);
             var writeMethodBody = writeMethod!.BodyStatements!.ToDisplayString();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), writeMethodBody);
+            Assert.That(writeMethodBody, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -205,16 +218,19 @@ namespace Azure.Generator.Tests.Visitors
             var updatedModel2 = visitor.InvokePreVisitModel(inputModel2, modelProvider2);
             var updatedModel3 = visitor.InvokePreVisitModel(inputModel3, modelProvider3);
 
-            // Assert
-            // Models with decorator should have converter
-            Assert.IsTrue(updatedModel1!.SerializationProviders[0].NestedTypes
-                .Any(t => t.Name.EndsWith("Converter")));
-            Assert.IsTrue(updatedModel2!.SerializationProviders[0].NestedTypes
-                .Any(t => t.Name.EndsWith("Converter")));
+            Assert.Multiple(() =>
+            {
+                // Assert
+                // Models with decorator should have converter
+                Assert.That(updatedModel1!.SerializationProviders[0].NestedTypes
+                    .Any(t => t.Name.EndsWith("Converter")), Is.True);
+                Assert.That(updatedModel2!.SerializationProviders[0].NestedTypes
+                    .Any(t => t.Name.EndsWith("Converter")), Is.True);
 
-            // Model without decorator should not have converter
-            Assert.IsFalse(updatedModel3!.SerializationProviders[0].NestedTypes
-                .Any(t => t.Name.EndsWith("Converter")));
+                // Model without decorator should not have converter
+                Assert.That(updatedModel3!.SerializationProviders[0].NestedTypes
+                    .Any(t => t.Name.EndsWith("Converter")), Is.False);
+            });
         }
 
         [Test]
@@ -227,7 +243,7 @@ namespace Azure.Generator.Tests.Visitors
 
             // Act
             var modelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-            Assert.IsNotNull(modelProvider);
+            Assert.That(modelProvider, Is.Not.Null);
 
             // Assert
             var serializationProvider = modelProvider!.SerializationProviders[0];
@@ -235,7 +251,7 @@ namespace Azure.Generator.Tests.Visitors
             var writer = new TypeProviderWriter(serializationProvider);
             var file = writer.Write();
 
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         private class TestSystemTextJsonConverterVisitor : SystemTextJsonConverterVisitor

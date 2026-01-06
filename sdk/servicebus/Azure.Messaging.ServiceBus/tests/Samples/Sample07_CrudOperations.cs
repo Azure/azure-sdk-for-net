@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 QueueProperties createdQueue = await client.CreateQueueAsync(options);
                 #endregion
-                Assert.AreEqual(options, new CreateQueueOptions(createdQueue) { MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes});
+                Assert.That(new CreateQueueOptions(createdQueue) { MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes }, Is.EqualTo(options));
             }
             finally
             {
@@ -105,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             queue.LockDuration = TimeSpan.FromSeconds(60);
             QueueProperties updatedQueue = await client.UpdateQueueAsync(queue);
             #endregion
-            Assert.AreEqual(TimeSpan.FromSeconds(60), updatedQueue.LockDuration);
+            Assert.That(updatedQueue.LockDuration, Is.EqualTo(TimeSpan.FromSeconds(60)));
             #region Snippet:DeleteQueue
             await client.DeleteQueueAsync(queueName);
             #endregion
@@ -165,9 +165,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     UserMetadata = "some metadata"
                 };
                 SubscriptionProperties createdSubscription = await client.CreateSubscriptionAsync(subscriptionOptions);
-                #endregion
-                Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic) { MaxMessageSizeInKilobytes = topicOptions.MaxMessageSizeInKilobytes});
-                Assert.AreEqual(subscriptionOptions, new CreateSubscriptionOptions(createdSubscription));
+                Assert.Multiple(() =>
+                {
+                    #endregion
+                    Assert.That(new CreateTopicOptions(createdTopic) { MaxMessageSizeInKilobytes = topicOptions.MaxMessageSizeInKilobytes }, Is.EqualTo(topicOptions));
+                    Assert.That(new CreateSubscriptionOptions(createdSubscription), Is.EqualTo(subscriptionOptions));
+                });
             }
             finally
             {
@@ -196,13 +199,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             topic.UserMetadata = "some metadata";
             TopicProperties updatedTopic = await client.UpdateTopicAsync(topic);
             #endregion
-            Assert.AreEqual("some metadata", updatedTopic.UserMetadata);
+            Assert.That(updatedTopic.UserMetadata, Is.EqualTo("some metadata"));
 
             #region Snippet:UpdateSubscription
             subscription.UserMetadata = "some metadata";
             SubscriptionProperties updatedSubscription = await client.UpdateSubscriptionAsync(subscription);
             #endregion
-            Assert.AreEqual("some metadata", updatedSubscription.UserMetadata);
+            Assert.That(updatedSubscription.UserMetadata, Is.EqualTo("some metadata"));
 
             // need to delete the subscription before the topic, as deleting
             // the topic would automatically delete the subscription

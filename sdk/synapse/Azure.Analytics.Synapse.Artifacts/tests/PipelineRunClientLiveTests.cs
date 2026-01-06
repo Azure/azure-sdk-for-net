@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
 
             CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
-            Assert.NotNull(runResponse.RunId);
+            Assert.That(runResponse.RunId, Is.Not.Null);
 
             Response response = await runClient.CancelPipelineRunAsync (runResponse.RunId);
             response.AssertSuccess();
@@ -68,11 +68,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
 
             CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
-            Assert.NotNull(runResponse.RunId);
+            Assert.That(runResponse.RunId, Is.Not.Null);
 
             PipelineRun run = await runClient.GetPipelineRunAsync (runResponse.RunId);
-            Assert.AreEqual (run.RunId, runResponse.RunId);
-            Assert.NotNull (run.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(runResponse.RunId, Is.EqualTo(run.RunId));
+                Assert.That(run.Status, Is.Not.Null);
+            });
         }
 
         [RecordedTest]
@@ -84,10 +87,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
 
             CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
-            Assert.NotNull(runResponse.RunId);
+            Assert.That(runResponse.RunId, Is.Not.Null);
 
             PipelineRunsQueryResponse queryResponse = await runClient.QueryPipelineRunsByWorkspaceAsync (new RunFilterParameters (DateTimeOffset.MinValue, DateTimeOffset.MaxValue));
-            Assert.GreaterOrEqual (queryResponse.Value.Count, 1);
+            Assert.That(queryResponse.Value, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -99,10 +102,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
 
             CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
-            Assert.NotNull(runResponse.RunId);
+            Assert.That(runResponse.RunId, Is.Not.Null);
 
             PipelineRunsQueryResponse queryResponse = await runClient.QueryPipelineRunsByWorkspaceAsync (new RunFilterParameters (DateTimeOffset.MinValue, DateTimeOffset.MaxValue));
-            Assert.GreaterOrEqual (queryResponse.Value.Count, 1);
+            Assert.That(queryResponse.Value, Is.Not.Empty);
         }
     }
 }

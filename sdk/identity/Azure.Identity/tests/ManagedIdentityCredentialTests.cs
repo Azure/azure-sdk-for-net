@@ -46,17 +46,20 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.Requests[0];
 
             string query = request.Uri.Query;
 
-            Assert.AreEqual(request.Uri.Host, "169.254.169.254");
-            Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
-            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
-            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-            Assert.IsTrue(query.Contains($"{Constants.ManagedIdentityClientId}=mock-client-id"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Uri.Host, Is.EqualTo("169.254.169.254"));
+                Assert.That(request.Uri.Path, Is.EqualTo("/metadata/identity/oauth2/token"));
+                Assert.That(query, Does.Contain("api-version=2018-02-01"));
+            });
+            Assert.That(query, Does.Contain($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+            Assert.That(query, Does.Contain($"{Constants.ManagedIdentityClientId}=mock-client-id"));
         }
 
         [NonParallelizable]
@@ -87,8 +90,11 @@ namespace Azure.Identity.Tests
             await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
-            Assert.AreEqual(1, probeCount, "Probe was sent more than once.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
+                Assert.That(probeCount, Is.EqualTo(1), "Probe was sent more than once.");
+            });
         }
 
         [NonParallelizable]
@@ -109,16 +115,19 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.Requests[0];
 
             string query = request.Uri.Query;
 
-            Assert.AreEqual(request.Uri.Host, "169.254.169.254");
-            Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
-            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
-            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Uri.Host, Is.EqualTo("169.254.169.254"));
+                Assert.That(request.Uri.Path, Is.EqualTo("/metadata/identity/oauth2/token"));
+                Assert.That(query, Does.Contain("api-version=2018-02-01"));
+            });
+            Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
         }
 
         [NonParallelizable]
@@ -140,7 +149,7 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, tenantId: Guid.NewGuid().ToString()));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
         }
 
         [NonParallelizable]
@@ -160,17 +169,20 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, tenantId: Guid.NewGuid().ToString()));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.Requests[0];
 
             string query = request.Uri.Query;
 
-            Assert.AreEqual(request.Uri.Host, "169.254.169.254");
-            Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
-            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
-            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.IsTrue(query.Contains($"{Constants.ManagedIdentityClientId}=mock-client-id"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Uri.Host, Is.EqualTo("169.254.169.254"));
+                Assert.That(request.Uri.Path, Is.EqualTo("/metadata/identity/oauth2/token"));
+                Assert.That(query, Does.Contain("api-version=2018-02-01"));
+            });
+            Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
+            Assert.That(query, Does.Contain($"{Constants.ManagedIdentityClientId}=mock-client-id"));
         }
 
         [NonParallelizable]
@@ -196,17 +208,23 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.Requests[0];
 
             string query = request.Uri.Query;
 
-            Assert.AreEqual(request.Uri.Host, "169.254.169.254");
-            Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
-            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
-            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"_res_id={_expectedResourceId}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Uri.Host, Is.EqualTo("169.254.169.254"));
+                Assert.That(request.Uri.Path, Is.EqualTo("/metadata/identity/oauth2/token"));
+                Assert.That(query, Does.Contain("api-version=2018-02-01"));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
+                Assert.That(Uri.UnescapeDataString(query), Does.Contain($"_res_id={_expectedResourceId}"));
+            });
         }
 
         [NonParallelizable]
@@ -233,16 +251,19 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.Requests[0];
 
             string query = request.Uri.Query;
 
-            Assert.AreEqual(request.Uri.Host, "169.254.169.254");
-            Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
-            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
-            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"object_id={expectedObjectId}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Uri.Host, Is.EqualTo("169.254.169.254"));
+                Assert.That(request.Uri.Path, Is.EqualTo("/metadata/identity/oauth2/token"));
+                Assert.That(query, Does.Contain("api-version=2018-02-01"));
+                Assert.That(Uri.UnescapeDataString(query), Does.Contain($"object_id={expectedObjectId}"));
+            });
         }
 
         [NonParallelizable]
@@ -294,15 +315,18 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.Requests[0];
 
             string query = request.Uri.Query;
 
-            Assert.AreEqual(request.Uri.Host, "169.254.169.254");
-            Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
-            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Uri.Host, Is.EqualTo("169.254.169.254"));
+                Assert.That(request.Uri.Path, Is.EqualTo("/metadata/identity/oauth2/token"));
+                Assert.That(query, Does.Contain("api-version=2018-02-01"));
+            });
             if (includeResourceIdentifier)
             {
                 Assert.That(query, Does.Contain($"{Constants.ManagedIdentityResourceId}={_expectedResourceId}"));
@@ -352,14 +376,17 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.Requests[0];
 
             string query = request.Uri.Query;
 
-            Assert.AreEqual(request.Uri.Host, "identity.constoso.com");
-            Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"), $"Unexpected query: {query}");
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Uri.Host, Is.EqualTo("identity.constoso.com"));
+                Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"), $"Unexpected query: {query}");
+            });
             if (includeResourceIdentifier)
             {
                 Assert.That(query, Does.Contain($"{Constants.ManagedIdentityResourceId}={_expectedResourceId}"));
@@ -525,11 +552,11 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.SingleRequest;
 
-            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.podid.endpoint" + ImdsManagedIdentityProbeSource.imddsTokenPath));
+            Assert.That(request.Uri.ToString(), Does.StartWith("https://mock.podid.endpoint" + ImdsManagedIdentityProbeSource.imddsTokenPath));
 
             string query = request.Uri.Query;
 
@@ -564,17 +591,20 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.SingleRequest;
 
-            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.podid.endpoint" + ImdsManagedIdentityProbeSource.imddsTokenPath));
+            Assert.That(request.Uri.ToString(), Does.StartWith("https://mock.podid.endpoint" + ImdsManagedIdentityProbeSource.imddsTokenPath));
 
             string query = request.Uri.Query;
 
             Assert.That(query, Does.Contain("api-version=2018-02-01"));
-            Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"_res_id={_expectedResourceId}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
+                Assert.That(Uri.UnescapeDataString(query), Does.Contain($"_res_id={_expectedResourceId}"));
+            });
         }
 
         [NonParallelizable]
@@ -595,17 +625,20 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.That(token.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.Requests[0];
-            Assert.IsTrue(request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint), $"Unexpected Uri: {request.Uri}");
+            Assert.That(request.Uri.ToString(), Does.StartWith(EnvironmentVariables.IdentityEndpoint), $"Unexpected Uri: {request.Uri}");
 
             string query = request.Uri.Query;
-            Assert.IsTrue(query.Contains("api-version=2019-08-01"));
-            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
+            Assert.That(query, Does.Contain("api-version=2019-08-01"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
+                Assert.That(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader), Is.True);
 
-            Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
+                Assert.That(identityHeader, Is.EqualTo(EnvironmentVariables.IdentityHeader));
+            });
         }
 
         [NonParallelizable]
@@ -626,17 +659,20 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.That(token.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.Requests[0];
-            Assert.IsTrue(request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint));
+            Assert.That(request.Uri.ToString(), Does.StartWith(EnvironmentVariables.IdentityEndpoint));
 
             string query = request.Uri.Query;
-            Assert.IsTrue(query.Contains("api-version=2019-08-01"));
-            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
+            Assert.That(query, Does.Contain("api-version=2019-08-01"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
+                Assert.That(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader), Is.True);
 
-            Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
+                Assert.That(identityHeader, Is.EqualTo(EnvironmentVariables.IdentityHeader));
+            });
         }
 
         [NonParallelizable]
@@ -657,17 +693,20 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.SingleRequest;
-            Assert.IsTrue(request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint));
+            Assert.That(request.Uri.ToString(), Does.StartWith(EnvironmentVariables.IdentityEndpoint));
 
             string query = request.Uri.Query;
-            Assert.IsTrue(query.Contains("api-version=2019-08-01"));
-            Assert.IsTrue(query.Contains($"{Constants.ManagedIdentityClientId}=mock-client-id"));
-            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
-            Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
+            Assert.That(query, Does.Contain("api-version=2019-08-01"));
+            Assert.That(query, Does.Contain($"{Constants.ManagedIdentityClientId}=mock-client-id"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
+                Assert.That(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader), Is.True);
+                Assert.That(identityHeader, Is.EqualTo(EnvironmentVariables.IdentityHeader));
+            });
         }
 
         [NonParallelizable]
@@ -689,18 +728,21 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
             MockRequest request = mockTransport.SingleRequest;
-            Assert.IsTrue(request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint));
+            Assert.That(request.Uri.ToString(), Does.StartWith(EnvironmentVariables.IdentityEndpoint));
 
             string query = request.Uri.Query;
 
-            Assert.IsTrue(query.Contains("api-version=2019-08-01"));
-            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.That(query, Does.Contain($"_res_id={resourceId}"));
-            Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
-            Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
+            Assert.That(query, Does.Contain("api-version=2019-08-01"));
+            Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(query, Does.Contain($"_res_id={resourceId}"));
+                Assert.That(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader), Is.True);
+                Assert.That(identityHeader, Is.EqualTo(EnvironmentVariables.IdentityHeader));
+            });
         }
 
         [NonParallelizable]
@@ -712,17 +754,23 @@ namespace Azure.Identity.Tests
             var response = CreateMockResponse(200, ExpectedToken);
             var mockTransport = new MockTransport(req =>
             {
-                Assert.IsTrue(req.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
-                Assert.IsTrue(req.Content.TryComputeLength(out long contentLen));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(req.Uri.ToString(), Does.StartWith("https://mock.msi.endpoint/"));
+                    Assert.That(req.Content.TryComputeLength(out long contentLen), Is.True);
+                });
 
                 var content = new byte[contentLen];
                 MemoryStream contentBuff = new MemoryStream(content);
                 req.Content.WriteTo(contentBuff, default);
                 string body = Encoding.UTF8.GetString(content);
 
-                Assert.IsTrue(body.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-                Assert.IsTrue(req.Headers.TryGetValue("Metadata", out string actMetadata));
-                Assert.AreEqual("true", actMetadata);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(body, Does.Contain($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+                    Assert.That(req.Headers.TryGetValue("Metadata", out string actMetadata), Is.True);
+                    Assert.That(actMetadata, Is.EqualTo("true"));
+                });
                 return response;
             });
             var options = new TokenCredentialOptions() { Transport = mockTransport };
@@ -730,7 +778,7 @@ namespace Azure.Identity.Tests
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(options: options));
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
         }
 
         [NonParallelizable]
@@ -748,21 +796,28 @@ namespace Azure.Identity.Tests
             var response = CreateMockResponse(200, ExpectedToken);
             var mockTransport = new MockTransport(req =>
             {
-                Assert.IsTrue(req.Uri.ToString().StartsWith("https://mock.msi.endpoint/"), $"Unexpected Uri: {req.Uri}");
-                Assert.IsTrue(req.Content.TryComputeLength(out long contentLen));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(req.Uri.ToString(), Does.StartWith("https://mock.msi.endpoint/"), $"Unexpected Uri: {req.Uri}");
+                    Assert.That(req.Content.TryComputeLength(out long contentLen), Is.True);
+                });
 
                 var content = new byte[contentLen];
                 MemoryStream contentBuff = new MemoryStream(content);
                 req.Content.WriteTo(contentBuff, default);
                 string body = Encoding.UTF8.GetString(content);
 
-                Assert.IsTrue(body.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+                Assert.That(body, Does.Contain($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
                 if (clientId != null || includeResourceIdentifier)
                 {
                     Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.UserAssignedManagedIdentityNotSupportedMessage, "Cloud Shell")));
                 }
-                Assert.IsTrue(req.Headers.TryGetValue("Metadata", out string actMetadata));
-                Assert.AreEqual("true", actMetadata);
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(req.Headers.TryGetValue("Metadata", out string actMetadata), Is.True);
+                    Assert.That(actMetadata, Is.EqualTo("true"));
+                });
 
                 return response;
             });
@@ -785,7 +840,7 @@ namespace Azure.Identity.Tests
             }
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
         }
 
         [NonParallelizable]
@@ -894,7 +949,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf(typeof(MockClientException)));
 
             await Task.CompletedTask;
         }
@@ -924,7 +979,7 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             if (isChained)
             {
-                Assert.IsInstanceOf(typeof(System.Text.Json.JsonException), ex.InnerException);
+                Assert.That(ex.InnerException, Is.InstanceOf(typeof(System.Text.Json.JsonException)));
             }
             await Task.CompletedTask;
         }
@@ -1010,8 +1065,11 @@ namespace Azure.Identity.Tests
                     new ManagedIdentityClientOptions() { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId("mock-client-id"), IsForceRefreshEnabled = true, Options = options })));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.That(ex.Message, Does.Contain(errorMessage));
-            Assert.That(tryCount, Is.EqualTo(6));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.Message, Does.Contain(errorMessage));
+                Assert.That(tryCount, Is.EqualTo(6));
+            });
 
             await Task.CompletedTask;
         }
@@ -1035,11 +1093,14 @@ namespace Azure.Identity.Tests
                 totalDelay404 = totalDelay404.Add(delay404);
             }
 
-            // Assert - 410 should have at least 70 seconds total, 404 should be standard exponential backoff with 5 retries
-            Assert.That(totalDelay410.TotalSeconds, Is.GreaterThanOrEqualTo(70),
-                "410 responses should have at least 70 seconds total retry duration");
-            Assert.That(totalDelay404.TotalSeconds, Is.LessThan(30),
-                "404 responses should use standard exponential backoff with 5 retries (~24.8 seconds)");
+            Assert.Multiple(() =>
+            {
+                // Assert - 410 should have at least 70 seconds total, 404 should be standard exponential backoff with 5 retries
+                Assert.That(totalDelay410.TotalSeconds, Is.GreaterThanOrEqualTo(70),
+                    "410 responses should have at least 70 seconds total retry duration");
+                Assert.That(totalDelay404.TotalSeconds, Is.LessThan(30),
+                    "404 responses should use standard exponential backoff with 5 retries (~24.8 seconds)");
+            });
         }
 
         [Test]
@@ -1195,8 +1256,11 @@ namespace Azure.Identity.Tests
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(options: options));
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
-            Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.ManagedIdentitySourceAttemptedMessage, "TokenExchangeManagedIdentitySource", true)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
+                Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.ManagedIdentitySourceAttemptedMessage, "TokenExchangeManagedIdentitySource", true)));
+            });
         }
 
         [NonParallelizable]
@@ -1264,9 +1328,12 @@ namespace Azure.Identity.Tests
             // This request changes the scope and should come from the authority
             AccessToken thirdToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate));
 
-            Assert.AreEqual(actualToken.Token, secondToken.Token);
-            Assert.AreNotEqual(actualToken.Token, thirdToken.Token);
-            Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.ManagedIdentitySourceAttemptedMessage, "TokenExchangeManagedIdentitySource", true)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(secondToken.Token, Is.EqualTo(actualToken.Token));
+                Assert.That(thirdToken.Token, Is.Not.EqualTo(actualToken.Token));
+                Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.ManagedIdentitySourceAttemptedMessage, "TokenExchangeManagedIdentitySource", true)));
+            });
         }
 
         private static IEnumerable<TestCaseData> ManagedIdentityIds()
@@ -1305,9 +1372,12 @@ namespace Azure.Identity.Tests
             ));
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualToken.Token, Is.EqualTo(ExpectedToken));
 
-            Assert.That(messages, Does.Contain(expectedMessage));
+                Assert.That(messages, Does.Contain(expectedMessage));
+            });
         }
 
         [NonParallelizable]
@@ -1336,12 +1406,15 @@ namespace Azure.Identity.Tests
             AccessToken tokenWithCAE1 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isCaeEnabled: true, claims: caeClaims));
             AccessToken tokenWithoutCAE3 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            // TokenWithoutCAE1 and TokenWithoutCAE2 should be the same since subsequent calls to GetTokenAsync should return the same token if no claims were provided
-            Assert.AreEqual(tokenWithoutCAE2.Token, tokenWithoutCAE1.Token);
-            // TokenWithCAE1 and TokenWithoutCAE3 should be the same since subsequent calls to GetTokenAsync should return the same token if no claims were provided.
-            Assert.AreEqual(tokenWithoutCAE3.Token, tokenWithCAE1.Token);
+            Assert.Multiple(() =>
+            {
+                // TokenWithoutCAE1 and TokenWithoutCAE2 should be the same since subsequent calls to GetTokenAsync should return the same token if no claims were provided
+                Assert.That(tokenWithoutCAE1.Token, Is.EqualTo(tokenWithoutCAE2.Token));
+                // TokenWithCAE1 and TokenWithoutCAE3 should be the same since subsequent calls to GetTokenAsync should return the same token if no claims were provided.
+                Assert.That(tokenWithCAE1.Token, Is.EqualTo(tokenWithoutCAE3.Token));
+            });
             // TokenWithCAE1 and TokenWithoutCAE1 should be different since the first token was requested with claims.
-            Assert.AreNotEqual(tokenWithCAE1.Token, tokenWithoutCAE1.Token);
+            Assert.That(tokenWithoutCAE1.Token, Is.Not.EqualTo(tokenWithCAE1.Token));
         }
 
         private static IEnumerable<TestCaseData> ResourceAndClientIds()

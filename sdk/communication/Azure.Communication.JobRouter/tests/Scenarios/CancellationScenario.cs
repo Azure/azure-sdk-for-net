@@ -52,7 +52,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
+            Assert.That(job.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
 
             await client.CancelJobAsync(new CancelJobOptions(job.Value.Id)
             {
@@ -60,8 +60,11 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             });
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);
-            Assert.AreEqual(RouterJobStatus.Cancelled, finalJobState.Value.Status);
-            Assert.AreEqual(dispositionCode, finalJobState.Value.DispositionCode);
+            Assert.Multiple(() =>
+            {
+                Assert.That(finalJobState.Value.Status, Is.EqualTo(RouterJobStatus.Cancelled));
+                Assert.That(finalJobState.Value.DispositionCode, Is.EqualTo(dispositionCode));
+            });
         }
     }
 }

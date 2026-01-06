@@ -49,7 +49,7 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
             await queueClient.CreateIfNotExistsAsync();
             await queueClient.SendMessageAsync("<s:Envelope xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:a=\"http://www.w3.org/2005/08/addressing\"><s:Header><a:Action s:mustUnderstand=\"1\">http://tempuri.org/ITestContract/Create</a:Action></s:Header><s:Body><Create xmlns=\"http://tempuri.org/\"><name>test</name></Create></s:Body></s:Envelope>");
             var testService = app.Services.GetRequiredService<TestService>();
-            Assert.True(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)));
+            Assert.That(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)), Is.True);
         }
 
         private static void AddAQSEndpoint(IServiceBuilder serviceBuilder, AzureClientCredentialType clientCredentialType, string queueName)

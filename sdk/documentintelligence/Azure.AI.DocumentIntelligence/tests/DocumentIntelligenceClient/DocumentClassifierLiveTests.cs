@@ -26,8 +26,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var options = new ClassifyDocumentOptions(disposableClassifier.ClassifierId, uriSource);
             var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             ValidateIrs1040ClassifierResult(operation.Value, disposableClassifier.ClassifierId);
         }
@@ -43,8 +46,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var options = new ClassifyDocumentOptions(disposableClassifier.ClassifierId, bytesSource);
             var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             ValidateIrs1040ClassifierResult(operation.Value, disposableClassifier.ClassifierId);
         }
@@ -61,27 +67,33 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var options = new ClassifyDocumentOptions(disposableClassifier.ClassifierId, uriSource);
             var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             ValidateGenericClassifierResult(operation.Value, disposableClassifier.ClassifierId);
         }
 
         private void ValidateGenericClassifierResult(AnalyzeResult analyzeResult, string classifierId)
         {
-            Assert.That(analyzeResult.ModelId, Is.EqualTo(classifierId));
-            Assert.That(analyzeResult.ApiVersion, Is.EqualTo(ServiceVersionString));
-            Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(DocumentContentFormat)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(analyzeResult.ModelId, Is.EqualTo(classifierId));
+                Assert.That(analyzeResult.ApiVersion, Is.EqualTo(ServiceVersionString));
+                Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(DocumentContentFormat)));
 
-            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/47482
-            //Assert.That(analyzeResult.Content, Is.Empty);
-            Assert.That(analyzeResult.Paragraphs, Is.Empty);
-            Assert.That(analyzeResult.Tables, Is.Empty);
-            Assert.That(analyzeResult.Figures, Is.Empty);
-            Assert.That(analyzeResult.Sections, Is.Empty);
-            Assert.That(analyzeResult.KeyValuePairs, Is.Empty);
-            Assert.That(analyzeResult.Styles, Is.Empty);
-            Assert.That(analyzeResult.Languages, Is.Empty);
+                // TODO: https://github.com/Azure/azure-sdk-for-net/issues/47482
+                //Assert.That(analyzeResult.Content, Is.Empty);
+                Assert.That(analyzeResult.Paragraphs, Is.Empty);
+                Assert.That(analyzeResult.Tables, Is.Empty);
+                Assert.That(analyzeResult.Figures, Is.Empty);
+                Assert.That(analyzeResult.Sections, Is.Empty);
+                Assert.That(analyzeResult.KeyValuePairs, Is.Empty);
+                Assert.That(analyzeResult.Styles, Is.Empty);
+                Assert.That(analyzeResult.Languages, Is.Empty);
+            });
 
             for (int pageNumber = 1; pageNumber <= analyzeResult.Pages.Count; pageNumber++)
             {
@@ -105,14 +117,20 @@ namespace Azure.AI.DocumentIntelligence.Tests
             foreach (var document in analyzeResult.Documents)
             {
                 Assert.That(document.DocumentType, Is.Not.Null);
-                Assert.That(document.DocumentType, Is.Not.Empty);
-                Assert.That(document.Fields, Is.Empty);
-                Assert.That(document.Spans, Is.Empty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(document.DocumentType, Is.Not.Empty);
+                    Assert.That(document.Fields, Is.Empty);
+                    Assert.That(document.Spans, Is.Empty);
+                });
 
                 foreach (var region in document.BoundingRegions)
                 {
-                    Assert.That(region.PageNumber, Is.EqualTo(expectedPageNumber++));
-                    Assert.That(region.Polygon.Count, Is.EqualTo(8));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(region.PageNumber, Is.EqualTo(expectedPageNumber++));
+                        Assert.That(region.Polygon, Has.Count.EqualTo(8));
+                    });
                 }
 
                 Assert.That(document.Confidence, Is.GreaterThanOrEqualTo(0f));
@@ -124,22 +142,31 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             ValidateGenericClassifierResult(analyzeResult, classifierId);
 
-            Assert.That(analyzeResult.ContentFormat, Is.EqualTo(DocumentContentFormat.Text));
+            Assert.Multiple(() =>
+            {
+                Assert.That(analyzeResult.ContentFormat, Is.EqualTo(DocumentContentFormat.Text));
 
-            Assert.That(analyzeResult.Pages.Count, Is.EqualTo(4));
+                Assert.That(analyzeResult.Pages, Has.Count.EqualTo(4));
+            });
 
             foreach (var page in analyzeResult.Pages)
             {
-                Assert.That(page.Angle, Is.EqualTo(0f).Within(0.05f));
-                Assert.That(page.Width, Is.EqualTo(8.5f));
-                Assert.That(page.Height, Is.EqualTo(11f));
-                Assert.That(page.Unit, Is.EqualTo(LengthUnit.Inch));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(page.Angle, Is.EqualTo(0f).Within(0.05f));
+                    Assert.That(page.Width, Is.EqualTo(8.5f));
+                    Assert.That(page.Height, Is.EqualTo(11f));
+                    Assert.That(page.Unit, Is.EqualTo(LengthUnit.Inch));
+                });
             }
 
             var document = analyzeResult.Documents.Single();
 
-            Assert.That(document.DocumentType, Is.EqualTo("IRS-1040-C"));
-            Assert.That(document.BoundingRegions.Count, Is.EqualTo(4));
+            Assert.Multiple(() =>
+            {
+                Assert.That(document.DocumentType, Is.EqualTo("IRS-1040-C"));
+                Assert.That(document.BoundingRegions, Has.Count.EqualTo(4));
+            });
         }
     }
 }

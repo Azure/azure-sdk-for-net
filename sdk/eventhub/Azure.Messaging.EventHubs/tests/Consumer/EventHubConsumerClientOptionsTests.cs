@@ -33,11 +33,14 @@ namespace Azure.Messaging.EventHubs.Tests
             EventHubConsumerClientOptions clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
-            Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
-            Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
-            Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
-            Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
-            Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
+                Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
+                Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
+                Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
+                Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
+            });
         }
 
         /// <summary>

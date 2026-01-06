@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void CreatesPathHierarchyTokenizerV2()
         {
             PathHierarchyTokenizer sut = new PathHierarchyTokenizer("test");
-            Assert.AreEqual(@"#Microsoft.Azure.Search.PathHierarchyTokenizerV2", sut.ODataType);
+            Assert.That(sut.ODataType, Is.EqualTo(@"#Microsoft.Azure.Search.PathHierarchyTokenizerV2"));
         }
 
         [Test]
@@ -34,14 +34,17 @@ namespace Azure.Search.Documents.Tests.Models
             JsonDocument jsonDoc = JsonDocument.Parse(jsonContent);
             PathHierarchyTokenizer sut = LexicalTokenizer.DeserializeLexicalTokenizer(jsonDoc.RootElement) as PathHierarchyTokenizer;
 
-            Assert.NotNull(sut);
-            Assert.AreEqual(@"#Microsoft.Azure.Search.PathHierarchyTokenizerV2", sut.ODataType);
-            Assert.AreEqual("test", sut.Name);
-            Assert.AreEqual('/', sut.Delimiter);
-            Assert.AreEqual(300, sut.MaxTokenLength);
-            Assert.AreEqual(0, sut.NumberOfTokensToSkip);
-            Assert.AreEqual('/', sut.Replacement);
-            Assert.AreEqual(false, sut.ReverseTokenOrder);
+            Assert.That(sut, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sut.ODataType, Is.EqualTo(@"#Microsoft.Azure.Search.PathHierarchyTokenizerV2"));
+                Assert.That(sut.Name, Is.EqualTo("test"));
+                Assert.That(sut.Delimiter, Is.EqualTo('/'));
+                Assert.That(sut.MaxTokenLength, Is.EqualTo(300));
+                Assert.That(sut.NumberOfTokensToSkip, Is.EqualTo(0));
+                Assert.That(sut.Replacement, Is.EqualTo('/'));
+                Assert.That(sut.ReverseTokenOrder, Is.EqualTo(false));
+            });
 
             using MemoryStream stream = new MemoryStream();
             using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
@@ -52,8 +55,11 @@ namespace Azure.Search.Documents.Tests.Models
             stream.Position = 0;
 
             jsonDoc = JsonDocument.Parse(stream);
-            Assert.True(jsonDoc.RootElement.TryGetProperty("@odata.type", out JsonElement odataTypeElem));
-            Assert.AreEqual(@"#Microsoft.Azure.Search.PathHierarchyTokenizerV2", odataTypeElem.GetString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(jsonDoc.RootElement.TryGetProperty("@odata.type", out JsonElement odataTypeElem), Is.True);
+                Assert.That(odataTypeElem.GetString(), Is.EqualTo(@"#Microsoft.Azure.Search.PathHierarchyTokenizerV2"));
+            });
             jsonDoc.Dispose();
         }
     }

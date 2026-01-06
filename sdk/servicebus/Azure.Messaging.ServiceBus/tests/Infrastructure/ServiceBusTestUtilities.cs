@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
         internal static Task ExceptionHandler(ProcessErrorEventArgs eventArgs)
         {
-            Assert.IsNotNull(eventArgs.CancellationToken);
+            Assert.That(eventArgs.CancellationToken, Is.Not.Null);
             Assert.Fail(eventArgs.Exception.ToString());
             return Task.CompletedTask;
         }

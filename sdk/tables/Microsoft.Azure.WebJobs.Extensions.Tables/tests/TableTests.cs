@@ -34,8 +34,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 catch (FunctionIndexingException e)
                 {
                     string functionName = typeof(TProgram).Name + "." + methodName;
-                    Assert.AreEqual("Error indexing method '" + functionName + "'", e.Message);
-                    StringAssert.Contains(expectedErrorMessage, e.InnerException.Message);
+                    Assert.That(e.Message, Is.EqualTo("Error indexing method '" + functionName + "'"));
+                    Assert.That(e.InnerException.Message, Does.Contain(expectedErrorMessage));
                     return;
                 }
                 Assert.Fail("Invoker should have failed");
@@ -67,10 +67,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 hostBuilder.ConfigureWebJobs(builder => { builder.AddExtension(ext); });
             });
 
-            // Assert
-            Assert.AreEqual(TableName, CustomTableBinding<Poco>.Table.Name);
-            Assert.True(CustomTableBinding<Poco>.AddInvoked);
-            Assert.True(CustomTableBinding<Poco>.DeleteInvoked);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(CustomTableBinding<Poco>.Table.Name, Is.EqualTo(TableName));
+                Assert.That(CustomTableBinding<Poco>.AddInvoked, Is.True);
+                Assert.That(CustomTableBinding<Poco>.DeleteInvoked, Is.True);
+            });
         }
 
         [RecordedTest]
@@ -92,25 +95,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await jobHost.CallAsync(nameof(BindToParameterBindingData.Run));
             ParameterBindingData result = program.Result;
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             var tableData = result?.Content.ToObjectFromJson<Dictionary<string, object>>();
 
-            // Assert
-            Assert.True(tableData.TryGetValue("TableName", out var tableName));
-            Assert.True(tableData.TryGetValue("Take", out var take));
-            Assert.True(tableData.TryGetValue("Filter", out var filter));
-            Assert.True(tableData.TryGetValue("Connection", out var connection));
-            Assert.True(tableData.TryGetValue("PartitionKey", out var partitionKey));
-            Assert.True(tableData.TryGetValue("RowKey", out var rowKey));
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableData.TryGetValue("TableName", out var tableName), Is.True);
+                Assert.That(tableData.TryGetValue("Take", out var take), Is.True);
+                Assert.That(tableData.TryGetValue("Filter", out var filter), Is.True);
+                Assert.That(tableData.TryGetValue("Connection", out var connection), Is.True);
+                Assert.That(tableData.TryGetValue("PartitionKey", out var partitionKey), Is.True);
+                Assert.That(tableData.TryGetValue("RowKey", out var rowKey), Is.True);
 
-            // Check values
-            Assert.AreEqual("tableName", tableName.ToString());
-            Assert.AreEqual("partitionKey", partitionKey.ToString());
-            Assert.AreEqual("rowKey", rowKey.ToString());
-            Assert.AreEqual("0", take.ToString());
-            Assert.Null(connection);
-            Assert.Null(filter);
+                // Check values
+                Assert.That(tableName.ToString(), Is.EqualTo("tableName"));
+                Assert.That(partitionKey.ToString(), Is.EqualTo("partitionKey"));
+                Assert.That(rowKey.ToString(), Is.EqualTo("rowKey"));
+                Assert.That(take.ToString(), Is.EqualTo("0"));
+                Assert.That(connection, Is.Null);
+                Assert.That(filter, Is.Null);
+            });
         }
 
         [RecordedTest]
@@ -132,25 +138,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await jobHost.CallAsync(nameof(BindToParameterBindingData.RunWithAdditionalParams));
             ParameterBindingData result = program.Result;
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             var tableData = result?.Content.ToObjectFromJson<Dictionary<string, object>>();
 
-            // Assert
-            Assert.True(tableData.TryGetValue("TableName", out var tableName));
-            Assert.True(tableData.TryGetValue("Take", out var take));
-            Assert.True(tableData.TryGetValue("Filter", out var filter));
-            Assert.True(tableData.TryGetValue("Connection", out var connection));
-            Assert.True(tableData.TryGetValue("PartitionKey", out var partitionKey));
-            Assert.True(tableData.TryGetValue("RowKey", out var rowKey));
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableData.TryGetValue("TableName", out var tableName), Is.True);
+                Assert.That(tableData.TryGetValue("Take", out var take), Is.True);
+                Assert.That(tableData.TryGetValue("Filter", out var filter), Is.True);
+                Assert.That(tableData.TryGetValue("Connection", out var connection), Is.True);
+                Assert.That(tableData.TryGetValue("PartitionKey", out var partitionKey), Is.True);
+                Assert.That(tableData.TryGetValue("RowKey", out var rowKey), Is.True);
 
-            // Check values
-            Assert.AreEqual("tableName", tableName.ToString());
-            Assert.AreEqual("partitionKey", partitionKey.ToString());
-            Assert.AreEqual("rowKey", rowKey.ToString());
-            Assert.AreEqual("5", take.ToString());
-            Assert.AreEqual("connection", connection.ToString());
-            Assert.AreEqual("filter", filter.ToString());
+                // Check values
+                Assert.That(tableName.ToString(), Is.EqualTo("tableName"));
+                Assert.That(partitionKey.ToString(), Is.EqualTo("partitionKey"));
+                Assert.That(rowKey.ToString(), Is.EqualTo("rowKey"));
+                Assert.That(take.ToString(), Is.EqualTo("5"));
+                Assert.That(connection.ToString(), Is.EqualTo("connection"));
+                Assert.That(filter.ToString(), Is.EqualTo("filter"));
+            });
         }
 
         // Add a rule for binding TableClient --> CustomTableBinding<TEntity>

@@ -15,11 +15,14 @@ namespace Azure.Data.SchemaRegistry.Tests
             var schema = SchemaRegistryModelFactory.SchemaRegistrySchema(
                 SchemaRegistryModelFactory.SchemaProperties(SchemaFormat.Avro, "schemaId", "groupName", "name"),
                 SchemaContent);
-            Assert.AreEqual(SchemaFormat.Avro, schema.Properties.Format);
-            Assert.AreEqual("schemaId", schema.Properties.Id);
-            Assert.AreEqual("groupName", schema.Properties.GroupName);
-            Assert.AreEqual("name", schema.Properties.Name);
-            Assert.AreEqual(SchemaContent, schema.Definition);
+            Assert.Multiple(() =>
+            {
+                Assert.That(schema.Properties.Format, Is.EqualTo(SchemaFormat.Avro));
+                Assert.That(schema.Properties.Id, Is.EqualTo("schemaId"));
+                Assert.That(schema.Properties.GroupName, Is.EqualTo("groupName"));
+                Assert.That(schema.Properties.Name, Is.EqualTo("name"));
+                Assert.That(schema.Definition, Is.EqualTo(SchemaContent));
+            });
         }
     }
 }

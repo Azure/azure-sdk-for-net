@@ -649,8 +649,11 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(capturedException, Is.Not.Null, "An exception should have been surfaced.");
-            Assert.That(capturedException.GetType(), Is.EqualTo(terminalException.GetType()), "The captured exception was not of the expected type.");
-            Assert.That(capturedException, Is.SameAs(terminalException), "The mocked terminal exception should have been surfaced.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(capturedException.GetType(), Is.EqualTo(terminalException.GetType()), "The captured exception was not of the expected type.");
+                Assert.That(capturedException, Is.SameAs(terminalException), "The mocked terminal exception should have been surfaced.");
+            });
         }
 
         /// <summary>
@@ -679,8 +682,11 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(capturedException, Is.Not.Null, "An exception should have been surfaced.");
-            Assert.That(capturedException.GetType(), Is.EqualTo(expectedException.GetType()), "The captured exception was not of the expected type.");
-            Assert.That(capturedException.Message, Is.EqualTo(expectedException.Message), "The mocked terminal exception should have been surfaced.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(capturedException.GetType(), Is.EqualTo(expectedException.GetType()), "The captured exception was not of the expected type.");
+                Assert.That(capturedException.Message, Is.EqualTo(expectedException.Message), "The mocked terminal exception should have been surfaced.");
+            });
 
             // Because the terminal exception was injected, it should not attempt to open the actual link.
 
@@ -781,8 +787,11 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(capturedException, Is.Not.Null, "An exception should have been surfaced.");
-            Assert.That(capturedException.GetType(), Is.EqualTo(expectedException.GetType()), "The captured exception was not of the expected type.");
-            Assert.That(capturedException.Message, Is.EqualTo(expectedException.Message), "The mocked terminal exception should have been surfaced.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(capturedException.GetType(), Is.EqualTo(expectedException.GetType()), "The captured exception was not of the expected type.");
+                Assert.That(capturedException.Message, Is.EqualTo(expectedException.Message), "The mocked terminal exception should have been surfaced.");
+            });
 
             var preservedException = GetActivePartitionStolenException(mockConsumer);
             Assert.That(preservedException, Is.SameAs(terminalException), "The preserved exception should match the terminal exception.");

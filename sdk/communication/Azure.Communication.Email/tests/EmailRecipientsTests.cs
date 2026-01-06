@@ -27,9 +27,12 @@ namespace Azure.Communication.Email.Tests
         {
             var recipients = new EmailRecipients(DefaultRecipients(toCount), DefaultRecipients(ccCount), DefaultRecipients(bccCount));
 
-            Assert.AreEqual(recipients.CC.Count, ccCount);
-            Assert.AreEqual(recipients.BCC.Count, bccCount);
-            Assert.AreEqual(recipients.To.Count, toCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ccCount, Is.EqualTo(recipients.CC.Count));
+                Assert.That(bccCount, Is.EqualTo(recipients.BCC.Count));
+                Assert.That(toCount, Is.EqualTo(recipients.To.Count));
+            });
         }
 
         private static List<EmailAddress> DefaultRecipients(int count = 1)

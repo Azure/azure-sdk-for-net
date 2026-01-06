@@ -215,7 +215,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             ReceiveResult result = await receiverClient.ReceiveAsync(maxEvents: 1);
             RenewLocksResult renewResult = await receiverClient.RenewLocksAsync(new[] { result.Details.First().BrokerProperties.LockToken });
-            Assert.IsEmpty(renewResult.FailedLockTokens);
+            Assert.That(renewResult.FailedLockTokens, Is.Empty);
         }
 
         [RecordedTest]
@@ -240,7 +240,7 @@ namespace Azure.Messaging.EventGrid.Tests
             ReleaseResult releaseResult = await receiver.ReleaseAsync(
                 new[] { result.Details.First().BrokerProperties.LockToken },
                 delay: ReleaseDelay.TenSeconds);
-            Assert.IsEmpty(releaseResult.FailedLockTokens);
+            Assert.That(releaseResult.FailedLockTokens, Is.Empty);
         }
 
         [RecordedTest]
@@ -263,7 +263,7 @@ namespace Azure.Messaging.EventGrid.Tests
             var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridReceiverClientOptions())));
             ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
             RejectResult rejectResult = await receiver.RejectAsync(new[] { result.Details.First().BrokerProperties.LockToken });
-            Assert.IsEmpty(rejectResult.FailedLockTokens);
+            Assert.That(rejectResult.FailedLockTokens, Is.Empty);
         }
 
         [RecordedTest]
@@ -286,7 +286,7 @@ namespace Azure.Messaging.EventGrid.Tests
             var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridReceiverClientOptions())));
             ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
             AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new[] { result.Details.First().BrokerProperties.LockToken });
-            Assert.IsEmpty(acknowledgeResult.FailedLockTokens);
+            Assert.That(acknowledgeResult.FailedLockTokens, Is.Empty);
         }
 
         [RecordedTest]
@@ -334,7 +334,7 @@ namespace Azure.Messaging.EventGrid.Tests
             #region Snippet:AcknowledgeCNCFEvent
             AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new string[] { eventResponse.BrokerProperties.LockToken.ToString() });
             #endregion
-            Assert.IsEmpty(acknowledgeResult.FailedLockTokens);
+            Assert.That(acknowledgeResult.FailedLockTokens, Is.Empty);
         }
 
         public class TestModel

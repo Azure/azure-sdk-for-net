@@ -58,7 +58,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (string value in client.GetMetricDimensionValuesAsync(MetricId, dimensionName, options))
             {
                 Assert.That(value, Is.Not.Null.And.Not.Empty);
-                Assert.That(value.Contains(filter));
+                Assert.That(value, Does.Contain(filter));
 
                 if (++valueCount >= MaximumSamplesCount)
                 {
@@ -120,11 +120,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 DimensionKey seriesKey = definition.SeriesKey;
 
-                Assert.That(seriesKey.TryGetValue("Dim1", out string region));
-                Assert.That(seriesKey.TryGetValue("Dim2", out string category));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(seriesKey.TryGetValue("Dim1", out string region));
+                    Assert.That(seriesKey.TryGetValue("Dim2", out string category));
 
-                Assert.That(dim1Filter.Contains(region));
-                Assert.That(dim2Filter.Contains(category));
+                    Assert.That(dim1Filter, Does.Contain(region));
+                    Assert.That(dim2Filter, Does.Contain(category));
+                });
 
                 if (++definitionCount >= MaximumSamplesCount)
                 {
@@ -160,13 +163,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(MetricId, options))
             {
                 Assert.That(seriesData, Is.Not.Null);
-                Assert.That(seriesData.SeriesKey, Is.Not.Null);
-                Assert.That(seriesData.Timestamps, Is.Not.Null);
-                Assert.That(seriesData.MetricValues, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(seriesData.SeriesKey, Is.Not.Null);
+                    Assert.That(seriesData.Timestamps, Is.Not.Null);
+                    Assert.That(seriesData.MetricValues, Is.Not.Null);
 
-                Assert.That(seriesData.MetricId, Is.EqualTo(MetricId));
+                    Assert.That(seriesData.MetricId, Is.EqualTo(MetricId));
+                });
 
-                Assert.That(seriesData.Timestamps.Count, Is.EqualTo(seriesData.MetricValues.Count));
+                Assert.That(seriesData.Timestamps, Has.Count.EqualTo(seriesData.MetricValues.Count));
 
                 foreach (DateTimeOffset timestamp in seriesData.Timestamps)
                 {
@@ -175,8 +181,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 var seriesKey = seriesData.SeriesKey;
 
-                Assert.That(seriesKey.TryGetValue("Dim1", out string dim1));
-                Assert.That(seriesKey.TryGetValue("Dim2", out string dim2));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(seriesKey.TryGetValue("Dim1", out string dim1));
+                    Assert.That(seriesKey.TryGetValue("Dim2", out string dim2));
+                });
 
                 if (dim1 == "JPN" && dim2 == "__SUM__")
                 {
@@ -190,9 +199,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 seriesDataCount++;
             }
 
-            Assert.That(seriesDataCount, Is.EqualTo(2));
-            Assert.That(returnedKey1);
-            Assert.That(returnedKey2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(seriesDataCount, Is.EqualTo(2));
+                Assert.That(returnedKey1);
+                Assert.That(returnedKey2);
+            });
         }
 
         [RecordedTest]
@@ -209,9 +221,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (EnrichmentStatus enrichmentStatus in client.GetMetricEnrichmentStatusesAsync(MetricId, options))
             {
                 Assert.That(enrichmentStatus, Is.Not.Null);
-                Assert.That(enrichmentStatus.Status, Is.Not.Null.And.Not.Empty);
-                Assert.That(enrichmentStatus.Message, Is.Not.Null.And.Not.Empty);
-                Assert.That(enrichmentStatus.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(enrichmentStatus.Status, Is.Not.Null.And.Not.Empty);
+                    Assert.That(enrichmentStatus.Message, Is.Not.Null.And.Not.Empty);
+                    Assert.That(enrichmentStatus.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
+                });
 
                 if (++statusCount >= MaximumSamplesCount)
                 {

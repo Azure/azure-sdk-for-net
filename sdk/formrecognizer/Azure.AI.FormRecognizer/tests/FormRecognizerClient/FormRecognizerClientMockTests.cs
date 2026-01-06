@@ -61,8 +61,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var request = mockTransport.Requests.Single();
 
-            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
-            Assert.AreEqual("image/jpeg", contentType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+                Assert.That(contentType, Is.EqualTo("image/jpeg"));
+            });
         }
 
         [Test]
@@ -80,8 +83,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var request = mockTransport.Requests.Single();
 
-            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
-            Assert.AreEqual("image/tiff", contentType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+                Assert.That(contentType, Is.EqualTo("image/tiff"));
+            });
         }
 
         [Test]
@@ -100,14 +106,14 @@ namespace Azure.AI.FormRecognizer.Tests
             await client.StartRecognizeContentFromUriAsync(new Uri(encodedUriString));
             await client.StartRecognizeContentFromUriAsync(new Uri(decodedUriString));
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(2));
 
             foreach (var request in mockTransport.Requests)
             {
                 var requestBody = GetString(request.Content);
 
-                Assert.True(requestBody.Contains(encodedUriString));
-                Assert.False(requestBody.Contains(decodedUriString));
+                Assert.That(requestBody, Does.Contain(encodedUriString));
+                Assert.That(requestBody.Contains(decodedUriString), Is.False);
             }
         }
 
@@ -130,7 +136,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"readingOrder={readingOrderString}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -152,7 +158,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"readingOrder={readingOrderString}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -176,7 +182,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var languageQuery = "language=";
             var index = requestUriQuery.IndexOf(languageQuery);
             var length = requestUriQuery.Length - (index + languageQuery.Length);
-            Assert.AreEqual(language, requestUriQuery.Substring(index + languageQuery.Length, length));
+            Assert.That(requestUriQuery.Substring(index + languageQuery.Length, length), Is.EqualTo(language));
         }
 
         [Test]
@@ -200,7 +206,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var languageQuery = "language=";
             var index = requestUriQuery.IndexOf(languageQuery);
             var length = requestUriQuery.Length - (index + languageQuery.Length);
-            Assert.AreEqual(language, requestUriQuery.Substring(index + languageQuery.Length, length));
+            Assert.That(requestUriQuery.Substring(index + languageQuery.Length, length), Is.EqualTo(language));
         }
 
         [Test]
@@ -222,7 +228,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -244,7 +250,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -266,7 +272,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -288,7 +294,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         #endregion
@@ -310,8 +316,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var request = mockTransport.Requests.Single();
 
-            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
-            Assert.AreEqual("image/jpeg", contentType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+                Assert.That(contentType, Is.EqualTo("image/jpeg"));
+            });
         }
 
         [Test]
@@ -329,8 +338,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var request = mockTransport.Requests.Single();
 
-            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
-            Assert.AreEqual("image/tiff", contentType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+                Assert.That(contentType, Is.EqualTo("image/tiff"));
+            });
         }
 
         [Test]
@@ -349,14 +361,14 @@ namespace Azure.AI.FormRecognizer.Tests
             await client.StartRecognizeReceiptsFromUriAsync(new Uri(encodedUriString));
             await client.StartRecognizeReceiptsFromUriAsync(new Uri(decodedUriString));
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(2));
 
             foreach (var request in mockTransport.Requests)
             {
                 var requestBody = GetString(request.Content);
 
-                Assert.True(requestBody.Contains(encodedUriString));
-                Assert.False(requestBody.Contains(decodedUriString));
+                Assert.That(requestBody, Does.Contain(encodedUriString));
+                Assert.That(requestBody.Contains(decodedUriString), Is.False);
             }
         }
 
@@ -381,7 +393,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var localeQuery = "locale=";
             var index = requestUriQuery.IndexOf(localeQuery);
             var length = requestUriQuery.Length - (index + localeQuery.Length);
-            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+            Assert.That(requestUriQuery.Substring(index + localeQuery.Length, length), Is.EqualTo(locale));
         }
 
         [Test]
@@ -405,7 +417,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var localeQuery = "locale=";
             var index = requestUriQuery.IndexOf(localeQuery);
             var length = requestUriQuery.Length - (index + localeQuery.Length);
-            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+            Assert.That(requestUriQuery.Substring(index + localeQuery.Length, length), Is.EqualTo(locale));
         }
 
         [Test]
@@ -427,7 +439,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -449,7 +461,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -471,7 +483,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -493,7 +505,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         #endregion
@@ -515,8 +527,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var request = mockTransport.Requests.Single();
 
-            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
-            Assert.AreEqual("image/jpeg", contentType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+                Assert.That(contentType, Is.EqualTo("image/jpeg"));
+            });
         }
 
         [Test]
@@ -534,8 +549,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var request = mockTransport.Requests.Single();
 
-            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
-            Assert.AreEqual("image/tiff", contentType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+                Assert.That(contentType, Is.EqualTo("image/tiff"));
+            });
         }
 
         [Test]
@@ -554,14 +572,14 @@ namespace Azure.AI.FormRecognizer.Tests
             await client.StartRecognizeBusinessCardsFromUriAsync(new Uri(encodedUriString));
             await client.StartRecognizeBusinessCardsFromUriAsync(new Uri(decodedUriString));
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(2));
 
             foreach (var request in mockTransport.Requests)
             {
                 var requestBody = GetString(request.Content);
 
-                Assert.True(requestBody.Contains(encodedUriString));
-                Assert.False(requestBody.Contains(decodedUriString));
+                Assert.That(requestBody, Does.Contain(encodedUriString));
+                Assert.That(requestBody.Contains(decodedUriString), Is.False);
             }
         }
 
@@ -586,7 +604,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var localeQuery = "locale=";
             var index = requestUriQuery.IndexOf(localeQuery);
             var length = requestUriQuery.Length - (index + localeQuery.Length);
-            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+            Assert.That(requestUriQuery.Substring(index + localeQuery.Length, length), Is.EqualTo(locale));
         }
 
         [Test]
@@ -610,7 +628,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var localeQuery = "locale=";
             var index = requestUriQuery.IndexOf(localeQuery);
             var length = requestUriQuery.Length - (index + localeQuery.Length);
-            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+            Assert.That(requestUriQuery.Substring(index + localeQuery.Length, length), Is.EqualTo(locale));
         }
 
         [Test]
@@ -632,7 +650,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -654,7 +672,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -676,7 +694,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -698,7 +716,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         #endregion
@@ -720,8 +738,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var request = mockTransport.Requests.Single();
 
-            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
-            Assert.AreEqual("image/jpeg", contentType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+                Assert.That(contentType, Is.EqualTo("image/jpeg"));
+            });
         }
 
         [Test]
@@ -739,8 +760,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var request = mockTransport.Requests.Single();
 
-            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
-            Assert.AreEqual("image/tiff", contentType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+                Assert.That(contentType, Is.EqualTo("image/tiff"));
+            });
         }
 
         [Test]
@@ -759,14 +783,14 @@ namespace Azure.AI.FormRecognizer.Tests
             await client.StartRecognizeInvoicesFromUriAsync(new Uri(encodedUriString));
             await client.StartRecognizeInvoicesFromUriAsync(new Uri(decodedUriString));
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(2));
 
             foreach (var request in mockTransport.Requests)
             {
                 var requestBody = GetString(request.Content);
 
-                Assert.True(requestBody.Contains(encodedUriString));
-                Assert.False(requestBody.Contains(decodedUriString));
+                Assert.That(requestBody, Does.Contain(encodedUriString));
+                Assert.That(requestBody.Contains(decodedUriString), Is.False);
             }
         }
 
@@ -791,7 +815,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var localeQuery = "locale=";
             var index = requestUriQuery.IndexOf(localeQuery);
             var length = requestUriQuery.Length - (index + localeQuery.Length);
-            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+            Assert.That(requestUriQuery.Substring(index + localeQuery.Length, length), Is.EqualTo(locale));
         }
 
         [Test]
@@ -815,7 +839,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var localeQuery = "locale=";
             var index = requestUriQuery.IndexOf(localeQuery);
             var length = requestUriQuery.Length - (index + localeQuery.Length);
-            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+            Assert.That(requestUriQuery.Substring(index + localeQuery.Length, length), Is.EqualTo(locale));
         }
 
         [Test]
@@ -837,7 +861,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -859,7 +883,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -881,7 +905,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -903,7 +927,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         #endregion
@@ -926,8 +950,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var request = mockTransport.Requests.Single();
 
-            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
-            Assert.AreEqual("image/jpeg", contentType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+                Assert.That(contentType, Is.EqualTo("image/jpeg"));
+            });
         }
 
         [Test]
@@ -945,8 +972,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var request = mockTransport.Requests.Single();
 
-            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
-            Assert.AreEqual("image/tiff", contentType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+                Assert.That(contentType, Is.EqualTo("image/tiff"));
+            });
         }
 
         [Test]
@@ -965,14 +995,14 @@ namespace Azure.AI.FormRecognizer.Tests
             await client.StartRecognizeCustomFormsFromUriAsync("00000000000000000000000000000000", new Uri(encodedUriString));
             await client.StartRecognizeCustomFormsFromUriAsync("00000000000000000000000000000000", new Uri(decodedUriString));
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(2));
 
             foreach (var request in mockTransport.Requests)
             {
                 var requestBody = GetString(request.Content);
 
-                Assert.True(requestBody.Contains(encodedUriString));
-                Assert.False(requestBody.Contains(decodedUriString));
+                Assert.That(requestBody, Does.Contain(encodedUriString));
+                Assert.That(requestBody.Contains(decodedUriString), Is.False);
             }
         }
 
@@ -995,7 +1025,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -1017,7 +1047,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -1039,7 +1069,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         [Test]
@@ -1061,7 +1091,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
 
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedSubstring));
         }
 
         #endregion

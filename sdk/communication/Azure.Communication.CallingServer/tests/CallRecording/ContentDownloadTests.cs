@@ -130,7 +130,7 @@ namespace Azure.Communication.CallingServer
             Stream destination = new MemoryStream();
             _callAutomationClient.GetCallRecording().DownloadTo(_dummyRecordingLocation, destination, options);
 
-            Assert.AreEqual(10, destination.Length);
+            Assert.That(destination.Length, Is.EqualTo(10));
         }
 
         [Test]
@@ -158,11 +158,14 @@ namespace Azure.Communication.CallingServer
                 MaximumTransferSize = 5
             };
 
-            Assert.AreNotEqual(options.GetHashCode(), options_updated.GetHashCode());
-            Assert.AreEqual(options.GetHashCode(), options_copy.GetHashCode());
-            Assert.True(options.Equals(options_copy));
-            Assert.True(options.Equals((object)options_copy));
-            Assert.False(options.Equals(options_updated));
+            Assert.Multiple(() =>
+            {
+                Assert.That(options_updated.GetHashCode(), Is.Not.EqualTo(options.GetHashCode()));
+                Assert.That(options_copy.GetHashCode(), Is.EqualTo(options.GetHashCode()));
+                Assert.That(options, Is.EqualTo(options_copy));
+            });
+            Assert.That(options, Is.EqualTo((object)options_copy));
+            Assert.That(options.Equals(options_updated), Is.False);
         }
 
         [Test]
@@ -171,8 +174,8 @@ namespace Azure.Communication.CallingServer
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callAutomationClient.GetCallRecording().DownloadStreaming(_dummyMetadataLocation));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -181,8 +184,8 @@ namespace Azure.Communication.CallingServer
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(404);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callAutomationClient.GetCallRecording().DownloadStreamingAsync(_dummyMetadataLocation));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -191,8 +194,8 @@ namespace Azure.Communication.CallingServer
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(401);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callAutomationClient.GetCallRecording().DownloadStreaming(_dummyMetadataLocation));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 401);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(401));
         }
 
         [Test]
@@ -201,8 +204,8 @@ namespace Azure.Communication.CallingServer
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(401);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callAutomationClient.GetCallRecording().DownloadStreamingAsync(_dummyMetadataLocation));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 401);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(401));
         }
 
         [Test]
@@ -230,7 +233,7 @@ namespace Azure.Communication.CallingServer
             Stream destination = new MemoryStream();
             _callAutomationClient.GetCallRecording().DownloadTo(_dummyRecordingLocation, destination, options);
 
-            Assert.AreEqual(10, destination.Length);
+            Assert.That(destination.Length, Is.EqualTo(10));
         }
 
         [Test]
@@ -258,22 +261,25 @@ namespace Azure.Communication.CallingServer
             Stream destination = new MemoryStream();
             await _callAutomationClient.GetCallRecording().DownloadToAsync(_dummyRecordingLocation, destination, options);
 
-            Assert.AreEqual(10, destination.Length);
+            Assert.That(destination.Length, Is.EqualTo(10));
         }
 
         private static void VerifyExpectedMetadata(Stream metadata)
         {
-            Assert.IsNotNull(metadata);
+            Assert.That(metadata, Is.Not.Null);
             JsonElement expected = JsonDocument.Parse(DummyRecordingMetadata).RootElement;
             JsonElement actual = JsonDocument.Parse(metadata).RootElement;
-            Assert.AreEqual(expected.GetProperty("chunkDocumentId").GetString(), actual.GetProperty("chunkDocumentId").GetString());
+            Assert.That(actual.GetProperty("chunkDocumentId").GetString(), Is.EqualTo(expected.GetProperty("chunkDocumentId").GetString()));
         }
 
         private static void VerifyExpectedRecording(Response<Stream> recording, int recordingLength)
         {
-            Assert.IsNotNull(recording.Value);
-            Assert.IsTrue(recording.Value.GetType().Name.Contains(typeof(RetriableStream).Name));
-            Assert.AreEqual(recordingLength, recording.Value.Length);
+            Assert.That(recording.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(recording.Value.GetType().Name, Does.Contain(typeof(RetriableStream).Name));
+                Assert.That(recording.Value.Length, Is.EqualTo(recordingLength));
+            });
         }
     }
 }

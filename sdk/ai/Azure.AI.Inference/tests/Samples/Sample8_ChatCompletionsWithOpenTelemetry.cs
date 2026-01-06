@@ -115,8 +115,11 @@ namespace Azure.AI.Inference.Tests.Samples
                 }
                 Assert.That(chatUpdate, Is.Not.Null);
 
-                Assert.That(chatUpdate.Id, Is.Not.Null.Or.Empty);
-                Assert.That(chatUpdate.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(chatUpdate.Id, Is.Not.Null.Or.Empty);
+                    Assert.That(chatUpdate.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
+                });
                 Assert.That(chatUpdate.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
                 if (!string.IsNullOrEmpty(chatUpdate.Id))
                 {
@@ -130,8 +133,11 @@ namespace Azure.AI.Inference.Tests.Samples
                 }
                 if (chatUpdate.Role.HasValue)
                 {
-                    Assert.IsFalse(gotRole);
-                    Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(gotRole, Is.False);
+                        Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
+                    });
                     gotRole = true;
                 }
 
@@ -146,15 +152,21 @@ namespace Azure.AI.Inference.Tests.Samples
         {
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+                Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+                Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            });
+            Assert.That(response.Value.Choices, Has.Count.EqualTo(1));
             ChatChoice choice = response.Value.Choices[0];
-            Assert.That(choice.Index, Is.EqualTo(0));
-            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(choice.Index, Is.EqualTo(0));
+                Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+            });
         }
         #endregion
     }

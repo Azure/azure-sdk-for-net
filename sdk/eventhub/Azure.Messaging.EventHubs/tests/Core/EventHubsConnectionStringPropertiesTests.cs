@@ -154,11 +154,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };SharedAccessSignature={ sharedAccessSignature }";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
-            Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
-            Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.SharedAccessSignature, Is.EqualTo(sharedAccessSignature), "The precomputed SAS should match.");
-            Assert.That(parsed.EventHubName, Is.Null, "The Event Hub path was not included in the connection string");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
+                Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
+                Assert.That(parsed.SharedAccessSignature, Is.EqualTo(sharedAccessSignature), "The precomputed SAS should match.");
+                Assert.That(parsed.EventHubName, Is.Null, "The Event Hub path was not included in the connection string");
+            });
         }
 
         /// <summary>
@@ -177,11 +180,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };EntityPath={ eventHub };SharedAccessSignature={ sharedAccessSignature }";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
-            Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
-            Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.SharedAccessSignature, Is.EqualTo(sharedAccessSignature), "The precomputed SAS should match.");
-            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
+                Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
+                Assert.That(parsed.SharedAccessSignature, Is.EqualTo(sharedAccessSignature), "The precomputed SAS should match.");
+                Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            });
         }
 
         /// <summary>
@@ -200,11 +206,14 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
-            Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
-            Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.SharedAccessSignature, Is.EqualTo(sharedAccessSignature), "The precomputed SAS should match.");
-            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
+                Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
+                Assert.That(parsed.SharedAccessSignature, Is.EqualTo(sharedAccessSignature), "The precomputed SAS should match.");
+                Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            });
         }
 
         /// <summary>
@@ -222,10 +231,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = $";Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };EntityPath={ eventHub }";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
-            Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
-            Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
+                Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
+                Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            });
         }
 
         /// <summary>
@@ -243,10 +255,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };EntityPath={ eventHub };";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
-            Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
-            Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
+                Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
+                Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            });
         }
 
         /// <summary>
@@ -264,10 +279,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = $"Endpoint=sb://{ endpoint }; SharedAccessKeyName={ sasKeyName }; SharedAccessKey={ sasKey }; EntityPath={ eventHub }";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
-            Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
-            Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
+                Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
+                Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            });
         }
 
         /// <summary>
@@ -285,10 +303,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = $"Endpoint = sb://{ endpoint };SharedAccessKeyName ={ sasKeyName };SharedAccessKey= { sasKey }; EntityPath  =  { eventHub }";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
-            Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
-            Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
+                Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
+                Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            });
         }
 
         /// <summary>
@@ -307,11 +328,14 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
-            Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
-            Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.SharedAccessSignature, Is.EqualTo(shardAccessSignature), "The precomputed SAS should match.");
-            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
+                Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
+                Assert.That(parsed.SharedAccessSignature, Is.EqualTo(shardAccessSignature), "The precomputed SAS should match.");
+                Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            });
         }
 
         /// <summary>
@@ -329,10 +353,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };Unknown=INVALID;SharedAccessKey={ sasKey };EntityPath={ eventHub };Trailing=WHOAREYOU";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
-            Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
-            Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
+                Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
+                Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            });
         }
 
         /// <summary>
@@ -357,12 +384,18 @@ namespace Azure.Messaging.EventHubs.Tests
                 valueUri = new Uri($"fake://{ endpointValue }");
             }
 
-            Assert.That(parsed.Endpoint.Port, Is.EqualTo(valueUri.IsDefaultPort ? -1 : valueUri.Port), "The default port should be used.");
-            Assert.That(parsed.Endpoint.Host, Does.Not.Contain(" "), "The host name should not contain any spaces.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint.Port, Is.EqualTo(valueUri.IsDefaultPort ? -1 : valueUri.Port), "The default port should be used.");
+                Assert.That(parsed.Endpoint.Host, Does.Not.Contain(" "), "The host name should not contain any spaces.");
+            });
             Assert.That(parsed.Endpoint.Host, Does.Not.Contain(":"), "The host name should not contain any port separators (:).");
             Assert.That(parsed.Endpoint.Host, Does.Not.Contain(valueUri.Port), "The host name should not contain the port.");
-            Assert.That(parsed.Endpoint.Host, Is.EqualTo(valueUri.Host), "The host name should have been normalized.");
-            Assert.That(parsed.Endpoint.ToString(), Does.StartWith(GetEventHubsEndpointScheme()), "The parser's endpoint scheme should have been used.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint.Host, Is.EqualTo(valueUri.Host), "The host name should have been normalized.");
+                Assert.That(parsed.Endpoint.ToString(), Does.StartWith(GetEventHubsEndpointScheme()), "The parser's endpoint scheme should have been used.");
+            });
         }
 
         /// <summary>
@@ -408,8 +441,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = "Endpoint=localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=true";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
-            Assert.That(parsed.UseDevelopmentEmulator, Is.True, "The development emulator flag should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
+                Assert.That(parsed.UseDevelopmentEmulator, Is.True, "The development emulator flag should have been set.");
+            });
         }
 
         /// <summary>
@@ -423,8 +459,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = "Endpoint=localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=false";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
-            Assert.That(parsed.UseDevelopmentEmulator, Is.False, "The development emulator flag should have been unset.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
+                Assert.That(parsed.UseDevelopmentEmulator, Is.False, "The development emulator flag should have been unset.");
+            });
         }
 
         /// <summary>
@@ -446,9 +485,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var endpoint = new Uri(string.Concat(GetEventHubsEndpointScheme(), host));
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint.Host, Is.EqualTo(endpoint.Host), "The endpoint hosts should match.");
-            Assert.That(parsed.Endpoint.Port, Is.EqualTo(endpoint.Port), "The endpoint ports should match.");
-            Assert.That(parsed.UseDevelopmentEmulator, Is.True, "The development emulator flag should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint.Host, Is.EqualTo(endpoint.Host), "The endpoint hosts should match.");
+                Assert.That(parsed.Endpoint.Port, Is.EqualTo(endpoint.Port), "The endpoint ports should match.");
+                Assert.That(parsed.UseDevelopmentEmulator, Is.True, "The development emulator flag should have been set.");
+            });
         }
 
         /// <summary>
@@ -473,9 +515,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = $"Endpoint={ host };SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=true";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint.Host, Is.EqualTo(endpoint.Host), "The endpoint hosts should match.");
-            Assert.That(parsed.Endpoint.Port, Is.EqualTo(endpoint.Port), "The endpoint ports should match.");
-            Assert.That(parsed.UseDevelopmentEmulator, Is.True, "The development emulator flag should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint.Host, Is.EqualTo(endpoint.Host), "The endpoint hosts should match.");
+                Assert.That(parsed.Endpoint.Port, Is.EqualTo(endpoint.Port), "The endpoint ports should match.");
+                Assert.That(parsed.UseDevelopmentEmulator, Is.True, "The development emulator flag should have been set.");
+            });
         }
 
         /// <summary>
@@ -491,8 +536,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = $"Endpoint=sb://localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator={ emulatorValue }";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
-            Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
-            Assert.That(parsed.UseDevelopmentEmulator, Is.False, $"The development emulator flag should have been unset because { emulatorValue } is not a boolean.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
+                Assert.That(parsed.UseDevelopmentEmulator, Is.False, $"The development emulator flag should have been unset because {emulatorValue} is not a boolean.");
+            });
         }
 
         /// <summary>
@@ -528,8 +576,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(connectionString.Length, Is.GreaterThan(0), "The connection string should have content.");
 
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
-            Assert.That(parsed, Is.Not.Null, "The connection string should be parsable.");
-            Assert.That(PropertiesAreEquivalent(properties, parsed), Is.True, "The connection string should parse into the source properties.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed, Is.Not.Null, "The connection string should be parsable.");
+                Assert.That(PropertiesAreEquivalent(properties, parsed), Is.True, "The connection string should parse into the source properties.");
+            });
         }
 
         /// <summary>
@@ -553,8 +604,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(connectionString.Length, Is.GreaterThan(0), "The connection string should have content.");
 
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
-            Assert.That(parsed, Is.Not.Null, "The connection string should be parsable.");
-            Assert.That(PropertiesAreEquivalent(properties, parsed), Is.True, "The connection string should parse into the source properties.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed, Is.Not.Null, "The connection string should be parsable.");
+                Assert.That(PropertiesAreEquivalent(properties, parsed), Is.True, "The connection string should parse into the source properties.");
+            });
         }
 
         /// <summary>
@@ -579,8 +633,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(connectionString.Length, Is.GreaterThan(0), "The connection string should have content.");
 
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
-            Assert.That(parsed, Is.Not.Null, "The connection string should be parsable.");
-            Assert.That(PropertiesAreEquivalent(properties, parsed), Is.True, "The connection string should parse into the source properties.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed, Is.Not.Null, "The connection string should be parsable.");
+                Assert.That(PropertiesAreEquivalent(properties, parsed), Is.True, "The connection string should parse into the source properties.");
+            });
         }
 
         /// <summary>

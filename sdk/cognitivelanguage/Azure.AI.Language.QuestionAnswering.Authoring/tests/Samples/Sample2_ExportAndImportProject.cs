@@ -28,10 +28,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             // retrieve export operation response, and extract url of exported file
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
-            #endregion
+            Assert.Multiple(() =>
+            {
+                #endregion
 
-            Assert.True(exportOperation.HasCompleted);
-            Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
+                Assert.That(exportOperation.HasCompleted, Is.True);
+                Assert.That(!string.IsNullOrEmpty(exportedFileUrl), Is.True);
+            });
 
             #region Snippet:QuestionAnsweringAuthoringClient_ImportProject_Authoring
             // Set import project name and request content
@@ -59,10 +62,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             EnqueueProjectDeletion(importedProjectName);
 #endif
             Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
-            #endregion
+            Assert.Multiple(() =>
+            {
+                #endregion
 
-            Assert.True(importOperation.HasCompleted);
-            Assert.AreEqual(200, importOperation.GetRawResponse().Status);
+                Assert.That(importOperation.HasCompleted, Is.True);
+                Assert.That(importOperation.GetRawResponse().Status, Is.EqualTo(200));
+            });
 
             #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetails_Authoring
             Response<QuestionAnsweringProject> projectDetails = client.GetProjectDetails(importedProjectName);
@@ -70,7 +76,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Console.WriteLine(projectDetails.GetRawResponse().Content);
             #endregion
 
-            Assert.AreEqual(200, projectDetails.GetRawResponse().Status);
+            Assert.That(projectDetails.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
@@ -87,10 +93,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             // retrieve export operation response, and extract url of exported file
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
-            #endregion
+            Assert.Multiple(() =>
+            {
+                #endregion
 
-            Assert.True(exportOperation.HasCompleted);
-            Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
+                Assert.That(exportOperation.HasCompleted, Is.True);
+                Assert.That(!string.IsNullOrEmpty(exportedFileUrl), Is.True);
+            });
 
             #region Snippet:QuestionAnsweringAuthoringClient_ImportProjectAsync_Authoring
             // Set import project name and request content
@@ -118,10 +127,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             EnqueueProjectDeletion(importedProjectName);
 #endif
             Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
-            #endregion
+            Assert.Multiple(() =>
+            {
+                #endregion
 
-            Assert.True(importOperation.HasCompleted);
-            Assert.AreEqual(200, importOperation.GetRawResponse().Status);
+                Assert.That(importOperation.HasCompleted, Is.True);
+                Assert.That(importOperation.GetRawResponse().Status, Is.EqualTo(200));
+            });
 
             #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetailsAsync_Authoring
             Response<QuestionAnsweringProject> projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
@@ -129,7 +141,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Console.WriteLine(projectDetails.GetRawResponse().Content);
             #endregion
 
-            Assert.AreEqual(200, projectDetails.GetRawResponse().Status);
+            Assert.That(projectDetails.GetRawResponse().Status, Is.EqualTo(200));
         }
     }
 }

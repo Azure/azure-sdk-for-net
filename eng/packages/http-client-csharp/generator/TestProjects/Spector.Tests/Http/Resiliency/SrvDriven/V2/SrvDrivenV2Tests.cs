@@ -19,7 +19,7 @@ namespace TestProjects.Spector.Tests.Http.Resiliency.SrvDriven.V2
             var client = new ResiliencyServiceDrivenClient(host, ServiceDeploymentV2);
             var response = await client.AddOperationAsync();
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         // This test validates the "new" client behavior when the api version is set to V1.
@@ -30,7 +30,7 @@ namespace TestProjects.Spector.Tests.Http.Resiliency.SrvDriven.V2
             var client = new ResiliencyServiceDrivenClient(host, ServiceDeploymentV2, options);
             var response = await client.FromNoneAsync();
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         // This test validates the "new" client behavior when the api version is set to V2.
@@ -41,7 +41,7 @@ namespace TestProjects.Spector.Tests.Http.Resiliency.SrvDriven.V2
             var client = new ResiliencyServiceDrivenClient(host, ServiceDeploymentV2, options);
             var response = await client.FromNoneAsync("new", cancellationToken: default);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -51,7 +51,7 @@ namespace TestProjects.Spector.Tests.Http.Resiliency.SrvDriven.V2
             var client = new ResiliencyServiceDrivenClient(host, ServiceDeploymentV2, options);
             var response = await client.FromOneOptionalAsync("optional");
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -61,7 +61,7 @@ namespace TestProjects.Spector.Tests.Http.Resiliency.SrvDriven.V2
             var client = new ResiliencyServiceDrivenClient(host, ServiceDeploymentV2, options);
             var response = await client.FromOneOptionalAsync("optional", "new", cancellationToken: default);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -71,7 +71,7 @@ namespace TestProjects.Spector.Tests.Http.Resiliency.SrvDriven.V2
             var client = new ResiliencyServiceDrivenClient(host, ServiceDeploymentV2, options);
             var response = await client.FromOneRequiredAsync("required");
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -81,7 +81,7 @@ namespace TestProjects.Spector.Tests.Http.Resiliency.SrvDriven.V2
             var client = new ResiliencyServiceDrivenClient(host, ServiceDeploymentV2, options);
             var response = await client.FromOneRequiredAsync("required", "new", cancellationToken: default);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

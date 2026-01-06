@@ -290,7 +290,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // get twin
                 ETag? etagBeforeUpdate = (await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomTwinId).ConfigureAwait(false)).Value.ETag;
 
-                Assert.IsNotNull(etagBeforeUpdate);
+                Assert.That(etagBeforeUpdate, Is.Not.Null);
 
                 // update twin once to make the previous etag fall out of date
                 JsonPatchDocument updateTwinPatchDocument = new JsonPatchDocument();
@@ -364,7 +364,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // get twin
                 ETag? etagBeforeUpdate = (await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomTwinId).ConfigureAwait(false)).Value.ETag;
 
-                Assert.IsNotNull(etagBeforeUpdate);
+                Assert.That(etagBeforeUpdate, Is.Not.Null);
 
                 // update twin again, but with the correct etag
                 JsonPatchDocument secondUpdateTwinPatchDocument = new JsonPatchDocument();
@@ -496,7 +496,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // get twin
                 ETag? correctETag = (await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomTwinId).ConfigureAwait(false)).Value.ETag;
-                Assert.IsNotNull(correctETag);
+                Assert.That(correctETag, Is.Not.Null);
 
                 try
                 {

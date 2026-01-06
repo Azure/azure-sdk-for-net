@@ -44,7 +44,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var assembly = Assembly.GetExecutingAssembly();
             string mustExistFilename = "transparent_statement.cose";
             string resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith(mustExistFilename));
-            Assert.IsNotNull(resourceName);
+            Assert.That(resourceName, Is.Not.Null);
             _fileQualifierPrefix = resourceName.Split(new String[] { mustExistFilename }, StringSplitOptions.None)[0];
         }
 
@@ -117,11 +117,14 @@ namespace Azure.Security.CodeTransparency.Tests
             #region Snippet:CodeTransparencySample2_GetEntryStatement
             Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
             byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
-            #endregion Snippet:CodeTransparencySample2_GetEntryStatement
-            #endregion Snippet:CodeTransparencyDownloadTransparentStatement
+            Assert.Multiple(() =>
+            {
+                #endregion Snippet:CodeTransparencySample2_GetEntryStatement
+                #endregion Snippet:CodeTransparencyDownloadTransparentStatement
 
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+            });
 
             #region Snippet:CodeTransparencySample2_GetRawReceipt
 #if SNIPPET
@@ -191,7 +194,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             #endregion Snippet:CodeTransparencyVerification_StoreForOfflineUse
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(2));
 
             #region Snippet:CodeTransparencyVerification_Offline
             var transparentStatement = File.ReadAllBytes(filePath);

@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.BusinessCardJpg);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsFromUriAsync(uri));
-            Assert.AreEqual("404", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("404"));
         }
 
         [RecordedTest]
@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.DriverLicenseJpg);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeIdentityDocumentsFromUriAsync(uri));
-            Assert.AreEqual("404", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("404"));
         }
 
         [RecordedTest]
@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceJpg);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesFromUriAsync(uri));
-            Assert.AreEqual("404", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("404"));
         }
     }
 }

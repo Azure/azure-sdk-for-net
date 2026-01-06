@@ -42,7 +42,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var a = Encoding.UTF8.GetBytes(left);
             var b = Encoding.UTF8.GetBytes(right);
-            Assert.AreEqual(expected, JsonPathComparer.Default.NormalizedEquals(a, b));
+            Assert.That(JsonPathComparer.Default.NormalizedEquals(a, b), Is.EqualTo(expected));
 
             Span<byte> buffer = stackalloc byte[Math.Max(a.Length, b.Length)];
             JsonPathComparer.Default.Normalize(a.AsSpan(), buffer, out int bytesWrittenA);
@@ -50,22 +50,25 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             JsonPathComparer.Default.Normalize(b.AsSpan(), buffer, out int bytesWrittenB);
             var normalizedB = buffer.Slice(0, bytesWrittenB).ToArray();
 
-            Assert.AreEqual(expected, JsonPathComparer.Default.Equals(normalizedA, normalizedB));
+            Assert.That(JsonPathComparer.Default.Equals(normalizedA, normalizedB), Is.EqualTo(expected));
         }
 
         [Test]
         public void Equals_ByteArray_Same()
         {
             var a = "$.x"u8.ToArray();
-            Assert.AreEqual(true, JsonPathComparer.Default.Equals(a, a));
+            Assert.That(JsonPathComparer.Default.Equals(a, a), Is.EqualTo(true));
         }
 
         [Test]
         public void Equals_ByteArray_Null()
         {
             var a = "$.x"u8.ToArray();
-            Assert.AreEqual(false, JsonPathComparer.Default.Equals(a, null));
-            Assert.AreEqual(false, JsonPathComparer.Default.Equals(null, a));
+            Assert.Multiple(() =>
+            {
+                Assert.That(JsonPathComparer.Default.Equals(a, null), Is.EqualTo(false));
+                Assert.That(JsonPathComparer.Default.Equals(null, a), Is.EqualTo(false));
+            });
         }
 
         [TestCase("$.x.y", "$['x'].y", true)]
@@ -94,14 +97,14 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var a = Encoding.UTF8.GetBytes(left);
             var b = Encoding.UTF8.GetBytes(right);
-            Assert.AreEqual(expected, JsonPathComparer.Default.NormalizedEquals(a.AsSpan(), b));
+            Assert.That(JsonPathComparer.Default.NormalizedEquals(a.AsSpan(), b), Is.EqualTo(expected));
         }
 
         [Test]
         public void Equals_SpanToNullByteArray()
         {
             var a = "$.x"u8.ToArray();
-            Assert.AreEqual(false, JsonPathComparer.Default.Equals(a.AsSpan(), null!));
+            Assert.That(JsonPathComparer.Default.Equals(a.AsSpan(), null!), Is.EqualTo(false));
         }
 
         [TestCase("$['x'].y", "$.x.y")]
@@ -126,7 +129,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             var a = Encoding.UTF8.GetBytes(input);
             Span<byte> buffer = stackalloc byte[a.Length];
             JsonPathComparer.Default.Normalize(a.AsSpan(), buffer, out int bytesWritten);
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(buffer.Slice(0, bytesWritten).ToArray()));
+            Assert.That(Encoding.UTF8.GetString(buffer.Slice(0, bytesWritten).ToArray()), Is.EqualTo(expected));
         }
 
         [TestCase("$.x.y", "$['x'].y")]
@@ -142,7 +145,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var a = Encoding.UTF8.GetBytes(left);
             var b = Encoding.UTF8.GetBytes(right);
-            Assert.AreEqual(JsonPathComparer.Default.GetNormalizedHashCode(a), JsonPathComparer.Default.GetNormalizedHashCode(b));
+            Assert.That(JsonPathComparer.Default.GetNormalizedHashCode(b), Is.EqualTo(JsonPathComparer.Default.GetNormalizedHashCode(a)));
 
             Span<byte> buffer = stackalloc byte[Math.Max(a.Length, b.Length)];
             JsonPathComparer.Default.Normalize(a.AsSpan(), buffer, out int bytesWrittenA);
@@ -150,7 +153,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             JsonPathComparer.Default.Normalize(b.AsSpan(), buffer, out int bytesWrittenB);
             var normalizedB = buffer.Slice(0, bytesWrittenB).ToArray();
 
-            Assert.AreEqual(JsonPathComparer.Default.GetHashCode(normalizedA), JsonPathComparer.Default.GetHashCode(normalizedB));
+            Assert.That(JsonPathComparer.Default.GetHashCode(normalizedB), Is.EqualTo(JsonPathComparer.Default.GetHashCode(normalizedA)));
         }
     }
 }

@@ -88,17 +88,20 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var targetAccessTokenElement = postRequestJson.RootElement.GetProperty("accessToken");
             var targetExpirationDateTimeElement = postRequestJson.RootElement.GetProperty("expirationDateTime");
 
-            Assert.That(targetClassifierIdElement.ToString(), Is.EqualTo("target_classifier_id"));
-            Assert.That(targetClassifierLocationElement.ToString(), Is.EqualTo("https://fake_classifier_location.com/"));
-            Assert.That(targetResourceIdIdElement.ToString(), Is.EqualTo("resource_id"));
-            Assert.That(targetResourceRegionIdElement.ToString(), Is.EqualTo("resource_region"));
-            Assert.That(targetAccessTokenElement.ToString(), Is.EqualTo("token"));
-            Assert.That(targetExpirationDateTimeElement.ToString(), Is.EqualTo("2024-09-24T00:00:00.0000000Z"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetClassifierIdElement.ToString(), Is.EqualTo("target_classifier_id"));
+                Assert.That(targetClassifierLocationElement.ToString(), Is.EqualTo("https://fake_classifier_location.com/"));
+                Assert.That(targetResourceIdIdElement.ToString(), Is.EqualTo("resource_id"));
+                Assert.That(targetResourceRegionIdElement.ToString(), Is.EqualTo("resource_region"));
+                Assert.That(targetAccessTokenElement.ToString(), Is.EqualTo("token"));
+                Assert.That(targetExpirationDateTimeElement.ToString(), Is.EqualTo("2024-09-24T00:00:00.0000000Z"));
 
-            // Validate the response.
+                // Validate the response.
 
-            Assert.That(operation.HasValue);
-            Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+                Assert.That(operation.HasCompleted);
+            });
 
             var result = operation.Value;
 
@@ -154,12 +157,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             DateTimeOffset expectedTime = new DateTimeOffset(2024, 9, 24, 0, 0, 0, TimeSpan.Zero);
 
-            Assert.That(copyAuthorization.TargetClassifierId, Is.EqualTo("target_classifier_id"));
-            Assert.That(copyAuthorization.TargetClassifierLocation.AbsoluteUri, Is.EqualTo("https://fake_classifier_location.com/"));
-            Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo("resource_id"));
-            Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo("resource_region"));
-            Assert.That(copyAuthorization.AccessToken, Is.EqualTo("token"));
-            Assert.That(copyAuthorization.ExpiresOn, Is.EqualTo(expectedTime));
+            Assert.Multiple(() =>
+            {
+                Assert.That(copyAuthorization.TargetClassifierId, Is.EqualTo("target_classifier_id"));
+                Assert.That(copyAuthorization.TargetClassifierLocation.AbsoluteUri, Is.EqualTo("https://fake_classifier_location.com/"));
+                Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo("resource_id"));
+                Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo("resource_region"));
+                Assert.That(copyAuthorization.AccessToken, Is.EqualTo("token"));
+                Assert.That(copyAuthorization.ExpiresOn, Is.EqualTo(expectedTime));
+            });
         }
 
         private DocumentIntelligenceAdministrationClient CreateNonInstrumentedClient(DocumentIntelligenceClientOptions options)

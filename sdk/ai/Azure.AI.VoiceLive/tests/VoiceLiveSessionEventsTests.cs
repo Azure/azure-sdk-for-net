@@ -57,8 +57,11 @@ namespace Azure.AI.VoiceLive.Tests
             {
                 Assert.That(evt, Is.TypeOf<SessionUpdateSessionCreated>());
                 var created = (SessionUpdateSessionCreated)evt;
-                Assert.That(created.Type.ToString(), Is.EqualTo("session.created"));
-                Assert.That(created.Session, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(created.Type.ToString(), Is.EqualTo("session.created"));
+                    Assert.That(created.Session, Is.Not.Null);
+                });
                 break; // Only need first event
             }
         }
@@ -92,13 +95,16 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(CreateSessionCreatedJson("evt-first"));
 
             await using var enumerator1 = session.GetUpdatesAsync().GetAsyncEnumerator();
-            Assert.That(await enumerator1.MoveNextAsync(), Is.True, "First enumeration should obtain an event.");
-            Assert.That(enumerator1.Current, Is.TypeOf<SessionUpdateSessionCreated>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(await enumerator1.MoveNextAsync(), Is.True, "First enumeration should obtain an event.");
+                Assert.That(enumerator1.Current, Is.TypeOf<SessionUpdateSessionCreated>());
+            });
 
             // Second enumeration attempt should throw InvalidOperationException when MoveNextAsync invoked.
             await using var enumerator2 = session.GetUpdatesAsync().GetAsyncEnumerator();
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await enumerator2.MoveNextAsync());
-            StringAssert.Contains("Only one update enumeration", ex?.Message);
+            Assert.That(ex?.Message, Does.Contain("Only one update enumeration"));
         }
 
         [Test]

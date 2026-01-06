@@ -32,21 +32,27 @@ namespace Azure.Messaging.WebPubSub.Tests
             // Synchronize
             Uri sUri = serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(1), default, default, default, clientType, default);
             var token = HttpUtility.ParseQueryString(sUri.Query).Get("access_token");
-            Assert.NotNull(token);
+            Assert.That(token, Is.Not.Null);
             JwtSecurityToken jwt = s_jwtTokenHandler.ReadJwtToken(token);
             var aud = jwt.Claims.FirstOrDefault(s => s.Type == "aud")?.Value;
-            Assert.AreEqual($"http://localhost:8080{clientUriPrefix}/hubs/hub", aud);
-            Assert.True(sUri.ToString().StartsWith(expectedUriPrefix));
-            Assert.True(serviceClient.GetClientAccessUri(DateTimeOffset.UtcNow.AddMinutes(1), default, default, default, clientType, default).ToString().StartsWith(expectedUriPrefix));
+            Assert.Multiple(() =>
+            {
+                Assert.That(aud, Is.EqualTo($"http://localhost:8080{clientUriPrefix}/hubs/hub"));
+                Assert.That(sUri.ToString(), Does.StartWith(expectedUriPrefix));
+                Assert.That(serviceClient.GetClientAccessUri(DateTimeOffset.UtcNow.AddMinutes(1), default, default, default, clientType, default).ToString(), Does.StartWith(expectedUriPrefix));
+            });
             // Asynchronize
             Uri asyncUri = await serviceClient.GetClientAccessUriAsync(TimeSpan.FromMinutes(1), default, default, default, clientType, default);
             var asyncToken = HttpUtility.ParseQueryString(asyncUri.Query).Get("access_token");
-            Assert.NotNull(asyncToken);
+            Assert.That(asyncToken, Is.Not.Null);
             JwtSecurityToken asyncJwt = s_jwtTokenHandler.ReadJwtToken(asyncToken);
             var asyncAud = asyncJwt.Claims.FirstOrDefault(s => s.Type == "aud")?.Value;
-            Assert.AreEqual($"http://localhost:8080{clientUriPrefix}/hubs/hub", asyncAud);
-            Assert.True(asyncUri.ToString().StartsWith(expectedUriPrefix));
-            Assert.True((await serviceClient.GetClientAccessUriAsync(DateTimeOffset.Now, default, default, default, clientType, default)).ToString().StartsWith(expectedUriPrefix));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(asyncAud, Is.EqualTo($"http://localhost:8080{clientUriPrefix}/hubs/hub"));
+                Assert.That(asyncUri.ToString(), Does.StartWith(expectedUriPrefix));
+                Assert.That((await serviceClient.GetClientAccessUriAsync(DateTimeOffset.Now, default, default, default, clientType, default)).ToString(), Does.StartWith(expectedUriPrefix));
+            });
         }
 
         [TestCase(WebPubSubClientProtocol.Default, "/client", "default")]
@@ -56,14 +62,17 @@ namespace Azure.Messaging.WebPubSub.Tests
         {
             var serviceClient = new WebPubSubServiceSubClass(new Uri("https://localhost"), "hub", new DefaultAzureCredential());
             var expectedUri = new Uri($"wss://localhost{clientUriPrefix}/hubs/hub?access_token=fakeToken");
-            Assert.AreEqual(expectedUri, serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(1), default, default, default, clientType, default));
+            Assert.That(serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(1), default, default, default, clientType, default), Is.EqualTo(expectedUri));
             Assert.AreEqual(expectedUri, serviceClient.GetClientAccessUri(DateTime.UtcNow, default, default, default, clientType, default));
-            Assert.AreEqual(expectedUri, await serviceClient.GetClientAccessUriAsync(TimeSpan.FromMinutes(1), default, default, default, clientType, default));
-            Assert.AreEqual(expectedUri, await serviceClient.GetClientAccessUriAsync(DateTime.UtcNow, default, default, default, clientType, default));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(await serviceClient.GetClientAccessUriAsync(TimeSpan.FromMinutes(1), default, default, default, clientType, default), Is.EqualTo(expectedUri));
+                Assert.That(await serviceClient.GetClientAccessUriAsync(DateTime.UtcNow, default, default, default, clientType, default), Is.EqualTo(expectedUri));
+            });
             for (var i = 0; i < 4; i++)
             {
                 // Validate the "clientType" parameter passed to the GenerateClientTokenImpl(Async) method
-                Assert.True(clientTypeString == serviceClient.InvocationParameters[i][4].ToString());
+                Assert.That(clientTypeString, Is.EqualTo(serviceClient.InvocationParameters[i][4].ToString()));
             }
         }
 
@@ -103,12 +112,15 @@ namespace Azure.Messaging.WebPubSub.Tests
 
             Uri uri = serviceClient.GetClientAccessUri(expiresAfter, "foo", null);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
-            Assert.NotNull(token);
+            Assert.That(token, Is.Not.Null);
             var jwt = s_jwtTokenHandler.ReadJwtToken(token);
 
             var expireTime = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
-            Assert.IsTrue(long.TryParse(expireTime, out var expireTimestamp));
-            Assert.AreEqual(utcnow.Add(TimeSpan.FromMinutes(expectedMinutesAfter)).ToUnixTimeSeconds(), expireTimestamp);
+            Assert.Multiple(() =>
+            {
+                Assert.That(long.TryParse(expireTime, out var expireTimestamp), Is.True);
+                Assert.That(expireTimestamp, Is.EqualTo(utcnow.Add(TimeSpan.FromMinutes(expectedMinutesAfter)).ToUnixTimeSeconds()));
+            });
         }
 
         [TestCase(1)]
@@ -122,12 +134,15 @@ namespace Azure.Messaging.WebPubSub.Tests
 
             Uri uri = serviceClient.GetClientAccessUri(expireAt, "foo", null);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
-            Assert.NotNull(token);
+            Assert.That(token, Is.Not.Null);
             var jwt = s_jwtTokenHandler.ReadJwtToken(token);
 
             var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
-            Assert.IsTrue(long.TryParse(exp, out var expTimestamp));
-            Assert.AreEqual(expireAt.ToUnixTimeSeconds(), expTimestamp);
+            Assert.Multiple(() =>
+            {
+                Assert.That(long.TryParse(exp, out var expTimestamp), Is.True);
+                Assert.That(expTimestamp, Is.EqualTo(expireAt.ToUnixTimeSeconds()));
+            });
         }
 
         [Test]
@@ -135,27 +150,27 @@ namespace Azure.Messaging.WebPubSub.Tests
         {
             DateTimeOffset expiresAt;
             expiresAt = DateTimeOffset.UtcNow.AddSeconds(0);
-            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAt));
+            Assert.That(WebPubSubServiceClient.GetMinutesToExpire(expiresAt), Is.EqualTo(1));
             expiresAt = DateTimeOffset.UtcNow.AddSeconds(59);
-            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAt));
+            Assert.That(WebPubSubServiceClient.GetMinutesToExpire(expiresAt), Is.EqualTo(1));
             expiresAt = DateTimeOffset.UtcNow.AddSeconds(61);
-            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAt));
+            Assert.That(WebPubSubServiceClient.GetMinutesToExpire(expiresAt), Is.EqualTo(1));
             expiresAt = DateTimeOffset.UtcNow.AddSeconds(119);
-            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAt));
+            Assert.That(WebPubSubServiceClient.GetMinutesToExpire(expiresAt), Is.EqualTo(1));
             expiresAt = DateTimeOffset.UtcNow.AddSeconds(121);
-            Assert.AreEqual(2, WebPubSubServiceClient.GetMinutesToExpire(expiresAt));
+            Assert.That(WebPubSubServiceClient.GetMinutesToExpire(expiresAt), Is.EqualTo(2));
 
             TimeSpan expiresAfter;
             expiresAfter = TimeSpan.FromSeconds(0);
-            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAfter));
+            Assert.That(WebPubSubServiceClient.GetMinutesToExpire(expiresAfter), Is.EqualTo(1));
             expiresAfter = TimeSpan.FromSeconds(59);
-            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAfter));
+            Assert.That(WebPubSubServiceClient.GetMinutesToExpire(expiresAfter), Is.EqualTo(1));
             expiresAfter = TimeSpan.FromSeconds(61);
-            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAfter));
+            Assert.That(WebPubSubServiceClient.GetMinutesToExpire(expiresAfter), Is.EqualTo(1));
             expiresAfter = TimeSpan.FromSeconds(119);
-            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAfter));
+            Assert.That(WebPubSubServiceClient.GetMinutesToExpire(expiresAfter), Is.EqualTo(1));
             expiresAfter = TimeSpan.FromSeconds(121);
-            Assert.AreEqual(2, WebPubSubServiceClient.GetMinutesToExpire(expiresAfter));
+            Assert.That(WebPubSubServiceClient.GetMinutesToExpire(expiresAfter), Is.EqualTo(2));
         }
 
         [Test]
@@ -172,13 +187,16 @@ namespace Azure.Messaging.WebPubSub.Tests
             var queryString = url.Substring(url.IndexOf('?'));
 
             var uri = HttpUtility.ParseQueryString(queryString);
-            Assert.AreEqual("foo", uri.Get("userId"));
-            Assert.AreEqual("1", uri.Get("minutesToExpire"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(uri.Get("userId"), Is.EqualTo("foo"));
+                Assert.That(uri.Get("minutesToExpire"), Is.EqualTo("1"));
+            });
 
             var actualRoles = uri.GetValues("role");
-            Assert.AreEqual(expectRoles.Length, actualRoles.Length);
-            Assert.IsTrue(actualRoles.Contains("a"));
-            Assert.IsTrue(actualRoles.Contains("b"));
+            Assert.That(actualRoles.Length, Is.EqualTo(expectRoles.Length));
+            Assert.That(actualRoles, Does.Contain("a"));
+            Assert.That(actualRoles, Does.Contain("b"));
         }
     }
 }

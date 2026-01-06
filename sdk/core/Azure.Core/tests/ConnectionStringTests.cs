@@ -29,8 +29,11 @@ namespace Azure.Core.Tests
         public void ValidString_CustomSeparators(string str, string segmentSeparator, string keyValueSeparator)
         {
             var connectionString = ConnectionString.Parse(str, segmentSeparator, keyValueSeparator);
-            Assert.AreEqual("y", connectionString.GetRequired("x"));
-            Assert.AreEqual("w", connectionString.GetRequired("z"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectionString.GetRequired("x"), Is.EqualTo("y"));
+                Assert.That(connectionString.GetRequired("z"), Is.EqualTo("w"));
+            });
         }
 
         [TestCase("x")]
@@ -60,7 +63,7 @@ namespace Azure.Core.Tests
         public void RequiredKey()
         {
             var connectionString = ConnectionString.Parse("x=y");
-            Assert.AreEqual("y", connectionString.GetRequired("x"));
+            Assert.That(connectionString.GetRequired("x"), Is.EqualTo("y"));
             Assert.Throws<InvalidOperationException>(() => connectionString.GetRequired("notpresent"));
         }
 
@@ -68,9 +71,12 @@ namespace Azure.Core.Tests
         public void TryGetSegmentValue()
         {
             var connectionString = ConnectionString.Parse("x=y");
-            Assert.That(connectionString.TryGetSegmentValue("x", out var value));
-            Assert.That(value, Is.EqualTo("y"));
-            Assert.That(connectionString.TryGetSegmentValue("notpresent", out _), Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectionString.TryGetSegmentValue("x", out var value));
+                Assert.That(value, Is.EqualTo("y"));
+                Assert.That(connectionString.TryGetSegmentValue("notpresent", out _), Is.False);
+            });
         }
 
         [Test]
@@ -86,7 +92,7 @@ namespace Azure.Core.Tests
         public void Add()
         {
             var connectionString = ConnectionString.Parse("x=y");
-            Assert.AreEqual("y", connectionString.GetRequired("x"));
+            Assert.That(connectionString.GetRequired("x"), Is.EqualTo("y"));
             Assert.Throws<InvalidOperationException>(() => connectionString.GetRequired("notpresent"));
 
             connectionString.Add("notpresent", "someValue");
@@ -97,8 +103,11 @@ namespace Azure.Core.Tests
         public void NonRequiredKey()
         {
             var connectionString = ConnectionString.Parse("x=y");
-            Assert.AreEqual("y", connectionString.GetNonRequired("x"));
-            Assert.AreEqual(null, connectionString.GetNonRequired("y"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectionString.GetNonRequired("x"), Is.EqualTo("y"));
+                Assert.That(connectionString.GetNonRequired("y"), Is.EqualTo(null));
+            });
         }
 
         [Test]
@@ -108,8 +117,11 @@ namespace Azure.Core.Tests
             connectionString.Replace("x", "z");
             connectionString.Replace("y", "w");
 
-            Assert.AreEqual("z", connectionString.GetNonRequired("x"));
-            Assert.AreEqual(null, connectionString.GetNonRequired("y"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectionString.GetNonRequired("x"), Is.EqualTo("z"));
+                Assert.That(connectionString.GetNonRequired("y"), Is.EqualTo(null));
+            });
         }
 
         [Test]

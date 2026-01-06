@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
 
-            Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedQuerySubstring));
         }
 
         private DocumentIntelligenceClient CreateInstrumentedClient(DocumentIntelligenceClientOptions options)

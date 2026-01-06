@@ -24,18 +24,24 @@ namespace Azure.Verticals.AgriFood.Farming.Tests
             Response createdResponse = await partiesClient.CreateOrUpdateAsync(partyId, RequestContent.Create(new object()));
             JsonElement createdBodyJson = JsonDocument.Parse(GetContentFromResponse(createdResponse)).RootElement;
 
-            Assert.AreEqual(partyId, createdBodyJson.GetProperty("id").GetString());
-            Assert.IsTrue(HasProperty(createdBodyJson, "eTag"));
-            Assert.IsTrue(HasProperty(createdBodyJson, "createdDateTime"));
-            Assert.IsTrue(HasProperty(createdBodyJson, "modifiedDateTime"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdBodyJson.GetProperty("id").GetString(), Is.EqualTo(partyId));
+                Assert.That(HasProperty(createdBodyJson, "eTag"), Is.True);
+                Assert.That(HasProperty(createdBodyJson, "createdDateTime"), Is.True);
+                Assert.That(HasProperty(createdBodyJson, "modifiedDateTime"), Is.True);
+            });
 
             Response fetchResponse = await partiesClient.GetPartyAsync(partyId, new());
             JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
 
-            Assert.AreEqual(createdBodyJson.GetProperty("id").GetString(), fetchBodyJson.GetProperty("id").GetString());
-            Assert.AreEqual(createdBodyJson.GetProperty("eTag").GetString(), fetchBodyJson.GetProperty("eTag").GetString());
-            Assert.AreEqual(createdBodyJson.GetProperty("createdDateTime").GetString(), fetchBodyJson.GetProperty("createdDateTime").GetString());
-            Assert.AreEqual(createdBodyJson.GetProperty("modifiedDateTime").GetString(), fetchBodyJson.GetProperty("modifiedDateTime").GetString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(fetchBodyJson.GetProperty("id").GetString(), Is.EqualTo(createdBodyJson.GetProperty("id").GetString()));
+                Assert.That(fetchBodyJson.GetProperty("eTag").GetString(), Is.EqualTo(createdBodyJson.GetProperty("eTag").GetString()));
+                Assert.That(fetchBodyJson.GetProperty("createdDateTime").GetString(), Is.EqualTo(createdBodyJson.GetProperty("createdDateTime").GetString()));
+                Assert.That(fetchBodyJson.GetProperty("modifiedDateTime").GetString(), Is.EqualTo(createdBodyJson.GetProperty("modifiedDateTime").GetString()));
+            });
 
             await partiesClient.DeleteAsync(partyId);
         }

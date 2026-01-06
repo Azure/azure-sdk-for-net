@@ -62,11 +62,14 @@ namespace Azure.Communication.Messages.Tests
             TextNotificationContent content = new(Guid.NewGuid(), new List<string> { "+1(123)456-7890" }, "testMessage");
             SendMessageResult sendMessageResult = await notificationMessagesClient.SendAsync(content);
 
-            //assert
-            Assert.IsNotNull(sendMessageResult.Receipts[0].MessageId);
-            Assert.IsNotNull(sendMessageResult.Receipts[0].To);
-            Assert.AreEqual("d53605de-2f6e-437d-9e40-8d83b2111cb8", sendMessageResult.Receipts[0].MessageId);
-            Assert.AreEqual("+1(123)456-7890", sendMessageResult.Receipts[0].To);
+            Assert.Multiple(() =>
+            {
+                //assert
+                Assert.That(sendMessageResult.Receipts[0].MessageId, Is.Not.Null);
+                Assert.That(sendMessageResult.Receipts[0].To, Is.Not.Null);
+            });
+            Assert.That(sendMessageResult.Receipts[0].MessageId, Is.EqualTo("d53605de-2f6e-437d-9e40-8d83b2111cb8"));
+            Assert.That(sendMessageResult.Receipts[0].To, Is.EqualTo("+1(123)456-7890"));
         }
 
         [Test]
@@ -94,7 +97,7 @@ namespace Azure.Communication.Messages.Tests
             catch (RequestFailedException requestFailedException)
             {
                 //assert
-                Assert.AreEqual(400, requestFailedException.Status);
+                Assert.That(requestFailedException.Status, Is.EqualTo(400));
             }
         }
 

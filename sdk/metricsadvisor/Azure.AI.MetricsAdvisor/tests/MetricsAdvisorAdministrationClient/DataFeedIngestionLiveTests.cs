@@ -27,8 +27,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(progress, Is.Not.Null);
             Assert.That(progress.LatestActiveTimestamp, Is.Not.Null);
-            Assert.That(progress.LatestActiveTimestamp, Is.Not.EqualTo(default(DateTimeOffset)));
-            Assert.That(progress.LatestSuccessTimestamp, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(progress.LatestActiveTimestamp, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.That(progress.LatestSuccessTimestamp, Is.Not.Null);
+            });
             Assert.That(progress.LatestSuccessTimestamp, Is.Not.EqualTo(default(DateTimeOffset)));
         }
 
@@ -61,9 +64,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (DataFeedIngestionStatus status in adminClient.GetDataFeedIngestionStatusesAsync(DataFeedId, options))
             {
                 Assert.That(status, Is.Not.Null);
-                Assert.That(status.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
-                Assert.That(status.Status, Is.Not.EqualTo(default(IngestionStatusType)));
-                Assert.That(status.Message, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(status.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
+                    Assert.That(status.Status, Is.Not.EqualTo(default(IngestionStatusType)));
+                    Assert.That(status.Message, Is.Not.Null);
+                });
 
                 if (++statusCount >= MaximumSamplesCount)
                 {

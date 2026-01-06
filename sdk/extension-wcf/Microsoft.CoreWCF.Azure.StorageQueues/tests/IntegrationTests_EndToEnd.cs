@@ -70,8 +70,11 @@ namespace CoreWCF
             channel.Create("TestService_EndToEnd");
 
             var testService = host.Services.GetRequiredService<TestService_EndToEnd>();
-            Assert.True(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)));
-            Assert.AreEqual("TestService_EndToEnd", testService.ReceivedName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)), Is.True);
+                Assert.That(testService.ReceivedName, Is.EqualTo("TestService_EndToEnd"));
+            });
         }
 
         [Test]
@@ -105,10 +108,10 @@ namespace CoreWCF
             channel.Create("TestService_EndToEnd");
 
             var testService = host.Services.GetRequiredService<TestService_EndToEnd>();
-            Assert.False(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)));
+            Assert.That(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)), Is.False);
             QueueClient queueClient = TestHelper.GetQueueClient(azuriteFixture.GetTransport(), connectionString, Startup_EndToEnd.DlqQueueName, QueueMessageEncoding.Base64);
             QueueMessage message = await queueClient.ReceiveMessageAsync();
-            Assert.IsNotNull(message.MessageText);
+            Assert.That(message.MessageText, Is.Not.Null);
         }
     }
 }

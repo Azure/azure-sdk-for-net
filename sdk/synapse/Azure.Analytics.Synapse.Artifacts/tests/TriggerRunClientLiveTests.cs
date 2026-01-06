@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await startOperation.WaitAndAssertSuccessfulCompletion();
 
             TriggerRunsQueryResponse response = await runClient.QueryTriggerRunsByWorkspaceAsync (new RunFilterParameters (DateTimeOffset.MinValue, DateTimeOffset.MaxValue));
-            Assert.GreaterOrEqual (response.Value.Count, 1);
+            Assert.That(response.Value, Is.Not.Empty);
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18079 - Missing or invalid pipeline references for trigger but no obvious place to put pipeline?")]

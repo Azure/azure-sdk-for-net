@@ -57,17 +57,23 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             DocumentClassifierDetails classifier = operation.Value;
 
-            Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
-            Assert.That(classifier.BaseClassifierId, Is.Null);
-            Assert.That(classifier.Description, Is.EqualTo(description));
-            Assert.That(classifier.ApiVersion, Is.EqualTo(ServiceVersionString));
-            Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime));
-            Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
+            Assert.Multiple(() =>
+            {
+                Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
+                Assert.That(classifier.BaseClassifierId, Is.Null);
+                Assert.That(classifier.Description, Is.EqualTo(description));
+                Assert.That(classifier.ApiVersion, Is.EqualTo(ServiceVersionString));
+                Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime));
+                Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
+            });
 
             DocumentAssert.AreEquivalent(docTypes, classifier.DocumentTypes);
 
@@ -115,17 +121,23 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             DocumentClassifierDetails classifier = operation.Value;
 
-            Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
-            Assert.That(classifier.BaseClassifierId, Is.Null);
-            Assert.That(classifier.Description, Is.EqualTo(description));
-            Assert.That(classifier.ApiVersion, Is.EqualTo(ServiceVersionString));
-            Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime));
-            Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
+            Assert.Multiple(() =>
+            {
+                Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
+                Assert.That(classifier.BaseClassifierId, Is.Null);
+                Assert.That(classifier.Description, Is.EqualTo(description));
+                Assert.That(classifier.ApiVersion, Is.EqualTo(ServiceVersionString));
+                Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime));
+                Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
+            });
 
             DocumentAssert.AreEquivalent(docTypes, classifier.DocumentTypes);
 
@@ -176,20 +188,26 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             DocumentClassifierDetails sourceClassifier = disposableClassifier.Value;
             DocumentClassifierDetails classifier = operation.Value;
 
-            Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
-            Assert.That(classifier.BaseClassifierId, Is.Null);
-            Assert.That(classifier.Description, Is.EqualTo(description));
-            Assert.That(classifier.ApiVersion, Is.EqualTo(ServiceVersionString));
+            Assert.Multiple(() =>
+            {
+                Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
+                Assert.That(classifier.BaseClassifierId, Is.Null);
+                Assert.That(classifier.Description, Is.EqualTo(description));
+                Assert.That(classifier.ApiVersion, Is.EqualTo(ServiceVersionString));
 
-            // Add a 4-hour tolerance because the model could have been cached before this test.
-            Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
+                // Add a 4-hour tolerance because the model could have been cached before this test.
+                Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+                Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
+            });
 
             DocumentAssert.AreEquivalent(sourceClassifier.DocumentTypes, classifier.DocumentTypes);
 
@@ -261,7 +279,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            Assert.That(idMapping.Count, Is.EqualTo(expectedIdMapping.Count));
+            Assert.That(idMapping, Has.Count.EqualTo(expectedIdMapping.Count));
 
             foreach (string id in expectedIdMapping.Keys)
             {
@@ -311,13 +329,19 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             ClassifierCopyAuthorization copyAuthorization = await client.AuthorizeClassifierCopyAsync(options);
 
-            Assert.That(copyAuthorization.TargetClassifierId, Is.EqualTo(classifierId));
-            Assert.That(copyAuthorization.TargetClassifierLocation.AbsoluteUri, Does.StartWith(TestEnvironment.Endpoint));
-            Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo(TestEnvironment.ResourceId));
-            Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo(TestEnvironment.ResourceRegion));
-            Assert.That(copyAuthorization.AccessToken, Is.Not.Null);
-            Assert.That(copyAuthorization.AccessToken, Is.Not.Empty);
-            Assert.That(copyAuthorization.ExpiresOn, Is.GreaterThan(Recording.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(copyAuthorization.TargetClassifierId, Is.EqualTo(classifierId));
+                Assert.That(copyAuthorization.TargetClassifierLocation.AbsoluteUri, Does.StartWith(TestEnvironment.Endpoint));
+                Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo(TestEnvironment.ResourceId));
+                Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo(TestEnvironment.ResourceRegion));
+                Assert.That(copyAuthorization.AccessToken, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(copyAuthorization.AccessToken, Is.Not.Empty);
+                Assert.That(copyAuthorization.ExpiresOn, Is.GreaterThan(Recording.UtcNow));
+            });
         }
     }
 }

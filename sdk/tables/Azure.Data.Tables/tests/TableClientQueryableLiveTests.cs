@@ -72,10 +72,13 @@ namespace Azure.Data.Tables.Tests
 
             foreach (ComplexEntity ent in results)
             {
-                Assert.That(ent.PartitionKey, Is.EqualTo(PartitionKeyValue));
-                Assert.That(ent.RowKey, Is.Not.EqualTo("0004"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ent.PartitionKey, Is.EqualTo(PartitionKeyValue));
+                    Assert.That(ent.RowKey, Is.Not.EqualTo("0004"));
+                });
             }
-            Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count - 1));
+            Assert.That(results, Has.Count.EqualTo(entitiesToCreate.Count - 1));
 
             // Key predicate before filter.
 
@@ -83,10 +86,13 @@ namespace Azure.Data.Tables.Tests
 
             foreach (ComplexEntity ent in results)
             {
-                Assert.That(ent.PartitionKey, Is.EqualTo(PartitionKeyValue));
-                Assert.That(ent.RowKey, Is.Not.EqualTo("0004"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ent.PartitionKey, Is.EqualTo(PartitionKeyValue));
+                    Assert.That(ent.RowKey, Is.Not.EqualTo("0004"));
+                });
             }
-            Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count - 1));
+            Assert.That(results, Has.Count.EqualTo(entitiesToCreate.Count - 1));
         }
 
         [RecordedTest]
@@ -102,10 +108,10 @@ namespace Azure.Data.Tables.Tests
 
             foreach (ComplexEntity ent in results)
             {
-                Assert.IsTrue(ent.Int32 == 4 || ent.Int32 == 2);
+                Assert.That(ent.Int32 == 4 || ent.Int32 == 2, Is.True);
             }
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
         }
 
         [RecordedTest]
@@ -122,10 +128,10 @@ namespace Azure.Data.Tables.Tests
 
             foreach (ComplexEntity ent in results)
             {
-                Assert.IsTrue(ent.Int32 == 4 || ent.Int32 == 2);
+                Assert.That(ent.Int32 == 4 || ent.Int32 == 2, Is.True);
             }
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
         }
 
         [RecordedTest]
@@ -144,10 +150,10 @@ namespace Azure.Data.Tables.Tests
 
             foreach (ComplexEntity ent in results)
             {
-                Assert.IsTrue(ent.Int32 == 4 || ent.Int32 == 2);
+                Assert.That(ent.Int32 == 4 || ent.Int32 == 2, Is.True);
             }
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
         }
 
         [RecordedTest]
@@ -165,7 +171,7 @@ namespace Azure.Data.Tables.Tests
 
             // Assert that all but one were returned
 
-            Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count - 1));
+            Assert.That(results, Has.Count.EqualTo(entitiesToCreate.Count - 1));
 
             foreach (var ent in results)
             {
@@ -177,14 +183,14 @@ namespace Azure.Data.Tables.Tests
             results = await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && +x.Int32 < +5).ToEnumerableAsync().ConfigureAwait(false);
 
             // Assert that all were returned
-            Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count));
+            Assert.That(results, Has.Count.EqualTo(entitiesToCreate.Count));
 
             // Unary -.
 
             results = await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && x.Int32 > -1).ToEnumerableAsync().ConfigureAwait(false);
 
             // Assert that all were returned
-            Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count));
+            Assert.That(results, Has.Count.EqualTo(entitiesToCreate.Count));
         }
 
         [RecordedTest]
@@ -202,7 +208,7 @@ namespace Azure.Data.Tables.Tests
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {
-                Assert.That(page.Values.Count, Is.EqualTo(10), "The entity paged result count should be 10");
+                Assert.That(page.Values, Has.Count.EqualTo(10), "The entity paged result count should be 10");
             }
         }
 
@@ -221,7 +227,7 @@ namespace Azure.Data.Tables.Tests
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {
-                Assert.That(page.Values.Count, Is.EqualTo(5), "The entity paged result count should be 5");
+                Assert.That(page.Values, Has.Count.EqualTo(5), "The entity paged result count should be 5");
             }
         }
 
@@ -240,8 +246,11 @@ namespace Azure.Data.Tables.Tests
             var entity = results.SingleOrDefault();
 
             Assert.That(entity, Is.Not.Null);
-            Assert.That(entity.PartitionKey, Is.EqualTo(PartitionKeyValue));
-            Assert.That(entity.RowKey, Is.EqualTo(entitiesToCreate[1].RowKey));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity.PartitionKey, Is.EqualTo(PartitionKeyValue));
+                Assert.That(entity.RowKey, Is.EqualTo(entitiesToCreate[1].RowKey));
+            });
         }
 
         [RecordedTest]
@@ -257,8 +266,11 @@ namespace Azure.Data.Tables.Tests
             var entity = results.SingleOrDefault();
 
             Assert.That(entity, Is.Not.Null);
-            Assert.That(entity.PartitionKey, Is.EqualTo(PartitionKeyValue));
-            Assert.That(entity.RowKey, Is.EqualTo(entitiesToCreate[1].RowKey));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity.PartitionKey, Is.EqualTo(PartitionKeyValue));
+                Assert.That(entity.RowKey, Is.EqualTo(entitiesToCreate[1].RowKey));
+            });
         }
 
         [RecordedTest]
@@ -286,7 +298,7 @@ namespace Azure.Data.Tables.Tests
                 Assert.That(ent.PartitionKey, Is.EqualTo(PartitionKeyValue));
                 secondIteration.Add(ent);
             }
-            Assert.That(firstIteration.Count, Is.EqualTo(secondIteration.Count));
+            Assert.That(firstIteration, Has.Count.EqualTo(secondIteration.Count));
 
             for (int m = 0; m < firstIteration.Count; m++)
             {
@@ -310,70 +322,70 @@ namespace Azure.Data.Tables.Tests
             // 1. Filter on String
             var results = await client.QueryAsync<ComplexEntity>(ent => ent.String.CompareTo(thirdEntity.String) >= 0).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 2. Filter on Guid
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Guid == thirdEntity.Guid).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(1));
+            Assert.That(results, Has.Count.EqualTo(1));
 
             // 3. Filter on Long
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Int64 >= thirdEntity.Int64).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<ComplexEntity>(ent => ent.LongPrimitive >= thirdEntity.LongPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<ComplexEntity>(ent => ent.LongPrimitiveN >= thirdEntity.LongPrimitiveN).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 4. Filter on Double
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Double >= thirdEntity.Double).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<ComplexEntity>(ent => ent.DoublePrimitive >= thirdEntity.DoublePrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 5. Filter on Integer
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Int32 >= thirdEntity.Int32).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Int32N >= thirdEntity.Int32N).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 6. Filter on Date
             results = await client.QueryAsync<ComplexEntity>(ent => ent.DateTimeOffset >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<ComplexEntity>(ent => ent.DateTimeOffset < thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 7. Filter on Boolean
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Bool == thirdEntity.Bool).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<ComplexEntity>(ent => ent.BoolPrimitive == thirdEntity.BoolPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 8. Filter on Binary
             results = await client.QueryAsync<ComplexEntity>(ent => ent.Binary == thirdEntity.Binary).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(1));
+            Assert.That(results, Has.Count.EqualTo(1));
 
             results = await client.QueryAsync<ComplexEntity>(ent => ent.BinaryPrimitive == thirdEntity.BinaryPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(1));
+            Assert.That(results, Has.Count.EqualTo(1));
 
             // 10. Complex Filter on Binary GTE
 
@@ -386,7 +398,7 @@ namespace Azure.Data.Tables.Tests
                      ent.Int32N >= thirdEntity.Int32N &&
                      ent.DateTimeOffset >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
         }
 
         [RecordedTest]
@@ -405,75 +417,75 @@ namespace Azure.Data.Tables.Tests
             // 1. Filter on String
             var results = await client.QueryAsync<TableEntity>(ent => ent.GetString("String").CompareTo(thirdEntity.String) >= 0).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 2. Filter on Guid
             results = await client.QueryAsync<TableEntity>(ent => ent.GetGuid("Guid") == thirdEntity.Guid).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(1));
+            Assert.That(results, Has.Count.EqualTo(1));
 
             // 3. Filter on Long
             results = await client.QueryAsync<TableEntity>(ent => ent.GetInt64("Int64") >= thirdEntity.Int64).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<TableEntity>(ent => ent.GetInt64("LongPrimitive") >= thirdEntity.LongPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<TableEntity>(ent => ent.GetInt64("LongPrimitiveN") >= thirdEntity.LongPrimitiveN).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 4. Filter on Double
             results = await client.QueryAsync<TableEntity>(ent => ent.GetDouble("Double") >= thirdEntity.Double).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<TableEntity>(ent => ent.GetDouble("DoublePrimitive") >= thirdEntity.DoublePrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 5. Filter on Integer
             results = await client.QueryAsync<TableEntity>(ent => ent.GetInt32("Int32") >= thirdEntity.Int32).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<TableEntity>(ent => ent.GetInt32("Int32N") >= thirdEntity.Int32N).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 6. Filter on Date
             results = await client.QueryAsync<TableEntity>(ent => (DateTimeOffset)ent["DateTimeOffset"] >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<TableEntity>(ent => (DateTimeOffset)ent["DateTimeOffset"] < thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 7. Filter on Boolean
             results = await client.QueryAsync<TableEntity>(ent => ent.GetBoolean("Bool") == thirdEntity.Bool).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             results = await client.QueryAsync<TableEntity>(ent => ent.GetBoolean("BoolPrimitive") == thirdEntity.BoolPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 8. Filter on Binary
             results = await client.QueryAsync<TableEntity>(ent => ent.GetBinaryData("Binary") == thirdEntity.Binary).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(1));
+            Assert.That(results, Has.Count.EqualTo(1));
 
             results = await client.QueryAsync<TableEntity>(ent => ent.GetBinary("BinaryPrimitive") == thirdEntity.BinaryPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(1));
+            Assert.That(results, Has.Count.EqualTo(1));
 
             // 9. Filter using indexer.
             results = await client.QueryAsync<TableEntity>(ent => (ent["String"] as string).CompareTo(thirdEntity.String) >= 0).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
 
             // 10. Complex Filter on Binary GTE
 
@@ -486,7 +498,7 @@ namespace Azure.Data.Tables.Tests
                      ent.GetInt32("Int32N") >= thirdEntity.Int32N &&
                      (DateTimeOffset)ent["DateTimeOffset"] >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results, Has.Count.EqualTo(2));
         }
 
         [RecordedTest]

@@ -13,28 +13,28 @@ namespace TestProjects.Spector.Tests.Http.Payload.MediaType
         public Task SendAsText() => Test(async (host) =>
         {
             var response1 = await new MediaTypeClient(host, null).GetStringBodyClient().SendAsTextAsync("{cat}");
-            Assert.AreEqual(200, response1.Status);
+            Assert.That(response1.Status, Is.EqualTo(200));
         });
 
         [SpectorTest]
         public Task GetAsText() => Test(async (host) =>
         {
             var response2 = await new MediaTypeClient(host, null).GetStringBodyClient().GetAsTextAsync();
-            Assert.AreEqual("{cat}", response2.Value);
+            Assert.That(response2.Value, Is.EqualTo("{cat}"));
         });
 
         [SpectorTest]
         public Task SendAsJson() => Test(async (host) =>
         {
             var response3 = await new MediaTypeClient(host, null).GetStringBodyClient().SendAsJsonAsync("foo");
-            Assert.AreEqual(200, response3.Status);
+            Assert.That(response3.Status, Is.EqualTo(200));
         });
 
         [SpectorTest]
         public Task GetAsJson() => Test(async (host) =>
         {
             var response4 = await new MediaTypeClient(host, null).GetStringBodyClient().GetAsJsonAsync();
-            Assert.AreEqual("foo", response4.Value);
+            Assert.That(response4.Value, Is.EqualTo("foo"));
         });
     }
 }

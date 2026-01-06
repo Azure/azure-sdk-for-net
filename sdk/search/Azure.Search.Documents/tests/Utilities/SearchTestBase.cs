@@ -170,7 +170,7 @@ namespace Azure.Search.Documents.Tests
         public static async Task<T> CatchAsync<T>(Func<Task> action)
             where T : Exception
         {
-            Assert.IsNotNull(action);
+            Assert.That(action, Is.Not.Null);
             try
             {
                 await action().ConfigureAwait(false);
@@ -239,7 +239,7 @@ namespace Azure.Search.Documents.Tests
             static void AssertEqual(object e, object a, string path)
             {
                 string location = path != null ? " at path " + path : "";
-                Assert.AreEqual(e, a, $"Expected value `{e}`{location}, not `{a}`.");
+                Assert.That(a, Is.EqualTo(e), $"Expected value `{e}`{location}, not `{a}`.");
             }
         }
 

@@ -23,25 +23,28 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
                 name = "Madge"
             };
             var response = await new BasicClient(host, null).CreateOrUpdateAsync(1, RequestContent.Create(value));
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
             JsonNode responseBody = JsonNode.Parse(response.Content!)!;
-            Assert.AreEqual(1, (int)responseBody["id"]!);
-            Assert.AreEqual("Madge", (string)responseBody["name"]!);
-            Assert.AreEqual("11bdc430-65e8-45ad-81d9-8ffa60d55b59", (string)responseBody["etag"]!);
+            Assert.Multiple(() =>
+            {
+                Assert.That((int)responseBody["id"]!, Is.EqualTo(1));
+                Assert.That((string)responseBody["name"]!, Is.EqualTo("Madge"));
+                Assert.That((string)responseBody["etag"]!, Is.EqualTo("11bdc430-65e8-45ad-81d9-8ffa60d55b59"));
+            });
         });
 
         [SpectorTest]
         public Task Azure_Core_Basic_createOrReplace() => Test(async (host) =>
         {
             User response = await new BasicClient(host, null).CreateOrReplaceAsync(1, new User("Madge"));
-            Assert.AreEqual("Madge", response.Name);
+            Assert.That(response.Name, Is.EqualTo("Madge"));
         });
 
         [SpectorTest]
         public Task Azure_Core_Basic_get() => Test(async (host) =>
         {
             User response = await new BasicClient(host, null).GetAsync(1);
-            Assert.AreEqual("Madge", response.Name);
+            Assert.That(response.Name, Is.EqualTo("Madge"));
         });
 
         [SpectorTest]
@@ -51,20 +54,26 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
             await foreach (Page<User> page in allPages.AsPages())
             {
                 User firstUser = page.Values.First();
-                Assert.AreEqual(1, firstUser.Id);
-                Assert.AreEqual("Madge", firstUser.Name);
-                Assert.AreEqual("11bdc430-65e8-45ad-81d9-8ffa60d55b59", firstUser.Etag.ToString());
-                Assert.AreEqual(1, firstUser.Orders.First().Id);
-                Assert.AreEqual(1, firstUser.Orders.First().UserId);
-                Assert.AreEqual("a recorder", firstUser.Orders.First().Detail);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(firstUser.Id, Is.EqualTo(1));
+                    Assert.That(firstUser.Name, Is.EqualTo("Madge"));
+                    Assert.That(firstUser.Etag.ToString(), Is.EqualTo("11bdc430-65e8-45ad-81d9-8ffa60d55b59"));
+                    Assert.That(firstUser.Orders.First().Id, Is.EqualTo(1));
+                    Assert.That(firstUser.Orders.First().UserId, Is.EqualTo(1));
+                    Assert.That(firstUser.Orders.First().Detail, Is.EqualTo("a recorder"));
+                });
 
                 User secondUser = page.Values.Last();
-                Assert.AreEqual(2, secondUser.Id);
-                Assert.AreEqual("John", secondUser.Name);
-                Assert.AreEqual("11bdc430-65e8-45ad-81d9-8ffa60d55b5a", secondUser.Etag.ToString());
-                Assert.AreEqual(2, secondUser.Orders.First().Id);
-                Assert.AreEqual(2, secondUser.Orders.First().UserId);
-                Assert.AreEqual("a TV", secondUser.Orders.First().Detail);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(secondUser.Id, Is.EqualTo(2));
+                    Assert.That(secondUser.Name, Is.EqualTo("John"));
+                    Assert.That(secondUser.Etag.ToString(), Is.EqualTo("11bdc430-65e8-45ad-81d9-8ffa60d55b5a"));
+                    Assert.That(secondUser.Orders.First().Id, Is.EqualTo(2));
+                    Assert.That(secondUser.Orders.First().UserId, Is.EqualTo(2));
+                    Assert.That(secondUser.Orders.First().Detail, Is.EqualTo("a TV"));
+                });
             }
         });
 
@@ -72,25 +81,28 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
         public Task Azure_Core_Basic_delete() => Test(async (host) =>
         {
             var response = await new BasicClient(host, null).DeleteAsync(1);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Azure_Core_Basic_export() => Test(async (host) =>
         {
             User response = await new BasicClient(host, null).ExportAsync(1, "json");
-            Assert.AreEqual("Madge", response.Name);
+            Assert.That(response.Name, Is.EqualTo("Madge"));
         });
 
         [SpectorTest]
         public Task Azure_Core_Basic_exportAllUsers() => Test(async (host) =>
         {
             var response = await new BasicClient(host, null).ExportAllUsersAsync("json");
-            Assert.AreEqual(1, response.Value.Users.First().Id);
-            Assert.AreEqual("Madge", response.Value.Users.First().Name);
-            Assert.AreEqual(2, response.Value.Users.Last().Id);
-            Assert.AreEqual("John", response.Value.Users.Last().Name);
-            Assert.AreEqual(2, response.Value.Users.Count());
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Users.First().Id, Is.EqualTo(1));
+                Assert.That(response.Value.Users.First().Name, Is.EqualTo("Madge"));
+                Assert.That(response.Value.Users.Last().Id, Is.EqualTo(2));
+                Assert.That(response.Value.Users.Last().Name, Is.EqualTo("John"));
+                Assert.That(response.Value.Users.Count(), Is.EqualTo(2));
+            });
         });
 
         [SpectorTest]
@@ -98,8 +110,11 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
         {
             var getUsersMethod = typeof(BasicClient).GetMethod("GetAllAsync", new[] { typeof(int?), typeof(int?), typeof(int?), typeof(IEnumerable<string>), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(CancellationToken) });
             var listMethod = typeof(BasicClient).GetMethod("List", new[] { typeof(int?), typeof(int?), typeof(int?), typeof(IEnumerable<string>), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(CancellationToken) });
-            Assert.IsNull(listMethod);
-            Assert.IsNotNull(getUsersMethod);
+            Assert.Multiple(() =>
+            {
+                Assert.That(listMethod, Is.Null);
+                Assert.That(getUsersMethod, Is.Not.Null);
+            });
         }
     }
 }

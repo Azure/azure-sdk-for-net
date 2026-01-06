@@ -173,9 +173,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(getResponse);
             DataSourceCredentialEntity credential = await adminClient.GetDataSourceCredentialAsync(FakeGuid);
 
-            Assert.That(credential.Id, Is.EqualTo(FakeGuid));
-            Assert.That(credential.Name, Is.EqualTo("unknownCredentialName"));
-            Assert.That(credential.Description, Is.EqualTo("unknown credential description"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(credential.Id, Is.EqualTo(FakeGuid));
+                Assert.That(credential.Name, Is.EqualTo("unknownCredentialName"));
+                Assert.That(credential.Description, Is.EqualTo("unknown credential description"));
+            });
         }
 
         [Test]
@@ -199,8 +202,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockRequest request = mockTransport.Requests.Last();
             string content = ReadContent(request);
 
-            Assert.That(request.Uri.Path, Contains.Substring(FakeGuid));
-            Assert.That(content, ContainsJsonString("dataSourceCredentialName", "newCredentialName"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Uri.Path, Contains.Substring(FakeGuid));
+                Assert.That(content, ContainsJsonString("dataSourceCredentialName", "newCredentialName"));
+            });
             Assert.That(content, ContainsJsonString("dataSourceCredentialType", "unknownType"));
             Assert.That(content, ContainsJsonString("dataSourceCredentialDescription", "new description"));
         }

@@ -14,8 +14,11 @@ namespace TestProjects.Spector.Tests.Http.Encode.Numeric
         public Task EncodeNumericPropertySafeintAsString() => Test(async (host) =>
         {
             var response = await new NumericClient(host, null).GetPropertyClient().SafeintAsStringAsync(new SafeintAsStringProperty(10000000000));
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(10000000000, response.Value.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Value, Is.EqualTo(10000000000));
+            });
         });
 
         [SpectorTest]
@@ -25,16 +28,22 @@ namespace TestProjects.Spector.Tests.Http.Encode.Numeric
             {
                 Value = "1"
             });
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("1", response.Value.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Value, Is.EqualTo("1"));
+            });
         });
 
         [SpectorTest]
         public Task EncodeNumericPropertyUint8AsString() => Test(async (host) =>
         {
             var response = await new NumericClient(host, null).GetPropertyClient().Uint8AsStringAsync(new Uint8AsStringProperty(255));
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(255, response.Value.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Value, Is.EqualTo(255));
+            });
         });
     }
 }

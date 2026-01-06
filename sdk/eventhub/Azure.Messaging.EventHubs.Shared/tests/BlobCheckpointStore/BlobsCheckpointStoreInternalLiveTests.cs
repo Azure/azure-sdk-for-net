@@ -259,8 +259,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 var claimedOwnershipMatch = s_doubleQuotesExpression.Match(claimedOwnership.First().Version);
                 var storedOwnershipListMatch = s_doubleQuotesExpression.Match(storedOwnershipList.First().Version);
 
-                Assert.That(claimedOwnershipMatch.Success, Is.False);
-                Assert.That(storedOwnershipListMatch.Success, Is.False);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(claimedOwnershipMatch.Success, Is.False);
+                    Assert.That(storedOwnershipListMatch.Success, Is.False);
+                });
             }
         }
 
@@ -292,8 +295,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 await checkpointStore.ClaimOwnershipAsync(ownershipList, default);
 
                 Assert.That(ownership.LastModifiedTime, Is.Not.EqualTo(default(DateTimeOffset)));
-                Assert.That(ownership.LastModifiedTime, Is.GreaterThan(DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(5))));
-                Assert.That(ownership.Version, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ownership.LastModifiedTime, Is.GreaterThan(DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(5))));
+                    Assert.That(ownership.Version, Is.Not.Null);
+                });
             }
         }
 
@@ -576,8 +582,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 await checkpointStore.ClaimOwnershipAsync(new[] { secondOwnership }, default);
                 var storedOwnershipList = await checkpointStore.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup1", default);
 
-                Assert.That(firstOwnership.Version, Is.Not.EqualTo(secondOwnership.Version));
-                Assert.That(storedOwnershipList, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(firstOwnership.Version, Is.Not.EqualTo(secondOwnership.Version));
+                    Assert.That(storedOwnershipList, Is.Not.Null);
+                });
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
                 Assert.That(storedOwnershipList.Single().IsEquivalentTo(firstOwnership), Is.True);
             }
@@ -623,8 +632,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 await checkpointStore.ClaimOwnershipAsync(new[] { secondOwnership }, default);
                 var storedOwnershipList = await checkpointStore.ListOwnershipAsync("namespace", "eventHubName1", "consumerGroup", default);
 
-                Assert.That(firstOwnership.Version, Is.Not.EqualTo(secondOwnership.Version));
-                Assert.That(storedOwnershipList, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(firstOwnership.Version, Is.Not.EqualTo(secondOwnership.Version));
+                    Assert.That(storedOwnershipList, Is.Not.Null);
+                });
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
                 Assert.That(storedOwnershipList.Single().IsEquivalentTo(firstOwnership), Is.True);
             }
@@ -670,8 +682,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 await checkpointStore.ClaimOwnershipAsync(new[] { secondOwnership }, default);
                 var storedOwnershipList = await checkpointStore.ListOwnershipAsync("namespace1", "eventHubName", "consumerGroup", default);
 
-                Assert.That(firstOwnership.Version, Is.Not.EqualTo(secondOwnership.Version));
-                Assert.That(storedOwnershipList, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(firstOwnership.Version, Is.Not.EqualTo(secondOwnership.Version));
+                    Assert.That(storedOwnershipList, Is.Not.Null);
+                });
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
                 Assert.That(storedOwnershipList.Single().IsEquivalentTo(firstOwnership), Is.True);
             }
@@ -752,8 +767,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     break;
                 }
 
-                Assert.That(blobCount, Is.EqualTo(0));
-                Assert.That(storedCheckpoint, Is.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(blobCount, Is.EqualTo(0));
+                    Assert.That(storedCheckpoint, Is.Null);
+                });
 
                 // Calling update should create the checkpoint.
 
@@ -761,8 +779,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 storedCheckpoint = await checkpointStore.GetCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, default);
 
                 Assert.That(storedCheckpoint, Is.Not.Null);
-                Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.OffsetString, false)));
-                Assert.That(storedCheckpoint.ClientIdentifier, Is.EqualTo("Id"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.OffsetString, false)));
+                    Assert.That(storedCheckpoint.ClientIdentifier, Is.EqualTo("Id"));
+                });
 
                 // There should be a single blob in the container.
 
@@ -827,10 +848,16 @@ namespace Azure.Messaging.EventHubs.Tests
                     }
                 }
 
-                Assert.That(blobCount, Is.EqualTo(1));
-                Assert.That(storedCheckpoint, Is.Not.Null);
-                Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.OffsetString, false)));
-                Assert.That(storedCheckpoint.ClientIdentifier, Is.EqualTo("Id"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(blobCount, Is.EqualTo(1));
+                    Assert.That(storedCheckpoint, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.OffsetString, false)));
+                    Assert.That(storedCheckpoint.ClientIdentifier, Is.EqualTo("Id"));
+                });
 
                 // Calling update again should update the existing checkpoint.
 
@@ -854,10 +881,16 @@ namespace Azure.Messaging.EventHubs.Tests
                     }
                 }
 
-                Assert.That(blobCount, Is.EqualTo(1));
-                Assert.That(storedCheckpoint, Is.Not.Null);
-                Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.OffsetString, false)));
-                Assert.That(storedCheckpoint.ClientIdentifier, Is.EqualTo("Id"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(blobCount, Is.EqualTo(1));
+                    Assert.That(storedCheckpoint, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.OffsetString, false)));
+                    Assert.That(storedCheckpoint.ClientIdentifier, Is.EqualTo("Id"));
+                });
             }
         }
 
@@ -881,8 +914,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 var storedCheckpoint1 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup1", "partitionId", default);
                 var storedCheckpoint2 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup2", "partitionId", default);
 
-                Assert.That(storedCheckpoint1, Is.Not.Null);
-                Assert.That(storedCheckpoint2, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(storedCheckpoint1, Is.Not.Null);
+                    Assert.That(storedCheckpoint2, Is.Not.Null);
+                });
             }
         }
 
@@ -906,8 +942,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 var storedCheckpoint1 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName1", "consumerGroup", "partitionId", default);
                 var storedCheckpoint2 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName2", "consumerGroup", "partitionId", default);
 
-                Assert.That(storedCheckpoint1, Is.Not.Null);
-                Assert.That(storedCheckpoint2, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(storedCheckpoint1, Is.Not.Null);
+                    Assert.That(storedCheckpoint2, Is.Not.Null);
+                });
             }
         }
 
@@ -931,8 +970,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 var storedCheckpoint1 = await checkpointStore.GetCheckpointAsync("namespace1", "eventHubName", "consumerGroup", "partitionId", default);
                 var storedCheckpoint2 = await checkpointStore.GetCheckpointAsync("namespace2", "eventHubName", "consumerGroup", "partitionId", default);
 
-                Assert.That(storedCheckpoint1, Is.Not.Null);
-                Assert.That(storedCheckpoint2, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(storedCheckpoint1, Is.Not.Null);
+                    Assert.That(storedCheckpoint2, Is.Not.Null);
+                });
             }
         }
 
@@ -956,8 +998,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 var storedCheckpoint1 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId1", default);
                 var storedCheckpoint2 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId2", default);
 
-                Assert.That(storedCheckpoint1, Is.Not.Null);
-                Assert.That(storedCheckpoint2, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(storedCheckpoint1, Is.Not.Null);
+                    Assert.That(storedCheckpoint2, Is.Not.Null);
+                });
             }
         }
     }

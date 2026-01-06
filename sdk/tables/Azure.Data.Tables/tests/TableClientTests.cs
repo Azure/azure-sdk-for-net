@@ -178,8 +178,8 @@ namespace Azure.Data.Tables.Tests
             Assert.Multiple(
                 () =>
                 {
-                    Assert.AreEqual(expectedAccountName, client.AccountName);
-                    Assert.AreEqual(expectedTableName, client.Name);
+                    Assert.That(client.AccountName, Is.EqualTo(expectedAccountName));
+                    Assert.That(client.Name, Is.EqualTo(expectedTableName));
                 });
         }
 
@@ -188,8 +188,11 @@ namespace Azure.Data.Tables.Tests
         {
             var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions());
 
-            Assert.AreEqual(AccountName, client.AccountName);
-            Assert.AreEqual(TableName, client.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(client.AccountName, Is.EqualTo(AccountName));
+                Assert.That(client.Name, Is.EqualTo(TableName));
+            });
         }
 
         [Test]
@@ -197,8 +200,11 @@ namespace Azure.Data.Tables.Tests
         {
             var client = new TableClient(new Uri($"{_url}/{TableName}?{signature}"));
 
-            Assert.AreEqual(AccountName, client.AccountName);
-            Assert.AreEqual(TableName, client.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(client.AccountName, Is.EqualTo(AccountName));
+                Assert.That(client.Name, Is.EqualTo(TableName));
+            });
         }
 
         /// <summary>
@@ -254,8 +260,11 @@ namespace Azure.Data.Tables.Tests
 
             var sas = client.GetSasBuilder(permissions, expiry);
 
-            Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
-            Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
+                Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
+            });
         }
 
         [Test]
@@ -266,8 +275,11 @@ namespace Azure.Data.Tables.Tests
 
             var sas = client.GetSasBuilder(permissions.ToPermissionsString(), expiry);
 
-            Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
-            Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
+                Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
+            });
         }
 
         [Test]
@@ -290,8 +302,8 @@ namespace Azure.Data.Tables.Tests
             string token = sas.Sign(new TableSharedKeyCredential("foo", "Kg=="));
 
             Assert.That(
-                token.StartsWith(
-                    $"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}={sas.Version}&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
+                token,
+                Does.StartWith($"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}={sas.Version}&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
         }
 
         /// <summary>
@@ -315,10 +327,13 @@ namespace Azure.Data.Tables.Tests
 
             var dictEntity = entity.ToOdataAnnotatedDictionary();
 
-            Assert.That(dictEntity["PartitionKey"], Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
-            Assert.That(dictEntity["RowKey"], Is.EqualTo(entity.RowKey), "The entities should be equivalent");
-            Assert.That(dictEntity["MyFoo"], Is.EqualTo(entity["MyFoo"].ToString()), "The entities should be equivalent");
-            Assert.That(dictEntity.Keys, Is.EquivalentTo(new[] { "PartitionKey", "RowKey", "MyFoo" }), "Only PK, RK, and user properties should be sent");
+            Assert.Multiple(() =>
+            {
+                Assert.That(dictEntity["PartitionKey"], Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
+                Assert.That(dictEntity["RowKey"], Is.EqualTo(entity.RowKey), "The entities should be equivalent");
+                Assert.That(dictEntity["MyFoo"], Is.EqualTo(entity["MyFoo"].ToString()), "The entities should be equivalent");
+                Assert.That(dictEntity.Keys, Is.EquivalentTo(new[] { "PartitionKey", "RowKey", "MyFoo" }), "Only PK, RK, and user properties should be sent");
+            });
         }
 
         [Test]
@@ -337,11 +352,14 @@ namespace Azure.Data.Tables.Tests
             // Create the new entities.
             var dictEntity = entity.ToOdataAnnotatedDictionary();
 
-            Assert.That(dictEntity["PartitionKey"], Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
-            Assert.That(dictEntity["RowKey"], Is.EqualTo(entity.RowKey), "The entities should be equivalent");
-            Assert.That(dictEntity["MyFoo"], Is.EqualTo(entity.MyFoo.ToString()), "The entities should be equivalent");
-            Assert.That(dictEntity["MyNullableFoo"], Is.EqualTo(entity.MyNullableFoo), "The entities should be equivalent");
-            Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
+            Assert.Multiple(() =>
+            {
+                Assert.That(dictEntity["PartitionKey"], Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
+                Assert.That(dictEntity["RowKey"], Is.EqualTo(entity.RowKey), "The entities should be equivalent");
+                Assert.That(dictEntity["MyFoo"], Is.EqualTo(entity.MyFoo.ToString()), "The entities should be equivalent");
+                Assert.That(dictEntity["MyNullableFoo"], Is.EqualTo(entity.MyNullableFoo), "The entities should be equivalent");
+                Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
+            });
         }
 
         [Test]
@@ -361,12 +379,15 @@ namespace Azure.Data.Tables.Tests
             // Create the new entities.
             var dictEntity = entity.ToOdataAnnotatedDictionary();
             var deserializedEntity = dictEntity.ToTableEntity<EnumEntity>();
-            Assert.That(deserializedEntity.PartitionKey, Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
-            Assert.That(deserializedEntity.RowKey, Is.EqualTo(entity.RowKey), "The entities should be equivalent");
-            Assert.That(deserializedEntity.MyFoo.ToString(), Is.EqualTo(entity.MyFoo.ToString()), "The entities should be equivalent");
-            Assert.That(deserializedEntity.MyNullableFoo.ToString(), Is.EqualTo(entity.MyNullableFoo.ToString()), "The entities should be equivalent");
-            Assert.That(deserializedEntity.MyNullableFoo2.ToString(), Is.EqualTo(entity.MyNullableFoo2.ToString()), "The entities should be equivalent");
-            Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserializedEntity.PartitionKey, Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
+                Assert.That(deserializedEntity.RowKey, Is.EqualTo(entity.RowKey), "The entities should be equivalent");
+                Assert.That(deserializedEntity.MyFoo.ToString(), Is.EqualTo(entity.MyFoo.ToString()), "The entities should be equivalent");
+                Assert.That(deserializedEntity.MyNullableFoo.ToString(), Is.EqualTo(entity.MyNullableFoo.ToString()), "The entities should be equivalent");
+                Assert.That(deserializedEntity.MyNullableFoo2.ToString(), Is.EqualTo(entity.MyNullableFoo2.ToString()), "The entities should be equivalent");
+                Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
+            });
         }
 
         // This test validates that a table entity with an enum property that has an unknown enum value is not deserialized.
@@ -388,12 +409,15 @@ namespace Azure.Data.Tables.Tests
             // Create the new entities.
             var dictEntity = entity.ToOdataAnnotatedDictionary();
             var deserializedEntity = dictEntity.ToTableEntity<EnumEntity>();
-            Assert.That(deserializedEntity.PartitionKey, Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
-            Assert.That(deserializedEntity.RowKey, Is.EqualTo(entity.RowKey), "The entities should be equivalent");
-            Assert.That(deserializedEntity.MyFoo.ToString(), Is.EqualTo(default(Foo).ToString()), "The non-existing enum value should not be deserialized.");
-            Assert.IsNull(deserializedEntity.MyNullableFoo, "The non-existing nullable enum value should not be deserialized.");
-            Assert.IsNull(deserializedEntity.MyNullableFoo2, "The entities should be equivalent.");
-            Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserializedEntity.PartitionKey, Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
+                Assert.That(deserializedEntity.RowKey, Is.EqualTo(entity.RowKey), "The entities should be equivalent");
+                Assert.That(deserializedEntity.MyFoo.ToString(), Is.EqualTo(default(Foo).ToString()), "The non-existing enum value should not be deserialized.");
+                Assert.That(deserializedEntity.MyNullableFoo, Is.Null, "The non-existing nullable enum value should not be deserialized.");
+                Assert.That(deserializedEntity.MyNullableFoo2, Is.Null, "The entities should be equivalent.");
+                Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
+            });
         }
 
         [Test]
@@ -408,8 +432,11 @@ namespace Azure.Data.Tables.Tests
             var continuationToken = TableClient.CreateContinuationTokenFromHeaders(headers);
             var actual = TableClient.ParseContinuationToken(continuationToken);
 
-            Assert.That(continuationToken, Is.EqualTo("next-pk next-rk"));
-            Assert.That(actual, Is.EqualTo(expected));
+            Assert.Multiple(() =>
+            {
+                Assert.That(continuationToken, Is.EqualTo("next-pk next-rk"));
+                Assert.That(actual, Is.EqualTo(expected));
+            });
         }
 
         [Test]
@@ -423,8 +450,11 @@ namespace Azure.Data.Tables.Tests
             var continuationToken = TableClient.CreateContinuationTokenFromHeaders(headers);
             var actual = TableClient.ParseContinuationToken(continuationToken);
 
-            Assert.That(continuationToken, Is.EqualTo("next-pk "));
-            Assert.That(actual, Is.EqualTo(expected));
+            Assert.Multiple(() =>
+            {
+                Assert.That(continuationToken, Is.EqualTo("next-pk "));
+                Assert.That(actual, Is.EqualTo(expected));
+            });
         }
 
         [Test]
@@ -437,8 +467,11 @@ namespace Azure.Data.Tables.Tests
             var continuationToken = TableClient.CreateContinuationTokenFromHeaders(headers);
             var actual = TableClient.ParseContinuationToken(continuationToken);
 
-            Assert.That(continuationToken, Is.Null);
-            Assert.That(actual, Is.EqualTo(expected));
+            Assert.Multiple(() =>
+            {
+                Assert.That(continuationToken, Is.Null);
+                Assert.That(actual, Is.EqualTo(expected));
+            });
         }
 
         [Test]
@@ -455,9 +488,9 @@ namespace Azure.Data.Tables.Tests
         public async Task ValidateUri()
         {
             await client.UpdateEntityAsync(new TableEntity("pkā", "rk"), ETag.All).ConfigureAwait(false);
-            Assert.AreEqual(
-                $"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata",
-                _transport.Requests[0].Uri.ToString());
+            Assert.That(
+                _transport.Requests[0].Uri.ToString(),
+                Is.EqualTo($"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata"));
         }
 
         [Test]
@@ -533,8 +566,8 @@ namespace Azure.Data.Tables.Tests
 
             var actualSas = client.GenerateSasUri(permissions, expires);
 
-            Assert.AreEqual("?" + expectedSas, actualSas.Query);
-            CollectionAssert.Contains(actualSas.Segments, TableName);
+            Assert.That(actualSas.Query, Is.EqualTo("?" + expectedSas));
+            Assert.That(actualSas.Segments, Has.Member(TableName));
         }
 
         private static IEnumerable<object[]> TableClientsAllCtors(bool useEmulator)
@@ -571,14 +604,14 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(TableClientsAllCtors), new object[] { false })]
         public void UriPropertyIsPopulated(TableClient client)
         {
-            Assert.AreEqual(_urlWithTableName, client.Uri);
+            Assert.That(client.Uri, Is.EqualTo(_urlWithTableName));
             Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
         }
 
         [TestCaseSource(nameof(TableClientsAllCtors), new object[] { true })]
         public void UriPropertyIsPopulatedForEmulator(TableClient client)
         {
-            Assert.AreEqual(new Uri("http://127.0.0.1:10002/devstoreaccount1/" + TableName), client.Uri);
+            Assert.That(client.Uri, Is.EqualTo(new Uri("http://127.0.0.1:10002/devstoreaccount1/" + TableName)));
             Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
         }
 

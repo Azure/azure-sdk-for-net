@@ -119,8 +119,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
 
-            Assert.That(aspects, Contains.Item("issue").And.Contains("resolution"));
-            Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.Multiple(() =>
+            {
+                Assert.That(aspects, Contains.Item("issue").And.Contains("resolution"));
+                Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
+            });
         }
 
         [AsyncOnly]
@@ -205,9 +208,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            #endregion
-            Assert.That(aspects, Contains.Item("issue").And.Contains("resolution"));
-            Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
+
+            Assert.Multiple(() =>
+            {
+                #endregion
+                Assert.That(aspects, Contains.Item("issue").And.Contains("resolution"));
+                Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
+            });
         }
     }
 }

@@ -42,20 +42,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
 
-            Assert.Greater(resourceDetails.CustomDocumentModelCount, 0);
-            Assert.GreaterOrEqual(resourceDetails.CustomDocumentModelLimit, resourceDetails.CustomDocumentModelCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resourceDetails.CustomDocumentModelCount, Is.GreaterThan(0));
+                Assert.That(resourceDetails.CustomDocumentModelLimit, Is.GreaterThanOrEqualTo(resourceDetails.CustomDocumentModelCount));
+            });
 
             ResourceQuotaDetails neuralQuota = resourceDetails.NeuralDocumentModelQuota;
 
             if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
-                Assert.GreaterOrEqual(neuralQuota.Used, 0);
-                Assert.GreaterOrEqual(neuralQuota.Quota, neuralQuota.Used);
-                Assert.Greater(neuralQuota.QuotaResetsOn, startTime);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(neuralQuota.Used, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(neuralQuota.Quota, Is.GreaterThanOrEqualTo(neuralQuota.Used));
+                    Assert.That(neuralQuota.QuotaResetsOn, Is.GreaterThan(startTime));
+                });
             }
             else
             {
-                Assert.Null(neuralQuota);
+                Assert.That(neuralQuota, Is.Null);
             }
         }
 
@@ -72,7 +78,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             OperationDetails operationDetails = await client.GetOperationAsync(disposableModel.Operation.Id);
 
             // Sanity check to make sure we got an actual response back from the service.
-            Assert.AreEqual(disposableModel.Operation.Id, operationDetails.OperationId);
+            Assert.That(operationDetails.OperationId, Is.EqualTo(disposableModel.Operation.Id));
         }
 
         [RecordedTest]
@@ -100,7 +106,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var buildOperationDetails = operationDetails as DocumentModelBuildOperationDetails;
 
-            Assert.IsNotNull(buildOperationDetails);
+            Assert.That(buildOperationDetails, Is.Not.Null);
 
             DocumentAssert.AreEqual(disposableModel.Value, buildOperationDetails.Result);
         }
@@ -129,7 +135,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var buildOperationDetails = operationDetails as DocumentClassifierBuildOperationDetails;
 
-            Assert.IsNotNull(buildOperationDetails);
+            Assert.That(buildOperationDetails, Is.Not.Null);
 
             DocumentAssert.AreEqual(disposableClassifier.Value, buildOperationDetails.Result);
         }
@@ -141,7 +147,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var fakeId = "00000000-0000-0000-0000-000000000000";
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.GetOperationAsync(fakeId));
-            Assert.AreEqual("NotFound", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("NotFound"));
         }
 
         #endregion
@@ -189,21 +195,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (string id in expectedIdMapping.Keys)
             {
-                Assert.True(idMapping.ContainsKey(id));
+                Assert.That(idMapping.ContainsKey(id), Is.True);
 
                 OperationSummary operationSummary = idMapping[id];
                 OperationDetails expected = expectedIdMapping[id];
 
-                Assert.AreEqual(expected.OperationId, operationSummary.OperationId);
-                Assert.AreEqual(expected.ServiceVersion, operationSummary.ServiceVersion);
-                Assert.AreEqual(expected.Status, operationSummary.Status);
-                Assert.AreEqual(expected.Kind, operationSummary.Kind);
-                Assert.AreEqual(expected.PercentCompleted, operationSummary.PercentCompleted);
-                Assert.AreEqual(expected.ResourceLocation.AbsoluteUri, operationSummary.ResourceLocation.AbsoluteUri);
-                Assert.AreEqual(expected.CreatedOn, operationSummary.CreatedOn);
-                Assert.AreEqual(expected.LastUpdatedOn, operationSummary.LastUpdatedOn);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(operationSummary.OperationId, Is.EqualTo(expected.OperationId));
+                    Assert.That(operationSummary.ServiceVersion, Is.EqualTo(expected.ServiceVersion));
+                    Assert.That(operationSummary.Status, Is.EqualTo(expected.Status));
+                    Assert.That(operationSummary.Kind, Is.EqualTo(expected.Kind));
+                    Assert.That(operationSummary.PercentCompleted, Is.EqualTo(expected.PercentCompleted));
+                    Assert.That(operationSummary.ResourceLocation.AbsoluteUri, Is.EqualTo(expected.ResourceLocation.AbsoluteUri));
+                    Assert.That(operationSummary.CreatedOn, Is.EqualTo(expected.CreatedOn));
+                    Assert.That(operationSummary.LastUpdatedOn, Is.EqualTo(expected.LastUpdatedOn));
+                });
 
-                CollectionAssert.AreEquivalent(expected.Tags, operationSummary.Tags);
+                Assert.That(operationSummary.Tags, Is.EquivalentTo(expected.Tags));
             }
         }
 
@@ -211,19 +220,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         private void ValidateOperationDetails(OperationDetails operationDetails, string id, DocumentOperationKind kind, string resourceLocation, DateTimeOffset startTime, IDictionary<string, string> tags)
         {
-            Assert.AreEqual(id, operationDetails.OperationId);
-            Assert.AreEqual(DocumentOperationStatus.Succeeded, operationDetails.Status);
-            Assert.AreEqual(kind, operationDetails.Kind);
-            Assert.AreEqual(100, operationDetails.PercentCompleted);
-            Assert.AreEqual(resourceLocation, operationDetails.ResourceLocation.AbsoluteUri);
-            Assert.Null(operationDetails.ServiceVersion);
-            Assert.Null(operationDetails.Error);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operationDetails.OperationId, Is.EqualTo(id));
+                Assert.That(operationDetails.Status, Is.EqualTo(DocumentOperationStatus.Succeeded));
+                Assert.That(operationDetails.Kind, Is.EqualTo(kind));
+                Assert.That(operationDetails.PercentCompleted, Is.EqualTo(100));
+                Assert.That(operationDetails.ResourceLocation.AbsoluteUri, Is.EqualTo(resourceLocation));
+                Assert.That(operationDetails.ServiceVersion, Is.Null);
+                Assert.That(operationDetails.Error, Is.Null);
 
-            // Add a 4-hour tolerance because model could have been cached before this test.
-            Assert.Greater(operationDetails.CreatedOn, startTime - TimeSpan.FromHours(4));
-            Assert.Greater(operationDetails.LastUpdatedOn, operationDetails.CreatedOn);
+                // Add a 4-hour tolerance because model could have been cached before this test.
+                Assert.That(operationDetails.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+                Assert.That(operationDetails.LastUpdatedOn, Is.GreaterThan(operationDetails.CreatedOn));
+            });
 
-            CollectionAssert.AreEquivalent(tags, operationDetails.Tags);
+            Assert.That(operationDetails.Tags, Is.EquivalentTo(tags));
         }
     }
 }

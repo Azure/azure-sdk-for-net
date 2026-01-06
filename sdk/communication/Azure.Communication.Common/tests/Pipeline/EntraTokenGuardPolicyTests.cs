@@ -179,7 +179,7 @@ namespace Azure.Communication.Pipeline
                 policy.Process(_httpMessage, pipelines);
                 _httpPipelinePolicyMock.Verify(p => p.Process(_httpMessage, It.IsAny<ReadOnlyMemory<HttpPipelinePolicy>>()), Times.Once);
             }
-            Assert.AreEqual(successfullResponse, _httpMessage.Response);
+            Assert.That(_httpMessage.Response, Is.EqualTo(successfullResponse));
         }
 
         private class CustomRequest: MockRequest

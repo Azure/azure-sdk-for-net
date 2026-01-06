@@ -16,13 +16,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         public void CovertToListOfPointFReturnsEmptyWhenCoordinatesIsNull()
         {
-            Assert.IsEmpty(ClientCommon.ConvertToListOfPointF(null));
+            Assert.That(ClientCommon.ConvertToListOfPointF(null), Is.Empty);
         }
 
         [Test]
         public void CovertToListOfPointFReturnsEmptyWhenCoordinatesIsEmpty()
         {
-            Assert.IsEmpty(ClientCommon.ConvertToListOfPointF(Array.Empty<float>()));
+            Assert.That(ClientCommon.ConvertToListOfPointF(Array.Empty<float>()), Is.Empty);
         }
 
         [Test]
@@ -31,15 +31,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var floatPoints = new List<float>() { 1.0f, 1.5f, 2.0f, 2.5f, 3.0f, 3.5f, 4.0f, 4.5f };
             IReadOnlyList<PointF> points = ClientCommon.ConvertToListOfPointF(floatPoints);
 
-            Assert.AreEqual(4, points.Count);
-            Assert.AreEqual(1.0f, points[0].X);
-            Assert.AreEqual(1.5f, points[0].Y);
-            Assert.AreEqual(2.0f, points[1].X);
-            Assert.AreEqual(2.5f, points[1].Y);
-            Assert.AreEqual(3.0f, points[2].X);
-            Assert.AreEqual(3.5f, points[2].Y);
-            Assert.AreEqual(4.0f, points[3].X);
-            Assert.AreEqual(4.5f, points[3].Y);
+            Assert.That(points, Has.Count.EqualTo(4));
+            Assert.Multiple(() =>
+            {
+                Assert.That(points[0].X, Is.EqualTo(1.0f));
+                Assert.That(points[0].Y, Is.EqualTo(1.5f));
+                Assert.That(points[1].X, Is.EqualTo(2.0f));
+                Assert.That(points[1].Y, Is.EqualTo(2.5f));
+                Assert.That(points[2].X, Is.EqualTo(3.0f));
+                Assert.That(points[2].Y, Is.EqualTo(3.5f));
+                Assert.That(points[3].X, Is.EqualTo(4.0f));
+                Assert.That(points[3].Y, Is.EqualTo(4.5f));
+            });
         }
     }
 }

@@ -36,12 +36,15 @@ namespace Azure.Messaging.EventHubs.Tests
             ReadEventOptions clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
-            Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The owner level of the clone should match.");
-            Assert.That(clone.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
-            Assert.That(clone.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The maximum wait time of the clone should match.");
-            Assert.That(clone.CacheEventCount, Is.EqualTo(options.CacheEventCount), "The event cache count of the clone should match.");
-            Assert.That(clone.PrefetchCount, Is.EqualTo(options.PrefetchCount), "The prefetch count of the clone should match.");
-            Assert.That(clone.PrefetchSizeInBytes, Is.EqualTo(options.PrefetchSizeInBytes), "The prefetch size of the clone should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The owner level of the clone should match.");
+                Assert.That(clone.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the clone should match.");
+                Assert.That(clone.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The maximum wait time of the clone should match.");
+                Assert.That(clone.CacheEventCount, Is.EqualTo(options.CacheEventCount), "The event cache count of the clone should match.");
+                Assert.That(clone.PrefetchCount, Is.EqualTo(options.PrefetchCount), "The prefetch count of the clone should match.");
+                Assert.That(clone.PrefetchSizeInBytes, Is.EqualTo(options.PrefetchSizeInBytes), "The prefetch size of the clone should match.");
+            });
         }
 
         /// <summary>

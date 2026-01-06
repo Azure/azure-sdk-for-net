@@ -595,10 +595,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.GetPartitionPublishingPropertiesAsync(expectedPartition, cancellationSource.Token);
 
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
-            Assert.That(partitionState.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(expectedProperties.LastPublishedSequenceNumber), "The sequence number should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
+                Assert.That(partitionState.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
+                Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(expectedProperties.LastPublishedSequenceNumber), "The sequence number should match.");
+            });
 
             mockTransport.VerifyAll();
         }
@@ -637,9 +640,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var readProperties = await producer.GetPartitionPublishingPropertiesAsync(expectedPartition, cancellationSource.Token);
 
             Assert.That(readProperties, Is.Not.Null, "The read properties should have been created.");
-            Assert.That(readProperties.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
-            Assert.That(readProperties.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
-            Assert.That(readProperties.LastPublishedSequenceNumber, Is.EqualTo(expectedProperties.LastPublishedSequenceNumber), "The sequence number should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(readProperties.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
+                Assert.That(readProperties.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
+                Assert.That(readProperties.LastPublishedSequenceNumber, Is.EqualTo(expectedProperties.LastPublishedSequenceNumber), "The sequence number should match.");
+            });
 
             mockTransport
                 .Verify(transportProducer => transportProducer.ReadInitializationPublishingPropertiesAsync(
@@ -672,9 +678,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var readProperties = await producer.GetPartitionPublishingPropertiesAsync(expectedPartition, cancellationSource.Token);
 
             Assert.That(readProperties, Is.Not.Null, "The read properties should have been created.");
-            Assert.That(readProperties.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
-            Assert.That(readProperties.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
-            Assert.That(readProperties.LastPublishedSequenceNumber, Is.EqualTo(expectedProperties.LastPublishedSequenceNumber), "The sequence number should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(readProperties.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
+                Assert.That(readProperties.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
+                Assert.That(readProperties.LastPublishedSequenceNumber, Is.EqualTo(expectedProperties.LastPublishedSequenceNumber), "The sequence number should match.");
+            });
 
             mockTransport
                 .Verify(transportProducer => transportProducer.ReadInitializationPublishingPropertiesAsync(
@@ -807,8 +816,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             (IEnumerable<EventData> calledWithEvents, SendEventOptions calledWithOptions) = transportProducer.SendCalledWith;
 
-            Assert.That(calledWithEvents, Is.EquivalentTo(events), "The events should contain same elements.");
-            Assert.That(calledWithOptions, Is.Not.Null, "A default set of options should be used.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(calledWithEvents, Is.EquivalentTo(events), "The events should contain same elements.");
+                Assert.That(calledWithOptions, Is.Not.Null, "A default set of options should be used.");
+            });
         }
 
         /// <summary>
@@ -828,10 +840,16 @@ namespace Azure.Messaging.EventHubs.Tests
 
             (IEnumerable<EventData> calledWithEvents, SendEventOptions calledWithOptions) = transportProducer.SendCalledWith;
 
-            Assert.That(calledWithEvents, Is.EquivalentTo(events), "The events should contain same elements.");
-            Assert.That(calledWithOptions, Is.Not.SameAs(options), "The options should not be the same instance.");
-            Assert.That(calledWithOptions.PartitionId, Is.EqualTo(options.PartitionId), "The partition id of the options should match.");
-            Assert.That(calledWithOptions.PartitionKey, Is.SameAs(options.PartitionKey), "The partition key of the options should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(calledWithEvents, Is.EquivalentTo(events), "The events should contain same elements.");
+                Assert.That(calledWithOptions, Is.Not.SameAs(options), "The options should not be the same instance.");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(calledWithOptions.PartitionId, Is.EqualTo(options.PartitionId), "The partition id of the options should match.");
+                Assert.That(calledWithOptions.PartitionKey, Is.SameAs(options.PartitionKey), "The partition key of the options should match.");
+            });
         }
 
         /// <summary>
@@ -955,10 +973,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(events, sendOptions);
 
-            Assert.That(requestedFeatures, Is.EqualTo(TransportProducerFeatures.IdempotentPublishing), "The idempotent feature should have been requested.");
-            Assert.That(requestedOptions.ProducerGroupId, Is.EqualTo(expectedOptions.ProducerGroupId), "The wrong producer group option was used to create the transport client.");
-            Assert.That(requestedOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The wrong owner level option was used to create the transport client.");
-            Assert.That(requestedOptions.StartingSequenceNumber, Is.EqualTo(expectedOptions.StartingSequenceNumber), "The wrong sequence number option was used to create the transport client.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(requestedFeatures, Is.EqualTo(TransportProducerFeatures.IdempotentPublishing), "The idempotent feature should have been requested.");
+                Assert.That(requestedOptions.ProducerGroupId, Is.EqualTo(expectedOptions.ProducerGroupId), "The wrong producer group option was used to create the transport client.");
+                Assert.That(requestedOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The wrong owner level option was used to create the transport client.");
+                Assert.That(requestedOptions.StartingSequenceNumber, Is.EqualTo(expectedOptions.StartingSequenceNumber), "The wrong sequence number option was used to create the transport client.");
+            });
 
             mockTransport.VerifyAll();
         }
@@ -1007,10 +1028,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(events, sendOptions);
 
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
-            Assert.That(partitionState.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(expectedLastSequence), "The sequence number should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
+                Assert.That(partitionState.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
+                Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(expectedLastSequence), "The sequence number should match.");
+            });
 
             mockTransport.VerifyAll();
         }
@@ -1145,14 +1169,20 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < events.Length; ++index)
             {
-                Assert.That(events[index].PublishedSequenceNumber, Is.EqualTo(startingSequence + 1 + index), $"The event in position `{ index }` was not in the proper sequence.");
-                Assert.That(events[index].PendingPublishSequenceNumber, Is.Null, $"The event in position `{ index }` should not have a pending sequence number remaining.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(events[index].PublishedSequenceNumber, Is.EqualTo(startingSequence + 1 + index), $"The event in position `{index}` was not in the proper sequence.");
+                    Assert.That(events[index].PendingPublishSequenceNumber, Is.Null, $"The event in position `{index}` should not have a pending sequence number remaining.");
+                });
             }
 
             var partitionStateCollection = GetPartitionState(producer);
             Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + events.Length), "The sequence number for partition state should have been updated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + events.Length), "The sequence number for partition state should have been updated.");
+            });
 
             mockTransport.VerifyAll();
         }
@@ -1195,14 +1225,20 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < events.Length; ++index)
             {
-                Assert.That(events[index].PublishedSequenceNumber, Is.EqualTo(index), $"The event in position `{ index }` was not in the proper sequence.");
-                Assert.That(events[index].PendingPublishSequenceNumber, Is.Null, $"The event in position `{ index }` should not have a pending sequence number remaining.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(events[index].PublishedSequenceNumber, Is.EqualTo(index), $"The event in position `{index}` was not in the proper sequence.");
+                    Assert.That(events[index].PendingPublishSequenceNumber, Is.Null, $"The event in position `{index}` should not have a pending sequence number remaining.");
+                });
             }
 
             var partitionStateCollection = GetPartitionState(producer);
             Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(events.Length - 1), "The sequence number for partition state should have been updated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(events.Length - 1), "The sequence number for partition state should have been updated.");
+            });
 
             mockTransport.VerifyAll();
         }
@@ -1244,14 +1280,20 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < events.Length; ++index)
             {
-                Assert.That(events[index].PublishedSequenceNumber, Is.Null, $"The event in position `{ index }`should not have a sequence number.");
-                Assert.That(events[index].PendingPublishSequenceNumber, Is.Null, $"The event in position `{ index }` should not have a pending sequence number remaining.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(events[index].PublishedSequenceNumber, Is.Null, $"The event in position `{index}`should not have a sequence number.");
+                    Assert.That(events[index].PendingPublishSequenceNumber, Is.Null, $"The event in position `{index}` should not have a pending sequence number remaining.");
+                });
             }
 
             var partitionStateCollection = GetPartitionState(producer);
             Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.Null, "The sequence number for partition state should have been reset.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.LastPublishedSequenceNumber, Is.Null, "The sequence number for partition state should have been reset.");
+            });
         }
 
         /// <summary>
@@ -1291,8 +1333,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionStateCollection = GetPartitionState(producer);
             Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.ProducerGroupId, Is.Not.EqualTo(expectedProperties.ProducerGroupId), "The producer group identifier in partition state should have been changed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.ProducerGroupId, Is.Not.EqualTo(expectedProperties.ProducerGroupId), "The producer group identifier in partition state should have been changed.");
+            });
         }
 
         /// <summary>
@@ -1383,15 +1428,21 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     ++eventPosition;
 
-                    Assert.That(batch[index].PublishedSequenceNumber, Is.EqualTo(startingSequence + eventPosition), $"The event in position `{ eventPosition }` was not in the proper sequence.");
-                    Assert.That(batch[index].PendingPublishSequenceNumber, Is.Null, $"The event in position `{ eventPosition }` should not have a pending sequence number remaining.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(batch[index].PublishedSequenceNumber, Is.EqualTo(startingSequence + eventPosition), $"The event in position `{eventPosition}` was not in the proper sequence.");
+                        Assert.That(batch[index].PendingPublishSequenceNumber, Is.Null, $"The event in position `{eventPosition}` should not have a pending sequence number remaining.");
+                    });
                 }
             }
 
             var partitionStateCollection = GetPartitionState(producer);
             Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + (events.Length * eventCount)), "The sequence number for partition state should have been updated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + (events.Length * eventCount)), "The sequence number for partition state should have been updated.");
+            });
         }
 
         /// <summary>
@@ -1454,8 +1505,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var stateKey in partitionStateCollection.Keys)
             {
-                Assert.That(partitionStateCollection.TryGetValue(stateKey, out var partitionState), Is.True, $"The state collection should have an entry for the partition `{ stateKey }`.");
-                Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + eventCount), $"The sequence number for partition `{ stateKey }` state should have been updated.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(partitionStateCollection.TryGetValue(stateKey, out var partitionState), Is.True, $"The state collection should have an entry for the partition `{stateKey}`.");
+                    Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + eventCount), $"The sequence number for partition `{stateKey}` state should have been updated.");
+                });
             }
         }
 
@@ -1556,10 +1610,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(batch);
 
-            Assert.That(requestedFeatures, Is.EqualTo(TransportProducerFeatures.IdempotentPublishing), "The idempotent feature should have been requested.");
-            Assert.That(requestedOptions.ProducerGroupId, Is.EqualTo(expectedOptions.ProducerGroupId), "The wrong producer group option was used to create the transport client.");
-            Assert.That(requestedOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The wrong owner level option was used to create the transport client.");
-            Assert.That(requestedOptions.StartingSequenceNumber, Is.EqualTo(expectedOptions.StartingSequenceNumber), "The wrong sequence number option was used to create the transport client.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(requestedFeatures, Is.EqualTo(TransportProducerFeatures.IdempotentPublishing), "The idempotent feature should have been requested.");
+                Assert.That(requestedOptions.ProducerGroupId, Is.EqualTo(expectedOptions.ProducerGroupId), "The wrong producer group option was used to create the transport client.");
+                Assert.That(requestedOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The wrong owner level option was used to create the transport client.");
+                Assert.That(requestedOptions.StartingSequenceNumber, Is.EqualTo(expectedOptions.StartingSequenceNumber), "The wrong sequence number option was used to create the transport client.");
+            });
 
             mockTransport.VerifyAll();
         }
@@ -1608,10 +1665,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(batch);
 
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
-            Assert.That(partitionState.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(expectedLastSequence), "The sequence number should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
+                Assert.That(partitionState.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
+                Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(expectedLastSequence), "The sequence number should match.");
+            });
 
             mockTransport.VerifyAll();
         }
@@ -1750,8 +1810,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionStateCollection = GetPartitionState(producer);
             Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + batch.Count), "The sequence number for partition state should have been updated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + batch.Count), "The sequence number for partition state should have been updated.");
+            });
 
             mockTransport.VerifyAll();
         }
@@ -1795,8 +1858,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionStateCollection = GetPartitionState(producer);
             Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.Null, "The sequence number for partition state should have been reset.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.LastPublishedSequenceNumber, Is.Null, "The sequence number for partition state should have been reset.");
+            });
         }
 
         /// <summary>
@@ -1837,8 +1903,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionStateCollection = GetPartitionState(producer);
             Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.ProducerGroupId, Is.Not.EqualTo(expectedProperties.ProducerGroupId), "The producer group identifier in partition state should have been changed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.ProducerGroupId, Is.Not.EqualTo(expectedProperties.ProducerGroupId), "The producer group identifier in partition state should have been changed.");
+            });
         }
 
         /// <summary>
@@ -1931,8 +2000,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var partitionStateCollection = GetPartitionState(producer);
                 Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-                Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + (batches.Length * eventCount)), "The sequence number for partition state should have been updated.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                    Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + (batches.Length * eventCount)), "The sequence number for partition state should have been updated.");
+                });
             }
             finally
             {
@@ -2001,8 +2073,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 foreach (var stateKey in partitionStateCollection.Keys)
                 {
-                    Assert.That(partitionStateCollection.TryGetValue(stateKey, out var partitionState), Is.True, $"The state collection should have an entry for the partition `{ stateKey }`.");
-                    Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + eventCount), $"The sequence number for partition `{ stateKey }` state should have been updated.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(partitionStateCollection.TryGetValue(stateKey, out var partitionState), Is.True, $"The state collection should have an entry for the partition `{stateKey}`.");
+                        Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + eventCount), $"The sequence number for partition `{stateKey}` state should have been updated.");
+                    });
                 }
             }
             finally
@@ -2051,8 +2126,11 @@ namespace Azure.Messaging.EventHubs.Tests
             completionSource.TrySetResult(true);
 
             await sendTask;
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>()))), Is.True, "The batch should not be locked after sending.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>()))), Is.True, "The batch should not be locked after sending.");
+            });
 
             cancellationSource.Cancel();
         }
@@ -2088,8 +2166,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.Null, "The batch creation should have passed options.");
             Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.SameAs(batchOptions), "The options should have been cloned.");
-            Assert.That(transportProducer.CreateBatchCalledWith.PartitionKey, Is.EqualTo(batchOptions.PartitionKey), "The partition key should match.");
-            Assert.That(transportProducer.CreateBatchCalledWith.MaximumSizeInBytes, Is.EqualTo(batchOptions.MaximumSizeInBytes), "The maximum size should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(transportProducer.CreateBatchCalledWith.PartitionKey, Is.EqualTo(batchOptions.PartitionKey), "The partition key should match.");
+                Assert.That(transportProducer.CreateBatchCalledWith.MaximumSizeInBytes, Is.EqualTo(batchOptions.MaximumSizeInBytes), "The maximum size should match.");
+            });
         }
 
         /// <summary>
@@ -2108,8 +2189,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.Null, "The batch creation should have passed options.");
             Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.SameAs(expectedOptions), "The options should have been cloned.");
-            Assert.That(transportProducer.CreateBatchCalledWith.PartitionKey, Is.EqualTo(expectedOptions.PartitionKey), "The partition key should match.");
-            Assert.That(transportProducer.CreateBatchCalledWith.MaximumSizeInBytes, Is.EqualTo(expectedOptions.MaximumSizeInBytes), "The maximum size should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(transportProducer.CreateBatchCalledWith.PartitionKey, Is.EqualTo(expectedOptions.PartitionKey), "The partition key should match.");
+                Assert.That(transportProducer.CreateBatchCalledWith.MaximumSizeInBytes, Is.EqualTo(expectedOptions.MaximumSizeInBytes), "The maximum size should match.");
+            });
         }
 
         /// <summary>
@@ -2125,8 +2209,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new EventHubProducerClient(new MockConnection(() => transportProducer));
             var eventBatch = await producer.CreateBatchAsync(batchOptions);
 
-            Assert.That(eventBatch.SendOptions.PartitionId, Is.EqualTo(transportProducer.CreateBatchCalledWith.PartitionId), "The batch options should have used for the send options, but the partition identifier didn't match.");
-            Assert.That(eventBatch.SendOptions.PartitionKey, Is.EqualTo(transportProducer.CreateBatchCalledWith.PartitionKey), "The batch options should have used for the send options, but the partition key didn't match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventBatch.SendOptions.PartitionId, Is.EqualTo(transportProducer.CreateBatchCalledWith.PartitionId), "The batch options should have used for the send options, but the partition identifier didn't match.");
+                Assert.That(eventBatch.SendOptions.PartitionKey, Is.EqualTo(transportProducer.CreateBatchCalledWith.PartitionKey), "The batch options should have used for the send options, but the partition key didn't match.");
+            });
         }
 
         /// <summary>
@@ -2147,8 +2234,11 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.SendAsync(mockSecondBatch).IgnoreExceptions();
             await producer.CloseAsync();
 
-            Assert.That(transportProducer.WasCloseCalled, Is.True);
-            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(transportProducer.WasCloseCalled, Is.True);
+                Assert.That(transportProducer.CloseCallCount, Is.EqualTo(3));
+            });
         }
 
         /// <summary>

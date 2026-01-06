@@ -14,56 +14,56 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void RequiresPlaintext()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.Rsa15Parameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.RsaOaepParameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.RsaOaep256Parameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.A128GcmParameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             Assert.DoesNotThrow(() => EncryptParameters.A128GcmParameters(Array.Empty<byte>(), null));
 
             ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.A192GcmParameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             Assert.DoesNotThrow(() => EncryptParameters.A192GcmParameters(Array.Empty<byte>(), null));
 
             ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.A256GcmParameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             Assert.DoesNotThrow(() => EncryptParameters.A256GcmParameters(Array.Empty<byte>(), null));
 
             ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.A128CbcParameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             Assert.DoesNotThrow(() => EncryptParameters.A128CbcParameters(Array.Empty<byte>(), null));
 
             ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.A128CbcParameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             Assert.DoesNotThrow(() => EncryptParameters.A192CbcParameters(Array.Empty<byte>(), null));
 
             ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.A128CbcParameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             Assert.DoesNotThrow(() => EncryptParameters.A256CbcParameters(Array.Empty<byte>(), null));
 
             ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.A128CbcPadParameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             Assert.DoesNotThrow(() => EncryptParameters.A128CbcPadParameters(Array.Empty<byte>(), null));
 
             ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.A128CbcPadParameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             Assert.DoesNotThrow(() => EncryptParameters.A192CbcPadParameters(Array.Empty<byte>(), null));
 
             ex = Assert.Throws<ArgumentNullException>(() => EncryptParameters.A128CbcPadParameters(null));
-            Assert.AreEqual("plaintext", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("plaintext"));
 
             Assert.DoesNotThrow(() => EncryptParameters.A256CbcPadParameters(Array.Empty<byte>(), null));
         }
@@ -78,17 +78,17 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 byte[] iv = parameters.Iv;
 
-                Assert.IsNotNull(parameters.Iv);
-                CollectionAssert.IsNotEmpty(parameters.Iv);
+                Assert.That(parameters.Iv, Is.Not.Null);
+                Assert.That(parameters.Iv, Is.Not.Empty);
 
                 // Calling it again should not overwrite.
                 parameters.Initialize();
 
-                Assert.AreSame(iv, parameters.Iv);
+                Assert.That(parameters.Iv, Is.SameAs(iv));
             }
             else
             {
-                Assert.IsNull(parameters.Iv);
+                Assert.That(parameters.Iv, Is.Null);
             }
         }
     }

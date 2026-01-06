@@ -30,47 +30,56 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         public void Constructor_SetsExpectedDefaults()
         {
             ServiceBusOptions config = new ServiceBusOptions();
-            Assert.AreEqual(16 * Utility.GetProcessorCount(), config.MaxConcurrentCalls);
-            Assert.AreEqual(0, config.PrefetchCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(config.MaxConcurrentCalls, Is.EqualTo(16 * Utility.GetProcessorCount()));
+                Assert.That(config.PrefetchCount, Is.EqualTo(0));
+            });
         }
 
         [Test]
         public void PrefetchCount_GetSet()
         {
             ServiceBusOptions config = new ServiceBusOptions();
-            Assert.AreEqual(0, config.PrefetchCount);
+            Assert.That(config.PrefetchCount, Is.EqualTo(0));
             config.PrefetchCount = 100;
-            Assert.AreEqual(100, config.PrefetchCount);
+            Assert.That(config.PrefetchCount, Is.EqualTo(100));
         }
 
         [Test]
         public void LogExceptionReceivedEvent_NonTransientEvent_LoggedAsError()
         {
             var ex = new ServiceBusException(isTransient: false, message: "message");
-            Assert.False(ex.IsTransient);
+            Assert.That(ex.IsTransient, Is.False);
             ProcessErrorEventArgs e = new ProcessErrorEventArgs(ex, ServiceBusErrorSource.Abandon, "TestEndpoint", "TestEntity", CancellationToken.None);
             ServiceBusExtensionConfigProvider.LogExceptionReceivedEvent(e, _loggerFactory);
 
             var expectedMessage = $"Message processing error (Action=Abandon, EntityPath=TestEntity, Endpoint=TestEndpoint)";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual(LogLevel.Error, logMessage.Level);
-            Assert.AreSame(ex, logMessage.Exception);
-            Assert.AreEqual(expectedMessage, logMessage.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Error));
+                Assert.That(logMessage.Exception, Is.SameAs(ex));
+                Assert.That(logMessage.FormattedMessage, Is.EqualTo(expectedMessage));
+            });
         }
 
         [Test]
         public void LogExceptionReceivedEvent_TransientEvent_LoggedAsInformation()
         {
             var ex = new ServiceBusException(message: "message", isTransient: true);
-            Assert.True(ex.IsTransient);
+            Assert.That(ex.IsTransient, Is.True);
             ProcessErrorEventArgs e = new ProcessErrorEventArgs(ex, ServiceBusErrorSource.Receive, "TestEndpoint", "TestEntity", CancellationToken.None);
             ServiceBusExtensionConfigProvider.LogExceptionReceivedEvent(e, _loggerFactory);
 
             var expectedMessage = $"Message processing error (Action=Receive, EntityPath=TestEntity, Endpoint=TestEndpoint)";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual(LogLevel.Information, logMessage.Level);
-            Assert.AreSame(ex, logMessage.Exception);
-            Assert.AreEqual(expectedMessage, logMessage.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(logMessage.Exception, Is.SameAs(ex));
+                Assert.That(logMessage.FormattedMessage, Is.EqualTo(expectedMessage));
+            });
         }
 
         [Test]
@@ -82,9 +91,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 
             var expectedMessage = $"Message processing error (Action=Complete, EntityPath=TestEntity, Endpoint=TestEndpoint)";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual(LogLevel.Error, logMessage.Level);
-            Assert.AreSame(ex, logMessage.Exception);
-            Assert.AreEqual(expectedMessage, logMessage.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Error));
+                Assert.That(logMessage.Exception, Is.SameAs(ex));
+                Assert.That(logMessage.FormattedMessage, Is.EqualTo(expectedMessage));
+            });
         }
 
         [Test]
@@ -100,10 +112,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             };
 
             ServiceBusProcessorOptions processorOptions = sbOptions.ToProcessorOptions(true, false);
-            Assert.AreEqual(true, processorOptions.AutoCompleteMessages);
-            Assert.AreEqual(sbOptions.PrefetchCount, processorOptions.PrefetchCount);
-            Assert.AreEqual(sbOptions.MaxAutoLockRenewalDuration, processorOptions.MaxAutoLockRenewalDuration);
-            Assert.AreEqual(sbOptions.MaxConcurrentCalls, processorOptions.MaxConcurrentCalls);
+            Assert.Multiple(() =>
+            {
+                Assert.That(processorOptions.AutoCompleteMessages, Is.EqualTo(true));
+                Assert.That(processorOptions.PrefetchCount, Is.EqualTo(sbOptions.PrefetchCount));
+                Assert.That(processorOptions.MaxAutoLockRenewalDuration, Is.EqualTo(sbOptions.MaxAutoLockRenewalDuration));
+                Assert.That(processorOptions.MaxConcurrentCalls, Is.EqualTo(sbOptions.MaxConcurrentCalls));
+            });
         }
 
         [Test]
@@ -119,10 +134,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             };
 
             ServiceBusProcessorOptions processorOptions = sbOptions.ToProcessorOptions(true, false);
-            Assert.AreEqual(true, processorOptions.AutoCompleteMessages);
-            Assert.AreEqual(sbOptions.PrefetchCount, processorOptions.PrefetchCount);
-            Assert.AreEqual(sbOptions.MaxAutoLockRenewalDuration, processorOptions.MaxAutoLockRenewalDuration);
-            Assert.AreEqual(sbOptions.MaxConcurrentCalls, processorOptions.MaxConcurrentCalls);
+            Assert.Multiple(() =>
+            {
+                Assert.That(processorOptions.AutoCompleteMessages, Is.EqualTo(true));
+                Assert.That(processorOptions.PrefetchCount, Is.EqualTo(sbOptions.PrefetchCount));
+                Assert.That(processorOptions.MaxAutoLockRenewalDuration, Is.EqualTo(sbOptions.MaxAutoLockRenewalDuration));
+                Assert.That(processorOptions.MaxConcurrentCalls, Is.EqualTo(sbOptions.MaxConcurrentCalls));
+            });
         }
 
         [Test]
@@ -138,10 +156,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             };
 
             ServiceBusProcessorOptions processorOptions = sbOptions.ToProcessorOptions(true, true);
-            Assert.AreEqual(true, processorOptions.AutoCompleteMessages);
-            Assert.AreEqual(sbOptions.PrefetchCount, processorOptions.PrefetchCount);
-            Assert.AreEqual(sbOptions.MaxAutoLockRenewalDuration, processorOptions.MaxAutoLockRenewalDuration);
-            Assert.AreEqual(1, processorOptions.MaxConcurrentCalls);
+            Assert.Multiple(() =>
+            {
+                Assert.That(processorOptions.AutoCompleteMessages, Is.EqualTo(true));
+                Assert.That(processorOptions.PrefetchCount, Is.EqualTo(sbOptions.PrefetchCount));
+                Assert.That(processorOptions.MaxAutoLockRenewalDuration, Is.EqualTo(sbOptions.MaxAutoLockRenewalDuration));
+                Assert.That(processorOptions.MaxConcurrentCalls, Is.EqualTo(1));
+            });
         }
 
         [Test]
@@ -158,12 +179,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             };
 
             ServiceBusSessionProcessorOptions processorOptions = sbOptions.ToSessionProcessorOptions(true, false);
-            Assert.AreEqual(true, processorOptions.AutoCompleteMessages);
-            Assert.AreEqual(sbOptions.PrefetchCount, processorOptions.PrefetchCount);
-            Assert.AreEqual(sbOptions.MaxAutoLockRenewalDuration, processorOptions.MaxAutoLockRenewalDuration);
-            Assert.AreEqual(sbOptions.SessionIdleTimeout, processorOptions.SessionIdleTimeout);
-            Assert.AreEqual(sbOptions.MaxConcurrentSessions, processorOptions.MaxConcurrentSessions);
-            Assert.AreEqual(sbOptions.MaxConcurrentCallsPerSession, processorOptions.MaxConcurrentCallsPerSession);
+            Assert.Multiple(() =>
+            {
+                Assert.That(processorOptions.AutoCompleteMessages, Is.EqualTo(true));
+                Assert.That(processorOptions.PrefetchCount, Is.EqualTo(sbOptions.PrefetchCount));
+                Assert.That(processorOptions.MaxAutoLockRenewalDuration, Is.EqualTo(sbOptions.MaxAutoLockRenewalDuration));
+                Assert.That(processorOptions.SessionIdleTimeout, Is.EqualTo(sbOptions.SessionIdleTimeout));
+                Assert.That(processorOptions.MaxConcurrentSessions, Is.EqualTo(sbOptions.MaxConcurrentSessions));
+                Assert.That(processorOptions.MaxConcurrentCallsPerSession, Is.EqualTo(sbOptions.MaxConcurrentCallsPerSession));
+            });
         }
 
         [Test]
@@ -181,12 +205,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             };
 
             ServiceBusSessionProcessorOptions processorOptions = sbOptions.ToSessionProcessorOptions(true, true);
-            Assert.AreEqual(true, processorOptions.AutoCompleteMessages);
-            Assert.AreEqual(sbOptions.PrefetchCount, processorOptions.PrefetchCount);
-            Assert.AreEqual(sbOptions.MaxAutoLockRenewalDuration, processorOptions.MaxAutoLockRenewalDuration);
-            Assert.AreEqual(sbOptions.SessionIdleTimeout, processorOptions.SessionIdleTimeout);
-            Assert.AreEqual(1, processorOptions.MaxConcurrentSessions);
-            Assert.AreEqual(1, processorOptions.MaxConcurrentCallsPerSession);
+            Assert.Multiple(() =>
+            {
+                Assert.That(processorOptions.AutoCompleteMessages, Is.EqualTo(true));
+                Assert.That(processorOptions.PrefetchCount, Is.EqualTo(sbOptions.PrefetchCount));
+                Assert.That(processorOptions.MaxAutoLockRenewalDuration, Is.EqualTo(sbOptions.MaxAutoLockRenewalDuration));
+                Assert.That(processorOptions.SessionIdleTimeout, Is.EqualTo(sbOptions.SessionIdleTimeout));
+                Assert.That(processorOptions.MaxConcurrentSessions, Is.EqualTo(1));
+                Assert.That(processorOptions.MaxConcurrentCallsPerSession, Is.EqualTo(1));
+            });
         }
     }
 }

@@ -363,11 +363,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(batchEnumerable, Is.Not.Null, "The batch enumerable should have been populated.");
 
             var batchEnumerableList = batchEnumerable.ToList();
-            Assert.That(batchEnumerableList.Count, Is.EqualTo(batch.Count), "The wrong number of events was in the enumerable.");
+            Assert.That(batchEnumerableList, Has.Count.EqualTo(batch.Count), "The wrong number of events was in the enumerable.");
 
             for (var index = 0; index < batchEvents.Length; ++index)
             {
-                Assert.That(batchEnumerableList.Contains(eventMessages[index]), $"The event at index: { index } was not in the enumerable.");
+                Assert.That(batchEnumerableList, Does.Contain(eventMessages[index]), $"The event at index: {index} was not in the enumerable.");
             }
         }
 
@@ -581,9 +581,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     ++sequenceIndex;
 
-                    Assert.That(sequence, Is.GreaterThan(firstSequence), $"The sequence number for index: { sequenceIndex } should be greater than the initial sequence number.");
-                    Assert.That(group, Is.EqualTo(expectedGroupId), $"The group for index: { sequenceIndex } should match.");
-                    Assert.That(owner, Is.EqualTo(expectedOwnerLevel), $"The owner for index: { sequenceIndex } should match.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sequence, Is.GreaterThan(firstSequence), $"The sequence number for index: {sequenceIndex} should be greater than the initial sequence number.");
+                        Assert.That(group, Is.EqualTo(expectedGroupId), $"The group for index: {sequenceIndex} should match.");
+                        Assert.That(owner, Is.EqualTo(expectedOwnerLevel), $"The owner for index: {sequenceIndex} should match.");
+                    });
                 }
             };
 

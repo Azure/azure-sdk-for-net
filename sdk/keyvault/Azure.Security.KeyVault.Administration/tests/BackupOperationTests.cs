@@ -105,8 +105,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync(default));
 
             Assert.Throws<RequestFailedException>(() => { KeyVaultBackupResult x = operation.Value; });
-            Assert.That(operation.StartTime, Is.EqualTo(failedBackup.StartTime));
-            Assert.That(operation.EndTime, Is.EqualTo(failedBackup.EndTime));
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.StartTime, Is.EqualTo(failedBackup.StartTime));
+                Assert.That(operation.EndTime, Is.EqualTo(failedBackup.EndTime));
+            });
         }
 
         [Test]
@@ -121,8 +124,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var operation = new KeyVaultBackupOperation(incompleteBackup, Mock.Of<Response>(), Mock.Of<KeyVaultBackupClient>());
 
             Assert.Throws<InvalidOperationException>(() => { KeyVaultBackupResult x = operation.Value; });
-            Assert.That(operation.StartTime, Is.EqualTo(incompleteBackup.StartTime));
-            Assert.That(operation.EndTime, Is.EqualTo(incompleteBackup.EndTime));
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.StartTime, Is.EqualTo(incompleteBackup.StartTime));
+                Assert.That(operation.EndTime, Is.EqualTo(incompleteBackup.EndTime));
+            });
         }
 
         [Test(Description = "https://github.com/Azure/azure-sdk-for-net/issues/41855")]
@@ -154,12 +160,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             var operation = new KeyVaultBackupOperation(mockClient.Object, jobId);
             var ex = Assert.Throws<RequestFailedException>(() => operation.WaitForCompletion());
-            Assert.AreEqual(ex.Status, 200);
+            Assert.That(ex.Status, Is.EqualTo(200));
 
             dynamic error = ex.GetRawResponse()?.Content.ToDynamicFromJson(JsonPropertyNames.UseExact).error;
             Assert.NotNull(error);
-            Assert.AreEqual("BadRequest", (string)error.code);
-            Assert.AreEqual("Invalid backup: Reason: Cannot read backup status document", (string)error.message);
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)error.code, Is.EqualTo("BadRequest"));
+                Assert.That((string)error.message, Is.EqualTo("Invalid backup: Reason: Cannot read backup status document"));
+            });
         }
 
         [Test(Description = "https://github.com/Azure/azure-sdk-for-net/issues/41855")]
@@ -191,12 +200,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             var operation = new KeyVaultRestoreOperation(mockClient.Object, jobId);
             var ex = Assert.Throws<RequestFailedException>(() => operation.WaitForCompletion());
-            Assert.AreEqual(ex.Status, 200);
+            Assert.That(ex.Status, Is.EqualTo(200));
 
             dynamic error = ex.GetRawResponse()?.Content.ToDynamicFromJson(JsonPropertyNames.UseExact).error;
             Assert.NotNull(error);
-            Assert.AreEqual("BadRequest", (string)error.code);
-            Assert.AreEqual("Invalid backup: Reason: Cannot read backup status document", (string)error.message);
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)error.code, Is.EqualTo("BadRequest"));
+                Assert.That((string)error.message, Is.EqualTo("Invalid backup: Reason: Cannot read backup status document"));
+            });
         }
     }
 }

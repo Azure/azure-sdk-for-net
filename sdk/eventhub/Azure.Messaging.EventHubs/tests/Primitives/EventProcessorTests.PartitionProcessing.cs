@@ -570,9 +570,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(partitionProcessor.ProcessingTask, Is.Not.Null, "There should be a processing task present.");
+                Assert.That(partitionProcessor.ProcessingTask, Is.Not.Null, "There should be a processing task present.");
+            });
             Assert.That(partitionProcessor.ProcessingTask.IsCompleted, Is.False, "The processing task should not be completed.");
 
             mockConsumer
@@ -624,9 +627,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(partitionProcessor.ProcessingTask, Is.Not.Null, "There should be a processing task present.");
+                Assert.That(partitionProcessor.ProcessingTask, Is.Not.Null, "There should be a processing task present.");
+            });
             Assert.That(partitionProcessor.ProcessingTask.IsCompleted, Is.False, "The processing task should not be completed.");
 
             cancellationSource.Cancel();
@@ -698,9 +704,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(receiveCompletionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(partitionProcessor.ProcessingTask, Is.Not.Null, "There should be a processing task present.");
+                Assert.That(partitionProcessor.ProcessingTask, Is.Not.Null, "There should be a processing task present.");
+            });
             Assert.That(partitionProcessor.ProcessingTask.IsCompleted, Is.False, "The processing task should not be completed.");
 
             cancellationSource.Cancel();
@@ -808,9 +817,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(receiveCompletionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(partitionProcessor.ProcessingTask, Is.Not.Null, "There should be a processing task present.");
+                Assert.That(partitionProcessor.ProcessingTask, Is.Not.Null, "There should be a processing task present.");
+            });
             Assert.That(partitionProcessor.ProcessingTask.IsCompleted, Is.False, "The processing task should not be completed.");
 
             cancellationSource.Cancel();

@@ -22,10 +22,13 @@ namespace Azure.Search.Documents.Tests
             var indexName = "my-index-name";
             var endpoint = new Uri($"https://{serviceName}.search.windows.net");
             var client = new SearchClient(endpoint, indexName, new AzureKeyCredential("fake"));
-            Assert.NotNull(client);
-            Assert.AreEqual(endpoint, client.Endpoint);
-            Assert.AreEqual(serviceName, client.ServiceName);
-            Assert.AreEqual(indexName, client.IndexName);
+            Assert.That(client, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(client.Endpoint, Is.EqualTo(endpoint));
+                Assert.That(client.ServiceName, Is.EqualTo(serviceName));
+                Assert.That(client.IndexName, Is.EqualTo(indexName));
+            });
 
             Assert.Throws<ArgumentNullException>(() => new SearchClient(null, indexName, new AzureKeyCredential("fake")));
             Assert.Throws<ArgumentNullException>(() => new SearchClient(endpoint, null, new AzureKeyCredential("fake")));
@@ -53,11 +56,14 @@ namespace Azure.Search.Documents.Tests
                         AuthorityHost = AzureAuthorityHosts.AzureChina
                     }),
                 options);
-            Assert.NotNull(client);
-            Assert.AreEqual(endpoint, client.Endpoint);
-            Assert.AreEqual(serviceName, client.ServiceName);
-            Assert.AreEqual(indexName, client.IndexName);
-            Assert.AreEqual(SearchAudience.AzureChina, options.Audience);
+            Assert.That(client, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(client.Endpoint, Is.EqualTo(endpoint));
+                Assert.That(client.ServiceName, Is.EqualTo(serviceName));
+                Assert.That(client.IndexName, Is.EqualTo(indexName));
+                Assert.That(options.Audience, Is.EqualTo(SearchAudience.AzureChina));
+            });
         }
 
         [Test]
@@ -67,8 +73,11 @@ namespace Azure.Search.Documents.Tests
 
             SearchClient client = search.GetSearchClient();
             Response<long> response = await client.GetDocumentCountAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(SearchResources.TestDocuments.Length, response.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value, Is.EqualTo(SearchResources.TestDocuments.Length));
+            });
         }
     }
 }

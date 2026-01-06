@@ -70,30 +70,39 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             DocumentModelDetails model = operation.Value;
 
-            Assert.That(model.ModelId, Is.EqualTo(modelId));
-            Assert.That(model.Description, Is.EqualTo(description));
-            Assert.That(model.ApiVersion, Is.EqualTo(ServiceVersionString));
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.ModelId, Is.EqualTo(modelId));
+                Assert.That(model.Description, Is.EqualTo(description));
+                Assert.That(model.ApiVersion, Is.EqualTo(ServiceVersionString));
 
-            // Add a 4-hour tolerance because the model could have been cached before this test.
-            Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
-            Assert.That(model.Tags, Is.EquivalentTo(options.Tags));
+                // Add a 4-hour tolerance because the model could have been cached before this test.
+                Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+                Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
+                Assert.That(model.Tags, Is.EquivalentTo(options.Tags));
 
-            Assert.That(model.BlobSource, Is.Null);
-            Assert.That(model.BlobFileListSource, Is.Null);
+                Assert.That(model.BlobSource, Is.Null);
+                Assert.That(model.BlobFileListSource, Is.Null);
 
-            Assert.That(model.DocumentTypes.Count, Is.EqualTo(1));
+                Assert.That(model.DocumentTypes, Has.Count.EqualTo(1));
+            });
             Assert.That(model.DocumentTypes.ContainsKey(modelId));
 
             DocumentTypeDetails docType = model.DocumentTypes[modelId];
 
-            Assert.That(docType.Description, Is.Null);
-            Assert.That(docType.BuildMode, Is.EqualTo(buildMode));
+            Assert.Multiple(() =>
+            {
+                Assert.That(docType.Description, Is.Null);
+                Assert.That(docType.BuildMode, Is.EqualTo(buildMode));
+            });
 
             if (buildMode == DocumentBuildMode.Template)
             {
@@ -112,17 +121,23 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             foreach (DocumentFieldSchema fieldSchema in docType.FieldSchema.Values)
             {
-                Assert.That(fieldSchema.Description, Is.Null);
-                Assert.That(fieldSchema.Example, Is.Null);
-                Assert.That(fieldSchema.Items, Is.Null);
-                Assert.That(fieldSchema.Properties, Is.Empty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(fieldSchema.Description, Is.Null);
+                    Assert.That(fieldSchema.Example, Is.Null);
+                    Assert.That(fieldSchema.Items, Is.Null);
+                    Assert.That(fieldSchema.Properties, Is.Empty);
+                });
             }
 
             DocumentFieldSchema merchantSchema = docType.FieldSchema["Merchant"];
             DocumentFieldSchema quantitySchema = docType.FieldSchema["Quantity"];
 
-            Assert.That(merchantSchema.FieldType, Is.EqualTo(DocumentFieldType.String));
-            Assert.That(quantitySchema.FieldType, Is.EqualTo(DocumentFieldType.Double));
+            Assert.Multiple(() =>
+            {
+                Assert.That(merchantSchema.FieldType, Is.EqualTo(DocumentFieldType.String));
+                Assert.That(quantitySchema.FieldType, Is.EqualTo(DocumentFieldType.Double));
+            });
         }
 
         [RecordedTest]
@@ -182,23 +197,29 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             DocumentModelDetails sourceModel = disposableModel.Value;
             DocumentModelDetails model = operation.Value;
 
-            Assert.That(model.ModelId, Is.EqualTo(modelId));
-            Assert.That(model.Description, Is.EqualTo(description));
-            Assert.That(model.ApiVersion, Is.EqualTo(ServiceVersionString));
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.ModelId, Is.EqualTo(modelId));
+                Assert.That(model.Description, Is.EqualTo(description));
+                Assert.That(model.ApiVersion, Is.EqualTo(ServiceVersionString));
 
-            // Add a 4-hour tolerance because the model could have been cached before this test.
-            Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
-            Assert.That(model.Tags, Is.EquivalentTo(tags));
+                // Add a 4-hour tolerance because the model could have been cached before this test.
+                Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+                Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
+                Assert.That(model.Tags, Is.EquivalentTo(tags));
 
-            Assert.That(model.BlobSource, Is.Null);
-            Assert.That(model.BlobFileListSource, Is.Null);
+                Assert.That(model.BlobSource, Is.Null);
+                Assert.That(model.BlobFileListSource, Is.Null);
+            });
 
             // TODO: reenable validation once the following service issue has been fixed: https://github.com/Azure/azure-sdk-for-net/issues/37172
             // DocumentAssert.AreEquivalent(sourceModel.DocTypes, model.DocTypes);
@@ -247,26 +268,32 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             DocumentModelDetails componentModel0 = disposableModel0.Value;
             DocumentModelDetails componentModel1 = disposableModel1.Value;
             DocumentModelDetails model = operation.Value;
 
-            Assert.That(model.ModelId, Is.EqualTo(modelId));
-            Assert.That(model.Description, Is.EqualTo(description));
-            Assert.That(model.ApiVersion, Is.EqualTo(ServiceVersionString));
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.ModelId, Is.EqualTo(modelId));
+                Assert.That(model.Description, Is.EqualTo(description));
+                Assert.That(model.ApiVersion, Is.EqualTo(ServiceVersionString));
 
-            // Add a 4-hour tolerance because the model could have been cached before this test.
-            Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
-            Assert.That(model.Tags, Is.EquivalentTo(options.Tags));
+                // Add a 4-hour tolerance because the model could have been cached before this test.
+                Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+                Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
+                Assert.That(model.Tags, Is.EquivalentTo(options.Tags));
 
-            Assert.That(model.BlobSource, Is.Null);
-            Assert.That(model.BlobFileListSource, Is.Null);
+                Assert.That(model.BlobSource, Is.Null);
+                Assert.That(model.BlobFileListSource, Is.Null);
 
-            Assert.That(model.DocumentTypes.Count, Is.EqualTo(2));
+                Assert.That(model.DocumentTypes, Has.Count.EqualTo(2));
+            });
 
             DocumentTypeDetails expectedDocType0 = componentModel0.DocumentTypes[componentModel0.ModelId];
             DocumentTypeDetails expectedDocType1 = componentModel1.DocumentTypes[componentModel1.ModelId];
@@ -361,7 +388,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            Assert.That(idMapping.Count, Is.EqualTo(expectedIdMapping.Count));
+            Assert.That(idMapping, Has.Count.EqualTo(expectedIdMapping.Count));
 
             foreach (string id in expectedIdMapping.Keys)
             {
@@ -370,16 +397,19 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 DocumentModelDetails expected = expectedIdMapping[id];
                 DocumentModelDetails model = idMapping[id];
 
-                Assert.That(model.ModelId, Is.EqualTo(expected.ModelId));
-                Assert.That(model.Description, Is.EqualTo(expected.Description));
-                Assert.That(model.ApiVersion, Is.EqualTo(expected.ApiVersion));
-                Assert.That(model.CreatedOn, Is.EqualTo(expected.CreatedOn));
-                Assert.That(model.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
-                Assert.That(model.Tags, Is.EquivalentTo(expected.Tags));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.ModelId, Is.EqualTo(expected.ModelId));
+                    Assert.That(model.Description, Is.EqualTo(expected.Description));
+                    Assert.That(model.ApiVersion, Is.EqualTo(expected.ApiVersion));
+                    Assert.That(model.CreatedOn, Is.EqualTo(expected.CreatedOn));
+                    Assert.That(model.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
+                    Assert.That(model.Tags, Is.EquivalentTo(expected.Tags));
 
-                Assert.That(model.BlobSource, Is.Null);
-                Assert.That(model.BlobFileListSource, Is.Null);
-                Assert.That(model.DocumentTypes, Is.Empty);
+                    Assert.That(model.BlobSource, Is.Null);
+                    Assert.That(model.BlobFileListSource, Is.Null);
+                    Assert.That(model.DocumentTypes, Is.Empty);
+                });
             }
         }
 
@@ -421,13 +451,19 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             ModelCopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(options);
 
-            Assert.That(copyAuthorization.TargetModelId, Is.EqualTo(modelId));
-            Assert.That(copyAuthorization.TargetModelLocation.AbsoluteUri, Does.StartWith(TestEnvironment.Endpoint));
-            Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo(TestEnvironment.ResourceId));
-            Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo(TestEnvironment.ResourceRegion));
-            Assert.That(copyAuthorization.AccessToken, Is.Not.Null);
-            Assert.That(copyAuthorization.AccessToken, Is.Not.Empty);
-            Assert.That(copyAuthorization.ExpiresOn, Is.GreaterThan(Recording.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(copyAuthorization.TargetModelId, Is.EqualTo(modelId));
+                Assert.That(copyAuthorization.TargetModelLocation.AbsoluteUri, Does.StartWith(TestEnvironment.Endpoint));
+                Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo(TestEnvironment.ResourceId));
+                Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo(TestEnvironment.ResourceRegion));
+                Assert.That(copyAuthorization.AccessToken, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(copyAuthorization.AccessToken, Is.Not.Empty);
+                Assert.That(copyAuthorization.ExpiresOn, Is.GreaterThan(Recording.UtcNow));
+            });
         }
     }
 }

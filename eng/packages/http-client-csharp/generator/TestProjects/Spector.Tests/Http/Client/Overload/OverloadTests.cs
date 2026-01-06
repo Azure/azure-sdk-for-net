@@ -13,26 +13,32 @@ namespace TestProjects.Spector.Tests.Http.Client.Overload
         public Task Client_Overload_list() => Test(async (host) =>
         {
             var response = await new OverloadClient(host, null).GetAllAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
 
             var results = response.Value;
-            Assert.AreEqual(2, results.Count);
-            Assert.AreEqual("foo", results[0].Name);
-            Assert.AreEqual("car", results[0].Scope);
-            Assert.AreEqual("bar", results[1].Name);
-            Assert.AreEqual("bike", results[1].Scope);
+            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(results[0].Name, Is.EqualTo("foo"));
+                Assert.That(results[0].Scope, Is.EqualTo("car"));
+                Assert.That(results[1].Name, Is.EqualTo("bar"));
+                Assert.That(results[1].Scope, Is.EqualTo("bike"));
+            });
         });
 
         [SpectorTest]
         public Task Client_Overload_listByScope() => Test(async (host) =>
         {
             var response = await new OverloadClient(host, null).GetAllAsync(scope: "car");
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
 
             var results = response.Value;
-            Assert.AreEqual(1, results.Count);
-            Assert.AreEqual("foo", results[0].Name);
-            Assert.AreEqual("car", results[0].Scope);
+            Assert.That(results.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(results[0].Name, Is.EqualTo("foo"));
+                Assert.That(results[0].Scope, Is.EqualTo("car"));
+            });
         });
     }
 }

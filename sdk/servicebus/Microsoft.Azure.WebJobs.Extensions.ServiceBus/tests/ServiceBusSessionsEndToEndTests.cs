@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string functionId = $"{methodInfo.DeclaringType.FullName}.{methodInfo.Name}";
                 var concurrencyManager = host.Services.GetServices<ConcurrencyManager>().SingleOrDefault();
                 var concurrencyStatus = concurrencyManager.GetStatus(functionId);
-                Assert.AreEqual(1, concurrencyStatus.CurrentConcurrency);
+                Assert.That(concurrencyStatus.CurrentConcurrency, Is.EqualTo(1));
 
                 // use a number of different sessions
                 int numSessions = 5;
@@ -97,12 +97,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // in the case of sessions, we should have at least increased
                 // to the session count
                 concurrencyStatus = concurrencyManager.GetStatus(functionId);
-                Assert.GreaterOrEqual(concurrencyStatus.CurrentConcurrency, numSessions);
+                Assert.That(concurrencyStatus.CurrentConcurrency, Is.GreaterThanOrEqualTo(numSessions));
 
                 // check a few of the concurrency logs
                 var concurrencyLogs = host.GetTestLoggerProvider().GetAllLogMessages().Where(p => p.Category == LogCategories.Concurrency).Select(p => p.FormattedMessage).ToList();
                 int concurrencyIncreaseLogCount = concurrencyLogs.Count(p => p.Contains("ProcessMessage Increasing concurrency"));
-                Assert.GreaterOrEqual(concurrencyIncreaseLogCount, 3);
+                Assert.That(concurrencyIncreaseLogCount, Is.GreaterThanOrEqualTo(3));
 
                 await host.StopAsync();
             }
@@ -120,15 +120,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await WriteQueueMessage("message4", "test-session1");
                 await WriteQueueMessage("message5", "test-session1");
 
-                Assert.True(_waitHandle1.WaitOne(SBTimeoutMills));
+                Assert.That(_waitHandle1.WaitOne(SBTimeoutMills), Is.True);
 
                 List<LogMessage> logMessages = GetLogMessages(host).Where(m => m.Category == "Function.SBQueue1Trigger.User").ToList();
-                Assert.True(logMessages.Count() == 5, ServiceBusSessionsTestHelper.GetLogsAsString(logMessages));
+                Assert.That(logMessages.Count(), Is.EqualTo(5), ServiceBusSessionsTestHelper.GetLogsAsString(logMessages));
 
                 int i = 1;
                 foreach (LogMessage logMessage in logMessages)
                 {
-                    StringAssert.StartsWith("message" + i++, logMessage.FormattedMessage);
+                    Assert.That(logMessage.FormattedMessage, Does.StartWith("message" + i++));
                 }
 
                 await host.StopAsync();
@@ -147,15 +147,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await WriteTopicMessage("message4", "test-session1");
                 await WriteTopicMessage("message5", "test-session1");
 
-                Assert.True(_waitHandle1.WaitOne(SBTimeoutMills));
+                Assert.That(_waitHandle1.WaitOne(SBTimeoutMills), Is.True);
 
                 List<LogMessage> logMessages = GetLogMessages(host).Where(m => m.Category == "Function.SBSub1Trigger.User").ToList();
-                Assert.True(logMessages.Count() == 5, ServiceBusSessionsTestHelper.GetLogsAsString(logMessages));
+                Assert.That(logMessages.Count(), Is.EqualTo(5), ServiceBusSessionsTestHelper.GetLogsAsString(logMessages));
 
                 int i = 1;
                 foreach (LogMessage logMessage in logMessages)
                 {
-                    StringAssert.StartsWith("message" + i++, logMessage.FormattedMessage);
+                    Assert.That(logMessage.FormattedMessage, Does.StartWith("message" + i++));
                 }
 
                 await host.StopAsync();
@@ -185,37 +185,46 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await WriteQueueMessage("message5", "test-session1");
                 await WriteQueueMessage("message5", "test-session2");
 
-                Assert.True(_waitHandle1.WaitOne(SBTimeoutMills));
-                Assert.True(_waitHandle2.WaitOne(SBTimeoutMills));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(_waitHandle1.WaitOne(SBTimeoutMills), Is.True);
+                    Assert.That(_waitHandle2.WaitOne(SBTimeoutMills), Is.True);
+                });
 
                 IEnumerable<LogMessage> logMessages1 = GetLogMessages(host1);
                 List<LogMessage> consoleOutput1 =
                     logMessages1.Where(m => m.Category == "Function.SBQueue1Trigger.User").ToList();
-                Assert.IsNotEmpty(logMessages1.Where(m =>
-                    m.Category == "CustomMessagingProvider" &&
-                    m.FormattedMessage.StartsWith("Custom processor Begin called!")));
-                Assert.IsNotEmpty(logMessages1.Where(m =>
-                    m.Category == "CustomMessagingProvider" &&
-                    m.FormattedMessage.StartsWith("Custom processor End called!")));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(logMessages1.Where(m =>
+                                    m.Category == "CustomMessagingProvider" &&
+                                    m.FormattedMessage.StartsWith("Custom processor Begin called!")), Is.Not.Empty);
+                    Assert.That(logMessages1.Where(m =>
+                        m.Category == "CustomMessagingProvider" &&
+                        m.FormattedMessage.StartsWith("Custom processor End called!")), Is.Not.Empty);
+                });
                 IEnumerable<LogMessage> logMessages2 = GetLogMessages(host2);
                 List<LogMessage> consoleOutput2 =
                     logMessages2.Where(m => m.Category == "Function.SBQueue2Trigger.User").ToList();
-                Assert.IsNotEmpty(logMessages2.Where(m =>
-                    m.Category == "CustomMessagingProvider" &&
-                    m.FormattedMessage.StartsWith("Custom processor Begin called!")));
-                Assert.IsNotEmpty(logMessages2.Where(m =>
-                    m.Category == "CustomMessagingProvider" &&
-                    m.FormattedMessage.StartsWith("Custom processor End called!")));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(logMessages2.Where(m =>
+                                    m.Category == "CustomMessagingProvider" &&
+                                    m.FormattedMessage.StartsWith("Custom processor Begin called!")), Is.Not.Empty);
+                    Assert.That(logMessages2.Where(m =>
+                        m.Category == "CustomMessagingProvider" &&
+                        m.FormattedMessage.StartsWith("Custom processor End called!")), Is.Not.Empty);
+                });
                 char sessionId1 = consoleOutput1[0].FormattedMessage[consoleOutput1[0].FormattedMessage.Length - 1];
                 foreach (LogMessage m in consoleOutput1)
                 {
-                    Assert.AreEqual(sessionId1, m.FormattedMessage[m.FormattedMessage.Length - 1]);
+                    Assert.That(m.FormattedMessage[m.FormattedMessage.Length - 1], Is.EqualTo(sessionId1));
                 }
 
                 char sessionId2 = consoleOutput2[0].FormattedMessage[consoleOutput1[0].FormattedMessage.Length - 1];
                 foreach (LogMessage m in consoleOutput2)
                 {
-                    Assert.AreEqual(sessionId2, m.FormattedMessage[m.FormattedMessage.Length - 1]);
+                    Assert.That(m.FormattedMessage[m.FormattedMessage.Length - 1], Is.EqualTo(sessionId2));
                 }
 
                 await host1.StopAsync();
@@ -246,38 +255,47 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await WriteTopicMessage("message5", "test-session1");
                 await WriteTopicMessage("message5", "test-session2");
 
-                Assert.True(_waitHandle1.WaitOne(SBTimeoutMills));
-                Assert.True(_waitHandle2.WaitOne(SBTimeoutMills));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(_waitHandle1.WaitOne(SBTimeoutMills), Is.True);
+                    Assert.That(_waitHandle2.WaitOne(SBTimeoutMills), Is.True);
+                });
 
                 IEnumerable<LogMessage> logMessages1 = GetLogMessages(host1);
                 List<LogMessage> consoleOutput1 =
                     logMessages1.Where(m => m.Category == "Function.SBSub1Trigger.User").ToList();
-                Assert.IsNotEmpty(logMessages1.Where(m =>
-                    m.Category == "CustomMessagingProvider" &&
-                    m.FormattedMessage.StartsWith("Custom processor Begin called!")));
-                Assert.IsNotEmpty(logMessages1.Where(m =>
-                    m.Category == "CustomMessagingProvider" &&
-                    m.FormattedMessage.StartsWith("Custom processor End called!")));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(logMessages1.Where(m =>
+                                    m.Category == "CustomMessagingProvider" &&
+                                    m.FormattedMessage.StartsWith("Custom processor Begin called!")), Is.Not.Empty);
+                    Assert.That(logMessages1.Where(m =>
+                        m.Category == "CustomMessagingProvider" &&
+                        m.FormattedMessage.StartsWith("Custom processor End called!")), Is.Not.Empty);
+                });
                 IEnumerable<LogMessage> logMessages2 = GetLogMessages(host2);
                 List<LogMessage> consoleOutput2 =
                     logMessages2.Where(m => m.Category == "Function.SBSub2Trigger.User").ToList();
-                Assert.IsNotEmpty(logMessages2.Where(m =>
-                    m.Category == "CustomMessagingProvider" &&
-                    m.FormattedMessage.StartsWith("Custom processor Begin called!")));
-                Assert.IsNotEmpty(logMessages2.Where(m =>
-                    m.Category == "CustomMessagingProvider" &&
-                    m.FormattedMessage.StartsWith("Custom processor End called!")));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(logMessages2.Where(m =>
+                                    m.Category == "CustomMessagingProvider" &&
+                                    m.FormattedMessage.StartsWith("Custom processor Begin called!")), Is.Not.Empty);
+                    Assert.That(logMessages2.Where(m =>
+                        m.Category == "CustomMessagingProvider" &&
+                        m.FormattedMessage.StartsWith("Custom processor End called!")), Is.Not.Empty);
+                });
 
                 char sessionId1 = consoleOutput1[0].FormattedMessage[consoleOutput1[0].FormattedMessage.Length - 1];
                 foreach (LogMessage m in consoleOutput1)
                 {
-                    Assert.AreEqual(sessionId1, m.FormattedMessage[m.FormattedMessage.Length - 1]);
+                    Assert.That(m.FormattedMessage[m.FormattedMessage.Length - 1], Is.EqualTo(sessionId1));
                 }
 
                 char sessionId2 = consoleOutput2[0].FormattedMessage[consoleOutput1[0].FormattedMessage.Length - 1];
                 foreach (LogMessage m in consoleOutput2)
                 {
-                    Assert.AreEqual(sessionId2, m.FormattedMessage[m.FormattedMessage.Length - 1]);
+                    Assert.That(m.FormattedMessage[m.FormattedMessage.Length - 1], Is.EqualTo(sessionId2));
                 }
 
                 await host1.StopAsync();
@@ -306,26 +324,29 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await WriteQueueMessage("message5", "test-session1");
                 await WriteQueueMessage("message5", "test-session2");
 
-                Assert.True(_waitHandle1.WaitOne(SBTimeoutMills));
-                Assert.True(_waitHandle2.WaitOne(SBTimeoutMills));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(_waitHandle1.WaitOne(SBTimeoutMills), Is.True);
+                    Assert.That(_waitHandle2.WaitOne(SBTimeoutMills), Is.True);
+                });
 
                 var logMessages = GetLogMessages(host)
                     .Where(m => m.Category == "Function.SBQueue1Trigger.User").ToList();
 
-                Assert.True(logMessages.Count() == 10, ServiceBusSessionsTestHelper.GetLogsAsString(logMessages));
+                Assert.That(logMessages.Count(), Is.EqualTo(10), ServiceBusSessionsTestHelper.GetLogsAsString(logMessages));
                 double seconds = (logMessages[5].Timestamp - logMessages[4].Timestamp).TotalSeconds;
-                Assert.True(seconds > 90 && seconds < 110, seconds.ToString());
+                Assert.That(seconds > 90 && seconds < 110, Is.True, seconds.ToString());
                 for (int i = 0; i < logMessages.Count(); i++)
                 {
                     if (i < 5)
                     {
-                        Assert.AreEqual(logMessages[i].FormattedMessage[logMessages[0].FormattedMessage.Length - 1],
-                            logMessages[0].FormattedMessage[logMessages[0].FormattedMessage.Length - 1]);
+                        Assert.That(logMessages[0].FormattedMessage[logMessages[0].FormattedMessage.Length - 1],
+                            Is.EqualTo(logMessages[i].FormattedMessage[logMessages[0].FormattedMessage.Length - 1]));
                     }
                     else
                     {
-                        Assert.AreEqual(logMessages[i].FormattedMessage[logMessages[0].FormattedMessage.Length - 1],
-                            logMessages[5].FormattedMessage[logMessages[0].FormattedMessage.Length - 1]);
+                        Assert.That(logMessages[5].FormattedMessage[logMessages[0].FormattedMessage.Length - 1],
+                            Is.EqualTo(logMessages[i].FormattedMessage[logMessages[0].FormattedMessage.Length - 1]));
                     }
                 }
                 await host.StopAsync();
@@ -353,26 +374,29 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await WriteTopicMessage("message5", "test-session1");
                 await WriteTopicMessage("message5", "test-session2");
 
-                Assert.True(_waitHandle1.WaitOne(SBTimeoutMills));
-                Assert.True(_waitHandle2.WaitOne(SBTimeoutMills));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(_waitHandle1.WaitOne(SBTimeoutMills), Is.True);
+                    Assert.That(_waitHandle2.WaitOne(SBTimeoutMills), Is.True);
+                });
 
                 var logMessages = GetLogMessages(host)
                     .Where(m => m.Category == "Function.SBSub1Trigger.User").ToList();;
 
-                Assert.True(logMessages.Count() == 10, ServiceBusSessionsTestHelper.GetLogsAsString(logMessages));
+                Assert.That(logMessages.Count(), Is.EqualTo(10), ServiceBusSessionsTestHelper.GetLogsAsString(logMessages));
                 double seconds = (logMessages[5].Timestamp - logMessages[4].Timestamp).TotalSeconds;
-                Assert.True(seconds > 90 && seconds < 110, seconds.ToString());
+                Assert.That(seconds > 90 && seconds < 110, Is.True, seconds.ToString());
                 for (int i = 0; i < logMessages.Count(); i++)
                 {
                     if (i < 5)
                     {
-                        Assert.AreEqual(logMessages[i].FormattedMessage[logMessages[0].FormattedMessage.Length - 1],
-                            logMessages[0].FormattedMessage[logMessages[0].FormattedMessage.Length - 1]);
+                        Assert.That(logMessages[0].FormattedMessage[logMessages[0].FormattedMessage.Length - 1],
+                            Is.EqualTo(logMessages[i].FormattedMessage[logMessages[0].FormattedMessage.Length - 1]));
                     }
                     else
                     {
-                        Assert.AreEqual(logMessages[i].FormattedMessage[logMessages[0].FormattedMessage.Length - 1],
-                            logMessages[5].FormattedMessage[logMessages[0].FormattedMessage.Length - 1]);
+                        Assert.That(logMessages[5].FormattedMessage[logMessages[0].FormattedMessage.Length - 1],
+                            Is.EqualTo(logMessages[i].FormattedMessage[logMessages[0].FormattedMessage.Length - 1]));
                     }
                 }
 
@@ -509,14 +533,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 // Wait to ensure function invocatoin has started before draining messages
-                Assert.True(_drainValidationPreDelay.WaitOne(SBTimeoutMills));
+                Assert.That(_drainValidationPreDelay.WaitOne(SBTimeoutMills), Is.True);
 
                 // Start draining in-flight messages
                 var drainModeManager = host.Services.GetService<IDrainModeManager>();
                 await drainModeManager.EnableDrainModeAsync(CancellationToken.None);
 
                 // Validate that function execution was allowed to complete
-                Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
+                Assert.That(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills), Is.True);
                 await host.StopAsync();
             }
         }
@@ -529,7 +553,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -542,7 +566,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -558,7 +582,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -574,7 +598,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -588,7 +612,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 // Delay to make sure function is done executing
                 await Task.Delay(500);
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
@@ -611,8 +635,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result1 = _waitHandle1.WaitOne(SBTimeoutMills);
                 bool result2 = _waitHandle2.WaitOne(SBTimeoutMills);
 
-                Assert.True(result1);
-                Assert.True(result2);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result1, Is.True);
+                    Assert.That(result2, Is.True);
+                });
                 await host.StopAsync();
             }
         }
@@ -635,7 +662,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 // Delay to make sure function is done executing
                 await Task.Delay(500);
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
@@ -655,11 +682,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
             var scope = listener.AssertAndRemoveScope(Constants.ProcessSessionMessagesActivityName);
             var tags = scope.Activity.Tags.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
-            Assert.AreEqual(2, scope.LinkedActivities.Count);
-            Assert.IsTrue(scope.IsCompleted);
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(scope.LinkedActivities, Has.Count.EqualTo(2));
+                Assert.That(scope.IsCompleted, Is.True);
+            });
         }
 
         [Test]
@@ -670,11 +700,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray_Throws>();
             var scope = listener.AssertAndRemoveScope(Constants.ProcessSessionMessagesActivityName);
             var tags = scope.Activity.Tags.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
-            Assert.AreEqual(2, scope.LinkedActivities.Count);
-            Assert.IsTrue(scope.IsFailed);
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(scope.LinkedActivities, Has.Count.EqualTo(2));
+                Assert.That(scope.IsFailed, Is.True);
+            });
         }
 
         [Test]
@@ -684,7 +717,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var host = BuildHost<TestSingleDispose>();
 
             bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-            Assert.True(result);
+            Assert.That(result, Is.True);
             host.Dispose();
         }
 
@@ -695,7 +728,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var host = BuildHost<TestSingleDispose>();
 
             bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-            Assert.True(result);
+            Assert.That(result, Is.True);
             await host.StopAsync();
         }
 
@@ -706,7 +739,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var host = BuildHost<TestBatchDispose>();
 
             bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-            Assert.True(result);
+            Assert.That(result, Is.True);
             host.Dispose();
         }
 
@@ -717,7 +750,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var host = BuildHost<TestBatchDispose>();
 
             bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-            Assert.True(result);
+            Assert.That(result, Is.True);
             await host.StopAsync();
         }
 
@@ -737,7 +770,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -755,7 +788,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -771,7 +804,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
 
                 await host.StopAsync();
             }
@@ -791,14 +824,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 // Wait to ensure function invocatoin has started before draining messages
-                Assert.True(_drainValidationPreDelay.WaitOne(SBTimeoutMills));
+                Assert.That(_drainValidationPreDelay.WaitOne(SBTimeoutMills), Is.True);
 
                 // Start draining in-flight messages
                 var drainModeManager = host.Services.GetService<IDrainModeManager>();
                 await drainModeManager.EnableDrainModeAsync(CancellationToken.None);
 
                 // Validate that function execution was allowed to complete
-                Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
+                Assert.That(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills), Is.True);
                 await host.StopAsync();
             }
         }
@@ -813,8 +846,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ILogger log,
                 string lockToken)
             {
-                Assert.AreEqual(1, deliveryCount);
-                Assert.AreEqual(message.LockToken, lockToken);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(deliveryCount, Is.EqualTo(1));
+                    Assert.That(lockToken, Is.EqualTo(message.LockToken));
+                });
 
                 ServiceBusSessionsTestHelper.ProcessMessage(message, log, _waitHandle1, _waitHandle2);
             }
@@ -827,8 +863,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ILogger log,
                 string lockToken)
             {
-                Assert.AreEqual(1, deliveryCount);
-                Assert.AreEqual(message.LockToken, lockToken);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(deliveryCount, Is.EqualTo(1));
+                    Assert.That(lockToken, Is.EqualTo(message.LockToken));
+                });
 
                 ServiceBusSessionsTestHelper.ProcessMessage(message, log, _waitHandle1, _waitHandle2);
             }
@@ -868,13 +907,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 logger.LogInformation(
                     $"DrainModeValidationFunctions.QueueWithSessions: message data {msg.Body} with session id {msg.SessionId}");
-                Assert.AreEqual(_drainModeSessionId, msg.SessionId);
-                Assert.AreEqual(msg.SessionId, sessionId);
-                Assert.AreEqual(msg.ReplyToSessionId, replyToSessionId);
-                Assert.AreEqual(msg.PartitionKey, partitionKey);
-                Assert.AreEqual(msg.TransactionPartitionKey, transactionPartitionKey);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(msg.SessionId, Is.EqualTo(_drainModeSessionId));
+                    Assert.That(sessionId, Is.EqualTo(msg.SessionId));
+                    Assert.That(replyToSessionId, Is.EqualTo(msg.ReplyToSessionId));
+                    Assert.That(partitionKey, Is.EqualTo(msg.PartitionKey));
+                    Assert.That(transactionPartitionKey, Is.EqualTo(msg.TransactionPartitionKey));
+                });
                 _drainValidationPreDelay.Set();
-                Assert.False(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.False);
                 try
                 {
                     await messageActions.CompleteMessageAsync(msg);
@@ -897,9 +939,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 logger.LogInformation(
                     $"DrainModeValidationFunctions.TopicWithSessions: message data {msg.Body} with session id {msg.SessionId}");
-                Assert.AreEqual(_drainModeSessionId, msg.SessionId);
+                Assert.That(msg.SessionId, Is.EqualTo(_drainModeSessionId));
                 _drainValidationPreDelay.Set();
-                Assert.False(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.False);
                 try
                 {
                     await messageSession.CompleteMessageAsync(msg);
@@ -922,21 +964,24 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
-                Assert.True(array.Length > 0);
+                Assert.That(array.Length > 0, Is.True);
                 logger.LogInformation(
                     $"DrainModeTestJobBatch.QueueWithSessionsBatch: received {array.Length} messages with session id {array[0].SessionId}");
-                Assert.AreEqual(_drainModeSessionId, array[0].SessionId);
+                Assert.That(array[0].SessionId, Is.EqualTo(_drainModeSessionId));
                 _drainValidationPreDelay.Set();
-                Assert.False(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.False);
                 for (int i = 0; i < array.Length; i++)
                 {
                     var message = array[i];
-                    Assert.AreEqual(message.SessionId, sessionIdArray[i]);
-                    Assert.AreEqual(message.ReplyToSessionId, replyToSessionIdArray[i]);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sessionIdArray[i], Is.EqualTo(message.SessionId));
+                        Assert.That(replyToSessionIdArray[i], Is.EqualTo(message.ReplyToSessionId));
+                    });
                     // validate that manual lock renewal works
                     var initialLockedUntil = sessionActions.SessionLockedUntil;
                     await sessionActions.RenewSessionLockAsync();
-                    Assert.Greater(sessionActions.SessionLockedUntil, initialLockedUntil);
+                    Assert.That(sessionActions.SessionLockedUntil, Is.GreaterThan(initialLockedUntil));
 
                     await sessionActions.CompleteMessageAsync(message);
                 }
@@ -954,12 +999,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
-                Assert.True(array.Length > 0);
+                Assert.That(array.Length > 0, Is.True);
                 logger.LogInformation(
                     $"DrainModeTestJobBatch.TopicWithSessionsBatch: received {array.Length} messages with session id {array[0].SessionId}");
-                Assert.AreEqual(_drainModeSessionId, array[0].SessionId);
+                Assert.That(array[0].SessionId, Is.EqualTo(_drainModeSessionId));
                 _drainValidationPreDelay.Set();
-                Assert.False(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.False);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
                     await messageSession.CompleteMessageAsync(msg);
@@ -1032,7 +1077,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
                ServiceBusReceivedMessage[] array)
             {
-                Assert.AreEqual(array.Length, 3);
+                Assert.That(3, Is.EqualTo(array.Length));
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
@@ -1044,7 +1089,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
                ServiceBusReceivedMessage[] array)
             {
-                Assert.AreEqual(array.Length, MinBatchSize);
+                Assert.That(MinBatchSize, Is.EqualTo(array.Length));
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
@@ -1112,7 +1157,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(SecondQueueScope.QueueName);
-                Assert.IsNotNull(receiver2);
+                Assert.That(receiver2, Is.Not.Null);
                 _waitHandle1.Set();
             }
         }
@@ -1138,7 +1183,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(SecondQueueScope.QueueName);
-                Assert.IsNotNull(receiver2);
+                Assert.That(receiver2, Is.Not.Null);
                 _waitHandle1.Set();
             }
         }
@@ -1154,15 +1199,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 switch (count)
                 {
                     case 0:
-                        Assert.AreEqual("session1", message.SessionId);
+                        Assert.That(message.SessionId, Is.EqualTo("session1"));
                         sessionActions.ReleaseSession();
                         break;
                     case 1:
                     case 2:
-                        Assert.AreEqual("session2", message.SessionId);
+                        Assert.That(message.SessionId, Is.EqualTo("session2"));
                         break;
                     case 3:
-                        Assert.AreEqual("session1", message.SessionId);
+                        Assert.That(message.SessionId, Is.EqualTo("session1"));
                         _waitHandle1.Set();
                         break;
                 }
@@ -1183,15 +1228,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 switch (count)
                 {
                     case 0:
-                        Assert.AreEqual("session1", message.SessionId);
+                        Assert.That(message.SessionId, Is.EqualTo("session1"));
                         sessionActions.ReleaseSession();
                         break;
                     case 1:
                     case 2:
-                        Assert.AreEqual("session2", message.SessionId);
+                        Assert.That(message.SessionId, Is.EqualTo("session2"));
                         break;
                     case 3:
-                        Assert.AreEqual("session1", message.SessionId);
+                        Assert.That(message.SessionId, Is.EqualTo("session1"));
                         _waitHandle1.Set();
                         break;
                 }
@@ -1210,7 +1255,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _waitHandle1.Set();
                 // wait a small amount of time for the host to call dispose
                 await Task.Delay(2000, CancellationToken.None);
-                Assert.IsTrue(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.True);
             }
         }
 
@@ -1224,7 +1269,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _waitHandle1.Set();
                 // wait a small amount of time for the host to call dispose
                 await Task.Delay(2000, CancellationToken.None);
-                Assert.IsTrue(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.True);
             }
         }
 
@@ -1325,8 +1370,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new[] { message.SequenceNumber });
 
                 var peeked = await receiveActions.PeekMessagesAsync(1, message.SequenceNumber);
-                Assert.IsNotEmpty(peeked);
-                Assert.AreEqual(message.SequenceNumber, peeked.Single().SequenceNumber);
+                Assert.That(peeked, Is.Not.Empty);
+                Assert.That(peeked.Single().SequenceNumber, Is.EqualTo(message.SequenceNumber));
 
                 _waitHandle1.Set();
             }
@@ -1373,7 +1418,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new[] { messages.First().SequenceNumber });
 
                 var received = await receiveActions.ReceiveMessagesAsync(1);
-                Assert.IsNotNull(received);
+                Assert.That(received, Is.Not.Null);
 
                 _waitHandle1.Set();
             }

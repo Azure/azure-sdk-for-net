@@ -73,9 +73,9 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
 
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsPopulateReferencesAgentWithAzureAISearchTool
@@ -183,9 +183,9 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         while (runResponse.Value.Status == RunStatus.Queued
             || runResponse.Value.Status == RunStatus.InProgress);
 
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             runResponse.Value.Status,
+            Is.EqualTo(RunStatus.Completed),
             runResponse.Value.LastError?.Message);
         #endregion
         #region Snippet:AgentsPopulateReferencesAgentWithAzureAISearchTool_Sync

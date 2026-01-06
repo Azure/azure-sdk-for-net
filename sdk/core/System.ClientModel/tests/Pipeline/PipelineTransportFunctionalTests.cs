@@ -32,7 +32,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 
         using PipelineMessage message = transport.CreateMessage();
 
-        Assert.AreEqual("GET", message.Request.Method);
+        Assert.That(message.Request.Method, Is.EqualTo("GET"));
     }
 
     [Theory]
@@ -59,7 +59,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual(method, httpMethod);
+        Assert.That(httpMethod, Is.EqualTo(method));
     }
 
     [Test]
@@ -86,7 +86,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        CollectionAssert.AreEqual(bytes, requestBytes);
+        Assert.That(requestBytes, Is.EqualTo(bytes).AsCollection);
     }
 
     [Test]
@@ -113,7 +113,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 #if NET462
         if (method == "DELETE")
         {
-            Assert.AreEqual(0, contentLength);
+            Assert.That(contentLength, Is.EqualTo(0));
 
             return;
         }
@@ -123,11 +123,11 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
             method == "GET" ||
             method == "HEAD")
         {
-            Assert.Null(contentLength);
+            Assert.That(contentLength, Is.Null);
         }
         else
         {
-            Assert.AreEqual(0, contentLength);
+            Assert.That(contentLength, Is.EqualTo(0));
         }
     }
 
@@ -152,7 +152,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.Null(contentType);
+        Assert.That(contentType, Is.Null);
     }
 
     [Test]
@@ -172,10 +172,10 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 
             await transport.ProcessSyncOrAsync(message, IsAsync);
 
-            Assert.False(disposeTrackingContent.IsDisposed);
+            Assert.That(disposeTrackingContent.IsDisposed, Is.False);
         }
 
-        Assert.True(disposeTrackingContent.IsDisposed);
+        Assert.That(disposeTrackingContent.IsDisposed, Is.True);
     }
 
     #endregion
@@ -200,7 +200,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual(code, message.Response!.Status);
+        Assert.That(message.Response!.Status, Is.EqualTo(code));
     }
 
     [Test]
@@ -222,7 +222,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual("Custom ReasonPhrase", message.Response!.ReasonPhrase);
+        Assert.That(message.Response!.ReasonPhrase, Is.EqualTo("Custom ReasonPhrase"));
     }
 
     #endregion

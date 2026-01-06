@@ -45,7 +45,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             var downloadResultValue = (await client.GetManifestAsync(digest)).Value;
-            Assert.AreEqual(digest, downloadResultValue.Digest);
+            Assert.That(downloadResultValue.Digest, Is.EqualTo(digest));
             ValidateManifest(downloadResultValue.Manifest.ToObjectFromJson<OciImageManifest>());
 
             // Clean up
@@ -88,7 +88,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             var getResultValue = (await client.GetManifestAsync(digest)).Value;
-            Assert.AreEqual(digest, getResultValue.Digest);
+            Assert.That(getResultValue.Digest, Is.EqualTo(digest));
             ValidateManifest(getResultValue.Manifest.ToObjectFromJson<OciImageManifest>());
 
             // Clean up
@@ -131,7 +131,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             var getResultValue = (await client.GetManifestAsync(digest)).Value;
-            Assert.AreEqual(digest, getResultValue.Digest);
+            Assert.That(getResultValue.Digest, Is.EqualTo(digest));
             ValidateManifest(getResultValue.Manifest.ToObjectFromJson<OciImageManifest>());
 
             // Clean up
@@ -156,15 +156,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             var downloadResultValue = (await client.GetManifestAsync(digest)).Value;
-            Assert.AreEqual(digest, downloadResultValue.Digest);
+            Assert.That(downloadResultValue.Digest, Is.EqualTo(digest));
             ValidateManifest(downloadResultValue.Manifest.ToObjectFromJson<OciImageManifest>());
 
             var artifact = registryClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
             var count = await tags.CountAsync();
-            Assert.AreEqual(1, count);
+            Assert.That(count, Is.EqualTo(1));
             var firstTag = await tags.FirstAsync();
-            Assert.AreEqual(tag, firstTag.Name);
+            Assert.That(firstTag.Name, Is.EqualTo(tag));
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -208,18 +208,18 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             var getResultValue = (await client.GetManifestAsync(digest)).Value;
-            Assert.AreEqual(digest, getResultValue.Digest);
+            Assert.That(getResultValue.Digest, Is.EqualTo(digest));
             ValidateManifest(getResultValue.Manifest.ToObjectFromJson<OciImageManifest>());
 
             var artifact = registryClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
             var count = await tags.CountAsync();
-            Assert.AreEqual(1, count);
+            Assert.That(count, Is.EqualTo(1));
             var firstTag = await tags.FirstAsync();
-            Assert.AreEqual(tag, firstTag.Name);
+            Assert.That(firstTag.Name, Is.EqualTo(tag));
 
             var getResultValue2 = (await client.GetManifestAsync(tag)).Value;
-            Assert.AreEqual(digest, getResultValue2.Digest);
+            Assert.That(getResultValue2.Digest, Is.EqualTo(digest));
             ValidateManifest(getResultValue2.Manifest.ToObjectFromJson<OciImageManifest>());
 
             // Clean up
@@ -246,7 +246,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             SetManifestResult result = await client.SetManifestAsync(manifest, mediaType: ManifestMediaType.DockerManifest);
 
             // Assert
-            Assert.AreEqual("sha256:721089ae5c4d90e58e3d7f7e6c652a351621fbf37c26eceae23622173ec5a44d", result.Digest);
+            Assert.That(result.Digest, Is.EqualTo("sha256:721089ae5c4d90e58e3d7f7e6c652a351621fbf37c26eceae23622173ec5a44d"));
 
             // The following fails because the manifest media type is set to OciImageManifest by default
             fs.Position = 0;
@@ -267,9 +267,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             GetManifestResult result = await client.GetManifestAsync(digest);
 
-            // Assert
-            Assert.AreEqual(digest, result.Digest);
-            Assert.AreEqual(ManifestMediaType.DockerManifest, result.MediaType);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(result.Digest, Is.EqualTo(digest));
+                Assert.That(result.MediaType, Is.EqualTo(ManifestMediaType.DockerManifest));
+            });
         }
 
         private async Task SetManifestPrerequisites(ContainerRegistryContentClient client)
@@ -313,18 +316,24 @@ namespace Azure.Containers.ContainerRegistry.Tests
         private static void ValidateManifest(OciImageManifest manifest)
         {
             // These are from the values in the Data\oci-artifact\manifest.json file.
-            Assert.IsNotNull(manifest);
+            Assert.That(manifest, Is.Not.Null);
 
-            Assert.IsNotNull(manifest.Configuration);
-            Assert.AreEqual("application/vnd.acme.rocket.config", manifest.Configuration.MediaType);
-            Assert.AreEqual("sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8", manifest.Configuration.Digest);
-            Assert.AreEqual(171, manifest.Configuration.SizeInBytes);
+            Assert.That(manifest.Configuration, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(manifest.Configuration.MediaType, Is.EqualTo("application/vnd.acme.rocket.config"));
+                Assert.That(manifest.Configuration.Digest, Is.EqualTo("sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8"));
+                Assert.That(manifest.Configuration.SizeInBytes, Is.EqualTo(171));
 
-            Assert.IsNotNull(manifest.Layers);
-            Assert.AreEqual(1, manifest.Layers.Count);
-            Assert.AreEqual("application/vnd.oci.image.layer.v1.tar", manifest.Layers[0].MediaType);
-            Assert.AreEqual("sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed", manifest.Layers[0].Digest);
-            Assert.AreEqual(28, manifest.Layers[0].SizeInBytes);
+                Assert.That(manifest.Layers, Is.Not.Null);
+            });
+            Assert.That(manifest.Layers, Has.Count.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(manifest.Layers[0].MediaType, Is.EqualTo("application/vnd.oci.image.layer.v1.tar"));
+                Assert.That(manifest.Layers[0].Digest, Is.EqualTo("sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed"));
+                Assert.That(manifest.Layers[0].SizeInBytes, Is.EqualTo(28));
+            });
         }
 
         #region Upload Blob Tests
@@ -343,13 +352,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string digest = BlobHelper.ComputeDigest(data.ToStream());
             UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(data);
 
-            Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(data.ToMemory().Length, uploadResult.SizeInBytes);
+            Assert.Multiple(() =>
+            {
+                Assert.That(uploadResult.Digest, Is.EqualTo(digest));
+                Assert.That(uploadResult.SizeInBytes, Is.EqualTo(data.ToMemory().Length));
+            });
 
             // Assert
             var downloadResult = await client.DownloadBlobContentAsync(digest);
-            Assert.AreEqual(digest, downloadResult.Value.Digest);
-            Assert.AreEqual(data.ToMemory().Length, downloadResult.Value.Content.ToMemory().Length);
+            Assert.Multiple(() =>
+            {
+                Assert.That(downloadResult.Value.Digest, Is.EqualTo(digest));
+                Assert.That(downloadResult.Value.Content.ToMemory().Length, Is.EqualTo(data.ToMemory().Length));
+            });
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -375,13 +390,16 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(stream);
                 streamLength = uploadResult.SizeInBytes;
 
-                Assert.AreEqual(digest, uploadResult.Digest);
+                Assert.That(uploadResult.Digest, Is.EqualTo(digest));
             }
 
             // Assert
             var downloadResult = await client.DownloadBlobContentAsync(digest);
-            Assert.AreEqual(digest, downloadResult.Value.Digest);
-            Assert.AreEqual(streamLength, downloadResult.Value.Content.ToArray().Length);
+            Assert.Multiple(() =>
+            {
+                Assert.That(downloadResult.Value.Digest, Is.EqualTo(digest));
+                Assert.That(downloadResult.Value.Content.ToArray().Length, Is.EqualTo(streamLength));
+            });
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -408,9 +426,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 uploadResult = await client.UploadBlobAsync(stream);
             }
 
-            // Assert
-            Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(uploadResult.Digest, Is.EqualTo(digest));
+                Assert.That(uploadResult.SizeInBytes, Is.EqualTo(blobSize));
+            });
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -439,9 +460,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 uploadResult = await client.UploadBlobAsync(stream);
             }
 
-            // Assert
-            Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(uploadResult.Digest, Is.EqualTo(digest));
+                Assert.That(uploadResult.SizeInBytes, Is.EqualTo(blobSize));
+            });
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -468,9 +492,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 uploadResult = await client.UploadBlobAsync(stream);
             }
 
-            // Assert
-            Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(uploadResult.Digest, Is.EqualTo(digest));
+                Assert.That(uploadResult.SizeInBytes, Is.EqualTo(blobSize));
+            });
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -494,7 +521,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Assert
-            Assert.AreEqual(digest, uploadResult.Digest);
+            Assert.That(uploadResult.Digest, Is.EqualTo(digest));
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -521,8 +548,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
             Response<DownloadRegistryBlobResult> downloadResult = await client.DownloadBlobContentAsync(digest);
 
-            Assert.AreEqual(digest, downloadResult.Value.Digest);
-            Assert.AreEqual(stream.Length, downloadResult.Value.Content.ToArray().Length);
+            Assert.Multiple(() =>
+            {
+                Assert.That(downloadResult.Value.Digest, Is.EqualTo(digest));
+                Assert.That(downloadResult.Value.Content.ToArray().Length, Is.EqualTo(stream.Length));
+            });
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -547,10 +577,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using Stream downloadedStream = downloadResult.Value.Content;
             BinaryData content = BinaryData.FromStream(downloadedStream);
 
-            // Assert
-            Assert.AreEqual(digest, downloadResult.Value.Digest);
-            Assert.AreEqual(stream.Length, content.ToMemory().Length);
-            Assert.AreEqual(data, content.ToArray());
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(downloadResult.Value.Digest, Is.EqualTo(digest));
+                Assert.That(content.ToMemory().Length, Is.EqualTo(stream.Length));
+                Assert.That(content.ToArray(), Is.EqualTo(data));
+            });
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -575,8 +608,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.DownloadBlobToAsync(digest, downloadStream);
             var digestOfDownload = BlobHelper.ComputeDigest(downloadStream);
 
-            Assert.AreEqual(digest, digestOfDownload);
-            Assert.AreEqual(blobSize, downloadStream.Length);
+            Assert.Multiple(() =>
+            {
+                Assert.That(digestOfDownload, Is.EqualTo(digest));
+                Assert.That(downloadStream.Length, Is.EqualTo(blobSize));
+            });
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -604,8 +640,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.DownloadBlobToAsync(digest, downloadStream);
             string digestOfDownload = BlobHelper.ComputeDigest(downloadStream);
 
-            Assert.AreEqual(digest, digestOfDownload);
-            Assert.AreEqual(blobSize, downloadStream.Length);
+            Assert.Multiple(() =>
+            {
+                Assert.That(digestOfDownload, Is.EqualTo(digest));
+                Assert.That(downloadStream.Length, Is.EqualTo(blobSize));
+            });
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -636,9 +675,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             BinaryData downloadedData = BinaryData.FromStream(downloadStream);
             var digestOfDownload = BlobHelper.ComputeDigest(downloadStream);
 
-            Assert.AreEqual(digest, digestOfDownload);
-            Assert.AreEqual(blobSize, downloadStream.Length);
-            Assert.IsTrue(downloadedData.ToMemory().Span.SequenceEqual(data.AsSpan()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(digestOfDownload, Is.EqualTo(digest));
+                Assert.That(downloadStream.Length, Is.EqualTo(blobSize));
+                Assert.That(downloadedData.ToMemory().Span.SequenceEqual(data.AsSpan()), Is.True);
+            });
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -671,9 +713,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             BinaryData downloadedData = BinaryData.FromStream(downloadStream);
             var digestOfDownload = BlobHelper.ComputeDigest(downloadStream);
 
-            Assert.AreEqual(digest, digestOfDownload);
-            Assert.AreEqual(blobSize, downloadStream.Length);
-            Assert.IsTrue(downloadedData.ToMemory().Span.SequenceEqual(data.AsSpan()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(digestOfDownload, Is.EqualTo(digest));
+                Assert.That(downloadStream.Length, Is.EqualTo(blobSize));
+                Assert.That(downloadedData.ToMemory().Span.SequenceEqual(data.AsSpan()), Is.True);
+            });
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -700,11 +745,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 Console.WriteLine($"Service error: {ex.Message}");
                 caught = true;
-                Assert.IsTrue(ex.Message.Contains("Content:"), "Download failed exception did not contain \"Content:\".");
-                Assert.IsTrue(ex.Message.Contains("404 page not found"), "Download failed exception did not contain error content \"404 page not found\".");
+                Assert.That(ex.Message, Does.Contain("Content:"), "Download failed exception did not contain \"Content:\".");
+                Assert.That(ex.Message, Does.Contain("404 page not found"), "Download failed exception did not contain error content \"404 page not found\".");
             }
 
-            Assert.IsTrue(caught, "Did not catch download failed exception.");
+            Assert.That(caught, Is.True, "Did not catch download failed exception.");
         }
 
         #endregion
@@ -722,10 +767,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ContainerRegistryClient registryClient = CreateClient();
 
             var names = registryClient.GetRepositoryNamesAsync();
-            Assert.IsTrue(await names.AnyAsync(n => n == "oci-artifact"));
+            Assert.That(await names.AnyAsync(n => n == "oci-artifact"), Is.True);
 
             var properties = await registryClient.GetArtifact("oci-artifact", "v1").GetManifestPropertiesAsync();
-            Assert.AreEqual(uploadManifestResult.Digest, properties.Value.Digest);
+            Assert.That(properties.Value.Digest, Is.EqualTo(uploadManifestResult.Digest));
 
             // Clean up
             await registryClient.DeleteRepositoryAsync("oci-artifact");
@@ -765,9 +810,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using FileStream downloadFs = File.OpenWrite(filePath);
             await client.DownloadBlobToAsync(uploadResult.Digest, downloadFs);
 
-            // Content is validated by the client, so we only need to check length.
-            Assert.IsTrue(File.Exists(filePath));
-            Assert.AreEqual(size, new FileInfo(filePath).Length);
+            Assert.Multiple(() =>
+            {
+                // Content is validated by the client, so we only need to check length.
+                Assert.That(File.Exists(filePath), Is.True);
+                Assert.That(new FileInfo(filePath).Length, Is.EqualTo(size));
+            });
         }
 
         [Test]
@@ -806,10 +854,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
             long blobSize = response.GetRawResponse().Headers.ContentLengthLong.Value;
             await CopyNetworkStream(contentStream, downloadFs, blobSize);
 
-            // Content is validated by the client, so we only need to check length.
-            Assert.IsTrue(File.Exists(filePath));
-            Assert.AreEqual(size, new FileInfo(filePath).Length);
-            Assert.AreEqual(blobSize, new FileInfo(filePath).Length);
+            Assert.Multiple(() =>
+            {
+                // Content is validated by the client, so we only need to check length.
+                Assert.That(File.Exists(filePath), Is.True);
+                Assert.That(new FileInfo(filePath).Length, Is.EqualTo(size));
+            });
+            Assert.That(new FileInfo(filePath).Length, Is.EqualTo(blobSize));
         }
 
         private async Task CopyNetworkStream(Stream source, Stream destination, long size, CancellationToken cancellationToken = default)
@@ -869,9 +920,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.Pipeline.SendAsync(message, CancellationToken.None);
             var response = message.Response;
 
-            // Assert
-            Assert.AreEqual(307, response.Status);
-            Assert.IsTrue(response.Headers.TryGetValue("Location", out string value));
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(response.Status, Is.EqualTo(307));
+                Assert.That(response.Headers.TryGetValue("Location", out string value), Is.True);
+            });
             Assert.DoesNotThrow(() => { Uri redirectUri = new(value); });
 
             // Clean up
@@ -972,13 +1026,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ContainerRegistryClient registryClient = CreateClient();
 
             var properties = await registryClient.GetArtifact("oci-artifact", "v1").GetManifestPropertiesAsync();
-            Assert.AreEqual(manifestResult.Value.Digest, properties.Value.Digest);
+            Assert.That(properties.Value.Digest, Is.EqualTo(manifestResult.Value.Digest));
             var files = Directory.GetFiles(path).Select(f => Path.GetFileName(f)).ToArray();
-            Assert.Contains("manifest.json", files);
-            Assert.Contains("config.json", files);
+            Assert.That(files, Does.Contain("manifest.json"));
+            Assert.That(files, Does.Contain("config.json"));
             foreach (var file in manifest.Layers)
             {
-                Assert.Contains(TrimSha(file.Digest), files);
+                Assert.That(files, Does.Contain(TrimSha(file.Digest)));
             }
 
             // Clean up

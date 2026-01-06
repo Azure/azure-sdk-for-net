@@ -22,7 +22,7 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new string[] { "https://management.azure.com//.default" }));
 
-            Assert.IsNotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new string[] { "https://management.azure.com//.default" }));
 
-            Assert.IsNotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
     }
 }

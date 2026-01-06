@@ -33,7 +33,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
             var book = new TestBook("contoso", 1, 5);
             var message = GetBrokeredMessage(serializer, book);
             var returned = (TestBook)serializer.ReadObject(message.Body.ToStream());
-            Assert.AreEqual(book, returned);
+            Assert.That(returned, Is.EqualTo(book));
         }
 
         [Test]
@@ -57,33 +57,39 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
                 lockTokenGuid: lockToken);
 
             var bindingData = ServiceBusExtensionConfigProvider.ConvertReceivedMessageToBindingData(message);
-            Assert.AreEqual("application/octet-stream", bindingData.ContentType);
-            Assert.AreEqual("1.0", bindingData.Version);
-            Assert.AreEqual("AzureServiceBusReceivedMessage", bindingData.Source);
+            Assert.Multiple(() =>
+            {
+                Assert.That(bindingData.ContentType, Is.EqualTo("application/octet-stream"));
+                Assert.That(bindingData.Version, Is.EqualTo("1.0"));
+                Assert.That(bindingData.Source, Is.EqualTo("AzureServiceBusReceivedMessage"));
+            });
 
             var bytes = bindingData.Content.ToMemory();
             var lockTokenBytes = bytes.Slice(0, 16).ToArray();
-            Assert.AreEqual(lockToken.ToByteArray(), lockTokenBytes);
+            Assert.That(lockTokenBytes, Is.EqualTo(lockToken.ToByteArray()));
 
             var deserialized = ServiceBusReceivedMessage.FromAmqpMessage(
                 AmqpAnnotatedMessage.FromBytes(
                     BinaryData.FromBytes(bytes.Slice(16, bytes.Length - 16))),
                 BinaryData.FromBytes(lockTokenBytes));
 
-            Assert.AreEqual(message.Body.ToArray(), deserialized.Body.ToArray());
-            Assert.AreEqual(message.MessageId, deserialized.MessageId);
-            Assert.AreEqual(message.CorrelationId, deserialized.CorrelationId);
-            Assert.AreEqual(message.SessionId, deserialized.SessionId);
-            Assert.AreEqual(message.ReplyTo, deserialized.ReplyTo);
-            Assert.AreEqual(message.ReplyToSessionId, deserialized.ReplyToSessionId);
-            Assert.AreEqual(message.ContentType, deserialized.ContentType);
-            Assert.AreEqual(message.Subject, deserialized.Subject);
-            Assert.AreEqual(message.To, deserialized.To);
-            Assert.AreEqual(message.PartitionKey, deserialized.PartitionKey);
-            Assert.AreEqual(message.TransactionPartitionKey, deserialized.TransactionPartitionKey);
-            Assert.AreEqual(message.DeadLetterSource, deserialized.DeadLetterSource);
-            Assert.AreEqual(message.EnqueuedSequenceNumber, deserialized.EnqueuedSequenceNumber);
-            Assert.AreEqual(message.LockToken, deserialized.LockToken);
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserialized.Body.ToArray(), Is.EqualTo(message.Body.ToArray()));
+                Assert.That(deserialized.MessageId, Is.EqualTo(message.MessageId));
+                Assert.That(deserialized.CorrelationId, Is.EqualTo(message.CorrelationId));
+                Assert.That(deserialized.SessionId, Is.EqualTo(message.SessionId));
+                Assert.That(deserialized.ReplyTo, Is.EqualTo(message.ReplyTo));
+                Assert.That(deserialized.ReplyToSessionId, Is.EqualTo(message.ReplyToSessionId));
+                Assert.That(deserialized.ContentType, Is.EqualTo(message.ContentType));
+                Assert.That(deserialized.Subject, Is.EqualTo(message.Subject));
+                Assert.That(deserialized.To, Is.EqualTo(message.To));
+                Assert.That(deserialized.PartitionKey, Is.EqualTo(message.PartitionKey));
+                Assert.That(deserialized.TransactionPartitionKey, Is.EqualTo(message.TransactionPartitionKey));
+                Assert.That(deserialized.DeadLetterSource, Is.EqualTo(message.DeadLetterSource));
+                Assert.That(deserialized.EnqueuedSequenceNumber, Is.EqualTo(message.EnqueuedSequenceNumber));
+                Assert.That(deserialized.LockToken, Is.EqualTo(message.LockToken));
+            });
         }
 
         private ServiceBusMessage GetBrokeredMessage(XmlObjectSerializer serializer, TestBook book)

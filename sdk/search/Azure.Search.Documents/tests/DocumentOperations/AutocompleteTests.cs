@@ -23,14 +23,17 @@ namespace Azure.Search.Documents.Tests
             IEnumerable<string> expectedText,
             IEnumerable<string> expectedQueryPlusText)
         {
-            Assert.NotNull(completions);
-            Assert.NotNull(completions.Results);
-            Assert.NotNull(expectedText);
-            Assert.NotNull(expectedQueryPlusText);
+            Assert.That(completions, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(completions.Results, Is.Not.Null);
+                Assert.That(expectedText, Is.Not.Null);
+                Assert.That(expectedQueryPlusText, Is.Not.Null);
+            });
 
             // TODO: #16824 - investigate autocompletions across SKUs
-            CollectionAssert.IsSubsetOf(completions.Results.Select(c => c.Text), expectedText);
-            CollectionAssert.IsSubsetOf(completions.Results.Select(c => c.QueryPlusText), expectedQueryPlusText);
+            Assert.That(completions.Results.Select(c => c.Text), Is.SubsetOf(expectedText));
+            Assert.That(completions.Results.Select(c => c.QueryPlusText), Is.SubsetOf(expectedQueryPlusText));
         }
 
         [Test]
@@ -58,10 +61,10 @@ namespace Azure.Search.Documents.Tests
                 async () => await resources.GetQueryClient().AutocompleteAsync(
                     "very po",
                     suggesterName: string.Empty));
-            Assert.AreEqual(400, ex.Status);
-            StringAssert.StartsWith(
-                "Cannot find fields enabled for suggestions. Please provide a value for 'suggesterName' in the query.",
-                ex.Message);
+            Assert.That(ex.Status, Is.EqualTo(400));
+            Assert.That(
+                ex.Message,
+                Does.StartWith("Cannot find fields enabled for suggestions. Please provide a value for 'suggesterName' in the query."));
         }
 
         [Test]
@@ -74,10 +77,10 @@ namespace Azure.Search.Documents.Tests
                     "very po",
                     invalidName,
                     new AutocompleteOptions { Mode = AutocompleteMode.OneTerm }));
-            Assert.AreEqual(400, ex.Status);
-            StringAssert.StartsWith(
-                $"The specified suggester name '{invalidName}' does not exist in this index definition.",
-                ex.Message);
+            Assert.That(ex.Status, Is.EqualTo(400));
+            Assert.That(
+                ex.Message,
+                Does.StartWith($"The specified suggester name '{invalidName}' does not exist in this index definition."));
         }
 
         [Test]
