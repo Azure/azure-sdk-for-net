@@ -17,14 +17,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledOperationsType"/>. </summary>
-        /// <param name="dayOfWeekName"> Name of the day of the week. </param>
-        public ScheduledOperationsType(OracleDatabaseDayOfWeekName? dayOfWeekName)
-        {
-
-            DayOfWeek = dayOfWeekName is null ? default : new OracleDatabaseDayOfWeek(dayOfWeekName.Value);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScheduledOperationsType"/>. </summary>
         /// <param name="dayOfWeek"> Day of week. </param>
         /// <param name="autoStartOn"> auto start time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="autoStopOn"> auto stop time. value must be of ISO-8601 format HH:mm. </param>

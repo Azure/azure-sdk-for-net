@@ -14,7 +14,7 @@ using Azure.ResourceManager.OracleDatabase;
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> Storage Details on the Exadata VM cluster. </summary>
-    internal partial class ExadbVmClusterStorageDetails : IJsonModel<ExadbVmClusterStorageDetails>
+    public partial class ExadbVmClusterStorageDetails : IJsonModel<ExadbVmClusterStorageDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ExadbVmClusterStorageDetails"/> for deserialization. </summary>
         internal ExadbVmClusterStorageDetails()

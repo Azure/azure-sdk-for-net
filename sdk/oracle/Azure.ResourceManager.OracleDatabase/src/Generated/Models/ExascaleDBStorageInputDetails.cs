@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> Create exadata Database Storage Details model. </summary>
-    internal partial class ExascaleDBStorageInputDetails
+    public partial class ExascaleDBStorageInputDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

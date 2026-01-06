@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.LambdaTestHyperExecute;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
@@ -16,21 +15,6 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOrganizationProperties"/>. </summary>
-        /// <param name="marketplace"> Marketplace details of the resource. </param>
-        /// <param name="user"> Details of the user. </param>
-        /// <param name="partnerLicensesSubscribed"> The number of licenses subscribed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> or <paramref name="user"/> is null. </exception>
-        public LambdaTestHyperExecuteOrganizationProperties(LambdaTestHyperExecuteMarketplaceDetails marketplace, LambdaTestHyperExecuteUserDetails user, int? partnerLicensesSubscribed)
-        {
-            Argument.AssertNotNull(marketplace, nameof(marketplace));
-            Argument.AssertNotNull(user, nameof(user));
-
-            Marketplace = marketplace;
-            User = user;
-            PartnerProperties = partnerLicensesSubscribed is null ? default : new LambdaTestHyperExecuteOfferPartnerProperties(partnerLicensesSubscribed.Value);
-        }
 
         /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>

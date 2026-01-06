@@ -12,7 +12,7 @@ using Azure.ResourceManager.ArizeAIObservabilityEval;
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
     /// <summary> Partner's specific Properties. </summary>
-    internal partial class ArizeAIObservabilityEvalOfferPartnerProperties
+    public partial class ArizeAIObservabilityEvalOfferPartnerProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
