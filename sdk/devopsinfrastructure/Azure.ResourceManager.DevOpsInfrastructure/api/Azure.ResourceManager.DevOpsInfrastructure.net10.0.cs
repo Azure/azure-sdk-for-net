@@ -284,20 +284,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static bool operator !=(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzurePermissionType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzurePermissionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DevOpsAzureSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku>
-    {
-        public DevOpsAzureSku(string name) { }
-        public string Name { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class DevOpsCheckNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult>
     {
         internal DevOpsCheckNameAvailabilityResult() { }
@@ -828,7 +814,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     }
     public partial class DevOpsVmssFabricProfile : Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsFabricProfile, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsVmssFabricProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsVmssFabricProfile>
     {
-        public DevOpsVmssFabricProfile(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku sku, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolVmImage> images) { }
+        public DevOpsVmssFabricProfile(string skuName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolVmImage> images) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolVmImage> Images { get { throw null; } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOSProfile OSProfile { get { throw null; } set { } }
