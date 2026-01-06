@@ -15,7 +15,7 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The resources needed for the user request. </summary>
-    public partial class UserRequestResources : IJsonModel<UserRequestResources>
+    internal partial class UserRequestResources : IJsonModel<UserRequestResources>
     {
         /// <summary> Initializes a new instance of <see cref="UserRequestResources"/> for deserialization. </summary>
         internal UserRequestResources()

@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="marketplace"> Marketplace details. </param>
         /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
         /// <param name="delegatedSubnetCidr"> Domain range for the delegated subnet. </param>
-        /// <param name="user"> User Details. </param>
+        /// <param name="userEmail"> User Email. </param>
         /// <param name="dellReferenceNumber"> DellReferenceNumber of the resource. </param>
         /// <param name="encryption"> EncryptionProperties of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="delegatedSubnetId"/>, <paramref name="delegatedSubnetCidr"/>, <paramref name="user"/>, <paramref name="dellReferenceNumber"/> or <paramref name="encryption"/> is null. </exception>
-        public DellFileSystemProperties(DellFileSystemMarketplaceDetails marketplace, ResourceIdentifier delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string dellReferenceNumber, DellFileSystemEncryptionProperties encryption)
+        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="delegatedSubnetId"/>, <paramref name="delegatedSubnetCidr"/>, <paramref name="userEmail"/>, <paramref name="dellReferenceNumber"/> or <paramref name="encryption"/> is null. </exception>
+        public DellFileSystemProperties(DellFileSystemMarketplaceDetails marketplace, ResourceIdentifier delegatedSubnetId, string delegatedSubnetCidr, string userEmail, string dellReferenceNumber, DellFileSystemEncryptionProperties encryption)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(delegatedSubnetId, nameof(delegatedSubnetId));
             Argument.AssertNotNull(delegatedSubnetCidr, nameof(delegatedSubnetCidr));
-            Argument.AssertNotNull(user, nameof(user));
+            Argument.AssertNotNull(userEmail, nameof(userEmail));
             Argument.AssertNotNull(dellReferenceNumber, nameof(dellReferenceNumber));
             Argument.AssertNotNull(encryption, nameof(encryption));
 
             Marketplace = marketplace;
             DelegatedSubnetId = delegatedSubnetId;
             DelegatedSubnetCidr = delegatedSubnetCidr;
-            User = user;
+            User = new DellFileSystemUserDetails(userEmail);
             DellReferenceNumber = dellReferenceNumber;
             Encryption = encryption;
         }
