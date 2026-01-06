@@ -60,10 +60,6 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
                 return Administration.Members;
             }
-            set
-            {
-                Administration = new FabricCapacityAdministration(value);
-            }
         }
     }
 }

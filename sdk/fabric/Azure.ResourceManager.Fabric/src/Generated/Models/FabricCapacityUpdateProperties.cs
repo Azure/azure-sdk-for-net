@@ -40,10 +40,6 @@ namespace Azure.ResourceManager.Fabric.Models
             {
                 return Administration is null ? default : Administration.Members;
             }
-            set
-            {
-                Administration = new FabricCapacityAdministration(value);
-            }
         }
     }
 }
