@@ -20,12 +20,8 @@ namespace Azure.AI.Projects
         /// <param name="client"> The Schedules client used to send requests. </param>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         public SchedulesGetRunsCollectionResultOfT(Schedules client, string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             _client = client;
             _id = id;
             _options = options;

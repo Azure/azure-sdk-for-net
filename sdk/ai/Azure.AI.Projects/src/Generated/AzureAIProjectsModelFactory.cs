@@ -434,7 +434,7 @@ namespace Azure.AI.Projects
         /// <param name="status"> Status of the red-team. It is set by service and is read-only. </param>
         /// <param name="target"> Target configuration for the red-team run. </param>
         /// <returns> A new <see cref="Projects.RedTeam"/> instance for mocking. </returns>
-        public static RedTeam RedTeam(string name = default, string displayName = default, int? numTurns = default, IEnumerable<AttackStrategy> attackStrategies = default, bool? simulationOnly = default, IEnumerable<RiskCategory> riskCategories = default, string applicationScenario = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string status = default, TargetConfig target = default)
+        public static RedTeam RedTeam(string name = default, string displayName = default, string numTurns = default, IEnumerable<AttackStrategy> attackStrategies = default, bool? simulationOnly = default, IEnumerable<RiskCategory> riskCategories = default, string applicationScenario = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string status = default, TargetConfig target = default)
         {
             attackStrategies ??= new ChangeTrackingList<AttackStrategy>();
             riskCategories ??= new ChangeTrackingList<RiskCategory>();
@@ -610,7 +610,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base class for targets with discriminator support.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAIAgentTarget"/>, <see cref="Projects.AzureAIModelTarget"/>, and <see cref="Projects.AzureAIAssistantTarget"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAIAgentTarget"/> and <see cref="Projects.AzureAIModelTarget"/>.
         /// </summary>
         /// <param name="type"> The type of target. </param>
         /// <returns> A new <see cref="Projects.Target"/> instance for mocking. </returns>
@@ -637,17 +637,6 @@ namespace Azure.AI.Projects
         public static ModelSamplingParams ModelSamplingParams(float temperature = default, float topP = default, int seed = default, int maxCompletionTokens = default)
         {
             return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents a target specifying an Azure AI Assistant (Agent V1) endpoint, including its id. </summary>
-        /// <param name="id"> The unique identifier of the Azure AI Assistant. </param>
-        /// <param name="toolDescriptions"> The descriptions of tools available to the assistant. </param>
-        /// <returns> A new <see cref="Projects.AzureAIAssistantTarget"/> instance for mocking. </returns>
-        public static AzureAIAssistantTarget AzureAIAssistantTarget(string id = default, IEnumerable<ToolDescription> toolDescriptions = default)
-        {
-            toolDescriptions ??= new ChangeTrackingList<ToolDescription>();
-
-            return new AzureAIAssistantTarget("azure_ai_assistant", additionalBinaryDataProperties: null, id, toolDescriptions.ToList());
         }
 
         /// <summary> Taxonomy category definition. </summary>

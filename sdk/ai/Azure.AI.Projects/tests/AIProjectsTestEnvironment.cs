@@ -30,6 +30,8 @@ namespace Azure.AI.Projects.Tests
         public string TESTIMAGEPNGINPUTPATH => GetRecordedVariable("TEST_IMAGE_PNG_INPUT_PATH");
         public string SAMPLEFILEPATH => GetRecordedVariable("SAMPLE_FILE_PATH");
         public string SAMPLEFOLDERPATH => GetRecordedVariable("SAMPLE_FOLDER_PATH");
+        public string MODEL_ENDPOINT => GetRecordedVariable(nameof(MODEL_ENDPOINT), options => options.IsSecret("https://sanitized.openai.azure.com/"));
+        public string MODEL_API_KEY => GetRecordedVariable(nameof(MODEL_API_KEY), options => options.IsSecret("Sanitized"));
         // The Fine tuning environment variables
         public string FINE_TUNING_COMPLETED_JOB => GetRecordedVariable(nameof(FINE_TUNING_COMPLETED_JOB));
         public string FINE_TUNING_AZURE_SUBSCRIPTION_ID => GetRecordedVariable(nameof(FINE_TUNING_AZURE_SUBSCRIPTION_ID));
