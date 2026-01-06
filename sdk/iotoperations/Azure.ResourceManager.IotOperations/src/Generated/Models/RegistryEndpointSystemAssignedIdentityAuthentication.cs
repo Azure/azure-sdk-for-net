@@ -7,23 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> System assigned identity authentication. </summary>
     public partial class RegistryEndpointSystemAssignedIdentityAuthentication : RegistryEndpointAuthentication
     {
-        /// <summary> Initializes a new instance of <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/>. </summary>
-        /// <param name="systemAssignedManagedIdentitySettings"> System assigned managed identity properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="systemAssignedManagedIdentitySettings"/> is null. </exception>
-        public RegistryEndpointSystemAssignedIdentityAuthentication(RegistryEndpointSystemAssignedManagedIdentitySettings systemAssignedManagedIdentitySettings) : base(RegistryEndpointAuthenticationMethod.SystemAssignedManagedIdentity)
-        {
-            Argument.AssertNotNull(systemAssignedManagedIdentitySettings, nameof(systemAssignedManagedIdentitySettings));
-
-            SystemAssignedManagedIdentitySettings = systemAssignedManagedIdentitySettings;
-        }
-
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/>. </summary>
         /// <param name="method"> The authentication method. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

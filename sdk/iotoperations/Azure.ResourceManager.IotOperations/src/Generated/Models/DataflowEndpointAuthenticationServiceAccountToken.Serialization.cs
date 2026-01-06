@@ -14,7 +14,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Service Account Token for BrokerAuthentication. </summary>
-    public partial class DataflowEndpointAuthenticationServiceAccountToken : IJsonModel<DataflowEndpointAuthenticationServiceAccountToken>
+    internal partial class DataflowEndpointAuthenticationServiceAccountToken : IJsonModel<DataflowEndpointAuthenticationServiceAccountToken>
     {
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointAuthenticationServiceAccountToken"/> for deserialization. </summary>
         internal DataflowEndpointAuthenticationServiceAccountToken()

@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Nginx.Models
     }
     public partial class NginxDeploymentPropertiesNginxAppProtect : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentPropertiesNginxAppProtect>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentPropertiesNginxAppProtect>
     {
-        public NginxDeploymentPropertiesNginxAppProtect(Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings webApplicationFirewallSettings) { }
+        internal NginxDeploymentPropertiesNginxAppProtect() { }
         public Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState? WebApplicationFirewallActivationState { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus WebApplicationFirewallStatus { get { throw null; } }
         protected virtual Azure.ResourceManager.Nginx.Models.NginxDeploymentPropertiesNginxAppProtect JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1111,20 +1111,6 @@ namespace Azure.ResourceManager.Nginx.Models
         Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class WebApplicationFirewallSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings>
-    {
-        public WebApplicationFirewallSettings() { }
-        public Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState? ActivationState { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WebApplicationFirewallStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus>
     {

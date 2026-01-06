@@ -52,7 +52,10 @@ import {
 } from "./sdk-context-options.js";
 import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
 import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
-import { resolveArmResources } from "./resolve-arm-resources-converter.js";
+import {
+  resolveArmResources,
+  getOperationScopeFromPath
+} from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
 
 export async function updateClients(
@@ -207,7 +210,7 @@ export function buildArmProviderSchema(
         methodId: method.crossLanguageDefinitionId,
         kind,
         operationPath: method.operation.path,
-        operationScope: getOperationScope(method.operation.path)
+        operationScope: getOperationScopeFromPath(method.operation.path)
       });
       if (!entry.resourceType) {
         entry.resourceType = calculateResourceTypeFromPath(
@@ -222,7 +225,7 @@ export function buildArmProviderSchema(
       nonResourceMethods.set(method.crossLanguageDefinitionId, {
         methodId: method.crossLanguageDefinitionId,
         operationPath: method.operation.path,
-        operationScope: getOperationScope(method.operation.path)
+        operationScope: getOperationScopeFromPath(method.operation.path)
       });
     }
   };
@@ -810,27 +813,6 @@ function getResourceScopeOfMethod(
     return candidates.reduce((a, b) => (a.length > b.length ? a : b));
   }
   return undefined;
-}
-
-function getOperationScope(path: string): ResourceScope {
-  if (path.startsWith("/{resourceUri}") || path.startsWith("/{scope}")) {
-    return ResourceScope.Extension;
-  } else if (
-    path.startsWith(
-      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/"
-    )
-  ) {
-    return ResourceScope.ResourceGroup;
-  } else if (path.startsWith("/subscriptions/{subscriptionId}/")) {
-    return ResourceScope.Subscription;
-  } else if (
-    path.startsWith(
-      "/providers/Microsoft.Management/managementGroups/{managementGroupId}/"
-    )
-  ) {
-    return ResourceScope.ManagementGroup;
-  }
-  return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
 }
 
 /**
