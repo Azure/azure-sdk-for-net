@@ -3300,7 +3300,6 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class IotOperationsInstanceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public IotOperationsInstanceProperties(Azure.ResourceManager.IotOperations.Models.SchemaRegistryRef schemaRegistryRef) { }
         public Azure.Core.ResourceIdentifier AdrNamespaceRefResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultSecretProviderClassRefResourceId { get { throw null; } set { } }

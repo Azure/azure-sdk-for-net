@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resources"> The resources for the request. </param>
         /// <param name="correlationId"> CorrelationId item. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/>, <paramref name="resources"/> or <paramref name="correlationId"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ExecuteStartContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationId)
         {
             Argument.AssertNotNull(executionParameters, nameof(executionParameters));

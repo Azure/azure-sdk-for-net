@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="totalEcpuCount"> The number of Total ECPUs for an Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="vmFileSystemStorage"> Filesystem storage details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetId"/>, <paramref name="subnetId"/>, <paramref name="displayName"/>, <paramref name="exascaleDBStorageVaultId"/>, <paramref name="hostname"/>, <paramref name="shape"/>, <paramref name="sshPublicKeys"/> or <paramref name="vmFileSystemStorage"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ExadbVmClusterProperties(ResourceIdentifier vnetId, ResourceIdentifier subnetId, string displayName, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string hostname, int nodeCount, string shape, IEnumerable<string> sshPublicKeys, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage)
         {
             Argument.AssertNotNull(vnetId, nameof(vnetId));

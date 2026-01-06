@@ -277,7 +277,6 @@ namespace Azure.ResourceManager.StorageActions.Models
     }
     public partial class StorageTaskPreviewActionCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewActionCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewActionCondition>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public StorageTaskPreviewActionCondition(Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewActionIfCondition @if, bool elseBlockExists) { }
         public bool ElseBlockExists { get { throw null; } set { } }
         public string IfCondition { get { throw null; } set { } }

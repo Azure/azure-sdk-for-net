@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="dellReferenceNumber"> DellReferenceNumber of the resource. </param>
         /// <param name="encryption"> EncryptionProperties of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="delegatedSubnetId"/>, <paramref name="delegatedSubnetCidr"/>, <paramref name="user"/>, <paramref name="dellReferenceNumber"/> or <paramref name="encryption"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public DellFileSystemProperties(DellFileSystemMarketplaceDetails marketplace, ResourceIdentifier delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string dellReferenceNumber, DellFileSystemEncryptionProperties encryption)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));

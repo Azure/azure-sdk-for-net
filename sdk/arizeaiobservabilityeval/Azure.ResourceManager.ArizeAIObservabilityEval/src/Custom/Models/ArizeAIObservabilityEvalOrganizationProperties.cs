@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <param name="user"> Details of the user. </param>
         /// <param name="partnerProperties"> partner properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="user"/> or <paramref name="partnerProperties"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace, ArizeAIObservabilityEvalUserDetails user, ArizeAIObservabilityEvalOfferPartnerProperties partnerProperties)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));

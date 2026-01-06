@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="if"> The condition to be tested for a match with container and blob properties. </param>
         /// <param name="elseBlockExists"> Specify whether the else block is present in the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="if"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public StorageTaskPreviewActionCondition(StorageTaskPreviewActionIfCondition @if, bool elseBlockExists)
         {
             Argument.AssertNotNull(@if, nameof(@if));

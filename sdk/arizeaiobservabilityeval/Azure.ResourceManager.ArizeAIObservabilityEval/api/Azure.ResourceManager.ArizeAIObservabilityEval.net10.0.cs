@@ -203,7 +203,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
     }
     public partial class ArizeAIObservabilityEvalOrganizationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ArizeAIObservabilityEvalOrganizationProperties(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails marketplace, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails user, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferPartnerProperties partnerProperties) { }
         public Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails Marketplace { get { throw null; } set { } }
         public string PartnerDescription { get { throw null; } set { } }

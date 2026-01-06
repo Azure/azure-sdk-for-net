@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="displayName"> The user-friendly name for the Exadata Database Storage Vault. The name does not need to be unique. </param>
         /// <param name="highCapacityDatabaseStorageInput"> Create exadata Database Storage Details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="highCapacityDatabaseStorageInput"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ExascaleDBStorageVaultProperties(string displayName, ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));

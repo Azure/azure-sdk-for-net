@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="IotOperationsInstanceProperties"/>. </summary>
         /// <param name="schemaRegistryRef"> The reference to the Schema Registry for this AIO Instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryRef"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public IotOperationsInstanceProperties(SchemaRegistryRef schemaRegistryRef)
         {
             Argument.AssertNotNull(schemaRegistryRef, nameof(schemaRegistryRef));

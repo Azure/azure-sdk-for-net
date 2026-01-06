@@ -297,7 +297,6 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     }
     public partial class DellFileSystemProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProperties>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public DellFileSystemProperties(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceDetails marketplace, Azure.Core.ResourceIdentifier delegatedSubnetId, string delegatedSubnetCidr, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemUserDetails user, string dellReferenceNumber, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionProperties encryption) { }
         public Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity Capacity { get { throw null; } set { } }
         public string DelegatedSubnetCidr { get { throw null; } set { } }
