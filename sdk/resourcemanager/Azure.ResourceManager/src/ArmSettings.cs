@@ -17,14 +17,6 @@ namespace Azure.ResourceManager
         /// <summary>
         /// .
         /// </summary>
-        public ArmSettings()
-            :base(new ArmClientOptions())
-        {
-        }
-
-        /// <summary>
-        /// .
-        /// </summary>
         public string DefaultSubscriptionId { get; set; }
 
         /// <inheritdoc/>
@@ -32,7 +24,7 @@ namespace Azure.ResourceManager
         {
             DefaultSubscriptionId = section["DefaultSubscriptionId"];
             // for schema should we have a layer for ClientOptions section.GetSection("ClientOptions")
-            Options = new ArmClientOptions(section);
+            Options = new ArmClientOptions(section.GetSection("Options"));
         }
 
         internal static ArmSettings Create(IServiceProvider serviceProvider, IConfigurationSection section, Action<ArmClientOptions> configureOptions)
@@ -41,7 +33,7 @@ namespace Azure.ResourceManager
             settings.Read(section);
             object credential;
 
-            string credentialSource = settings.Credential.CredentialSource;
+            string credentialSource = settings.CredentialSettings.CredentialSource;
             if (credentialSource is null || !credentialSource.Equals("ApiKey", StringComparison.Ordinal))
             {
                 credential = serviceProvider.GetRequiredService<TokenCredential>();
@@ -50,14 +42,14 @@ namespace Azure.ResourceManager
             {
                 if (string.Equals(credentialSource, "ApiKey", StringComparison.Ordinal))
                 {
-                    credential = settings.Credential.Key;
+                    credential = settings.CredentialSettings.Key;
                 }
                 else
                 {
                     throw new Exception($"Unsupported credential source '{credentialSource}'.");
                 }
             }
-            settings.CredentialObject = credential;
+            settings.Credential = credential;
 
             configureOptions?.Invoke((ArmClientOptions)settings.Options);
             return settings;

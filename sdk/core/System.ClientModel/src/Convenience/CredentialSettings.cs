@@ -21,7 +21,7 @@ public class CredentialSettings
 
         CredentialSource = section["CredentialSource"];
         Key = section["Key"];
-        Properties = section;
+        Configuration = section;
     }
 
     /// <summary>
@@ -37,5 +37,5 @@ public class CredentialSettings
     /// <summary>
     /// .
     /// </summary>
-    public IConfigurationSection Properties { get; set; }
+    public IConfigurationSection Configuration { get; set; }
 }

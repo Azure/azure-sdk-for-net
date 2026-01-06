@@ -13,31 +13,22 @@ public class ClientSettings
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="options"></param>
-    public ClientSettings(object options)
-    {
-        Options = options;
-    }
+    public CredentialSettings? CredentialSettings { get; set; }
 
     /// <summary>
     /// .
     /// </summary>
-    public CredentialSettings? Credential { get; set; }
+    public IConfigurationSection? Configuration { get; set; }
 
     /// <summary>
     /// .
     /// </summary>
-    public IConfigurationSection? Properties { get; set; }
+    public object? Credential { get; set; }
 
     /// <summary>
     /// .
     /// </summary>
-    public object? CredentialObject { get; set; }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    public object Options { get; set; }
+    public object? Options { get; set; }
 
     /// <summary>
     /// .
@@ -45,9 +36,9 @@ public class ClientSettings
     /// <param name="section"></param>
     public void Read(IConfigurationSection section)
     {
-        Initialized = true;
-        Properties = section;
-        Credential = new(section.GetRequiredSection("Credential"));
+        IsInitialized = true;
+        Configuration = section;
+        CredentialSettings = new(section.GetRequiredSection("Credential"));
         ReadCore(section);
     }
 
@@ -58,19 +49,19 @@ public class ClientSettings
     /// <exception cref="InvalidOperationException"></exception>
     public ClientConnection GetClientConnection()
     {
-        if (!Initialized)
+        if (!IsInitialized)
             throw new InvalidOperationException("Must call Read with an IConfigurationSection before converting to a ClientConnection");
 
-        if (Credential is null)
+        if (CredentialSettings is null)
             throw new InvalidOperationException("Credential section must exist in configuration");
 
         object credential;
-        CredentialKind credentialKind = Credential?.CredentialSource == "ApiKey" ? CredentialKind.ApiKeyString : CredentialKind.TokenCredential;
-        if (CredentialObject is null)
+        CredentialKind credentialKind = CredentialSettings?.CredentialSource == "ApiKey" ? CredentialKind.ApiKeyString : CredentialKind.TokenCredential;
+        if (Credential is null)
         {
-            if (Credential?.CredentialSource == "ApiKey")
+            if (CredentialSettings?.CredentialSource == "ApiKey")
             {
-                credential = Credential!.Key!;
+                credential = CredentialSettings!.Key!;
             }
             else
             {
@@ -79,16 +70,16 @@ public class ClientSettings
         }
         else
         {
-            credential = CredentialObject;
+            credential = Credential;
         }
 
-        return ClientConnection.Create(Properties, credential, credentialKind);
+        return ClientConnection.Create(Configuration, credential, credentialKind);
     }
 
     /// <summary>
     /// .
     /// </summary>
-    protected bool Initialized { get; private set; }
+    protected bool IsInitialized { get; private set; }
 
     /// <summary>
     /// .

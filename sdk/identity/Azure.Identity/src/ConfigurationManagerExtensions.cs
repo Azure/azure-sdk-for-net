@@ -24,7 +24,7 @@ namespace Azure.Identity
             IConfigurationSection section = configuration.GetRequiredSection(sectionName);
             T t = new();
             t.Read(section);
-            t.CredentialObject = new ConfigurableCredential(section);
+            t.Credential = new ConfigurableCredential(section);
             return t;
         }
     }

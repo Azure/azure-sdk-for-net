@@ -78,9 +78,9 @@ namespace System.ClientModel
     public partial class CredentialSettings
     {
         public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        public Microsoft.Extensions.Configuration.IConfigurationSection Configuration { get { throw null; } set { } }
         public string? CredentialSource { get { throw null; } set { } }
         public string? Key { get { throw null; } set { } }
-        public Microsoft.Extensions.Configuration.IConfigurationSection Properties { get { throw null; } set { } }
     }
 }
 namespace System.ClientModel.Primitives
@@ -222,12 +222,12 @@ namespace System.ClientModel.Primitives
     }
     public partial class ClientSettings
     {
-        public ClientSettings(object options) { }
-        public System.ClientModel.CredentialSettings? Credential { get { throw null; } set { } }
-        public object? CredentialObject { get { throw null; } set { } }
-        protected bool Initialized { get { throw null; } }
-        public object Options { get { throw null; } set { } }
-        public Microsoft.Extensions.Configuration.IConfigurationSection? Properties { get { throw null; } set { } }
+        public ClientSettings() { }
+        public Microsoft.Extensions.Configuration.IConfigurationSection? Configuration { get { throw null; } set { } }
+        public object? Credential { get { throw null; } set { } }
+        public System.ClientModel.CredentialSettings? CredentialSettings { get { throw null; } set { } }
+        protected bool IsInitialized { get { throw null; } }
+        public object? Options { get { throw null; } set { } }
         public System.ClientModel.Primitives.ClientConnection GetClientConnection() { throw null; }
         public void Read(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         protected virtual void ReadCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }

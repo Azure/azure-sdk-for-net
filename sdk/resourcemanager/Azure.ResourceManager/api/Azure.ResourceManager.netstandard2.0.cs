@@ -125,7 +125,7 @@ namespace Azure.ResourceManager
     }
     public partial class ArmSettings : System.ClientModel.Primitives.ClientSettings
     {
-        public ArmSettings() : base (default(object)) { }
+        public ArmSettings() { }
         public string DefaultSubscriptionId { get { throw null; } set { } }
         protected override void ReadCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }

@@ -19,7 +19,7 @@ namespace Azure.Identity
         public static T WithAzureCredential<T>(this T settings)
             where T : ClientSettings
         {
-            settings.CredentialObject = new ConfigurableCredential(settings.Properties);
+            settings.Credential = new ConfigurableCredential(settings.Configuration);
             return settings;
         }
     }
