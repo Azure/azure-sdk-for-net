@@ -32,6 +32,16 @@ public partial class PrivateLinkService : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
+    /// The access mode of the private link service.
+    /// </summary>
+    public BicepValue<PrivateLinkServiceAccessMode> AccessMode 
+    {
+        get { Initialize(); return _accessMode!; }
+        set { Initialize(); _accessMode!.Assign(value); }
+    }
+    private BicepValue<PrivateLinkServiceAccessMode>? _accessMode;
+
+    /// <summary>
     /// The list of subscriptions.
     /// </summary>
     public BicepList<string> AutoApprovalSubscriptions 
@@ -209,6 +219,7 @@ public partial class PrivateLinkService : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _accessMode = DefineProperty<PrivateLinkServiceAccessMode>("AccessMode", ["properties", "accessMode"]);
         _autoApprovalSubscriptions = DefineListProperty<string>("AutoApprovalSubscriptions", ["properties", "autoApproval", "subscriptions"]);
         _destinationIPAddress = DefineProperty<string>("DestinationIPAddress", ["properties", "destinationIPAddress"]);
         _enableProxyProtocol = DefineProperty<bool>("EnableProxyProtocol", ["properties", "enableProxyProtocol"]);

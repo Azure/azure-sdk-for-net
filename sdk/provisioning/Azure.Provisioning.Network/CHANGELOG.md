@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Updated to latest api-version.
+- Added `PrivateDnsZoneGroup` resource.
+
 ### Breaking Changes
 
 ### Bugs Fixed

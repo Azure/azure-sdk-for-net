@@ -6,27 +6,18 @@
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// The transport protocol for the endpoint.
+/// Indicates the scope of the load balancer: external (Public) or internal
+/// (Private).
 /// </summary>
-public enum LoadBalancingTransportProtocol
+public enum LoadBalancerScope
 {
     /// <summary>
-    /// Udp.
+    /// Public.
     /// </summary>
-    Udp,
+    Public,
 
     /// <summary>
-    /// Tcp.
+    /// Private.
     /// </summary>
-    Tcp,
-
-    /// <summary>
-    /// All.
-    /// </summary>
-    All,
-
-    /// <summary>
-    /// Quic.
-    /// </summary>
-    Quic,
+    Private,
 }

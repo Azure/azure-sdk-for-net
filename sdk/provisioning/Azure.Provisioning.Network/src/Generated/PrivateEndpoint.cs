@@ -95,6 +95,17 @@ public partial class PrivateEndpoint : ProvisionableResource
     private BicepList<PrivateEndpointIPConfiguration>? _iPConfigurations;
 
     /// <summary>
+    /// Specifies the IP version type for the private IPs of the private
+    /// endpoint. If not defined, this defaults to IPv4.
+    /// </summary>
+    public BicepValue<PrivateEndpointIPVersionType> IPVersionType 
+    {
+        get { Initialize(); return _iPVersionType!; }
+        set { Initialize(); _iPVersionType!.Assign(value); }
+    }
+    private BicepValue<PrivateEndpointIPVersionType>? _iPVersionType;
+
+    /// <summary>
     /// Resource location.
     /// </summary>
     public BicepValue<AzureLocation> Location 
@@ -202,6 +213,7 @@ public partial class PrivateEndpoint : ProvisionableResource
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _iPConfigurations = DefineListProperty<PrivateEndpointIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
+        _iPVersionType = DefineProperty<PrivateEndpointIPVersionType>("IPVersionType", ["properties", "ipVersionType"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _manualPrivateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("ManualPrivateLinkServiceConnections", ["properties", "manualPrivateLinkServiceConnections"]);
         _privateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("PrivateLinkServiceConnections", ["properties", "privateLinkServiceConnections"]);
