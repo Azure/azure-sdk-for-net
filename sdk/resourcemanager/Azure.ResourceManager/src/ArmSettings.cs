@@ -12,7 +12,7 @@ namespace Azure.ResourceManager
     /// <summary>
     /// .
     /// </summary>
-    public class ArmSettings : ClientSettingsBase
+    public class ArmSettings : ClientSettings
     {
         /// <summary>
         /// .
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager
 
         internal static ArmSettings Create(IServiceProvider serviceProvider, IConfigurationSection section, Action<ArmClientOptions> configureOptions)
         {
-            ArmSettings settings = new ArmSettings();
+            ArmSettings settings = new();
             settings.Read(section);
             object credential;
 

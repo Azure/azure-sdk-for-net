@@ -17,7 +17,7 @@ namespace Azure.Identity
         /// <param name="settings"></param>
         /// <returns></returns>
         public static T WithAzureCredential<T>(this T settings)
-            where T : ClientSettingsBase
+            where T : ClientSettings
         {
             settings.CredentialObject = new ConfigurableCredential(settings.Properties);
             return settings;

@@ -6,7 +6,6 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -46,7 +45,7 @@ namespace Azure.Identity
             this IHostApplicationBuilder host,
             string sectionName,
             Action<TSettings> configureSettings = default)
-                where TSettings : ClientSettingsBase, new()
+                where TSettings : ClientSettings, new()
                 where TClient : class
         {
             host.Services.AddSingleton(sp =>
@@ -74,7 +73,7 @@ namespace Azure.Identity
             string key,
             string sectionName,
             Action<TSettings> configureSettings = default)
-                where TSettings : ClientSettingsBase, new()
+                where TSettings : ClientSettings, new()
                 where TClient : class
         {
             host.Services.AddKeyedSingleton(key, (sp, key) =>

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Primitives;
 using Microsoft.Extensions.Configuration;
 
@@ -20,7 +19,7 @@ namespace Azure.Identity
         /// <param name="sectionName"></param>
         /// <returns></returns>
         public static T GetAzureClientSettings<T>(this IConfiguration configuration, string sectionName)
-            where T : ClientSettingsBase, new()
+            where T : ClientSettings, new()
         {
             IConfigurationSection section = configuration.GetRequiredSection(sectionName);
             T t = new();

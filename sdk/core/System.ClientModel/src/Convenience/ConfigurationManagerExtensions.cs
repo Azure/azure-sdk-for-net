@@ -19,7 +19,7 @@ public static class ConfigurationManagerExtensions
     /// <param name="sectionName"></param>
     /// <returns></returns>
     public static T GetClientSettings<T>(this IConfiguration configuration, string sectionName)
-        where T : ClientSettingsBase, new()
+        where T : ClientSettings, new()
         => configuration.GetSection(sectionName).GetClientSettings<T>();
 
     /// <summary>
@@ -29,7 +29,7 @@ public static class ConfigurationManagerExtensions
     /// <param name="section"></param>
     /// <returns></returns>
     public static T GetClientSettings<T>(this IConfigurationSection section)
-        where T : ClientSettingsBase, new()
+        where T : ClientSettings, new()
     {
         T t = new();
         t.Read(section);

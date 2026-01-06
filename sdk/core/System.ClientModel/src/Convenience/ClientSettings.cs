@@ -8,13 +8,13 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// .
 /// </summary>
-public class ClientSettingsBase
+public class ClientSettings
 {
     /// <summary>
     /// .
     /// </summary>
     /// <param name="options"></param>
-    public ClientSettingsBase(object options)
+    public ClientSettings(object options)
     {
         Options = options;
     }

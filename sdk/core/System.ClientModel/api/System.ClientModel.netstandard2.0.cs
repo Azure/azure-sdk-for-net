@@ -56,11 +56,6 @@ namespace System.ClientModel
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
-    public abstract partial class ClientSettings : System.ClientModel.Primitives.ClientSettingsBase
-    {
-        protected ClientSettings() { }
-        public System.ClientModel.Primitives.ClientPipelineOptions ClientOptions { get { throw null; } set { } }
-    }
     public abstract partial class CollectionResult<T> : System.ClientModel.Primitives.CollectionResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
         protected internal CollectionResult() { }
@@ -70,8 +65,8 @@ namespace System.ClientModel
     }
     public static partial class ConfigurationManagerExtensions
     {
-        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettingsBase, new() { throw null; }
-        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfigurationSection section) where T : System.ClientModel.Primitives.ClientSettingsBase, new() { throw null; }
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfigurationSection section) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
     }
     public partial class ContinuationToken
     {
@@ -225,16 +220,17 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class ClientSettingsBase
+    public partial class ClientSettings
     {
-        protected ClientSettingsBase() { }
+        public ClientSettings(object options) { }
         public System.ClientModel.CredentialSettings? Credential { get { throw null; } set { } }
         public object? CredentialObject { get { throw null; } set { } }
         protected bool Initialized { get { throw null; } }
+        public object Options { get { throw null; } set { } }
         public Microsoft.Extensions.Configuration.IConfigurationSection? Properties { get { throw null; } set { } }
         public System.ClientModel.Primitives.ClientConnection GetClientConnection() { throw null; }
         public void Read(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
-        protected abstract void ReadCore(Microsoft.Extensions.Configuration.IConfigurationSection section);
+        protected virtual void ReadCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public abstract partial class CollectionResult
     {

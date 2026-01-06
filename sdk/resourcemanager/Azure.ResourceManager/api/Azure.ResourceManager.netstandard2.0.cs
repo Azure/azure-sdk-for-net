@@ -123,10 +123,9 @@ namespace Azure.ResourceManager
         public virtual Azure.ResourceManager.Resources.TagResource GetTagResource() { throw null; }
         protected virtual bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
-    public partial class ArmSettings : Azure.Core.AzureClientSettings
+    public partial class ArmSettings : System.ClientModel.Primitives.ClientSettings
     {
-        public ArmSettings() { }
-        public new Azure.ResourceManager.ArmClientOptions ClientOptions { get { throw null; } set { } }
+        public ArmSettings() : base (default(object)) { }
         public string DefaultSubscriptionId { get { throw null; } set { } }
         protected override void ReadCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
