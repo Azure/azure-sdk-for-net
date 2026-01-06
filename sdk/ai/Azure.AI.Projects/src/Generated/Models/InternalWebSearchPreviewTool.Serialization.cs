@@ -41,6 +41,11 @@ namespace OpenAI
                 writer.WritePropertyName("search_context_size"u8);
                 writer.WriteStringValue(SearchContextSize.Value.ToString());
             }
+            if (Optional.IsDefined(CustomSearchConfiguration))
+            {
+                writer.WritePropertyName("custom_search_configuration"u8);
+                writer.WriteObjectValue(CustomSearchConfiguration, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -72,6 +77,7 @@ namespace OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             InternalLocation userLocation = default;
             WebSearchPreviewToolSearchContextSize? searchContextSize = default;
+            WebSearchConfiguration customSearchConfiguration = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -98,12 +104,21 @@ namespace OpenAI
                     searchContextSize = new WebSearchPreviewToolSearchContextSize(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("custom_search_configuration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customSearchConfiguration = WebSearchConfiguration.DeserializeWebSearchConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalWebSearchPreviewTool(@type, additionalBinaryDataProperties, userLocation, searchContextSize);
+            return new InternalWebSearchPreviewTool(@type, additionalBinaryDataProperties, userLocation, searchContextSize, customSearchConfiguration);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

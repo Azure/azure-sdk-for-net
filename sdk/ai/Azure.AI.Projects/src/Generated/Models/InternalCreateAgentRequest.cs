@@ -15,7 +15,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="InternalCreateAgentRequest"/>. </summary>
         /// <param name="name">
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters, 
+        /// - Must start and end with alphanumeric characters,
         /// - Can contain hyphens in the middle
         /// - Must not exceed 63 characters.
         /// </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="InternalCreateAgentRequest"/>. </summary>
         /// <param name="name">
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters, 
+        /// - Must start and end with alphanumeric characters,
         /// - Can contain hyphens in the middle
         /// - Must not exceed 63 characters.
         /// </param>
@@ -56,7 +56,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters, 
+        /// - Must start and end with alphanumeric characters,
         /// - Can contain hyphens in the middle
         /// - Must not exceed 63 characters.
         /// </summary>

@@ -307,6 +307,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(UpdateMemoryStoreRequest))]
     [ModelReaderWriterBuildable(typeof(UserProfileMemoryItem))]
     [ModelReaderWriterBuildable(typeof(WebSearchActionSearchSources))]
+    [ModelReaderWriterBuildable(typeof(WebSearchConfiguration))]
     [ModelReaderWriterBuildable(typeof(WeeklyRecurrenceSchedule))]
     [ModelReaderWriterBuildable(typeof(WorkflowAgentDefinition))]
     public partial class AzureAIProjectsContext : ModelReaderWriterContext
