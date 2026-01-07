@@ -31,7 +31,9 @@ namespace Azure.Generator.Management.Utilities
             foreach (var parameter in requestParameters)
             {
                 // find the corresponding contextual parameter in the contextual parameter list
-                if (contextualPath.TryGetContextualParameter(parameter, out var contextualParameter))
+                // Note: We pass null for the key since we don't have the operation path context here.
+                // This is acceptable since parameters reaching this point are already filtered.
+                if (contextualPath.TryGetContextualParameter(parameter, key: null, out var contextualParameter))
                 {
                     arguments.Add(Convert(contextualParameter.BuildValueExpression(idProperty), typeof(string), parameter.Type));
                 }

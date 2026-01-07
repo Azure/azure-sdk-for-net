@@ -44,7 +44,10 @@ namespace Azure.Generator.Management.Utilities
 
                 var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
 
-                if (contextualPath.TryGetContextualParameter(outputParameter, out _, operationPath))
+                // Get the key for this parameter from the operation path to enable key-based matching
+                string? parameterKey = RequestPathPattern.GetParameterKey(operationPath, outputParameter.WireInfo.SerializedName);
+
+                if (contextualPath.TryGetContextualParameter(outputParameter, parameterKey, out _))
                 {
                     continue;
                 }

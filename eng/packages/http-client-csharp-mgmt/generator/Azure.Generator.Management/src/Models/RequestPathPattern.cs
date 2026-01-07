@@ -197,57 +197,6 @@ namespace Azure.Generator.Management.Models
             return requestPath._path;
         }
 
-        private IReadOnlyDictionary<string, ContextualParameter>? _contextualParameters;
-        private IReadOnlyDictionary<string, ContextualParameter>? _contextualParametersByKey;
-
-        /// <summary>
-        /// Get the corresponding contextual parameter in this request path for a provided parameter.
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <param name="contextualParameter"></param>
-        /// <param name="operationPath">Optional operation request path pattern to match parameters by key.</param>
-        /// <returns></returns>
-        public bool TryGetContextualParameter(ParameterProvider parameter, [MaybeNullWhen(false)] out ContextualParameter contextualParameter, RequestPathPattern? operationPath = null)
-        {
-            contextualParameter = null;
-            if (parameter.Location != ParameterLocation.Path)
-            {
-                return false;
-            }
-
-            // Build contextual parameter dictionaries lazily
-            if (_contextualParameters is null)
-            {
-                var contextualParams = ContextualParameterBuilder.BuildContextualParameters(this);
-                _contextualParameters = contextualParams.ToDictionary(p => p.VariableName);
-                // Keys are unique by design - each key represents a distinct segment type in the resource path hierarchy
-                // (e.g., "subscriptions", "resourceGroups", "fleets"). If there were duplicate keys, it would indicate
-                // a malformed path pattern.
-                _contextualParametersByKey = contextualParams.Where(p => !string.IsNullOrEmpty(p.Key)).ToDictionary(p => p.Key);
-            }
-
-            var parameterName = parameter.WireInfo.SerializedName;
-
-            // First, try to match by parameter name
-            if (_contextualParameters.TryGetValue(parameterName, out contextualParameter))
-            {
-                return true;
-            }
-
-            // If no match by name and operation path is provided, try to match by key
-            if (operationPath is not null && _contextualParametersByKey is not null)
-            {
-                // Find the key for this parameter in the operation path
-                string? key = GetParameterKey(operationPath, parameterName);
-                if (key != null && _contextualParametersByKey.TryGetValue(key, out contextualParameter))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         /// <summary>
         /// Gets the key (preceding segment) for a given parameter in a request path.
         /// For example, in "/fleets/{name}/children/{childName}", the key for "name" is "fleets".
@@ -255,7 +204,7 @@ namespace Azure.Generator.Management.Models
         /// <param name="requestPath">The request path pattern.</param>
         /// <param name="parameterName">The parameter name to find the key for.</param>
         /// <returns>The key if found, otherwise null.</returns>
-        private static string? GetParameterKey(RequestPathPattern requestPath, string parameterName)
+        public static string? GetParameterKey(RequestPathPattern requestPath, string parameterName)
         {
             for (int i = 0; i < requestPath.Count; i++)
             {
@@ -271,6 +220,59 @@ namespace Azure.Generator.Management.Models
                 }
             }
             return null;
+        }
+
+        private IReadOnlyDictionary<string, ContextualParameter>? _contextualParametersByName;
+        private IReadOnlyDictionary<string, ContextualParameter>? _contextualParametersByKey;
+
+        /// <summary>
+        /// Get the corresponding contextual parameter in this request path for a provided parameter.
+        /// </summary>
+        /// <param name="parameter">The parameter to match.</param>
+        /// <param name="key">Optional key (preceding segment) of the parameter in the operation path.</param>
+        /// <param name="contextualParameter">The matched contextual parameter, if found.</param>
+        /// <returns>True if a matching contextual parameter was found; otherwise, false.</returns>
+        public bool TryGetContextualParameter(ParameterProvider parameter, string? key, [MaybeNullWhen(false)] out ContextualParameter contextualParameter)
+        {
+            contextualParameter = null;
+            if (parameter.Location != ParameterLocation.Path)
+            {
+                return false;
+            }
+
+            EnsureContextualParametersInitialized();
+
+            var parameterName = parameter.WireInfo.SerializedName;
+
+            // First, try to match by parameter name
+            if (_contextualParametersByName!.TryGetValue(parameterName, out contextualParameter))
+            {
+                return true;
+            }
+
+            // If no match by name and key is provided, try to match by key
+            if (key is not null && _contextualParametersByKey!.TryGetValue(key, out contextualParameter))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Ensures that the contextual parameter dictionaries are initialized.
+        /// </summary>
+        private void EnsureContextualParametersInitialized()
+        {
+            if (_contextualParametersByName is null)
+            {
+                var contextualParams = ContextualParameterBuilder.BuildContextualParameters(this);
+                _contextualParametersByName = contextualParams.ToDictionary(p => p.VariableName);
+                // Keys are unique by design - each key represents a distinct segment type in the resource path hierarchy
+                // (e.g., "subscriptions", "resourceGroups", "fleets"). If there were duplicate keys, it would indicate
+                // a malformed path pattern.
+                _contextualParametersByKey = contextualParams.Where(p => !string.IsNullOrEmpty(p.Key)).ToDictionary(p => p.Key);
+            }
         }
     }
 }
