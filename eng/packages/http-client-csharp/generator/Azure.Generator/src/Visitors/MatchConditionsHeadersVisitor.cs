@@ -53,14 +53,40 @@ namespace Azure.Generator.Visitors
             { RequestConditionHeaders.IfUnmodifiedSince, IfUnmodifiedSince }
         };
 
+        protected override ScmMethodProviderCollection? Visit(
+            InputServiceMethod serviceMethod,
+            ClientProvider enclosingType,
+            ScmMethodProviderCollection? methodProviderCollection)
+        {
+            if (methodProviderCollection != null)
+            {
+                foreach (var method in methodProviderCollection)
+                {
+                    UpdateMethod(method);
+                }
+            }
+
+            return methodProviderCollection;
+        }
+
+        protected override ScmMethodProvider? VisitCreateRequestMethod(
+            InputServiceMethod serviceMethod,
+            RestClientProvider enclosingType,
+            ScmMethodProvider? createRequestMethodProvider)
+        {
+            UpdateMethod(createRequestMethodProvider!);
+
+            return createRequestMethodProvider;
+        }
+
         /// <summary>
-        /// Visits a method and modifies it to handle request condition headers.
+        /// Modifies a method to handle request condition headers.
         /// </summary>
-        protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
+        private void UpdateMethod(ScmMethodProvider method)
         {
             if (!TryGetMethodRequestConditionInfo(method, out var headerFlags, out var matchConditionParams))
             {
-                return base.VisitMethod(method);
+                return;
             }
 
             // Update method parameters
@@ -75,8 +101,6 @@ namespace Azure.Generator.Visitors
             {
                 UpdateClientMethodBody(method, headerFlags, matchConditionParams);
             }
-
-            return method;
         }
 
         protected override TypeProvider? VisitType(TypeProvider type)
