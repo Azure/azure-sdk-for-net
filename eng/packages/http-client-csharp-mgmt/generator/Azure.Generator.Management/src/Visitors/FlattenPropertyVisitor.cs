@@ -200,6 +200,17 @@ namespace Azure.Generator.Management.Visitors
 
             var parameters = new List<ValueExpression>();
             var additionalPropertyIndex = GetAdditionalPropertyIndex();
+
+            // If there are no flattened properties, we need to add Null for all constructor parameters
+            if (flattenedProperties.Count == 0)
+            {
+                for (int i = 0; i < constructorParameters.Count; i++)
+                {
+                    parameters.Add(Null);
+                }
+                return parameters.ToArray();
+            }
+
             for (int flattenedPropertyIndex = 0, fullConstructorParameterIndex = 0; ; fullConstructorParameterIndex++)
             {
                 // If we have processed all the flattened properties or all the constructor parameters, we can break the loop.
@@ -332,8 +343,9 @@ namespace Azure.Generator.Management.Visitors
                 // safe flatten single property
                 else
                 {
-                    // only safe flatten single property
-                    if (innerProperties.Count != 1)
+                    // only safe flatten single public property
+                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                    if (publicPropertyCount != 1)
                     {
                         continue;
                     }
@@ -436,7 +448,8 @@ namespace Azure.Generator.Management.Visitors
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
         {
             bool isFlattened;
-            var innerProperty = innerProperties.Single();
+            // Get the single public property from innerProperties
+            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             isFlattened = true;
 
             // flatten the single property to public and associate it with the internal property
