@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsTestingPlatformApplication>false</IsTestingPlatformApplication>
     <NoWarn>SA1636</NoWarn>
     <Nullable>enable</Nullable>
   </PropertyGroup>

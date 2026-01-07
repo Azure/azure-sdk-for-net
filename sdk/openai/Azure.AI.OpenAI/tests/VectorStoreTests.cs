@@ -126,11 +126,9 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             {
                 string idString = vectorStore.Name.Substring("Test Vector Store ".Length);
 
-                Assert.Multiple(() =>
-                {
-                    Assert.That(int.TryParse(idString, out int seenId), Is.True);
-                    Assert.That(seenId, Is.LessThan(lastIdSeen));
-                });
+                Assert.That(int.TryParse(idString, out int seenId), Is.True);
+                Assert.That(seenId, Is.LessThan(lastIdSeen));
+
                 lastIdSeen = seenId;
             }
             if (lastIdSeen == 0 || ++count >= 100)

@@ -244,7 +244,7 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.That(appComponents, Is.Not.Null);
             var component = appComponents.Components.Values.FirstOrDefault();
             Assert.That(component, Is.Not.Null);
-            Assert.AreEqual(_resourceId, component.ResourceId.ToString());
+            Assert.That(_resourceId, Is.EqualTo(component.ResourceId.ToString()));
         }
 
         [Test]
@@ -279,7 +279,7 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("metrics").GetProperty(_resourceId).GetProperty("resourceId").ToString());
+            Assert.That(_resourceId, Is.EqualTo(jsonDocument.RootElement.GetProperty("metrics").GetProperty(_resourceId).GetProperty("resourceId").ToString()));
         }
 
         [Test]
@@ -318,7 +318,7 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.That(serverMetrics, Is.Not.Null);
             var metric = serverMetrics.Metrics.Values.FirstOrDefault();
             Assert.That(metric, Is.Not.Null);
-            Assert.AreEqual(_resourceId, metric.ResourceId.ToString());
+            Assert.That(_resourceId, Is.EqualTo(metric.ResourceId.ToString()));
         }
 
         [Test]
@@ -333,8 +333,8 @@ namespace Azure.Developer.LoadTesting.Tests
                 );
 
             JsonDocument jsonDocument = JsonDocument.Parse(fileUploadOperation.Value.ToString());
-            Assert.AreEqual(_fileName, jsonDocument.RootElement.GetProperty("fileName").ToString());
-            Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
+            Assert.That(_fileName, Is.EqualTo(jsonDocument.RootElement.GetProperty("fileName").ToString()));
+            Assert.That("VALIDATION_SUCCESS", Is.EqualTo(jsonDocument.RootElement.GetProperty("validationStatus").ToString()));
             Assert.Multiple(() =>
             {
                 Assert.That(fileUploadOperation.HasValue, Is.True);
@@ -356,8 +356,8 @@ namespace Azure.Developer.LoadTesting.Tests
             await fileUploadOperation.WaitForCompletionAsync();
 
             JsonDocument jsonDocument = JsonDocument.Parse(fileUploadOperation.Value.ToString());
-            Assert.AreEqual(_fileName, jsonDocument.RootElement.GetProperty("fileName").ToString());
-            Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
+            Assert.That(_fileName, Is.EqualTo(jsonDocument.RootElement.GetProperty("fileName").ToString()));
+            Assert.That("VALIDATION_SUCCESS", Is.EqualTo(jsonDocument.RootElement.GetProperty("validationStatus").ToString()));
             Assert.Multiple(() =>
             {
                 Assert.That(fileUploadOperation.HasValue, Is.True);
@@ -400,7 +400,7 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.AreEqual(_testProfileId, jsonDocument.RootElement.GetProperty("testProfileId").ToString());
+            Assert.That(_testProfileId, Is.EqualTo(jsonDocument.RootElement.GetProperty("testProfileId").ToString()));
         }
 
         [Test]
@@ -410,8 +410,8 @@ namespace Azure.Developer.LoadTesting.Tests
             var testProfileResponse = await _loadTestAdministrationClient.GetTestProfileAsync(_testProfileId);
             var testProfile = testProfileResponse.Value;
             Assert.That(testProfile, Is.Not.Null);
-            Assert.AreEqual(_testProfileId, testProfile.TestProfileId);
-            Assert.AreEqual(_targetResourceId, testProfile.TargetResourceId.ToString());
+            Assert.That(_testProfileId, Is.EqualTo(testProfile.TestProfileId));
+            Assert.That(_targetResourceId, Is.EqualTo(testProfile.TargetResourceId.ToString()));
         }
 
         [Test]

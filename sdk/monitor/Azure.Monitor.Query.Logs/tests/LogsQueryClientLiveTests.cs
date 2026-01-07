@@ -665,7 +665,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             }
             else
             {
-                Assert.That(response.Value.GetStatistics(), Is.EqualTo(default));
+                Assert.That(response.Value.GetStatistics(), Is.EqualTo(default(BinaryData)));
             }
         }
 
@@ -688,7 +688,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             }
             else
             {
-                Assert.That(response.Value.GetVisualization(), Is.EqualTo(default));
+                Assert.That(response.Value.GetVisualization(), Is.EqualTo(default(BinaryData)));
             }
         }
 
@@ -720,7 +720,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             }
             else
             {
-                Assert.That(result.GetStatistics(), Is.EqualTo(default));
+                Assert.That(result.GetStatistics(), Is.EqualTo(default(BinaryData)));
             }
         }
 

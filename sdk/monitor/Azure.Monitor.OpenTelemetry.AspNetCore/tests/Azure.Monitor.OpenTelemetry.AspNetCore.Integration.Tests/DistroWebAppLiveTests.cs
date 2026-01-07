@@ -80,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // ACT
             using var httpClient = new HttpClient();
             var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
-            Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
+            Assert.That(res.Equals("Response from Test Server"), Is.True, "If this assert fails, the in-process test server is not running.");
 
             // SHUTDOWN
             var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
@@ -162,7 +162,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // ACT
             using var httpClient = new HttpClient();
             var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
-            Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
+            Assert.That(res.Equals("Response from Test Server"), Is.True, "If this assert fails, the in-process test server is not running.");
 
             // SHUTDOWN
             var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
@@ -220,7 +220,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // ACT
             using var httpClient = new HttpClient();
             var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
-            Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
+            Assert.That(res.Equals("Response from Test Server"), Is.True, "If this assert fails, the in-process test server is not running.");
 
             // SHUTDOWN
             var tracerProvider = app.Services.GetRequiredService<TracerProvider>();

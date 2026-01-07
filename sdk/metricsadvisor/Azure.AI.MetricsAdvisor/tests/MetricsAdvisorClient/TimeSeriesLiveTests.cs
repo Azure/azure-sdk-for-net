@@ -181,11 +181,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 var seriesKey = seriesData.SeriesKey;
 
-                Assert.Multiple(() =>
-                {
-                    Assert.That(seriesKey.TryGetValue("Dim1", out string dim1));
-                    Assert.That(seriesKey.TryGetValue("Dim2", out string dim2));
-                });
+                Assert.That(seriesKey.TryGetValue("Dim1", out string dim1));
+                Assert.That(seriesKey.TryGetValue("Dim2", out string dim2));
 
                 if (dim1 == "JPN" && dim2 == "__SUM__")
                 {
