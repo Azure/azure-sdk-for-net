@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Fabric;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
@@ -16,16 +15,6 @@ namespace Azure.ResourceManager.Fabric.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="FabricCapacityProperties"/>. </summary>
-        /// <param name="administration"> The capacity administration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="administration"/> is null. </exception>
-        public FabricCapacityProperties(FabricCapacityAdministration administration)
-        {
-            Argument.AssertNotNull(administration, nameof(administration));
-
-            Administration = administration;
-        }
 
         /// <summary> Initializes a new instance of <see cref="FabricCapacityProperties"/>. </summary>
         /// <param name="provisioningState"> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </param>
