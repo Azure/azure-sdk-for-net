@@ -19,10 +19,10 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifier source,
             PhoneNumberIdentifier sourceCallerIdNumber,
             string sourceDisplayName,
-            MediaStreamingSubscription mediaStreamingSubscription,
-            TranscriptionSubscription transcriptionSubscription,
+            string dataSubscriptionId,
             CommunicationUserIdentifier answeredBy,
-            PhoneNumberIdentifier answeredFor
+            MediaStreamingSubscription mediaStreamingSubscription,
+            DtmfConfigurationOptions dtmfConfigurationOptions
             )
         {
             CallConnectionId = callConnectionId;
@@ -33,10 +33,10 @@ namespace Azure.Communication.CallAutomation
             Source = source;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
-            MediaStreamingSubscription = mediaStreamingSubscription;
-            TranscriptionSubscription = transcriptionSubscription;
+            DataSubscriptionId = dataSubscriptionId;
             AnsweredBy = answeredBy;
-            AnsweredFor = answeredFor;
+            MediaStreamingSubscription = mediaStreamingSubscription;
+            DtmfConfigurationOptions = dtmfConfigurationOptions;
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesDtoInternal)
@@ -55,19 +55,7 @@ namespace Azure.Communication.CallAutomation
             }
 
             CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
-            MediaStreamingSubscription = callConnectionPropertiesDtoInternal.MediaStreamingSubscription != null ?
-               new MediaStreamingSubscription(
-                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.Id,
-                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.State,
-                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.SubscribedContentTypes)
-               : null;
-            TranscriptionSubscription = callConnectionPropertiesDtoInternal.TranscriptionSubscription != null ?
-                new TranscriptionSubscription(
-                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.Id,
-                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.State,
-                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.SubscribedResultTypes,
-                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.Locale)
-                : null;
+            DataSubscriptionId = callConnectionPropertiesDtoInternal.DataSubscriptionId;
             Source = callConnectionPropertiesDtoInternal.Source == null ? null : CommunicationIdentifierSerializer_2025_06_30.Deserialize(callConnectionPropertiesDtoInternal.Source);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
             CorrelationId = callConnectionPropertiesDtoInternal.CorrelationId;
@@ -77,11 +65,19 @@ namespace Azure.Communication.CallAutomation
             {
                 SourceCallerIdNumber = new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.SourceCallerIdNumber.Value);
             }
-
-            if (callConnectionPropertiesDtoInternal.AnsweredFor != null)
-            {
-                AnsweredFor = new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.AnsweredFor.Value);
-            }
+            MediaStreamingSubscription = callConnectionPropertiesDtoInternal.MediaStreamingSubscription != null ?
+              new MediaStreamingSubscription(
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.Id,
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.State,
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.SubscribedContentTypes,
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.StreamUrl)
+              : null;
+            DtmfConfigurationOptions = callConnectionPropertiesDtoInternal.DtmfConfigurationOptions == null
+                ? null
+                : new DtmfConfigurationOptions()
+                {
+                    EnableDtmfBroadcastInGroupCalls = callConnectionPropertiesDtoInternal.DtmfConfigurationOptions.EnableDtmfBroadcastInGroupCalls
+                };
         }
 
         /// <summary> The call connection id. </summary>
@@ -94,10 +90,8 @@ namespace Azure.Communication.CallAutomation
         public CallConnectionState CallConnectionState { get; }
         /// <summary> The callback URI. </summary>
         public Uri CallbackUri { get; }
-        /// <summary> SubscriptionId for media streaming. </summary>
-        public MediaStreamingSubscription MediaStreamingSubscription { get; }
         /// <summary> SubscriptionId for transcription. </summary>
-        public TranscriptionSubscription TranscriptionSubscription { get; }
+        public string DataSubscriptionId { get; }
         /// <summary>
         /// Caller ID phone number to appear on the invitee.
         /// </summary>
@@ -122,8 +116,11 @@ namespace Azure.Communication.CallAutomation
         public CommunicationUserIdentifier AnsweredBy { get; }
 
         /// <summary>
-        /// Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number.
+        /// Media streaming subscription details.
         /// </summary>
-        public PhoneNumberIdentifier AnsweredFor { get; }
+        public MediaStreamingSubscription MediaStreamingSubscription { get; }
+
+        /// <summary> The state of DTMF configuration for the call. </summary>
+        public DtmfConfigurationOptions DtmfConfigurationOptions { get; }
     }
 }

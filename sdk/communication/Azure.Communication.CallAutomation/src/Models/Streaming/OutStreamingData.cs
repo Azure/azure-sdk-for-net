@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
@@ -32,7 +31,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary>
         /// Out streaming Stop Audio Data
-        /// </summary>s
+        /// </summary>
         public StopAudio StopAudio { get; internal set; }
 
         /// <summary>
@@ -46,6 +45,23 @@ namespace Azure.Communication.CallAutomation
             var audio = new OutStreamingData(MediaKind.AudioData)
             {
                 AudioData = new AudioData(audioData)
+            };
+            // Serialize the JSON object to a string
+            return JsonSerializer.Serialize(audio);
+        }
+
+        /// <summary>
+        /// Get the streaming data for outbound
+        /// </summary>
+        /// <param name="audioData"></param>
+        /// <param name="markId"></param>
+        /// <returns>the string of outstreaming data</returns>
+        public static string GetAudioDataForOutbound(byte[] audioData, string markId)
+        {
+            // Create a ServerAudioData object for this chunk
+            var audio = new OutStreamingData(MediaKind.AudioData)
+            {
+                AudioData = new AudioData(audioData, markId)
             };
             // Serialize the JSON object to a string
             return JsonSerializer.Serialize(audio);

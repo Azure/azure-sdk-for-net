@@ -78,14 +78,20 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     };
                     Response<RemoveParticipantResult> removePartResponse = await response.CallConnection.RemoveParticipantAsync(removeParticipantsOptions);
                     Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
-                    string expectedOperationContext = Mode == RecordedTestMode.Playback ? "Sanitized" : operationContext1;
-                    Assert.AreEqual(expectedOperationContext, removePartResponse.Value.OperationContext);
+                    Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
+
+                    // wait for callConnected
+                    var removeParticipantSucceededEvent = await WaitForEvent<RemoveParticipantSucceeded>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(removeParticipantSucceededEvent);
+                    Assert.IsTrue(removeParticipantSucceededEvent is RemoveParticipantSucceeded);
+                    Assert.AreEqual(callConnectionId, ((RemoveParticipantSucceeded)removeParticipantSucceededEvent!).CallConnectionId);
 
                     // call should be disconnected after removing participant
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
                     Assert.IsTrue(disconnectedEvent is CallDisconnected);
                     Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
                     callConnectionId = null;
                 }
                 catch (Exception)
@@ -158,9 +164,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     OperationContext = operationContext,
                 };
                 var addParticipantResponse = await callConnection.AddParticipantAsync(addParticipantOptions);
-
-                string expectedOperationContext = Mode == RecordedTestMode.Playback ? "Sanitized" : operationContext;
-                Assert.AreEqual(expectedOperationContext, addParticipantResponse.Value.OperationContext);
+                Assert.AreEqual(operationContext, addParticipantResponse.Value.OperationContext);
                 Assert.IsNotNull(addParticipantResponse.Value.InvitationId);
 
                 // ensure invitation has arrived

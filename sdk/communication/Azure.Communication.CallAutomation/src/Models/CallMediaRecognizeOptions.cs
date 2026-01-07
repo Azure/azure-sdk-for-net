@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -43,11 +42,6 @@ namespace Azure.Communication.CallAutomation
         /// PlaySource information.
         /// </summary>
         public PlaySource Prompt { get; set; }
-
-        /// <summary>
-        /// PlaySource objects representing the sources to play.
-        /// </summary>
-        public IList<PlaySource> PlayPrompts { get; set; }
 
         /// <summary>
         /// Determines if we interrupt the prompt and start recognizing.

@@ -38,18 +38,13 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        /// <param name="mediaStreamingOptions">
-        /// Media Streaming Options.
-        /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
-        /// </param>
-        /// <param name="transcriptionOptions">
-        /// Transcription Options.
-        /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
-        /// </param>
+        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
+        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
         /// <param name="teamsAppSource"> The identifier of the source for creating call with Teams resource account ID. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions, MicrosoftTeamsAppIdentifierModel teamsAppSource)
+        /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
+        /// <param name="dtmfOptions"> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </param>
+        /// <param name="postDialTones"> DTMF tones to send as part of the call for a participant. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, MicrosoftTeamsAppIdentifierModel teamsAppSource, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions, string postDialTones)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -58,9 +53,12 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
             CallbackUri = callbackUri;
             CallIntelligenceOptions = callIntelligenceOptions;
-            MediaStreamingOptions = mediaStreamingOptions;
-            TranscriptionOptions = transcriptionOptions;
+            TranscriptionConfiguration = transcriptionConfiguration;
+            MediaStreamingConfiguration = mediaStreamingConfiguration;
             TeamsAppSource = teamsAppSource;
+            EnableLoopbackAudio = enableLoopbackAudio;
+            DtmfOptions = dtmfOptions;
+            PostDialTones = postDialTones;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -80,19 +78,17 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUri { get; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
-        /// <summary>
-        /// Media Streaming Options.
-        /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
-        /// </summary>
-        public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
-        /// <summary>
-        /// Transcription Options.
-        /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
-        /// </summary>
-        public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
+        /// <summary> Live Transcription Configuration. </summary>
+        public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
+        /// <summary> Media Streaming Configuration. </summary>
+        public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
         /// <summary> The identifier of the source for creating call with Teams resource account ID. </summary>
         public MicrosoftTeamsAppIdentifierModel TeamsAppSource { get; set; }
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? EnableLoopbackAudio { get; set; }
+        /// <summary> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </summary>
+        public DtmfConfigurationOptionsInternal DtmfOptions { get; set; }
+        /// <summary> DTMF tones to send as part of the call for a participant. </summary>
+        public string PostDialTones { get; set; }
     }
 }

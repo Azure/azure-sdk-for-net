@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -35,19 +34,19 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
 
         [JsonPropertyName("offset")]
-        public long Offset { get; set; }
+        public ulong Offset { get; set; }
 
         /// <summary>
         /// Duration in ticks. 1 tick = 100 nanoseconds.
         /// </summary>
         [JsonPropertyName("duration")]
-        public long Duration { get; set; }
+        public ulong Duration { get; set; }
 
         /// <summary>
         /// The result for each word of the phrase
         /// </summary>
         [JsonPropertyName("words")]
-        public IEnumerable<WordDataInternal> Words { get; set; }
+        public IEnumerable<WordData> Words { get; set; }
 
         /// <summary>
         /// The identified speaker based on participant raw ID
@@ -59,6 +58,6 @@ namespace Azure.Communication.CallAutomation
         /// Status of the result of transcription
         /// </summary>
         [JsonPropertyName("resultStatus")]
-        public TranscriptionResultState ResultState { get; set; }
+        public string ResultStatus { get; set; }
     }
 }

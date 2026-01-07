@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="contentType"></param>
         /// <param name="mediaStreamingStatus"></param>
         /// <param name="mediaStreamingStatusDetails"></param>
-        internal MediaStreamingUpdate(string contentType, MediaStreamingStatus? mediaStreamingStatus, MediaStreamingStatusDetails? mediaStreamingStatusDetails)
+        internal MediaStreamingUpdate(string contentType, MediaStreamingStatus mediaStreamingStatus, MediaStreamingStatusDetails mediaStreamingStatusDetails)
         {
             ContentType = contentType;
             MediaStreamingStatus = mediaStreamingStatus;
@@ -28,9 +28,5 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Gets the content type. </summary>
         public string ContentType { get; }
-        /// <summary> Gets the media streaming status. </summary>
-        public MediaStreamingStatus? MediaStreamingStatus { get; }
-        /// <summary> Gets the media streaming status details. </summary>
-        public MediaStreamingStatusDetails? MediaStreamingStatusDetails { get; }
     }
 }

@@ -47,14 +47,14 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
         /// Live Transcription Configuration.
         /// </summary>
         public TranscriptionOptions TranscriptionOptions { get; set; }
+
+        /// <summary>
+        /// Media Streaming Configuration.
+        /// </summary>
+        public MediaStreamingOptions MediaStreamingOptions { get; set; }
 
         /// <summary>
         /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource
@@ -67,5 +67,14 @@ namespace Azure.Communication.CallAutomation
         /// This is per-operation setting and does not change the client's default source.
         /// </summary>
         public MicrosoftTeamsAppIdentifier TeamsAppSource { get; set; }
+
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? EnableLoopbackAudio { get; set; }
+
+        /// <summary> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </summary>
+        public DtmfConfigurationOptions DtmfOptions { get; set; }
+
+        /// <summary> DTMF tones to send as part of the call for a participant. </summary>
+        public string PostDialTones { get; set; }
     }
 }

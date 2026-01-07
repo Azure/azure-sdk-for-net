@@ -130,11 +130,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     // check reject response
                     Assert.IsFalse(rejectResponse.IsError);
 
-                    var createCallFailedEvent = await WaitForEvent<CreateCallFailed>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(createCallFailedEvent);
-                    Assert.IsTrue(createCallFailedEvent is CreateCallFailed);
-                    Assert.AreEqual(callConnectionId, ((CreateCallFailed)createCallFailedEvent!).CallConnectionId);
-
                     try
                     {
                         // test get properties

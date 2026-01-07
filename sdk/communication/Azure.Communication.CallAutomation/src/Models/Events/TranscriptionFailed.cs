@@ -14,11 +14,6 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionFailed : CallAutomationEventBase
     {
         /// <summary>
-        /// Reason code.
-        /// </summary>
-        public MediaEventReasonCode ReasonCode { get; internal set; }
-
-        /// <summary>
         /// Deserialize <see cref="TranscriptionFailed"/> event.
         /// </summary>
         /// <param name="content">The json content.</param>

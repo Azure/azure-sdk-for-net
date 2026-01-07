@@ -7,32 +7,56 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>
-    /// Options for media streaming.
-    /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
-    /// </summary>
-    internal abstract partial class MediaStreamingOptionsInternal
+    /// <summary> Configuration of Media streaming. </summary>
+    internal partial class MediaStreamingOptionsInternal
     {
         /// <summary> Initializes a new instance of <see cref="MediaStreamingOptionsInternal"/>. </summary>
-        /// <param name="audioChannelType"> The audio channel type to stream, e.g., unmixed audio, mixed audio. </param>
-        protected MediaStreamingOptionsInternal(MediaStreamingAudioChannel audioChannelType)
+        /// <param name="transportType"> The type of transport to be used for media streaming, eg. Websocket. </param>
+        /// <param name="contentType"> Content type to stream, eg. audio. </param>
+        /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
+        public MediaStreamingOptionsInternal(MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType)
         {
+            TransportType = transportType;
+            ContentType = contentType;
             AudioChannelType = audioChannelType;
         }
 
         /// <summary> Initializes a new instance of <see cref="MediaStreamingOptionsInternal"/>. </summary>
-        /// <param name="transportType"> Defines the transport type used for streaming. Note that future values may be introduced that are not currently documented. </param>
-        /// <param name="audioChannelType"> The audio channel type to stream, e.g., unmixed audio, mixed audio. </param>
-        internal MediaStreamingOptionsInternal(StreamingTransport transportType, MediaStreamingAudioChannel audioChannelType)
+        /// <param name="transportUrl"> Transport URL for media streaming. </param>
+        /// <param name="transportType"> The type of transport to be used for media streaming, eg. Websocket. </param>
+        /// <param name="contentType"> Content type to stream, eg. audio. </param>
+        /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
+        /// <param name="startMediaStreaming"> Determines if the media streaming should be started immediately after call is answered or not. </param>
+        /// <param name="enableBidirectional"> A value indicating whether bidirectional streaming is enabled. </param>
+        /// <param name="audioFormat"> Specifies the audio format used for encoding, including sample rate and channel type. </param>
+        /// <param name="enableDtmfTones"> A value that indicates whether to stream the DTMF tones. </param>
+        internal MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, bool? startMediaStreaming, bool? enableBidirectional, AudioFormat? audioFormat, bool? enableDtmfTones)
         {
+            TransportUrl = transportUrl;
             TransportType = transportType;
+            ContentType = contentType;
             AudioChannelType = audioChannelType;
+            StartMediaStreaming = startMediaStreaming;
+            EnableBidirectional = enableBidirectional;
+            AudioFormat = audioFormat;
+            EnableDtmfTones = enableDtmfTones;
         }
 
-        /// <summary> Defines the transport type used for streaming. Note that future values may be introduced that are not currently documented. </summary>
-        internal StreamingTransport TransportType { get; set; }
-        /// <summary> The audio channel type to stream, e.g., unmixed audio, mixed audio. </summary>
+        /// <summary> Transport URL for media streaming. </summary>
+        public string TransportUrl { get; set; }
+        /// <summary> The type of transport to be used for media streaming, eg. Websocket. </summary>
+        public MediaStreamingTransport TransportType { get; }
+        /// <summary> Content type to stream, eg. audio. </summary>
+        public MediaStreamingContent ContentType { get; }
+        /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
         public MediaStreamingAudioChannel AudioChannelType { get; }
+        /// <summary> Determines if the media streaming should be started immediately after call is answered or not. </summary>
+        public bool? StartMediaStreaming { get; set; }
+        /// <summary> A value indicating whether bidirectional streaming is enabled. </summary>
+        public bool? EnableBidirectional { get; set; }
+        /// <summary> Specifies the audio format used for encoding, including sample rate and channel type. </summary>
+        public AudioFormat? AudioFormat { get; set; }
+        /// <summary> A value that indicates whether to stream the DTMF tones. </summary>
+        public bool? EnableDtmfTones { get; set; }
     }
 }

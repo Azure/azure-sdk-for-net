@@ -17,21 +17,35 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            TranscriptionUpdate transcriptionUpdate = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            TranscriptionUpdate transcriptionUpdateResult = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
-            string operationContext = default;
-            ResultInformation resultInformation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("transcriptionUpdate"u8))
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resultInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transcriptionUpdate = TranscriptionUpdate.DeserializeTranscriptionUpdate(property.Value);
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("transcriptionUpdateResult"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    transcriptionUpdateResult = TranscriptionUpdate.DeserializeTranscriptionUpdate(property.Value);
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"u8))
@@ -49,28 +63,14 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationContext"u8))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
             }
             return new TranscriptionStarted(
-                transcriptionUpdate,
+                operationContext,
+                resultInformation,
+                transcriptionUpdateResult,
                 callConnectionId,
                 serverCallId,
-                correlationId,
-                operationContext,
-                resultInformation);
+                correlationId);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

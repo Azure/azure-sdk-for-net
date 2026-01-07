@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +18,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
         }
 
+        [Ignore(reason: "Recording is currently broken with error Removing modality controller as this conversation has ended. Waiting on fix for this")]
         [RecordedTest]
         public async Task RecordingOperationsTest()
         {

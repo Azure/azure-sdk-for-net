@@ -9,6 +9,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The play completed event.
     /// </summary>
+    [CodeGenModel("PlayCompleted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class PlayCompleted : CallAutomationEventBase
     {
         /// <summary>
@@ -16,16 +17,20 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public MediaEventReasonCode ReasonCode { get; internal set; }
 
-        /// <summary> Initializes a new instance of PlayCompleted. </summary>
-        /// <param name="internalEvent"> PlayCompletedInternal event. </param>
-        internal PlayCompleted(PlayCompletedInternal internalEvent)
+        /// <summary> Initializes a new instance of <see cref="PlayCompleted"/>. </summary>
+        /// <param name="operationContext"></param>
+        /// <param name="resultInformation"></param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        internal PlayCompleted(string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId)
         {
-            CallConnectionId = internalEvent.CallConnectionId;
-            ServerCallId = internalEvent.ServerCallId;
-            CorrelationId = internalEvent.CorrelationId;
-            OperationContext = internalEvent.OperationContext;
-            ResultInformation = internalEvent.ResultInformation;
-            ReasonCode = new MediaEventReasonCode(ResultInformation.SubCode.ToString());
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            ReasonCode = new MediaEventReasonCode(resultInformation.SubCode.ToString());
         }
 
         /// <summary>
@@ -38,7 +43,7 @@ namespace Azure.Communication.CallAutomation
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return new PlayCompleted(PlayCompletedInternal.DeserializePlayCompletedInternal(element));
+            return DeserializePlayCompleted(element);
         }
     }
 }

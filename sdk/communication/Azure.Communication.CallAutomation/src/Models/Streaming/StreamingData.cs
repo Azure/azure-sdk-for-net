@@ -60,7 +60,15 @@ namespace Azure.Communication.CallAutomation
                 case "AudioData":
                     AudioDataInternal audioInternal = JsonSerializer.Deserialize<AudioDataInternal>(streamingData.GetProperty("audioData").ToString());
                     return new AudioData(
-                        audioInternal.Data, audioInternal.Timestamp, audioInternal.ParticipantRawId, audioInternal.Silent);
+                        audioInternal.Data, audioInternal.Timestamp, audioInternal.ParticipantRawId, audioInternal.Silent, audioInternal.Mark);
+
+                case "MarkData":
+                    MarkDataInternal markDataInternal = JsonSerializer.Deserialize<MarkDataInternal>(streamingData.GetProperty("markData").ToString());
+                    return new MarkData
+                    {
+                        Id = markDataInternal.Id,
+                        Status = markDataInternal.Status
+                    };
 
                 #endregion
 
@@ -72,8 +80,7 @@ namespace Azure.Communication.CallAutomation
 
                 #region Transcription
                 case "TranscriptionMetadata":
-                    TranscriptionMetadataInternal transcriptionMetadataInternal = JsonSerializer.Deserialize<TranscriptionMetadataInternal>(streamingData.GetProperty("transcriptionMetadata").ToString());
-                    return new TranscriptionMetadata(transcriptionMetadataInternal);
+                    return JsonSerializer.Deserialize<TranscriptionMetadata>(streamingData.GetProperty("transcriptionMetadata").ToString());
 
                 case "TranscriptionData":
                     TranscriptionDataInternal transcriptionDataInternal = JsonSerializer.Deserialize<TranscriptionDataInternal>(
@@ -87,7 +94,7 @@ namespace Azure.Communication.CallAutomation
                         transcriptionDataInternal.Duration,
                         transcriptionDataInternal.Words,
                         transcriptionDataInternal.ParticipantRawID,
-                        transcriptionDataInternal.ResultState
+                        transcriptionDataInternal.ResultStatus
                         );
 
                 #endregion

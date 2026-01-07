@@ -28,51 +28,47 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets when answering On-Behalf-Of call. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
-        /// <param name="mediaStreamingOptions">
-        /// Media Streaming Options.
-        /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
-        /// </param>
-        /// <param name="transcriptionOptions">
-        /// Transcription Options.
-        /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
-        /// </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions)
+        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
+        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
+        /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
+        /// <param name="dtmfOptions"> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
+            CustomCallingContext = customCallingContext;
             OperationContext = operationContext;
             CallIntelligenceOptions = callIntelligenceOptions;
             AnsweredBy = answeredBy;
-            MediaStreamingOptions = mediaStreamingOptions;
-            TranscriptionOptions = transcriptionOptions;
+            TranscriptionConfiguration = transcriptionConfiguration;
+            MediaStreamingConfiguration = mediaStreamingConfiguration;
+            EnableLoopbackAudio = enableLoopbackAudio;
+            DtmfOptions = dtmfOptions;
         }
 
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; }
         /// <summary> The callback uri. </summary>
         public string CallbackUri { get; }
+        /// <summary> Used by customer to send custom calling context to targets when answering On-Behalf-Of call. </summary>
+        public CustomCallingContextInternal CustomCallingContext { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
-        /// <summary>
-        /// Media Streaming Options.
-        /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
-        /// </summary>
-        public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
-        /// <summary>
-        /// Transcription Options.
-        /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
-        /// </summary>
-        public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
+        /// <summary> Live Transcription Configuration. </summary>
+        public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
+        /// <summary> Media Streaming Configuration. </summary>
+        public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? EnableLoopbackAudio { get; set; }
+        /// <summary> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </summary>
+        public DtmfConfigurationOptionsInternal DtmfOptions { get; set; }
     }
 }

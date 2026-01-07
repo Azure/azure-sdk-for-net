@@ -38,9 +38,8 @@ namespace Azure.Communication.CallAutomation
         /// Channel-Participant mapping details can be found in the metadata of the recording.
         /// ///
         /// </param>
-        /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which can be resumed. </param>
-        /// <param name="externalStorage"> Optional property to specify location where recording will be stored. </param>
-        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string callConnectionId, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart, RecordingStorageInternal externalStorage)
+        /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which could be resumed. </param>
+        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string callConnectionId, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart)
         {
             CallLocator = callLocator;
             CallConnectionId = callConnectionId;
@@ -51,7 +50,6 @@ namespace Azure.Communication.CallAutomation
             AudioChannelParticipantOrdering = audioChannelParticipantOrdering;
             ChannelAffinity = channelAffinity;
             PauseOnStart = pauseOnStart;
-            ExternalStorage = externalStorage;
         }
 
         /// <summary> The call locator. (Only one of callLocator or callConnectionId to be used). </summary>
@@ -80,9 +78,7 @@ namespace Azure.Communication.CallAutomation
         /// ///
         /// </summary>
         public IList<ChannelAffinityInternal> ChannelAffinity { get; }
-        /// <summary> When set to true will start recording in Pause mode, which can be resumed. </summary>
+        /// <summary> When set to true will start recording in Pause mode, which could be resumed. </summary>
         public bool? PauseOnStart { get; set; }
-        /// <summary> Optional property to specify location where recording will be stored. </summary>
-        public RecordingStorageInternal ExternalStorage { get; set; }
     }
 }

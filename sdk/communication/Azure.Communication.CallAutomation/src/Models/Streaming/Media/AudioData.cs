@@ -11,29 +11,44 @@ namespace Azure.Communication.CallAutomation
     public class AudioData : StreamingData
     {
         /// <summary>
-        /// The audio data, encoded as a ReadOnlyMemory of bytes
+        /// The audio data, encoded as a base64 string
         /// </summary>
         /// <param name="data"></param>
-        public AudioData(ReadOnlyMemory<byte> data)
+        public AudioData(byte[] data)
         {
             Data = data;
         }
 
-        internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
+        /// <summary>
+        /// The audio data, encoded as a base64 string
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="markId"></param>
+        internal AudioData(byte[] data, string markId)
         {
-            Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data).AsMemory() : default;
+            Data = data;
+            Mark = new MarkAudio()
+            {
+                Id = markId
+            };
+        }
+
+        internal AudioData(string data, DateTime timestamp, string participantId, bool silent, MarkAudio mark)
+        {
+            Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data) : default;
             Timestamp = timestamp;
             if (participantId != null)
             {
                 Participant = CommunicationIdentifier.FromRawId(participantId);
             }
             IsSilent = silent;
+            Mark = mark;
         }
 
         /// <summary>
-        /// The audio data in ReadOnlyMemory byte.
+        /// The audio data in base64 byte.
         /// </summary>
-        public ReadOnlyMemory<byte> Data { get; }
+        public byte[] Data { get; }
 
         /// <summary>
         /// The timestamp indicating when the media content was received by the bot,
@@ -51,5 +66,10 @@ namespace Azure.Communication.CallAutomation
         /// Indicates whether the received audio buffer contains only silence.
         /// </summary>
         public bool IsSilent { get; }
+
+        /// <summary>
+        /// Mark this audio data which signals the player when it reaches the mark position
+        /// </summary>
+        public MarkAudio Mark { get; }
     }
 }

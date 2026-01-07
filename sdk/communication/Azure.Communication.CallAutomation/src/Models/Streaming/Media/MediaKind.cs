@@ -18,6 +18,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// stop audio data type
         /// </summary>
-        StopAudio
+        StopAudio,
     }
 }

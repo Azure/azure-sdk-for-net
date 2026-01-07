@@ -33,8 +33,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private string transportUrl = "TRANSPORT_URL";
 
-        private string fileSourceUrl = "FILE_SOURCE_URL";
-
         private string cognitiveServiceEndpoint = "COGNITIVE_SERVICE_ENDPOINT";
 
         /// <summary>
@@ -82,21 +80,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         public string ServiceBusNamespace => GetRecordedOptionalVariable(servicebusString, options => options.IsSecret("Sanitized"));
 
         /// <summary>
-        /// websocket url for automated testing
-        /// </summary>
-        public string TransportUrl => GetRecordedOptionalVariable(transportUrl, options => options.IsSecret("https://sanitized.skype.com"));
-
-        /// <summary>
-        /// file source for automated testing
-        /// </summary>
-        public string FileSourceUrl => GetRecordedOptionalVariable(fileSourceUrl, options => options.IsSecret("https://sanitized.skype.com/prompt.wav"));
-
-        /// <summary>
-        /// Cognitive service endpoint for automated testing
-        /// </summary>
-        public string CognitiveServiceEndpoint => GetRecordedOptionalVariable(cognitiveServiceEndpoint, options => options.IsSecret("https://sanitized.skype.com"));
-
-        /// <summary>
         /// The callback url of the application where notification would be received.
         /// </summary>
         public string DispatcherCallback => $"{DispatcherEndpoint}/api/servicebuscallback/events";
@@ -117,5 +100,15 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         public string AppCallbackUrl => $"{AppBaseUrl}/api/incident/callback?SecretKey={WebUtility.UrlEncode(IncomingRequestSecret)}";
 
         public string WebsocketUrl => $"wss://testwebsocket.webpubsub.azure.com/client/hubs/media?access_token=helloworld";
+
+        /// <summary>
+        /// websocket url for automated testing
+        /// </summary>
+        public string TransportUrl => GetRecordedOptionalVariable(transportUrl, options => options.IsSecret("https://sanitized.skype.com"));
+
+        /// <summary>
+        /// Cognitive service endpoint for automated testing
+        /// </summary>
+        public string CognitiveServiceEndpoint => GetRecordedOptionalVariable(cognitiveServiceEndpoint, options => options.IsSecret("https://sanitized.skype.com"));
     }
 }

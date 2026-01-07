@@ -49,20 +49,35 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("callIntelligenceOptions"u8);
                 writer.WriteObjectValue(CallIntelligenceOptions);
             }
-            if (Optional.IsDefined(MediaStreamingOptions))
+            if (Optional.IsDefined(TranscriptionConfiguration))
             {
-                writer.WritePropertyName("mediaStreamingOptions"u8);
-                writer.WriteObjectValue(MediaStreamingOptions);
+                writer.WritePropertyName("transcriptionConfiguration"u8);
+                writer.WriteObjectValue(TranscriptionConfiguration);
             }
-            if (Optional.IsDefined(TranscriptionOptions))
+            if (Optional.IsDefined(MediaStreamingConfiguration))
             {
-                writer.WritePropertyName("transcriptionOptions"u8);
-                writer.WriteObjectValue(TranscriptionOptions);
+                writer.WritePropertyName("mediaStreamingConfiguration"u8);
+                writer.WriteObjectValue(MediaStreamingConfiguration);
             }
             if (Optional.IsDefined(TeamsAppSource))
             {
                 writer.WritePropertyName("teamsAppSource"u8);
                 writer.WriteObjectValue(TeamsAppSource);
+            }
+            if (Optional.IsDefined(EnableLoopbackAudio))
+            {
+                writer.WritePropertyName("enableLoopbackAudio"u8);
+                writer.WriteBooleanValue(EnableLoopbackAudio.Value);
+            }
+            if (Optional.IsDefined(DtmfOptions))
+            {
+                writer.WritePropertyName("dtmfOptions"u8);
+                writer.WriteObjectValue(DtmfOptions);
+            }
+            if (Optional.IsDefined(PostDialTones))
+            {
+                writer.WritePropertyName("postDialTones"u8);
+                writer.WriteStringValue(PostDialTones);
             }
             writer.WriteEndObject();
         }

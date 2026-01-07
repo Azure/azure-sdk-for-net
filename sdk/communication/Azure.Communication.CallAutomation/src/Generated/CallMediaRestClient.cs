@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallMediaRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-06-15")
+        public CallMediaRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-01-22-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -617,92 +617,6 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateSendDtmfTonesRequest(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequestInternal)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/calling/callConnections/", false);
-            uri.AppendPath(callConnectionId, true);
-            uri.AppendPath(":sendDtmfTones", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sendDtmfTonesRequestInternal);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Send dtmf tones. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="sendDtmfTonesRequestInternal"> The send dtmf tones request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequestInternal"/> is null. </exception>
-        public async Task<Response<SendDtmfTonesResult>> SendDtmfTonesAsync(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequestInternal, CancellationToken cancellationToken = default)
-        {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
-            if (sendDtmfTonesRequestInternal == null)
-            {
-                throw new ArgumentNullException(nameof(sendDtmfTonesRequestInternal));
-            }
-
-            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequestInternal);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    {
-                        SendDtmfTonesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SendDtmfTonesResult.DeserializeSendDtmfTonesResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Send dtmf tones. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="sendDtmfTonesRequestInternal"> The send dtmf tones request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequestInternal"/> is null. </exception>
-        public Response<SendDtmfTonesResult> SendDtmfTones(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequestInternal, CancellationToken cancellationToken = default)
-        {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
-            if (sendDtmfTonesRequestInternal == null)
-            {
-                throw new ArgumentNullException(nameof(sendDtmfTonesRequestInternal));
-            }
-
-            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequestInternal);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    {
-                        SendDtmfTonesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SendDtmfTonesResult.DeserializeSendDtmfTonesResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateHoldRequest(string callConnectionId, HoldRequestInternal holdRequestInternal)
         {
             var message = _pipeline.CreateMessage();
@@ -845,6 +759,166 @@ namespace Azure.Communication.CallAutomation
             switch (message.Response.Status)
             {
                 case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateSendDtmfTonesRequest(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequestInternal)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":sendDtmfTones", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sendDtmfTonesRequestInternal);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Send dtmf tones. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="sendDtmfTonesRequestInternal"> The send dtmf tones request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequestInternal"/> is null. </exception>
+        public async Task<Response<SendDtmfTonesResult>> SendDtmfTonesAsync(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequestInternal, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (sendDtmfTonesRequestInternal == null)
+            {
+                throw new ArgumentNullException(nameof(sendDtmfTonesRequestInternal));
+            }
+
+            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequestInternal);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        SendDtmfTonesResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SendDtmfTonesResult.DeserializeSendDtmfTonesResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Send dtmf tones. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="sendDtmfTonesRequestInternal"> The send dtmf tones request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequestInternal"/> is null. </exception>
+        public Response<SendDtmfTonesResult> SendDtmfTones(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequestInternal, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (sendDtmfTonesRequestInternal == null)
+            {
+                throw new ArgumentNullException(nameof(sendDtmfTonesRequestInternal));
+            }
+
+            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequestInternal);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        SendDtmfTonesResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SendDtmfTonesResult.DeserializeSendDtmfTonesResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateInterruptAudioAndAnnounceRequest(string callConnectionId, InterruptAudioAndAnnounceRequestInternal interruptRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":interruptAudioAndAnnounce", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(interruptRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Plays audio to participants in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="interruptRequest"> play request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="interruptRequest"/> is null. </exception>
+        public async Task<Response> InterruptAudioAndAnnounceAsync(string callConnectionId, InterruptAudioAndAnnounceRequestInternal interruptRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (interruptRequest == null)
+            {
+                throw new ArgumentNullException(nameof(interruptRequest));
+            }
+
+            using var message = CreateInterruptAudioAndAnnounceRequest(callConnectionId, interruptRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Plays audio to participants in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="interruptRequest"> play request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="interruptRequest"/> is null. </exception>
+        public Response InterruptAudioAndAnnounce(string callConnectionId, InterruptAudioAndAnnounceRequestInternal interruptRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (interruptRequest == null)
+            {
+                throw new ArgumentNullException(nameof(interruptRequest));
+            }
+
+            using var message = CreateInterruptAudioAndAnnounceRequest(callConnectionId, interruptRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

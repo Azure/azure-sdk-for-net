@@ -22,11 +22,13 @@ namespace Azure.Communication.CallAutomation
         /// <param name="id"> Subscription Id. </param>
         /// <param name="state"> Media streaming subscription state. </param>
         /// <param name="subscribedContentTypes"> Subscribed media streaming content types. </param>
-        internal MediaStreamingSubscriptionInternal(string id, MediaStreamingSubscriptionState? state, IReadOnlyList<MediaStreamingContent> subscribedContentTypes)
+        /// <param name="streamUrl"> Media streaming subscription stream URL. </param>
+        internal MediaStreamingSubscriptionInternal(string id, MediaStreamingSubscriptionState? state, IReadOnlyList<MediaStreamingContent> subscribedContentTypes, string streamUrl)
         {
             Id = id;
             State = state;
             SubscribedContentTypes = subscribedContentTypes;
+            StreamUrl = streamUrl;
         }
 
         /// <summary> Subscription Id. </summary>
@@ -35,5 +37,7 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingSubscriptionState? State { get; }
         /// <summary> Subscribed media streaming content types. </summary>
         public IReadOnlyList<MediaStreamingContent> SubscribedContentTypes { get; }
+        /// <summary> Media streaming subscription stream URL. </summary>
+        public string StreamUrl { get; }
     }
 }
