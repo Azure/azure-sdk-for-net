@@ -4,6 +4,8 @@
 
 ### Features Added
 
+Upgraded api-version to 2025-09-01-preview.
+
 ### Breaking Changes
 
 ### Bugs Fixed

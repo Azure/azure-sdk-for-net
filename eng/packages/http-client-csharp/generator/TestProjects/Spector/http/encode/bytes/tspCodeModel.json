@@ -985,7 +985,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.Query.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1656,7 +1656,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.Property.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2023,7 +2023,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.Header.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2671,7 +2671,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3190,7 +3190,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.endpoint"
             }
           ],
           "initializedBy": 0,

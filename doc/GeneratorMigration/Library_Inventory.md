@@ -12,15 +12,15 @@
 
 ## Summary
 
-- Total libraries: 399
-- Management Plane (MPG): 226
+- Total libraries: 400
+- Management Plane (MPG): 227
   - Autorest/Swagger: 156
-  - New Emitter (TypeSpec): 49
-  - Old TypeSpec: 21
+  - New Emitter (TypeSpec): 52
+  - Old TypeSpec: 19
 - Data Plane (DPG): 173
   - Autorest/Swagger: 86
-  - New Emitter (TypeSpec): 21
-  - Old TypeSpec: 17
+  - New Emitter (TypeSpec): 22
+  - Old TypeSpec: 16
 - No generator: 49
 
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 21 / 38 (55.3%)
+**Migration Status**: 22 / 38 (57.9%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -37,7 +37,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | ai | Azure.AI.VoiceLive | ✅ |
 | anomalydetector | Azure.AI.AnomalyDetector |  |
 | appconfiguration | Azure.Data.AppConfiguration | ✅ |
-| batch | Azure.Compute.Batch |  |
+| batch | Azure.Compute.Batch | ✅ |
 | cognitivelanguage | Azure.AI.Language.Conversations |  |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring |  |
@@ -170,14 +170,14 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 49 / 70 (70%)
+**Migration Status**: 52 / 71 (73.2%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
 | avs | Azure.ResourceManager.Avs |  |
-| azurestackhci | Azure.ResourceManager.Hci.Vm |  |
+| azurestackhci | Azure.ResourceManager.Hci.Vm | ✅ |
 | carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
 | chaos | Azure.ResourceManager.Chaos |  |
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
@@ -200,7 +200,8 @@ Libraries that provide resource management APIs for Azure services and have been
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
-| fabric | Azure.ResourceManager.Fabric |  |
+| fabric | Azure.ResourceManager.Fabric | ✅ |
+| fileshares | Azure.ResourceManager.FileShares | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |

@@ -5914,6 +5914,172 @@
             }
           },
           "isHttpMetadata": false
+        },
+        {
+          "$id": "535",
+          "kind": "property",
+          "name": "plan",
+          "serializedName": "plan",
+          "doc": "Details of the resource plan.",
+          "type": {
+            "$id": "536",
+            "kind": "model",
+            "name": "Plan",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Plan",
+            "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+            "doc": "Plan for the resource.",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "properties": [
+              {
+                "$id": "537",
+                "kind": "property",
+                "name": "name",
+                "serializedName": "name",
+                "doc": "A user defined name of the 3rd Party Artifact that is being procured.",
+                "type": {
+                  "$id": "538",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Plan.name",
+                "serializationOptions": {
+                  "json": {
+                    "name": "name"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "539",
+                "kind": "property",
+                "name": "publisher",
+                "serializedName": "publisher",
+                "doc": "The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic",
+                "type": {
+                  "$id": "540",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Plan.publisher",
+                "serializationOptions": {
+                  "json": {
+                    "name": "publisher"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "541",
+                "kind": "property",
+                "name": "product",
+                "serializedName": "product",
+                "doc": "The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding.",
+                "type": {
+                  "$id": "542",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Plan.product",
+                "serializationOptions": {
+                  "json": {
+                    "name": "product"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "543",
+                "kind": "property",
+                "name": "promotionCode",
+                "serializedName": "promotionCode",
+                "doc": "A publisher provided promotion code as provisioned in Data Market for the said product/artifact.",
+                "type": {
+                  "$id": "544",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Plan.promotionCode",
+                "serializationOptions": {
+                  "json": {
+                    "name": "promotionCode"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "545",
+                "kind": "property",
+                "name": "version",
+                "serializedName": "version",
+                "doc": "The version of the desired product/artifact.",
+                "type": {
+                  "$id": "546",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Plan.version",
+                "serializationOptions": {
+                  "json": {
+                    "name": "version"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "MgmtTypeSpec.Foo.plan",
+          "serializationOptions": {
+            "json": {
+              "name": "plan"
+            }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -33675,7 +33841,7 @@
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "2458",
+                      "$id": "2470",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -33685,7 +33851,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "2459",
+                        "$id": "2471",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -33699,13 +33865,13 @@
                     "readOnly": false
                   },
                   {
-                    "$id": "2460",
+                    "$id": "2472",
                     "kind": "path",
                     "name": "bestPracticeName",
                     "serializedName": "bestPracticeName",
                     "doc": "The name of the best practice",
                     "type": {
-                      "$id": "2461",
+                      "$id": "2473",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -33723,13 +33889,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.createOrUpdate.bestPracticeName"
                   },
                   {
-                    "$id": "2462",
+                    "$id": "2474",
                     "kind": "path",
                     "name": "versionName",
                     "serializedName": "versionName",
                     "doc": "The name of the version",
                     "type": {
-                      "$id": "2463",
+                      "$id": "2475",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -33747,7 +33913,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.createOrUpdate.versionName"
                   },
                   {
-                    "$id": "2464",
+                    "$id": "2476",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -33764,7 +33930,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.createOrUpdate.contentType"
                   },
                   {
-                    "$id": "2465",
+                    "$id": "2477",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -33780,7 +33946,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.createOrUpdate.accept"
                   },
                   {
-                    "$id": "2466",
+                    "$id": "2478",
                     "kind": "body",
                     "name": "resource",
                     "serializedName": "resource",
@@ -33842,13 +34008,13 @@
               },
               "parameters": [
                 {
-                  "$id": "2467",
+                  "$id": "2479",
                   "kind": "method",
                   "name": "bestPracticeName",
                   "serializedName": "bestPracticeName",
                   "doc": "The name of the best practice",
                   "type": {
-                    "$id": "2468",
+                    "$id": "2480",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -33864,13 +34030,13 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2469",
+                  "$id": "2481",
                   "kind": "method",
                   "name": "versionName",
                   "serializedName": "versionName",
                   "doc": "The name of the version",
                   "type": {
-                    "$id": "2470",
+                    "$id": "2482",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -33886,7 +34052,7 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2471",
+                  "$id": "2483",
                   "kind": "method",
                   "name": "resource",
                   "serializedName": "resource",
@@ -33904,7 +34070,7 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2472",
+                  "$id": "2484",
                   "kind": "method",
                   "name": "contentType",
                   "serializedName": "Content-Type",
@@ -33922,7 +34088,7 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2473",
+                  "$id": "2485",
                   "kind": "method",
                   "name": "accept",
                   "serializedName": "Accept",
@@ -33950,7 +34116,7 @@
               "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.createOrUpdate"
             },
             {
-              "$id": "2474",
+              "$id": "2486",
               "kind": "basic",
               "name": "update",
               "accessibility": "public",
@@ -33966,13 +34132,13 @@
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "2476",
+                    "$id": "2488",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "2477",
+                      "$id": "2489",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -33982,7 +34148,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "2478",
+                        "$id": "2490",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -33996,13 +34162,13 @@
                     "readOnly": false
                   },
                   {
-                    "$id": "2479",
+                    "$id": "2491",
                     "kind": "path",
                     "name": "bestPracticeName",
                     "serializedName": "bestPracticeName",
                     "doc": "The name of the best practice",
                     "type": {
-                      "$id": "2480",
+                      "$id": "2492",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -34020,13 +34186,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.update.bestPracticeName"
                   },
                   {
-                    "$id": "2481",
+                    "$id": "2493",
                     "kind": "path",
                     "name": "versionName",
                     "serializedName": "versionName",
                     "doc": "The name of the version",
                     "type": {
-                      "$id": "2482",
+                      "$id": "2494",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -36955,7 +37121,7 @@
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "2683",
+                      "$id": "2695",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -36965,7 +37131,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "2684",
+                        "$id": "2696",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -36979,18 +37145,18 @@
                     "readOnly": false
                   },
                   {
-                    "$id": "2685",
+                    "$id": "2697",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "2686",
+                      "$id": "2698",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "2687",
+                        "$id": "2699",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -37010,13 +37176,13 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.update.subscriptionId"
                   },
                   {
-                    "$id": "2688",
+                    "$id": "2700",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "2689",
+                      "$id": "2701",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -37034,7 +37200,7 @@
                     "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.update.resourceGroupName"
                   },
                   {
-                    "$id": "2690",
+                    "$id": "2702",
                     "kind": "path",
                     "name": "fooName",
                     "serializedName": "fooName",
