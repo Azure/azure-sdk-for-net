@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Primitives;
 
 namespace Azure.Identity
 {
@@ -15,22 +14,16 @@ namespace Azure.Identity
         private TokenCredential _tokenCredential;
         private AccessToken _apiKeyToken;
 
-        private IChangeToken _changeToken;
-        private readonly IConfigurationSection _config;
-
         public ConfigurableCredential()
             : this(new DefaultAzureCredentialOptions())
         {
         }
 
-        public ConfigurableCredential(IConfigurationSection configurationSection)
-            : this(new DefaultAzureCredentialOptions(configurationSection.GetSection("Credential")))
+        public ConfigurableCredential(CredentialSettings settings)
+            : this(new DefaultAzureCredentialOptions(settings))
         {
-            if (configurationSection is null)
-                throw new ArgumentNullException(nameof(configurationSection));
-
-            _config = configurationSection;
-            _changeToken = configurationSection.GetReloadToken();
+            if (settings is null)
+                throw new ArgumentNullException(nameof(settings));
 
             //TODO: register for changes
         }

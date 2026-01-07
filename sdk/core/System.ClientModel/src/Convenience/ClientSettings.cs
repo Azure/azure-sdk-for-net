@@ -13,17 +13,12 @@ public class ClientSettings
     /// <summary>
     /// .
     /// </summary>
-    public CredentialSettings? CredentialSettings { get; set; }
+    public CredentialSettings? Credential { get; set; }
 
     /// <summary>
     /// .
     /// </summary>
-    public IConfigurationSection? Configuration { get; set; }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    public object? Credential { get; set; }
+    public object? CredentialObject { get; set; }
 
     /// <summary>
     /// .
@@ -33,47 +28,20 @@ public class ClientSettings
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="section"></param>
-    public void Read(IConfigurationSection section)
+    public void Bind(IConfigurationSection? section = null)
     {
         IsInitialized = true;
-        Configuration = section;
-        CredentialSettings = new(section.GetRequiredSection("Credential"));
-        ReadCore(section);
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="InvalidOperationException"></exception>
-    public ClientConnection GetClientConnection()
-    {
-        if (!IsInitialized)
-            throw new InvalidOperationException("Must call Read with an IConfigurationSection before converting to a ClientConnection");
-
-        if (CredentialSettings is null)
-            throw new InvalidOperationException("Credential section must exist in configuration");
-
-        object credential;
-        CredentialKind credentialKind = CredentialSettings?.CredentialSource == "ApiKey" ? CredentialKind.ApiKeyString : CredentialKind.TokenCredential;
-        if (Credential is null)
+        if (Credential is null && section is not null)
         {
-            if (CredentialSettings?.CredentialSource == "ApiKey")
-            {
-                credential = CredentialSettings!.Key!;
-            }
-            else
-            {
-                throw new InvalidOperationException("CredentialObject must be provided when CredentialSource is not ApiKey.");
-            }
-        }
-        else
-        {
-            credential = Credential;
+            Credential = new CredentialSettings(section.GetSection("Credential"));
         }
 
-        return ClientConnection.Create(Configuration, credential, credentialKind);
+        if (CredentialObject is null && Credential?.CredentialSource == "ApiKey")
+        {
+            CredentialObject = Credential?.Key;
+        }
+
+        BindCore(section);
     }
 
     /// <summary>
@@ -84,6 +52,5 @@ public class ClientSettings
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="section"></param>
-    protected virtual void ReadCore(IConfigurationSection section) { }
+    protected virtual void BindCore(IConfigurationSection? section = null) { }
 }

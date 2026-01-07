@@ -23,8 +23,8 @@ namespace Azure.Identity
         {
             IConfigurationSection section = configuration.GetRequiredSection(sectionName);
             T t = new();
-            t.Read(section);
-            t.Credential = new ConfigurableCredential(section);
+            t.Bind(section);
+            t.CredentialObject = new ConfigurableCredential(t.Credential);
             return t;
         }
     }

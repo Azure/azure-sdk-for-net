@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Primitives;
-using Azure.Core;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.ResourceManager
 {
@@ -19,40 +16,20 @@ namespace Azure.ResourceManager
         /// </summary>
         public string DefaultSubscriptionId { get; set; }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        public new ArmClientOptions Options { get; set; }
+
         /// <inheritdoc/>
-        protected override void ReadCore(IConfigurationSection section)
+        protected override void BindCore(IConfigurationSection section)
         {
+            if (section == null)
+                return;
+
             DefaultSubscriptionId = section["DefaultSubscriptionId"];
             // for schema should we have a layer for ClientOptions section.GetSection("ClientOptions")
             Options = new ArmClientOptions(section.GetSection("Options"));
-        }
-
-        internal static ArmSettings Create(IServiceProvider serviceProvider, IConfigurationSection section, Action<ArmClientOptions> configureOptions)
-        {
-            ArmSettings settings = new();
-            settings.Read(section);
-            object credential;
-
-            string credentialSource = settings.CredentialSettings.CredentialSource;
-            if (credentialSource is null || !credentialSource.Equals("ApiKey", StringComparison.Ordinal))
-            {
-                credential = serviceProvider.GetRequiredService<TokenCredential>();
-            }
-            else
-            {
-                if (string.Equals(credentialSource, "ApiKey", StringComparison.Ordinal))
-                {
-                    credential = settings.CredentialSettings.Key;
-                }
-                else
-                {
-                    throw new Exception($"Unsupported credential source '{credentialSource}'.");
-                }
-            }
-            settings.Credential = credential;
-
-            configureOptions?.Invoke((ArmClientOptions)settings.Options);
-            return settings;
         }
     }
 }

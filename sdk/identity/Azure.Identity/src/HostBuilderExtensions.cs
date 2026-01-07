@@ -24,7 +24,7 @@ namespace Azure.Identity
         /// <returns></returns>
         public static IHostApplicationBuilder AddAzureCredential(this IHostApplicationBuilder host, string sectionName)
         {
-            DefaultAzureCredentialOptions options = new(host.Configuration.GetSection(sectionName));
+            DefaultAzureCredentialOptions options = new(new CredentialSettings(host.Configuration.GetSection(sectionName)));
             DefaultAzureCredential credential = new DefaultAzureCredential(options);
             host.Services.AddSingleton<TokenCredential>(sp => credential);
             host.Services.AddSingleton<AuthenticationTokenProvider>(sp => credential);

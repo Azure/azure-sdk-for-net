@@ -8,7 +8,7 @@ namespace Azure.Identity
     /// <summary>
     /// .
     /// </summary>
-    public static class ClientSettingsBaseExtensions
+    public static class ClientSettingsExtensions
     {
         /// <summary>
         /// .
@@ -19,7 +19,7 @@ namespace Azure.Identity
         public static T WithAzureCredential<T>(this T settings)
             where T : ClientSettings
         {
-            settings.Credential = new ConfigurableCredential(settings.Configuration);
+            settings.CredentialObject = new ConfigurableCredential(settings.Credential);
             return settings;
         }
     }

@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Azure.Identity
 {
@@ -46,16 +46,10 @@ namespace Azure.Identity
         {
         }
 
-        internal DefaultAzureCredentialOptions(IConfigurationSection configurationSection)
+        internal DefaultAzureCredentialOptions(CredentialSettings settings)
         {
-            if (configurationSection["CredentialSource"] is string credentialSource)
-            {
-                CredentialSource = credentialSource;
-            }
-            if (configurationSection["Key"] is string apiKey)
-            {
-                ApiKey = apiKey;
-            }
+            CredentialSource = settings.CredentialSource;
+            ApiKey = settings.Key;
         }
 
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);

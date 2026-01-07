@@ -11,29 +11,31 @@ public abstract class AuthenticationPolicy : PipelinePolicy
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="connection"></param>
+    /// <param name="settings"></param>
     /// <param name="scope"></param>
     /// <returns></returns>
-    public static AuthenticationPolicy Create(ClientConnection connection, string scope)
+    public static AuthenticationPolicy Create(ClientSettings settings, string scope)
     {
-        return connection.CredentialKind switch
+        if (settings.Credential?.CredentialSource is null)
+            throw new ArgumentNullException(nameof(settings.Credential), "CredentialSource cannot be null.");
+
+        return settings.Credential?.CredentialSource switch
         {
-            CredentialKind.TokenCredential => CreateWithTokenCredential(connection, scope),
-            CredentialKind.ApiKeyString => CreateWithApiKey(connection, scope),
-            _ => throw new InvalidOperationException($"Unsupported CredentialKind: {connection.CredentialKind}")
+            "ApiKey" => CreateWithApiKey(settings, scope),
+            _ => CreateWithTokenCredential(settings, scope)
         };
     }
 
-    private static AuthenticationPolicy CreateWithTokenCredential(ClientConnection connection, string scope)
+    private static AuthenticationPolicy CreateWithTokenCredential(ClientSettings settings, string scope)
     {
-        var tokenCredential = (AuthenticationTokenProvider)connection.Credential!;
+        var tokenCredential = (AuthenticationTokenProvider)settings.CredentialObject!;
         return new BearerTokenPolicy(tokenCredential, scope);
     }
 
-    private static AuthenticationPolicy CreateWithApiKey(ClientConnection connection, string scope)
+    private static AuthenticationPolicy CreateWithApiKey(ClientSettings settings, string scope)
     {
         string apiKey;
-        if (connection.Credential is AuthenticationTokenProvider apiKeyProvider)
+        if (settings.CredentialObject is AuthenticationTokenProvider apiKeyProvider)
         {
             GetTokenOptions options = new GetTokenOptions(new Dictionary<string, object>
             {
@@ -43,7 +45,7 @@ public abstract class AuthenticationPolicy : PipelinePolicy
         }
         else
         {
-            apiKey = (string)connection.Credential!;
+            apiKey = (string)settings.CredentialObject!;
         }
         return ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(new ApiKeyCredential(apiKey));
     }

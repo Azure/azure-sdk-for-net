@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using Microsoft.Extensions.Hosting;
 
@@ -18,7 +19,7 @@ namespace Azure.Identity
         /// <returns></returns>
         public static IHostApplicationBuilder WithAzureCredential(this IClientBuilder clientBuilder)
         {
-            clientBuilder.SetCredentialObject(new ConfigurableCredential(clientBuilder.ConfigurationSection));
+            clientBuilder.SetCredentialObject(new ConfigurableCredential(new CredentialSettings(clientBuilder.ConfigurationSection.GetSection("Credential"))));
             return clientBuilder;
         }
     }

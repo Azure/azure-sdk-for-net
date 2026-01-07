@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -85,6 +84,7 @@ namespace Azure.ResourceManager
         }
 
         internal ArmClientOptions(IConfigurationSection section)
+            : base(section)
         {
             if (section is null)
                 return; // default options

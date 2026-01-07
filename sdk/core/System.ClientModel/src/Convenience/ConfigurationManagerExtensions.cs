@@ -32,7 +32,7 @@ public static class ConfigurationManagerExtensions
         where T : ClientSettings, new()
     {
         T t = new();
-        t.Read(section);
+        t.Bind(section);
         return t;
     }
 }
