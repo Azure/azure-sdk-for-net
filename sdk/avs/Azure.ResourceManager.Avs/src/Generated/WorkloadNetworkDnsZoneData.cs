@@ -14,89 +14,134 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary>
-    /// A class representing the WorkloadNetworkDnsZone data model.
-    /// NSX DNS Zone
-    /// </summary>
+    /// <summary> NSX DNS Zone. </summary>
     public partial class WorkloadNetworkDnsZoneData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZoneData"/>. </summary>
         public WorkloadNetworkDnsZoneData()
         {
-            Domain = new ChangeTrackingList<string>();
-            DnsServerIPs = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZoneData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Display name of the DNS Zone. </param>
-        /// <param name="domain"> Domain names of the DNS Zone. </param>
-        /// <param name="dnsServerIPs"> DNS Server IP array of the DNS Zone. </param>
-        /// <param name="sourceIP"> Source IP of the DNS Zone. </param>
-        /// <param name="dnsServices"> Number of DNS Services using the DNS zone. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="revision"> NSX revision number. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> domain, IList<IPAddress> dnsServerIPs, IPAddress sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal WorkloadNetworkDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WorkloadNetworkDnsZoneProperties properties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            Domain = domain;
-            DnsServerIPs = dnsServerIPs;
-            SourceIP = sourceIP;
-            DnsServices = dnsServices;
-            ProvisioningState = provisioningState;
-            Revision = revision;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal WorkloadNetworkDnsZoneProperties Properties { get; set; }
+
         /// <summary> Display name of the DNS Zone. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadNetworkDnsZoneProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Domain names of the DNS Zone. </summary>
-        public IList<string> Domain { get; }
+        public IList<string> Domain
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadNetworkDnsZoneProperties();
+                }
+                return Properties.Domain;
+            }
+        }
+
         /// <summary> DNS Server IP array of the DNS Zone. </summary>
-        public IList<IPAddress> DnsServerIPs { get; }
+        public IList<IPAddress> DnsServerIPs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadNetworkDnsZoneProperties();
+                }
+                return Properties.DnsServerIPs;
+            }
+        }
+
         /// <summary> Source IP of the DNS Zone. </summary>
-        public IPAddress SourceIP { get; set; }
+        public IPAddress SourceIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadNetworkDnsZoneProperties();
+                }
+                Properties.SourceIP = value;
+            }
+        }
+
         /// <summary> Number of DNS Services using the DNS zone. </summary>
-        public long? DnsServices { get; set; }
+        public long? DnsServices
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsServices;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadNetworkDnsZoneProperties();
+                }
+                Properties.DnsServices = value.Value;
+            }
+        }
+
         /// <summary> The provisioning state. </summary>
-        public WorkloadNetworkDnsZoneProvisioningState? ProvisioningState { get; }
+        public WorkloadNetworkDnsZoneProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> NSX revision number. </summary>
-        public long? Revision { get; set; }
+        public long? Revision
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Revision;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadNetworkDnsZoneProperties();
+                }
+                Properties.Revision = value.Value;
+            }
+        }
     }
 }

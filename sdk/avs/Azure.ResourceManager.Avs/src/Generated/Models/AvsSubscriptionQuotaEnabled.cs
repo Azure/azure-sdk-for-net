@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct AvsSubscriptionQuotaEnabled : IEquatable<AvsSubscriptionQuotaEnabled>
     {
         private readonly string _value;
+        /// <summary> is enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> is disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="AvsSubscriptionQuotaEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvsSubscriptionQuotaEnabled(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> is enabled. </summary>
         public static AvsSubscriptionQuotaEnabled Enabled { get; } = new AvsSubscriptionQuotaEnabled(EnabledValue);
+
         /// <summary> is disabled. </summary>
         public static AvsSubscriptionQuotaEnabled Disabled { get; } = new AvsSubscriptionQuotaEnabled(DisabledValue);
+
         /// <summary> Determines if two <see cref="AvsSubscriptionQuotaEnabled"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvsSubscriptionQuotaEnabled left, AvsSubscriptionQuotaEnabled right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvsSubscriptionQuotaEnabled"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvsSubscriptionQuotaEnabled left, AvsSubscriptionQuotaEnabled right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsSubscriptionQuotaEnabled"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvsSubscriptionQuotaEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvsSubscriptionQuotaEnabled(string value) => new AvsSubscriptionQuotaEnabled(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvsSubscriptionQuotaEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvsSubscriptionQuotaEnabled?(string value) => value == null ? null : new AvsSubscriptionQuotaEnabled(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvsSubscriptionQuotaEnabled other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvsSubscriptionQuotaEnabled other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

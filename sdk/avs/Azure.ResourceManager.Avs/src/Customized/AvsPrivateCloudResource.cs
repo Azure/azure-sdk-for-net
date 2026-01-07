@@ -16,12 +16,6 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary>
-    /// A Class representing an AvsPrivateCloud along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAvsPrivateCloud method.
-    /// </summary>
     public partial class AvsPrivateCloudResource : ArmResource
     {
         /// <summary>
@@ -36,10 +30,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>WorkloadNetworks_Get</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkResource"/></description>
         /// </item>
@@ -52,7 +42,7 @@ namespace Azure.ResourceManager.Avs
         [Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public virtual Response<WorkloadNetworkResource> GetWorkloadNetwork(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadNetworks().Get(workloadNetworkName, cancellationToken);
+            throw new NotSupportedException("The method is deprecated as of API version 2023-09-01 and will be removed in a future release.");
         }
 
         /// <summary>
@@ -67,10 +57,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>WorkloadNetworks_Get</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkResource"/></description>
         /// </item>
@@ -81,9 +67,9 @@ namespace Azure.ResourceManager.Avs
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future release.", false)]
-        public virtual async Task<Response<WorkloadNetworkResource>> GetWorkloadNetworkAsync(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<WorkloadNetworkResource>> GetWorkloadNetworkAsync(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
-            return await GetWorkloadNetworks().GetAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
+            throw new NotSupportedException("The method is deprecated as of API version 2023-09-01 and will be removed in a future release.");
         }
 
         /// <summary> Gets a collection of WorkloadNetworkResources in the AvsPrivateCloud. </summary>
@@ -92,9 +78,9 @@ namespace Azure.ResourceManager.Avs
         [Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public virtual WorkloadNetworkCollection GetWorkloadNetworks()
         {
-            return GetCachedClient(client => new WorkloadNetworkCollection(client, Id));
+            throw new NotSupportedException("The method is deprecated as of API version 2023-09-01 and will be removed in a future release.");
         }
-
+/*
         /// <summary>
         /// Get dhcp by id in a private cloud workload network.
         /// <list type="bullet">
@@ -105,10 +91,6 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetDhcp</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,10 +119,6 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetDhcp</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,10 +156,7 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetDnsService</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
+
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkDnsServiceResource"/></description>
@@ -741,6 +716,6 @@ namespace Azure.ResourceManager.Avs
         public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkVmGroups();
-        }
+        }*/
     }
 }
