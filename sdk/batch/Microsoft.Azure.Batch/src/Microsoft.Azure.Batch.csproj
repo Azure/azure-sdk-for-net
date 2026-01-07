@@ -16,6 +16,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <ApiCompatBaselineTargetFramework>netstandard2.0</ApiCompatBaselineTargetFramework>
     <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -50,4 +51,17 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>AzureBatch.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" />
+    <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
+    <PackageReference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
 </Project>
