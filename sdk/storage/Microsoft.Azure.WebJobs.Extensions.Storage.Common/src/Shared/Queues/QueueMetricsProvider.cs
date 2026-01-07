@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
@@ -15,16 +16,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
     /// </summary>
     internal class QueueMetricsProvider
     {
+        private readonly string _functionId;
         private readonly QueueClient _queue;
         private readonly ILogger _logger;
 
         /// <summary>
         /// Instantiates a QueueMetricsProvider.
         /// </summary>
+        /// <param name="functionId">The function id to make scale decisions for.</param>
         /// <param name="queue">The QueueClient to use for metrics polling.</param>
         /// <param name="loggerFactory">Used to create an ILogger instance.</param>
-        public QueueMetricsProvider(QueueClient queue, ILoggerFactory loggerFactory)
+        public QueueMetricsProvider(string functionId, QueueClient queue, ILoggerFactory loggerFactory)
         {
+            _functionId = functionId;
             _queue = queue;
             _logger = loggerFactory.CreateLogger<QueueMetricsProvider>();
         }
@@ -49,12 +53,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                     // ignore transient errors, and return default metrics
                     // E.g. if the queue doesn't exist, we'll return a zero queue length
                     // and scale in
-                    _logger.LogWarning($"Error querying for queue scale status: {ex.ToString()}");
+                    _logger.LogFunctionScaleWarning("Error querying for queue scale status", _functionId, ex);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogWarning($"Fatal error querying for queue scale status: {ex.ToString()}");
+                _logger.LogFunctionScaleWarning("Fatal error querying for queue scale status", _functionId, ex);
             }
 
             return 0;
@@ -101,12 +105,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                     // ignore transient errors, and return default metrics
                     // E.g. if the queue doesn't exist, we'll return a zero queue length
                     // and scale in
-                    _logger.LogWarning($"Error querying for queue scale status: {ex.ToString()}");
+
+                    _logger.LogFunctionScaleWarning("Error querying for queue scale status", _functionId, ex);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogWarning($"Fatal error querying for queue scale status: {ex.ToString()}");
+                _logger.LogFunctionScaleWarning("Fatal error querying for queue scale status", _functionId, ex);
             }
 
             return new QueueTriggerMetrics
