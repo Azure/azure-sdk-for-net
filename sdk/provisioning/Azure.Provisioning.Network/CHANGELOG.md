@@ -1,14 +1,11 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2026-01-07)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated to latest api-version.
+- Added `PrivateDnsZoneGroup` resource.
 
 ## 1.0.0-beta.2 (2025-12-10)
 

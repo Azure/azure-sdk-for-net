@@ -14,12 +14,12 @@ using System;
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// ServiceEndpointPolicyDefinition.
+/// PrivateDnsZoneGroup.
 /// </summary>
-public partial class ServiceEndpointPolicyDefinition : ProvisionableResource
+public partial class PrivateDnsZoneGroup : ProvisionableResource
 {
     /// <summary>
-    /// The name of the service endpoint policy definition name.
+    /// The name of the private dns zone group.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -27,16 +27,6 @@ public partial class ServiceEndpointPolicyDefinition : ProvisionableResource
         set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
-
-    /// <summary>
-    /// A description for this rule. Restricted to 140 chars.
-    /// </summary>
-    public BicepValue<string> Description 
-    {
-        get { Initialize(); return _description!; }
-        set { Initialize(); _description!.Assign(value); }
-    }
-    private BicepValue<string>? _description;
 
     /// <summary>
     /// Resource ID.
@@ -49,24 +39,15 @@ public partial class ServiceEndpointPolicyDefinition : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// Service endpoint name.
+    /// A collection of private dns zone configurations of the private dns zone
+    /// group.
     /// </summary>
-    public BicepValue<string> Service 
+    public BicepList<PrivateDnsZoneConfig> PrivateDnsZoneConfigs 
     {
-        get { Initialize(); return _service!; }
-        set { Initialize(); _service!.Assign(value); }
+        get { Initialize(); return _privateDnsZoneConfigs!; }
+        set { Initialize(); _privateDnsZoneConfigs!.Assign(value); }
     }
-    private BicepValue<string>? _service;
-
-    /// <summary>
-    /// A list of service resources.
-    /// </summary>
-    public BicepList<ResourceIdentifier> ServiceResources 
-    {
-        get { Initialize(); return _serviceResources!; }
-        set { Initialize(); _serviceResources!.Assign(value); }
-    }
-    private BicepList<ResourceIdentifier>? _serviceResources;
+    private BicepList<PrivateDnsZoneConfig>? _privateDnsZoneConfigs;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -78,8 +59,7 @@ public partial class ServiceEndpointPolicyDefinition : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// The provisioning state of the service endpoint policy definition
-    /// resource.
+    /// The provisioning state of the private dns zone group resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
@@ -88,49 +68,46 @@ public partial class ServiceEndpointPolicyDefinition : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// Gets or sets a reference to the parent ServiceEndpointPolicy.
+    /// Gets or sets a reference to the parent PrivateEndpoint.
     /// </summary>
-    public ServiceEndpointPolicy? Parent
+    public PrivateEndpoint? Parent
     {
         get { Initialize(); return _parent!.Value; }
         set { Initialize(); _parent!.Value = value; }
     }
-    private ResourceReference<ServiceEndpointPolicy>? _parent;
+    private ResourceReference<PrivateEndpoint>? _parent;
 
     /// <summary>
-    /// Creates a new ServiceEndpointPolicyDefinition.
+    /// Creates a new PrivateDnsZoneGroup.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the ServiceEndpointPolicyDefinition
-    /// resource.  This can be used to refer to the resource in expressions,
-    /// but is not the Azure name of the resource.  This value can contain
-    /// letters, numbers, and underscores.
+    /// The the Bicep identifier name of the PrivateDnsZoneGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ServiceEndpointPolicyDefinition.</param>
-    public ServiceEndpointPolicyDefinition(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/serviceEndpointPolicies/serviceEndpointPolicyDefinitions", resourceVersion ?? "2025-05-01")
+    /// <param name="resourceVersion">Version of the PrivateDnsZoneGroup.</param>
+    public PrivateDnsZoneGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/privateEndpoints/privateDnsZoneGroups", resourceVersion ?? "2025-05-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of
-    /// ServiceEndpointPolicyDefinition.
+    /// Define all the provisionable properties of PrivateDnsZoneGroup.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _description = DefineProperty<string>("Description", ["properties", "description"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _service = DefineProperty<string>("Service", ["properties", "service"]);
-        _serviceResources = DefineListProperty<ResourceIdentifier>("ServiceResources", ["properties", "serviceResources"]);
+        _privateDnsZoneConfigs = DefineListProperty<PrivateDnsZoneConfig>("PrivateDnsZoneConfigs", ["properties", "privateDnsZoneConfigs"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _parent = DefineResource<ServiceEndpointPolicy>("Parent", ["parent"], isRequired: true);
+        _parent = DefineResource<PrivateEndpoint>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported ServiceEndpointPolicyDefinition resource versions.
+    /// Supported PrivateDnsZoneGroup resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -348,74 +325,19 @@ public partial class ServiceEndpointPolicyDefinition : ProvisionableResource
         /// 2019-02-01.
         /// </summary>
         public static readonly string V2019_02_01 = "2019-02-01";
-
-        /// <summary>
-        /// 2018-12-01.
-        /// </summary>
-        public static readonly string V2018_12_01 = "2018-12-01";
-
-        /// <summary>
-        /// 2018-11-01.
-        /// </summary>
-        public static readonly string V2018_11_01 = "2018-11-01";
-
-        /// <summary>
-        /// 2018-10-01.
-        /// </summary>
-        public static readonly string V2018_10_01 = "2018-10-01";
-
-        /// <summary>
-        /// 2018-08-01.
-        /// </summary>
-        public static readonly string V2018_08_01 = "2018-08-01";
-
-        /// <summary>
-        /// 2018-07-01.
-        /// </summary>
-        public static readonly string V2018_07_01 = "2018-07-01";
-
-        /// <summary>
-        /// 2018-06-01.
-        /// </summary>
-        public static readonly string V2018_06_01 = "2018-06-01";
-
-        /// <summary>
-        /// 2018-05-01.
-        /// </summary>
-        public static readonly string V2018_05_01 = "2018-05-01";
-
-        /// <summary>
-        /// 2018-04-01.
-        /// </summary>
-        public static readonly string V2018_04_01 = "2018-04-01";
-
-        /// <summary>
-        /// 2018-03-01.
-        /// </summary>
-        public static readonly string V2018_03_01 = "2018-03-01";
-
-        /// <summary>
-        /// 2018-02-01.
-        /// </summary>
-        public static readonly string V2018_02_01 = "2018-02-01";
-
-        /// <summary>
-        /// 2018-01-01.
-        /// </summary>
-        public static readonly string V2018_01_01 = "2018-01-01";
     }
 
     /// <summary>
-    /// Creates a reference to an existing ServiceEndpointPolicyDefinition.
+    /// Creates a reference to an existing PrivateDnsZoneGroup.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the ServiceEndpointPolicyDefinition
-    /// resource.  This can be used to refer to the resource in expressions,
-    /// but is not the Azure name of the resource.  This value can contain
-    /// letters, numbers, and underscores.
+    /// The the Bicep identifier name of the PrivateDnsZoneGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ServiceEndpointPolicyDefinition.</param>
-    /// <returns>The existing ServiceEndpointPolicyDefinition resource.</returns>
-    public static ServiceEndpointPolicyDefinition FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the PrivateDnsZoneGroup.</param>
+    /// <returns>The existing PrivateDnsZoneGroup resource.</returns>
+    public static PrivateDnsZoneGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

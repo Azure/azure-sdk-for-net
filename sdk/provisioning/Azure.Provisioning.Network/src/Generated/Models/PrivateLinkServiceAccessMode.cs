@@ -6,27 +6,17 @@
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// The transport protocol for the endpoint.
+/// The access mode of the private link service.
 /// </summary>
-public enum LoadBalancingTransportProtocol
+public enum PrivateLinkServiceAccessMode
 {
     /// <summary>
-    /// Udp.
+    /// Allows unrestricted access to the private link service.
     /// </summary>
-    Udp,
+    Default,
 
     /// <summary>
-    /// Tcp.
+    /// Limits access to subscriptions which are inside visibility list only.
     /// </summary>
-    Tcp,
-
-    /// <summary>
-    /// All.
-    /// </summary>
-    All,
-
-    /// <summary>
-    /// Quic.
-    /// </summary>
-    Quic,
+    Restricted,
 }
