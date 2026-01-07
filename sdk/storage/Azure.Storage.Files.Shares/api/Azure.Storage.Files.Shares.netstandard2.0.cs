@@ -313,7 +313,6 @@ namespace Azure.Storage.Files.Shares
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.ShareSasBuilder builder) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.ShareSasBuilder builder, out string stringToSign) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.ShareFileSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Files.Shares.Models.UserDelegationKey userDelegationKey) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.ShareFileSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Files.Shares.Models.UserDelegationKey userDelegationKey, out string stringToSign) { throw null; }
