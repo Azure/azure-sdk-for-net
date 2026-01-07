@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// be created
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssPublicIPAddressDnsSettings(string domainNameLabel, ComputeFleetDomainNameLabelScopeTypes? domainNameLabelScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmssPublicIPAddressDnsSettings(string domainNameLabel, ComputeFleetDomainNameLabelScopeType? domainNameLabelScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainNameLabel = domainNameLabel;
             DomainNameLabelScope = domainNameLabelScope;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// index will be the domain name labels of the PublicIPAddress resources that will
         /// be created
         /// </summary>
-        public ComputeFleetDomainNameLabelScopeTypes? DomainNameLabelScope { get; set; }
+        public ComputeFleetDomainNameLabelScopeType? DomainNameLabelScope { get; set; }
     }
 }

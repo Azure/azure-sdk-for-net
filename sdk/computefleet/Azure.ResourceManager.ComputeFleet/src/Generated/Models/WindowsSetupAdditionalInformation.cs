@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// include the root element for the setting or feature that is being inserted.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsSetupAdditionalInformation(WindowsSetupAdditionalInformationPassName? passName, WindowsSetupAdditionalInformationComponentName? componentName, AdditionalInformationSettingNames? settingName, string content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WindowsSetupAdditionalInformation(WindowsSetupAdditionalInformationPassName? passName, WindowsSetupAdditionalInformationComponentName? componentName, AdditionalInformationSettingName? settingName, string content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PassName = passName;
             ComponentName = componentName;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies the name of the setting to which the content applies. Possible values
         /// are: FirstLogonCommands and AutoLogon.
         /// </summary>
-        public AdditionalInformationSettingNames? SettingName { get; set; }
+        public AdditionalInformationSettingName? SettingName { get; set; }
 
         /// <summary>
         /// Specifies the XML formatted content that is added to the unattend.xml file for

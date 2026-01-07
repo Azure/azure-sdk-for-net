@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// information about Disk Controller Types supported please refer to
     /// https://aka.ms/azure-diskcontrollertypes.
     /// </summary>
-    public readonly partial struct ComputeFleetDiskControllerTypes : IEquatable<ComputeFleetDiskControllerTypes>
+    public readonly partial struct ComputeFleetDiskControllerType : IEquatable<ComputeFleetDiskControllerType>
     {
         private readonly string _value;
         /// <summary> SCSI disk type. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> NVMe disk type. </summary>
         private const string NvmeValue = "NVMe";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetDiskControllerTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetDiskControllerType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeFleetDiskControllerTypes(string value)
+        public ComputeFleetDiskControllerType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,35 +41,35 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> SCSI disk type. </summary>
-        public static ComputeFleetDiskControllerTypes Scsi { get; } = new ComputeFleetDiskControllerTypes(ScsiValue);
+        public static ComputeFleetDiskControllerType Scsi { get; } = new ComputeFleetDiskControllerType(ScsiValue);
 
         /// <summary> NVMe disk type. </summary>
-        public static ComputeFleetDiskControllerTypes Nvme { get; } = new ComputeFleetDiskControllerTypes(NvmeValue);
+        public static ComputeFleetDiskControllerType Nvme { get; } = new ComputeFleetDiskControllerType(NvmeValue);
 
-        /// <summary> Determines if two <see cref="ComputeFleetDiskControllerTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetDiskControllerType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeFleetDiskControllerTypes left, ComputeFleetDiskControllerTypes right) => left.Equals(right);
+        public static bool operator ==(ComputeFleetDiskControllerType left, ComputeFleetDiskControllerType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeFleetDiskControllerTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetDiskControllerType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeFleetDiskControllerTypes left, ComputeFleetDiskControllerTypes right) => !left.Equals(right);
+        public static bool operator !=(ComputeFleetDiskControllerType left, ComputeFleetDiskControllerType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetDiskControllerTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskControllerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDiskControllerTypes(string value) => new ComputeFleetDiskControllerTypes(value);
+        public static implicit operator ComputeFleetDiskControllerType(string value) => new ComputeFleetDiskControllerType(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetDiskControllerTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskControllerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDiskControllerTypes?(string value) => value == null ? null : new ComputeFleetDiskControllerTypes(value);
+        public static implicit operator ComputeFleetDiskControllerType?(string value) => value == null ? null : new ComputeFleetDiskControllerType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeFleetDiskControllerTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetDiskControllerType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeFleetDiskControllerTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetDiskControllerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

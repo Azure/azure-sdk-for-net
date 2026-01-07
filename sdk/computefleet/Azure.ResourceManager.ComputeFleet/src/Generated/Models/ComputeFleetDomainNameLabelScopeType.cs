@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// index will be the domain name labels of the PublicIPAddress resources that will
     /// be created
     /// </summary>
-    public readonly partial struct ComputeFleetDomainNameLabelScopeTypes : IEquatable<ComputeFleetDomainNameLabelScopeTypes>
+    public readonly partial struct ComputeFleetDomainNameLabelScopeType : IEquatable<ComputeFleetDomainNameLabelScopeType>
     {
         private readonly string _value;
         /// <summary> TenantReuse type. </summary>
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> NoReuse type. </summary>
         private const string NoReuseValue = "NoReuse";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetDomainNameLabelScopeTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetDomainNameLabelScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeFleetDomainNameLabelScopeTypes(string value)
+        public ComputeFleetDomainNameLabelScopeType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -40,41 +40,41 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> TenantReuse type. </summary>
-        public static ComputeFleetDomainNameLabelScopeTypes TenantReuse { get; } = new ComputeFleetDomainNameLabelScopeTypes(TenantReuseValue);
+        public static ComputeFleetDomainNameLabelScopeType TenantReuse { get; } = new ComputeFleetDomainNameLabelScopeType(TenantReuseValue);
 
         /// <summary> SubscriptionReuse type. </summary>
-        public static ComputeFleetDomainNameLabelScopeTypes SubscriptionReuse { get; } = new ComputeFleetDomainNameLabelScopeTypes(SubscriptionReuseValue);
+        public static ComputeFleetDomainNameLabelScopeType SubscriptionReuse { get; } = new ComputeFleetDomainNameLabelScopeType(SubscriptionReuseValue);
 
         /// <summary> ResourceGroupReuse type. </summary>
-        public static ComputeFleetDomainNameLabelScopeTypes ResourceGroupReuse { get; } = new ComputeFleetDomainNameLabelScopeTypes(ResourceGroupReuseValue);
+        public static ComputeFleetDomainNameLabelScopeType ResourceGroupReuse { get; } = new ComputeFleetDomainNameLabelScopeType(ResourceGroupReuseValue);
 
         /// <summary> NoReuse type. </summary>
-        public static ComputeFleetDomainNameLabelScopeTypes NoReuse { get; } = new ComputeFleetDomainNameLabelScopeTypes(NoReuseValue);
+        public static ComputeFleetDomainNameLabelScopeType NoReuse { get; } = new ComputeFleetDomainNameLabelScopeType(NoReuseValue);
 
-        /// <summary> Determines if two <see cref="ComputeFleetDomainNameLabelScopeTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetDomainNameLabelScopeType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeFleetDomainNameLabelScopeTypes left, ComputeFleetDomainNameLabelScopeTypes right) => left.Equals(right);
+        public static bool operator ==(ComputeFleetDomainNameLabelScopeType left, ComputeFleetDomainNameLabelScopeType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeFleetDomainNameLabelScopeTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetDomainNameLabelScopeType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeFleetDomainNameLabelScopeTypes left, ComputeFleetDomainNameLabelScopeTypes right) => !left.Equals(right);
+        public static bool operator !=(ComputeFleetDomainNameLabelScopeType left, ComputeFleetDomainNameLabelScopeType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetDomainNameLabelScopeTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetDomainNameLabelScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDomainNameLabelScopeTypes(string value) => new ComputeFleetDomainNameLabelScopeTypes(value);
+        public static implicit operator ComputeFleetDomainNameLabelScopeType(string value) => new ComputeFleetDomainNameLabelScopeType(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetDomainNameLabelScopeTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetDomainNameLabelScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDomainNameLabelScopeTypes?(string value) => value == null ? null : new ComputeFleetDomainNameLabelScopeTypes(value);
+        public static implicit operator ComputeFleetDomainNameLabelScopeType?(string value) => value == null ? null : new ComputeFleetDomainNameLabelScopeType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeFleetDomainNameLabelScopeTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetDomainNameLabelScopeType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeFleetDomainNameLabelScopeTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetDomainNameLabelScopeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

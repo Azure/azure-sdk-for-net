@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// Specifies the protocol of WinRM listener. Possible values are: **http,**
     /// **https.**
     /// </summary>
-    public readonly partial struct ComputeFleetProtocolTypes : IEquatable<ComputeFleetProtocolTypes>
+    public readonly partial struct ComputeFleetProtocolType : IEquatable<ComputeFleetProtocolType>
     {
         private readonly string _value;
         /// <summary> Http protocol. </summary>
@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Https protocol. </summary>
         private const string HttpsValue = "Https";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetProtocolTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeFleetProtocolTypes(string value)
+        public ComputeFleetProtocolType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -34,35 +34,35 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Http protocol. </summary>
-        public static ComputeFleetProtocolTypes Http { get; } = new ComputeFleetProtocolTypes(HttpValue);
+        public static ComputeFleetProtocolType Http { get; } = new ComputeFleetProtocolType(HttpValue);
 
         /// <summary> Https protocol. </summary>
-        public static ComputeFleetProtocolTypes Https { get; } = new ComputeFleetProtocolTypes(HttpsValue);
+        public static ComputeFleetProtocolType Https { get; } = new ComputeFleetProtocolType(HttpsValue);
 
-        /// <summary> Determines if two <see cref="ComputeFleetProtocolTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetProtocolType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeFleetProtocolTypes left, ComputeFleetProtocolTypes right) => left.Equals(right);
+        public static bool operator ==(ComputeFleetProtocolType left, ComputeFleetProtocolType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeFleetProtocolTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetProtocolType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeFleetProtocolTypes left, ComputeFleetProtocolTypes right) => !left.Equals(right);
+        public static bool operator !=(ComputeFleetProtocolType left, ComputeFleetProtocolType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetProtocolTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetProtocolTypes(string value) => new ComputeFleetProtocolTypes(value);
+        public static implicit operator ComputeFleetProtocolType(string value) => new ComputeFleetProtocolType(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetProtocolTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetProtocolTypes?(string value) => value == null ? null : new ComputeFleetProtocolTypes(value);
+        public static implicit operator ComputeFleetProtocolType?(string value) => value == null ? null : new ComputeFleetProtocolType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeFleetProtocolTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetProtocolType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeFleetProtocolTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetProtocolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

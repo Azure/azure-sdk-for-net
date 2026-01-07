@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
             if (Optional.IsDefined(Image))
             {
@@ -144,16 +144,16 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 return null;
             }
             string name = default;
-            ComputeFleetCachingTypes? caching = default;
+            ComputeFleetCachingType? caching = default;
             bool? isWriteAcceleratorEnabled = default;
-            ComputeFleetDiskCreateOptionTypes createOption = default;
+            ComputeFleetDiskCreateOptionType createOption = default;
             ComputeFleetDiffDiskSettings diffDiskSettings = default;
             int? diskSizeGB = default;
-            ComputeFleetOperatingSystemTypes? osType = default;
+            ComputeFleetOperatingSystemType? osType = default;
             ComputeFleetVirtualHardDisk image = default;
             IList<string> vhdContainers = default;
             ComputeFleetVmssManagedDisk managedDisk = default;
-            ComputeFleetDiskDeleteOptionTypes? deleteOption = default;
+            ComputeFleetDiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    caching = new ComputeFleetCachingTypes(prop.Value.GetString());
+                    caching = new ComputeFleetCachingType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
                 if (prop.NameEquals("createOption"u8))
                 {
-                    createOption = new ComputeFleetDiskCreateOptionTypes(prop.Value.GetString());
+                    createOption = new ComputeFleetDiskCreateOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diffDiskSettings"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    osType = new ComputeFleetOperatingSystemTypes(prop.Value.GetString());
+                    osType = new ComputeFleetOperatingSystemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("image"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    deleteOption = new ComputeFleetDiskDeleteOptionTypes(prop.Value.GetString());
+                    deleteOption = new ComputeFleetDiskDeleteOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

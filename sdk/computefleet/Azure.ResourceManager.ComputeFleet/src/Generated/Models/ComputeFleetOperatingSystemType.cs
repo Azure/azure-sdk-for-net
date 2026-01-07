@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// disk if creating a VM from user-image or a specialized VHD. Possible values
     /// are: **Windows,** **Linux.**
     /// </summary>
-    public readonly partial struct ComputeFleetOperatingSystemTypes : IEquatable<ComputeFleetOperatingSystemTypes>
+    public readonly partial struct ComputeFleetOperatingSystemType : IEquatable<ComputeFleetOperatingSystemType>
     {
         private readonly string _value;
         /// <summary> Windows OS type. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Linux OS type. </summary>
         private const string LinuxValue = "Linux";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetOperatingSystemTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetOperatingSystemType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeFleetOperatingSystemTypes(string value)
+        public ComputeFleetOperatingSystemType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Windows OS type. </summary>
-        public static ComputeFleetOperatingSystemTypes Windows { get; } = new ComputeFleetOperatingSystemTypes(WindowsValue);
+        public static ComputeFleetOperatingSystemType Windows { get; } = new ComputeFleetOperatingSystemType(WindowsValue);
 
         /// <summary> Linux OS type. </summary>
-        public static ComputeFleetOperatingSystemTypes Linux { get; } = new ComputeFleetOperatingSystemTypes(LinuxValue);
+        public static ComputeFleetOperatingSystemType Linux { get; } = new ComputeFleetOperatingSystemType(LinuxValue);
 
-        /// <summary> Determines if two <see cref="ComputeFleetOperatingSystemTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetOperatingSystemType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeFleetOperatingSystemTypes left, ComputeFleetOperatingSystemTypes right) => left.Equals(right);
+        public static bool operator ==(ComputeFleetOperatingSystemType left, ComputeFleetOperatingSystemType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeFleetOperatingSystemTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetOperatingSystemType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeFleetOperatingSystemTypes left, ComputeFleetOperatingSystemTypes right) => !left.Equals(right);
+        public static bool operator !=(ComputeFleetOperatingSystemType left, ComputeFleetOperatingSystemType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetOperatingSystemTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetOperatingSystemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetOperatingSystemTypes(string value) => new ComputeFleetOperatingSystemTypes(value);
+        public static implicit operator ComputeFleetOperatingSystemType(string value) => new ComputeFleetOperatingSystemType(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetOperatingSystemTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetOperatingSystemType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetOperatingSystemTypes?(string value) => value == null ? null : new ComputeFleetOperatingSystemTypes(value);
+        public static implicit operator ComputeFleetOperatingSystemType?(string value) => value == null ? null : new ComputeFleetOperatingSystemType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeFleetOperatingSystemTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetOperatingSystemType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeFleetOperatingSystemTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetOperatingSystemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ComputeFleet
         private readonly string _resourceGroupName;
         private readonly string _name;
         private readonly string _filter;
-        private readonly string _skiptoken;
+        private readonly string _skipToken;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of FleetsGetVirtualMachinesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the Fleet. </param>
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
-        /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FleetsGetVirtualMachinesAsyncCollectionResultOfT(Fleets client, Guid subscriptionId, string resourceGroupName, string name, string filter, string skiptoken, RequestContext context) : base(context?.CancellationToken ?? default)
+        public FleetsGetVirtualMachinesAsyncCollectionResultOfT(Fleets client, Guid subscriptionId, string resourceGroupName, string name, string filter, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _name = name;
             _filter = filter;
-            _skiptoken = skiptoken;
+            _skipToken = skipToken;
             _context = context;
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetVirtualMachinesRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _filter, _skiptoken, _context) : _client.CreateGetVirtualMachinesRequest(_subscriptionId, _resourceGroupName, _name, _filter, _skiptoken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetVirtualMachinesRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _filter, _skipToken, _context) : _client.CreateGetVirtualMachinesRequest(_subscriptionId, _resourceGroupName, _name, _filter, _skipToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ComputeFleetResource.GetVirtualMachines");
             scope.Start();
             try

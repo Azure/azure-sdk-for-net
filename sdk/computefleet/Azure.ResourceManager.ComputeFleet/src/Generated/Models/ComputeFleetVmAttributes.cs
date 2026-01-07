@@ -12,16 +12,16 @@ using Azure.ResourceManager.ComputeFleet;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> VMAttributes that will be used to filter VMSizes which will be used to build Fleet. </summary>
-    public partial class ComputeFleetVMAttributes
+    public partial class ComputeFleetVmAttributes
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVMAttributes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmAttributes"/>. </summary>
         /// <param name="vCpuCount"> The range of vCpuCount specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
         /// <param name="memoryInGiB"> The range of memory specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vCpuCount"/> or <paramref name="memoryInGiB"/> is null. </exception>
-        public ComputeFleetVMAttributes(ComputeFleetVmAttributeMinMaxInteger vCpuCount, ComputeFleetVmAttributeMinMaxDouble memoryInGiB)
+        public ComputeFleetVmAttributes(ComputeFleetVmAttributeMinMaxInteger vCpuCount, ComputeFleetVmAttributeMinMaxDouble memoryInGiB)
         {
             Argument.AssertNotNull(vCpuCount, nameof(vCpuCount));
             Argument.AssertNotNull(memoryInGiB, nameof(memoryInGiB));
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             VmCategories = new ChangeTrackingList<ComputeFleetVmCategory>();
             ArchitectureTypes = new ChangeTrackingList<ArchitectureType>();
             CpuManufacturers = new ChangeTrackingList<CpuManufacturer>();
-            ExcludedVMSizes = new ChangeTrackingList<string>();
+            ExcludedVmSizes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVMAttributes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmAttributes"/>. </summary>
         /// <param name="vCpuCount"> The range of vCpuCount specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
         /// <param name="memoryInGiB"> The range of memory specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
         /// <param name="memoryInGiBPerVCpu"> The range of memory in GiB per vCPU specified from min to max. Optional parameter. Either Min or Max is required if specified. </param>
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="architectureTypes"> The VM architecture types specified as a list. Optional parameter. </param>
         /// <param name="cpuManufacturers"> The VM CPU manufacturers specified as a list. Optional parameter. </param>
         /// <param name="burstableSupport"> Specifies whether the VMSize supporting burstable capability should be used to build Fleet or not. </param>
-        /// <param name="excludedVMSizes"> Specifies which VMSizes should be excluded while building Fleet. Optional parameter. </param>
+        /// <param name="excludedVmSizes"> Specifies which VMSizes should be excluded while building Fleet. Optional parameter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVMAttributes(ComputeFleetVmAttributeMinMaxInteger vCpuCount, ComputeFleetVmAttributeMinMaxDouble memoryInGiB, ComputeFleetVmAttributeMinMaxDouble memoryInGiBPerVCpu, ComputeFleetVMAttributeSupport? localStorageSupport, ComputeFleetVmAttributeMinMaxDouble localStorageInGiB, IList<LocalStorageDiskType> localStorageDiskTypes, ComputeFleetVmAttributeMinMaxInteger dataDiskCount, ComputeFleetVmAttributeMinMaxInteger networkInterfaceCount, ComputeFleetVmAttributeMinMaxDouble networkBandwidthInMbps, ComputeFleetVMAttributeSupport? rdmaSupport, ComputeFleetVmAttributeMinMaxInteger rdmaNetworkInterfaceCount, ComputeFleetVMAttributeSupport? acceleratorSupport, IList<AcceleratorManufacturer> acceleratorManufacturers, IList<AcceleratorType> acceleratorTypes, ComputeFleetVmAttributeMinMaxInteger acceleratorCount, IList<ComputeFleetVmCategory> vmCategories, IList<ArchitectureType> architectureTypes, IList<CpuManufacturer> cpuManufacturers, ComputeFleetVMAttributeSupport? burstableSupport, IList<string> excludedVMSizes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmAttributes(ComputeFleetVmAttributeMinMaxInteger vCpuCount, ComputeFleetVmAttributeMinMaxDouble memoryInGiB, ComputeFleetVmAttributeMinMaxDouble memoryInGiBPerVCpu, ComputeFleetVmAttributeSupport? localStorageSupport, ComputeFleetVmAttributeMinMaxDouble localStorageInGiB, IList<LocalStorageDiskType> localStorageDiskTypes, ComputeFleetVmAttributeMinMaxInteger dataDiskCount, ComputeFleetVmAttributeMinMaxInteger networkInterfaceCount, ComputeFleetVmAttributeMinMaxDouble networkBandwidthInMbps, ComputeFleetVmAttributeSupport? rdmaSupport, ComputeFleetVmAttributeMinMaxInteger rdmaNetworkInterfaceCount, ComputeFleetVmAttributeSupport? acceleratorSupport, IList<AcceleratorManufacturer> acceleratorManufacturers, IList<AcceleratorType> acceleratorTypes, ComputeFleetVmAttributeMinMaxInteger acceleratorCount, IList<ComputeFleetVmCategory> vmCategories, IList<ArchitectureType> architectureTypes, IList<CpuManufacturer> cpuManufacturers, ComputeFleetVmAttributeSupport? burstableSupport, IList<string> excludedVmSizes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VCpuCount = vCpuCount;
             MemoryInGiB = memoryInGiB;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ArchitectureTypes = architectureTypes;
             CpuManufacturers = cpuManufacturers;
             BurstableSupport = burstableSupport;
-            ExcludedVMSizes = excludedVMSizes;
+            ExcludedVmSizes = excludedVmSizes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies whether the VMSize supporting local storage should be used to build Fleet or not.
         /// Included - Default if not specified as most Azure VMs support local storage.
         /// </summary>
-        public ComputeFleetVMAttributeSupport? LocalStorageSupport { get; set; }
+        public ComputeFleetVmAttributeSupport? LocalStorageSupport { get; set; }
 
         /// <summary>
         /// LocalStorageSupport should be set to "Included" or "Required" to use this VMAttribute. 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public ComputeFleetVmAttributeMinMaxDouble NetworkBandwidthInMbps { get; set; }
 
         /// <summary> Specifies whether the VMSize supporting RDMA (Remote Direct Memory Access) should be used to build Fleet or not. </summary>
-        public ComputeFleetVMAttributeSupport? RdmaSupport { get; set; }
+        public ComputeFleetVmAttributeSupport? RdmaSupport { get; set; }
 
         /// <summary>
         /// The range of RDMA (Remote Direct Memory Access) network interface count specified from Min to Max. Optional parameter. Either Min or Max is required if specified.
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// acceleratorSupport should be set to "Included" or "Required" to use this VMAttribute. 
         /// If acceleratorSupport is "Excluded", this VMAttribute can not be used.
         /// </summary>
-        public ComputeFleetVMAttributeSupport? AcceleratorSupport { get; set; }
+        public ComputeFleetVmAttributeSupport? AcceleratorSupport { get; set; }
 
         /// <summary>
         /// The accelerator manufacturers specified as a list. 
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public IList<CpuManufacturer> CpuManufacturers { get; }
 
         /// <summary> Specifies whether the VMSize supporting burstable capability should be used to build Fleet or not. </summary>
-        public ComputeFleetVMAttributeSupport? BurstableSupport { get; set; }
+        public ComputeFleetVmAttributeSupport? BurstableSupport { get; set; }
 
         /// <summary> Specifies which VMSizes should be excluded while building Fleet. Optional parameter. </summary>
-        public IList<string> ExcludedVMSizes { get; }
+        public IList<string> ExcludedVmSizes { get; }
     }
 }

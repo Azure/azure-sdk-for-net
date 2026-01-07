@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// Specifies the security profile settings for the managed disk. **Note:** It can
     /// only be set for Confidential VMs.
     /// </summary>
-    public partial class ComputeFleetVMDiskSecurityProfile
+    public partial class ComputeFleetVmDiskSecurityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVMDiskSecurityProfile"/>. </summary>
-        public ComputeFleetVMDiskSecurityProfile()
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmDiskSecurityProfile"/>. </summary>
+        public ComputeFleetVmDiskSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVMDiskSecurityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmDiskSecurityProfile"/>. </summary>
         /// <param name="securityEncryptionType">
         /// Specifies the EncryptionType of the managed disk. It is set to
         /// DiskWithVMGuestState for encryption of the managed disk along with VMGuestState
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// VMGuest blob.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVMDiskSecurityProfile(ComputeFleetSecurityEncryptionTypes? securityEncryptionType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmDiskSecurityProfile(ComputeFleetSecurityEncryptionType? securityEncryptionType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityEncryptionType = securityEncryptionType;
             DiskEncryptionSet = diskEncryptionSet;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// NonPersistedTPM for not persisting firmware state in the VMGuestState blob..
         /// **Note:** It can be set for only Confidential VMs.
         /// </summary>
-        public ComputeFleetSecurityEncryptionTypes? SecurityEncryptionType { get; set; }
+        public ComputeFleetSecurityEncryptionType? SecurityEncryptionType { get; set; }
 
         /// <summary>
         /// Specifies the customer managed disk encryption set resource id for the managed

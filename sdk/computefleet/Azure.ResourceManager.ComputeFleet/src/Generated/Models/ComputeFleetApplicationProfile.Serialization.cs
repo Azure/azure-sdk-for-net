@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("galleryApplications"u8);
                 writer.WriteStartArray();
-                foreach (ComputeFleetVMGalleryApplication item in GalleryApplications)
+                foreach (ComputeFleetVmGalleryApplication item in GalleryApplications)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            IList<ComputeFleetVMGalleryApplication> galleryApplications = default;
+            IList<ComputeFleetVmGalleryApplication> galleryApplications = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    List<ComputeFleetVMGalleryApplication> array = new List<ComputeFleetVMGalleryApplication>();
+                    List<ComputeFleetVmGalleryApplication> array = new List<ComputeFleetVmGalleryApplication>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeFleetVMGalleryApplication.DeserializeComputeFleetVMGalleryApplication(item, options));
+                        array.Add(ComputeFleetVmGalleryApplication.DeserializeComputeFleetVmGalleryApplication(item, options));
                     }
                     galleryApplications = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeFleetApplicationProfile(galleryApplications ?? new ChangeTrackingList<ComputeFleetVMGalleryApplication>(), additionalBinaryDataProperties);
+            return new ComputeFleetApplicationProfile(galleryApplications ?? new ChangeTrackingList<ComputeFleetVmGalleryApplication>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

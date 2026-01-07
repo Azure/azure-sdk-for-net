@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssPublicIPAddressConfigurationProperties"/>. </summary>
         public ComputeFleetVmssPublicIPAddressConfigurationProperties()
         {
-            IpTags = new ChangeTrackingList<ComputeFleetVmssIPTag>();
+            IPTags = new ChangeTrackingList<ComputeFleetVmssIPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssPublicIPAddressConfigurationProperties"/>. </summary>
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssPublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, ComputeFleetVmssPublicIPAddressDnsSettings dnsSettings, IList<ComputeFleetVmssIPTag> ipTags, SubResource publicIPPrefix, ComputeFleetIPVersion? publicIPAddressVersion, ComputeFleetVmDeleteOptions? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmssPublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, ComputeFleetVmssPublicIPAddressDnsSettings dnsSettings, IList<ComputeFleetVmssIPTag> ipTags, SubResource publicIPPrefix, ComputeFleetIPVersion? publicIPAddressVersion, ComputeFleetVmDeleteOption? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DnsSettings = dnsSettings;
-            IpTags = ipTags;
+            IPTags = ipTags;
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
             DeleteOption = deleteOption;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public ComputeFleetVmssPublicIPAddressDnsSettings DnsSettings { get; set; }
 
         /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<ComputeFleetVmssIPTag> IpTags { get; }
+        public IList<ComputeFleetVmssIPTag> IPTags { get; }
 
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
         internal SubResource PublicIPPrefix { get; set; }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public ComputeFleetIPVersion? PublicIPAddressVersion { get; set; }
 
         /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>
-        public ComputeFleetVmDeleteOptions? DeleteOption { get; set; }
+        public ComputeFleetVmDeleteOption? DeleteOption { get; set; }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier PublicIPPrefixId

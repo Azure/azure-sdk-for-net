@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Patching on Windows.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmGuestPatchSettings(ComputeFleetWindowsVMGuestPatchMode? patchMode, bool? isHotPatchingEnabled, ComputeFleetWindowsPatchAssessmentMode? assessmentMode, ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmGuestPatchSettings(ComputeFleetWindowsVmGuestPatchMode? patchMode, bool? isHotPatchingEnabled, ComputeFleetWindowsPatchAssessmentMode? assessmentMode, ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchMode = patchMode;
             IsHotPatchingEnabled = isHotPatchingEnabled;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// automatically updated by the platform. The properties provisionVMAgent and
         /// WindowsConfiguration.enableAutomaticUpdates must be true
         /// </summary>
-        public ComputeFleetWindowsVMGuestPatchMode? PatchMode { get; set; }
+        public ComputeFleetWindowsVmGuestPatchMode? PatchMode { get; set; }
 
         /// <summary>
         /// Enables customers to patch their Azure VMs without requiring a reboot. For
@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies additional settings for patch mode AutomaticByPlatform in VM Guest
         /// Patching on Windows.
         /// </summary>
-        public ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get; set; }
+        public ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get; set; }
     }
 }

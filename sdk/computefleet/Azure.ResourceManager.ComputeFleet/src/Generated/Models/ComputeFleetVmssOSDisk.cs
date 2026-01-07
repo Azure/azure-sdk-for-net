@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// the imageReference element described above. If you are using a marketplace
         /// image, you  also use the plan element previously described.
         /// </param>
-        public ComputeFleetVmssOSDisk(ComputeFleetDiskCreateOptionTypes createOption)
+        public ComputeFleetVmssOSDisk(ComputeFleetDiskCreateOptionType createOption)
         {
             CreateOption = createOption;
             VhdContainers = new ChangeTrackingList<string>();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Disk.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssOSDisk(string name, ComputeFleetCachingTypes? caching, bool? isWriteAcceleratorEnabled, ComputeFleetDiskCreateOptionTypes createOption, ComputeFleetDiffDiskSettings diffDiskSettings, int? diskSizeGB, ComputeFleetOperatingSystemTypes? osType, ComputeFleetVirtualHardDisk image, IList<string> vhdContainers, ComputeFleetVmssManagedDisk managedDisk, ComputeFleetDiskDeleteOptionTypes? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmssOSDisk(string name, ComputeFleetCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeFleetDiskCreateOptionType createOption, ComputeFleetDiffDiskSettings diffDiskSettings, int? diskSizeGB, ComputeFleetOperatingSystemType? osType, ComputeFleetVirtualHardDisk image, IList<string> vhdContainers, ComputeFleetVmssManagedDisk managedDisk, ComputeFleetDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Caching = caching;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             CreateOption = createOption;
             DiffDiskSettings = diffDiskSettings;
             DiskSizeGB = diskSizeGB;
-            OsType = osType;
+            OSType = osType;
             Image = image;
             VhdContainers = vhdContainers;
             ManagedDisk = managedDisk;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// **ReadOnly,** **ReadWrite.** The default values are: **None for Standard
         /// storage. ReadOnly for Premium storage.**
         /// </summary>
-        public ComputeFleetCachingTypes? Caching { get; set; }
+        public ComputeFleetCachingType? Caching { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? IsWriteAcceleratorEnabled { get; set; }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// the imageReference element described above. If you are using a marketplace
         /// image, you  also use the plan element previously described.
         /// </summary>
-        public ComputeFleetDiskCreateOptionTypes CreateOption { get; set; }
+        public ComputeFleetDiskCreateOptionType CreateOption { get; set; }
 
         /// <summary>
         /// Specifies the ephemeral disk Settings for the operating system disk used by the
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// disk if creating a VM from user-image or a specialized VHD. Possible values
         /// are: **Windows,** **Linux.**
         /// </summary>
-        public ComputeFleetOperatingSystemTypes? OsType { get; set; }
+        public ComputeFleetOperatingSystemType? OSType { get; set; }
 
         /// <summary> Specifies information about the unmanaged user image to base the scale set on. </summary>
         internal ComputeFleetVirtualHardDisk Image { get; set; }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// is set to **Delete**. User cannot change the delete option for Ephemeral OS
         /// Disk.
         /// </summary>
-        public ComputeFleetDiskDeleteOptionTypes? DeleteOption { get; set; }
+        public ComputeFleetDiskDeleteOptionType? DeleteOption { get; set; }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
         public Uri ImageUri

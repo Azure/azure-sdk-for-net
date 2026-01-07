@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// sizes exposes a cache disk.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetDiffDiskSettings(ComputeFleetDiffDiskOptions? option, ComputeFleetDiffDiskPlacement? placement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetDiffDiskSettings(ComputeFleetDiffDiskOption? option, ComputeFleetDiffDiskPlacement? placement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Option = option;
             Placement = placement;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Specifies the ephemeral disk settings for operating system disk. </summary>
-        public ComputeFleetDiffDiskOptions? Option { get; set; }
+        public ComputeFleetDiffDiskOption? Option { get; set; }
 
         /// <summary>
         /// Specifies the ephemeral disk placement for operating system disk. Possible

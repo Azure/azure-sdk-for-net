@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// api-version: 2023-09-01.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetSecurityProfile(ComputeFleetUefiSettings uefiSettings, bool? isEncryptionAtHostEnabled, ComputeFleetSecurityTypes? securityType, ComputeFleetEncryptionIdentity encryptionIdentity, ComputeFleetProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetSecurityProfile(ComputeFleetUefiSettings uefiSettings, bool? isEncryptionAtHostEnabled, ComputeFleetSecurityType? securityType, ComputeFleetEncryptionIdentity encryptionIdentity, ComputeFleetProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UefiSettings = uefiSettings;
             IsEncryptionAtHostEnabled = isEncryptionAtHostEnabled;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// specified value to enable UefiSettings. The default behavior is: UefiSettings
         /// will not be enabled unless this property is set.
         /// </summary>
-        public ComputeFleetSecurityTypes? SecurityType { get; set; }
+        public ComputeFleetSecurityType? SecurityType { get; set; }
 
         /// <summary>
         /// Specifies the Managed Identity used by ADE to get access token for keyvault

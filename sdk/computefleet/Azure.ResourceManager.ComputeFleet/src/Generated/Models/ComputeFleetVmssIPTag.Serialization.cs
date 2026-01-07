@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssIPTag)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpTagType))
+            if (Optional.IsDefined(IPTagType))
             {
                 writer.WritePropertyName("ipTagType"u8);
-                writer.WriteStringValue(IpTagType);
+                writer.WriteStringValue(IPTagType);
             }
             if (Optional.IsDefined(Tag))
             {

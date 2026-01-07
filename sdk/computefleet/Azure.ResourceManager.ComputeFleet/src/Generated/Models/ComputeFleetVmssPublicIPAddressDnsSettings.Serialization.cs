@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 return null;
             }
             string domainNameLabel = default;
-            ComputeFleetDomainNameLabelScopeTypes? domainNameLabelScope = default;
+            ComputeFleetDomainNameLabelScopeType? domainNameLabelScope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    domainNameLabelScope = new ComputeFleetDomainNameLabelScopeTypes(prop.Value.GetString());
+                    domainNameLabelScope = new ComputeFleetDomainNameLabelScopeType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

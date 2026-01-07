@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.ComputeFleet;
 using Azure.ResourceManager.Resources.Models;
@@ -190,58 +189,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
                 if (prop.NameEquals("applicationGatewayBackendAddressPools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default));
-                    }
-                    applicationGatewayBackendAddressPools = array;
+                    DeserializeApplicationGatewayBackendAddressPools(prop, ref applicationGatewayBackendAddressPools);
                     continue;
                 }
                 if (prop.NameEquals("applicationSecurityGroups"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default));
-                    }
-                    applicationSecurityGroups = array;
+                    DeserializeApplicationSecurityGroups(prop, ref applicationSecurityGroups);
                     continue;
                 }
                 if (prop.NameEquals("loadBalancerBackendAddressPools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default));
-                    }
-                    loadBalancerBackendAddressPools = array;
+                    DeserializeLoadBalancerBackendAddressPools(prop, ref loadBalancerBackendAddressPools);
                     continue;
                 }
                 if (prop.NameEquals("loadBalancerInboundNatPools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default));
-                    }
-                    loadBalancerInboundNatPools = array;
+                    DeserializeLoadBalancerInboundNatPools(prop, ref loadBalancerInboundNatPools);
                     continue;
                 }
                 if (options.Format != "W")

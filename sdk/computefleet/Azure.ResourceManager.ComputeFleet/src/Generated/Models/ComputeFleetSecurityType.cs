@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// specified value to enable UefiSettings. The default behavior is: UefiSettings
     /// will not be enabled unless this property is set.
     /// </summary>
-    public readonly partial struct ComputeFleetSecurityTypes : IEquatable<ComputeFleetSecurityTypes>
+    public readonly partial struct ComputeFleetSecurityType : IEquatable<ComputeFleetSecurityType>
     {
         private readonly string _value;
         /// <summary> TrustedLaunch security type. </summary>
         private const string TrustedLaunchValue = "TrustedLaunch";
         /// <summary> ConfidentialVM security type. </summary>
-        private const string ConfidentialVMValue = "ConfidentialVM";
+        private const string ConfidentialVmValue = "ConfidentialVM";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetSecurityTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetSecurityType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeFleetSecurityTypes(string value)
+        public ComputeFleetSecurityType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> TrustedLaunch security type. </summary>
-        public static ComputeFleetSecurityTypes TrustedLaunch { get; } = new ComputeFleetSecurityTypes(TrustedLaunchValue);
+        public static ComputeFleetSecurityType TrustedLaunch { get; } = new ComputeFleetSecurityType(TrustedLaunchValue);
 
         /// <summary> ConfidentialVM security type. </summary>
-        public static ComputeFleetSecurityTypes ConfidentialVM { get; } = new ComputeFleetSecurityTypes(ConfidentialVMValue);
+        public static ComputeFleetSecurityType ConfidentialVm { get; } = new ComputeFleetSecurityType(ConfidentialVmValue);
 
-        /// <summary> Determines if two <see cref="ComputeFleetSecurityTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetSecurityType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeFleetSecurityTypes left, ComputeFleetSecurityTypes right) => left.Equals(right);
+        public static bool operator ==(ComputeFleetSecurityType left, ComputeFleetSecurityType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeFleetSecurityTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetSecurityType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeFleetSecurityTypes left, ComputeFleetSecurityTypes right) => !left.Equals(right);
+        public static bool operator !=(ComputeFleetSecurityType left, ComputeFleetSecurityType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetSecurityTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetSecurityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetSecurityTypes(string value) => new ComputeFleetSecurityTypes(value);
+        public static implicit operator ComputeFleetSecurityType(string value) => new ComputeFleetSecurityType(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetSecurityTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetSecurityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetSecurityTypes?(string value) => value == null ? null : new ComputeFleetSecurityTypes(value);
+        public static implicit operator ComputeFleetSecurityType?(string value) => value == null ? null : new ComputeFleetSecurityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeFleetSecurityTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetSecurityType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeFleetSecurityTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetSecurityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

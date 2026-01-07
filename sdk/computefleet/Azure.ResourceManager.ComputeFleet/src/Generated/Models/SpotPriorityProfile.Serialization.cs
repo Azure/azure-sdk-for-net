@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
-            if (Optional.IsDefined(MaxPricePerVM))
+            if (Optional.IsDefined(MaxPricePerVm))
             {
                 writer.WritePropertyName("maxPricePerVM"u8);
-                writer.WriteNumberValue(MaxPricePerVM.Value);
+                writer.WriteNumberValue(MaxPricePerVm.Value);
             }
             if (Optional.IsDefined(EvictionPolicy))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
             int? capacity = default;
             int? minCapacity = default;
-            float? maxPricePerVM = default;
+            float? maxPricePerVm = default;
             ComputeFleetEvictionPolicy? evictionPolicy = default;
             SpotAllocationStrategy? allocationStrategy = default;
             bool? isMaintainEnabled = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    maxPricePerVM = prop.Value.GetSingle();
+                    maxPricePerVm = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("evictionPolicy"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new SpotPriorityProfile(
                 capacity,
                 minCapacity,
-                maxPricePerVM,
+                maxPricePerVm,
                 evictionPolicy,
                 allocationStrategy,
                 isMaintainEnabled,

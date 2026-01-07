@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             SpotPriorityProfile spotPriorityProfile = default;
             RegularPriorityProfile regularPriorityProfile = default;
             IList<ComputeFleetVmSizeProfile> vmSizesProfile = default;
-            ComputeFleetVMAttributes vmAttributes = default;
+            ComputeFleetVmAttributes vmAttributes = default;
             AdditionalLocationsProfile additionalLocationsProfile = default;
             ComputeFleetComputeProfile computeProfile = default;
             DateTimeOffset? createdOn = default;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    vmAttributes = ComputeFleetVMAttributes.DeserializeComputeFleetVMAttributes(prop.Value, options);
+                    vmAttributes = ComputeFleetVmAttributes.DeserializeComputeFleetVmAttributes(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("additionalLocationsProfile"u8))

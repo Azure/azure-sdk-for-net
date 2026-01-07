@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference, options);
             }
-            if (Optional.IsDefined(OsDisk))
+            if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OsDisk, options);
+                writer.WriteObjectValue(OSDisk, options);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ComputeFleetImageReference imageReference = default;
             ComputeFleetVmssOSDisk osDisk = default;
             IList<ComputeFleetVmssDataDisk> dataDisks = default;
-            ComputeFleetDiskControllerTypes? diskControllerType = default;
+            ComputeFleetDiskControllerType? diskControllerType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    diskControllerType = new ComputeFleetDiskControllerTypes(prop.Value.GetString());
+                    diskControllerType = new ComputeFleetDiskControllerType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

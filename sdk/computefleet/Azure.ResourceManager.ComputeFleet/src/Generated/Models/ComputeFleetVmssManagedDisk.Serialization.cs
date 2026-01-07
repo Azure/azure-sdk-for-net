@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            ComputeFleetStorageAccountTypes? storageAccountType = default;
+            ComputeFleetStorageAccountType? storageAccountType = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
-            ComputeFleetVMDiskSecurityProfile securityProfile = default;
+            ComputeFleetVmDiskSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    storageAccountType = new ComputeFleetStorageAccountTypes(prop.Value.GetString());
+                    storageAccountType = new ComputeFleetStorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    securityProfile = ComputeFleetVMDiskSecurityProfile.DeserializeComputeFleetVMDiskSecurityProfile(prop.Value, options);
+                    securityProfile = ComputeFleetVmDiskSecurityProfile.DeserializeComputeFleetVmDiskSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

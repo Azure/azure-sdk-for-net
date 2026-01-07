@@ -14,24 +14,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// Specifies additional settings to be applied when patch mode AutomaticByPlatform
     /// is selected in Linux patch settings.
     /// </summary>
-    public partial class ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings
+    public partial class ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings"/>. </summary>
-        public ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings()
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings"/>. </summary>
+        public ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings"/>. </summary>
         /// <param name="rebootSetting">
         /// Specifies the reboot setting for all AutomaticByPlatform patch installation
         /// operations.
         /// </param>
         /// <param name="isBypassPlatformSafetyChecksOnUserScheduleEnabled"> Enables customer to schedule patching without accidental upgrades. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings(ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? isBypassPlatformSafetyChecksOnUserScheduleEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings(ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? isBypassPlatformSafetyChecksOnUserScheduleEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RebootSetting = rebootSetting;
             IsBypassPlatformSafetyChecksOnUserScheduleEnabled = isBypassPlatformSafetyChecksOnUserScheduleEnabled;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies the reboot setting for all AutomaticByPlatform patch installation
         /// operations.
         /// </summary>
-        public ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get; set; }
+        public ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get; set; }
 
         /// <summary> Enables customer to schedule patching without accidental upgrades. </summary>
         public bool? IsBypassPlatformSafetyChecksOnUserScheduleEnabled { get; set; }

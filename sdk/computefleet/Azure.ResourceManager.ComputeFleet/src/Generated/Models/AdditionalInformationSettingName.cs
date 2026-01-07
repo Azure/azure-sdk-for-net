@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// Specifies the name of the setting to which the content applies. Possible values
     /// are: FirstLogonCommands and AutoLogon.
     /// </summary>
-    public readonly partial struct AdditionalInformationSettingNames : IEquatable<AdditionalInformationSettingNames>
+    public readonly partial struct AdditionalInformationSettingName : IEquatable<AdditionalInformationSettingName>
     {
         private readonly string _value;
         /// <summary> AutoLogon setting. </summary>
@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> FirstLogonCommands setting. </summary>
         private const string FirstLogonCommandsValue = "FirstLogonCommands";
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalInformationSettingNames"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalInformationSettingName"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AdditionalInformationSettingNames(string value)
+        public AdditionalInformationSettingName(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -34,35 +34,35 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> AutoLogon setting. </summary>
-        public static AdditionalInformationSettingNames AutoLogon { get; } = new AdditionalInformationSettingNames(AutoLogonValue);
+        public static AdditionalInformationSettingName AutoLogon { get; } = new AdditionalInformationSettingName(AutoLogonValue);
 
         /// <summary> FirstLogonCommands setting. </summary>
-        public static AdditionalInformationSettingNames FirstLogonCommands { get; } = new AdditionalInformationSettingNames(FirstLogonCommandsValue);
+        public static AdditionalInformationSettingName FirstLogonCommands { get; } = new AdditionalInformationSettingName(FirstLogonCommandsValue);
 
-        /// <summary> Determines if two <see cref="AdditionalInformationSettingNames"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AdditionalInformationSettingName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AdditionalInformationSettingNames left, AdditionalInformationSettingNames right) => left.Equals(right);
+        public static bool operator ==(AdditionalInformationSettingName left, AdditionalInformationSettingName right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AdditionalInformationSettingNames"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AdditionalInformationSettingName"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AdditionalInformationSettingNames left, AdditionalInformationSettingNames right) => !left.Equals(right);
+        public static bool operator !=(AdditionalInformationSettingName left, AdditionalInformationSettingName right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AdditionalInformationSettingNames"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AdditionalInformationSettingName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdditionalInformationSettingNames(string value) => new AdditionalInformationSettingNames(value);
+        public static implicit operator AdditionalInformationSettingName(string value) => new AdditionalInformationSettingName(value);
 
-        /// <summary> Converts a string to a <see cref="AdditionalInformationSettingNames"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AdditionalInformationSettingName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AdditionalInformationSettingNames?(string value) => value == null ? null : new AdditionalInformationSettingNames(value);
+        public static implicit operator AdditionalInformationSettingName?(string value) => value == null ? null : new AdditionalInformationSettingName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AdditionalInformationSettingNames other && Equals(other);
+        public override bool Equals(object obj) => obj is AdditionalInformationSettingName other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AdditionalInformationSettingNames other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AdditionalInformationSettingName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

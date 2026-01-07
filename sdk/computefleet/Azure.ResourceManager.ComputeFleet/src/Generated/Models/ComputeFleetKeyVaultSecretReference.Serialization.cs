@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 if (prop.NameEquals("secretUrl"u8))
                 {
-                    secretUri = new Uri(prop.Value.GetString());
+                    secretUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceVault"u8))

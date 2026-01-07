@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssManagedDisk(ComputeFleetStorageAccountTypes? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, ComputeFleetVMDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmssManagedDisk(ComputeFleetStorageAccountType? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, ComputeFleetVmDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountType = storageAccountType;
             DiskEncryptionSet = diskEncryptionSet;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can
         /// only be used with data disks, it cannot be used with OS Disk.
         /// </summary>
-        public ComputeFleetStorageAccountTypes? StorageAccountType { get; set; }
+        public ComputeFleetStorageAccountType? StorageAccountType { get; set; }
 
         /// <summary>
         /// Specifies the customer managed disk encryption set resource id for the managed
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
 
         /// <summary> Specifies the security profile for the managed disk. </summary>
-        public ComputeFleetVMDiskSecurityProfile SecurityProfile { get; set; }
+        public ComputeFleetVmDiskSecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier DiskEncryptionSetId

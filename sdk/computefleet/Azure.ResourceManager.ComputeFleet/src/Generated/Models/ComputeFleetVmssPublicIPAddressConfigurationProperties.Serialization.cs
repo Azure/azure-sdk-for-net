@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings, options);
             }
-            if (Optional.IsCollectionDefined(IpTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (ComputeFleetVmssIPTag item in IpTags)
+                foreach (ComputeFleetVmssIPTag item in IPTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             IList<ComputeFleetVmssIPTag> ipTags = default;
             SubResource publicIPPrefix = default;
             ComputeFleetIPVersion? publicIPAddressVersion = default;
-            ComputeFleetVmDeleteOptions? deleteOption = default;
+            ComputeFleetVmDeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    deleteOption = new ComputeFleetVmDeleteOptions(prop.Value.GetString());
+                    deleteOption = new ComputeFleetVmDeleteOption(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

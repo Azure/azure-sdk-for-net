@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// Specifies the required information to reference a compute gallery application
     /// version
     /// </summary>
-    public partial class ComputeFleetVMGalleryApplication
+    public partial class ComputeFleetVmGalleryApplication
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVMGalleryApplication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmGalleryApplication"/>. </summary>
         /// <param name="packageReferenceId">
         /// Specifies the GalleryApplicationVersion resource id on the form of
         /// /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageReferenceId"/> is null. </exception>
-        public ComputeFleetVMGalleryApplication(ResourceIdentifier packageReferenceId)
+        public ComputeFleetVmGalleryApplication(ResourceIdentifier packageReferenceId)
         {
             Argument.AssertNotNull(packageReferenceId, nameof(packageReferenceId));
 
             PackageReferenceId = packageReferenceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVMGalleryApplication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmGalleryApplication"/>. </summary>
         /// <param name="tags"> Optional, Specifies a passthrough value for more generic context. </param>
         /// <param name="order"> Optional, Specifies the order in which the packages have to be installed. </param>
         /// <param name="packageReferenceId">
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// it will be automatically updated for the VM/VMSS
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVMGalleryApplication(string tags, int? order, ResourceIdentifier packageReferenceId, string configurationReference, bool? isTreatFailureAsDeploymentFailureEnabled, bool? isAutomaticUpgradeEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmGalleryApplication(string tags, int? order, ResourceIdentifier packageReferenceId, string configurationReference, bool? isTreatFailureAsDeploymentFailureEnabled, bool? isAutomaticUpgradeEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Order = order;

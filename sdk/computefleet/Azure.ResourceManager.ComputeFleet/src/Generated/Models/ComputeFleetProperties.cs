@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVMAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, ComputeFleetCapacityType? capacityType, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, ComputeFleetCapacityType? capacityType, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SpotPriorityProfile = spotPriorityProfile;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public IList<ComputeFleetVmSizeProfile> VmSizesProfile { get; }
 
         /// <summary> Attribute based Fleet. </summary>
-        public ComputeFleetVMAttributes VmAttributes { get; set; }
+        public ComputeFleetVmAttributes VmAttributes { get; set; }
 
         /// <summary> Represents the configuration for additional locations where Fleet resources may be deployed. </summary>
         internal AdditionalLocationsProfile AdditionalLocationsProfile { get; set; }
@@ -105,18 +105,5 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Zone Allocation Policy for Fleet. </summary>
         public ComputeFleetZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
-
-        /// <summary> The list of location profiles. </summary>
-        public IList<LocationProfile> AdditionalLocationsLocationProfiles
-        {
-            get
-            {
-                return AdditionalLocationsProfile is null ? default : AdditionalLocationsProfile.LocationProfiles;
-            }
-            set
-            {
-                AdditionalLocationsProfile = new AdditionalLocationsProfile(value);
-            }
-        }
     }
 }

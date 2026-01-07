@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// Linux Virtual Machines, refer to
     /// https://learn.microsoft.com/azure/virtual-machines/linux/disks-types
     /// </summary>
-    public readonly partial struct ComputeFleetStorageAccountTypes : IEquatable<ComputeFleetStorageAccountTypes>
+    public readonly partial struct ComputeFleetStorageAccountType : IEquatable<ComputeFleetStorageAccountType>
     {
         private readonly string _value;
         /// <summary> Standard_LRS option. </summary>
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> PremiumV2_LRS option. </summary>
         private const string PremiumV2LRSValue = "PremiumV2_LRS";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetStorageAccountTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeFleetStorageAccountTypes(string value)
+        public ComputeFleetStorageAccountType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -53,50 +53,50 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Standard_LRS option. </summary>
-        public static ComputeFleetStorageAccountTypes StandardLrs { get; } = new ComputeFleetStorageAccountTypes(StandardLrsValue);
+        public static ComputeFleetStorageAccountType StandardLrs { get; } = new ComputeFleetStorageAccountType(StandardLrsValue);
 
         /// <summary> Premium_LRS option. </summary>
-        public static ComputeFleetStorageAccountTypes PremiumLrs { get; } = new ComputeFleetStorageAccountTypes(PremiumLrsValue);
+        public static ComputeFleetStorageAccountType PremiumLrs { get; } = new ComputeFleetStorageAccountType(PremiumLrsValue);
 
         /// <summary> StandardSSD_LRS option. </summary>
-        public static ComputeFleetStorageAccountTypes StandardSsdLrd { get; } = new ComputeFleetStorageAccountTypes(StandardSsdLrdValue);
+        public static ComputeFleetStorageAccountType StandardSsdLrd { get; } = new ComputeFleetStorageAccountType(StandardSsdLrdValue);
 
         /// <summary> UltraSSD_LRS option. </summary>
-        public static ComputeFleetStorageAccountTypes UltraSsdLrs { get; } = new ComputeFleetStorageAccountTypes(UltraSsdLrsValue);
+        public static ComputeFleetStorageAccountType UltraSsdLrs { get; } = new ComputeFleetStorageAccountType(UltraSsdLrsValue);
 
         /// <summary> Premium_ZRS option. </summary>
-        public static ComputeFleetStorageAccountTypes PremiumZrs { get; } = new ComputeFleetStorageAccountTypes(PremiumZrsValue);
+        public static ComputeFleetStorageAccountType PremiumZrs { get; } = new ComputeFleetStorageAccountType(PremiumZrsValue);
 
         /// <summary> StandardSSD_ZRS option. </summary>
-        public static ComputeFleetStorageAccountTypes StandardSsdZrs { get; } = new ComputeFleetStorageAccountTypes(StandardSsdZrsValue);
+        public static ComputeFleetStorageAccountType StandardSsdZrs { get; } = new ComputeFleetStorageAccountType(StandardSsdZrsValue);
 
         /// <summary> PremiumV2_LRS option. </summary>
-        public static ComputeFleetStorageAccountTypes PremiumV2LRS { get; } = new ComputeFleetStorageAccountTypes(PremiumV2LRSValue);
+        public static ComputeFleetStorageAccountType PremiumV2LRS { get; } = new ComputeFleetStorageAccountType(PremiumV2LRSValue);
 
-        /// <summary> Determines if two <see cref="ComputeFleetStorageAccountTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetStorageAccountType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeFleetStorageAccountTypes left, ComputeFleetStorageAccountTypes right) => left.Equals(right);
+        public static bool operator ==(ComputeFleetStorageAccountType left, ComputeFleetStorageAccountType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeFleetStorageAccountTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetStorageAccountType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeFleetStorageAccountTypes left, ComputeFleetStorageAccountTypes right) => !left.Equals(right);
+        public static bool operator !=(ComputeFleetStorageAccountType left, ComputeFleetStorageAccountType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetStorageAccountTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetStorageAccountTypes(string value) => new ComputeFleetStorageAccountTypes(value);
+        public static implicit operator ComputeFleetStorageAccountType(string value) => new ComputeFleetStorageAccountType(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetStorageAccountTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetStorageAccountTypes?(string value) => value == null ? null : new ComputeFleetStorageAccountTypes(value);
+        public static implicit operator ComputeFleetStorageAccountType?(string value) => value == null ? null : new ComputeFleetStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeFleetStorageAccountTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetStorageAccountType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeFleetStorageAccountTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetStorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

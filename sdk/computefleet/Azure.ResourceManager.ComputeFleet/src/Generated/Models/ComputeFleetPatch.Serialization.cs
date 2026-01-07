@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
-            ResourcePlanUpdate plan = default;
+            ComputeFleetPlan plan = default;
             ComputeFleetProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    plan = ResourcePlanUpdate.DeserializeResourcePlanUpdate(prop.Value, options);
+                    plan = ComputeFleetPlan.DeserializeComputeFleetPlan(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputeFleetVmssIPTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpTagType = ipTagType;
+            IPTagType = ipTagType;
             Tag = tag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP tag type. Example: FirstPartyUsage. </summary>
-        public string IpTagType { get; set; }
+        public string IPTagType { get; set; }
 
         /// <summary> IP tag associated with the public IP. Example: SQL, Storage etc. </summary>
         public string Tag { get; set; }

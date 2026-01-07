@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            ComputeFleetVMSizeProperties vmSizeProperties = default;
+            ComputeFleetVmSizeProperties vmSizeProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    vmSizeProperties = ComputeFleetVMSizeProperties.DeserializeComputeFleetVMSizeProperties(prop.Value, options);
+                    vmSizeProperties = ComputeFleetVmSizeProperties.DeserializeComputeFleetVmSizeProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

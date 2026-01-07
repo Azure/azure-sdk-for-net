@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         internal ComputeFleetScheduledEventsProfile(ComputeFleetTerminateNotificationProfile terminateNotificationProfile, ComputeFleetOSImageNotificationProfile osImageNotificationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TerminateNotificationProfile = terminateNotificationProfile;
-            OsImageNotificationProfile = osImageNotificationProfile;
+            OSImageNotificationProfile = osImageNotificationProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public ComputeFleetTerminateNotificationProfile TerminateNotificationProfile { get; set; }
 
         /// <summary> Specifies OS Image Scheduled Event related configurations. </summary>
-        public ComputeFleetOSImageNotificationProfile OsImageNotificationProfile { get; set; }
+        public ComputeFleetOSImageNotificationProfile OSImageNotificationProfile { get; set; }
     }
 }

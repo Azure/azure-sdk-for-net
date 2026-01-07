@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Windows](https://learn.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetWinRMListener(ComputeFleetProtocolTypes? protocol, Uri certificateUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetWinRMListener(ComputeFleetProtocolType? protocol, Uri certificateUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
             CertificateUri = certificateUri;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies the protocol of WinRM listener. Possible values are: **http,**
         /// **https.**
         /// </summary>
-        public ComputeFleetProtocolTypes? Protocol { get; set; }
+        public ComputeFleetProtocolType? Protocol { get; set; }
 
         /// <summary>
         /// This is the URL of a certificate that has been uploaded to Key Vault as a

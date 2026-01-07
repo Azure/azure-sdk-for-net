@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="SpotPriorityProfile"/>. </summary>
         /// <param name="capacity"> Total capacity to achieve. It is currently in terms of number of VMs. </param>
         /// <param name="minCapacity"> Minimum capacity to achieve which cannot be updated. If we will not be able to "guarantee" minimum capacity, we will reject the request in the sync path itself. </param>
-        /// <param name="maxPricePerVM"> Price per hour of each Spot VM will never exceed this. </param>
+        /// <param name="maxPricePerVm"> Price per hour of each Spot VM will never exceed this. </param>
         /// <param name="evictionPolicy"> Eviction Policy to follow when evicting Spot VMs. </param>
         /// <param name="allocationStrategy"> Allocation strategy to follow when determining the VM sizes distribution for Spot VMs. </param>
         /// <param name="isMaintainEnabled">
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Maintain is enabled by default.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SpotPriorityProfile(int? capacity, int? minCapacity, float? maxPricePerVM, ComputeFleetEvictionPolicy? evictionPolicy, SpotAllocationStrategy? allocationStrategy, bool? isMaintainEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SpotPriorityProfile(int? capacity, int? minCapacity, float? maxPricePerVm, ComputeFleetEvictionPolicy? evictionPolicy, SpotAllocationStrategy? allocationStrategy, bool? isMaintainEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Capacity = capacity;
             MinCapacity = minCapacity;
-            MaxPricePerVM = maxPricePerVM;
+            MaxPricePerVm = maxPricePerVm;
             EvictionPolicy = evictionPolicy;
             AllocationStrategy = allocationStrategy;
             IsMaintainEnabled = isMaintainEnabled;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public int? MinCapacity { get; set; }
 
         /// <summary> Price per hour of each Spot VM will never exceed this. </summary>
-        public float? MaxPricePerVM { get; set; }
+        public float? MaxPricePerVm { get; set; }
 
         /// <summary> Eviction Policy to follow when evicting Spot VMs. </summary>
         public ComputeFleetEvictionPolicy? EvictionPolicy { get; set; }

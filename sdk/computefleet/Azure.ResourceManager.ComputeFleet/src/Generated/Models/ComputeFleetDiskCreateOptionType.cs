@@ -12,7 +12,7 @@ using Azure.ResourceManager.ComputeFleet;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Specifies how the virtual machine should be created. </summary>
-    public readonly partial struct ComputeFleetDiskCreateOptionTypes : IEquatable<ComputeFleetDiskCreateOptionTypes>
+    public readonly partial struct ComputeFleetDiskCreateOptionType : IEquatable<ComputeFleetDiskCreateOptionType>
     {
         private readonly string _value;
         /// <summary>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> This value is used to create a data disk from a disk restore point. </summary>
         private const string RestoreValue = "Restore";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetDiskCreateOptionTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetDiskCreateOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeFleetDiskCreateOptionTypes(string value)
+        public ComputeFleetDiskCreateOptionType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -47,44 +47,44 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// described above. If you are using a marketplace image, you also use the
         /// plan element previously described.
         /// </summary>
-        public static ComputeFleetDiskCreateOptionTypes FromImage { get; } = new ComputeFleetDiskCreateOptionTypes(FromImageValue);
+        public static ComputeFleetDiskCreateOptionType FromImage { get; } = new ComputeFleetDiskCreateOptionType(FromImageValue);
 
         /// <summary> This value is used when creating an empty data disk. </summary>
-        public static ComputeFleetDiskCreateOptionTypes Empty { get; } = new ComputeFleetDiskCreateOptionTypes(EmptyValue);
+        public static ComputeFleetDiskCreateOptionType Empty { get; } = new ComputeFleetDiskCreateOptionType(EmptyValue);
 
         /// <summary> This value is used when you are using a specialized disk to create the virtual machine. </summary>
-        public static ComputeFleetDiskCreateOptionTypes Attach { get; } = new ComputeFleetDiskCreateOptionTypes(AttachValue);
+        public static ComputeFleetDiskCreateOptionType Attach { get; } = new ComputeFleetDiskCreateOptionType(AttachValue);
 
         /// <summary> This value is used to create a data disk from a snapshot or another disk. </summary>
-        public static ComputeFleetDiskCreateOptionTypes Copy { get; } = new ComputeFleetDiskCreateOptionTypes(CopyValue);
+        public static ComputeFleetDiskCreateOptionType Copy { get; } = new ComputeFleetDiskCreateOptionType(CopyValue);
 
         /// <summary> This value is used to create a data disk from a disk restore point. </summary>
-        public static ComputeFleetDiskCreateOptionTypes Restore { get; } = new ComputeFleetDiskCreateOptionTypes(RestoreValue);
+        public static ComputeFleetDiskCreateOptionType Restore { get; } = new ComputeFleetDiskCreateOptionType(RestoreValue);
 
-        /// <summary> Determines if two <see cref="ComputeFleetDiskCreateOptionTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetDiskCreateOptionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeFleetDiskCreateOptionTypes left, ComputeFleetDiskCreateOptionTypes right) => left.Equals(right);
+        public static bool operator ==(ComputeFleetDiskCreateOptionType left, ComputeFleetDiskCreateOptionType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeFleetDiskCreateOptionTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetDiskCreateOptionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeFleetDiskCreateOptionTypes left, ComputeFleetDiskCreateOptionTypes right) => !left.Equals(right);
+        public static bool operator !=(ComputeFleetDiskCreateOptionType left, ComputeFleetDiskCreateOptionType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetDiskCreateOptionTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskCreateOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDiskCreateOptionTypes(string value) => new ComputeFleetDiskCreateOptionTypes(value);
+        public static implicit operator ComputeFleetDiskCreateOptionType(string value) => new ComputeFleetDiskCreateOptionType(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetDiskCreateOptionTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskCreateOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDiskCreateOptionTypes?(string value) => value == null ? null : new ComputeFleetDiskCreateOptionTypes(value);
+        public static implicit operator ComputeFleetDiskCreateOptionType?(string value) => value == null ? null : new ComputeFleetDiskCreateOptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeFleetDiskCreateOptionTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetDiskCreateOptionType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeFleetDiskCreateOptionTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetDiskCreateOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

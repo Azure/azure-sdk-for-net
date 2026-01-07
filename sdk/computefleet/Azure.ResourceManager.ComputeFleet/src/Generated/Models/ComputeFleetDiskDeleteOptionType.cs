@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// deleted. **Detach.** If this value is used, the managed disk is retained after
     /// VM gets deleted. Minimum api-version: 2021-03-01.
     /// </summary>
-    public readonly partial struct ComputeFleetDiskDeleteOptionTypes : IEquatable<ComputeFleetDiskDeleteOptionTypes>
+    public readonly partial struct ComputeFleetDiskDeleteOptionType : IEquatable<ComputeFleetDiskDeleteOptionType>
     {
         private readonly string _value;
         /// <summary> If this value is used, the managed disk is deleted when VM gets deleted. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> If this value is used, the managed disk is retained after VM gets deleted. </summary>
         private const string DetachValue = "Detach";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetDiskDeleteOptionTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetDiskDeleteOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeFleetDiskDeleteOptionTypes(string value)
+        public ComputeFleetDiskDeleteOptionType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,35 +37,35 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> If this value is used, the managed disk is deleted when VM gets deleted. </summary>
-        public static ComputeFleetDiskDeleteOptionTypes Delete { get; } = new ComputeFleetDiskDeleteOptionTypes(DeleteValue);
+        public static ComputeFleetDiskDeleteOptionType Delete { get; } = new ComputeFleetDiskDeleteOptionType(DeleteValue);
 
         /// <summary> If this value is used, the managed disk is retained after VM gets deleted. </summary>
-        public static ComputeFleetDiskDeleteOptionTypes Detach { get; } = new ComputeFleetDiskDeleteOptionTypes(DetachValue);
+        public static ComputeFleetDiskDeleteOptionType Detach { get; } = new ComputeFleetDiskDeleteOptionType(DetachValue);
 
-        /// <summary> Determines if two <see cref="ComputeFleetDiskDeleteOptionTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetDiskDeleteOptionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeFleetDiskDeleteOptionTypes left, ComputeFleetDiskDeleteOptionTypes right) => left.Equals(right);
+        public static bool operator ==(ComputeFleetDiskDeleteOptionType left, ComputeFleetDiskDeleteOptionType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeFleetDiskDeleteOptionTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetDiskDeleteOptionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeFleetDiskDeleteOptionTypes left, ComputeFleetDiskDeleteOptionTypes right) => !left.Equals(right);
+        public static bool operator !=(ComputeFleetDiskDeleteOptionType left, ComputeFleetDiskDeleteOptionType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetDiskDeleteOptionTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskDeleteOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDiskDeleteOptionTypes(string value) => new ComputeFleetDiskDeleteOptionTypes(value);
+        public static implicit operator ComputeFleetDiskDeleteOptionType(string value) => new ComputeFleetDiskDeleteOptionType(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetDiskDeleteOptionTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskDeleteOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDiskDeleteOptionTypes?(string value) => value == null ? null : new ComputeFleetDiskDeleteOptionTypes(value);
+        public static implicit operator ComputeFleetDiskDeleteOptionType?(string value) => value == null ? null : new ComputeFleetDiskDeleteOptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeFleetDiskDeleteOptionTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetDiskDeleteOptionType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeFleetDiskDeleteOptionTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetDiskDeleteOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

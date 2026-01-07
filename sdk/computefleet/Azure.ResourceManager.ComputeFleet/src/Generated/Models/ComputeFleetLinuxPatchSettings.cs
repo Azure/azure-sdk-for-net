@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Patching on Linux.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetLinuxPatchSettings(ComputeFleetLinuxVMGuestPatchMode? patchMode, ComputeFleetLinuxPatchAssessmentMode? assessmentMode, ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetLinuxPatchSettings(ComputeFleetLinuxVmGuestPatchMode? patchMode, ComputeFleetLinuxPatchAssessmentMode? assessmentMode, ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchMode = patchMode;
             AssessmentMode = assessmentMode;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// **AutomaticByPlatform** - The virtual machine will be automatically updated by
         /// the platform. The property provisionVMAgent must be true
         /// </summary>
-        public ComputeFleetLinuxVMGuestPatchMode? PatchMode { get; set; }
+        public ComputeFleetLinuxVmGuestPatchMode? PatchMode { get; set; }
 
         /// <summary>
         /// Specifies the mode of VM Guest Patch Assessment for the IaaS virtual
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies additional settings for patch mode AutomaticByPlatform in VM Guest
         /// Patching on Linux.
         /// </summary>
-        public ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get; set; }
+        public ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get; set; }
     }
 }

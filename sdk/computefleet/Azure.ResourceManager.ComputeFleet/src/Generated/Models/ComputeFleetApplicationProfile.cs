@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="ComputeFleetApplicationProfile"/>. </summary>
         public ComputeFleetApplicationProfile()
         {
-            GalleryApplications = new ChangeTrackingList<ComputeFleetVMGalleryApplication>();
+            GalleryApplications = new ChangeTrackingList<ComputeFleetVmGalleryApplication>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetApplicationProfile"/>. </summary>
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetApplicationProfile(IList<ComputeFleetVMGalleryApplication> galleryApplications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetApplicationProfile(IList<ComputeFleetVmGalleryApplication> galleryApplications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GalleryApplications = galleryApplications;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<ComputeFleetVMGalleryApplication> GalleryApplications { get; }
+        public IList<ComputeFleetVmGalleryApplication> GalleryApplications { get; }
     }
 }

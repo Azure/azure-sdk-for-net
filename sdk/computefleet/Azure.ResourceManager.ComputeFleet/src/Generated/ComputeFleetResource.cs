@@ -502,12 +502,12 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </summary>
         /// <param name="name"> The name of the Fleet. </param>
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
-        /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ComputeFleetVirtualMachine"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComputeFleetVirtualMachine> GetVirtualMachinesAsync(string name, string filter = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ComputeFleetVirtualMachine> GetVirtualMachinesAsync(string name, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ComputeFleet
                 Id.ResourceGroupName,
                 name,
                 filter,
-                skiptoken,
+                skipToken,
                 context);
         }
 
@@ -548,12 +548,12 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </summary>
         /// <param name="name"> The name of the Fleet. </param>
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
-        /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ComputeFleetVirtualMachine"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComputeFleetVirtualMachine> GetVirtualMachines(string name, string filter = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ComputeFleetVirtualMachine> GetVirtualMachines(string name, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.ComputeFleet
                 Id.ResourceGroupName,
                 name,
                 filter,
-                skiptoken,
+                skipToken,
                 context);
         }
 

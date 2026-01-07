@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OsProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {

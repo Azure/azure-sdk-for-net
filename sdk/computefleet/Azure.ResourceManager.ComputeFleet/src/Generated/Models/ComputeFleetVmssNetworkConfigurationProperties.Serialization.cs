@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
             writer.WritePropertyName("ipConfigurations"u8);
             writer.WriteStartArray();
-            foreach (ComputeFleetVmssIPConfiguration item in IpConfigurations)
+            foreach (ComputeFleetVmssIPConfiguration item in IPConfigurations)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ComputeFleetVmssNetworkDnsSettings dnsSettings = default;
             IList<ComputeFleetVmssIPConfiguration> ipConfigurations = default;
             bool? isIPForwardingEnabled = default;
-            ComputeFleetVmDeleteOptions? deleteOption = default;
+            ComputeFleetVmDeleteOption? deleteOption = default;
             ComputeFleetNetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
             ComputeFleetNetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    deleteOption = new ComputeFleetVmDeleteOptions(prop.Value.GetString());
+                    deleteOption = new ComputeFleetVmDeleteOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("auxiliaryMode"u8))

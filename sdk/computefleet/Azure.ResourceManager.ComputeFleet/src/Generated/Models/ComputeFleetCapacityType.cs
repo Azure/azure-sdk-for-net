@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     {
         private readonly string _value;
         /// <summary> Default. VM is the default capacity type for Compute Fleet where Fleet capacity is provisioned in terms of VMs. </summary>
-        private const string VMValue = "VM";
+        private const string VmValue = "VM";
         /// <summary>
         /// VCpu is the capacity type for Compute Fleet where Fleet capacity is provisioned in terms of VCpus.
         /// If VCpu capacity is not exactly divisible by VCpu count in VMSizes, Fleet capacity in VCpus will be overprovisioned by default.
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Default. VM is the default capacity type for Compute Fleet where Fleet capacity is provisioned in terms of VMs. </summary>
-        public static ComputeFleetCapacityType VM { get; } = new ComputeFleetCapacityType(VMValue);
+        public static ComputeFleetCapacityType Vm { get; } = new ComputeFleetCapacityType(VmValue);
 
         /// <summary>
         /// VCpu is the capacity type for Compute Fleet where Fleet capacity is provisioned in terms of VCpus.

@@ -12,7 +12,7 @@ using Azure.ResourceManager.ComputeFleet;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Specifies the caching requirements. </summary>
-    public readonly partial struct ComputeFleetCachingTypes : IEquatable<ComputeFleetCachingTypes>
+    public readonly partial struct ComputeFleetCachingType : IEquatable<ComputeFleetCachingType>
     {
         private readonly string _value;
         /// <summary> 'None' is default for Standard Storage. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> 'ReadWrite' is default for OS Disk. </summary>
         private const string ReadWriteValue = "ReadWrite";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetCachingTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetCachingType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeFleetCachingTypes(string value)
+        public ComputeFleetCachingType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> 'None' is default for Standard Storage. </summary>
-        public static ComputeFleetCachingTypes None { get; } = new ComputeFleetCachingTypes(NoneValue);
+        public static ComputeFleetCachingType None { get; } = new ComputeFleetCachingType(NoneValue);
 
         /// <summary> 'ReadOnly' is default for Premium Storage. </summary>
-        public static ComputeFleetCachingTypes ReadOnly { get; } = new ComputeFleetCachingTypes(ReadOnlyValue);
+        public static ComputeFleetCachingType ReadOnly { get; } = new ComputeFleetCachingType(ReadOnlyValue);
 
         /// <summary> 'ReadWrite' is default for OS Disk. </summary>
-        public static ComputeFleetCachingTypes ReadWrite { get; } = new ComputeFleetCachingTypes(ReadWriteValue);
+        public static ComputeFleetCachingType ReadWrite { get; } = new ComputeFleetCachingType(ReadWriteValue);
 
-        /// <summary> Determines if two <see cref="ComputeFleetCachingTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetCachingType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeFleetCachingTypes left, ComputeFleetCachingTypes right) => left.Equals(right);
+        public static bool operator ==(ComputeFleetCachingType left, ComputeFleetCachingType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeFleetCachingTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetCachingType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeFleetCachingTypes left, ComputeFleetCachingTypes right) => !left.Equals(right);
+        public static bool operator !=(ComputeFleetCachingType left, ComputeFleetCachingType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetCachingTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetCachingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetCachingTypes(string value) => new ComputeFleetCachingTypes(value);
+        public static implicit operator ComputeFleetCachingType(string value) => new ComputeFleetCachingType(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetCachingTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetCachingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetCachingTypes?(string value) => value == null ? null : new ComputeFleetCachingTypes(value);
+        public static implicit operator ComputeFleetCachingType?(string value) => value == null ? null : new ComputeFleetCachingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeFleetCachingTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetCachingType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeFleetCachingTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetCachingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

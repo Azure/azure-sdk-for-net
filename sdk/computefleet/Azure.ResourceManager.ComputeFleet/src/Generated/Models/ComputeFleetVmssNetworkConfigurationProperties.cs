@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         {
             Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
 
-            IpConfigurations = ipConfigurations.ToList();
+            IPConfigurations = ipConfigurations.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssNetworkConfigurationProperties"/>. </summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// resource.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssNetworkConfigurationProperties(bool? isPrimary, bool? isAcceleratedNetworkingEnabled, bool? isTcpStateTrackingDisabled, bool? isFpgaEnabled, SubResource networkSecurityGroup, ComputeFleetVmssNetworkDnsSettings dnsSettings, IList<ComputeFleetVmssIPConfiguration> ipConfigurations, bool? isIPForwardingEnabled, ComputeFleetVmDeleteOptions? deleteOption, ComputeFleetNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeFleetNetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmssNetworkConfigurationProperties(bool? isPrimary, bool? isAcceleratedNetworkingEnabled, bool? isTcpStateTrackingDisabled, bool? isFpgaEnabled, SubResource networkSecurityGroup, ComputeFleetVmssNetworkDnsSettings dnsSettings, IList<ComputeFleetVmssIPConfiguration> ipConfigurations, bool? isIPForwardingEnabled, ComputeFleetVmDeleteOption? deleteOption, ComputeFleetNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeFleetNetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsPrimary = isPrimary;
             IsAcceleratedNetworkingEnabled = isAcceleratedNetworkingEnabled;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             IsFpgaEnabled = isFpgaEnabled;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             IsIPForwardingEnabled = isIPForwardingEnabled;
             DeleteOption = deleteOption;
             AuxiliaryMode = auxiliaryMode;
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         internal ComputeFleetVmssNetworkDnsSettings DnsSettings { get; set; }
 
         /// <summary> Specifies the IP configurations of the network interface. </summary>
-        public IList<ComputeFleetVmssIPConfiguration> IpConfigurations { get; }
+        public IList<ComputeFleetVmssIPConfiguration> IPConfigurations { get; }
 
         /// <summary> Whether IP forwarding enabled on this NIC. </summary>
         public bool? IsIPForwardingEnabled { get; set; }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public ComputeFleetVmDeleteOptions? DeleteOption { get; set; }
+        public ComputeFleetVmDeleteOption? DeleteOption { get; set; }
 
         /// <summary>
         /// Specifies whether the Auxiliary mode is enabled for the Network Interface

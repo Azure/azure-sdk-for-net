@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            ComputeFleetWindowsVMGuestPatchMode? patchMode = default;
+            ComputeFleetWindowsVmGuestPatchMode? patchMode = default;
             bool? isHotPatchingEnabled = default;
             ComputeFleetWindowsPatchAssessmentMode? assessmentMode = default;
-            ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
+            ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    patchMode = new ComputeFleetWindowsVMGuestPatchMode(prop.Value.GetString());
+                    patchMode = new ComputeFleetWindowsVmGuestPatchMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableHotpatching"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    automaticByPlatformSettings = ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings.DeserializeComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings(prop.Value, options);
+                    automaticByPlatformSettings = ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings.DeserializeComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

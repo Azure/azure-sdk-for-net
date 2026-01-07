@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("terminateNotificationProfile"u8);
                 writer.WriteObjectValue(TerminateNotificationProfile, options);
             }
-            if (Optional.IsDefined(OsImageNotificationProfile))
+            if (Optional.IsDefined(OSImageNotificationProfile))
             {
                 writer.WritePropertyName("osImageNotificationProfile"u8);
-                writer.WriteObjectValue(OsImageNotificationProfile, options);
+                writer.WriteObjectValue(OSImageNotificationProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

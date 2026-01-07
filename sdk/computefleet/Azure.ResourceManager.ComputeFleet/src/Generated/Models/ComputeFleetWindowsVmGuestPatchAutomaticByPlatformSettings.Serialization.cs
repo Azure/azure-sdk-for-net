@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// Specifies additional settings to be applied when patch mode AutomaticByPlatform
     /// is selected in Windows patch settings.
     /// </summary>
-    public partial class ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings : IJsonModel<ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings>
+    public partial class ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings : IJsonModel<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(RebootSetting))
             {
@@ -66,30 +66,30 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings IJsonModel<ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings IJsonModel<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings(document.RootElement, options);
+            return DeserializeComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings DeserializeComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings DeserializeComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ComputeFleetWindowsVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default;
+            ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default;
             bool? isBypassPlatformSafetyChecksOnUserScheduleEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    rebootSetting = new ComputeFleetWindowsVMGuestPatchAutomaticByPlatformRebootSetting(prop.Value.GetString());
+                    rebootSetting = new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("bypassPlatformSafetyChecksOnUserSchedule"u8))
@@ -117,47 +117,47 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings(rebootSetting, isBypassPlatformSafetyChecksOnUserScheduleEnabled, additionalBinaryDataProperties);
+            return new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings(rebootSetting, isBypassPlatformSafetyChecksOnUserScheduleEnabled, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings IPersistableModel<ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings IPersistableModel<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings(document.RootElement, options);
+                        return DeserializeComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeFleetWindowsVMGuestPatchAutomaticByPlatformSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

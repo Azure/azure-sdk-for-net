@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// Specifies the security profile settings for the managed disk. **Note:** It can
     /// only be set for Confidential VMs.
     /// </summary>
-    public partial class ComputeFleetVMDiskSecurityProfile : IJsonModel<ComputeFleetVMDiskSecurityProfile>
+    public partial class ComputeFleetVmDiskSecurityProfile : IJsonModel<ComputeFleetVmDiskSecurityProfile>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeFleetVMDiskSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeFleetVmDiskSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeFleetVMDiskSecurityProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVmDiskSecurityProfile)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(SecurityEncryptionType))
             {
@@ -66,30 +66,30 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVMDiskSecurityProfile IJsonModel<ComputeFleetVMDiskSecurityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeFleetVmDiskSecurityProfile IJsonModel<ComputeFleetVmDiskSecurityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVMDiskSecurityProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeFleetVmDiskSecurityProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeFleetVMDiskSecurityProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVmDiskSecurityProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeFleetVMDiskSecurityProfile(document.RootElement, options);
+            return DeserializeComputeFleetVmDiskSecurityProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeFleetVMDiskSecurityProfile DeserializeComputeFleetVMDiskSecurityProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeFleetVmDiskSecurityProfile DeserializeComputeFleetVmDiskSecurityProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ComputeFleetSecurityEncryptionTypes? securityEncryptionType = default;
+            ComputeFleetSecurityEncryptionType? securityEncryptionType = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    securityEncryptionType = new ComputeFleetSecurityEncryptionTypes(prop.Value.GetString());
+                    securityEncryptionType = new ComputeFleetSecurityEncryptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))
@@ -117,47 +117,47 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeFleetVMDiskSecurityProfile(securityEncryptionType, diskEncryptionSet, additionalBinaryDataProperties);
+            return new ComputeFleetVmDiskSecurityProfile(securityEncryptionType, diskEncryptionSet, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeFleetVMDiskSecurityProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeFleetVmDiskSecurityProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVMDiskSecurityProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVmDiskSecurityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVMDiskSecurityProfile IPersistableModel<ComputeFleetVMDiskSecurityProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeFleetVmDiskSecurityProfile IPersistableModel<ComputeFleetVmDiskSecurityProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVMDiskSecurityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeFleetVmDiskSecurityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComputeFleetVMDiskSecurityProfile(document.RootElement, options);
+                        return DeserializeComputeFleetVmDiskSecurityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVMDiskSecurityProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVmDiskSecurityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeFleetVMDiskSecurityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeFleetVmDiskSecurityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

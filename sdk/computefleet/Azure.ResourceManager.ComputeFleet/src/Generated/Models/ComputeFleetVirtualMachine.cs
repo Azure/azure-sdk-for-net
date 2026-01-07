@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -23,30 +24,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVirtualMachine"/>. </summary>
-        /// <param name="name"> The name of the virtual machine. </param>
-        /// <param name="id"> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </param>
-        /// <param name="type"> Type of the virtual machine. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVirtualMachine(string name, ResourceIdentifier id, string @type, ComputeFleetVmOperationStatus operationStatus, ComputeFleetApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVirtualMachine(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeFleetVmOperationStatus operationStatus, ComputeFleetApiError error) : base(id, name, resourceType, systemData)
         {
-            Name = name;
-            Id = id;
-            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             OperationStatus = operationStatus;
             Error = error;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The name of the virtual machine. </summary>
-        public string Name { get; }
-
-        /// <summary> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </summary>
-        public ResourceIdentifier Id { get; }
-
-        /// <summary> Type of the virtual machine. </summary>
-        public string Type { get; }
 
         /// <summary> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </summary>
         public ComputeFleetVmOperationStatus OperationStatus { get; }

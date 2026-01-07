@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            ComputeFleetLinuxVMGuestPatchMode? patchMode = default;
+            ComputeFleetLinuxVmGuestPatchMode? patchMode = default;
             ComputeFleetLinuxPatchAssessmentMode? assessmentMode = default;
-            ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
+            ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    patchMode = new ComputeFleetLinuxVMGuestPatchMode(prop.Value.GetString());
+                    patchMode = new ComputeFleetLinuxVmGuestPatchMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("assessmentMode"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    automaticByPlatformSettings = ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings.DeserializeComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings(prop.Value, options);
+                    automaticByPlatformSettings = ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings.DeserializeComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

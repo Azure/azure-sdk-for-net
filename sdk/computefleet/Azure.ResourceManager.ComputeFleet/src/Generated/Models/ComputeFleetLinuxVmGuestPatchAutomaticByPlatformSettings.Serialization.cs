@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// Specifies additional settings to be applied when patch mode AutomaticByPlatform
     /// is selected in Linux patch settings.
     /// </summary>
-    public partial class ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings : IJsonModel<ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings>
+    public partial class ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings : IJsonModel<ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(RebootSetting))
             {
@@ -66,30 +66,30 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings IJsonModel<ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings IJsonModel<ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings(document.RootElement, options);
+            return DeserializeComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings DeserializeComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings DeserializeComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default;
+            ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default;
             bool? isBypassPlatformSafetyChecksOnUserScheduleEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    rebootSetting = new ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting(prop.Value.GetString());
+                    rebootSetting = new ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("bypassPlatformSafetyChecksOnUserSchedule"u8))
@@ -117,47 +117,47 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings(rebootSetting, isBypassPlatformSafetyChecksOnUserScheduleEnabled, additionalBinaryDataProperties);
+            return new ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings(rebootSetting, isBypassPlatformSafetyChecksOnUserScheduleEnabled, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings IPersistableModel<ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings IPersistableModel<ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings(document.RootElement, options);
+                        return DeserializeComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeFleetLinuxVMGuestPatchAutomaticByPlatformSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

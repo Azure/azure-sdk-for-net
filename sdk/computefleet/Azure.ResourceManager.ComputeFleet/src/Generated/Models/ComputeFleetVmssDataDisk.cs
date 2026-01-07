@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// disk attached to a VM.
         /// </param>
         /// <param name="createOption"> The create option. </param>
-        public ComputeFleetVmssDataDisk(int lun, ComputeFleetDiskCreateOptionTypes createOption)
+        public ComputeFleetVmssDataDisk(int lun, ComputeFleetDiskCreateOptionType createOption)
         {
             Lun = lun;
             CreateOption = createOption;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// deleted.&lt;br&gt;&lt;br&gt; The default value is set to **Delete**.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssDataDisk(string name, int lun, ComputeFleetCachingTypes? caching, bool? isWriteAcceleratorEnabled, ComputeFleetDiskCreateOptionTypes createOption, int? diskSizeGB, ComputeFleetVmssManagedDisk managedDisk, long? diskIopsReadWrite, long? diskMbpsReadWrite, ComputeFleetDiskDeleteOptionTypes? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmssDataDisk(string name, int lun, ComputeFleetCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeFleetDiskCreateOptionType createOption, int? diskSizeGB, ComputeFleetVmssManagedDisk managedDisk, long? diskIopsReadWrite, long? diskMbpsReadWrite, ComputeFleetDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Lun = lun;
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// **ReadOnly,** **ReadWrite.** The default values are: **None for Standard
         /// storage. ReadOnly for Premium storage.**
         /// </summary>
-        public ComputeFleetCachingTypes? Caching { get; set; }
+        public ComputeFleetCachingType? Caching { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? IsWriteAcceleratorEnabled { get; set; }
 
         /// <summary> The create option. </summary>
-        public ComputeFleetDiskCreateOptionTypes CreateOption { get; set; }
+        public ComputeFleetDiskCreateOptionType CreateOption { get; set; }
 
         /// <summary>
         /// Specifies the size of an empty data disk in gigabytes. This element can be used
@@ -140,6 +140,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// this value is used, the data disk is retained after VMSS Flex VM is
         /// deleted.&lt;br&gt;&lt;br&gt; The default value is set to **Delete**.
         /// </summary>
-        public ComputeFleetDiskDeleteOptionTypes? DeleteOption { get; set; }
+        public ComputeFleetDiskDeleteOptionType? DeleteOption { get; set; }
     }
 }

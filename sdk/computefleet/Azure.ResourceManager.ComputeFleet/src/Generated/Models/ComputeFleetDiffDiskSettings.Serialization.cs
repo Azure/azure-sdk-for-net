@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            ComputeFleetDiffDiskOptions? option = default;
+            ComputeFleetDiffDiskOption? option = default;
             ComputeFleetDiffDiskPlacement? placement = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    option = new ComputeFleetDiffDiskOptions(prop.Value.GetString());
+                    option = new ComputeFleetDiffDiskOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("placement"u8))

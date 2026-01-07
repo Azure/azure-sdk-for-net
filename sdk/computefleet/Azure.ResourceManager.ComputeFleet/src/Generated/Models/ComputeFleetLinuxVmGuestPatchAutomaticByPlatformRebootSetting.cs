@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// Specifies the reboot setting for all AutomaticByPlatform patch installation
     /// operations.
     /// </summary>
-    public readonly partial struct ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting : IEquatable<ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting>
+    public readonly partial struct ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting : IEquatable<ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting>
     {
         private readonly string _value;
         /// <summary> Unknown Reboot setting. </summary>
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Always Reboot setting. </summary>
         private const string AlwaysValue = "Always";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting(string value)
+        public ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -38,41 +38,41 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Unknown Reboot setting. </summary>
-        public static ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting Unknown { get; } = new ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting(UnknownValue);
+        public static ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting Unknown { get; } = new ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting(UnknownValue);
 
         /// <summary> IfRequired Reboot setting. </summary>
-        public static ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting IfRequired { get; } = new ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting(IfRequiredValue);
+        public static ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting IfRequired { get; } = new ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting(IfRequiredValue);
 
         /// <summary> Never Reboot setting. </summary>
-        public static ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting Never { get; } = new ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting(NeverValue);
+        public static ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting Never { get; } = new ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting(NeverValue);
 
         /// <summary> Always Reboot setting. </summary>
-        public static ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting Always { get; } = new ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting(AlwaysValue);
+        public static ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting Always { get; } = new ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting(AlwaysValue);
 
-        /// <summary> Determines if two <see cref="ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting left, ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting right) => left.Equals(right);
+        public static bool operator ==(ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting left, ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting left, ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting right) => !left.Equals(right);
+        public static bool operator !=(ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting left, ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting(string value) => new ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting(value);
+        public static implicit operator ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting(string value) => new ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? null : new ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting(value);
+        public static implicit operator ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? null : new ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeFleetLinuxVMGuestPatchAutomaticByPlatformRebootSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputeFleetVmProfile(ComputeFleetVmssOSProfile osProfile, ComputeFleetVmssStorageProfile storageProfile, ComputeFleetVmssNetworkProfile networkProfile, ComputeFleetSecurityProfile securityProfile, ComputeFleetDiagnosticsProfile diagnosticsProfile, ComputeFleetVmssExtensionProfile extensionProfile, string licenseType, ComputeFleetScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ComputeFleetApplicationProfile applicationProfile, ComputeFleetVmssHardwareProfile hardwareProfile, ServiceArtifactReference serviceArtifactReference, ComputeFleetSecurityPostureReference securityPostureReference, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
             SecurityProfile = securityProfile;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies the operating system settings for the virtual machines in the scale
         /// set.
         /// </summary>
-        public ComputeFleetVmssOSProfile OsProfile { get; set; }
+        public ComputeFleetVmssOSProfile OSProfile { get; set; }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
         public ComputeFleetVmssStorageProfile StorageProfile { get; set; }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<ComputeFleetVMGalleryApplication> ApplicationGalleryApplications
+        public IList<ComputeFleetVmGalleryApplication> ApplicationGalleryApplications
         {
             get
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Minimum api-version: 2021-11-01. Please follow the instructions in [VM
         /// Customization](https://aka.ms/vmcustomization) for more details.
         /// </summary>
-        public ComputeFleetVMSizeProperties HardwareVmSizeProperties
+        public ComputeFleetVmSizeProperties HardwareVmSizeProperties
         {
             get
             {

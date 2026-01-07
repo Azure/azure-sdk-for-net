@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 throw new FormatException($"The model {nameof(ComputeFleetVmss)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("operationStatus"u8);
@@ -80,6 +85,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string @type = default;
             ComputeFleetProvisioningState operationStatus = default;
             ComputeFleetApiError error = default;
             foreach (var prop in element.EnumerateObject())
@@ -116,6 +122,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeFleetContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("operationStatus"u8))
                 {
                     operationStatus = new ComputeFleetProvisioningState(prop.Value.GetString());
@@ -141,6 +152,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                @type,
                 operationStatus,
                 error);
         }

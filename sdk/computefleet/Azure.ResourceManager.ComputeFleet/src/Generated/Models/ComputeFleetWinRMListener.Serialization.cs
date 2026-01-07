@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            ComputeFleetProtocolTypes? protocol = default;
+            ComputeFleetProtocolType? protocol = default;
             Uri certificateUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    protocol = new ComputeFleetProtocolTypes(prop.Value.GetString());
+                    protocol = new ComputeFleetProtocolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("certificateUrl"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    certificateUri = new Uri(prop.Value.GetString());
+                    certificateUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

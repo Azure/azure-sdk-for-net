@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// Specifies the required information to reference a compute gallery application
     /// version
     /// </summary>
-    public partial class ComputeFleetVMGalleryApplication : IJsonModel<ComputeFleetVMGalleryApplication>
+    public partial class ComputeFleetVmGalleryApplication : IJsonModel<ComputeFleetVmGalleryApplication>
     {
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVMGalleryApplication"/> for deserialization. </summary>
-        internal ComputeFleetVMGalleryApplication()
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmGalleryApplication"/> for deserialization. </summary>
+        internal ComputeFleetVmGalleryApplication()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeFleetVMGalleryApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeFleetVmGalleryApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeFleetVMGalleryApplication)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVmGalleryApplication)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Tags))
             {
@@ -89,24 +89,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVMGalleryApplication IJsonModel<ComputeFleetVMGalleryApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeFleetVmGalleryApplication IJsonModel<ComputeFleetVmGalleryApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVMGalleryApplication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeFleetVmGalleryApplication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeFleetVMGalleryApplication)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVmGalleryApplication)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeFleetVMGalleryApplication(document.RootElement, options);
+            return DeserializeComputeFleetVmGalleryApplication(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeFleetVMGalleryApplication DeserializeComputeFleetVMGalleryApplication(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeFleetVmGalleryApplication DeserializeComputeFleetVmGalleryApplication(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeFleetVMGalleryApplication(
+            return new ComputeFleetVmGalleryApplication(
                 tags,
                 order,
                 packageReferenceId,
@@ -179,43 +179,43 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeFleetVMGalleryApplication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeFleetVmGalleryApplication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVMGalleryApplication)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVmGalleryApplication)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVMGalleryApplication IPersistableModel<ComputeFleetVMGalleryApplication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeFleetVmGalleryApplication IPersistableModel<ComputeFleetVmGalleryApplication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVMGalleryApplication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeFleetVmGalleryApplication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComputeFleetVMGalleryApplication(document.RootElement, options);
+                        return DeserializeComputeFleetVmGalleryApplication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVMGalleryApplication)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVmGalleryApplication)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeFleetVMGalleryApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeFleetVmGalleryApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

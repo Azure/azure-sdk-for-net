@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
             string name = default;
             int lun = default;
-            ComputeFleetCachingTypes? caching = default;
+            ComputeFleetCachingType? caching = default;
             bool? isWriteAcceleratorEnabled = default;
-            ComputeFleetDiskCreateOptionTypes createOption = default;
+            ComputeFleetDiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
             ComputeFleetVmssManagedDisk managedDisk = default;
             long? diskIopsReadWrite = default;
             long? diskMbpsReadWrite = default;
-            ComputeFleetDiskDeleteOptionTypes? deleteOption = default;
+            ComputeFleetDiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    caching = new ComputeFleetCachingTypes(prop.Value.GetString());
+                    caching = new ComputeFleetCachingType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
                 if (prop.NameEquals("createOption"u8))
                 {
-                    createOption = new ComputeFleetDiskCreateOptionTypes(prop.Value.GetString());
+                    createOption = new ComputeFleetDiskCreateOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    deleteOption = new ComputeFleetDiskDeleteOptionTypes(prop.Value.GetString());
+                    deleteOption = new ComputeFleetDiskDeleteOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

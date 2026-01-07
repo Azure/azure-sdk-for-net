@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Customization](https://aka.ms/vmcustomization) for more details.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssHardwareProfile(ComputeFleetVMSizeProperties vmSizeProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmssHardwareProfile(ComputeFleetVmSizeProperties vmSizeProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizeProperties = vmSizeProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Minimum api-version: 2021-11-01. Please follow the instructions in [VM
         /// Customization](https://aka.ms/vmcustomization) for more details.
         /// </summary>
-        public ComputeFleetVMSizeProperties VmSizeProperties { get; set; }
+        public ComputeFleetVmSizeProperties VmSizeProperties { get; set; }
     }
 }

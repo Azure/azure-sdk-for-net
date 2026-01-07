@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
             ComputeFleetUefiSettings uefiSettings = default;
             bool? isEncryptionAtHostEnabled = default;
-            ComputeFleetSecurityTypes? securityType = default;
+            ComputeFleetSecurityType? securityType = default;
             ComputeFleetEncryptionIdentity encryptionIdentity = default;
             ComputeFleetProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    securityType = new ComputeFleetSecurityTypes(prop.Value.GetString());
+                    securityType = new ComputeFleetSecurityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryptionIdentity"u8))

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
             WindowsSetupAdditionalInformationPassName? passName = default;
             WindowsSetupAdditionalInformationComponentName? componentName = default;
-            AdditionalInformationSettingNames? settingName = default;
+            AdditionalInformationSettingName? settingName = default;
             string content = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    settingName = new AdditionalInformationSettingNames(prop.Value.GetString());
+                    settingName = new AdditionalInformationSettingName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("content"u8))

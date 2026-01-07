@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
-        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = default, SpotPriorityProfile spotPriorityProfile = default, RegularPriorityProfile regularPriorityProfile = default, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = default, ComputeFleetVMAttributes vmAttributes = default, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = default, ComputeFleetComputeProfile computeProfile = default, DateTimeOffset? createdOn = default, string uniqueId = default, ComputeFleetMode? mode = default, ComputeFleetCapacityType? capacityType = default, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default)
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = default, SpotPriorityProfile spotPriorityProfile = default, RegularPriorityProfile regularPriorityProfile = default, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = default, ComputeFleetVmAttributes vmAttributes = default, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = default, ComputeFleetComputeProfile computeProfile = default, DateTimeOffset? createdOn = default, string uniqueId = default, ComputeFleetMode? mode = default, ComputeFleetCapacityType? capacityType = default, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default)
         {
             vmSizesProfile ??= new ChangeTrackingList<ComputeFleetVmSizeProfile>();
 
@@ -136,9 +137,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="architectureTypes"> The VM architecture types specified as a list. Optional parameter. </param>
         /// <param name="cpuManufacturers"> The VM CPU manufacturers specified as a list. Optional parameter. </param>
         /// <param name="burstableSupport"> Specifies whether the VMSize supporting burstable capability should be used to build Fleet or not. </param>
-        /// <param name="excludedVMSizes"> Specifies which VMSizes should be excluded while building Fleet. Optional parameter. </param>
-        /// <returns> A new <see cref="Models.ComputeFleetVMAttributes"/> instance for mocking. </returns>
-        public static ComputeFleetVMAttributes ComputeFleetVMAttributes(ComputeFleetVmAttributeMinMaxInteger vCpuCount = default, ComputeFleetVmAttributeMinMaxDouble memoryInGiB = default, ComputeFleetVmAttributeMinMaxDouble memoryInGiBPerVCpu = default, ComputeFleetVMAttributeSupport? localStorageSupport = default, ComputeFleetVmAttributeMinMaxDouble localStorageInGiB = default, IEnumerable<LocalStorageDiskType> localStorageDiskTypes = default, ComputeFleetVmAttributeMinMaxInteger dataDiskCount = default, ComputeFleetVmAttributeMinMaxInteger networkInterfaceCount = default, ComputeFleetVmAttributeMinMaxDouble networkBandwidthInMbps = default, ComputeFleetVMAttributeSupport? rdmaSupport = default, ComputeFleetVmAttributeMinMaxInteger rdmaNetworkInterfaceCount = default, ComputeFleetVMAttributeSupport? acceleratorSupport = default, IEnumerable<AcceleratorManufacturer> acceleratorManufacturers = default, IEnumerable<AcceleratorType> acceleratorTypes = default, ComputeFleetVmAttributeMinMaxInteger acceleratorCount = default, IEnumerable<ComputeFleetVmCategory> vmCategories = default, IEnumerable<ArchitectureType> architectureTypes = default, IEnumerable<CpuManufacturer> cpuManufacturers = default, ComputeFleetVMAttributeSupport? burstableSupport = default, IEnumerable<string> excludedVMSizes = default)
+        /// <param name="excludedVmSizes"> Specifies which VMSizes should be excluded while building Fleet. Optional parameter. </param>
+        /// <returns> A new <see cref="Models.ComputeFleetVmAttributes"/> instance for mocking. </returns>
+        public static ComputeFleetVmAttributes ComputeFleetVmAttributes(ComputeFleetVmAttributeMinMaxInteger vCpuCount = default, ComputeFleetVmAttributeMinMaxDouble memoryInGiB = default, ComputeFleetVmAttributeMinMaxDouble memoryInGiBPerVCpu = default, ComputeFleetVmAttributeSupport? localStorageSupport = default, ComputeFleetVmAttributeMinMaxDouble localStorageInGiB = default, IEnumerable<LocalStorageDiskType> localStorageDiskTypes = default, ComputeFleetVmAttributeMinMaxInteger dataDiskCount = default, ComputeFleetVmAttributeMinMaxInteger networkInterfaceCount = default, ComputeFleetVmAttributeMinMaxDouble networkBandwidthInMbps = default, ComputeFleetVmAttributeSupport? rdmaSupport = default, ComputeFleetVmAttributeMinMaxInteger rdmaNetworkInterfaceCount = default, ComputeFleetVmAttributeSupport? acceleratorSupport = default, IEnumerable<AcceleratorManufacturer> acceleratorManufacturers = default, IEnumerable<AcceleratorType> acceleratorTypes = default, ComputeFleetVmAttributeMinMaxInteger acceleratorCount = default, IEnumerable<ComputeFleetVmCategory> vmCategories = default, IEnumerable<ArchitectureType> architectureTypes = default, IEnumerable<CpuManufacturer> cpuManufacturers = default, ComputeFleetVmAttributeSupport? burstableSupport = default, IEnumerable<string> excludedVmSizes = default)
         {
             localStorageDiskTypes ??= new ChangeTrackingList<LocalStorageDiskType>();
             acceleratorManufacturers ??= new ChangeTrackingList<AcceleratorManufacturer>();
@@ -146,9 +147,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             vmCategories ??= new ChangeTrackingList<ComputeFleetVmCategory>();
             architectureTypes ??= new ChangeTrackingList<ArchitectureType>();
             cpuManufacturers ??= new ChangeTrackingList<CpuManufacturer>();
-            excludedVMSizes ??= new ChangeTrackingList<string>();
+            excludedVmSizes ??= new ChangeTrackingList<string>();
 
-            return new ComputeFleetVMAttributes(
+            return new ComputeFleetVmAttributes(
                 vCpuCount,
                 memoryInGiB,
                 memoryInGiBPerVCpu,
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 architectureTypes.ToList(),
                 cpuManufacturers.ToList(),
                 burstableSupport,
-                excludedVMSizes.ToList(),
+                excludedVmSizes.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// with minimum api-version 2023-09-01. Examples: "2024-07-01T00:00:01.1234567+00:00"
         /// </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmProfile"/> instance for mocking. </returns>
-        public static ComputeFleetVmProfile ComputeFleetVmProfile(ComputeFleetVmssOSProfile osProfile = default, ComputeFleetVmssStorageProfile storageProfile = default, ComputeFleetVmssNetworkProfile networkProfile = default, ComputeFleetSecurityProfile securityProfile = default, ComputeFleetBootDiagnostics bootDiagnostics = default, ComputeFleetVmssExtensionProfile extensionProfile = default, string licenseType = default, ComputeFleetScheduledEventsProfile scheduledEventsProfile = default, string userData = default, CapacityReservationProfile capacityReservation = default, IEnumerable<ComputeFleetVMGalleryApplication> applicationGalleryApplications = default, ComputeFleetVMSizeProperties hardwareVmSizeProperties = default, ResourceIdentifier serviceArtifactReferenceId = default, ComputeFleetSecurityPostureReference securityPostureReference = default, DateTimeOffset? createdOn = default)
+        public static ComputeFleetVmProfile ComputeFleetVmProfile(ComputeFleetVmssOSProfile osProfile = default, ComputeFleetVmssStorageProfile storageProfile = default, ComputeFleetVmssNetworkProfile networkProfile = default, ComputeFleetSecurityProfile securityProfile = default, ComputeFleetBootDiagnostics bootDiagnostics = default, ComputeFleetVmssExtensionProfile extensionProfile = default, string licenseType = default, ComputeFleetScheduledEventsProfile scheduledEventsProfile = default, string userData = default, CapacityReservationProfile capacityReservation = default, IEnumerable<ComputeFleetVmGalleryApplication> applicationGalleryApplications = default, ComputeFleetVmSizeProperties hardwareVmSizeProperties = default, ResourceIdentifier serviceArtifactReferenceId = default, ComputeFleetSecurityPostureReference securityPostureReference = default, DateTimeOffset? createdOn = default)
         {
             return new ComputeFleetVmProfile(
                 osProfile,
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 scheduledEventsProfile,
                 userData,
                 capacityReservation,
-                applicationGalleryApplications is null ? default : new ComputeFleetApplicationProfile((applicationGalleryApplications ?? new ChangeTrackingList<ComputeFleetVMGalleryApplication>()).ToList(), null),
+                applicationGalleryApplications is null ? default : new ComputeFleetApplicationProfile((applicationGalleryApplications ?? new ChangeTrackingList<ComputeFleetVmGalleryApplication>()).ToList(), null),
                 hardwareVmSizeProperties is null ? default : new ComputeFleetVmssHardwareProfile(hardwareVmSizeProperties, null),
                 serviceArtifactReferenceId is null ? default : new ServiceArtifactReference(serviceArtifactReferenceId, null),
                 securityPostureReference,
@@ -411,7 +412,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="diskControllerType"> Specifies the disk controller type configured for the virtual machines in the scale set. Minimum api-version: 2022-08-01. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmssStorageProfile"/> instance for mocking. </returns>
-        public static ComputeFleetVmssStorageProfile ComputeFleetVmssStorageProfile(ComputeFleetImageReference imageReference = default, ComputeFleetVmssOSDisk osDisk = default, IEnumerable<ComputeFleetVmssDataDisk> dataDisks = default, ComputeFleetDiskControllerTypes? diskControllerType = default)
+        public static ComputeFleetVmssStorageProfile ComputeFleetVmssStorageProfile(ComputeFleetImageReference imageReference = default, ComputeFleetVmssOSDisk osDisk = default, IEnumerable<ComputeFleetVmssDataDisk> dataDisks = default, ComputeFleetDiskControllerType? diskControllerType = default)
         {
             dataDisks ??= new ChangeTrackingList<ComputeFleetVmssDataDisk>();
 
@@ -518,7 +519,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Disk.
         /// </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmssOSDisk"/> instance for mocking. </returns>
-        public static ComputeFleetVmssOSDisk ComputeFleetVmssOSDisk(string name = default, ComputeFleetCachingTypes? caching = default, bool? isWriteAcceleratorEnabled = default, ComputeFleetDiskCreateOptionTypes createOption = default, ComputeFleetDiffDiskSettings diffDiskSettings = default, int? diskSizeGB = default, ComputeFleetOperatingSystemTypes? osType = default, Uri imageUri = default, IEnumerable<string> vhdContainers = default, ComputeFleetVmssManagedDisk managedDisk = default, ComputeFleetDiskDeleteOptionTypes? deleteOption = default)
+        public static ComputeFleetVmssOSDisk ComputeFleetVmssOSDisk(string name = default, ComputeFleetCachingType? caching = default, bool? isWriteAcceleratorEnabled = default, ComputeFleetDiskCreateOptionType createOption = default, ComputeFleetDiffDiskSettings diffDiskSettings = default, int? diskSizeGB = default, ComputeFleetOperatingSystemType? osType = default, Uri imageUri = default, IEnumerable<string> vhdContainers = default, ComputeFleetVmssManagedDisk managedDisk = default, ComputeFleetDiskDeleteOptionType? deleteOption = default)
         {
             vhdContainers ??= new ChangeTrackingList<string>();
 
@@ -576,7 +577,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// resource.
         /// </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmssNetworkConfigurationProperties"/> instance for mocking. </returns>
-        public static ComputeFleetVmssNetworkConfigurationProperties ComputeFleetVmssNetworkConfigurationProperties(bool? isPrimary = default, bool? isAcceleratedNetworkingEnabled = default, bool? isTcpStateTrackingDisabled = default, bool? isFpgaEnabled = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IEnumerable<ComputeFleetVmssIPConfiguration> ipConfigurations = default, bool? isIPForwardingEnabled = default, ComputeFleetVmDeleteOptions? deleteOption = default, ComputeFleetNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeFleetNetworkInterfaceAuxiliarySku? auxiliarySku = default)
+        public static ComputeFleetVmssNetworkConfigurationProperties ComputeFleetVmssNetworkConfigurationProperties(bool? isPrimary = default, bool? isAcceleratedNetworkingEnabled = default, bool? isTcpStateTrackingDisabled = default, bool? isFpgaEnabled = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IEnumerable<ComputeFleetVmssIPConfiguration> ipConfigurations = default, bool? isIPForwardingEnabled = default, ComputeFleetVmDeleteOption? deleteOption = default, ComputeFleetNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeFleetNetworkInterfaceAuxiliarySku? auxiliarySku = default)
         {
             ipConfigurations ??= new ChangeTrackingList<ComputeFleetVmssIPConfiguration>();
 
@@ -657,7 +658,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmssPublicIPAddressConfigurationProperties"/> instance for mocking. </returns>
-        public static ComputeFleetVmssPublicIPAddressConfigurationProperties ComputeFleetVmssPublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, ComputeFleetVmssPublicIPAddressDnsSettings dnsSettings = default, IEnumerable<ComputeFleetVmssIPTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, ComputeFleetIPVersion? publicIPAddressVersion = default, ComputeFleetVmDeleteOptions? deleteOption = default)
+        public static ComputeFleetVmssPublicIPAddressConfigurationProperties ComputeFleetVmssPublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, ComputeFleetVmssPublicIPAddressDnsSettings dnsSettings = default, IEnumerable<ComputeFleetVmssIPTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, ComputeFleetIPVersion? publicIPAddressVersion = default, ComputeFleetVmDeleteOption? deleteOption = default)
         {
             ipTags ??= new ChangeTrackingList<ComputeFleetVmssIPTag>();
 
@@ -796,7 +797,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="plan"> Updatable resource plan. </param>
         /// <param name="properties"> RP-specific updatable properties. </param>
         /// <returns> A new <see cref="Models.ComputeFleetPatch"/> instance for mocking. </returns>
-        public static ComputeFleetPatch ComputeFleetPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ResourcePlanUpdate plan = default, ComputeFleetProperties properties = default)
+        public static ComputeFleetPatch ComputeFleetPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ComputeFleetPlan plan = default, ComputeFleetProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -808,10 +809,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="type"> Type of the virtualMachineScaleSet. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error Information when `operationStatus` is `Failed`. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmss"/> instance for mocking. </returns>
-        public static ComputeFleetVmss ComputeFleetVmss(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = default)
+        public static ComputeFleetVmss ComputeFleetVmss(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string @type = default, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = default)
         {
             return new ComputeFleetVmss(
                 id,
@@ -819,6 +821,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                @type,
                 operationStatus,
                 error);
         }
@@ -863,20 +866,125 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> An instant Fleet's virtual machine. </summary>
-        /// <param name="name"> The name of the virtual machine. </param>
-        /// <param name="id"> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </param>
-        /// <param name="type"> Type of the virtual machine. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVirtualMachine"/> instance for mocking. </returns>
-        public static ComputeFleetVirtualMachine ComputeFleetVirtualMachine(string name = default, ResourceIdentifier id = default, string @type = default, ComputeFleetVmOperationStatus operationStatus = default, ComputeFleetApiError error = default)
+        public static ComputeFleetVirtualMachine ComputeFleetVirtualMachine(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeFleetVmOperationStatus operationStatus = default, ComputeFleetApiError error = default)
         {
             return new ComputeFleetVirtualMachine(
-                name,
                 id,
-                @type,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 operationStatus,
-                error,
+                error);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetProperties"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="spotPriorityProfile"> Configuration Options for Spot instances in Compute Fleet. </param>
+        /// <param name="regularPriorityProfile"> Configuration Options for Regular instances in Compute Fleet. </param>
+        /// <param name="vmSizesProfile"> List of VM sizes supported for Compute Fleet. </param>
+        /// <param name="vmAttributes"> Attribute based Fleet. </param>
+        /// <param name="additionalLocationsLocationProfiles"> Represents the configuration for additional locations where Fleet resources may be deployed. </param>
+        /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
+        /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
+        /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
+        /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, IEnumerable<LocationProfile> additionalLocationsLocationProfiles, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId)
+        {
+            return ComputeFleetProperties(provisioningState, spotPriorityProfile, regularPriorityProfile, vmSizesProfile, vmAttributes, additionalLocationsLocationProfiles, computeProfile, createdOn, uniqueId, mode: default, capacityType: default, zoneAllocationPolicy: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetVmProfile"/>. </summary>
+        /// <param name="osProfile">
+        /// Specifies the operating system settings for the virtual machines in the scale
+        ///             set.
+        /// </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="networkProfile">
+        /// Specifies properties of the network interfaces of the virtual machines in the
+        ///             scale set.
+        /// </param>
+        /// <param name="securityProfile">
+        /// Specifies the Security related profile settings for the virtual machines in the
+        ///             scale set.
+        /// </param>
+        /// <param name="bootDiagnostics"> Specifies the boot diagnostic settings state. </param>
+        /// <param name="extensionProfile">
+        /// Specifies a collection of settings for extensions installed on virtual machines
+        ///             in the scale set.
+        /// </param>
+        /// <param name="licenseType">
+        /// Specifies that the image or disk that is being used was licensed on-premises.
+        ///             &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt;
+        ///             Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux
+        ///             Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS
+        ///             (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for
+        ///             Windows
+        ///             Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
+        ///             &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux
+        ///             Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
+        ///             &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15
+        /// </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData">
+        /// UserData for the virtual machines in the scale set, which must be base-64
+        ///             encoded. Customer should not pass any secrets in here. Minimum api-version:
+        ///             2021-03-01.
+        /// </param>
+        /// <param name="capacityReservationGroupId">
+        /// Specifies the capacity reservation related details of a scale set. Minimum
+        ///             api-version: 2021-04-01.
+        /// </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        /// <param name="hardwareVmSizeProperties">
+        /// Specifies the hardware profile related details of a scale set. Minimum
+        ///             api-version: 2021-11-01.
+        /// </param>
+        /// <param name="serviceArtifactReferenceId">
+        /// Specifies the service artifact reference id used to set same image version for
+        ///             all virtual machines in the scale set when using 'latest' image version.
+        ///             Minimum api-version: 2022-11-01
+        /// </param>
+        /// <param name="securityPostureReference">
+        /// Specifies the security posture to be used for all virtual machines in the scale
+        ///             set. Minimum api-version: 2023-03-01
+        /// </param>
+        /// <param name="createdOn">
+        /// Specifies the time in which this VM profile for the Virtual Machine Scale Set
+        ///             was created. Minimum API version for this property is 2023-09-01. This value
+        ///             will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile
+        ///             with minimum api-version 2023-09-01. Examples: "2024-07-01T00:00:01.1234567+00:00"
+        /// </param>
+        /// <returns> A new <see cref="Models.ComputeFleetVmProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ComputeFleetVmProfile ComputeFleetVmProfile(ComputeFleetVmssOSProfile osProfile, ComputeFleetVmssStorageProfile storageProfile, ComputeFleetVmssNetworkProfile networkProfile, ComputeFleetSecurityProfile securityProfile, ComputeFleetBootDiagnostics bootDiagnostics, ComputeFleetVmssExtensionProfile extensionProfile, string licenseType, ComputeFleetScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<ComputeFleetVmGalleryApplication> galleryApplications, ComputeFleetVmSizeProperties hardwareVmSizeProperties, ResourceIdentifier serviceArtifactReferenceId, ComputeFleetSecurityPostureReference securityPostureReference, DateTimeOffset? createdOn)
+        {
+            galleryApplications ??= new ChangeTrackingList<ComputeFleetVmGalleryApplication>();
+
+            return new ComputeFleetVmProfile(
+                osProfile,
+                storageProfile,
+                networkProfile,
+                securityProfile,
+                default,
+                extensionProfile,
+                licenseType,
+                scheduledEventsProfile,
+                userData,
+                default,
+                default,
+                default,
+                default,
+                securityPostureReference,
+                createdOn,
                 additionalBinaryDataProperties: null);
         }
     }
