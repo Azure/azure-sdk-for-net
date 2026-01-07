@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         internal ComputeFleetVmss(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string @type, ComputeFleetProvisioningState operationStatus, ComputeFleetApiError error) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            //Type = @type;
+            Type = @type;
             OperationStatus = operationStatus;
             Error = error;
         }

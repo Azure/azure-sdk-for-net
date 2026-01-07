@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Describes SubResource. </summary>
-    public partial class SubResource
+    internal partial class SubResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

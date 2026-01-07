@@ -20,15 +20,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetKeyVaultSecretReference"/>. </summary>
         /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
-        /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretUri"/> or <paramref name="sourceVault"/> is null. </exception>
-        public ComputeFleetKeyVaultSecretReference(Uri secretUri, SubResource sourceVault)
+        /// <exception cref="ArgumentNullException"> <paramref name="secretUri"/> is null. </exception>
+        public ComputeFleetKeyVaultSecretReference(Uri secretUri)
         {
             Argument.AssertNotNull(secretUri, nameof(secretUri));
-            Argument.AssertNotNull(sourceVault, nameof(sourceVault));
 
             SecretUri = secretUri;
-            SourceVault = sourceVault;
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetKeyVaultSecretReference"/>. </summary>
