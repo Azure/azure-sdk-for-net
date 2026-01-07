@@ -53,16 +53,6 @@ namespace Azure.ResourceManager.Fabric.Models
             return new FabricCapacityProperties(provisioningState, state, administrationMembers is null ? default : new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The administration properties of the Fabric capacity resource. </summary>
-        /// <param name="members"> An array of administrator user identities. </param>
-        /// <returns> A new <see cref="Models.FabricCapacityAdministration"/> instance for mocking. </returns>
-        public static FabricCapacityAdministration FabricCapacityAdministration(IEnumerable<string> members = default)
-        {
-            members ??= new ChangeTrackingList<string>();
-
-            return new FabricCapacityAdministration(members.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The type used for update operations of the FabricCapacity. </summary>
         /// <param name="sku"> The SKU details. </param>
         /// <param name="tags"> Resource tags. </param>

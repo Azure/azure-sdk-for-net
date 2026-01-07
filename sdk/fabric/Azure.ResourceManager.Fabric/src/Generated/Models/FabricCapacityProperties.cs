@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Fabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FabricCapacityProperties"/>. </summary>
-        /// <param name="administration"> The capacity administration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="administration"/> is null. </exception>
-        public FabricCapacityProperties(FabricCapacityAdministration administration)
+        /// <param name="administrationMembers"> An array of administrator user identities. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="administrationMembers"/> is null. </exception>
+        public FabricCapacityProperties(IEnumerable<string> administrationMembers)
         {
-            Argument.AssertNotNull(administration, nameof(administration));
+            Argument.AssertNotNull(administrationMembers, nameof(administrationMembers));
 
-            Administration = administration;
+            Administration = new FabricCapacityAdministration(administrationMembers);
         }
 
         /// <summary> Initializes a new instance of <see cref="FabricCapacityProperties"/>. </summary>
