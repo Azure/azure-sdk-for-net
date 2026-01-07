@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 }
                 if (prop.NameEquals("bomUrl"u8))
                 {
-                    bomUri = new Uri(prop.Value.GetString());
+                    bomUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sapBitsStorageAccountId"u8))

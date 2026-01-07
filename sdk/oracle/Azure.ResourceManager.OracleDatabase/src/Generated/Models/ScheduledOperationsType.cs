@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -16,16 +15,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ScheduledOperationsType"/>. </summary>
-        /// <param name="dayOfWeek"> Day of week. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dayOfWeek"/> is null. </exception>
-        public ScheduledOperationsType(OracleDatabaseDayOfWeek dayOfWeek)
-        {
-            Argument.AssertNotNull(dayOfWeek, nameof(dayOfWeek));
-
-            DayOfWeek = dayOfWeek;
-        }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledOperationsType"/>. </summary>
         /// <param name="dayOfWeek"> Day of week. </param>

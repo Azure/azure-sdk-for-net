@@ -5862,7 +5862,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.Models.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6136,7 +6136,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.ModelProperties.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7405,7 +7405,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.Operations.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10173,7 +10173,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.Parameters.endpoint"
             }
           ],
           "initializedBy": 0,

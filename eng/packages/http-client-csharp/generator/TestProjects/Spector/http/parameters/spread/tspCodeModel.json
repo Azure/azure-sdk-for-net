@@ -1358,7 +1358,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Spread.Model.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2414,7 +2414,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Spread.Alias.endpoint"
             }
           ],
           "initializedBy": 0,
