@@ -238,7 +238,7 @@ namespace Azure.Generator.Management.Utilities
                     }
                 }
 
-                //need to depluralize the last word and check
+                //need to pluralize or singularize the last word and check
                 if (i == nameWords.Length - 1 && (parentWordsHash.Contains(lastWord.Pluralize()) || (suffixStripped && parentWordsHash.Contains(lastWord.Singularize()))))
                     return innerProperty.Name;
             }
