@@ -26,9 +26,6 @@ namespace Azure.AI.ContentUnderstanding.Tests
     [SetUpFixture]
     public class ContentUnderstandingTestSetupFixture : SetUpFixtureBase<ContentUnderstandingClientTestEnvironment>
     {
-        private static bool s_defaultsConfigured = false;
-        private static readonly object s_lockObject = new object();
-
         /// <summary>
         /// Performs one-time setup to configure Content Understanding service defaults.
         /// </summary>
@@ -40,18 +37,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 return;
             }
 
-            // Use double-checked locking to ensure defaults are only configured once
-            if (!s_defaultsConfigured)
-            {
-                lock (s_lockObject)
-                {
-                    if (!s_defaultsConfigured)
-                    {
-                        ConfigureDefaultsAsync().GetAwaiter().GetResult();
-                        s_defaultsConfigured = true;
-                    }
-                }
-            }
+            // Configure defaults asynchronously
+            await ConfigureDefaultsAsync();
         }
 
         /// <summary>
