@@ -351,10 +351,11 @@ if ($allDeploymentsReady) {
 
     # Build model deployments mapping (model name -> deployment name)
     # The deployment name is the same as the model name in our configuration
-    $modelDeployments = @{
-        'gpt-4.1' = 'gpt-4.1'
-        'gpt-4.1-mini' = 'gpt-4.1-mini'
-        'text-embedding-3-large' = 'text-embedding-3-large'
+    $modelDeployments = @{}
+    foreach ($model in $modelConfigs) {
+        if ($null -ne $model.Name -and -not [string]::IsNullOrWhiteSpace([string]$model.Name)) {
+            $modelDeployments[$model.Name] = $model.Name
+        }
     }
 
     # Update defaults for Primary Microsoft Foundry resource
