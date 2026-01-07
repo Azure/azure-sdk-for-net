@@ -14,7 +14,7 @@ using Azure.ResourceManager.Fabric;
 namespace Azure.ResourceManager.Fabric.Models
 {
     /// <summary> The administration properties of the Fabric capacity resource. </summary>
-    internal partial class FabricCapacityAdministration : IJsonModel<FabricCapacityAdministration>
+    public partial class FabricCapacityAdministration : IJsonModel<FabricCapacityAdministration>
     {
         /// <summary> Initializes a new instance of <see cref="FabricCapacityAdministration"/> for deserialization. </summary>
         internal FabricCapacityAdministration()
