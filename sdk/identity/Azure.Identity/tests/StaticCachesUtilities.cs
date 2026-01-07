@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.Identity.Client;
@@ -13,31 +12,26 @@ namespace Azure.Identity.Tests
     {
         private static readonly Action s_noOpAction = () => { };
 
-        private static readonly Lazy<Action> s_clearStaticMetadataProvider = new Lazy<Action>(() =>
+        internal static readonly Lazy<Action> s_clearStaticMetadataProvider = new Lazy<Action>(() =>
         {
             Type staticMetadataProviderType = typeof(PublicClientApplication).Assembly.GetType("Microsoft.Identity.Client.Instance.Discovery.NetworkCacheMetadataProvider", false);
             if (staticMetadataProviderType == null)
             {
-                return s_noOpAction; // No-op if type doesn't exist
+                return s_noOpAction;
             }
 
-            // Try static method first, then instance method
-            MethodInfo clearMethod = staticMetadataProviderType.GetMethod("Clear", BindingFlags.Public | BindingFlags.Static);
-            if (clearMethod != null)
+            MethodInfo resetMethod = staticMetadataProviderType.GetMethod("ResetStaticCacheForTest", BindingFlags.NonPublic | BindingFlags.Static);
+            if (resetMethod == null)
             {
-                return Expression.Lambda<Action>(Expression.Call(clearMethod)).Compile();
+                return s_noOpAction;
             }
 
-            clearMethod = staticMetadataProviderType.GetMethod("Clear", BindingFlags.Public | BindingFlags.Instance);
-            if (clearMethod == null)
-            {
-                return s_noOpAction; // No-op if method doesn't exist
-            }
-
-            NewExpression callConstructor = Expression.New(staticMetadataProviderType);
-            MethodCallExpression invokeClear = Expression.Call(callConstructor, clearMethod);
-            return Expression.Lambda<Action>(invokeClear).Compile();
+            return Expression.Lambda<Action>(Expression.Call(resetMethod)).Compile();
         });
-        public static void ClearStaticMetadataProviderCache() => s_clearStaticMetadataProvider.Value();
+
+        public static void ClearStaticMetadataProviderCache()
+        {
+            s_clearStaticMetadataProvider.Value();
+        }
     }
 }
