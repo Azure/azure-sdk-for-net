@@ -202,67 +202,98 @@ function Wait-ForDeployment {
 
 # Function to call Content Understanding UpdateDefaults API using az rest
 # Returns $true if successful, $false if failed
+# Retries on DeploymentIdNotFound errors to handle propagation delay
 function Update-ContentUnderstandingDefaults {
     param (
         [string] $Endpoint,
         [string] $AccountName,
-        [hashtable] $ModelDeployments
+        [hashtable] $ModelDeployments,
+        [int] $MaxRetries = 10,
+        [int] $RetryDelaySeconds = 30
     )
 
     Write-Host "Updating Content Understanding defaults for account '$AccountName'..."
 
-    try {
-        # Build the request body JSON
-        # Format: { "modelDeployments": { "gpt-4.1": "gpt-4.1", "gpt-4.1-mini": "gpt-4.1-mini", "text-embedding-3-large": "text-embedding-3-large" } }
-        $modelDeploymentsJson = @{}
-        foreach ($kvp in $ModelDeployments.GetEnumerator()) {
-            $modelDeploymentsJson[$kvp.Key] = $kvp.Value
-        }
-        $requestBody = @{
-            modelDeployments = $modelDeploymentsJson
-        } | ConvertTo-Json -Depth 10 -Compress
+    # Build the request body JSON
+    # Format: { "modelDeployments": { "gpt-4.1": "gpt-4.1", "gpt-4.1-mini": "gpt-4.1-mini", "text-embedding-3-large": "text-embedding-3-large" } }
+    $modelDeploymentsJson = @{}
+    foreach ($kvp in $ModelDeployments.GetEnumerator()) {
+        $modelDeploymentsJson[$kvp.Key] = $kvp.Value
+    }
+    $requestBody = @{
+        modelDeployments = $modelDeploymentsJson
+    } | ConvertTo-Json -Depth 10 -Compress
 
-        # Call UpdateDefaults API using az rest
-        # Endpoint: {endpoint}/contentunderstanding/defaults?api-version=2025-11-01
-        # Method: PATCH
-        # Content-Type: application/merge-patch+json
-        # Note: az rest will automatically determine the resource from the URL for known endpoints
-        $apiUrl = "$($Endpoint.TrimEnd('/'))/contentunderstanding/defaults?api-version=2025-11-01"
+    # Call UpdateDefaults API using az rest
+    # Endpoint: {endpoint}/contentunderstanding/defaults?api-version=2025-11-01
+    # Method: PATCH
+    # Content-Type: application/merge-patch+json
+    # Note: az rest will automatically determine the resource from the URL for known endpoints
+    $apiUrl = "$($Endpoint.TrimEnd('/'))/contentunderstanding/defaults?api-version=2025-11-01"
 
-        Write-Host "Calling UpdateDefaults API: $apiUrl"
-        Write-Host "Request body: $requestBody"
+    # Use the Cognitive Services resource URL for authentication
+    # For Azure Cognitive Services, the resource identifier is https://cognitiveservices.azure.com
+    $resourceUrl = "https://cognitiveservices.azure.com"
 
-        # Use the Cognitive Services resource URL for authentication
-        # For Azure Cognitive Services, the resource identifier is https://cognitiveservices.azure.com
-        $resourceUrl = "https://cognitiveservices.azure.com"
+    $attempt = 0
+    while ($attempt -lt $MaxRetries) {
+        $attempt++
 
-        $response = az rest --method patch `
-            --url $apiUrl `
-            --resource $resourceUrl `
-            --headers "Content-Type=application/merge-patch+json" `
-            --body $requestBody `
-            --output json 2>&1
-
-        if ($LASTEXITCODE -eq 0) {
-            $result = $response | ConvertFrom-Json
-            Write-Host "Successfully updated Content Understanding defaults for '$AccountName'" -ForegroundColor Green
-            if ($result.modelDeployments) {
-                Write-Host "Configured model deployments:"
-                foreach ($kvp in $result.modelDeployments.PSObject.Properties) {
-                    Write-Host "  $($kvp.Name): $($kvp.Value)"
-                }
-            }
-            return $true
+        if ($attempt -gt 1) {
+            Write-Host "Retry attempt $attempt of $MaxRetries (waiting $RetryDelaySeconds seconds for deployment propagation)..."
+            Start-Sleep -Seconds $RetryDelaySeconds
         }
         else {
-            Write-Error "FAILED to update Content Understanding defaults for '$AccountName': $response" -ErrorAction Continue
+            Write-Host "Calling UpdateDefaults API: $apiUrl"
+            Write-Host "Request body: $requestBody"
+        }
+
+        try {
+            $response = az rest --method patch `
+                --url $apiUrl `
+                --resource $resourceUrl `
+                --headers "Content-Type=application/merge-patch+json" `
+                --body $requestBody `
+                --output json 2>&1
+
+            if ($LASTEXITCODE -eq 0) {
+                $result = $response | ConvertFrom-Json
+                Write-Host "Successfully updated Content Understanding defaults for '$AccountName'" -ForegroundColor Green
+                if ($result.modelDeployments) {
+                    Write-Host "Configured model deployments:"
+                    foreach ($kvp in $result.modelDeployments.PSObject.Properties) {
+                        Write-Host "  $($kvp.Name): $($kvp.Value)"
+                    }
+                }
+                return $true
+            }
+            else {
+                # Check if the error is DeploymentIdNotFound (propagation delay)
+                $errorMessage = $response -join " "
+                if ($errorMessage -match "DeploymentIdNotFound") {
+                    if ($attempt -lt $MaxRetries) {
+                        Write-Host "Deployment not yet visible to Content Understanding API (attempt $attempt/$MaxRetries). This is normal due to propagation delay." -ForegroundColor Yellow
+                        continue
+                    }
+                    else {
+                        Write-Error "FAILED to update Content Understanding defaults for '$AccountName' after $MaxRetries attempts: Deployment still not visible to API after waiting. $errorMessage" -ErrorAction Continue
+                        return $false
+                    }
+                }
+                else {
+                    # Non-propagation error - don't retry
+                    Write-Error "FAILED to update Content Understanding defaults for '$AccountName': $errorMessage" -ErrorAction Continue
+                    return $false
+                }
+            }
+        }
+        catch {
+            Write-Error "FAILED to update Content Understanding defaults for '$AccountName': $_" -ErrorAction Continue
             return $false
         }
     }
-    catch {
-        Write-Error "FAILED to update Content Understanding defaults for '$AccountName': $_" -ErrorAction Continue
-        return $false
-    }
+
+    return $false
 }
 
 # Deploy models to Primary Microsoft Foundry resource
@@ -306,10 +337,6 @@ Write-Host "IMPORTANT: Model deployments may take 5-15 minutes to propagate to t
 Write-Host "Even though deployments show 'Succeeded' in Azure Resource Manager, the Content Understanding" -ForegroundColor Yellow
 Write-Host "API may not see them immediately. If tests fail with 'DeploymentIdNotFound', wait a few" -ForegroundColor Yellow
 Write-Host "more minutes and retry the tests." -ForegroundColor Yellow
-
-Write-Host ""
-Write-Host "Note: Model deployments are asynchronous and may take 5-15 minutes to fully provision."
-Write-Host "The deployments will be in 'Succeeded' state when ready for use."
 
 # Wait for deployments to be ready before calling UpdateDefaults
 Write-Host ""
