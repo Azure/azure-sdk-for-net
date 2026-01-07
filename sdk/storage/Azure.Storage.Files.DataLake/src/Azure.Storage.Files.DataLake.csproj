@@ -91,5 +91,6 @@
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)OverloadResolutionPriorityAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>
