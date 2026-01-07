@@ -8,19 +8,12 @@ namespace Azure.Provisioning.Primitives;
 /// These control how resources are rendered in Bicep but are not part of the
 /// Azure resource definition itself.
 /// </summary>
-public class BicepMetadata
+public sealed class BicepMetadata
 {
     /// <summary>
     /// Optional description for the resource that appears as a @description decorator.
     /// </summary>
     public string? Description { get; set; }
-
-    /// <summary>
-    /// Optional condition string for conditional resource deployment.
-    /// If set, the resource will be wrapped in an 'if (condition)' statement.
-    /// The condition is used as-is without validation.
-    /// </summary>
-    public string? Condition { get; set; }
 
     /// <summary>
     /// Optional batch size for resource deployment.
