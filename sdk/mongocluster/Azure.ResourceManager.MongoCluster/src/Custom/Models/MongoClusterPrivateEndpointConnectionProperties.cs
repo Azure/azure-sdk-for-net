@@ -22,9 +22,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
     [CodeGenSerialization(nameof(PrivateEndpoint), DeserializationValueHook = nameof(DeserializeSubResource))]
     public partial class MongoClusterPrivateEndpointConnectionProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-
-
         /// <summary> The private endpoint resource. </summary>
         internal SubResource PrivateEndpoint { get; set; }
 
