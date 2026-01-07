@@ -400,7 +400,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -446,7 +446,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -784,7 +784,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -1122,7 +1122,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -1172,7 +1172,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1510,7 +1510,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -1848,7 +1848,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.endpoint"
                 }
               ],
               "initializedBy": 0,

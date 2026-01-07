@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    public partial class OracleNetworkAnchorProperties : IUtf8JsonSerializable, IJsonModel<OracleNetworkAnchorProperties>
+    /// <summary> Network Anchor properties. </summary>
+    public partial class OracleNetworkAnchorProperties : IJsonModel<OracleNetworkAnchorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OracleNetworkAnchorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="OracleNetworkAnchorProperties"/> for deserialization. </summary>
+        internal OracleNetworkAnchorProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleNetworkAnchorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleNetworkAnchorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OracleNetworkAnchorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OracleNetworkAnchorProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("resourceAnchorId"u8);
             writer.WriteStringValue(ResourceAnchorId);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -92,7 +98,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("dnsForwardingRules"u8);
                 writer.WriteStartArray();
-                foreach (var item in DnsForwardingRules)
+                foreach (NetworkAnchorDnsForwardingRule item in DnsForwardingRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -128,15 +134,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dnsForwardingEndpointNsgRulesUrl"u8);
                 writer.WriteStringValue(DnsForwardingEndpointNsgRulesUri.AbsoluteUri);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -145,22 +151,27 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        OracleNetworkAnchorProperties IJsonModel<OracleNetworkAnchorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OracleNetworkAnchorProperties IJsonModel<OracleNetworkAnchorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OracleNetworkAnchorProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleNetworkAnchorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OracleNetworkAnchorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OracleNetworkAnchorProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOracleNetworkAnchorProperties(document.RootElement, options);
         }
 
-        internal static OracleNetworkAnchorProperties DeserializeOracleNetworkAnchorProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OracleNetworkAnchorProperties DeserializeOracleNetworkAnchorProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -181,155 +192,153 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string dnsListeningEndpointAllowedCidrs = default;
             string dnsListeningEndpointIPAddress = default;
             string dnsForwardingEndpointIPAddress = default;
-            Uri dnsForwardingRulesUrl = default;
-            Uri dnsListeningEndpointNsgRulesUrl = default;
-            Uri dnsForwardingEndpointNsgRulesUrl = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            Uri dnsForwardingRulesUri = default;
+            Uri dnsListeningEndpointNsgRulesUri = default;
+            Uri dnsForwardingEndpointNsgRulesUri = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceAnchorId"u8))
+                if (prop.NameEquals("resourceAnchorId"u8))
                 {
-                    resourceAnchorId = property.Value.GetString();
+                    resourceAnchorId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new OracleDatabaseProvisioningState(property.Value.GetString());
+                    provisioningState = new OracleDatabaseProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vnetId"u8))
+                if (prop.NameEquals("vnetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vnetId = new ResourceIdentifier(property.Value.GetString());
+                    vnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subnetId"u8))
+                if (prop.NameEquals("subnetId"u8))
                 {
-                    subnetId = new ResourceIdentifier(property.Value.GetString());
+                    subnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cidrBlock"u8))
+                if (prop.NameEquals("cidrBlock"u8))
                 {
-                    cidrBlock = property.Value.GetString();
+                    cidrBlock = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ociVcnId"u8))
+                if (prop.NameEquals("ociVcnId"u8))
                 {
-                    ociVcnId = property.Value.GetString();
+                    ociVcnId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ociVcnDnsLabel"u8))
+                if (prop.NameEquals("ociVcnDnsLabel"u8))
                 {
-                    ociVcnDnsLabel = property.Value.GetString();
+                    ociVcnDnsLabel = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ociSubnetId"u8))
+                if (prop.NameEquals("ociSubnetId"u8))
                 {
-                    ociSubnetId = property.Value.GetString();
+                    ociSubnetId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ociBackupCidrBlock"u8))
+                if (prop.NameEquals("ociBackupCidrBlock"u8))
                 {
-                    ociBackupCidrBlock = property.Value.GetString();
+                    ociBackupCidrBlock = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isOracleToAzureDnsZoneSyncEnabled"u8))
+                if (prop.NameEquals("isOracleToAzureDnsZoneSyncEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isOracleToAzureDnsZoneSyncEnabled = property.Value.GetBoolean();
+                    isOracleToAzureDnsZoneSyncEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isOracleDnsListeningEndpointEnabled"u8))
+                if (prop.NameEquals("isOracleDnsListeningEndpointEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isOracleDnsListeningEndpointEnabled = property.Value.GetBoolean();
+                    isOracleDnsListeningEndpointEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isOracleDnsForwardingEndpointEnabled"u8))
+                if (prop.NameEquals("isOracleDnsForwardingEndpointEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isOracleDnsForwardingEndpointEnabled = property.Value.GetBoolean();
+                    isOracleDnsForwardingEndpointEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dnsForwardingRules"u8))
+                if (prop.NameEquals("dnsForwardingRules"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NetworkAnchorDnsForwardingRule> array = new List<NetworkAnchorDnsForwardingRule>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NetworkAnchorDnsForwardingRule.DeserializeNetworkAnchorDnsForwardingRule(item, options));
                     }
                     dnsForwardingRules = array;
                     continue;
                 }
-                if (property.NameEquals("dnsListeningEndpointAllowedCidrs"u8))
+                if (prop.NameEquals("dnsListeningEndpointAllowedCidrs"u8))
                 {
-                    dnsListeningEndpointAllowedCidrs = property.Value.GetString();
+                    dnsListeningEndpointAllowedCidrs = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsListeningEndpointIpAddress"u8))
+                if (prop.NameEquals("dnsListeningEndpointIpAddress"u8))
                 {
-                    dnsListeningEndpointIPAddress = property.Value.GetString();
+                    dnsListeningEndpointIPAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsForwardingEndpointIpAddress"u8))
+                if (prop.NameEquals("dnsForwardingEndpointIpAddress"u8))
                 {
-                    dnsForwardingEndpointIPAddress = property.Value.GetString();
+                    dnsForwardingEndpointIPAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsForwardingRulesUrl"u8))
+                if (prop.NameEquals("dnsForwardingRulesUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dnsForwardingRulesUrl = new Uri(property.Value.GetString());
+                    dnsForwardingRulesUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dnsListeningEndpointNsgRulesUrl"u8))
+                if (prop.NameEquals("dnsListeningEndpointNsgRulesUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dnsListeningEndpointNsgRulesUrl = new Uri(property.Value.GetString());
+                    dnsListeningEndpointNsgRulesUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dnsForwardingEndpointNsgRulesUrl"u8))
+                if (prop.NameEquals("dnsForwardingEndpointNsgRulesUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dnsForwardingEndpointNsgRulesUrl = new Uri(property.Value.GetString());
+                    dnsForwardingEndpointNsgRulesUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new OracleNetworkAnchorProperties(
                 resourceAnchorId,
                 provisioningState,
@@ -347,16 +356,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 dnsListeningEndpointAllowedCidrs,
                 dnsListeningEndpointIPAddress,
                 dnsForwardingEndpointIPAddress,
-                dnsForwardingRulesUrl,
-                dnsListeningEndpointNsgRulesUrl,
-                dnsForwardingEndpointNsgRulesUrl,
-                serializedAdditionalRawData);
+                dnsForwardingRulesUri,
+                dnsListeningEndpointNsgRulesUri,
+                dnsForwardingEndpointNsgRulesUri,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<OracleNetworkAnchorProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleNetworkAnchorProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OracleNetworkAnchorProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleNetworkAnchorProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -366,15 +378,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        OracleNetworkAnchorProperties IPersistableModel<OracleNetworkAnchorProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleNetworkAnchorProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OracleNetworkAnchorProperties IPersistableModel<OracleNetworkAnchorProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OracleNetworkAnchorProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleNetworkAnchorProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOracleNetworkAnchorProperties(document.RootElement, options);
                     }
                 default:
@@ -382,6 +399,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OracleNetworkAnchorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

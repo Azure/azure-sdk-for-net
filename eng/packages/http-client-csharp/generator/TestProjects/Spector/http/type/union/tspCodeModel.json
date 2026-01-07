@@ -2219,7 +2219,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringsOnly.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2462,7 +2462,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringExtensible.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2705,7 +2705,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamed.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2948,7 +2948,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.IntsOnly.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3191,7 +3191,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.FloatsOnly.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3434,7 +3434,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.ModelsOnly.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3677,7 +3677,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.EnumsOnly.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3920,7 +3920,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringAndArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4163,7 +4163,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.MixedLiterals.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4406,7 +4406,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.MixedTypes.endpoint"
             }
           ],
           "initializedBy": 0,

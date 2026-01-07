@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class DataflowEndpointKafka : IUtf8JsonSerializable, IJsonModel<DataflowEndpointKafka>
+    /// <summary> Kafka endpoint properties. </summary>
+    public partial class DataflowEndpointKafka : IJsonModel<DataflowEndpointKafka>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowEndpointKafka>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataflowEndpointKafka"/> for deserialization. </summary>
+        internal DataflowEndpointKafka()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowEndpointKafka>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointKafka>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointKafka>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowEndpointKafka)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("authentication"u8);
             writer.WriteObjectValue(Authentication, options);
             if (Optional.IsDefined(ConsumerGroupId))
@@ -78,15 +83,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("cloudEventAttributes"u8);
                 writer.WriteStringValue(CloudEventAttributes.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -95,22 +100,27 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowEndpointKafka IJsonModel<DataflowEndpointKafka>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowEndpointKafka IJsonModel<DataflowEndpointKafka>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowEndpointKafka JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointKafka>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointKafka>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowEndpointKafka)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataflowEndpointKafka(document.RootElement, options);
         }
 
-        internal static DataflowEndpointKafka DeserializeDataflowEndpointKafka(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataflowEndpointKafka DeserializeDataflowEndpointKafka(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,94 +135,92 @@ namespace Azure.ResourceManager.IotOperations.Models
             DataflowEndpointKafkaPartitionStrategy? partitionStrategy = default;
             IotOperationsTlsProperties tls = default;
             CloudEventAttributeType? cloudEventAttributes = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("authentication"u8))
+                if (prop.NameEquals("authentication"u8))
                 {
-                    authentication = DataflowEndpointKafkaAuthentication.DeserializeDataflowEndpointKafkaAuthentication(property.Value, options);
+                    authentication = DataflowEndpointKafkaAuthentication.DeserializeDataflowEndpointKafkaAuthentication(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("consumerGroupId"u8))
+                if (prop.NameEquals("consumerGroupId"u8))
                 {
-                    consumerGroupId = property.Value.GetString();
+                    consumerGroupId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("host"u8))
+                if (prop.NameEquals("host"u8))
                 {
-                    host = property.Value.GetString();
+                    host = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("batching"u8))
+                if (prop.NameEquals("batching"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    batching = DataflowEndpointKafkaBatching.DeserializeDataflowEndpointKafkaBatching(property.Value, options);
+                    batching = DataflowEndpointKafkaBatching.DeserializeDataflowEndpointKafkaBatching(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("copyMqttProperties"u8))
+                if (prop.NameEquals("copyMqttProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    copyMqttProperties = new IotOperationsOperationalMode(property.Value.GetString());
+                    copyMqttProperties = new IotOperationsOperationalMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("compression"u8))
+                if (prop.NameEquals("compression"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    compression = new DataflowEndpointKafkaCompression(property.Value.GetString());
+                    compression = new DataflowEndpointKafkaCompression(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kafkaAcks"u8))
+                if (prop.NameEquals("kafkaAcks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kafkaAcks = new DataflowEndpointKafkaAck(property.Value.GetString());
+                    kafkaAcks = new DataflowEndpointKafkaAck(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("partitionStrategy"u8))
+                if (prop.NameEquals("partitionStrategy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    partitionStrategy = new DataflowEndpointKafkaPartitionStrategy(property.Value.GetString());
+                    partitionStrategy = new DataflowEndpointKafkaPartitionStrategy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tls"u8))
+                if (prop.NameEquals("tls"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tls = IotOperationsTlsProperties.DeserializeIotOperationsTlsProperties(property.Value, options);
+                    tls = IotOperationsTlsProperties.DeserializeIotOperationsTlsProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("cloudEventAttributes"u8))
+                if (prop.NameEquals("cloudEventAttributes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cloudEventAttributes = new CloudEventAttributeType(property.Value.GetString());
+                    cloudEventAttributes = new CloudEventAttributeType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataflowEndpointKafka(
                 authentication,
                 consumerGroupId,
@@ -224,13 +232,16 @@ namespace Azure.ResourceManager.IotOperations.Models
                 partitionStrategy,
                 tls,
                 cloudEventAttributes,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataflowEndpointKafka>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointKafka>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataflowEndpointKafka>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointKafka>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -240,15 +251,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowEndpointKafka IPersistableModel<DataflowEndpointKafka>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointKafka>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowEndpointKafka IPersistableModel<DataflowEndpointKafka>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowEndpointKafka PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointKafka>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataflowEndpointKafka(document.RootElement, options);
                     }
                 default:
@@ -256,6 +272,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataflowEndpointKafka>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

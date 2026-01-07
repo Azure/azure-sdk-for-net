@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary>
     /// A class representing the ContainerServiceTrustedAccessRoleBinding data model.
     /// Defines binding between a resource and role
+    /// Serialized Name: TrustedAccessRoleBinding
     /// </summary>
     public partial class ContainerServiceTrustedAccessRoleBindingData : ResourceData
     {
@@ -53,8 +54,14 @@ namespace Azure.ResourceManager.ContainerService
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleBindingData"/>. </summary>
-        /// <param name="sourceResourceId"> The ARM resource ID of source resource that trusted access is configured for. </param>
-        /// <param name="roles"> A list of roles to bind, each item is a resource type qualified role name. For example: 'Microsoft.MachineLearningServices/workspaces/reader'. </param>
+        /// <param name="sourceResourceId">
+        /// The ARM resource ID of source resource that trusted access is configured for.
+        /// Serialized Name: TrustedAccessRoleBinding.properties.sourceResourceId
+        /// </param>
+        /// <param name="roles">
+        /// A list of roles to bind, each item is a resource type qualified role name. For example: 'Microsoft.MachineLearningServices/workspaces/reader'.
+        /// Serialized Name: TrustedAccessRoleBinding.properties.roles
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/> or <paramref name="roles"/> is null. </exception>
         public ContainerServiceTrustedAccessRoleBindingData(ResourceIdentifier sourceResourceId, IEnumerable<string> roles)
         {
@@ -70,9 +77,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The current provisioning state of trusted access role binding. </param>
-        /// <param name="sourceResourceId"> The ARM resource ID of source resource that trusted access is configured for. </param>
-        /// <param name="roles"> A list of roles to bind, each item is a resource type qualified role name. For example: 'Microsoft.MachineLearningServices/workspaces/reader'. </param>
+        /// <param name="provisioningState">
+        /// The current provisioning state of trusted access role binding.
+        /// Serialized Name: TrustedAccessRoleBinding.properties.provisioningState
+        /// </param>
+        /// <param name="sourceResourceId">
+        /// The ARM resource ID of source resource that trusted access is configured for.
+        /// Serialized Name: TrustedAccessRoleBinding.properties.sourceResourceId
+        /// </param>
+        /// <param name="roles">
+        /// A list of roles to bind, each item is a resource type qualified role name. For example: 'Microsoft.MachineLearningServices/workspaces/reader'.
+        /// Serialized Name: TrustedAccessRoleBinding.properties.roles
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceTrustedAccessRoleBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerServiceTrustedAccessRoleBindingProvisioningState? provisioningState, ResourceIdentifier sourceResourceId, IList<string> roles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -87,13 +103,22 @@ namespace Azure.ResourceManager.ContainerService
         {
         }
 
-        /// <summary> The current provisioning state of trusted access role binding. </summary>
+        /// <summary>
+        /// The current provisioning state of trusted access role binding.
+        /// Serialized Name: TrustedAccessRoleBinding.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public ContainerServiceTrustedAccessRoleBindingProvisioningState? ProvisioningState { get; }
-        /// <summary> The ARM resource ID of source resource that trusted access is configured for. </summary>
+        /// <summary>
+        /// The ARM resource ID of source resource that trusted access is configured for.
+        /// Serialized Name: TrustedAccessRoleBinding.properties.sourceResourceId
+        /// </summary>
         [WirePath("properties.sourceResourceId")]
         public ResourceIdentifier SourceResourceId { get; set; }
-        /// <summary> A list of roles to bind, each item is a resource type qualified role name. For example: 'Microsoft.MachineLearningServices/workspaces/reader'. </summary>
+        /// <summary>
+        /// A list of roles to bind, each item is a resource type qualified role name. For example: 'Microsoft.MachineLearningServices/workspaces/reader'.
+        /// Serialized Name: TrustedAccessRoleBinding.properties.roles
+        /// </summary>
         [WirePath("properties.roles")]
         public IList<string> Roles { get; }
     }

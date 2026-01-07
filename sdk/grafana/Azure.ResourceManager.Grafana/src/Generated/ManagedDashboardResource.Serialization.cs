@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Grafana
 {
+    /// <summary></summary>
     public partial class ManagedDashboardResource : IJsonModel<ManagedDashboardData>
     {
-        private static ManagedDashboardData s_dataDeserializationInstance;
-        private static ManagedDashboardData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedDashboardData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedDashboardData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedDashboardData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedDashboardData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDashboardData>)Data).Write(writer, options);
 
-        ManagedDashboardData IJsonModel<ManagedDashboardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDashboardData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedDashboardData IJsonModel<ManagedDashboardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedDashboardData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedDashboardData>(Data, options, AzureResourceManagerGrafanaContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedDashboardData IPersistableModel<ManagedDashboardData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedDashboardData>(data, options, AzureResourceManagerGrafanaContext.Default);
 
-        string IPersistableModel<ManagedDashboardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedDashboardData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedDashboardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

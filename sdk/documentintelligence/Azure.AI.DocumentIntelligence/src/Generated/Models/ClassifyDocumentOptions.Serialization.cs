@@ -97,7 +97,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    uriSource = new Uri(prop.Value.GetString());
+                    uriSource = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("base64Source"u8))

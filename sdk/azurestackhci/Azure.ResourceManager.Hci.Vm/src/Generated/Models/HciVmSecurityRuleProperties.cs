@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Security rule resource. </summary>
     public partial class HciVmSecurityRuleProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmSecurityRuleProperties"/>. </summary>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
@@ -73,8 +45,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="priority"> The priority of the rule. The value can be between 100 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="direction"> The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic. </param>
         /// <param name="provisioningState"> Provisioning state of the SR. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmSecurityRuleProperties(string description, HciVmSecurityRuleProtocol protocol, IList<string> sourceAddressPrefixes, IList<string> destinationAddressPrefixes, IList<string> sourcePortRanges, IList<string> destinationPortRanges, HciVmSecurityRuleAccess access, int priority, HciVmSecurityRuleDirection direction, HciVmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmSecurityRuleProperties(string description, HciVmSecurityRuleProtocol protocol, IList<string> sourceAddressPrefixes, IList<string> destinationAddressPrefixes, IList<string> sourcePortRanges, IList<string> destinationPortRanges, HciVmSecurityRuleAccess access, int priority, HciVmSecurityRuleDirection direction, HciVmProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Protocol = protocol;
@@ -86,32 +58,36 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             Priority = priority;
             Direction = direction;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HciVmSecurityRuleProperties"/> for deserialization. </summary>
-        internal HciVmSecurityRuleProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A description for this rule. Restricted to 140 chars. </summary>
         public string Description { get; set; }
+
         /// <summary> Network protocol this rule applies to. </summary>
         public HciVmSecurityRuleProtocol Protocol { get; set; }
+
         /// <summary> The CIDR or source IP ranges. </summary>
         public IList<string> SourceAddressPrefixes { get; }
+
         /// <summary> The destination address prefixes. CIDR or destination IP ranges. </summary>
         public IList<string> DestinationAddressPrefixes { get; }
+
         /// <summary> The source port ranges. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </summary>
         public IList<string> SourcePortRanges { get; }
+
         /// <summary> The destination port ranges. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </summary>
         public IList<string> DestinationPortRanges { get; }
+
         /// <summary> The network traffic is allowed or denied. </summary>
         public HciVmSecurityRuleAccess Access { get; set; }
+
         /// <summary> The priority of the rule. The value can be between 100 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </summary>
         public int Priority { get; set; }
+
         /// <summary> The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic. </summary>
         public HciVmSecurityRuleDirection Direction { get; set; }
+
         /// <summary> Provisioning state of the SR. </summary>
         public HciVmProvisioningState? ProvisioningState { get; }
     }

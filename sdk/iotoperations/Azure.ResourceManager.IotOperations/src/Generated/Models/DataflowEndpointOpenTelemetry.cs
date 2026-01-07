@@ -7,51 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> OpenTelemetry endpoint properties. </summary>
     public partial class DataflowEndpointOpenTelemetry
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointOpenTelemetry"/>. </summary>
         /// <param name="host"> Host of the OpenTelemetry in the form of &lt;host&gt;:&lt;port&gt;. </param>
-        /// <param name="authentication">
-        /// Authentication properties for OpenTelemetry endpoints
-        /// Please note <see cref="DataflowOpenTelemetryAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataflowOpenTelemetryAnonymousAuthentication"/>, <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/> and <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>.
-        /// </param>
+        /// <param name="authentication"> Authentication properties for OpenTelemetry endpoints. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="authentication"/> is null. </exception>
         public DataflowEndpointOpenTelemetry(string host, DataflowOpenTelemetryAuthentication authentication)
         {
@@ -66,37 +34,27 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="host"> Host of the OpenTelemetry in the form of &lt;host&gt;:&lt;port&gt;. </param>
         /// <param name="batching"> Batching configuration. </param>
         /// <param name="tls"> TLS configuration. </param>
-        /// <param name="authentication">
-        /// Authentication properties for OpenTelemetry endpoints
-        /// Please note <see cref="DataflowOpenTelemetryAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataflowOpenTelemetryAnonymousAuthentication"/>, <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/> and <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowEndpointOpenTelemetry(string host, IotOperationsBatchingConfig batching, IotOperationsTlsProperties tls, DataflowOpenTelemetryAuthentication authentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="authentication"> Authentication properties for OpenTelemetry endpoints. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataflowEndpointOpenTelemetry(string host, IotOperationsBatchingConfig batching, IotOperationsTlsProperties tls, DataflowOpenTelemetryAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Batching = batching;
             Tls = tls;
             Authentication = authentication;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowEndpointOpenTelemetry"/> for deserialization. </summary>
-        internal DataflowEndpointOpenTelemetry()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Host of the OpenTelemetry in the form of &lt;host&gt;:&lt;port&gt;. </summary>
         public string Host { get; set; }
+
         /// <summary> Batching configuration. </summary>
         public IotOperationsBatchingConfig Batching { get; set; }
+
         /// <summary> TLS configuration. </summary>
         public IotOperationsTlsProperties Tls { get; set; }
-        /// <summary>
-        /// Authentication properties for OpenTelemetry endpoints
-        /// Please note <see cref="DataflowOpenTelemetryAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataflowOpenTelemetryAnonymousAuthentication"/>, <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/> and <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>.
-        /// </summary>
+
+        /// <summary> Authentication properties for OpenTelemetry endpoints. </summary>
         public DataflowOpenTelemetryAuthentication Authentication { get; set; }
     }
 }
