@@ -37,6 +37,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 return;
             }
 
+            // Configure defaults asynchronously
             await ConfigureDefaultsAsync();
         }
 
@@ -103,11 +104,15 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 if (needsConfiguration)
                 {
                     TestContext.WriteLine("Configuring Content Understanding service defaults...");
+                    var nonNullGpt41Deployment = gpt41Deployment ?? throw new InvalidOperationException("gpt41Deployment must be configured for test setup.");
+                    var nonNullGpt41MiniDeployment = gpt41MiniDeployment ?? throw new InvalidOperationException("gpt41MiniDeployment must be configured for test setup.");
+                    var nonNullTextEmbeddingDeployment = textEmbeddingDeployment ?? throw new InvalidOperationException("textEmbeddingDeployment must be configured for test setup.");
+
                     var modelDeployments = new Dictionary<string, string>
                     {
-                        ["gpt-4.1"] = gpt41Deployment!,
-                        ["gpt-4.1-mini"] = gpt41MiniDeployment!,
-                        ["text-embedding-3-large"] = textEmbeddingDeployment!
+                        ["gpt-4.1"] = nonNullGpt41Deployment,
+                        ["gpt-4.1-mini"] = nonNullGpt41MiniDeployment,
+                        ["text-embedding-3-large"] = nonNullTextEmbeddingDeployment
                     };
 
                     Response<ContentUnderstandingDefaults> response = await client.UpdateDefaultsAsync(modelDeployments);
