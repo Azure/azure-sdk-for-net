@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -3017,12 +3018,11 @@ namespace Azure.Storage.Files.DataLake
         /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [OverloadResolutionPriority(-1)]
         public virtual Pageable<PathItem> GetPaths(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            bool recursive,
-            bool userPrincipalName,
-            CancellationToken cancellationToken) =>
+            bool recursive = false,
+            bool userPrincipalName = false,
+            CancellationToken cancellationToken = default) =>
             new GetPathsAsyncCollection(
                 FileSystemClient,
                 Path,
@@ -3067,12 +3067,11 @@ namespace Azure.Storage.Files.DataLake
         /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [OverloadResolutionPriority(-1)]
         public virtual AsyncPageable<PathItem> GetPathsAsync(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            bool recursive,
-            bool userPrincipalName,
-            CancellationToken cancellationToken) =>
+            bool recursive = false,
+            bool userPrincipalName = false,
+            CancellationToken cancellationToken = default) =>
             new GetPathsAsyncCollection(
                 FileSystemClient,
                 Path,
