@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
@@ -328,6 +329,39 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             // For a singleton resource, the location should be extracted from Id.Parent.Name
             // because Id.Name would return "spot" (the singleton name)
             Assert.AreEqual("id.Parent.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
+        }
+
+        [TestCase]
+        public void ValidateContextualParameters_MatchByKey()
+        {
+            // This test represents the scenario from the issue:
+            // Contextual path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}
+            // Operation path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachineScaleSets
+            // The parameter {name} in operation path should match the contextual parameter {fleetName} because they both have key "fleets"
+
+            var contextualPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}");
+            var operationPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachineScaleSets");
+
+            var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(contextualPath);
+
+            // Verify contextual parameters are built correctly
+            Assert.AreEqual(3, contextualParameters.Count);
+            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
+            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
+            Assert.AreEqual("resourceGroups", contextualParameters[1].Key);
+            Assert.AreEqual("resourceGroupName", contextualParameters[1].VariableName);
+            Assert.AreEqual("fleets", contextualParameters[2].Key);
+            Assert.AreEqual("fleetName", contextualParameters[2].VariableName);
+
+            // Create a mock parameter with name "name" (from the operation path)
+            var nameParameter = new ParameterProvider("name", $"", typeof(string), location: ParameterLocation.Path, wireInfo: new WireInfo("name"));
+
+            // Test that the parameter "name" matches the contextual parameter "fleetName" by key "fleets"
+            bool matched = contextualPath.TryGetContextualParameter(nameParameter, out var matchedContextualParameter, operationPath);
+            Assert.IsTrue(matched, "Parameter 'name' should match contextual parameter 'fleetName' by key 'fleets'");
+            Assert.IsNotNull(matchedContextualParameter);
+            Assert.AreEqual("fleetName", matchedContextualParameter!.VariableName);
+            Assert.AreEqual("fleets", matchedContextualParameter.Key);
         }
     }
 }

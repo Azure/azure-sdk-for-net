@@ -32,6 +32,9 @@ namespace Azure.Generator.Management.Utilities
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
+            // Parse the operation's request path to enable matching by key
+            var operationPath = new RequestPathPattern(serviceMethod.Operation.Path);
+
             foreach (var parameter in serviceMethod.Operation.Parameters)
             {
                 if (parameter.Scope != InputParameterScope.Method)
@@ -41,7 +44,7 @@ namespace Azure.Generator.Management.Utilities
 
                 var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
 
-                if (contextualPath.TryGetContextualParameter(outputParameter, out _))
+                if (contextualPath.TryGetContextualParameter(outputParameter, out _, operationPath))
                 {
                     continue;
                 }

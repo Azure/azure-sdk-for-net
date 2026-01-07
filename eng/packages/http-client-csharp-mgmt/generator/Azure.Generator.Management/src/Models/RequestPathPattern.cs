@@ -198,14 +198,16 @@ namespace Azure.Generator.Management.Models
         }
 
         private IReadOnlyDictionary<string, ContextualParameter>? _contextualParameters;
+        private IReadOnlyDictionary<string, ContextualParameter>? _contextualParametersByKey;
 
         /// <summary>
         /// Get the corresponding contextual parameter in this request path for a provided parameter.
         /// </summary>
         /// <param name="parameter"></param>
         /// <param name="contextualParameter"></param>
+        /// <param name="operationPath">Optional operation request path pattern to match parameters by key.</param>
         /// <returns></returns>
-        public bool TryGetContextualParameter(ParameterProvider parameter, [MaybeNullWhen(false)] out ContextualParameter contextualParameter)
+        public bool TryGetContextualParameter(ParameterProvider parameter, [MaybeNullWhen(false)] out ContextualParameter contextualParameter, RequestPathPattern? operationPath = null)
         {
             contextualParameter = null;
             if (parameter.Location != ParameterLocation.Path)
@@ -213,9 +215,59 @@ namespace Azure.Generator.Management.Models
                 return false;
             }
 
-            _contextualParameters ??= ContextualParameterBuilder.BuildContextualParameters(this).ToDictionary(p => p.VariableName);
+            // Build contextual parameter dictionaries lazily
+            if (_contextualParameters is null)
+            {
+                var contextualParams = ContextualParameterBuilder.BuildContextualParameters(this);
+                _contextualParameters = contextualParams.ToDictionary(p => p.VariableName);
+                _contextualParametersByKey = contextualParams.Where(p => !string.IsNullOrEmpty(p.Key)).ToDictionary(p => p.Key);
+            }
 
-            return _contextualParameters.TryGetValue(parameter.WireInfo.SerializedName, out contextualParameter);
+            var parameterName = parameter.WireInfo.SerializedName;
+
+            // First, try to match by parameter name
+            if (_contextualParameters.TryGetValue(parameterName, out contextualParameter))
+            {
+                return true;
+            }
+
+            // If no match by name and operation path is provided, try to match by key
+            if (operationPath != null && _contextualParametersByKey != null)
+            {
+                // Find the key for this parameter in the operation path
+                string? key = GetParameterKey(operationPath, parameterName);
+                if (key != null && _contextualParametersByKey.TryGetValue(key, out contextualParameter))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the key (preceding segment) for a given parameter in a request path.
+        /// For example, in "/fleets/{name}/children/{childName}", the key for "name" is "fleets".
+        /// </summary>
+        /// <param name="requestPath">The request path pattern.</param>
+        /// <param name="parameterName">The parameter name to find the key for.</param>
+        /// <returns>The key if found, otherwise null.</returns>
+        private static string? GetParameterKey(RequestPathPattern requestPath, string parameterName)
+        {
+            for (int i = 0; i < requestPath.Count; i++)
+            {
+                var segment = requestPath[i];
+                if (!segment.IsConstant && segment.VariableName == parameterName)
+                {
+                    // Found the parameter, check if there's a preceding constant segment
+                    if (i > 0 && requestPath[i - 1].IsConstant)
+                    {
+                        return requestPath[i - 1].Value;
+                    }
+                    break;
+                }
+            }
+            return null;
         }
     }
 }
