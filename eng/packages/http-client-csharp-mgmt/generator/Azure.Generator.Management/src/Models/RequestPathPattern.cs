@@ -235,7 +235,8 @@ namespace Azure.Generator.Management.Models
 
         /// <summary>
         /// Determines if two parameter names are equivalent, accounting for common naming variations.
-        /// For example, "resourceGroup" and "resourceGroupName" are considered equivalent.
+        /// For example, "resourceGroup" matches "resourceGroupName" because after removing the "Name"
+        /// suffix from "resourceGroup", we check if "resourceGroupName" starts with "resourceGroup".
         /// </summary>
         private static bool AreParameterNamesEquivalent(string name1, string name2)
         {
@@ -244,15 +245,13 @@ namespace Azure.Generator.Management.Models
                 return true;
             }
 
-            // Handle common suffix variations like "Name"
+            // Remove the 'Name' suffix from name1 if it exists (case-insensitive)
             var name1WithoutSuffix = name1.EndsWith("Name", StringComparison.OrdinalIgnoreCase)
                 ? name1[..^4]
                 : name1;
-            var name2WithoutSuffix = name2.EndsWith("Name", StringComparison.OrdinalIgnoreCase)
-                ? name2[..^4]
-                : name2;
 
-            return name1WithoutSuffix.Equals(name2WithoutSuffix, StringComparison.OrdinalIgnoreCase);
+            // Check if name2 starts with name1 (after removing 'Name' suffix)
+            return name2.StartsWith(name1WithoutSuffix, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
