@@ -800,13 +800,11 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.That(events, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
-                Assert.That((eventData as MediaJobOutputStateChangeEventData).PreviousState, Is.EqualTo(MediaJobState.Scheduled));
-                Assert.That((eventData as MediaJobOutputStateChangeEventData).Output.State, Is.EqualTo(MediaJobState.Processing));
-                Assert.That((eventData as MediaJobOutputStateChangeEventData).Output is MediaJobOutputAsset, Is.True);
-            });
+            Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
+            Assert.That((eventData as MediaJobOutputStateChangeEventData).PreviousState, Is.EqualTo(MediaJobState.Scheduled));
+            Assert.That((eventData as MediaJobOutputStateChangeEventData).Output.State, Is.EqualTo(MediaJobState.Processing));
+            Assert.That((eventData as MediaJobOutputStateChangeEventData).Output is MediaJobOutputAsset, Is.True);
+
             MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)(eventData as MediaJobOutputStateChangeEventData).Output;
             Assert.Multiple(() =>
             {
@@ -825,13 +823,11 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.That(events, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
-                Assert.That((eventData as MediaJobOutputStateChangeEventData).PreviousState, Is.EqualTo(MediaJobState.Scheduled));
-                Assert.That((eventData as MediaJobOutputStateChangeEventData).Output.State, Is.EqualTo(MediaJobState.Processing));
-                Assert.That((eventData as MediaJobOutputStateChangeEventData).Output is MediaJobOutputAsset, Is.True);
-            });
+            Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
+            Assert.That((eventData as MediaJobOutputStateChangeEventData).PreviousState, Is.EqualTo(MediaJobState.Scheduled));
+            Assert.That((eventData as MediaJobOutputStateChangeEventData).Output.State, Is.EqualTo(MediaJobState.Processing));
+            Assert.That((eventData as MediaJobOutputStateChangeEventData).Output is MediaJobOutputAsset, Is.True);
+
             MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)(eventData as MediaJobOutputStateChangeEventData).Output;
             Assert.Multiple(() =>
             {
@@ -897,13 +893,11 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.That(events, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
-                Assert.That((eventData as MediaJobFinishedEventData).PreviousState, Is.EqualTo(MediaJobState.Processing));
-                Assert.That((eventData as MediaJobFinishedEventData).State, Is.EqualTo(MediaJobState.Finished));
-                Assert.That((eventData as MediaJobFinishedEventData).Outputs.Count, Is.EqualTo(1));
-            });
+            Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
+            Assert.That((eventData as MediaJobFinishedEventData).PreviousState, Is.EqualTo(MediaJobState.Processing));
+            Assert.That((eventData as MediaJobFinishedEventData).State, Is.EqualTo(MediaJobState.Finished));
+            Assert.That((eventData as MediaJobFinishedEventData).Outputs.Count, Is.EqualTo(1));
+
             Assert.That((eventData as MediaJobFinishedEventData).Outputs[0] is MediaJobOutputAsset, Is.True);
             MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)(eventData as MediaJobFinishedEventData).Outputs[0];
 
@@ -924,13 +918,11 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.That(events, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
-                Assert.That((eventData as MediaJobCanceledEventData).PreviousState, Is.EqualTo(MediaJobState.Canceling));
-                Assert.That((eventData as MediaJobCanceledEventData).State, Is.EqualTo(MediaJobState.Canceled));
-                Assert.That((eventData as MediaJobCanceledEventData).Outputs.Count, Is.EqualTo(1));
-            });
+            Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
+            Assert.That((eventData as MediaJobCanceledEventData).PreviousState, Is.EqualTo(MediaJobState.Canceling));
+            Assert.That((eventData as MediaJobCanceledEventData).State, Is.EqualTo(MediaJobState.Canceled));
+            Assert.That((eventData as MediaJobCanceledEventData).Outputs.Count, Is.EqualTo(1));
+
             Assert.That((eventData as MediaJobCanceledEventData).Outputs[0] is MediaJobOutputAsset, Is.True);
 
             MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)(eventData as MediaJobCanceledEventData).Outputs[0];
@@ -951,20 +943,13 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.That(events, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
-                Assert.That((eventData as MediaJobErroredEventData).PreviousState, Is.EqualTo(MediaJobState.Processing));
-                Assert.That((eventData as MediaJobErroredEventData).State, Is.EqualTo(MediaJobState.Error));
-                Assert.That((eventData as MediaJobErroredEventData).Outputs.Count, Is.EqualTo(1));
-            });
-            Assert.Multiple(() =>
-            {
-                Assert.That((eventData as MediaJobErroredEventData).Outputs[0] is MediaJobOutputAsset, Is.True);
-
-                Assert.That((eventData as MediaJobErroredEventData).Outputs[0].State, Is.EqualTo(MediaJobState.Error));
-                Assert.That((eventData as MediaJobErroredEventData).Outputs[0].Error, Is.Not.Null);
-            });
+            Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
+            Assert.That((eventData as MediaJobErroredEventData).PreviousState, Is.EqualTo(MediaJobState.Processing));
+            Assert.That((eventData as MediaJobErroredEventData).State, Is.EqualTo(MediaJobState.Error));
+            Assert.That((eventData as MediaJobErroredEventData).Outputs.Count, Is.EqualTo(1));
+            Assert.That((eventData as MediaJobErroredEventData).Outputs[0] is MediaJobOutputAsset, Is.True);
+            Assert.That((eventData as MediaJobErroredEventData).Outputs[0].State, Is.EqualTo(MediaJobState.Error));
+            Assert.That((eventData as MediaJobErroredEventData).Outputs[0].Error, Is.Not.Null);
             Assert.Multiple(() =>
             {
                 Assert.That((eventData as MediaJobErroredEventData).Outputs[0].Error.Category, Is.EqualTo(MediaJobErrorCategory.Service));
@@ -1517,35 +1502,35 @@ namespace Azure.Messaging.EventGrid.Tests
         // properties being tested below.
         private static void AssertResourceEventData(dynamic eventData)
         {
-            Assert.NotNull(eventData);
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.That(eventData, Is.Not.Null);
+            Assert.That("72f988bf-86f1-41af-91ab-2d7cd011db47", Is.EqualTo(eventData.TenantId));
             var authorizationJson = JsonDocument.Parse(eventData.Authorization).RootElement;
-            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default",
-                authorizationJson.GetProperty("scope").GetString());
-            Assert.AreEqual("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default",
-                eventData.AuthorizationValue.Scope);
-            Assert.AreEqual("Microsoft.Web/sites/host/listKeys/action", authorizationJson.GetProperty("action").GetString());
-            Assert.AreEqual("Microsoft.Web/sites/host/listKeys/action", eventData.AuthorizationValue.Action);
-            Assert.AreEqual(
+            Assert.That("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default",
+                Is.EqualTo(authorizationJson.GetProperty("scope").GetString()));
+            Assert.That("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default",
+                Is.EqualTo(eventData.AuthorizationValue.Scope));
+            Assert.That("Microsoft.Web/sites/host/listKeys/action", Is.EqualTo(authorizationJson.GetProperty("action").GetString()));
+            Assert.That("Microsoft.Web/sites/host/listKeys/action", Is.EqualTo(eventData.AuthorizationValue.Action));
+            Assert.That(
                 "{\"role\":\"Azure EventGrid Service BuiltIn Role\",\"roleAssignmentScope\":\"/subscriptions/sub\",\"roleAssignmentId\":\"rid\",\"roleDefinitionId\":\"rd\",\"principalId\":\"principal\",\"principalType\":\"ServicePrincipal\"}",
-                authorizationJson.GetProperty("evidence").GetRawText());
-            Assert.AreEqual("Azure EventGrid Service BuiltIn Role", eventData.AuthorizationValue.Evidence["role"]);
-            Assert.AreEqual("/subscriptions/sub", eventData.AuthorizationValue.Evidence["roleAssignmentScope"]);
-            Assert.AreEqual("ServicePrincipal", eventData.AuthorizationValue.Evidence["principalType"]);
+                Is.EqualTo(authorizationJson.GetProperty("evidence").GetRawText()));
+            Assert.That("Azure EventGrid Service BuiltIn Role", Is.EqualTo(eventData.AuthorizationValue.Evidence["role"]));
+            Assert.That("/subscriptions/sub", Is.EqualTo(eventData.AuthorizationValue.Evidence["roleAssignmentScope"]));
+            Assert.That("ServicePrincipal", Is.EqualTo(eventData.AuthorizationValue.Evidence["principalType"]));
 
             var claimsJson = JsonDocument.Parse(eventData.Claims).RootElement;
-            Assert.AreEqual("https://management.core.windows.net", claimsJson.GetProperty("aud").GetString());
-            Assert.AreEqual("https://management.core.windows.net", eventData.ClaimsValue["aud"]);
+            Assert.That("https://management.core.windows.net", Is.EqualTo(claimsJson.GetProperty("aud").GetString()));
+            Assert.That("https://management.core.windows.net", Is.EqualTo(eventData.ClaimsValue["aud"]));
 
             var httpRequestJson = JsonDocument.Parse(eventData.HttpRequest).RootElement;
-            Assert.AreEqual("POST", httpRequestJson.GetProperty("method").GetString());
-            Assert.AreEqual("POST", eventData.HttpRequestValue.Method.ToString());
-            Assert.AreEqual(
+            Assert.That("POST", Is.EqualTo(httpRequestJson.GetProperty("method").GetString()));
+            Assert.That("POST", Is.EqualTo(eventData.HttpRequestValue.Method.ToString()));
+            Assert.That(
                 "https://management.azure.com/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default/listKeys?api-version=2018-11-01",
-                httpRequestJson.GetProperty("url").GetString());
-            Assert.AreEqual(
+                Is.EqualTo(httpRequestJson.GetProperty("url").GetString()));
+            Assert.That(
                 "https://management.azure.com/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Web/sites/function/host/default/listKeys?api-version=2018-11-01",
-                eventData.HttpRequestValue.Url);
+                Is.EqualTo(eventData.HttpRequestValue.Url));
         }
         #endregion
 
@@ -3067,14 +3052,13 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.That(events, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
-                Assert.That((eventData as MachineLearningServicesModelRegisteredEventData).ModelName, Is.EqualTo("sklearn_regression_model"));
-                Assert.That((eventData as MachineLearningServicesModelRegisteredEventData).ModelVersion, Is.EqualTo("3"));
 
-                Assert.That((eventData as MachineLearningServicesModelRegisteredEventData).ModelTags is IDictionary, Is.True);
-            });
+            Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
+            Assert.That((eventData as MachineLearningServicesModelRegisteredEventData).ModelName, Is.EqualTo("sklearn_regression_model"));
+            Assert.That((eventData as MachineLearningServicesModelRegisteredEventData).ModelVersion, Is.EqualTo("3"));
+
+            Assert.That((eventData as MachineLearningServicesModelRegisteredEventData).ModelTags is IDictionary, Is.True);
+
             IDictionary tags = (IDictionary)(eventData as MachineLearningServicesModelRegisteredEventData).ModelTags;
             Assert.Multiple(() =>
             {
@@ -3217,13 +3201,12 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.That(events, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
-                Assert.That((eventData as MediaJobOutputStateChangeEventData).PreviousState, Is.EqualTo(MediaJobState.Scheduled));
-                Assert.That((eventData as MediaJobOutputStateChangeEventData).Output.State, Is.EqualTo(MediaJobState.Processing));
-                Assert.That((eventData as MediaJobOutputStateChangeEventData).Output is MediaJobOutputAsset, Is.True);
-            });
+
+            Assert.That(events[0].TryGetSystemEventData(out object eventData), Is.True);
+            Assert.That((eventData as MediaJobOutputStateChangeEventData).PreviousState, Is.EqualTo(MediaJobState.Scheduled));
+            Assert.That((eventData as MediaJobOutputStateChangeEventData).Output.State, Is.EqualTo(MediaJobState.Processing));
+            Assert.That((eventData as MediaJobOutputStateChangeEventData).Output is MediaJobOutputAsset, Is.True);
+
             MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)(eventData as MediaJobOutputStateChangeEventData).Output;
             Assert.That(outputAsset.AssetName, Is.EqualTo("output-2ac2fe75-6557-4de5-ab25-5713b74a6901"));
         }

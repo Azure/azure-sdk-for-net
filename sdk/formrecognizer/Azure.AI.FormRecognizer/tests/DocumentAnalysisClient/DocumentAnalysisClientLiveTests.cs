@@ -123,19 +123,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(jobTitles.FirstOrDefault().Value.AsString(), Is.EqualTo("Senior Researcher"));
 
             var departments = document.Fields["Departments"].Value.AsList();
-            Assert.AreEqual(1, departments.Count);
+            Assert.That(departments.Count, Is.EqualTo(1));
             Assert.That(departments.FirstOrDefault().Value.AsString(), Is.EqualTo("Cloud & Al Department"));
 
             var emails = document.Fields["Emails"].Value.AsList();
-            Assert.AreEqual(1, emails.Count);
+            Assert.That(emails.Count, Is.EqualTo(1));
             Assert.That(emails.FirstOrDefault().Value.AsString(), Is.EqualTo("avery.smith@contoso.com"));
 
             var websites = document.Fields["Websites"].Value.AsList();
-            Assert.AreEqual(1, websites.Count);
+            Assert.That(websites.Count, Is.EqualTo(1));
             Assert.That(websites.FirstOrDefault().Value.AsString(), Is.EqualTo("https://www.contoso.com/"));
 
             var mobilePhones = document.Fields["MobilePhones"].Value.AsList();
-            Assert.AreEqual(1, mobilePhones.Count);
+            Assert.That(mobilePhones.Count, Is.EqualTo(1));
             Assert.That(mobilePhones.FirstOrDefault().FieldType, Is.EqualTo(DocumentFieldType.PhoneNumber));
 
             var otherPhones = document.Fields["WorkPhones"].Value.AsList();
@@ -806,7 +806,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 Assert.That(document.Fields, Is.Not.Null);
             });
-
             Assert.Multiple(() =>
             {
                 Assert.That(document.Fields.ContainsKey("AmountDue"), Is.True);
@@ -1418,7 +1417,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 Assert.That(document.Fields, Is.Not.Null);
             });
-
             Assert.Multiple(() =>
             {
                 Assert.That(document.Fields.ContainsKey("MerchantAddress"), Is.True);

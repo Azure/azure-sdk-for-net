@@ -920,12 +920,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.Pipeline.SendAsync(message, CancellationToken.None);
             var response = message.Response;
 
-            Assert.Multiple(() =>
-            {
-                // Assert
-                Assert.That(response.Status, Is.EqualTo(307));
-                Assert.That(response.Headers.TryGetValue("Location", out string value), Is.True);
-            });
+            // Assert
+            Assert.That(response.Status, Is.EqualTo(307));
+            Assert.That(response.Headers.TryGetValue("Location", out string value), Is.True);
+
             Assert.DoesNotThrow(() => { Uri redirectUri = new(value); });
 
             // Clean up

@@ -38,7 +38,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 Assert.That(properties.RepositoryName, Is.EqualTo(_repositoryName));
                 Assert.That(properties.RelatedArtifacts, Has.Count.GreaterThanOrEqualTo(helloWorldRelatedArtifacts));
             });
-
             Assert.Multiple(() =>
             {
                 Assert.That(properties.RelatedArtifacts.Any(

@@ -235,25 +235,25 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 if (lineIndex == 45)
                 {
-                    Assert.AreEqual(TextStyleName.Handwriting, line.Appearance.Style.Name);
+                    Assert.That(TextStyleName.Handwriting, Is.EqualTo(line.Appearance.Style.Name));
                 }
                 else
                 {
-                    Assert.AreEqual(TextStyleName.Other, line.Appearance.Style.Name);
+                    Assert.That(TextStyleName.Other, Is.EqualTo(line.Appearance.Style.Name));
                 }
             }
 
-            Assert.AreEqual(2, formPage.Tables.Count);
+            Assert.That(formPage.Tables.Count, Is.EqualTo(2));
 
             var sampleTable = formPage.Tables[1];
 
-            Assert.AreEqual(4, sampleTable.RowCount);
-            Assert.AreEqual(2, sampleTable.ColumnCount);
-            Assert.AreEqual(4, sampleTable.BoundingBox.Points.Count(), $"There should be exactly 4 points in the table bounding box.");
+            Assert.That(sampleTable.RowCount, Is.EqualTo(4));
+            Assert.That(sampleTable.ColumnCount, Is.EqualTo(2));
+            Assert.That(sampleTable.BoundingBox.Points.Count(), Is.EqualTo(4), $"There should be exactly 4 points in the table bounding box.");
 
             var cells = sampleTable.Cells.ToList();
 
-            Assert.AreEqual(8, cells.Count);
+            Assert.That(cells.Count, Is.EqualTo(8));
 
             var expectedText = new string[4, 2]
             {

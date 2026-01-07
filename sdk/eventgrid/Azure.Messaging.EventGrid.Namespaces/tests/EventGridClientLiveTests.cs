@@ -327,9 +327,9 @@ namespace Azure.Messaging.EventGrid.Tests
                 new ContentType("application/cloudevents+json"),
                 null);
             #endregion
-            Assert.AreEqual(evt.Source, receivedCloudEvent.Source);
-            Assert.AreEqual(evt.Type, receivedCloudEvent.Type);
-            Assert.AreEqual(evt.Id, receivedCloudEvent.Id);
+            Assert.That(evt.Source, Is.EqualTo(receivedCloudEvent.Source));
+            Assert.That(evt.Type, Is.EqualTo(receivedCloudEvent.Type));
+            Assert.That(evt.Id, Is.EqualTo(receivedCloudEvent.Id));
 
             #region Snippet:AcknowledgeCNCFEvent
             AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new string[] { eventResponse.BrokerProperties.LockToken.ToString() });

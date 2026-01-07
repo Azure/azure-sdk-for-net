@@ -163,7 +163,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(ex.Status, Is.EqualTo(200));
 
             dynamic error = ex.GetRawResponse()?.Content.ToDynamicFromJson(JsonPropertyNames.UseExact).error;
-            Assert.NotNull(error);
+            Assert.That(error, Is.Not.Null);
             Assert.Multiple(() =>
             {
                 Assert.That((string)error.code, Is.EqualTo("BadRequest"));
@@ -203,7 +203,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(ex.Status, Is.EqualTo(200));
 
             dynamic error = ex.GetRawResponse()?.Content.ToDynamicFromJson(JsonPropertyNames.UseExact).error;
-            Assert.NotNull(error);
+            Assert.That(error, Is.Not.Null);
             Assert.Multiple(() =>
             {
                 Assert.That((string)error.code, Is.EqualTo("BadRequest"));

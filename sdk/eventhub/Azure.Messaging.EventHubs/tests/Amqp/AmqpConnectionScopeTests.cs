@@ -2155,13 +2155,10 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(refreshTimer, Is.Not.Null, "The link should have a non-null timer.");
 
             mockScope.Object.Dispose();
-            Assert.Multiple(() =>
-            {
-                Assert.That(managedAuthorizations.Count, Is.Zero, "Disposal should stop managing authorizations.");
+            Assert.That(managedAuthorizations.Count, Is.Zero, "Disposal should stop managing authorizations.");
 
 #if NET8_0_OR_GREATER
-                Assert.That(refreshTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan), Is.False, "The timer should have been disposed.");
-            });
+            Assert.That(refreshTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan), Is.False, "The timer should have been disposed.");
 #else
             Assert.That(() => refreshTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan), Throws.InstanceOf<ObjectDisposedException>(), "The timer should have been disposed.");
 #endif

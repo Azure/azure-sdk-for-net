@@ -661,11 +661,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(message.MessageFormat, Is.Null, "The batch envelope should be not be marked with a batchable format when created from one event.");
                 Assert.That(message.DataBody, Is.Not.Null, "The batch envelope should a body.");
             });
-            Assert.Multiple(() =>
-            {
-                Assert.That(message.DataBody.ToList(), Has.Count.EqualTo(1), "The batch envelope should contain a single event in the body.");
-                Assert.That(message.MessageAnnotations.Map.TryGetValue(AmqpProperty.PartitionKey, out string partitionKeyAnnotation), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "There should be an annotation if a partition key was present.");
-            });
+            Assert.That(message.DataBody.ToList(), Has.Count.EqualTo(1), "The batch envelope should contain a single event in the body.");
+            Assert.That(message.MessageAnnotations.Map.TryGetValue(AmqpProperty.PartitionKey, out string partitionKeyAnnotation), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "There should be an annotation if a partition key was present.");
 
             if (!string.IsNullOrEmpty(partitionKey))
             {
@@ -698,11 +695,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(message.MessageFormat, Is.EqualTo(AmqpConstants.AmqpBatchedMessageFormat), "The batch envelope should be marked with a batchable format.");
                 Assert.That(message.DataBody, Is.Not.Null, "The batch envelope should a body.");
             });
-            Assert.Multiple(() =>
-            {
-                Assert.That(message.DataBody.ToList(), Has.Count.EqualTo(events.Length), "The batch envelope should contain each batch event in the body.");
-                Assert.That(message.MessageAnnotations.Map.TryGetValue(AmqpProperty.PartitionKey, out string partitionKeyAnnotation), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "There should be an annotation if a partition key was present.");
-            });
+            Assert.That(message.DataBody.ToList(), Has.Count.EqualTo(events.Length), "The batch envelope should contain each batch event in the body.");
+            Assert.That(message.MessageAnnotations.Map.TryGetValue(AmqpProperty.PartitionKey, out string partitionKeyAnnotation), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "There should be an annotation if a partition key was present.");
 
             if (!string.IsNullOrEmpty(partitionKey))
             {
@@ -879,11 +873,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(batchEnvelope.MessageFormat, Is.Null, "The batch envelope should be not be marked with a batchable format when created from one event.");
                 Assert.That(batchEnvelope.DataBody, Is.Not.Null, "The batch envelope should a body.");
             });
-            Assert.Multiple(() =>
-            {
-                Assert.That(batchEnvelope.DataBody.ToList(), Has.Count.EqualTo(1), "The batch envelope should contain a single event in the body.");
-                Assert.That(batchEnvelope.MessageAnnotations.Map.TryGetValue(AmqpProperty.PartitionKey, out string partitionKeyAnnotation), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "There should be an annotation if a partition key was present.");
-            });
+            Assert.That(batchEnvelope.DataBody.ToList(), Has.Count.EqualTo(1), "The batch envelope should contain a single event in the body.");
+            Assert.That(batchEnvelope.MessageAnnotations.Map.TryGetValue(AmqpProperty.PartitionKey, out string partitionKeyAnnotation), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "There should be an annotation if a partition key was present.");
 
             if (!string.IsNullOrEmpty(partitionKey))
             {
@@ -916,11 +907,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(batchEnvelope.MessageFormat, Is.EqualTo(AmqpConstants.AmqpBatchedMessageFormat), "The batch envelope should be marked with a batchable format.");
                 Assert.That(batchEnvelope.DataBody, Is.Not.Null, "The batch envelope should a body.");
             });
-            Assert.Multiple(() =>
-            {
-                Assert.That(batchEnvelope.DataBody.ToList(), Has.Count.EqualTo(source.Count), "The batch envelope should contain each batch event in the body.");
-                Assert.That(batchEnvelope.MessageAnnotations.Map.TryGetValue(AmqpProperty.PartitionKey, out string partitionKeyAnnotation), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "There should be an annotation if a partition key was present.");
-            });
+            Assert.That(batchEnvelope.DataBody.ToList(), Has.Count.EqualTo(source.Count), "The batch envelope should contain each batch event in the body.");
+            Assert.That(batchEnvelope.MessageAnnotations.Map.TryGetValue(AmqpProperty.PartitionKey, out string partitionKeyAnnotation), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "There should be an annotation if a partition key was present.");
 
             if (!string.IsNullOrEmpty(partitionKey))
             {

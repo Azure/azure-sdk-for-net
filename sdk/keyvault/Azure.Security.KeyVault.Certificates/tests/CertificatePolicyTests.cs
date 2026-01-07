@@ -280,7 +280,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.That(actual?.IpAddresses, Is.EqualTo(expected?.IpAddresses).Using(StringComparer.Ordinal));
         }
 
-        private class LifetimeActionComparer : IComparer<LifetimeAction>, IComparer
+        private class LifetimeActionComparer : IComparer<LifetimeAction>
         {
             public static readonly LifetimeActionComparer Instance = new LifetimeActionComparer();
 

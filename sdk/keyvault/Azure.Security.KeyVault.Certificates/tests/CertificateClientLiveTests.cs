@@ -621,29 +621,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
 #if NET9_0_OR_GREATER
             X509Certificate2 serverCertificate = X509CertificateLoader.LoadCertificate(mergedServerCertificate.Cer);
-<<<<<<< TODO: Unmerged change from project 'Azure.Security.KeyVault.Certificates.Tests(net8.0)', Before:
-            X509Certificate2 serverCertificate = new X509Certificate2(mergedServerCertificate.Cer);
-#endif
-            Assert.That(serverCertificate.Subject, Is.EqualTo(csrInfo.Subject.ToString()));
-            Assert.That(mergedServerCertificate.Name, Is.EqualTo(serverCertificateName));
-=======
-            X509Certificate2 serverCertificate = new X509Certificate2(mergedServerCertificate.Cer);
-            Assert.Multiple(() =>
-            {
-#endif
-                Assert.That(serverCertificate.Subject, Is.EqualTo(csrInfo.Subject.ToString()));
-                Assert.That(mergedServerCertificate.Name, Is.EqualTo(serverCertificateName));
-            });
->>>>>>> After
-
-            Assert.Multiple(() =>
-            {
 #else
             X509Certificate2 serverCertificate = new X509Certificate2(mergedServerCertificate.Cer);
 #endif
-                Assert.That(serverCertificate.Subject, Is.EqualTo(csrInfo.Subject.ToString()));
+            Assert.That(serverCertificate.Subject, Is.EqualTo(csrInfo.Subject.ToString()));
                 Assert.That(mergedServerCertificate.Name, Is.EqualTo(serverCertificateName));
-            });
 
             KeyVaultCertificateWithPolicy completedServerCertificate = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 

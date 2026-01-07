@@ -131,20 +131,20 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(jobTitles.FirstOrDefault().Value.AsString(), Is.EqualTo("Senior Researcher"));
 
             var departments = form.Fields["Departments"].Value.AsList();
-            Assert.AreEqual(1, departments.Count);
+            Assert.That(departments.Count, Is.EqualTo(1));
             Assert.That(departments.FirstOrDefault().Value.AsString(), Is.EqualTo("Cloud & Al Department"));
 
             var emails = form.Fields["Emails"].Value.AsList();
-            Assert.AreEqual(1, emails.Count);
+            Assert.That(emails.Count, Is.EqualTo(1));
             Assert.That(emails.FirstOrDefault().Value.AsString(), Is.EqualTo("avery.smith@contoso.com"));
 
             var websites = form.Fields["Websites"].Value.AsList();
-            Assert.AreEqual(1, websites.Count);
+            Assert.That(websites.Count, Is.EqualTo(1));
             Assert.That(websites.FirstOrDefault().Value.AsString(), Is.EqualTo("https://www.contoso.com/"));
 
             // Update validation when https://github.com/Azure/azure-sdk-for-python/issues/14300 is fixed
             var mobilePhones = form.Fields["MobilePhones"].Value.AsList();
-            Assert.AreEqual(1, mobilePhones.Count);
+            Assert.That(mobilePhones.Count, Is.EqualTo(1));
             Assert.That(mobilePhones.FirstOrDefault().Value.ValueType, Is.EqualTo(FieldValueType.PhoneNumber));
 
             var otherPhones = form.Fields["WorkPhones"].Value.AsList();
@@ -160,7 +160,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(addresses.FirstOrDefault().Value.AsString(), Is.EqualTo("2 Kingdom Street Paddington, London, W2 6BD"));
 
             var companyNames = form.Fields["CompanyNames"].Value.AsList();
-            Assert.AreEqual(1, companyNames.Count);
+            Assert.That(companyNames.Count, Is.EqualTo(1));
             Assert.That(companyNames.FirstOrDefault().Value.AsString(), Is.EqualTo("Contoso"));
         }
 
@@ -244,20 +244,20 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(jobTitles.FirstOrDefault().Value.AsString(), Is.EqualTo("Senior Researcher"));
 
             var departments = form.Fields["Departments"].Value.AsList();
-            Assert.AreEqual(1, departments.Count);
+            Assert.That(departments.Count, Is.EqualTo(1));
             Assert.That(departments.FirstOrDefault().Value.AsString(), Is.EqualTo("Cloud & Al Department"));
 
             var emails = form.Fields["Emails"].Value.AsList();
-            Assert.AreEqual(1, emails.Count);
+            Assert.That(emails.Count, Is.EqualTo(1));
             Assert.That(emails.FirstOrDefault().Value.AsString(), Is.EqualTo("avery.smith@contoso.com"));
 
             var websites = form.Fields["Websites"].Value.AsList();
-            Assert.AreEqual(1, websites.Count);
+            Assert.That(websites.Count, Is.EqualTo(1));
             Assert.That(websites.FirstOrDefault().Value.AsString(), Is.EqualTo("https://www.contoso.com/"));
 
             // Update validation when https://github.com/Azure/azure-sdk-for-python/issues/14300 is fixed
             var mobilePhones = form.Fields["MobilePhones"].Value.AsList();
-            Assert.AreEqual(1, mobilePhones.Count);
+            Assert.That(mobilePhones.Count, Is.EqualTo(1));
             Assert.That(mobilePhones.FirstOrDefault().Value.ValueType, Is.EqualTo(FieldValueType.PhoneNumber));
 
             var otherPhones = form.Fields["WorkPhones"].Value.AsList();
@@ -273,7 +273,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(addresses.FirstOrDefault().Value.AsString(), Is.EqualTo("2 Kingdom Street Paddington, London, W2 6BD"));
 
             var companyNames = form.Fields["CompanyNames"].Value.AsList();
-            Assert.AreEqual(1, companyNames.Count);
+            Assert.That(companyNames.Count, Is.EqualTo(1));
             Assert.That(companyNames.FirstOrDefault().Value.AsString(), Is.EqualTo("Contoso"));
         }
 
