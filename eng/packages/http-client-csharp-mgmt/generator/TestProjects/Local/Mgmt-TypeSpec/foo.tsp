@@ -70,12 +70,12 @@ model SafeFlattenModel {
 
 // Test case for multi-layer safe flatten with internal properties
 // This should flatten CapacityReservationGroupId all the way up to ComputeFleetVmProfile
-model SubResource {
+model TestSubResource {
   id?: armResourceIdentifier;
 }
 
 model CapacityReservationProfile {
-  capacityReservationGroup?: SubResource;
+  capacityReservationGroup?: TestSubResource;
 }
 
 model ComputeFleetVmProfile {

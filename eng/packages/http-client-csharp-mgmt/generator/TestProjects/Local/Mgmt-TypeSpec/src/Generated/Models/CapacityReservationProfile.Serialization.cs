@@ -81,7 +81,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 return null;
             }
-            SubResource1 capacityReservationGroup = default;
+            TestSubResource capacityReservationGroup = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    capacityReservationGroup = SubResource1.DeserializeSubResource1(prop.Value, options);
+                    capacityReservationGroup = TestSubResource.DeserializeTestSubResource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -12,21 +12,21 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The SubResource1. </summary>
-    internal partial class SubResource1
+    /// <summary> The TestSubResource. </summary>
+    internal partial class TestSubResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubResource1"/>. </summary>
-        public SubResource1()
+        /// <summary> Initializes a new instance of <see cref="TestSubResource"/>. </summary>
+        public TestSubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubResource1"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestSubResource"/>. </summary>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubResource1(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestSubResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -14,12 +14,12 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The SubResource1. </summary>
-    internal partial class SubResource1 : IJsonModel<SubResource1>
+    /// <summary> The TestSubResource. </summary>
+    internal partial class TestSubResource : IJsonModel<TestSubResource>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SubResource1>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TestSubResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubResource1>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestSubResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubResource1)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TestSubResource)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Id))
             {
@@ -59,24 +59,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubResource1 IJsonModel<SubResource1>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TestSubResource IJsonModel<TestSubResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SubResource1 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TestSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubResource1>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestSubResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubResource1)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TestSubResource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubResource1(document.RootElement, options);
+            return DeserializeTestSubResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SubResource1 DeserializeSubResource1(JsonElement element, ModelReaderWriterOptions options)
+        internal static TestSubResource DeserializeTestSubResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,47 +100,47 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SubResource1(id, additionalBinaryDataProperties);
+            return new TestSubResource(id, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SubResource1>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TestSubResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubResource1>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestSubResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SubResource1)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestSubResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubResource1 IPersistableModel<SubResource1>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TestSubResource IPersistableModel<TestSubResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SubResource1 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TestSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubResource1>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestSubResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSubResource1(document.RootElement, options);
+                        return DeserializeTestSubResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubResource1)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestSubResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SubResource1>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TestSubResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

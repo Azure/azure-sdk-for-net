@@ -5643,9 +5643,9 @@
                             "type": {
                               "$id": "521",
                               "kind": "model",
-                              "name": "SubResource1",
+                              "name": "TestSubResource",
                               "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
-                              "crossLanguageDefinitionId": "MgmtTypeSpec.SubResource",
+                              "crossLanguageDefinitionId": "MgmtTypeSpec.TestSubResource",
                               "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
                               "decorators": [
                                 {
@@ -5678,7 +5678,7 @@
                                   "discriminator": false,
                                   "flatten": false,
                                   "decorators": [],
-                                  "crossLanguageDefinitionId": "MgmtTypeSpec.SubResource.id",
+                                  "crossLanguageDefinitionId": "MgmtTypeSpec.TestSubResource.id",
                                   "serializationOptions": {
                                     "json": {
                                       "name": "id"

@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProfile"/>. </summary>
         /// <param name="capacityReservationGroup"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationProfile(SubResource1 capacityReservationGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityReservationProfile(TestSubResource capacityReservationGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityReservationGroup = capacityReservationGroup;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,7 +34,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Gets or sets the CapacityReservationGroup. </summary>
         [WirePath("capacityReservationGroup")]
-        internal SubResource1 CapacityReservationGroup { get; set; }
+        internal TestSubResource CapacityReservationGroup { get; set; }
 
         /// <summary> Gets or sets the Id. </summary>
         [WirePath("capacityReservationGroup.id")]
@@ -48,7 +48,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 if (CapacityReservationGroup is null)
                 {
-                    CapacityReservationGroup = new SubResource1();
+                    CapacityReservationGroup = new TestSubResource();
                 }
                 CapacityReservationGroup.Id = value;
             }
