@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.Sms.Models
 {
     /// <summary> A single opt out recipient number. </summary>
-    public partial class OptOutRecipient
+    internal partial class OptOutRecipient
     {
         /// <summary> Initializes a new instance of <see cref="OptOutRecipient"/>. </summary>
         /// <param name="to"> The recipient's phone number (in E.164 format). </param>

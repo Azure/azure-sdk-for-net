@@ -20,6 +20,7 @@ namespace Azure.Communication.Sms
     public class SmsClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly DeliveryReportsRestClient _deliveryReportsRestClient;
         internal SmsRestClient RestClient { get; }
 
         #region public constructors - all arguments need null check
@@ -83,7 +84,8 @@ namespace Azure.Communication.Sms
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new SmsRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
-            OptOuts = new OptOutsClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+            _deliveryReportsRestClient = new DeliveryReportsRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), "2026-01-23");
+            OptOuts = new OptOuts(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
         }
 
         #endregion
@@ -93,13 +95,14 @@ namespace Azure.Communication.Sms
         {
             _clientDiagnostics = null;
             RestClient = null;
+            _deliveryReportsRestClient = null;
             OptOuts = null;
         }
 
         /// <summary>
-        /// Opt Out management client.
+        /// Opt Out management sub-client.
         /// </summary>
-        public virtual OptOutsClient OptOuts { get; private set; }
+        public virtual OptOuts OptOuts { get; private set; }
 
         /// <summary>
         /// Sends a SMS <paramref name="from"/> a phone number that is acquired by the authenticated account, <paramref name="to"/> another phone number.
@@ -166,8 +169,15 @@ namespace Azure.Communication.Sms
                         RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
                     });
 
-                Response<SmsSendResponse> response = await RestClient.SendAsync(from, recipients, message, options, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                Response<object> response = await RestClient.SendAsync(from, recipients, message, options, cancellationToken).ConfigureAwait(false);
+
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+
+                var smsSendResponse = (SmsSendResponse)response.Value;
+                return Response.FromValue(smsSendResponse.Value, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -202,8 +212,89 @@ namespace Azure.Communication.Sms
                         RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
                     });
 
-                Response<SmsSendResponse> response = RestClient.Send(from, recipients, message, options, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                Response<object> response = RestClient.Send(from, recipients, message, options, cancellationToken);
+
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+
+                var smsSendResponse = (SmsSendResponse)response.Value;
+                return Response.FromValue(smsSendResponse.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets delivery report for a specific outgoing message.
+        /// </summary>
+        /// <param name="outgoingMessageId">The identifier of the outgoing message.</param>
+        /// <param name="cancellationToken">The cancellation token for the task.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="outgoingMessageId"/> is null.</exception>
+        public virtual async Task<Response<DeliveryReport>> GetDeliveryReportAsync(string outgoingMessageId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(GetDeliveryReport)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrWhiteSpace(outgoingMessageId, nameof(outgoingMessageId));
+
+                Response<object> response = await _deliveryReportsRestClient.GetAsync(outgoingMessageId, cancellationToken).ConfigureAwait(false);
+
+                if (response.Value is DeliveryReport deliveryReport)
+                {
+                    return Response.FromValue(deliveryReport, response.GetRawResponse());
+                }
+                else if (response.Value is ErrorResponse error)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                else
+                {
+                    throw new InvalidOperationException("Unexpected response type");
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets delivery report for a specific outgoing message.
+        /// </summary>
+        /// <param name="outgoingMessageId">The identifier of the outgoing message.</param>
+        /// <param name="cancellationToken">The cancellation token for the underlying request.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="outgoingMessageId"/> is null.</exception>
+        public virtual Response<DeliveryReport> GetDeliveryReport(string outgoingMessageId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(GetDeliveryReport)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrWhiteSpace(outgoingMessageId, nameof(outgoingMessageId));
+
+                Response<object> response = _deliveryReportsRestClient.Get(outgoingMessageId, cancellationToken);
+
+                if (response.Value is DeliveryReport deliveryReport)
+                {
+                    return Response.FromValue(deliveryReport, response.GetRawResponse());
+                }
+                else if (response.Value is ErrorResponse error)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                else
+                {
+                    throw new InvalidOperationException("Unexpected response type");
+                }
             }
             catch (Exception ex)
             {

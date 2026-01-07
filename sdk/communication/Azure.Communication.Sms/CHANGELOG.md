@@ -1,26 +1,44 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
+- Added delivery report functionality to `SmsClient`:
+  - New `SmsClient.GetDeliveryReport` and `SmsClient.GetDeliveryReportAsync` methods for retrieving message delivery status
+  - Provides detailed information including delivery status, delivery attempts, and timestamps
+  - Supports tracking partner-generated message IDs via `MessagingConnectPartnerMessageId` property
+- Improved MessagingConnect partner integration with standard Azure SDK patterns (changed from 1.1.0-beta.3):
+  - Use `Dictionary<string, object>` for partner-specific parameters instead of the previous `MessagingConnectPartnerParameters` helper class
+  - Updated constructor: `new MessagingConnectOptions(string partner, IDictionary<string, object> partnerParams)`
+  - Follows Azure SDK design guidelines for flexible parameter collections
+  - Migration from beta: Change `new MessagingConnectOptions("your-api-key", "PartnerName")` to `new MessagingConnectOptions("PartnerName", new Dictionary<string, object> { { "ApiKey", "your-api-key" } })`
 
-### Bugs Fixed
+### Other Changes (changed from 1.1.0-beta.2)
 
-### Other Changes
+- **Redesigned Opt-Out Management API response types for improved consistency and developer experience**:
+  - `OptOutResponseItem` has been renamed to `OptOutCheckResponseItem` to match the Check operation
+  - `OptOutAddResponseItem` and `OptOutRemoveResponseItem` have been unified into a single `OptOutOperationResponseItem` type since they were functionally identical
+  - Updated method signatures:
+    - `OptOuts.CheckAsync()` and `OptOuts.Check()` now return `IReadOnlyList<OptOutCheckResponseItem>`
+    - `OptOuts.AddAsync()`, `OptOuts.Add()`, `OptOuts.RemoveAsync()`, and `OptOuts.Remove()` now return `IReadOnlyList<OptOutOperationResponseItem>`
+  - **Migration guide**:
+    - Replace `OptOutResponseItem` with `OptOutCheckResponseItem` for Check operations
+    - Replace both `OptOutAddResponseItem` and `OptOutRemoveResponseItem` with `OptOutOperationResponseItem` for Add and Remove operations
+  - This change eliminates duplicate types and provides consistent naming across all opt-out operations
 
 ## 1.1.0-beta.3 (2025-06-12)
 
 ### Features Added
- - Introduced Messaging Connect support in the .NET SDK.
-    - Added a new MessagingConnect field to the SmsSendOptions model.
-    - The MessagingConnect structure includes:
-        - apiKey: used for authenticating Messaging Connect requests.
-        - partner: identifies the Messaging Connect partner.
-    - Supports:
-        - Incoming and outgoing flows for long codes.
-        - Outgoing flow for Dynamic Alpha Sender IDs (DASID).
+
+- Introduced Messaging Connect support in the .NET SDK.
+  - Added a new MessagingConnect field to the SmsSendOptions model.
+  - The MessagingConnect structure includes:
+    - partner: identifies the Messaging Connect partner.
+    - partnerParams: partner-specific parameters as key-value pairs (e.g., apiKey, servicePlanId, authToken).
+  - Supports:
+    - Incoming and outgoing flows for long codes.
+    - Outgoing flow for Dynamic Alpha Sender IDs (DASID).
 
 ## 1.1.0-beta.2 (2024-12-10)
 

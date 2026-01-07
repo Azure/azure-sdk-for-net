@@ -13,21 +13,21 @@ namespace Azure.Communication.Sms
     public partial class MessagingConnectOptions
     {
         /// <summary> Initializes a new instance of <see cref="MessagingConnectOptions"/>. </summary>
-        /// <param name="apiKey"> Represents the API key associated with the customer's account in the Messaging Connect Partner portal. </param>
-        /// <param name="partner"> Specifies the partner associated with the API key. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiKey"/> or <paramref name="partner"/> is null. </exception>
-        public MessagingConnectOptions(string apiKey, string partner)
+        /// <param name="partner"> Specifies the partner name for message delivery. </param>
+        /// <param name="partnerParams"> Partner-specific parameters as key-value pairs. Must contain at least one parameter required by the messaging connect partner (e.g., apiKey, servicePlanId, authToken, etc.). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partner"/> or <paramref name="partnerParams"/> is null. </exception>
+        public MessagingConnectOptions(string partner, object partnerParams)
         {
-            Argument.AssertNotNull(apiKey, nameof(apiKey));
             Argument.AssertNotNull(partner, nameof(partner));
+            Argument.AssertNotNull(partnerParams, nameof(partnerParams));
 
-            ApiKey = apiKey;
             Partner = partner;
+            PartnerParams = partnerParams;
         }
 
-        /// <summary> Represents the API key associated with the customer's account in the Messaging Connect Partner portal. </summary>
-        public string ApiKey { get; }
-        /// <summary> Specifies the partner associated with the API key. </summary>
+        /// <summary> Specifies the partner name for message delivery. </summary>
         public string Partner { get; }
+        /// <summary> Partner-specific parameters as key-value pairs. Must contain at least one parameter required by the messaging connect partner (e.g., apiKey, servicePlanId, authToken, etc.). </summary>
+        public object PartnerParams { get; }
     }
 }
