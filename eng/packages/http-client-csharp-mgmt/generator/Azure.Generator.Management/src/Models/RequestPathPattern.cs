@@ -215,7 +215,26 @@ namespace Azure.Generator.Management.Models
 
             _contextualParameters ??= ContextualParameterBuilder.BuildContextualParameters(this).ToDictionary(p => p.VariableName);
 
-            return _contextualParameters.TryGetValue(parameter.WireInfo.SerializedName, out contextualParameter);
+            var parameterName = parameter.WireInfo.SerializedName;
+
+            // Try exact match first
+            if (_contextualParameters.TryGetValue(parameterName, out contextualParameter))
+            {
+                return true;
+            }
+
+            // Handle resource group parameter name variations
+            // If the parameter is named "resourceGroup", also try "resourceGroupName" and vice versa
+            if (parameterName.Equals("resourceGroup", StringComparison.OrdinalIgnoreCase))
+            {
+                return _contextualParameters.TryGetValue("resourceGroupName", out contextualParameter);
+            }
+            else if (parameterName.Equals("resourceGroupName", StringComparison.OrdinalIgnoreCase))
+            {
+                return _contextualParameters.TryGetValue("resourceGroup", out contextualParameter);
+            }
+
+            return false;
         }
     }
 }
