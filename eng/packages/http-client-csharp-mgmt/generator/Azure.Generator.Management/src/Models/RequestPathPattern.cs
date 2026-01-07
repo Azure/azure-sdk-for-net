@@ -236,7 +236,7 @@ namespace Azure.Generator.Management.Models
         /// <summary>
         /// Determines if two parameter names are equivalent by checking if they differ only by a "Name" suffix.
         /// For example, "resourceGroup" matches "resourceGroupName" because one is exactly the other with
-        /// "Name" appended. If name1 ends with "Name", the suffix is removed before performing the comparison.
+        /// "Name" appended. The check is bidirectional and case-insensitive.
         /// </summary>
         private static bool AreParameterNamesEquivalent(string name1, string name2)
         {
