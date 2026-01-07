@@ -139,6 +139,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
+        /// <summary> Gets the BytesArrayValue. </summary>
+        [WirePath("properties.bytesArrayValue")]
+        public IList<BinaryData> BytesArrayValue
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.BytesArrayValue;
+            }
+        }
+
         /// <summary> double value. </summary>
         [WirePath("properties.doubleValue")]
         public double? DoubleValue
