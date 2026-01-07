@@ -74,7 +74,10 @@ namespace Azure.Generator.Visitors
             RestClientProvider enclosingType,
             ScmMethodProvider? createRequestMethodProvider)
         {
-            UpdateMethod(createRequestMethodProvider!);
+            if (createRequestMethodProvider != null)
+            {
+                UpdateMethod(createRequestMethodProvider);
+            }
 
             return createRequestMethodProvider;
         }
