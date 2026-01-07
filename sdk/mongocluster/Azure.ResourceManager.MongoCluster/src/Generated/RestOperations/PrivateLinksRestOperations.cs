@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByMongoClusterRequest(Guid subscriptionId, string resourceGroupName, string mongoClusterName, RequestContext context)
+        internal HttpMessage CreateGetPrivateLinksRequest(Guid subscriptionId, string resourceGroupName, string mongoClusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MongoCluster
             return message;
         }
 
-        internal HttpMessage CreateNextGetByMongoClusterRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string mongoClusterName, RequestContext context)
+        internal HttpMessage CreateNextGetPrivateLinksRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string mongoClusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
