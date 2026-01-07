@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Core.Tools.Operations;
+using Azure.AI.AgentServer.Core.Tools.Utilities;
 
 namespace Azure.AI.AgentServer.Core.Tools;
 
@@ -72,30 +73,31 @@ public class FoundryToolClient : IAsyncDisposable, IDisposable
     /// <exception cref="Exceptions.MCPToolApprovalRequiredException">Tool approval required.</exception>
     public virtual IReadOnlyList<ResolvedFoundryTool> ListTools(CancellationToken cancellationToken = default)
     {
-        var existingNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var tools = new List<ResolvedFoundryTool>();
 
         if (_options.ToolConfig.HostedMcpTools.Count > 0)
         {
-            var response = _hostedMcpTools.ListTools(existingNames, cancellationToken);
+            var response = _hostedMcpTools.ListTools(cancellationToken);
             tools.AddRange(response.Value);
         }
 
         if (_options.ToolConfig.ConnectedTools.Count > 0)
         {
-            var response = _connectedTools.ResolveTools(existingNames, cancellationToken);
+            var response = _connectedTools.ResolveTools(cancellationToken);
             tools.AddRange(response.Value);
         }
 
+        var resolvedTools = ResolveToolNameConflicts(tools);
+
         // Attach sync + async invokers
-        foreach (var tool in tools)
+        foreach (var tool in resolvedTools)
         {
             tool.Invoker = args => InvokeTool(tool, args, cancellationToken);
             tool.AsyncInvoker = async args =>
                 await InvokeToolAsync(tool, args, cancellationToken).ConfigureAwait(false);
         }
 
-        return tools;
+        return resolvedTools;
     }
 
     /// <summary>
@@ -107,7 +109,6 @@ public class FoundryToolClient : IAsyncDisposable, IDisposable
     /// <exception cref="Exceptions.MCPToolApprovalRequiredException">Tool approval required.</exception>
     public virtual async Task<IReadOnlyList<ResolvedFoundryTool>> ListToolsAsync(CancellationToken cancellationToken = default)
     {
-        var existingNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var tools = new List<ResolvedFoundryTool>();
 
         // Parallel execution for better performance
@@ -115,12 +116,12 @@ public class FoundryToolClient : IAsyncDisposable, IDisposable
 
         if (_options.ToolConfig.HostedMcpTools.Count > 0)
         {
-            tasks.Add(_hostedMcpTools.ListToolsAsync(existingNames, cancellationToken));
+            tasks.Add(_hostedMcpTools.ListToolsAsync(cancellationToken));
         }
 
         if (_options.ToolConfig.ConnectedTools.Count > 0)
         {
-            tasks.Add(_connectedTools.ResolveToolsAsync(existingNames, cancellationToken));
+            tasks.Add(_connectedTools.ResolveToolsAsync(cancellationToken));
         }
 
         if (tasks.Count > 0)
@@ -133,15 +134,17 @@ public class FoundryToolClient : IAsyncDisposable, IDisposable
             }
         }
 
+        var resolvedTools = ResolveToolNameConflicts(tools);
+
         // Attach async invokers
-        foreach (var tool in tools)
+        foreach (var tool in resolvedTools)
         {
             tool.Invoker = args => InvokeTool(tool, args, cancellationToken);
             tool.AsyncInvoker = async args =>
                 await InvokeToolAsync(tool, args, cancellationToken).ConfigureAwait(false);
         }
 
-        return tools;
+        return resolvedTools;
     }
 
     /// <summary>
@@ -244,6 +247,27 @@ public class FoundryToolClient : IAsyncDisposable, IDisposable
         return tools.FirstOrDefault(t =>
             string.Equals(t.Name, toolName, StringComparison.OrdinalIgnoreCase))
             ?? throw new KeyNotFoundException($"Unknown tool: {toolName}");
+    }
+
+    private static IReadOnlyList<ResolvedFoundryTool> ResolveToolNameConflicts(IReadOnlyList<ResolvedFoundryTool> tools)
+    {
+        if (tools.Count == 0)
+        {
+            return tools;
+        }
+
+        var existingNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var resolvedTools = new List<ResolvedFoundryTool>(tools.Count);
+
+        foreach (var tool in tools)
+        {
+            var resolvedName = NameResolver.EnsureUniqueName(tool.Name, existingNames);
+            var resolvedTool = resolvedName == tool.Name ? tool : tool with { Name = resolvedName };
+            existingNames.Add(resolvedName);
+            resolvedTools.Add(resolvedTool);
+        }
+
+        return resolvedTools;
     }
 
     private static Uri EnsureTrailingSlash(Uri endpoint)

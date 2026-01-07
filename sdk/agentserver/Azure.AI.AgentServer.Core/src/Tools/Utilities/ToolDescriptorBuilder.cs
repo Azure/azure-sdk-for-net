@@ -15,12 +15,10 @@ internal static class ToolDescriptorBuilder
     /// </summary>
     /// <param name="rawTools">Raw tool data from API.</param>
     /// <param name="source">Source of the tools.</param>
-    /// <param name="existingNames">Set of existing tool names to avoid conflicts.</param>
     /// <returns>List of built tool descriptors.</returns>
     public static IReadOnlyList<ResolvedFoundryTool> BuildDescriptors(
         IEnumerable<Dictionary<string, object?>> rawTools,
-        FoundryToolSource source,
-        HashSet<string> existingNames)
+        FoundryToolSource source)
     {
         var descriptors = new List<ResolvedFoundryTool>();
 
@@ -32,7 +30,6 @@ internal static class ToolDescriptorBuilder
                 continue;
             }
 
-            var resolvedName = NameResolver.EnsureUniqueName(name, existingNames);
             var inputSchema = ToolMetadataExtractor.ExtractInputSchema(raw);
             var foundryTool = raw.TryGetValue("foundry_tool", out var td) && td is FoundryTool tDef
                 ? tDef
@@ -40,7 +37,7 @@ internal static class ToolDescriptorBuilder
 
             var descriptor = new ResolvedFoundryTool
             {
-                Name = resolvedName,
+                Name = name,
                 Description = description ?? string.Empty,
                 Metadata = raw,
                 InputSchema = inputSchema,
@@ -48,7 +45,6 @@ internal static class ToolDescriptorBuilder
             };
 
             descriptors.Add(descriptor);
-            existingNames.Add(resolvedName);
         }
 
         return descriptors;
