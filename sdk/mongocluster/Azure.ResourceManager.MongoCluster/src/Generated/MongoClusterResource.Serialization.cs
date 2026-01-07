@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MongoCluster
 {
     /// <summary></summary>
-    public partial class MongoClusterResource : ArmResource, IJsonModel<MongoClusterData>
+    public partial class MongoClusterResource : IJsonModel<MongoClusterData>
     {
         private static IJsonModel<MongoClusterData> s_dataDeserializationInstance;
 
