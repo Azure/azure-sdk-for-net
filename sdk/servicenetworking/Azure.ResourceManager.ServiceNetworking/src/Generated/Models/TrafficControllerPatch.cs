@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> The type used for update operations of the TrafficController. </summary>
     public partial class TrafficControllerPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TrafficControllerPatch"/>. </summary>
         public TrafficControllerPatch()
@@ -54,26 +26,33 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Initializes a new instance of <see cref="TrafficControllerPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerPatch(IDictionary<string, string> tags, TrafficControllerUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficControllerPatch(IDictionary<string, string> tags, TrafficControllerUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The resource-specific properties for this resource. </summary>
         internal TrafficControllerUpdateProperties Properties { get; set; }
+
         /// <summary> Security Policy Configuration. </summary>
         public SecurityPolicyConfigurations TrafficControllerUpdateSecurityPolicyConfigurations
         {
-            get => Properties is null ? default : Properties.SecurityPolicyConfigurations;
+            get
+            {
+                return Properties is null ? default : Properties.SecurityPolicyConfigurations;
+            }
             set
             {
                 if (Properties is null)
+                {
                     Properties = new TrafficControllerUpdateProperties();
+                }
                 Properties.SecurityPolicyConfigurations = value;
             }
         }
