@@ -232,7 +232,7 @@ namespace Azure.Generator.Management.Models
             }
 
             // If no match by name and operation path is provided, try to match by key
-            if (operationPath != null && _contextualParametersByKey != null)
+            if (operationPath is not null && _contextualParametersByKey is not null)
             {
                 // Find the key for this parameter in the operation path
                 string? key = GetParameterKey(operationPath, parameterName);
