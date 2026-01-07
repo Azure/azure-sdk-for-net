@@ -33,18 +33,16 @@ internal class FoundryConnectedToolsOperations
     /// <summary>
     /// Resolves remote tools synchronously.
     /// </summary>
-    /// <param name="existingNames">Set of existing tool names to avoid conflicts.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>List of remote tools.</returns>
     public Response<IReadOnlyList<ResolvedFoundryTool>> ResolveTools(
-        HashSet<string> existingNames,
         CancellationToken cancellationToken = default)
     {
         var message = CreateResolveToolsMessage(cancellationToken);
         using (message)
         {
             var response = _invoker.SendRequest(message, cancellationToken);
-            var tools = ProcessResolveToolsResponse(response, existingNames);
+            var tools = ProcessResolveToolsResponse(response);
             return Response.FromValue<IReadOnlyList<ResolvedFoundryTool>>(tools, response);
         }
     }
@@ -52,18 +50,16 @@ internal class FoundryConnectedToolsOperations
     /// <summary>
     /// Resolves remote tools asynchronously.
     /// </summary>
-    /// <param name="existingNames">Set of existing tool names to avoid conflicts.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task returning list of remote tools.</returns>
     public async Task<Response<IReadOnlyList<ResolvedFoundryTool>>> ResolveToolsAsync(
-        HashSet<string> existingNames,
         CancellationToken cancellationToken = default)
     {
         var message = CreateResolveToolsMessage(cancellationToken);
         using (message)
         {
             var response = await _invoker.SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
-            var tools = await ProcessResolveToolsResponseAsync(response, existingNames, cancellationToken)
+            var tools = await ProcessResolveToolsResponseAsync(response, cancellationToken)
                 .ConfigureAwait(false);
             return Response.FromValue<IReadOnlyList<ResolvedFoundryTool>>(tools, response);
         }
@@ -166,9 +162,7 @@ internal class FoundryConnectedToolsOperations
             cancellationToken);
     }
 
-    private IReadOnlyList<ResolvedFoundryTool> ProcessResolveToolsResponse(
-        Response response,
-        HashSet<string> existingNames)
+    private IReadOnlyList<ResolvedFoundryTool> ProcessResolveToolsResponse(Response response)
     {
         if (response.ContentStream == null)
         {
@@ -188,15 +182,11 @@ internal class FoundryConnectedToolsOperations
 
         var enrichedTools = ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
 
-        return ToolDescriptorBuilder.BuildDescriptors(
-            enrichedTools,
-            FoundryToolSource.CONNECTED,
-            existingNames);
+        return ToolDescriptorBuilder.BuildDescriptors(enrichedTools, FoundryToolSource.CONNECTED);
     }
 
     private async Task<IReadOnlyList<ResolvedFoundryTool>> ProcessResolveToolsResponseAsync(
         Response response,
-        HashSet<string> existingNames,
         CancellationToken cancellationToken)
     {
         if (response.ContentStream == null)
@@ -218,10 +208,7 @@ internal class FoundryConnectedToolsOperations
 
         var enrichedTools = ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
 
-        return ToolDescriptorBuilder.BuildDescriptors(
-            enrichedTools,
-            FoundryToolSource.CONNECTED,
-            existingNames);
+        return ToolDescriptorBuilder.BuildDescriptors(enrichedTools, FoundryToolSource.CONNECTED);
     }
 
     private object? ProcessInvokeToolResponse(Response response)

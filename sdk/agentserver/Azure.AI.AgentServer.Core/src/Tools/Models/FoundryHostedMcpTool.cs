@@ -22,6 +22,14 @@ public sealed record FoundryHostedMcpTool : FoundryTool
     }
 
     /// <summary>
+    /// Creates an MCP tool definition.
+    /// </summary>
+    public static FoundryHostedMcpTool Create(
+        string name,
+        IReadOnlyDictionary<string, object?>? additionalProperties = null)
+        => new(name, additionalProperties);
+
+    /// <summary>
     /// Gets the source of the tool.
     /// </summary>
     public override FoundryToolSource Source => FoundryToolSource.HOSTED_MCP;
