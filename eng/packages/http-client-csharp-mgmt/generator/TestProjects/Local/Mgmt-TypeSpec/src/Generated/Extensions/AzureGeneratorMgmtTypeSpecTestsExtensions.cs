@@ -1190,46 +1190,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// List Employee resources by Bar
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetBarsAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="barName"> The name of the Bar. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Employee"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Employee> GetBarsAsync(this ResourceGroupResource resourceGroupResource, string fooName, string barName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetBarsAsync(fooName, barName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List Employee resources by Bar
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetBars(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="barName"> The name of the Bar. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Employee"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Employee> GetBars(this ResourceGroupResource resourceGroupResource, string fooName, string barName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetBars(fooName, barName, cancellationToken);
-        }
-
-        /// <summary>
         /// list private links on the given resource
         /// <item>
         /// <term> Mocking. </term>

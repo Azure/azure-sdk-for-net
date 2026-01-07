@@ -21,8 +21,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _employeesClientDiagnostics;
-        private Employees _employeesRestClient;
         private ClientDiagnostics _privateLinksClientDiagnostics;
         private PrivateLinks _privateLinksRestClient;
 
@@ -37,10 +35,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         internal MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics EmployeesClientDiagnostics => _employeesClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Employees EmployeesRestClient => _employeesRestClient ??= new Employees(EmployeesClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -658,88 +652,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             Argument.AssertNotNullOrEmpty(sampleDataName, nameof(sampleDataName));
 
             return GetSampleDatas().Get(sampleDataName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List Employee resources by Bar
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/employees. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Employees_ListByParent. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="barName"> The name of the Bar. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> or <paramref name="barName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fooName"/> or <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Employee"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Employee> GetBarsAsync(string fooName, string barName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
-            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new EmployeesGetEmployeesAsyncCollectionResultOfT(
-                EmployeesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                fooName,
-                barName,
-                context);
-        }
-
-        /// <summary>
-        /// List Employee resources by Bar
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/employees. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Employees_ListByParent. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="barName"> The name of the Bar. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> or <paramref name="barName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fooName"/> or <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Employee"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Employee> GetBars(string fooName, string barName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
-            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new EmployeesGetEmployeesCollectionResultOfT(
-                EmployeesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                fooName,
-                barName,
-                context);
         }
 
         /// <summary>
