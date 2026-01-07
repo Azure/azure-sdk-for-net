@@ -14,14 +14,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public partial class MongoClusterEntraIdentityProvider : MongoClusterIdentityProvider
     {
         /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProvider"/>. </summary>
-        /// <param name="mongoClusterEntraIdentityProviderPrincipalType"> The principal type of the user. </param>
-        public MongoClusterEntraIdentityProvider(MongoClusterEntraPrincipalType? mongoClusterEntraIdentityProviderPrincipalType) : base(IdentityProviderType.MicrosoftEntraID)
-        {
-
-            Properties = mongoClusterEntraIdentityProviderPrincipalType is null ? default : new MongoClusterEntraIdentityProviderProperties(mongoClusterEntraIdentityProviderPrincipalType.Value);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProvider"/>. </summary>
         /// <param name="type"> The type of identity provider that the user belongs to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The Entra identity properties for the user. </param>

@@ -454,7 +454,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public partial class MongoClusterEntraIdentityProvider : Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider>
     {
         public MongoClusterEntraIdentityProvider(Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties properties) { }
-        public MongoClusterEntraIdentityProvider(Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType? mongoClusterEntraIdentityProviderPrincipalType) { }
         public Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType? MongoClusterEntraIdentityProviderPrincipalType { get { throw null; } set { } }
         protected override Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
