@@ -20,6 +20,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
+    <ApiCompatBaselineTargetFramework>netstandard2.0</ApiCompatBaselineTargetFramework>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <ItemGroup>
