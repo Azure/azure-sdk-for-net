@@ -227,17 +227,10 @@ namespace Azure.Generator.Management.Models
             // against variable segments in the route path, accounting for common naming variations.
             // This handles cases like "resourceGroup" vs "resourceGroupName" where both refer to the
             // same logical resource group parameter.
-            foreach (var candidateParam in _contextualParameters.Values)
-            {
-                // Check if the parameter name matches the contextual parameter's variable name with common variations
-                if (AreParameterNamesEquivalent(parameterName, candidateParam.VariableName))
-                {
-                    contextualParameter = candidateParam;
-                    return true;
-                }
-            }
+            contextualParameter = _contextualParameters.Values
+                .FirstOrDefault(p => AreParameterNamesEquivalent(parameterName, p.VariableName));
 
-            return false;
+            return contextualParameter != null;
         }
 
         /// <summary>
@@ -253,10 +246,10 @@ namespace Azure.Generator.Management.Models
 
             // Handle common suffix variations like "Name"
             var name1WithoutSuffix = name1.EndsWith("Name", StringComparison.OrdinalIgnoreCase)
-                ? name1.Substring(0, name1.Length - 4)
+                ? name1[..^4]
                 : name1;
             var name2WithoutSuffix = name2.EndsWith("Name", StringComparison.OrdinalIgnoreCase)
-                ? name2.Substring(0, name2.Length - 4)
+                ? name2[..^4]
                 : name2;
 
             return name1WithoutSuffix.Equals(name2WithoutSuffix, StringComparison.OrdinalIgnoreCase);
