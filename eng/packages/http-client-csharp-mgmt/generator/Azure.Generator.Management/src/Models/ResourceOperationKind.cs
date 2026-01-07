@@ -8,7 +8,7 @@ namespace Azure.Generator.Management.Models
         Action,
         Create,
         Delete,
-        Get,
+        Read,
         List,
         Update,
     }

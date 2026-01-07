@@ -14,45 +14,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> The details of a response from an operation on a resource. </summary>
     public partial class ResourceOperationDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         internal ResourceOperationDetails(string operationId)
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
-
             OperationId = operationId;
         }
 
@@ -67,10 +35,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="timezone"> Timezone for the operation. </param>
         /// <param name="operationTimezone"> Timezone for the operation. </param>
         /// <param name="resourceOperationError"> Operation level errors if they exist. </param>
+        /// <param name="fallbackOperationInfo"> Fallback operation details if a fallback was performed. </param>
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadline, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timezone, string operationTimezone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadline, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timezone, string operationTimezone, ResourceOperationError resourceOperationError, FallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             ResourceId = resourceId;
@@ -82,38 +51,48 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Timezone = timezone;
             OperationTimezone = operationTimezone;
             ResourceOperationError = resourceOperationError;
+            FallbackOperationInfo = fallbackOperationInfo;
             CompletedOn = completedOn;
             RetryPolicy = retryPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationDetails"/> for deserialization. </summary>
-        internal ResourceOperationDetails()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Operation identifier for the unique operation. </summary>
         public string OperationId { get; }
+
         /// <summary> Unique identifier for the resource involved in the operation, eg ArmId. </summary>
         public ResourceIdentifier ResourceId { get; }
+
         /// <summary> Type of operation performed on the resources. </summary>
         public ResourceOperationType? OpType { get; }
+
         /// <summary> Subscription id attached to the request. </summary>
         public string SubscriptionId { get; }
+
         /// <summary> Deadline for the operation. </summary>
         public DateTimeOffset? Deadline { get; }
+
         /// <summary> Type of deadline of the operation. </summary>
         public ScheduledActionDeadlineType? DeadlineType { get; }
+
         /// <summary> Current state of the operation. </summary>
         public ScheduledActionOperationState? State { get; }
+
         /// <summary> Timezone for the operation. </summary>
         public string Timezone { get; }
+
         /// <summary> Timezone for the operation. </summary>
         public string OperationTimezone { get; }
+
         /// <summary> Operation level errors if they exist. </summary>
         public ResourceOperationError ResourceOperationError { get; }
+
+        /// <summary> Fallback operation details if a fallback was performed. </summary>
+        public FallbackOperationInfo FallbackOperationInfo { get; }
+
         /// <summary> Time the operation was complete if errors are null. </summary>
         public DateTimeOffset? CompletedOn { get; }
+
         /// <summary> Retry policy the user can pass. </summary>
         public UserRequestRetryPolicy RetryPolicy { get; }
     }

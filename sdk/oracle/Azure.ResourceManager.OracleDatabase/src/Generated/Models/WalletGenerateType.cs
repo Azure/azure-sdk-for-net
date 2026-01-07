@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct WalletGenerateType : IEquatable<WalletGenerateType>
     {
         private readonly string _value;
+        /// <summary> Generate single. </summary>
+        private const string SingleValue = "Single";
+        /// <summary> Generate all. </summary>
+        private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="WalletGenerateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WalletGenerateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingleValue = "Single";
-        private const string AllValue = "All";
+            _value = value;
+        }
 
         /// <summary> Generate single. </summary>
         public static WalletGenerateType Single { get; } = new WalletGenerateType(SingleValue);
+
         /// <summary> Generate all. </summary>
         public static WalletGenerateType All { get; } = new WalletGenerateType(AllValue);
+
         /// <summary> Determines if two <see cref="WalletGenerateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WalletGenerateType left, WalletGenerateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WalletGenerateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WalletGenerateType left, WalletGenerateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WalletGenerateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WalletGenerateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WalletGenerateType(string value) => new WalletGenerateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WalletGenerateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WalletGenerateType?(string value) => value == null ? null : new WalletGenerateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WalletGenerateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WalletGenerateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

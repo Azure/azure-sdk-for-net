@@ -14,51 +14,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> ExascaleDbStorageVault resource model. </summary>
     public partial class ExascaleDBStorageVaultProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultProperties"/>. </summary>
-        /// <param name="displayName"> The user-friendly name for the Exadata Database Storage Vault. The name does not need to be unique. </param>
-        /// <param name="highCapacityDatabaseStorageInput"> Create exadata Database Storage Details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="highCapacityDatabaseStorageInput"/> is null. </exception>
-        public ExascaleDBStorageVaultProperties(string displayName, ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput)
-        {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(highCapacityDatabaseStorageInput, nameof(highCapacityDatabaseStorageInput));
-
-            DisplayName = displayName;
-            HighCapacityDatabaseStorageInput = highCapacityDatabaseStorageInput;
-            AttachedShapeAttributes = new ChangeTrackingList<ExascaleStorageShapeAttribute>();
-        }
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultProperties"/>. </summary>
         /// <param name="additionalFlashCacheInPercent"> The size of additional Flash Cache in percentage of High Capacity database storage. </param>
@@ -75,8 +32,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
         /// <param name="exadataInfrastructureId"> Cloud Exadata infrastructure ID. </param>
         /// <param name="attachedShapeAttributes"> The shapeAttribute of the Exadata VM cluster(s) associated with the Exadata Database Storage Vault. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent, string description, string displayName, ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput, ExascaleDBStorageDetails highCapacityDatabaseStorage, string timeZone, OracleDatabaseProvisioningState? provisioningState, ExascaleDBStorageVaultLifecycleState? lifecycleState, string lifecycleDetails, int? vmClusterCount, string ocid, Uri ociUri, ResourceIdentifier exadataInfrastructureId, IReadOnlyList<ExascaleStorageShapeAttribute> attachedShapeAttributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent, string description, string displayName, ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput, ExascaleDBStorageDetails highCapacityDatabaseStorage, string timeZone, OracleDatabaseProvisioningState? provisioningState, ExascaleDBStorageVaultLifecycleState? lifecycleState, string lifecycleDetails, int? vmClusterCount, string ocid, Uri ociUri, ResourceIdentifier exadataInfrastructureId, IReadOnlyList<ExascaleStorageShapeAttribute> attachedShapeAttributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdditionalFlashCacheInPercent = additionalFlashCacheInPercent;
             Description = description;
@@ -92,51 +49,62 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             OciUri = ociUri;
             ExadataInfrastructureId = exadataInfrastructureId;
             AttachedShapeAttributes = attachedShapeAttributes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultProperties"/> for deserialization. </summary>
-        internal ExascaleDBStorageVaultProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The size of additional Flash Cache in percentage of High Capacity database storage. </summary>
         public int? AdditionalFlashCacheInPercent { get; set; }
+
         /// <summary> Exadata Database Storage Vault description. </summary>
         public string Description { get; set; }
+
         /// <summary> The user-friendly name for the Exadata Database Storage Vault. The name does not need to be unique. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Create exadata Database Storage Details. </summary>
         internal ExascaleDBStorageInputDetails HighCapacityDatabaseStorageInput { get; set; }
-        /// <summary> Total Capacity. </summary>
-        public int? HighCapacityDatabaseStorageInputTotalSizeInGbs
-        {
-            get => HighCapacityDatabaseStorageInput is null ? default(int?) : HighCapacityDatabaseStorageInput.TotalSizeInGbs;
-            set
-            {
-                HighCapacityDatabaseStorageInput = value.HasValue ? new ExascaleDBStorageInputDetails(value.Value) : null;
-            }
-        }
 
         /// <summary> Response exadata Database Storage Details. </summary>
         public ExascaleDBStorageDetails HighCapacityDatabaseStorage { get; }
+
         /// <summary> The time zone that you want to use for the Exadata Database Storage Vault. </summary>
         public string TimeZone { get; set; }
+
         /// <summary> Exadata Database Storage Vault provisioning state. </summary>
         public OracleDatabaseProvisioningState? ProvisioningState { get; }
+
         /// <summary> Exadata Database Storage Vault lifecycle state. </summary>
         public ExascaleDBStorageVaultLifecycleState? LifecycleState { get; }
+
         /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
+
         /// <summary> The number of Exadata VM clusters used the Exadata Database Storage Vault. </summary>
         public int? VmClusterCount { get; }
+
         /// <summary> The OCID of the Exadata Database Storage Vault. </summary>
         public string Ocid { get; }
+
         /// <summary> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </summary>
         public Uri OciUri { get; }
+
         /// <summary> Cloud Exadata infrastructure ID. </summary>
         public ResourceIdentifier ExadataInfrastructureId { get; set; }
+
         /// <summary> The shapeAttribute of the Exadata VM cluster(s) associated with the Exadata Database Storage Vault. </summary>
         public IReadOnlyList<ExascaleStorageShapeAttribute> AttachedShapeAttributes { get; }
+
+        /// <summary> Total Capacity. </summary>
+        public int? HighCapacityDatabaseStorageInputTotalSizeInGbs
+        {
+            get
+            {
+                return HighCapacityDatabaseStorageInput is null ? default : HighCapacityDatabaseStorageInput.TotalSizeInGbs;
+            }
+            set
+            {
+                HighCapacityDatabaseStorageInput = value.HasValue ? new ExascaleDBStorageInputDetails(value.Value) : default;
+            }
+        }
     }
 }
