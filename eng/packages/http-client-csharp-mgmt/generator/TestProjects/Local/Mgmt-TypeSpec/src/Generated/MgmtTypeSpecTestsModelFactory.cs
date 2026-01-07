@@ -949,6 +949,33 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new ScheduledActionsExtensionProperties(actionId, status, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.ConfigurationData"/> instance for mocking. </returns>
+        public static ConfigurationData ConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfigurationProperties properties = default)
+        {
+            return new ConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The ConfigurationProperties. </summary>
+        /// <param name="exclude"></param>
+        /// <param name="lowCpuThreshold"></param>
+        /// <returns> A new <see cref="Models.ConfigurationProperties"/> instance for mocking. </returns>
+        public static ConfigurationProperties ConfigurationProperties(bool? exclude = default, string lowCpuThreshold = default)
+        {
+            return new ConfigurationProperties(exclude, lowCpuThreshold, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>

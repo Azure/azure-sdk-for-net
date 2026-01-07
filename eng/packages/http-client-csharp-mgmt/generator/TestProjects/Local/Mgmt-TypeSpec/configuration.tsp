@@ -11,7 +11,7 @@ using TypeSpec.Http;
 using Azure.ResourceManager;
 using Azure.Core;
 
-namespace Microsoft.Advisor;
+namespace MgmtTypeSpec;
 
 @armResourceOperations
 interface Configurations {
@@ -27,11 +27,11 @@ interface Configurations {
      */
     @path
     resourceGroup: string,
-  ): ArmResponse<ConfigurationListResult> | ArmDefaultErrorResponse;
+  ): ArmResponse<ConfigurationListResult> | ErrorResponse;
 }
 
-model ConfigurationData extends ProxyResource {
-  properties?: ConfigurationProperties;
+model ConfigurationData is ProxyResource<ConfigurationProperties> {
+  ...ResourceNameParameter<ConfigurationData, SegmentName = "configurations">;
 }
 
 model ConfigurationProperties {

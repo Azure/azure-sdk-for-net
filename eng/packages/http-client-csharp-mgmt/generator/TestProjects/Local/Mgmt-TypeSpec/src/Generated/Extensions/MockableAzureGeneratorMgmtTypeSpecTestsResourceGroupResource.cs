@@ -21,6 +21,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _configurationsClientDiagnostics;
+        private Configurations _configurationsRestClient;
         private ClientDiagnostics _privateLinksClientDiagnostics;
         private PrivateLinks _privateLinksRestClient;
 
@@ -35,6 +37,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         internal MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ConfigurationsClientDiagnostics => _configurationsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Configurations ConfigurationsRestClient => _configurationsRestClient ??= new Configurations(ConfigurationsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -652,6 +658,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             Argument.AssertNotNullOrEmpty(sampleDataName, nameof(sampleDataName));
 
             return GetSampleDatas().Get(sampleDataName, cancellationToken);
+        }
+
+        /// <summary>
+        /// GetByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/subscriptions/{subscriptionId}/{resourceGroup}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfigurationData> GetByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ConfigurationsGetByResourceGroupAsyncCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+        }
+
+        /// <summary>
+        /// GetByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/subscriptions/{subscriptionId}/{resourceGroup}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfigurationData> GetByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ConfigurationsGetByResourceGroupCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
         }
 
         /// <summary>
