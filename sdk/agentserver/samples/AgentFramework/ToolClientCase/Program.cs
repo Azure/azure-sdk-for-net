@@ -50,7 +50,8 @@ var agent = new ChatClientAgent(chatClient,
   - microsoft_docs_search: Searches Microsoft/Azure documentation
   - microsoft_code_sample_search: Searches for code examples")
       .AsBuilder()
-      .UseFoundryTools(FoundryConnectedTool.Mcp(toolConnectionId))
+      //   .UseFoundryTools(FoundryConnectedTool.Mcp(toolConnectionId))
+      .UseFoundryTools(FoundryHostedMcpTool.Create("web_search_preview"))
       .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
       .Build();
 
