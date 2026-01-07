@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkBlobSource);
 
             var result = await dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, triggerFunc(dataFactory, linkedServiceName, pipelineName1, pipelineName2, pipelineName3));
-            Assert.IsNotNull(result.Value.Data.Id);
+            Assert.That(result.Value.Data.Id, Is.Not.Null);
         }
 
         [Test]
@@ -128,22 +128,22 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             // Create
             string triggerName = Recording.GenerateAssetName("trigger-");
             var trigger = await CreateDefaultTrigger(dataFactory, triggerName);
-            Assert.IsNotNull(trigger);
-            Assert.AreEqual(triggerName, trigger.Data.Name);
+            Assert.That(trigger, Is.Not.Null);
+            Assert.That(trigger.Data.Name, Is.EqualTo(triggerName));
             // Exists
             bool flag = await dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             // Get
             var triggerGet = await dataFactory.GetDataFactoryTriggers().GetAsync(triggerName);
-            Assert.IsNotNull(trigger);
-            Assert.AreEqual(triggerName, triggerGet.Value.Data.Name);
+            Assert.That(trigger, Is.Not.Null);
+            Assert.That(triggerGet.Value.Data.Name, Is.EqualTo(triggerName));
             // GetAll
             var list = await dataFactory.GetDataFactoryTriggers().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             // Delete
             await trigger.DeleteAsync(WaitUntil.Completed);
             flag = await dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [Test]

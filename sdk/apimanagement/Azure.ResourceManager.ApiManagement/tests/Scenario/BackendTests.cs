@@ -69,26 +69,26 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             backendCreateParameters.Credentials.Header.Add("x-my-1", new List<string> { "val1", "val2" });
 
             var backendResponse = (await backendCollection.CreateOrUpdateAsync(WaitUntil.Completed, backendId, backendCreateParameters)).Value;
-            Assert.NotNull(backendResponse);
+            Assert.That(backendResponse, Is.Not.Null);
 
             // get to check it was created
             var backendContract = (await backendResponse.GetAsync()).Value;
 
-            Assert.NotNull(backendContract);
-            Assert.AreEqual(backendId, backendContract.Data.Name);
-            Assert.NotNull(backendContract.Data.Description);
-            Assert.NotNull(backendContract.Data.Credentials.Authorization);
-            Assert.NotNull(backendContract.Data.Credentials.Query);
-            Assert.NotNull(backendContract.Data.Credentials.Header);
-            Assert.AreEqual(BackendProtocol.Http, backendContract.Data.Protocol);
-            Assert.AreEqual(1, backendContract.Data.Credentials.Query.Keys.Count);
-            Assert.AreEqual(1, backendContract.Data.Credentials.Header.Keys.Count);
-            Assert.NotNull(backendContract.Data.Credentials.Authorization);
-            Assert.AreEqual("basic", backendContract.Data.Credentials.Authorization.Scheme);
+            Assert.That(backendContract, Is.Not.Null);
+            Assert.That(backendContract.Data.Name, Is.EqualTo(backendId));
+            Assert.That(backendContract.Data.Description, Is.Not.Null);
+            Assert.That(backendContract.Data.Credentials.Authorization, Is.Not.Null);
+            Assert.That(backendContract.Data.Credentials.Query, Is.Not.Null);
+            Assert.That(backendContract.Data.Credentials.Header, Is.Not.Null);
+            Assert.That(backendContract.Data.Protocol, Is.EqualTo(BackendProtocol.Http));
+            Assert.That(backendContract.Data.Credentials.Query.Keys.Count, Is.EqualTo(1));
+            Assert.That(backendContract.Data.Credentials.Header.Keys.Count, Is.EqualTo(1));
+            Assert.That(backendContract.Data.Credentials.Authorization, Is.Not.Null);
+            Assert.That(backendContract.Data.Credentials.Authorization.Scheme, Is.EqualTo("basic"));
 
             var listBackends = await backendCollection.GetAllAsync().ToEnumerableAsync();
 
-            Assert.NotNull(listBackends);
+            Assert.That(listBackends, Is.Not.Null);
 
             // there should be one user
             Assert.GreaterOrEqual(listBackends.Count, 1);
@@ -103,14 +103,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // get to check it was patched
             backendContract = await backendCollection.GetAsync(backendId);
-            Assert.NotNull(backendContract);
-            Assert.AreEqual(backendId, backendContract.Data.Name);
-            Assert.AreEqual(patchedDescription, backendContract.Data.Description);
+            Assert.That(backendContract, Is.Not.Null);
+            Assert.That(backendContract.Data.Name, Is.EqualTo(backendId));
+            Assert.That(backendContract.Data.Description, Is.EqualTo(patchedDescription));
 
             // delete the backend
             await backendContract.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await backendCollection.ExistsAsync(backendId)).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
         }
     }
 }

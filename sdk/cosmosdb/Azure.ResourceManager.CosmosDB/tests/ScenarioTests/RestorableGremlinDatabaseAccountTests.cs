@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             // Fetching restorable databases and graph feed
             var restorableDatabases = await restorableAccount.GetRestorableGremlinDatabasesAsync().ToEnumerableAsync();
-            Assert.True(restorableDatabases.Count == 2);
+            Assert.That(restorableDatabases.Count, Is.EqualTo(2));
             RestorableGremlinDatabase restorableDatabase = restorableDatabases.Single(database => database.Resource.DatabaseName == databaseName1);
             var restorableGraphs = await restorableAccount.GetRestorableGremlinGraphsAsync(restorableDatabase.Resource.DatabaseId).ToEnumerableAsync();
-            Assert.True(restorableGraphs.Count == 1);
+            Assert.That(restorableGraphs.Count, Is.EqualTo(1));
             RestorableGremlinGraph restorableGraph = restorableGraphs.Single(graph => graph.Resource.GraphName == graphName1);
 
             // building restore info to restore only database1 and graph1
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             // verifying restored database
             GremlinDatabaseResource restoredDatabase = await _restoredDatabaseAccount.GetGremlinDatabaseAsync(restorableDatabase.Resource.DatabaseName);
-            Assert.NotNull(restoredDatabase);
+            Assert.That(restoredDatabase, Is.Not.Null);
 
             // verifying restored graph
             GremlinGraphResource restoredGraph = await restoredDatabase.GetGremlinGraphAsync(restorableGraph.Resource.GraphName);
-            Assert.NotNull(restoredGraph);
+            Assert.That(restoredGraph, Is.Not.Null);
         }
 
         [Test]
@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             databaseAccountCreateUpdateParameters.Capabilities.Add(new CosmosDBAccountCapability("EnableGremlin", null));
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, restoredAccountName, databaseAccountCreateUpdateParameters);
             CosmosDBAccountResource restoredDatabaseAccount = accountLro.Value;
-            Assert.NotNull(restoredDatabaseAccount);
-            Assert.NotNull(restoredDatabaseAccount.Data.RestoreParameters);
-            Assert.AreEqual(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower(), restorableAccount.Id.ToString().ToLower());
-            Assert.True(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy);
+            Assert.That(restoredDatabaseAccount, Is.Not.Null);
+            Assert.That(restoredDatabaseAccount.Data.RestoreParameters, Is.Not.Null);
+            Assert.That(restorableAccount.Id.ToString().ToLower(), Is.EqualTo(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower()));
+            Assert.That(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy, Is.True);
 
             ContinuousModeBackupPolicy policy = restoredDatabaseAccount.Data.BackupPolicy as ContinuousModeBackupPolicy;
-            Assert.AreEqual(_restorableDatabaseAccount.Data.BackupPolicy.BackupPolicyType, policy.BackupPolicyType);
-            Assert.AreEqual(IsFreeTierEnabled, restoredDatabaseAccount.Data.IsFreeTierEnabled);
+            Assert.That(policy.BackupPolicyType, Is.EqualTo(_restorableDatabaseAccount.Data.BackupPolicy.BackupPolicyType));
+            Assert.That(restoredDatabaseAccount.Data.IsFreeTierEnabled, Is.EqualTo(IsFreeTierEnabled));
 
             return restoredDatabaseAccount;
         }
@@ -237,11 +237,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var backupInformation = await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, restoreLocation);
 
             DateTime? oldTime = _restorableDatabaseAccount.Data.SystemData.CreatedOn.Value.DateTime;
-            Assert.NotNull(oldTime);
+            Assert.That(oldTime, Is.Not.Null);
 
-            Assert.NotNull(backupInformation);
-            Assert.NotNull(backupInformation.Value.ContinuousBackupInformation);
-            Assert.True(backupInformation.Value.ContinuousBackupInformation.LatestRestorableTimestamp.Value.DateTime > oldTime);
+            Assert.That(backupInformation, Is.Not.Null);
+            Assert.That(backupInformation.Value.ContinuousBackupInformation, Is.Not.Null);
+            Assert.That(backupInformation.Value.ContinuousBackupInformation.LatestRestorableTimestamp.Value.DateTime > oldTime, Is.True);
         }
 
         private async Task RestorableDatabaseAccountFeedTestHelperAsync(
@@ -260,12 +260,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             string expectedApiType,
             int expectedRestorableLocations)
         {
-            Assert.AreEqual(expectedApiType, restorableDatabaseAccount.Data.ApiType.Value.ToString());
-            Assert.AreEqual(expectedRestorableLocations, restorableDatabaseAccount.Data.RestorableLocations.Count);
-            Assert.AreEqual("Microsoft.DocumentDB/locations/restorableDatabaseAccounts", restorableDatabaseAccount.Data.ResourceType.ToString());
-            Assert.AreEqual(_restorableDatabaseAccount.Data.Location, restorableDatabaseAccount.Data.Location);
-            Assert.AreEqual(_restorableDatabaseAccount.Data.Name, restorableDatabaseAccount.Data.AccountName);
-            Assert.True(restorableDatabaseAccount.Data.CreatedOn.HasValue);
+            Assert.That(restorableDatabaseAccount.Data.ApiType.Value.ToString(), Is.EqualTo(expectedApiType));
+            Assert.That(restorableDatabaseAccount.Data.RestorableLocations.Count, Is.EqualTo(expectedRestorableLocations));
+            Assert.That(restorableDatabaseAccount.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.DocumentDB/locations/restorableDatabaseAccounts"));
+            Assert.That(restorableDatabaseAccount.Data.Location, Is.EqualTo(_restorableDatabaseAccount.Data.Location));
+            Assert.That(restorableDatabaseAccount.Data.AccountName, Is.EqualTo(_restorableDatabaseAccount.Data.Name));
+            Assert.That(restorableDatabaseAccount.Data.CreatedOn.HasValue, Is.True);
         }
 
         internal async Task<GremlinDatabaseResource> CreateGremlinDatabase(string databaseName, AutoscaleSettings autoscale)

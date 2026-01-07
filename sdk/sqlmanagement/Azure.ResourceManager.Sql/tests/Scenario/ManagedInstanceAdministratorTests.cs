@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.Sql.Tests
                 TenantId = Guid.NewGuid(),
             };
             var admin = await collection.CreateOrUpdateAsync(WaitUntil.Completed, adminName, data);
-            Assert.NotNull(admin.Value.Data);
-            Assert.AreEqual(adminName, admin.Value.Data.Name);
+            Assert.That(admin.Value.Data, Is.Not.Null);
+            Assert.That(admin.Value.Data.Name, Is.EqualTo(adminName));
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(adminName));
-            Assert.IsFalse(collection.Exists(adminName + "0"));
+            Assert.That((bool)collection.Exists(adminName), Is.True);
+            Assert.That((bool)collection.Exists(adminName + "0"), Is.False);
 
             // 3.Get
             var getAdmin = await collection.GetAsync(adminName);
-            Assert.NotNull(getAdmin.Value.Data);
-            Assert.AreEqual(getAdmin, admin.Value.Data.Name);
+            Assert.That(getAdmin.Value.Data, Is.Not.Null);
+            Assert.That(admin.Value.Data.Name, Is.EqualTo(getAdmin));
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Qumulo.Tests
         {
             string resourceName = Recording.GenerateAssetName("testResource-");
             var qumuloResource = await CreateQumuloFileSystemResource(ResGroup, Location, resourceName);
-            Assert.IsTrue(resourceName.Equals(qumuloResource.Data.Name));
+            Assert.That(resourceName, Is.EqualTo(qumuloResource.Data.Name));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await ResGroup.GetQumuloFileSystemResources().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, null)).Value);
         }
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Qumulo.Tests
             string qumuloFileSystemName = Recording.GenerateAssetName("testResource-");
             QumuloFileSystemResource qumuloFileSystem = await CreateQumuloFileSystemResource(ResGroup, Location, qumuloFileSystemName);
 
-            Assert.IsTrue(await collection.ExistsAsync(qumuloFileSystemName));
-            Assert.IsFalse(await collection.ExistsAsync(qumuloFileSystemName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(qumuloFileSystemName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(qumuloFileSystemName + "1"), Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Qumulo.Tests
                 count++;
             }
 
-            Assert.AreEqual(count, 0);
+            Assert.That(count, Is.EqualTo(0));
 
             string qumuloFileSystemName1 = Recording.GenerateAssetName("testResource-");
             string qumuloFileSystemName2 = Recording.GenerateAssetName("testResource-");
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Qumulo.Tests
 
         private void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.That(r2.Location, Is.EqualTo(r1.Location));
+            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
         }
     }
 }

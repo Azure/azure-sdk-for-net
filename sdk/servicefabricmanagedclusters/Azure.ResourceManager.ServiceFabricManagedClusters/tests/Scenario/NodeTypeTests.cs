@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
             var serviveFabricManagedClusterNodeType = (await nodeTypeCollection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, nodeTypeData)).Value;
 
             var resourceData = serviveFabricManagedClusterNodeType.Data;
-            Assert.AreEqual(nodeTypeData.SecurityType, resourceData.SecurityType);
-            Assert.AreEqual(nodeTypeData.IsSecureBootEnabled, resourceData.IsSecureBootEnabled);
+            Assert.That(resourceData.SecurityType, Is.EqualTo(nodeTypeData.SecurityType));
+            Assert.That(resourceData.IsSecureBootEnabled, Is.EqualTo(nodeTypeData.IsSecureBootEnabled));
         }
     }
 }

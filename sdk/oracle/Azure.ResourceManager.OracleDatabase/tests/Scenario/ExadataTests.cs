@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             var createExaInfraOperation = await _exaInfraCollection.CreateOrUpdateAsync(WaitUntil.Completed,
             _exadataInfraName, GetDefaultExaInfraData(_exadataInfraName));
             await createExaInfraOperation.WaitForCompletionAsync();
-            Assert.IsTrue(createExaInfraOperation.HasCompleted);
-            Assert.IsTrue(createExaInfraOperation.HasValue);
+            Assert.That(createExaInfraOperation.HasCompleted, Is.True);
+            Assert.That(createExaInfraOperation.HasValue, Is.True);
 
             // Get
             Response<CloudExadataInfrastructureResource> getExaInfraResponse = await _exaInfraCollection.GetAsync(_exadataInfraName);
             CloudExadataInfrastructureResource exaInfraResource = getExaInfraResponse.Value;
-            Assert.IsNotNull(exaInfraResource);
+            Assert.That(exaInfraResource, Is.Not.Null);
             return exaInfraResource;
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             if (exaInfraResource != null) {
                 var deleteExaInfraOperation = await exaInfraResource.DeleteAsync(WaitUntil.Completed);
                 await deleteExaInfraOperation.WaitForCompletionResponseAsync();
-                Assert.IsTrue(deleteExaInfraOperation.HasCompleted);
+                Assert.That(deleteExaInfraOperation.HasCompleted, Is.True);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             if (vmClusterResource != null) {
                 var deleteVmClusterOperation = await vmClusterResource.DeleteAsync(WaitUntil.Completed);
                 await deleteVmClusterOperation.WaitForCompletionResponseAsync();
-                Assert.IsTrue(deleteVmClusterOperation.HasCompleted);
+                Assert.That(deleteVmClusterOperation.HasCompleted, Is.True);
             }
         }
 

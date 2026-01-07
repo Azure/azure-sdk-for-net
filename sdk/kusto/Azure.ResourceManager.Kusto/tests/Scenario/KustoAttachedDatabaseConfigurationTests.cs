@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             await FollowingCluster.DetachFollowerDatabasesAsync(WaitUntil.Completed, followerDatabaseDefinition);
 
-            Assert.IsNull(await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync());
+            Assert.That(await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync(), Is.Null);
 
             await ValidateReadWriteDatabase(false);
         }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var content = new DatabaseInviteFollowerContent("user@contoso.com");
             var invitation = await Database.InviteFollowerDatabaseAsync(content).ConfigureAwait(false);
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(invitation.Value.GeneratedInvitation));
+            Assert.That(!string.IsNullOrWhiteSpace(invitation.Value.GeneratedInvitation), Is.True);
         }
 
         private async Task ReadOnlyFollowingDatabaseResourceTests(KustoDatabaseResource followingDatabase)
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             KustoFollowerDatabaseDefinition followerDatabaseDefinition, string expectedAttachedDatabaseConfigurationName
         )
         {
-            Assert.IsNotNull(followerDatabaseDefinition);
+            Assert.That(followerDatabaseDefinition, Is.Not.Null);
             AssertEquality(
                 expectedAttachedDatabaseConfigurationName,
                 followerDatabaseDefinition.AttachedDatabaseConfigurationName

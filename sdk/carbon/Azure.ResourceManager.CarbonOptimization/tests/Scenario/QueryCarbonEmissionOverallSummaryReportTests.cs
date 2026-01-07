@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
 
             CarbonEmissionListResult result = await Tenant.QueryCarbonEmissionReportsAsync(queryParameters);
 
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Value);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Value, Is.Not.Null);
 
             var resultItem = (CarbonEmissionOverallSummary)result.Value[0];
-            Assert.IsNotNull(resultItem.LatestMonthEmissions);
-            Assert.IsTrue(resultItem.DataType == CarbonEmissionDataType.OverallSummaryData);
+            Assert.That(resultItem.LatestMonthEmissions, Is.Not.Null);
+            Assert.That(resultItem.DataType, Is.EqualTo(CarbonEmissionDataType.OverallSummaryData));
         }
     }
 }

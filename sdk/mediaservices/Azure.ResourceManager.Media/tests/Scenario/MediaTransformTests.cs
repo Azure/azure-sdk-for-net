@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Media.Tests
         {
             string mediaTransformName = Recording.GenerateAssetName("randomtransfer");
             var mediaTransfer = await CreateMediaTransfer(_mediaService, mediaTransformName);
-            Assert.IsNotNull(mediaTransfer);
-            Assert.AreEqual(mediaTransformName, mediaTransfer.Data.Name);
+            Assert.That(mediaTransfer, Is.Not.Null);
+            Assert.That(mediaTransfer.Data.Name, Is.EqualTo(mediaTransformName));
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Media.Tests
             string mediaTransformName = Recording.GenerateAssetName("randomtransfer");
             await CreateMediaTransfer(_mediaService, mediaTransformName);
             bool flag = await mediaTransformCollection.ExistsAsync(mediaTransformName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Media.Tests
             string mediaTransformName = Recording.GenerateAssetName("randomtransfer");
             await CreateMediaTransfer(_mediaService, mediaTransformName);
             var mediaTransfer = await mediaTransformCollection.GetAsync(mediaTransformName);
-            Assert.IsNotNull(mediaTransfer);
-            Assert.AreEqual(mediaTransformName, mediaTransfer.Value.Data.Name);
+            Assert.That(mediaTransfer, Is.Not.Null);
+            Assert.That(mediaTransfer.Value.Data.Name, Is.EqualTo(mediaTransformName));
         }
 
         [Test]
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Media.Tests
             string mediaTransformName = Recording.GenerateAssetName("randomtransfer");
             var mediaTransfer = await CreateMediaTransfer(_mediaService, mediaTransformName);
             bool flag = await mediaTransformCollection.ExistsAsync(mediaTransformName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await mediaTransfer.DeleteAsync(WaitUntil.Completed);
             flag = await mediaTransformCollection.ExistsAsync(mediaTransformName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

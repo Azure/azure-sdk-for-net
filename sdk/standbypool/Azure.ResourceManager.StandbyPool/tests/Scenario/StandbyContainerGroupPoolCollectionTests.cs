@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             AsyncPageable<StandbyContainerGroupPoolResource> standbyContainerGroupPools = StandbyPoolExtensions.GetStandbyContainerGroupPoolsAsync(subscription);
             List<StandbyContainerGroupPoolResource> standbyContainerGroupPoolResults = await standbyContainerGroupPools.ToEnumerableAsync();
 
-            Assert.NotNull(standbyContainerGroupPoolResults);
-            Assert.IsTrue(standbyContainerGroupPoolResults.Count > 0);
+            Assert.That(standbyContainerGroupPoolResults, Is.Not.Null);
+            Assert.That(standbyContainerGroupPoolResults.Count > 0, Is.True);
         }
 
         [TestCase]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             await this.CreateResources(resourceGroup);
             await this.CreateResources(resourceGroup);
             List<StandbyContainerGroupPoolResource> standbyContainerGroupPoolCollection = await resourceGroup.GetStandbyContainerGroupPools().ToEnumerableAsync();
-            Assert.AreEqual(2, standbyContainerGroupPoolCollection.Count);
+            Assert.That(standbyContainerGroupPoolCollection.Count, Is.EqualTo(2));
         }
     }
 }

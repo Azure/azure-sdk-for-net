@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var privateEndpointConnectionProperties = new IotHubPrivateEndpointConnectionProperties(connectionState) { };
             var iotHubPrivateEndpointConnectionData = new IotHubPrivateEndpointConnectionData(privateEndpointConnectionProperties) {};
             var connection = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, iotHubPrivateEndpointConnectionData);
-            Assert.IsNotNull(connection);
+            Assert.That(connection, Is.Not.Null);
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string connectionName = "IotHub-6981.c3c46102-efff-4ced-b7c1-52dbfb1e5111";
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             var connect  = await iothub.GetIotHubPrivateEndpointConnections().GetAsync(connectionName);
-            Assert.IsNotNull(connect);
+            Assert.That(connect, Is.Not.Null);
         }
 
         [Test]

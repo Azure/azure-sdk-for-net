@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationInfo(volume.Id));
             ElasticSanSnapshotResource snapshot = (await snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName1, data)).Value;
             _ = (await snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName2, data)).Value;
-            Assert.AreEqual(snapshot.Id.Name, snapshotName1);
-            Assert.AreEqual(snapshot.Data.VolumeName, volume.Id.Name);
-            Assert.AreEqual(snapshot.Data.SourceVolumeSizeGiB, volume.Data.SizeGiB);
+            Assert.That(snapshotName1, Is.EqualTo(snapshot.Id.Name));
+            Assert.That(volume.Id.Name, Is.EqualTo(snapshot.Data.VolumeName));
+            Assert.That(volume.Data.SizeGiB, Is.EqualTo(snapshot.Data.SourceVolumeSizeGiB));
 
             ElasticSanSnapshotResource snapshot2 = (await snapshotCollection.GetAsync(snapshotName1)).Value;
-            Assert.AreEqual(snapshot.Id.Name, snapshot2.Id.Name);
-            Assert.AreEqual(snapshot.Id.ResourceGroupName, snapshot2.Id.ResourceGroupName);
-            Assert.AreEqual(snapshot.Data.Name, snapshot2.Data.Name);
-            Assert.AreEqual(snapshot.Data.VolumeName, snapshot2.Data.VolumeName);
-            Assert.AreEqual(snapshot.Data.CreationDataSourceId, snapshot2.Data.CreationDataSourceId);
-            Assert.AreEqual(snapshot.Data.SourceVolumeSizeGiB, snapshot2.Data.SourceVolumeSizeGiB);
+            Assert.That(snapshot2.Id.Name, Is.EqualTo(snapshot.Id.Name));
+            Assert.That(snapshot2.Id.ResourceGroupName, Is.EqualTo(snapshot.Id.ResourceGroupName));
+            Assert.That(snapshot2.Data.Name, Is.EqualTo(snapshot.Data.Name));
+            Assert.That(snapshot2.Data.VolumeName, Is.EqualTo(snapshot.Data.VolumeName));
+            Assert.That(snapshot2.Data.CreationDataSourceId, Is.EqualTo(snapshot.Data.CreationDataSourceId));
+            Assert.That(snapshot2.Data.SourceVolumeSizeGiB, Is.EqualTo(snapshot.Data.SourceVolumeSizeGiB));
 
             int count = 0;
             await foreach (ElasticSanSnapshotResource _ in snapshotCollection.GetAllAsync())
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             }
             Assert.GreaterOrEqual(count, 2);
 
-            Assert.IsTrue(await snapshotCollection.ExistsAsync(snapshotName1));
-            Assert.IsFalse(await snapshotCollection.ExistsAsync(snapshotName1 + "abcd"));
+            Assert.That((bool)await snapshotCollection.ExistsAsync(snapshotName1), Is.True);
+            Assert.That((bool)await snapshotCollection.ExistsAsync(snapshotName1 + "abcd"), Is.False);
         }
     }
 }

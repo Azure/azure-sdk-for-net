@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private void ValidateRunData(LogicWorkflowRunResource actual)
         {
-            Assert.NotNull(actual.Data.Name);
-            Assert.NotNull(actual.Data.EndOn);
-            Assert.AreEqual("Succeeded", actual.Data.Status.ToString());
+            Assert.That(actual.Data.Name, Is.Not.Null);
+            Assert.That(actual.Data.EndOn, Is.Not.Null);
+            Assert.That(actual.Data.Status.ToString(), Is.EqualTo("Succeeded"));
         }
 
         [RecordedTest]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string runName = list.FirstOrDefault().Data.Name;
 
             bool flag = await _runCollection.ExistsAsync(runName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string runName = list.FirstOrDefault().Data.Name;
 
             var run = await _runCollection.GetAsync(runName);
-            Assert.IsNotNull(run);
+            Assert.That(run, Is.Not.Null);
             ValidateRunData(run);
 
             var operation = await run.Value.GetLogicWorkflowRunActions().GetAllAsync().ToEnumerableAsync();

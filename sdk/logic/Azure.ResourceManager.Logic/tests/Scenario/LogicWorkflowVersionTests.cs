@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Tests
             var list = await _versionCollection.GetAllAsync().ToEnumerableAsync();
             string versionName = list.FirstOrDefault().Data.Name;
             bool flag = await _versionCollection.ExistsAsync(versionName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Logic.Tests
             var list = await _versionCollection.GetAllAsync().ToEnumerableAsync();
             string versionName = list.FirstOrDefault().Data.Name;
             var version = await _versionCollection.GetAsync(versionName);
-            Assert.IsNotNull(version);
-            Assert.AreEqual(versionName, version.Value.Data.Name);
+            Assert.That(version, Is.Not.Null);
+            Assert.That(version.Value.Data.Name, Is.EqualTo(versionName));
         }
 
         [RecordedTest]
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             var list = await _versionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
         }
     }
 }

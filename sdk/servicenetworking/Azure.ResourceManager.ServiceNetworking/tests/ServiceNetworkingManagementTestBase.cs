@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Tests
             var rgResourceTask = CreateResourceGroupAsync(Subscription, rgNamePrefix, location);
             rgResourceTask.Wait();
             var rgResource = rgResourceTask.Result;
-            Assert.NotNull(rgResource, "Resource Group not created successfully");  //TODO: Validate that this won't be an issue (name reused)
+            Assert.That(rgResource, Is.Not.Null, "Resource Group not created successfully");  //TODO: Validate that this won't be an issue (name reused)
             return rgResource;
         }
 

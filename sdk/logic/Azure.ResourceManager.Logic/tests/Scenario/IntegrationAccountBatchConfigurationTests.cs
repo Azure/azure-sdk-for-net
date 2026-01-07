@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string batchConfigurationName = SessionRecording.GenerateAssetName("batch");
             var batchConfiguration = await CreateBatchConfiguration(batchConfigurationName);
-            Assert.IsNotNull(batchConfiguration);
-            Assert.AreEqual(batchConfigurationName, batchConfiguration.Data.Name);
+            Assert.That(batchConfiguration, Is.Not.Null);
+            Assert.That(batchConfiguration.Data.Name, Is.EqualTo(batchConfigurationName));
         }
 
         [RecordedTest]
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string batchConfigurationName = SessionRecording.GenerateAssetName("batch");
             await CreateBatchConfiguration(batchConfigurationName);
             bool flag = await _batchConfigurationCollection.ExistsAsync(batchConfigurationName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Logic.Tests
             string batchConfigurationName = SessionRecording.GenerateAssetName("batch");
             await CreateBatchConfiguration(batchConfigurationName);
             var batchConfiguration = await _batchConfigurationCollection.GetAsync(batchConfigurationName);
-            Assert.IsNotNull(batchConfiguration);
-            Assert.AreEqual(batchConfigurationName, batchConfiguration.Value.Data.Name);
+            Assert.That(batchConfiguration, Is.Not.Null);
+            Assert.That(batchConfiguration.Value.Data.Name, Is.EqualTo(batchConfigurationName));
         }
 
         [RecordedTest]
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string batchConfigurationName = SessionRecording.GenerateAssetName("batch");
             var batchConfiguration = await CreateBatchConfiguration(batchConfigurationName);
             bool flag = await _batchConfigurationCollection.ExistsAsync(batchConfigurationName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await batchConfiguration.DeleteAsync(WaitUntil.Completed);
             flag = await _batchConfigurationCollection.ExistsAsync(batchConfigurationName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

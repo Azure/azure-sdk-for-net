@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (providerOperation1 != null)
             {
                 var providerOperation2 = await collection.GetAsync(providerOperation1.Data.Name);
-                Assert.AreEqual(providerOperation2.Value.Data.Name, providerOperation1.Data.Name);
+                Assert.That(providerOperation1.Data.Name, Is.EqualTo(providerOperation2.Value.Data.Name));
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (providerOperation1 != null)
             {
                 var providerOperation2 = await collection.ExistsAsync(providerOperation1.Data.Name);
-                Assert.IsTrue(providerOperation2.Value);
+                Assert.That(providerOperation2.Value, Is.True);
             }
         }
     }

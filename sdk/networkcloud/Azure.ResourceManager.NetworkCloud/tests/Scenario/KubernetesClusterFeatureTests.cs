@@ -45,11 +45,11 @@ new StringKeyValuePair("featureOptionName","featureOptionValue")
             };
             // Create
             ArmOperation<NetworkCloudKubernetesClusterFeatureResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, featureName, data);
-            Assert.AreEqual(featureName, createResult.Value.Data.Name);
+            Assert.That(createResult.Value.Data.Name, Is.EqualTo(featureName));
 
             // Get
             var getResult = await feature.GetAsync();
-            Assert.AreEqual(featureName, getResult.Value.Data.Name);
+            Assert.That(getResult.Value.Data.Name, Is.EqualTo(featureName));
 
             // List
             var listByKubernetesCluster = new List<NetworkCloudKubernetesClusterFeatureResource>();
@@ -69,12 +69,12 @@ new StringKeyValuePair("featureOptionName","featureOptionValue")
                 }
             };
             ArmOperation<NetworkCloudKubernetesClusterFeatureResource> updateResult = await feature.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
+            Assert.That(updateResult.Value.Data.Tags, Is.EqualTo(patch.Tags));
 
             // Delete
             ArmOperation<NetworkCloudOperationStatusResult> deleteResult = await feature.DeleteAsync(WaitUntil.Completed, "*", "*", CancellationToken.None);
             NetworkCloudOperationStatusResult result = deleteResult.Value;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
     }
 }

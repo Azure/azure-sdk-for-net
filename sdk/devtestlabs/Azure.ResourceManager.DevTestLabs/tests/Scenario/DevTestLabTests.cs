@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         public async Task Exist()
         {
             var flag = await _devTestLabCollections.ExistsAsync(_labName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
             await DeleteAllLocks(TestResourceGroup);
             await TestDevTestLab.DeleteAsync(WaitUntil.Completed);
             bool flag = await _devTestLabCollections.ExistsAsync(_labName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [TestCase(null)]
@@ -78,25 +78,25 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
             // AddTag
             await lab.AddTagAsync("addtagkey", "addtagvalue");
             lab = await _devTestLabCollections.GetAsync(_labName);
-            Assert.AreEqual(1, lab.Data.Tags.Count);
+            Assert.That(lab.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = lab.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await lab.RemoveTagAsync("addtagkey");
             lab = await _devTestLabCollections.GetAsync(_labName);
-            Assert.AreEqual(0, lab.Data.Tags.Count);
+            Assert.That(lab.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private void ValidateDevTestLab(DevTestLabData lab, string labName)
         {
-            Assert.IsNotNull(lab);
-            Assert.IsNotNull(lab.CreatedOn);
+            Assert.That(lab, Is.Not.Null);
+            Assert.That(lab.CreatedOn, Is.Not.Null);
             Assert.IsNotEmpty(lab.Id);
-            Assert.AreEqual(labName, lab.Name);
-            Assert.AreEqual(DevTestLabPremiumDataDisk.Disabled, lab.PremiumDataDisks);
-            Assert.AreEqual("Succeeded", lab.ProvisioningState);
+            Assert.That(lab.Name, Is.EqualTo(labName));
+            Assert.That(lab.PremiumDataDisks, Is.EqualTo(DevTestLabPremiumDataDisk.Disabled));
+            Assert.That(lab.ProvisioningState, Is.EqualTo("Succeeded"));
         }
     }
 }

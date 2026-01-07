@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             // Delete
             await secondaryNodeType.DeleteAsync(WaitUntil.Completed);
             var flag = await _nodeTypeCollection.ExistsAsync(secondaryNodeTypeName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         [RecordedTest]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             // Exist
             var flag = await _nodeTypeCollection.ExistsAsync(nodeTypeName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getNodeType = await _nodeTypeCollection.GetAsync(nodeTypeName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             {
                 var startFaultSimulationResult = (await secondaryNodeType.StartFaultSimulationAsync(WaitUntil.Completed, faultSimulationContentWrapper)).Value;
 
-                Assert.AreEqual(startFaultSimulationResult.Status, FaultSimulationStatus.Active);
+                Assert.That(FaultSimulationStatus.Active, Is.EqualTo(startFaultSimulationResult.Status));
 
                 // List Fault Simulation
                 var faultSimulationCount = 0;
@@ -141,23 +141,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                     mostRecentSimulationId = simulation.SimulationId;
                 }
 
-                Assert.AreEqual(faultSimulationCount, 1);
-                Assert.AreEqual(startFaultSimulationResult.SimulationId, mostRecentSimulationId);
+                Assert.That(faultSimulationCount, Is.EqualTo(1));
+                Assert.That(mostRecentSimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
 
                 // Get Fault Simulation
                 FaultSimulationIdContent faultSimulationIdContent = new FaultSimulationIdContent(startFaultSimulationResult.SimulationId);
                 var getFaultSimulationResult = (await secondaryNodeType.GetFaultSimulationAsync(faultSimulationIdContent)).Value;
 
-                Assert.AreEqual(startFaultSimulationResult.SimulationId, getFaultSimulationResult.SimulationId);
-                Assert.AreEqual(startFaultSimulationResult.Details.ClusterId, getFaultSimulationResult.Details.ClusterId);
-                Assert.AreEqual(startFaultSimulationResult.StartOn, getFaultSimulationResult.StartOn);
-                Assert.AreEqual(startFaultSimulationResult.EndOn, getFaultSimulationResult.EndOn);
+                Assert.That(getFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                Assert.That(getFaultSimulationResult.Details.ClusterId, Is.EqualTo(startFaultSimulationResult.Details.ClusterId));
+                Assert.That(getFaultSimulationResult.StartOn, Is.EqualTo(startFaultSimulationResult.StartOn));
+                Assert.That(getFaultSimulationResult.EndOn, Is.EqualTo(startFaultSimulationResult.EndOn));
 
                 // Stop Fault Simulation
                 var stopFaultSimulationResult = (await secondaryNodeType.StopFaultSimulationAsync(WaitUntil.Completed, faultSimulationIdContent)).Value;
 
-                Assert.AreEqual(startFaultSimulationResult.SimulationId, stopFaultSimulationResult.SimulationId);
-                Assert.AreEqual(stopFaultSimulationResult.Status, FaultSimulationStatus.Done);
+                Assert.That(stopFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                Assert.That(FaultSimulationStatus.Done, Is.EqualTo(stopFaultSimulationResult.Status));
             }
             catch (Exception ex)
             {
@@ -170,16 +170,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         {
             Assert.IsNotNull(nodeType);
             Assert.IsNotEmpty(nodeType.Id);
-            Assert.AreEqual(nodeTypeName, nodeType.Name);
-            Assert.AreEqual("S", nodeType.DataDiskLetter);
-            Assert.AreEqual(256, nodeType.DataDiskSizeInGB);
-            Assert.AreEqual(ServiceFabricManagedDataDiskType.StandardSsdLrs, nodeType.DataDiskType);
-            Assert.AreEqual("WindowsServer", nodeType.VmImageOffer);
-            Assert.AreEqual("MicrosoftWindowsServer", nodeType.VmImagePublisher);
-            Assert.AreEqual("2022-Datacenter", nodeType.VmImageSku);
-            Assert.AreEqual("latest", nodeType.VmImageVersion);
-            Assert.AreEqual(6, nodeType.VmInstanceCount);
-            Assert.AreEqual("Standard_D2_v2", nodeType.VmSize);
+            Assert.That(nodeType.Name, Is.EqualTo(nodeTypeName));
+            Assert.That(nodeType.DataDiskLetter, Is.EqualTo("S"));
+            Assert.That(nodeType.DataDiskSizeInGB, Is.EqualTo(256));
+            Assert.That(nodeType.DataDiskType, Is.EqualTo(ServiceFabricManagedDataDiskType.StandardSsdLrs));
+            Assert.That(nodeType.VmImageOffer, Is.EqualTo("WindowsServer"));
+            Assert.That(nodeType.VmImagePublisher, Is.EqualTo("MicrosoftWindowsServer"));
+            Assert.That(nodeType.VmImageSku, Is.EqualTo("2022-Datacenter"));
+            Assert.That(nodeType.VmImageVersion, Is.EqualTo("latest"));
+            Assert.That(nodeType.VmInstanceCount, Is.EqualTo(6));
+            Assert.That(nodeType.VmSize, Is.EqualTo("Standard_D2_v2"));
         }
     }
 }

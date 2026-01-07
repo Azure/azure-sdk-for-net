@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             // Exist
             bool flag = await _workspaceSettingCollection.ExistsAsync(_workspaceSettingName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var getResponse = await _workspaceSettingCollection.GetAsync(_workspaceSettingName);

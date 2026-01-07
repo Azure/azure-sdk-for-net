@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Tests
             await communication.RemoveTagAsync("testkey");
             communication = await collection.GetAsync(communicationServiceName);
             var tag = communication.Data.Tags;
-            Assert.That(tag.Count == 0, Is.True);
+            Assert.That(tag.Count, Is.EqualTo(0));
         }
 
         [TestCase(null)]
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Communication.Tests
             await communication.SetTagsAsync(tag);
             communication = await collection.GetAsync(communicationServiceName);
             tagValue = communication.Data.Tags.FirstOrDefault();
-            Assert.That(communication.Data.Tags.Count == 1, Is.True);
+            Assert.That(communication.Data.Tags.Count, Is.EqualTo(1));
             Assert.That(tagValue.Key, Is.EqualTo("newtestkey"));
             Assert.That(tagValue.Value, Is.EqualTo("newtestvalue"));
         }

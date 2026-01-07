@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         {
             var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var servicePrincipal = await subscription.GetServicePrincipalAsync();
-            Assert.IsNotNull(servicePrincipal);
+            Assert.That(servicePrincipal, Is.Not.Null);
         }
 
         [TestCase]

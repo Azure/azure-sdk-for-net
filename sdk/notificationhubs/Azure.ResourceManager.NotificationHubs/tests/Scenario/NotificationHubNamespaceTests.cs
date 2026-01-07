@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
         {
             string notificationHubNamespaceName = Recording.GenerateAssetName("azNotificationHubNamespace");
             var notificationHubNamespace = await CreateNotificationHubNamespace(_resourceGroup, notificationHubNamespaceName);
-            Assert.IsNotNull(notificationHubNamespace);
-            Assert.AreEqual(notificationHubNamespaceName, notificationHubNamespace.Data.Name);
+            Assert.That(notificationHubNamespace, Is.Not.Null);
+            Assert.That(notificationHubNamespace.Data.Name, Is.EqualTo(notificationHubNamespaceName));
         }
 
         [RecordedTest]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubNamespaceName = Recording.GenerateAssetName("azNotificationHubNamespace");
             await CreateNotificationHubNamespace(_resourceGroup, notificationHubNamespaceName);
             bool flag = await _namespaceCollection.ExistsAsync(notificationHubNamespaceName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubNamespaceName = Recording.GenerateAssetName("azNotificationHubNamespace");
             await CreateNotificationHubNamespace(_resourceGroup, notificationHubNamespaceName);
             var notificationHubNamespace = await _namespaceCollection.GetAsync(notificationHubNamespaceName);
-            Assert.IsNotNull(notificationHubNamespace);
-            Assert.AreEqual(notificationHubNamespaceName, notificationHubNamespace.Value.Data.Name);
+            Assert.That(notificationHubNamespace, Is.Not.Null);
+            Assert.That(notificationHubNamespace.Value.Data.Name, Is.EqualTo(notificationHubNamespaceName));
         }
 
         [RecordedTest]
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubNamespaceName = Recording.GenerateAssetName("azNotificationHubNamespace");
             var notificationHubNamespace = await CreateNotificationHubNamespace(_resourceGroup, notificationHubNamespaceName);
             bool flag = await _namespaceCollection.ExistsAsync(notificationHubNamespaceName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await notificationHubNamespace.DeleteAsync(WaitUntil.Completed);
             flag = await _namespaceCollection.ExistsAsync(notificationHubNamespaceName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

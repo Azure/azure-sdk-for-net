@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests.Mock
             var count = 0;
             await foreach (var item in result)
             {
-                Assert.AreEqual(summaryResult[count], item);
+                Assert.That(item, Is.EqualTo(summaryResult[count]));
                 count++;
             }
         }

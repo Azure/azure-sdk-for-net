@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.GreaterOrEqual(listResponse.Count, 1);
 
             var redis = listResponse.FirstOrDefault();
-            Assert.AreEqual(redisCacheName, redis.Data.Name);
-            Assert.AreEqual(RedisSkuName.Premium, redis.Data.Sku.Name);
-            Assert.AreEqual(RedisSkuFamily.Premium, redis.Data.Sku.Family);
-            Assert.AreEqual(1, redis.Data.Sku.Capacity);
-            Assert.AreEqual(6379, redis.Data.Port);
-            Assert.AreEqual(6380, redis.Data.SslPort);
+            Assert.That(redis.Data.Name, Is.EqualTo(redisCacheName));
+            Assert.That(redis.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+            Assert.That(redis.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+            Assert.That(redis.Data.Sku.Capacity, Is.EqualTo(1));
+            Assert.That(redis.Data.Port, Is.EqualTo(6379));
+            Assert.That(redis.Data.SslPort, Is.EqualTo(6380));
 
             listResponse = await DefaultSubscription.GetAllRedisAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(listResponse.Count, 1);
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.Redis.Tests
             redis = listResponse.FirstOrDefault(x => x.Data.Name.Equals(redisCacheName));
             if (redis != null)
             {
-                Assert.AreEqual(redisCacheName, redis.Data.Name);
-                Assert.AreEqual(RedisSkuName.Premium, redis.Data.Sku.Name);
-                Assert.AreEqual(RedisSkuFamily.Premium, redis.Data.Sku.Family);
-                Assert.AreEqual(1, redis.Data.Sku.Capacity);
-                Assert.AreEqual(6379, redis.Data.Port);
-                Assert.AreEqual(6380, redis.Data.SslPort);
+                Assert.That(redis.Data.Name, Is.EqualTo(redisCacheName));
+                Assert.That(redis.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+                Assert.That(redis.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+                Assert.That(redis.Data.Sku.Capacity, Is.EqualTo(1));
+                Assert.That(redis.Data.Port, Is.EqualTo(6379));
+                Assert.That(redis.Data.SslPort, Is.EqualTo(6380));
             }
 
             var response = (await redis.GetKeysAsync()).Value;
-            Assert.NotNull(response.PrimaryKey);
-            Assert.NotNull(response.SecondaryKey);
+            Assert.That(response.PrimaryKey, Is.Not.Null);
+            Assert.That(response.SecondaryKey, Is.Not.Null);
         }
     }
 }

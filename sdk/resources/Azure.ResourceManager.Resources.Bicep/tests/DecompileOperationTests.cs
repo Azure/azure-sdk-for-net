@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Tests
             """.Replace("\r\n", "\n")));
 
             var mainBicep = response.Value.Files.Single(x => x.Path == response.Value.EntryPoint);
-            Assert.AreEqual("param foo string\n\noutput foo string = foo\n", mainBicep.Contents);
+            Assert.That(mainBicep.Contents, Is.EqualTo("param foo string\n\noutput foo string = foo\n"));
         }
     }
 }

@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             AsyncPageable<EdgeOrderResource> orders = EdgeOrderExtensions.GetEdgeOrdersAsync(Subscription);
             List<EdgeOrderResource> ordersResult = await orders.ToEnumerableAsync();
 
-            Assert.NotNull(ordersResult);
-            Assert.IsTrue(ordersResult.Count >= 1);
+            Assert.That(ordersResult, Is.Not.Null);
+            Assert.That(ordersResult.Count >= 1, Is.True);
         }
 
         [TestCase, Order(2)]
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             AsyncPageable<EdgeOrderResource> orders = EdgeOrderExtensions.GetEdgeOrdersAsync(rg);
             List<EdgeOrderResource> ordersResult = await orders.ToEnumerableAsync();
 
-            Assert.NotNull(ordersResult);
-            Assert.IsTrue(ordersResult.Count >= 1);
+            Assert.That(ordersResult, Is.Not.Null);
+            Assert.That(ordersResult.Count >= 1, Is.True);
         }
     }
 }

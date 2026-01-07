@@ -34,38 +34,38 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusTopicCollection topicCollection = serviceBusNamespace.GetServiceBusTopics();
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopicResource topic = (await topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
-            Assert.NotNull(topic);
-            Assert.AreEqual(topic.Id.Name, topicName);
+            Assert.That(topic, Is.Not.Null);
+            Assert.That(topicName, Is.EqualTo(topic.Id.Name));
 
             //create a subscription
             ServiceBusSubscriptionCollection serviceBusSubscriptionCollection = topic.GetServiceBusSubscriptions();
             string subscriptionName = Recording.GenerateAssetName("subscription");
             ServiceBusSubscriptionData parameters = new ServiceBusSubscriptionData();
             ServiceBusSubscriptionResource serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionName, parameters)).Value;
-            Assert.NotNull(serviceBusSubscription);
-            Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
+            Assert.That(serviceBusSubscription, Is.Not.Null);
+            Assert.That(subscriptionName, Is.EqualTo(serviceBusSubscription.Id.Name));
 
             //create rule with no filters
             string ruleName1 = Recording.GenerateAssetName("rule");
             ServiceBusRuleCollection ruleCollection = serviceBusSubscription.GetServiceBusRules();
             ServiceBusRuleResource rule1 = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName1, new ServiceBusRuleData())).Value;
-            Assert.NotNull(rule1);
-            Assert.AreEqual(rule1.Id.Name, ruleName1);
+            Assert.That(rule1, Is.Not.Null);
+            Assert.That(ruleName1, Is.EqualTo(rule1.Id.Name));
 
             //create rule with correlation filter
             string ruleName2 = Recording.GenerateAssetName("rule");
             ServiceBusRuleResource rule2 = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName2, new ServiceBusRuleData(){FilterType = ServiceBusFilterType.CorrelationFilter})).Value;
-            Assert.NotNull(rule2);
-            Assert.AreEqual(rule2.Id.Name, ruleName2);
+            Assert.That(rule2, Is.Not.Null);
+            Assert.That(ruleName2, Is.EqualTo(rule2.Id.Name));
 
             //get created rules
             rule1 = await ruleCollection.GetAsync(ruleName1);
-            Assert.NotNull(rule1);
-            Assert.AreEqual(rule1.Id.Name, ruleName1);
+            Assert.That(rule1, Is.Not.Null);
+            Assert.That(ruleName1, Is.EqualTo(rule1.Id.Name));
 
             //get all rules
             List<ServiceBusRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(2, rules.Count);
+            Assert.That(rules.Count, Is.EqualTo(2));
 
             //update rule with sql filter and action
             ServiceBusRuleData updateParameters = new ServiceBusRuleData()
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusTopicCollection topicCollection = serviceBusNamespace.GetServiceBusTopics();
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopicResource topic = (await topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
-            Assert.NotNull(topic);
-            Assert.AreEqual(topic.Id.Name, topicName);
+            Assert.That(topic, Is.Not.Null);
+            Assert.That(topicName, Is.EqualTo(topic.Id.Name));
 
             //create a subscription
             ServiceBusSubscriptionCollection serviceBusSubscriptionCollection = topic.GetServiceBusSubscriptions();
             string subscriptionName = Recording.GenerateAssetName("subscription");
             ServiceBusSubscriptionData parameters = new ServiceBusSubscriptionData();
             ServiceBusSubscriptionResource serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionName, parameters)).Value;
-            Assert.NotNull(serviceBusSubscription);
-            Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
+            Assert.That(serviceBusSubscription, Is.Not.Null);
+            Assert.That(subscriptionName, Is.EqualTo(serviceBusSubscription.Id.Name));
 
             //create rule with no filters
             string ruleName = Recording.GenerateAssetName("rule");
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             input.CorrelationFilter.ApplicationProperties.Add("intKey", 5);
             input.CorrelationFilter.ApplicationProperties.Add("dateTimeKey", Recording.Now.UtcDateTime);
             ServiceBusRuleResource rule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input)).Value;
-            Assert.NotNull(rule);
-            Assert.AreEqual(rule.Id.Name, ruleName);
+            Assert.That(rule, Is.Not.Null);
+            Assert.That(ruleName, Is.EqualTo(rule.Id.Name));
         }
     }
 }

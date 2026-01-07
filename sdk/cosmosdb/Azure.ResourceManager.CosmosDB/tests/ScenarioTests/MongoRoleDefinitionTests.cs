@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             string databaseName = _mongoDBDatabaseId.Name;
             var definition = await CreateMongoRoleDefinition(databaseName, MongoRoleDefinitionCollection);
-            Assert.AreEqual(_roleDefinition.Data.Name, definition.Data.Name);
-            Assert.AreEqual(definition.Data.DatabaseName, databaseName);
+            Assert.That(definition.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
+            Assert.That(databaseName, Is.EqualTo(definition.Data.DatabaseName));
             Assert.That(definition.Data.Privileges, Has.Count.EqualTo(1));
             Assert.That(definition.Data.Privileges[0].Actions, Has.Count.EqualTo(1));
-            Assert.AreEqual(PrivilegeActionInsert, definition.Data.Privileges[0].Actions[0]);
+            Assert.That(definition.Data.Privileges[0].Actions[0], Is.EqualTo(PrivilegeActionInsert));
 
             bool ifExists = await MongoRoleDefinitionCollection.ExistsAsync(this._roleDefinitionId);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             MongoDBRoleDefinitionResource definition2 = await MongoRoleDefinitionCollection.GetAsync(this._roleDefinitionId);
-            Assert.AreEqual(_roleDefinition.Data.Name, definition2.Data.Name);
+            Assert.That(definition2.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
             VerifyMongoRoleDefinitions(definition, definition2);
 
             var updateParameters = new MongoDBRoleDefinitionCreateOrUpdateContent
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             updateParameters.Privileges.Add(privilege);
 
             definition = await (await MongoRoleDefinitionCollection.CreateOrUpdateAsync(WaitUntil.Completed, this._roleDefinitionId, updateParameters)).WaitForCompletionAsync();
-            Assert.AreEqual(_roleDefinition.Data.Name, definition.Data.Name);
-            Assert.AreEqual(_roleDefinition.Data.Name, definition.Data.Name);
-            Assert.AreEqual(definition.Data.DatabaseName, databaseName);
+            Assert.That(definition.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
+            Assert.That(definition.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
+            Assert.That(databaseName, Is.EqualTo(definition.Data.DatabaseName));
             Assert.That(definition.Data.Privileges, Has.Count.EqualTo(1));
             Assert.That(definition.Data.Privileges[0].Actions, Has.Count.EqualTo(1));
-            Assert.AreEqual(PrivilegeActionFind, definition.Data.Privileges[0].Actions[0]);
+            Assert.That(definition.Data.Privileges[0].Actions[0], Is.EqualTo(PrivilegeActionFind));
 
             definition2 = await MongoRoleDefinitionCollection.GetAsync(this._roleDefinitionId);
             VerifyMongoRoleDefinitions(definition, definition2);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var definitions = await MongoRoleDefinitionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(definitions, Is.Not.Zero);
-            Assert.AreEqual(definition.Data.Name, definitions[0].Data.Name);
+            Assert.That(definitions[0].Data.Name, Is.EqualTo(definition.Data.Name));
 
             VerifyMongoRoleDefinitions(definitions[0], definition);
         }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var definition = await CreateMongoRoleDefinition(databaseName, MongoRoleDefinitionCollection);
             await definition.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsFalse(await MongoRoleDefinitionCollection.ExistsAsync(this._roleDefinition.Data.Id.Name));
+            Assert.That((bool)await MongoRoleDefinitionCollection.ExistsAsync(this._roleDefinition.Data.Id.Name), Is.False);
         }
 
         [Test]
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var definition = await CreateMongoRoleDefinition(databaseName, MongoRoleDefinitionCollection);
             var definition2 = await definition.GetAsync();
 
-            Assert.IsTrue(await MongoRoleDefinitionCollection.ExistsAsync(this._roleDefinition.Data.Id.Name));
+            Assert.That((bool)await MongoRoleDefinitionCollection.ExistsAsync(this._roleDefinition.Data.Id.Name), Is.True);
             VerifyMongoRoleDefinitions(definition, definition2);
         }
 
@@ -187,30 +187,30 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyMongoRoleDefinitions(MongoDBRoleDefinitionResource expectedValue, MongoDBRoleDefinitionResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.AreEqual(expectedValue.Data.RoleName, actualValue.Data.RoleName);
+            Assert.That(actualValue.Data.RoleName, Is.EqualTo(expectedValue.Data.RoleName));
 
-            Assert.AreEqual(expectedValue.Data.DatabaseName, actualValue.Data.DatabaseName);
+            Assert.That(actualValue.Data.DatabaseName, Is.EqualTo(expectedValue.Data.DatabaseName));
             VerifyPrivileges(expectedValue.Data.Privileges, actualValue.Data.Privileges);
         }
 
         private void VerifyPrivileges(IList<MongoDBPrivilege> expected, IList<MongoDBPrivilege> actualValue)
         {
-            Assert.AreEqual(expected.Count, actualValue.Count);
+            Assert.That(actualValue.Count, Is.EqualTo(expected.Count));
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Actions[0], actualValue[i].Actions[0]);
+                Assert.That(actualValue[i].Actions[0], Is.EqualTo(expected[i].Actions[0]));
                 VerifyPrivilegeResource(expected[i].Resource, actualValue[i].Resource);
             }
         }
 
         private void VerifyPrivilegeResource(MongoDBPrivilegeResourceInfo expected, MongoDBPrivilegeResourceInfo actualValue)
         {
-            Assert.AreEqual(expected.DBName, actualValue.DBName);
-            Assert.AreEqual(expected.Collection, actualValue.Collection);
+            Assert.That(actualValue.DBName, Is.EqualTo(expected.DBName));
+            Assert.That(actualValue.Collection, Is.EqualTo(expected.Collection));
         }
     }
 }

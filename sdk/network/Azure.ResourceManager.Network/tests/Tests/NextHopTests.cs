@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Network.Tests
             Response<RouteTableResource> routeTable = await resourceGroup.GetRouteTables().GetAsync(resourceGroupName + "RT");
 
             //Validation
-            Assert.AreEqual("10.0.1.2", getNextHop1.Value.NextHopIPAddress);
-            Assert.AreEqual(routeTable.Value.Id, getNextHop1.Value.RouteTableId);
-            Assert.AreEqual("Internet", getNextHop2.Value.NextHopType.ToString());
-            Assert.AreEqual("System Route", getNextHop2.Value.RouteTableId);
+            Assert.That(getNextHop1.Value.NextHopIPAddress, Is.EqualTo("10.0.1.2"));
+            Assert.That(getNextHop1.Value.RouteTableId, Is.EqualTo(routeTable.Value.Id));
+            Assert.That(getNextHop2.Value.NextHopType.ToString(), Is.EqualTo("Internet"));
+            Assert.That(getNextHop2.Value.RouteTableId, Is.EqualTo("System Route"));
         }
     }
 }

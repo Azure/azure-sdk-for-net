@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status, "Expected a 404 status code.");
-                Assert.AreEqual("NotFound", ex.ErrorCode, "Expected the error code to be 'NotFound'.");
+                Assert.That(ex.Status, Is.EqualTo(404), "Expected a 404 status code.");
+                Assert.That(ex.ErrorCode, Is.EqualTo("NotFound"), "Expected the error code to be 'NotFound'.");
                 StringAssert.Contains(
                     "The data was not found. Please check the request and try again.",
                     ex.Message,
                     "The error message did not match the expected text."
                 );
 
-                Assert.IsTrue(ex.Message.Contains("NotFound"), "The error message should contain 'NotFound'.");
+                Assert.That(ex.Message, Does.Contain("NotFound"), "The error message should contain 'NotFound'.");
                 return;
             }
 
@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status, "Expected a 404 status code.");
-                Assert.AreEqual("NotFound", ex.ErrorCode, "Expected the error code to be 'NotFound'.");
+                Assert.That(ex.Status, Is.EqualTo(404), "Expected a 404 status code.");
+                Assert.That(ex.ErrorCode, Is.EqualTo("NotFound"), "Expected the error code to be 'NotFound'.");
                 StringAssert.Contains(
                     "The data was not found. Please check the request and try again.",
                     ex.Message,
                     "The error message did not match the expected text."
                 );
 
-                Assert.IsTrue(ex.Message.Contains("NotFound"), "The error message should contain 'NotFound'.");
+                Assert.That(ex.Message, Does.Contain("NotFound"), "The error message should contain 'NotFound'.");
                 return;
             }
 

@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Hci.Tests
             var arcSettingCollection = cluster.GetArcSettings();
             var arcSettingName = "default";//Recording.GenerateAssetName("hci-arc-setting");
             var arcSetting = await CreateArcSettingAsync(cluster, arcSettingName);
-            Assert.AreEqual(arcSetting.Data.Name, arcSettingName);
+            Assert.That(arcSettingName, Is.EqualTo(arcSetting.Data.Name));
 
             ArcSettingResource arcSettingFromGet = await arcSettingCollection.GetAsync(arcSettingName);
-            Assert.AreEqual(arcSettingFromGet.Data.Name, arcSettingName);
+            Assert.That(arcSettingName, Is.EqualTo(arcSettingFromGet.Data.Name));
 
             await foreach (ArcSettingResource arcSettingFromList in arcSettingCollection)
             {
-                Assert.AreEqual(arcSettingFromList.Data.Name, arcSettingName);
+                Assert.That(arcSettingName, Is.EqualTo(arcSettingFromList.Data.Name));
             }
         }
     }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
                 Console.WriteLine(recordType.ToString());
                 count++;
             }
-            Assert.AreEqual(count, 11);
+            Assert.That(count, Is.EqualTo(11));
         }
 
         private async Task Create_A()

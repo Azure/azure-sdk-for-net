@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Tests
             // create
             DdosProtectionPlanResource ddosProtectionPlan = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, new DdosProtectionPlanData(TestEnvironment.Location))).WaitForCompletionAsync();
 
-            Assert.True(await container.ExistsAsync(name));
+            Assert.That((bool)await container.ExistsAsync(name), Is.True);
 
             var ddosProtectionPlanData = ddosProtectionPlan.Data;
             ValidateCommon(ddosProtectionPlanData, name);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Tests
             // delete
             await ddosProtectionPlan.DeleteAsync(WaitUntil.Completed);
 
-            Assert.False(await container.ExistsAsync(name));
+            Assert.That((bool)await container.ExistsAsync(name), Is.False);
 
             ddosProtectionPlans = await container.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(ddosProtectionPlans);
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.Network.Tests
 
         private void ValidateCommon(DdosProtectionPlanData data, string name)
         {
-            Assert.AreEqual(name, data.Name);
-            Assert.AreEqual(TestEnvironment.Location, data.Location.Name);
+            Assert.That(data.Name, Is.EqualTo(name));
+            Assert.That(data.Location.Name, Is.EqualTo(TestEnvironment.Location));
         }
     }
 }

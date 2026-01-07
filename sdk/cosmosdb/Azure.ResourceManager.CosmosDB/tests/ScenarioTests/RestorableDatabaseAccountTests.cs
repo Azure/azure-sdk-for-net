@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             _databaseAccountName = name;
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, _databaseAccountName, createOptions);
 
-            Assert.AreEqual(inputContinuousTier, ((ContinuousModeBackupPolicy)accountLro.Value.Data.BackupPolicy).ContinuousModeTier, "Unexpected ContinuousTier");
+            Assert.That(((ContinuousModeBackupPolicy)accountLro.Value.Data.BackupPolicy).ContinuousModeTier, Is.EqualTo(inputContinuousTier), "Unexpected ContinuousTier");
 
             return accountLro.Value;
         }
@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
 
             RestorableCosmosDBAccountResource restorableDBA = restorableAccounts.Where(account => account.Data.AccountName == expectedRestorableDatabaseAccountName).Single();
-            Assert.AreEqual(restorableDBA.Data.ApiType, CosmosDBApiType.Sql);
-            Assert.IsNotNull(restorableDBA.Data.CreatedOn);
-            Assert.IsNull(restorableDBA.Data.DeletedOn, $"Actual DeletedOn: {restorableDBA.Data.DeletedOn}");
-            Assert.IsNotNull(restorableDBA.Data.OldestRestorableOn);
-            Assert.IsNotNull(restorableDBA.Data.RestorableLocations);
+            Assert.That(CosmosDBApiType.Sql, Is.EqualTo(restorableDBA.Data.ApiType));
+            Assert.That(restorableDBA.Data.CreatedOn, Is.Not.Null);
+            Assert.That(restorableDBA.Data.DeletedOn, Is.Null, $"Actual DeletedOn: {restorableDBA.Data.DeletedOn}");
+            Assert.That(restorableDBA.Data.OldestRestorableOn, Is.Not.Null);
+            Assert.That(restorableDBA.Data.RestorableLocations, Is.Not.Null);
         }
 
         private async Task<CosmosDBAccountResource> RestoreAndVerifyRestoredAccount(AccountType accountType, RestorableCosmosDBAccountResource restorableAccount, CosmosDBAccountRestoreParameters restoreParameters, AzureLocation location, AzureLocation armLocation, bool IsFreeTierEnabled = false)
@@ -213,15 +213,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, restoredAccountName, databaseAccountCreateUpdateParameters);
             CosmosDBAccountResource restoredDatabaseAccount = accountLro.Value;
-            Assert.NotNull(restoredDatabaseAccount);
-            Assert.NotNull(restoredDatabaseAccount.Data.RestoreParameters);
-            Assert.AreEqual(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower(), restorableAccount.Id.ToString().ToLower());
-            Assert.True(restoredDatabaseAccount.Data.RestoreParameters.IsRestoreWithTtlDisabled);
-            Assert.True(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy);
+            Assert.That(restoredDatabaseAccount, Is.Not.Null);
+            Assert.That(restoredDatabaseAccount.Data.RestoreParameters, Is.Not.Null);
+            Assert.That(restorableAccount.Id.ToString().ToLower(), Is.EqualTo(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower()));
+            Assert.That(restoredDatabaseAccount.Data.RestoreParameters.IsRestoreWithTtlDisabled, Is.True);
+            Assert.That(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy, Is.True);
 
             ContinuousModeBackupPolicy policy = restoredDatabaseAccount.Data.BackupPolicy as ContinuousModeBackupPolicy;
-            Assert.AreEqual(_restorableDatabaseAccount.Data.BackupPolicy.BackupPolicyType, policy.BackupPolicyType);
-            Assert.AreEqual(IsFreeTierEnabled, restoredDatabaseAccount.Data.IsFreeTierEnabled);
+            Assert.That(policy.BackupPolicyType, Is.EqualTo(_restorableDatabaseAccount.Data.BackupPolicy.BackupPolicyType));
+            Assert.That(restoredDatabaseAccount.Data.IsFreeTierEnabled, Is.EqualTo(IsFreeTierEnabled));
 
             return restoredDatabaseAccount;
         }

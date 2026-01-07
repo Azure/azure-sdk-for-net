@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             ResourceIdentifier resourceIdentifier = TrafficManagerUserMetricsResource.CreateResourceIdentifier(FalseySubId);
             var badResource = Client.GetTrafficManagerUserMetricsResource(resourceIdentifier);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await badResource.DeleteAsync(WaitUntil.Completed));
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
 
             await Task.CompletedTask;
         }
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             ArmOperation<TrafficManagerUserMetricsResource> userMetricsModelResourceOperation = await userMetricsModelResource.CreateOrUpdateAsync(WaitUntil.Completed);
 
-            Assert.IsTrue(userMetricsModelResourceOperation.HasCompleted);
-            Assert.IsTrue(userMetricsModelResourceOperation.HasValue);
+            Assert.That(userMetricsModelResourceOperation.HasCompleted, Is.True);
+            Assert.That(userMetricsModelResourceOperation.HasValue, Is.True);
         }
     }
 }

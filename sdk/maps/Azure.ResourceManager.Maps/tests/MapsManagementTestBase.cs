@@ -58,28 +58,28 @@ namespace Azure.ResourceManager.Maps.Tests
 
         public void VerifyAccountProperties(MapsAccountData account, bool useDefaults, MapsSkuName skuName, string location = "East US")
         {
-            Assert.NotNull(account.Id);
-            Assert.NotNull(account.Location);
-            Assert.NotNull(account.Name);
+            Assert.That(account.Id, Is.Not.Null);
+            Assert.That(account.Location, Is.Not.Null);
+            Assert.That(account.Name, Is.Not.Null);
 
-            Assert.NotNull(account.Sku);
-            Assert.NotNull(account.Sku.Tier);
+            Assert.That(account.Sku, Is.Not.Null);
+            Assert.That(account.Sku.Tier, Is.Not.Null);
 
             if (useDefaults)
             {
-                Assert.AreEqual("East US", account.Location.DisplayName);
-                Assert.AreEqual(MapsSkuName.G2, account.Sku.Name);
+                Assert.That(account.Location.DisplayName, Is.EqualTo("East US"));
+                Assert.That(account.Sku.Name, Is.EqualTo(MapsSkuName.G2));
 
-                Assert.NotNull(account.Tags);
-                Assert.NotNull(account.Properties.UniqueId);
-                Assert.AreEqual(2, account.Tags.Count);
-                Assert.AreEqual("value1", account.Tags["key1"]);
-                Assert.AreEqual("value2", account.Tags["key2"]);
+                Assert.That(account.Tags, Is.Not.Null);
+                Assert.That(account.Properties.UniqueId, Is.Not.Null);
+                Assert.That(account.Tags.Count, Is.EqualTo(2));
+                Assert.That(account.Tags["key1"], Is.EqualTo("value1"));
+                Assert.That(account.Tags["key2"], Is.EqualTo("value2"));
             }
             else
             {
-                Assert.AreEqual(skuName, account.Sku.Name);
-                Assert.AreEqual(location, account.Location.DisplayName);
+                Assert.That(account.Sku.Name, Is.EqualTo(skuName));
+                Assert.That(account.Location.DisplayName, Is.EqualTo(location));
             }
         }
 

@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // create portal revision
             var portalRevision = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, revisionId, portalRevisionContract)).Value;
 
-            Assert.NotNull(portalRevision);
-            Assert.IsFalse(portalRevision.Data.IsCurrent);
+            Assert.That(portalRevision, Is.Not.Null);
+            Assert.That(portalRevision.Data.IsCurrent, Is.False);
 
             //get
             var getPortalRevision = (await collection.GetAsync(revisionId)).Value;
 
-            Assert.NotNull(getPortalRevision);
-            Assert.IsFalse(portalRevision.Data.IsCurrent);
+            Assert.That(getPortalRevision, Is.Not.Null);
+            Assert.That(portalRevision.Data.IsCurrent, Is.False);
 
             var updateDescription = "Updated " + portalRevisionContract.Description;
 
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 ETag.All,
                 new ApiManagementPortalRevisionData { Description = updateDescription })).Value;
 
-            Assert.NotNull(updatedResult);
-            Assert.IsFalse(portalRevision.Data.IsCurrent);
-            Assert.AreEqual(updateDescription, updatedResult.Data.Description);
+            Assert.That(updatedResult, Is.Not.Null);
+            Assert.That(portalRevision.Data.IsCurrent, Is.False);
+            Assert.That(updatedResult.Data.Description, Is.EqualTo(updateDescription));
 
             //list
             var listPortalRevision = await collection.GetAllAsync().ToEnumerableAsync();

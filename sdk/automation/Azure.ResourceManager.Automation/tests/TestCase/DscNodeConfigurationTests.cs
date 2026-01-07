@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             var lro = await nodeCollection.CreateOrUpdateAsync(WaitUntil.Completed, "SampleConfiguration.localhost", input);
             //2.Get
             DscNodeConfigurationResource dscconfiguration2 = (await nodeCollection.GetAsync("SampleConfiguration.localhost")).Value;
-            Assert.AreEqual("SampleConfiguration.localhost", dscconfiguration2.Data.Name);
+            Assert.That(dscconfiguration2.Data.Name, Is.EqualTo("SampleConfiguration.localhost"));
             //3.GetAll
             _ = await nodeCollection.CreateOrUpdateAsync(WaitUntil.Completed, "SampleConfiguration.localhost", input);
             //_ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName + name2, input);
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 1);
             //4.Exists
-            Assert.IsTrue(await nodeCollection.ExistsAsync("SampleConfiguration.localhost"));
-            Assert.IsFalse(await nodeCollection.ExistsAsync("SampleConfiguration.localhost"+"1"));
+            Assert.That((bool)await nodeCollection.ExistsAsync("SampleConfiguration.localhost"), Is.True);
+            Assert.That((bool)await nodeCollection.ExistsAsync("SampleConfiguration.localhost" + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await nodeCollection.ExistsAsync(null));
             //Resource

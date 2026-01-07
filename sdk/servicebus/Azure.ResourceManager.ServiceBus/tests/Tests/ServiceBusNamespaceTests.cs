@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //validate if created successfully
             serviceBusNamespace = await namespaceCollection.GetAsync(namespaceName);
-            Assert.IsTrue(await namespaceCollection.ExistsAsync(namespaceName));
+            Assert.That((bool)await namespaceCollection.ExistsAsync(namespaceName), Is.True);
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //delete namespace
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //validate if deleted successfully
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
+            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.That((bool)await namespaceCollection.ExistsAsync(namespaceName), Is.False);
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             };
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
             VerifyNamespaceProperties(serviceBusNamespace, false);
-            Assert.IsTrue(serviceBusNamespace.Data.IsZoneRedundant);
+            Assert.That(serviceBusNamespace.Data.IsZoneRedundant, Is.True);
         }
 
         [Test]
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             };
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
             VerifyNamespaceProperties(serviceBusNamespace, false);
-            Assert.AreEqual(parameters.Sku.Capacity, serviceBusNamespace.Data.Sku.Capacity);
-            Assert.IsTrue(serviceBusNamespace.Data.IsZoneRedundant);
-            Assert.AreEqual(serviceBusNamespace.Data.PremiumMessagingPartitions, 2);
+            Assert.That(serviceBusNamespace.Data.Sku.Capacity, Is.EqualTo(parameters.Sku.Capacity));
+            Assert.That(serviceBusNamespace.Data.IsZoneRedundant, Is.True);
+            Assert.That(serviceBusNamespace.Data.PremiumMessagingPartitions, Is.EqualTo(2));
             await serviceBusNamespace.DeleteAsync(WaitUntil.Completed);
         }
 
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             var serviceBusNamespace2 = await serviceBusNamespace.UpdateAsync(WaitUntil.Completed, parameters);
 
             //validate
-            Assert.AreEqual(serviceBusNamespace2.Value.Data.Tags.Count, 2);
-            Assert.AreEqual("value1", serviceBusNamespace2.Value.Data.Tags["key1"]);
-            Assert.AreEqual("value2", serviceBusNamespace2.Value.Data.Tags["key2"]);
+            Assert.That(serviceBusNamespace2.Value.Data.Tags.Count, Is.EqualTo(2));
+            Assert.That(serviceBusNamespace2.Value.Data.Tags["key1"], Is.EqualTo("value1"));
+            Assert.That(serviceBusNamespace2.Value.Data.Tags["key2"], Is.EqualTo("value2"));
 
             //wait until provision state is succeeded
             await GetSucceededNamespace(serviceBusNamespace);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 if (serviceBusNamespace.Id.Name == namespaceName2)
                     namespace2 = serviceBusNamespace;
             }
-            Assert.AreEqual(count, 2);
+            Assert.That(count, Is.EqualTo(2));
             VerifyNamespaceProperties(namespace1, true);
             VerifyNamespaceProperties(namespace2, true);
         }
@@ -191,8 +191,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             }
             VerifyNamespaceProperties(namespace1, true);
             VerifyNamespaceProperties(namespace2, true);
-            Assert.AreEqual(namespace1.Id.ResourceGroupName, _resourceGroup.Id.Name);
-            Assert.AreEqual(namespace2.Id.ResourceGroupName, resourceGroup.Id.Name);
+            Assert.That(_resourceGroup.Id.Name, Is.EqualTo(namespace1.Id.ResourceGroupName));
+            Assert.That(resourceGroup.Id.Name, Is.EqualTo(namespace2.Id.ResourceGroupName));
         }
 
         [Test]
@@ -239,23 +239,23 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 }
             };
             ServiceBusPrivateEndpointConnectionResource privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, parameter)).Value;
-            Assert.NotNull(privateEndpointConnection);
-            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
+            Assert.That(privateEndpointConnection, Is.Not.Null);
+            Assert.That(serviceBusNamespace2.Id.ToString(), Is.EqualTo(privateEndpointConnection.Data.PrivateEndpoint.Id));
             connectionName = privateEndpointConnection.Id.Name;
 
             //get the endpoint connection and validate
             privateEndpointConnection = await privateEndpointConnectionCollection.GetAsync(connectionName);
-            Assert.NotNull(privateEndpointConnection);
-            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
+            Assert.That(privateEndpointConnection, Is.Not.Null);
+            Assert.That(serviceBusNamespace2.Id.ToString(), Is.EqualTo(privateEndpointConnection.Data.PrivateEndpoint.Id));
 
             //get all endpoint connections and validate
             List<ServiceBusPrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(privateEndpointConnections, 1);
-            Assert.AreEqual(privateEndpointConnections.First().Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
+            Assert.That(privateEndpointConnections, Is.EqualTo(1));
+            Assert.That(serviceBusNamespace2.Id.ToString(), Is.EqualTo(privateEndpointConnections.First().Data.PrivateEndpoint.Id));
 
             //delete endpoint connection and validate
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
-            Assert.IsFalse(await privateEndpointConnectionCollection.ExistsAsync(connectionName));
+            Assert.That((bool)await privateEndpointConnectionCollection.ExistsAsync(connectionName), Is.False);
         }
 
         [Test]
@@ -277,20 +277,20 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 Rights = { ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send }
             };
             ServiceBusNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
-            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
+            Assert.That(authorizationRule, Is.Not.Null);
+            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //get authorization rule
             authorizationRule = await ruleCollection.GetAsync(ruleName);
-            Assert.AreEqual(authorizationRule.Id.Name, ruleName);
-            Assert.NotNull(authorizationRule);
-            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
+            Assert.That(ruleName, Is.EqualTo(authorizationRule.Id.Name));
+            Assert.That(authorizationRule, Is.Not.Null);
+            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //get all authorization rules
             List<ServiceBusNamespaceAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //there should be two authorization rules
-            Assert.True(rules.Count > 1);
+            Assert.That(rules.Count > 1, Is.True);
             bool isContainAuthorizationRuleName = false;
             bool isContainDefaultRuleName = false;
             foreach (ServiceBusNamespaceAuthorizationRuleResource rule in rules)
@@ -304,23 +304,23 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                     isContainDefaultRuleName = true;
                 }
             }
-            Assert.True(isContainDefaultRuleName);
-            Assert.True(isContainAuthorizationRuleName);
+            Assert.That(isContainDefaultRuleName, Is.True);
+            Assert.That(isContainAuthorizationRuleName, Is.True);
 
             //update authorization rule
             parameter.Rights.Add(ServiceBusAccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
-            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
+            Assert.That(authorizationRule, Is.Not.Null);
+            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //delete authorization rule
             await authorizationRule.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted
-            Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
+            Assert.That((bool)await ruleCollection.ExistsAsync(ruleName), Is.False);
             rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.True(rules.Count == 1);
-            Assert.AreEqual(rules[0].Id.Name, DefaultNamespaceAuthorizationRule);
+            Assert.That(rules.Count, Is.EqualTo(1));
+            Assert.That(rules[0].Id.Name, Is.EqualTo(DefaultNamespaceAuthorizationRule));
         }
 
         [Test]
@@ -342,26 +342,26 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 Rights = { ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send }
             };
             ServiceBusNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.NotNull(authorizationRule);
-            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
+            Assert.That(authorizationRule, Is.Not.Null);
+            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             ServiceBusAccessKeys keys1 = await authorizationRule.GetKeysAsync();
-            Assert.NotNull(keys1);
-            Assert.NotNull(keys1.PrimaryConnectionString);
-            Assert.NotNull(keys1.SecondaryConnectionString);
+            Assert.That(keys1, Is.Not.Null);
+            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
 
             ServiceBusAccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreNotEqual(keys1.PrimaryKey, keys2.PrimaryKey);
-                Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
+                Assert.That(keys2.PrimaryKey, Is.Not.EqualTo(keys1.PrimaryKey));
+                Assert.That(keys2.SecondaryKey, Is.EqualTo(keys1.SecondaryKey));
             }
 
             ServiceBusAccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
-                Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
+                Assert.That(keys3.PrimaryKey, Is.EqualTo(keys2.PrimaryKey));
+                Assert.That(keys3.SecondaryKey, Is.Not.EqualTo(keys2.SecondaryKey));
             }
 
             var updatePrimaryKey = GenerateRandomKey();
@@ -373,8 +373,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(updatePrimaryKey, keys4.PrimaryKey);
-                Assert.AreEqual(currentKeys.SecondaryKey, keys4.SecondaryKey);
+                Assert.That(keys4.PrimaryKey, Is.EqualTo(updatePrimaryKey));
+                Assert.That(keys4.SecondaryKey, Is.EqualTo(currentKeys.SecondaryKey));
             }
 
             currentKeys = keys4;
@@ -385,8 +385,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
-                Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
+                Assert.That(keys5.SecondaryKey, Is.EqualTo(updateSecondaryKey));
+                Assert.That(keys5.PrimaryKey, Is.EqualTo(currentKeys.PrimaryKey));
             }
         }
 
@@ -462,11 +462,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //get the network rule set
             ServiceBusNetworkRuleSetResource networkRuleSet = await serviceBusNamespace.GetServiceBusNetworkRuleSet().GetAsync();
-            Assert.NotNull(networkRuleSet);
-            Assert.NotNull(networkRuleSet.Data.IPRules);
-            Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
-            Assert.AreEqual(networkRuleSet.Data.VirtualNetworkRules.Count, 3);
-            Assert.AreEqual(networkRuleSet.Data.IPRules.Count, 5);
+            Assert.That(networkRuleSet, Is.Not.Null);
+            Assert.That(networkRuleSet.Data.IPRules, Is.Not.Null);
+            Assert.That(networkRuleSet.Data.VirtualNetworkRules, Is.Not.Null);
+            Assert.That(networkRuleSet.Data.VirtualNetworkRules.Count, Is.EqualTo(3));
+            Assert.That(networkRuleSet.Data.IPRules.Count, Is.EqualTo(5));
         }
 
         [Test]
@@ -497,9 +497,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             ArmOperation<ServiceBusNamespaceResource> serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData).ConfigureAwait(false));
 
-            Assert.AreEqual(namespaceName, serviceBusNamespace.Value.Data.Name);
-            Assert.AreEqual(ServiceBusSkuName.Premium, serviceBusNamespace.Value.Data.Sku.Name);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, serviceBusNamespace.Value.Data.Identity.ManagedServiceIdentityType);
+            Assert.That(serviceBusNamespace.Value.Data.Name, Is.EqualTo(namespaceName));
+            Assert.That(serviceBusNamespace.Value.Data.Sku.Name, Is.EqualTo(ServiceBusSkuName.Premium));
+            Assert.That(serviceBusNamespace.Value.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
 
             namespaceData = serviceBusNamespace.Value.Data;
 
@@ -682,18 +682,18 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 migrationConfig = await serviceBusNamespace2.GetMigrationConfigurations().GetAsync(MigrationConfigurationName.Default);
                 count++;
             }
-            Assert.NotNull(migrationConfig);
+            Assert.That(migrationConfig, Is.Not.Null);
             List<MigrationConfigurationResource> migrationConfigs = await serviceBusNamespace2.GetMigrationConfigurations().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, migrationConfigs.Count);
+            Assert.That(migrationConfigs.Count, Is.EqualTo(1));
 
             //complete migration
             await migrationConfig.CompleteMigrationAsync();
 
             //validate migration
             List<ServiceBusTopicResource> topics = await serviceBusNamespace1.GetServiceBusTopics().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(10, topics.Count);
+            Assert.That(topics.Count, Is.EqualTo(10));
             List<ServiceBusQueueResource> queues = await serviceBusNamespace1.GetServiceBusQueues().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(10, queues.Count);
+            Assert.That(queues.Count, Is.EqualTo(10));
 
             //wait for migration config and premium namespace
             migrationConfig = await serviceBusNamespace2.GetMigrationConfigurations().GetAsync(MigrationConfigurationName.Default);
@@ -715,33 +715,33 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             if (expectedNamespace.Identity != null)
             {
                 Assert.IsNotNull(actualNamespace.Identity);
-                Assert.AreEqual(expectedNamespace.Identity.ManagedServiceIdentityType, actualNamespace.Identity.ManagedServiceIdentityType);
-                Assert.AreEqual(expectedNamespace.Identity.PrincipalId, actualNamespace.Identity.PrincipalId);
-                Assert.AreEqual(expectedNamespace.Identity.TenantId, actualNamespace.Identity.TenantId);
+                Assert.That(actualNamespace.Identity.ManagedServiceIdentityType, Is.EqualTo(expectedNamespace.Identity.ManagedServiceIdentityType));
+                Assert.That(actualNamespace.Identity.PrincipalId, Is.EqualTo(expectedNamespace.Identity.PrincipalId));
+                Assert.That(actualNamespace.Identity.TenantId, Is.EqualTo(expectedNamespace.Identity.TenantId));
 
                 if (expectedNamespace.Identity.UserAssignedIdentities != null)
                 {
-                    Assert.NotNull(actualNamespace.Identity.UserAssignedIdentities);
-                    Assert.AreEqual(expectedNamespace.Identity.UserAssignedIdentities.Count, actualNamespace.Identity.UserAssignedIdentities.Count);
+                    Assert.That(actualNamespace.Identity.UserAssignedIdentities, Is.Not.Null);
+                    Assert.That(actualNamespace.Identity.UserAssignedIdentities.Count, Is.EqualTo(expectedNamespace.Identity.UserAssignedIdentities.Count));
                 }
                 else
                 {
-                    Assert.Null(actualNamespace.Identity.UserAssignedIdentities);
+                    Assert.That(actualNamespace.Identity.UserAssignedIdentities, Is.Null);
                 }
 
                 if (expectedNamespace.Encryption != null)
                 {
-                    Assert.NotNull(actualNamespace.Encryption);
-                    Assert.AreEqual(expectedNamespace.Encryption.KeyVaultProperties.Count, actualNamespace.Encryption.KeyVaultProperties.Count);
+                    Assert.That(actualNamespace.Encryption, Is.Not.Null);
+                    Assert.That(actualNamespace.Encryption.KeyVaultProperties.Count, Is.EqualTo(expectedNamespace.Encryption.KeyVaultProperties.Count));
                 }
                 else
                 {
-                    Assert.Null(actualNamespace.Encryption);
+                    Assert.That(actualNamespace.Encryption, Is.Null);
                 }
             }
             else
             {
-                Assert.Null(actualNamespace.Identity);
+                Assert.That(actualNamespace.Identity, Is.Null);
             }
         }
 

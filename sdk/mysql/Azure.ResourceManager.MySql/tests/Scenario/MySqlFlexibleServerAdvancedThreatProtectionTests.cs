@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MySql.Tests
             };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, serverData);
             MySqlFlexibleServerResource mySqlFlexibleServer = lro.Value;
-            Assert.AreEqual(serverName, mySqlFlexibleServer.Data.Name);
+            Assert.That(mySqlFlexibleServer.Data.Name, Is.EqualTo(serverName));
 
             // List all Advance Threat Protection Settings
             AdvancedThreatProtectionCollection collection = mySqlFlexibleServer.GetAdvancedThreatProtections();
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.MySql.Tests
             await foreach (AdvancedThreatProtectionResource td in collection.GetAllAsync())
             {
                 Console.WriteLine($"Found Advanced Threat Protection Settings: {td.Id}");
-                Assert.AreEqual("Disabled", td.Data.State.ToString(), "Found an Advanced Threat Protection Settings, where state is not Disabled");
+                Assert.That(td.Data.State.ToString(), Is.EqualTo("Disabled"), "Found an Advanced Threat Protection Settings, where state is not Disabled");
             }
 
             // Get Advanced Threat Protection Settings Default
             AdvancedThreatProtectionName advancedThreatProtectionNameDefault = AdvancedThreatProtectionName.Default;
             AdvancedThreatProtectionResource result = await mySqlFlexibleServer.GetAdvancedThreatProtectionAsync(advancedThreatProtectionNameDefault);
-            Assert.AreEqual("Disabled", result.Data.State.ToString(), "Found an Advanced Threat Protection Settings, where state is not Disabled");
+            Assert.That(result.Data.State.ToString(), Is.EqualTo("Disabled"), "Found an Advanced Threat Protection Settings, where state is not Disabled");
 
             // Set Enable by using patch api
             AdvancedThreatProtectionResource advancedThreatProtection = await mySqlFlexibleServer.GetAdvancedThreatProtectionAsync(advancedThreatProtectionNameDefault);
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.MySql.Tests
             };
             ArmOperation<AdvancedThreatProtectionResource> lroPatchATP = await advancedThreatProtection.UpdateAsync(WaitUntil.Completed, patch);
             AdvancedThreatProtectionResource resultPatchATP = lroPatchATP.Value;
-            Assert.AreEqual("Enabled", resultPatchATP.Data.State.ToString(), "Set Advanced Threat Protection Settings state is not enabled");
+            Assert.That(resultPatchATP.Data.State.ToString(), Is.EqualTo("Enabled"), "Set Advanced Threat Protection Settings state is not enabled");
 
             // Get Advanced Threat Protection Settings Default
             result = await mySqlFlexibleServer.GetAdvancedThreatProtectionAsync(advancedThreatProtectionNameDefault);
-            Assert.AreEqual("Enabled", result.Data.State.ToString(), "Found an Advanced Threat Protection Settings, where state is not Enabled");
+            Assert.That(result.Data.State.ToString(), Is.EqualTo("Enabled"), "Found an Advanced Threat Protection Settings, where state is not Enabled");
 
             // Set Enable by using put api
             // invoke the operation
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.MySql.Tests
             };
             ArmOperation<AdvancedThreatProtectionResource> lroPutATP = await collection.CreateOrUpdateAsync(WaitUntil.Completed, advancedThreatProtectionNameDefault, data);
             AdvancedThreatProtectionResource resultPutATP = lroPutATP.Value;
-            Assert.AreEqual("Disabled", resultPutATP.Data.State.ToString(), "Set Advanced Threat Protection Settings state is not Disabled");
+            Assert.That(resultPutATP.Data.State.ToString(), Is.EqualTo("Disabled"), "Set Advanced Threat Protection Settings state is not Disabled");
 
             // Get Advanced Threat Protection Settings Default
             result = await mySqlFlexibleServer.GetAdvancedThreatProtectionAsync(advancedThreatProtectionNameDefault);
-            Assert.AreEqual("Disabled", result.Data.State.ToString(), "Found an Advanced Threat Protection Settings, where state is not Disabled");
+            Assert.That(result.Data.State.ToString(), Is.EqualTo("Disabled"), "Found an Advanced Threat Protection Settings, where state is not Disabled");
         }
     }
 }

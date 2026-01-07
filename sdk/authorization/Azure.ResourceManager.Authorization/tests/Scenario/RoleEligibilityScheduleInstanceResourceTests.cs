@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (roleEligibilityScheduleInstance1 != null)
             {
                 var roleEligibilityScheduleInstance2 = await roleEligibilityScheduleInstance1.GetAsync();
-                Assert.AreEqual(roleEligibilityScheduleInstance2.Value.Data.Name, roleEligibilityScheduleInstance1.Data.Name);
+                Assert.That(roleEligibilityScheduleInstance1.Data.Name, Is.EqualTo(roleEligibilityScheduleInstance2.Value.Data.Name));
             }
         }
     }

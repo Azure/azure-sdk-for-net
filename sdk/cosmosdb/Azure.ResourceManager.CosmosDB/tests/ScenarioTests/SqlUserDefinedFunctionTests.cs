@@ -76,16 +76,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlUserDefinedFunctionCreateAndUpdate()
         {
             var userDefinedFunction = await CreateSqlUserDefinedFunction(null);
-            Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction.Data.Resource.FunctionName);
+            Assert.That(userDefinedFunction.Data.Resource.FunctionName, Is.EqualTo(_userDefinedFunctionName));
             Assert.That(userDefinedFunction.Data.Resource.Body, Contains.Substring("First Hello World"));
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
 
             bool ifExists = await SqlUserDefinedFunctionCollection.ExistsAsync(_userDefinedFunctionName);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             CosmosDBSqlUserDefinedFunctionResource userDefinedFunction2 = await SqlUserDefinedFunctionCollection.GetAsync(_userDefinedFunctionName);
-            Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction2.Data.Resource.FunctionName);
+            Assert.That(userDefinedFunction2.Data.Resource.FunctionName, Is.EqualTo(_userDefinedFunctionName));
 
             VerifySqlUserDefinedFunctions(userDefinedFunction, userDefinedFunction2);
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             });
 
             userDefinedFunction = (await SqlUserDefinedFunctionCollection.CreateOrUpdateAsync(WaitUntil.Completed, _userDefinedFunctionName, updateOptions)).Value;
-            Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction.Data.Resource.FunctionName);
+            Assert.That(userDefinedFunction.Data.Resource.FunctionName, Is.EqualTo(_userDefinedFunctionName));
             Assert.That(userDefinedFunction.Data.Resource.Body, Contains.Substring("Second Hello World"));
 
             userDefinedFunction2 = await SqlUserDefinedFunctionCollection.GetAsync(_userDefinedFunctionName);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var userDefinedFunctions = await SqlUserDefinedFunctionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(userDefinedFunctions, Has.Count.EqualTo(1));
-            Assert.AreEqual(userDefinedFunction.Data.Name, userDefinedFunctions[0].Data.Name);
+            Assert.That(userDefinedFunctions[0].Data.Name, Is.EqualTo(userDefinedFunction.Data.Name));
 
             VerifySqlUserDefinedFunctions(userDefinedFunctions[0], userDefinedFunction);
         }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await userDefinedFunction.DeleteAsync(WaitUntil.Completed);
 
             bool exists = await SqlUserDefinedFunctionCollection.ExistsAsync(_userDefinedFunctionName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         internal async Task<CosmosDBSqlUserDefinedFunctionResource> CreateSqlUserDefinedFunction(AutoscaleSettings autoscale)
@@ -150,13 +150,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifySqlUserDefinedFunctions(CosmosDBSqlUserDefinedFunctionResource expectedValue, CosmosDBSqlUserDefinedFunctionResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.FunctionName, actualValue.Data.Resource.FunctionName);
-            Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
-            Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
-            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
-            Assert.AreEqual(expectedValue.Data.Resource.Body, actualValue.Data.Resource.Body);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.Resource.FunctionName, Is.EqualTo(expectedValue.Data.Resource.FunctionName));
+            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+            Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+            Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+            Assert.That(actualValue.Data.Resource.Body, Is.EqualTo(expectedValue.Data.Resource.Body));
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos.Tests
                 WaitUntil.Completed,
                 TestConstants.VmssTargetName,
                 new ChaosTargetData(new Dictionary<string, BinaryData>()));
-            Assert.AreEqual(200, createUpdateTargetResponse.GetRawResponse().Status);
+            Assert.That(createUpdateTargetResponse.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [TestCase]
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Chaos.Tests
                 TestConstants.VmssResourceName,
                 this.VmssName,
                 TestConstants.VmssTargetName).ConfigureAwait(false);
-            Assert.AreEqual(TestConstants.VmssTargetName, targetResponse.Value.Data.Name);
-            Assert.AreEqual(200, targetResponse.GetRawResponse().Status);
+            Assert.That(targetResponse.Value.Data.Name, Is.EqualTo(TestConstants.VmssTargetName));
+            Assert.That(targetResponse.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [TestCase]
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Chaos.Tests
                 TestConstants.VmssResourceName,
                 this.VmssName);
             var targetList = await targetCollection.GetAllAsync().ToListAsync().ConfigureAwait(false);
-            Assert.IsTrue(targetList.Any());
+            Assert.That(targetList.Any(), Is.True);
         }
     }
 }

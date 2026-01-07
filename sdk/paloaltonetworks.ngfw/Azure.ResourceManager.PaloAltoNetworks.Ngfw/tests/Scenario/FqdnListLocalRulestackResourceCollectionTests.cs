@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             LocalRulestackFqdnData data = new LocalRulestackFqdnData(fqdnList);
             var response = await LocalRulestack.GetLocalRulestackFqdns().CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             LocalRulestackFqdnResource list = response.Value;
-            Assert.IsTrue((name).Equals(list.Data.Name));
+            Assert.That((name), Is.EqualTo(list.Data.Name));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetLocalRulestackFqdns().CreateOrUpdateAsync(WaitUntil.Completed, "3", null)).Value);
         }
 
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             LocalRulestackFqdnCollection collection = LocalRulestack.GetLocalRulestackFqdns();
             LocalRulestackFqdnResource listsResource = await collection.GetAsync(DefaultResource1.Data.Name);
-            Assert.IsNotNull(listsResource);
-            Assert.AreEqual(listsResource.Data.Name, DefaultResource1.Data.Name);
+            Assert.That(listsResource, Is.Not.Null);
+            Assert.That(DefaultResource1.Data.Name, Is.EqualTo(listsResource.Data.Name));
         }
 
         [TestCase]
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Exists()
         {
             LocalRulestackFqdnCollection collection = LocalRulestack.GetLocalRulestackFqdns();
-            Assert.IsTrue(await collection.ExistsAsync(DefaultResource1.Data.Name));
-            Assert.IsFalse(await collection.ExistsAsync("invalidName"));
+            Assert.That((bool)await collection.ExistsAsync(DefaultResource1.Data.Name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync("invalidName"), Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             {
                 count++;
             }
-            Assert.AreEqual(count, 3);
+            Assert.That(count, Is.EqualTo(3));
         }
     }
 }

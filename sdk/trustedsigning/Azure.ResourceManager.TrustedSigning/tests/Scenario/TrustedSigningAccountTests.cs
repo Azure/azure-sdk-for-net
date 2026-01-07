@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             TrustedSigningAccountNameAvailabilityContent body = new TrustedSigningAccountNameAvailabilityContent(new ResourceType("Microsoft.CodeSigning/codeSigningAccounts"), accountName);
             TrustedSigningAccountNameAvailabilityResult result = await DefaultSubscription.CheckTrustedSigningAccountNameAvailabilityAsync(body);
 
-            Assert.IsTrue(result.IsNameAvailable);
+            Assert.That(result.IsNameAvailable, Is.True);
         }
 
         // Get a Trusted Signing Account
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             TrustedSigningAccountResource accountResource = Client.GetTrustedSigningAccountResource(account.Id);
             TrustedSigningAccountResource result = await accountResource.GetAsync();
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.Data.Name, accountName);
+            Assert.That(accountName, Is.EqualTo(result.Data.Name));
         }
 
         // Update a trusted signing account.
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             TrustedSigningAccountData resourceData = result.Data;
             Assert.IsNotNull(resourceData.Id);
-            Assert.AreEqual(resourceData.Tags["key1"], patch.Tags["key1"]);
+            Assert.That(patch.Tags["key1"], Is.EqualTo(resourceData.Tags["key1"]));
         }
 
         // Delete a trusted signing account.
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             Assert.IsNotNull(account);
 
             ArmOperation op = await account.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(op.HasCompleted);
+            Assert.That(op.HasCompleted, Is.True);
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
                     break;
                 }
             }
-            Assert.IsTrue(exist);
+            Assert.That(exist, Is.True);
         }
 
         [Test]
@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             string accountName = Recording.GenerateAssetName("account-");
             bool exist = await collection.ExistsAsync(accountName);
-            Assert.IsFalse(exist);
+            Assert.That(exist, Is.False);
 
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
             Assert.IsNotNull(account);
 
             exist = await collection.ExistsAsync(accountName);
-            Assert.IsTrue(exist);
+            Assert.That(exist, Is.True);
         }
 
         [Test]
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             string accountName = Recording.GenerateAssetName("account-");
             NullableResponse<TrustedSigningAccountResource> response = await collection.GetIfExistsAsync(accountName);
-            Assert.IsFalse(response.HasValue);
+            Assert.That(response.HasValue, Is.False);
 
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
             Assert.IsNotNull(account);
 
             response = await collection.GetIfExistsAsync(accountName);
-            Assert.IsTrue(response.HasValue);
+            Assert.That(response.HasValue, Is.True);
             Assert.IsNotNull(response.Value);
         }
 

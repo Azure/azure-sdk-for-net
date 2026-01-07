@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string consumerGroupName = Recording.GenerateAssetName("consumerGroup-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             var consumerGroupInfos = await CreateConsumerGroup(iothub,consumerGroupName);
-            Assert.IsNotNull(consumerGroupInfos);
-            Assert.AreEqual(consumerGroupName, consumerGroupInfos.Data.Name);
+            Assert.That(consumerGroupInfos, Is.Not.Null);
+            Assert.That(consumerGroupInfos.Data.Name, Is.EqualTo(consumerGroupName));
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             await CreateConsumerGroup(iothub, consumerGroupName);
             bool flag = await iothub.GetEventHubConsumerGroupInfos("events").ExistsAsync(consumerGroupName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
 
             var groupInfo = await iothub.GetEventHubConsumerGroupInfos("events").GetAsync("$Default");
-            Assert.IsNotNull(groupInfo);
-            Assert.AreEqual("$Default", groupInfo.Value.Data.Name);
+            Assert.That(groupInfo, Is.Not.Null);
+            Assert.That(groupInfo.Value.Data.Name, Is.EqualTo("$Default"));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
             var list = await iothub.GetEventHubConsumerGroupInfos("events").GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual("$Default", list.FirstOrDefault().Data.Name);
+            Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo("$Default"));
         }
 
         [Test]
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             var deleteConsumerGroup = await CreateConsumerGroup(iothub, consumerGroupName);
             bool flag = await iothub.GetEventHubConsumerGroupInfos("events").ExistsAsync(consumerGroupName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             await deleteConsumerGroup.DeleteAsync(WaitUntil.Completed);
             flag = await iothub.GetEventHubConsumerGroupInfos("events").ExistsAsync(consumerGroupName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

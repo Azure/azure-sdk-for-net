@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.Media.Tests
             // Create
             string liveEventName = Recording.GenerateAssetName("liveEventName");
             var liveEvent = await CreateLiveEvent(_mediaService, liveEventName);
-            Assert.IsNotNull(liveEvent);
-            Assert.AreEqual(liveEventName, liveEvent.Data.Name);
+            Assert.That(liveEvent, Is.Not.Null);
+            Assert.That(liveEvent.Data.Name, Is.EqualTo(liveEventName));
             // Check exists
             bool flag = await liveEventCollection.ExistsAsync(liveEventName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             // Get
             var result = await liveEventCollection.GetAsync(liveEventName);
-            Assert.IsNotNull(liveEvent);
-            Assert.AreEqual(liveEventName, result.Value.Data.Name);
+            Assert.That(liveEvent, Is.Not.Null);
+            Assert.That(result.Value.Data.Name, Is.EqualTo(liveEventName));
             // List
             var list = await liveEventCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             // Delete
             await liveEvent.DeleteAsync(WaitUntil.Completed);
             flag = await liveEventCollection.ExistsAsync(liveEventName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var dnsResolverPolicy = await _dnsResolverPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverPolicyName, dnsResolverPolicyData);
 
             // ASSERT
-            Assert.AreEqual(dnsResolverPolicy.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
+            Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(dnsResolverPolicy.Value.Data.ProvisioningState));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var retrievedDnsResolverPolicy = await _dnsResolverPolicyCollection.GetAsync(dnsResolverPolicyName);
 
             // ASSERT
-            Assert.AreEqual(retrievedDnsResolverPolicy.Value.Data.Name, dnsResolverPolicyName);
+            Assert.That(dnsResolverPolicyName, Is.EqualTo(retrievedDnsResolverPolicy.Value.Data.Name));
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
             // ASSERT
             var getDnsResolverPolicyResult = await _dnsResolverPolicyCollection.ExistsAsync(dnsResolverPolicyName);
-            Assert.AreEqual(getDnsResolverPolicyResult.Value, false);
+            Assert.That(getDnsResolverPolicyResult.Value, Is.EqualTo(false));
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             var calculateExchangeResponse = await Tenant.CalculateReservationExchangeAsync(WaitUntil.Completed, calculateExchangeRequest);
 
             Assert.IsNotNull(calculateExchangeResponse.Value);
-            Assert.AreEqual(CalculateExchangeOperationResultStatus.Succeeded, calculateExchangeResponse.Value.Status);
+            Assert.That(calculateExchangeResponse.Value.Status, Is.EqualTo(CalculateExchangeOperationResultStatus.Succeeded));
             Assert.IsNotEmpty(calculateExchangeResponse.Value.Id);
             Assert.IsNotEmpty(calculateExchangeResponse.Value.Name);
             Assert.IsNotNull(calculateExchangeResponse.Value.Properties);
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.IsNotNull(calculateExchangeResponse.Value.Properties.PurchasesTotal);
             Assert.IsNotNull(calculateExchangeResponse.Value.Properties.RefundsTotal);
             Assert.Greater(calculateExchangeResponse.Value.Properties.NetPayable.Amount, 0);
-            Assert.AreEqual("GBP", calculateExchangeResponse.Value.Properties.NetPayable.CurrencyCode);
+            Assert.That(calculateExchangeResponse.Value.Properties.NetPayable.CurrencyCode, Is.EqualTo("GBP"));
             Assert.Greater(calculateExchangeResponse.Value.Properties.PurchasesTotal.Amount, 0);
-            Assert.AreEqual("GBP", calculateExchangeResponse.Value.Properties.PurchasesTotal.CurrencyCode);
+            Assert.That(calculateExchangeResponse.Value.Properties.PurchasesTotal.CurrencyCode, Is.EqualTo("GBP"));
             Assert.Greater(calculateExchangeResponse.Value.Properties.RefundsTotal.Amount, 0);
-            Assert.AreEqual("GBP", calculateExchangeResponse.Value.Properties.RefundsTotal.CurrencyCode);
+            Assert.That(calculateExchangeResponse.Value.Properties.RefundsTotal.CurrencyCode, Is.EqualTo("GBP"));
             Assert.IsNotEmpty(calculateExchangeResponse.Value.Properties.SessionId.ToString());
             Assert.IsNotNull(calculateExchangeResponse.Value.Properties.ReservationsToExchange);
             Assert.GreaterOrEqual(calculateExchangeResponse.Value.Properties.ReservationsToExchange.Count, 1);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             var exchangeResponse = await Tenant.ExchangeAsync(WaitUntil.Completed, exchangeRequest);
 
             Assert.IsNotNull(exchangeResponse.Value);
-            Assert.AreEqual(ExchangeOperationResultStatus.Succeeded, exchangeResponse.Value.Status);
+            Assert.That(exchangeResponse.Value.Status, Is.EqualTo(ExchangeOperationResultStatus.Succeeded));
             Assert.IsNotEmpty(exchangeResponse.Value.Id);
             Assert.IsNotEmpty(exchangeResponse.Value.Name);
             Assert.IsNotNull(exchangeResponse.Value.Properties);
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.IsNotNull(exchangeResponse.Value.Properties.PurchasesTotal);
             Assert.IsNotNull(exchangeResponse.Value.Properties.RefundsTotal);
             Assert.Greater(exchangeResponse.Value.Properties.NetPayable.Amount, 0);
-            Assert.AreEqual("GBP", exchangeResponse.Value.Properties.NetPayable.CurrencyCode);
+            Assert.That(exchangeResponse.Value.Properties.NetPayable.CurrencyCode, Is.EqualTo("GBP"));
             Assert.Greater(exchangeResponse.Value.Properties.PurchasesTotal.Amount, 0);
-            Assert.AreEqual("GBP", exchangeResponse.Value.Properties.PurchasesTotal.CurrencyCode);
+            Assert.That(exchangeResponse.Value.Properties.PurchasesTotal.CurrencyCode, Is.EqualTo("GBP"));
             Assert.Greater(exchangeResponse.Value.Properties.RefundsTotal.Amount, 0);
-            Assert.AreEqual("GBP", exchangeResponse.Value.Properties.RefundsTotal.CurrencyCode);
+            Assert.That(exchangeResponse.Value.Properties.RefundsTotal.CurrencyCode, Is.EqualTo("GBP"));
             Assert.IsNotEmpty(exchangeResponse.Value.Properties.SessionId.ToString());
             Assert.IsNotNull(exchangeResponse.Value.Properties.ReservationsToExchange);
             Assert.GreaterOrEqual(exchangeResponse.Value.Properties.ReservationsToExchange.Count, 1);

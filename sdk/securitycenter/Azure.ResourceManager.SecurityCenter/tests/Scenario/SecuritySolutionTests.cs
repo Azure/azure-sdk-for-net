@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             string securitySolutionName = "";
             bool flag = await _securitySolutionCollection.ExistsAsync(securitySolutionName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Tests
             };
             AvailabilitySetResource updatedSet = await set.UpdateAsync(update);
 
-            Assert.AreEqual(updatedPlatformFaultDomainCount, updatedSet.Data.PlatformFaultDomainCount);
+            Assert.That(updatedSet.Data.PlatformFaultDomainCount, Is.EqualTo(updatedPlatformFaultDomainCount));
         }
 
         [RecordedTest]
@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.Compute.Tests
 
             updateOptions2.ProximityPlacementGroup.Id = proxGrp.Id;
             aset2 = await aset2.UpdateAsync(updateOptions2);
-            Assert.NotNull(aset2.Data.ProximityPlacementGroup.Id);
+            Assert.That(aset2.Data.ProximityPlacementGroup.Id, Is.Not.Null);
 
             updateOptions2.ProximityPlacementGroup = null;
             aset2 = await aset2.UpdateAsync(updateOptions2);
             var newRemoveOuterIdResult = aset2.Data.ProximityPlacementGroup;
 
-            Assert.AreEqual(beforeAdd, newBeforeAdd);
-            Assert.AreEqual(addIdResult, newAddIdResult);
-            Assert.AreEqual(removeIdResult, newRemoveIdResult);
+            Assert.That(newBeforeAdd, Is.EqualTo(beforeAdd));
+            Assert.That(newAddIdResult, Is.EqualTo(addIdResult));
+            Assert.That(newRemoveIdResult, Is.EqualTo(removeIdResult));
             //Assert.AreEqual(removeIdResult, newRemoveOuterIdResult);
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Tests
             };
             AvailabilitySetResource updated = await aset.SetTagsAsync(tags);
 
-            Assert.AreEqual(tags, updated.Data.Tags);
+            Assert.That(updated.Data.Tags, Is.EqualTo(tags));
         }
     }
 }

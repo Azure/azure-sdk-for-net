@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Consumption.Tests
         {
             var subscriptionBillingPeriodConsumption = Client.GetSubscriptionBillingPeriodConsumptionResource(_scope);
             var priceSheetResult = await subscriptionBillingPeriodConsumption.GetPriceSheetAsync();
-            Assert.IsNotNull(priceSheetResult);
+            Assert.That(priceSheetResult, Is.Not.Null);
             Assert.IsNotEmpty(priceSheetResult.Value.Pricesheets.First().BillingPeriodId);
-            Assert.IsNotNull(priceSheetResult.Value.Pricesheets.First().MeterId);
+            Assert.That(priceSheetResult.Value.Pricesheets.First().MeterId, Is.Not.Null);
         }
     }
 }

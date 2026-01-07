@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ArmOperation<NetworkTapRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkTapRuleName, data);
             TestContext.Out.WriteLine($" ########################################");
             NetworkTapRuleResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, TestEnvironment.NetworkTapRuleName);
+            Assert.That(TestEnvironment.NetworkTapRuleName, Is.EqualTo(createResult.Data.Name));
 
             // Update
             // Patch not supported now. Will enable it once supported.
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkTapRuleResource getResult = await ntpResource.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkTapRuleName);
+            Assert.That(TestEnvironment.NetworkTapRuleName, Is.EqualTo(getResult.Data.Name));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             var deleteResponse = await ntpResource.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

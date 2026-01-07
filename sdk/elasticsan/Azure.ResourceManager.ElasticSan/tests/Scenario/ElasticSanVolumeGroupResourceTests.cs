@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             string volumeGroupName = Recording.GenerateAssetName("testvolgroup-");
             ElasticSanVolumeGroupResource volumeGroup = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, new ElasticSanVolumeGroupData())).Value;
             ElasticSanVolumeGroupResource volumeGroup1 = (await volumeGroup.GetAsync()).Value;
-            Assert.AreEqual(volumeGroupName, volumeGroup1.Id.Name);
+            Assert.That(volumeGroup1.Id.Name, Is.EqualTo(volumeGroupName));
             Assert.IsEmpty(volumeGroup1.Data.VirtualNetworkRules);
-            Assert.AreEqual(ElasticSanStorageTargetType.Iscsi, volumeGroup1.Data.ProtocolType);
-            Assert.AreEqual(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey, volumeGroup1.Data.Encryption);
-            Assert.AreEqual(true, volumeGroup1.Data.EnforceDataIntegrityCheckForIscsi);
+            Assert.That(volumeGroup1.Data.ProtocolType, Is.EqualTo(ElasticSanStorageTargetType.Iscsi));
+            Assert.That(volumeGroup1.Data.Encryption, Is.EqualTo(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey));
+            Assert.That(volumeGroup1.Data.EnforceDataIntegrityCheckForIscsi, Is.EqualTo(true));
 
             ElasticSanVolumeGroupPatch patch = new()
             {
@@ -64,22 +64,22 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             patch.VirtualNetworkRules.Add(new ElasticSanVirtualNetworkRule(vnetResourceId));
 
             ElasticSanVolumeGroupResource volGroup1 = (await volumeGroup.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.AreEqual(volumeGroupName, volGroup1.Id.Name);
-            Assert.AreEqual(ElasticSanStorageTargetType.Iscsi, volGroup1.Data.ProtocolType);
-            Assert.AreEqual(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey, volGroup1.Data.Encryption);
-            Assert.AreEqual(false, volGroup1.Data.EnforceDataIntegrityCheckForIscsi);
-            Assert.AreEqual(vnetResourceId, volGroup1.Data.VirtualNetworkRules[0].VirtualNetworkResourceId);
+            Assert.That(volGroup1.Id.Name, Is.EqualTo(volumeGroupName));
+            Assert.That(volGroup1.Data.ProtocolType, Is.EqualTo(ElasticSanStorageTargetType.Iscsi));
+            Assert.That(volGroup1.Data.Encryption, Is.EqualTo(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey));
+            Assert.That(volGroup1.Data.EnforceDataIntegrityCheckForIscsi, Is.EqualTo(false));
+            Assert.That(volGroup1.Data.VirtualNetworkRules[0].VirtualNetworkResourceId, Is.EqualTo(vnetResourceId));
 
             ElasticSanVolumeGroupPatch patch2 = new ElasticSanVolumeGroupPatch
             {
                 EnforceDataIntegrityCheckForIscsi = true,
             };
             ElasticSanVolumeGroupResource volGroup2 = (await volGroup1.UpdateAsync(WaitUntil.Completed, patch2)).Value;
-            Assert.AreEqual(volumeGroupName, volGroup2.Id.Name);
-            Assert.AreEqual(true, volGroup2.Data.EnforceDataIntegrityCheckForIscsi);
+            Assert.That(volGroup2.Id.Name, Is.EqualTo(volumeGroupName));
+            Assert.That(volGroup2.Data.EnforceDataIntegrityCheckForIscsi, Is.EqualTo(true));
 
             await volumeGroup.DeleteAsync(WaitUntil.Completed);
-            Assert.IsFalse(await _collection.ExistsAsync(volumeGroupName));
+            Assert.That((bool)await _collection.ExistsAsync(volumeGroupName), Is.False);
 
             string volumeGroupSoftDeleteName = Recording.GenerateAssetName("testvolumegroupsd-");
             ElasticSanVolumeGroupData volumeGroupSoftDeleteData = new ElasticSanVolumeGroupData()
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
                 }
             };
             ElasticSanVolumeGroupResource volumeGroupSoftDelete = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupSoftDeleteName, volumeGroupSoftDeleteData)).Value;
-            Assert.AreEqual(volumeGroupSoftDelete.Id.Name, volumeGroupSoftDeleteName);
-            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.PolicyState, ElasticSanDeleteRetentionPolicyState.Enabled);
-            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.RetentionPeriodDays, 1);
+            Assert.That(volumeGroupSoftDeleteName, Is.EqualTo(volumeGroupSoftDelete.Id.Name));
+            Assert.That(ElasticSanDeleteRetentionPolicyState.Enabled, Is.EqualTo(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.PolicyState));
+            Assert.That(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.RetentionPeriodDays, Is.EqualTo(1));
             await volumeGroupSoftDelete.DeleteAsync(WaitUntil.Completed);
             int count = 0;
             await foreach (ElasticSanVolumeGroupResource _ in _collection.GetAllAsync())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
             var volumeNameList = new ElasticSanVolumeNameListContent(new string[] { volumeName });
             var preBackup = (await volumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, volumeNameList)).Value;
-            Assert.AreEqual(preBackup.ValidationStatus, "Success");
+            Assert.That(preBackup.ValidationStatus, Is.EqualTo("Success"));
 
             // Require a real disk snapshot id for live test
             DiskSnapshotListContent diskSnapshotList = new DiskSnapshotListContent(
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
                     new ResourceIdentifier(
                         "/subscriptions/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/resourcegroup/providers/Microsoft.Compute/snapshots/disksnapshotid") });
             var preRestore = (await volumeGroup.PreRestoreVolumeAsync(WaitUntil.Completed, diskSnapshotList)).Value;
-            Assert.AreEqual(preRestore.ValidationStatus, "Success");
+            Assert.That(preRestore.ValidationStatus, Is.EqualTo("Success"));
 
             await volumeGroup.DeleteAsync(WaitUntil.Completed);
         }

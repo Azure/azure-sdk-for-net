@@ -28,23 +28,23 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
 
             // Create the compute fleet
             var createFleetResult = await computeFleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, computeFleetName, computeFleetData);
-            Assert.AreEqual(computeFleetName, createFleetResult.Value.Data.Name);
-            Assert.AreEqual(DefaultLocation, createFleetResult.Value.Data.Location);
+            Assert.That(createFleetResult.Value.Data.Name, Is.EqualTo(computeFleetName));
+            Assert.That(createFleetResult.Value.Data.Location, Is.EqualTo(DefaultLocation));
 
             // Get the compute fleet
             var getComputeFleet = await computeFleetCollection.GetAsync(computeFleetName);
-            Assert.AreEqual(computeFleetName, getComputeFleet.Value.Data.Name);
+            Assert.That(getComputeFleet.Value.Data.Name, Is.EqualTo(computeFleetName));
 
             // Check if Fleet exists.
             var isExists = await computeFleetCollection.ExistsAsync(computeFleetName);
-            Assert.IsTrue(isExists);
+            Assert.That((bool)isExists, Is.True);
 
             // Delete the compute fleet
             await createFleetResult.Value.DeleteAsync(WaitUntil.Completed);
 
             // Check if Fleet does not exists.
             isExists = await computeFleetCollection.ExistsAsync(computeFleetName);
-            Assert.IsFalse(isExists);
+            Assert.That((bool)isExists, Is.False);
         }
 
         [TestCase]
@@ -59,44 +59,44 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
 
             // Create the compute fleet
             var createFleetResult = await computeFleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, computeFleetName, computeFleetData);
-            Assert.AreEqual(computeFleetName, createFleetResult.Value.Data.Name);
-            Assert.AreEqual(DefaultLocation, createFleetResult.Value.Data.Location);
+            Assert.That(createFleetResult.Value.Data.Name, Is.EqualTo(computeFleetName));
+            Assert.That(createFleetResult.Value.Data.Location, Is.EqualTo(DefaultLocation));
 
             // Get the compute fleet
             var getComputeFleet = await computeFleetCollection.GetAsync(computeFleetName);
-            Assert.AreEqual(computeFleetName, getComputeFleet.Value.Data.Name);
+            Assert.That(getComputeFleet.Value.Data.Name, Is.EqualTo(computeFleetName));
 
             // Check if Fleet exists.
             var isExists = await computeFleetCollection.ExistsAsync(computeFleetName);
-            Assert.IsTrue(isExists);
+            Assert.That((bool)isExists, Is.True);
 
             // Create 2nd Fleet
             var computeFleetName2nd = Recording.GenerateAssetName("testFleetViaSDK-", "multi");
             var computeFleetData2nd = GetBasicComputeFleetData(DefaultLocation, computeFleetName2nd, GetSubnetId(vnet));
             var createFleetResult2nd = await computeFleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, computeFleetName2nd, computeFleetData2nd);
-            Assert.AreEqual(computeFleetName2nd, createFleetResult2nd.Value.Data.Name);
-            Assert.AreEqual(DefaultLocation, createFleetResult2nd.Value.Data.Location);
+            Assert.That(createFleetResult2nd.Value.Data.Name, Is.EqualTo(computeFleetName2nd));
+            Assert.That(createFleetResult2nd.Value.Data.Location, Is.EqualTo(DefaultLocation));
 
             // Check if 2nd Fleet exists.
             isExists = await computeFleetCollection.ExistsAsync(computeFleetName2nd);
-            Assert.IsTrue(isExists);
+            Assert.That((bool)isExists, Is.True);
 
             var fleet2nd = await computeFleetCollection.GetIfExistsAsync(computeFleetName2nd);
-            Assert.NotNull(fleet2nd);
+            Assert.That(fleet2nd, Is.Not.Null);
 
             // Delete the 1st compute fleet
             await createFleetResult.Value.DeleteAsync(WaitUntil.Completed);
 
             // Check if 1st Fleet does not exists.
             isExists = await computeFleetCollection.ExistsAsync(computeFleetName);
-            Assert.IsFalse(isExists);
+            Assert.That((bool)isExists, Is.False);
 
             // Delete the 2nd compute fleet
             await createFleetResult2nd.Value.DeleteAsync(WaitUntil.Completed);
 
             // Check if 2nd Fleet does not exists.
             isExists = await computeFleetCollection.ExistsAsync(computeFleetName2nd);
-            Assert.IsFalse(isExists);
+            Assert.That((bool)isExists, Is.False);
         }
     }
 }

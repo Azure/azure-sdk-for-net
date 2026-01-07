@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             Uri probeURL = new Uri("https://azurecdn-files.azureedge.net/dsa-test/probe-v.txt");
             ValidateProbeContent validateProbeInput2 = new ValidateProbeContent(probeURL);
             ValidateProbeResult validateProbeResult = await subscription.ValidateProbeAsync(validateProbeInput2);
-            Assert.True(validateProbeResult.IsValid);
+            Assert.That(validateProbeResult.IsValid, Is.True);
             probeURL = new Uri("https://www.notexist.com/notexist/notexist.txt");
             ValidateProbeContent validateProbeInput3 = new ValidateProbeContent(probeURL);
             validateProbeResult = await subscription.ValidateProbeAsync(validateProbeInput3);
-            Assert.False(validateProbeResult.IsValid);
+            Assert.That(validateProbeResult.IsValid, Is.False);
         }
     }
 }

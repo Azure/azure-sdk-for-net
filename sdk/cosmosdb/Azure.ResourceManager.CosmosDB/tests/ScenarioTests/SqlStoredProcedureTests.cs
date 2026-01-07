@@ -76,17 +76,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlStoredProcedureCreateAndUpdate()
         {
             var storedProcedure = await CreateSqlStoredProcedure(null);
-            Assert.AreEqual(_storedProcedureName, storedProcedure.Data.Resource.StoredProcedureName);
+            Assert.That(storedProcedure.Data.Resource.StoredProcedureName, Is.EqualTo(_storedProcedureName));
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
 
             bool ifExists = await SqlStoredProcedureCollection.ExistsAsync(_storedProcedureName);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             // NOT WORKING API
             //ThroughputSettingsData throughtput = await container.GetMongoDBCollectionThroughputAsync();
             CosmosDBSqlStoredProcedureResource storedProcedure2 = await SqlStoredProcedureCollection.GetAsync(_storedProcedureName);
-            Assert.AreEqual(_storedProcedureName, storedProcedure2.Data.Resource.StoredProcedureName);
+            Assert.That(storedProcedure2.Data.Resource.StoredProcedureName, Is.EqualTo(_storedProcedureName));
             //Assert.AreEqual(TestThroughput1, container2.Data.Options.Throughput);
 
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
 
             storedProcedure = (await SqlStoredProcedureCollection.CreateOrUpdateAsync(WaitUntil.Completed, _storedProcedureName, updateOptions)).Value;
-            Assert.AreEqual(_storedProcedureName, storedProcedure.Data.Resource.StoredProcedureName);
+            Assert.That(storedProcedure.Data.Resource.StoredProcedureName, Is.EqualTo(_storedProcedureName));
             storedProcedure2 = await SqlStoredProcedureCollection.GetAsync(_storedProcedureName);
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
         }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var storedProcedures = await SqlStoredProcedureCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(storedProcedures, Has.Count.EqualTo(1));
-            Assert.AreEqual(storedProcedure.Data.Name, storedProcedures[0].Data.Name);
+            Assert.That(storedProcedures[0].Data.Name, Is.EqualTo(storedProcedure.Data.Name));
 
             VerifySqlStoredProcedures(storedProcedures[0], storedProcedure);
         }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await storedProcedure.DeleteAsync(WaitUntil.Completed);
 
             bool exists = await SqlStoredProcedureCollection.ExistsAsync(_storedProcedureName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         internal async Task<CosmosDBSqlStoredProcedureResource> CreateSqlStoredProcedure(AutoscaleSettings autoscale)
@@ -148,13 +148,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifySqlStoredProcedures(CosmosDBSqlStoredProcedureResource expectedValue, CosmosDBSqlStoredProcedureResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.StoredProcedureName, actualValue.Data.Resource.StoredProcedureName);
-            Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
-            Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
-            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
-            Assert.AreEqual(expectedValue.Data.Resource.Body, actualValue.Data.Resource.Body);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.Resource.StoredProcedureName, Is.EqualTo(expectedValue.Data.Resource.StoredProcedureName));
+            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+            Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+            Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+            Assert.That(actualValue.Data.Resource.Body, Is.EqualTo(expectedValue.Data.Resource.Body));
         }
     }
 }

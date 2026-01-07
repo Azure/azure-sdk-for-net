@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // Exist
             var flag = await _fhirServiceCollection.ExistsAsync(fhirServiceName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getFhirService = await _fhirServiceCollection.GetAsync(fhirServiceName);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             // Delete
             await fhirService.DeleteAsync(WaitUntil.Completed);
             flag = await _fhirServiceCollection.ExistsAsync(fhirServiceName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         [TestCase(null)]
@@ -70,28 +70,28 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             // AddTag
             await fhirService.AddTagAsync("addtagkey", "addtagvalue");
             fhirService = await _fhirServiceCollection.GetAsync(fhirServiceName);
-            Assert.AreEqual(1, fhirService.Data.Tags.Count);
+            Assert.That(fhirService.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = fhirService.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await fhirService.RemoveTagAsync("addtagkey");
             fhirService = await _fhirServiceCollection.GetAsync(fhirServiceName);
-            Assert.AreEqual(0, fhirService.Data.Tags.Count);
+            Assert.That(fhirService.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private void ValidateFhirService(FhirServiceData fhirService, string fhirServiceName)
         {
-            Assert.IsNotNull(fhirService);
-            Assert.IsNotNull(fhirService.ETag);
-            Assert.AreEqual(fhirServiceName, fhirService.Id.Name);
-            Assert.AreEqual("fhir-R4", fhirService.Kind.ToString());
-            Assert.AreEqual(DefaultLocation, fhirService.Location);
-            Assert.AreEqual("Succeeded", fhirService.ProvisioningState.ToString());
-            Assert.AreEqual("Enabled", fhirService.PublicNetworkAccess.ToString());
-            Assert.AreEqual("Microsoft.HealthcareApis/workspaces/fhirservices", fhirService.ResourceType.ToString());
-            Assert.AreEqual("no-version", fhirService.ResourceVersionPolicyConfiguration.Default.ToString());
+            Assert.That(fhirService, Is.Not.Null);
+            Assert.That(fhirService.ETag, Is.Not.Null);
+            Assert.That(fhirService.Id.Name, Is.EqualTo(fhirServiceName));
+            Assert.That(fhirService.Kind.ToString(), Is.EqualTo("fhir-R4"));
+            Assert.That(fhirService.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(fhirService.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(fhirService.PublicNetworkAccess.ToString(), Is.EqualTo("Enabled"));
+            Assert.That(fhirService.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces/fhirservices"));
+            Assert.That(fhirService.ResourceVersionPolicyConfiguration.Default.ToString(), Is.EqualTo("no-version"));
         }
     }
 }

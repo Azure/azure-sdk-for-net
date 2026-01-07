@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var backupInformation = await table.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, restoreLocation);
 
             DateTime? oldTime = _restorableDatabaseAccount.Data.SystemData.CreatedOn.Value.DateTime;
-            Assert.NotNull(oldTime);
+            Assert.That(oldTime, Is.Not.Null);
 
-            Assert.NotNull(backupInformation);
-            Assert.NotNull(backupInformation.Value.ContinuousBackupInformation);
-            Assert.True(backupInformation.Value.ContinuousBackupInformation.LatestRestorableTimestamp.Value.DateTime > oldTime);
+            Assert.That(backupInformation, Is.Not.Null);
+            Assert.That(backupInformation.Value.ContinuousBackupInformation, Is.Not.Null);
+            Assert.That(backupInformation.Value.ContinuousBackupInformation.LatestRestorableTimestamp.Value.DateTime > oldTime, Is.True);
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             // Fetching restorable tables
             var restorableTables = await restorableAccount.GetRestorableTablesAsync().ToEnumerableAsync();
-            Assert.True(restorableTables.Count == 2);
+            Assert.That(restorableTables.Count, Is.EqualTo(2));
 
             // Building restore parameter to restore table1
             RestorableTable restorableTable = restorableTables.Single(table => table.Resource.TableName == tableName1);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             // verifying restored table
             CosmosDBTableResource restoredTable = await _restoredDatabaseAccount.GetCosmosDBTableAsync(restorableTable.Resource.TableName);
-            Assert.NotNull(restoredTable);
+            Assert.That(restoredTable, Is.Not.Null);
         }
 
         [Test]
@@ -214,14 +214,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, restoredAccountName, databaseAccountCreateUpdateParameters);
             CosmosDBAccountResource restoredDatabaseAccount = accountLro.Value;
-            Assert.NotNull(restoredDatabaseAccount);
-            Assert.NotNull(restoredDatabaseAccount.Data.RestoreParameters);
-            Assert.AreEqual(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower(), restorableAccount.Id.ToString().ToLower());
-            Assert.True(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy);
+            Assert.That(restoredDatabaseAccount, Is.Not.Null);
+            Assert.That(restoredDatabaseAccount.Data.RestoreParameters, Is.Not.Null);
+            Assert.That(restorableAccount.Id.ToString().ToLower(), Is.EqualTo(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower()));
+            Assert.That(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy, Is.True);
 
             ContinuousModeBackupPolicy policy = restoredDatabaseAccount.Data.BackupPolicy as ContinuousModeBackupPolicy;
-            Assert.AreEqual(_restorableDatabaseAccount.Data.BackupPolicy.BackupPolicyType, policy.BackupPolicyType);
-            Assert.AreEqual(IsFreeTierEnabled, restoredDatabaseAccount.Data.IsFreeTierEnabled);
+            Assert.That(policy.BackupPolicyType, Is.EqualTo(_restorableDatabaseAccount.Data.BackupPolicy.BackupPolicyType));
+            Assert.That(restoredDatabaseAccount.Data.IsFreeTierEnabled, Is.EqualTo(IsFreeTierEnabled));
 
             return restoredDatabaseAccount;
         }
@@ -242,12 +242,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             string expectedApiType,
             int expectedRestorableLocations)
         {
-            Assert.AreEqual(expectedApiType, restorableDatabaseAccount.Data.ApiType.Value.ToString());
-            Assert.AreEqual(expectedRestorableLocations, restorableDatabaseAccount.Data.RestorableLocations.Count);
-            Assert.AreEqual("Microsoft.DocumentDB/locations/restorableDatabaseAccounts", restorableDatabaseAccount.Data.ResourceType.ToString());
-            Assert.AreEqual(_restorableDatabaseAccount.Data.Location, restorableDatabaseAccount.Data.Location);
-            Assert.AreEqual(_restorableDatabaseAccount.Data.Name, restorableDatabaseAccount.Data.AccountName);
-            Assert.True(restorableDatabaseAccount.Data.CreatedOn.HasValue);
+            Assert.That(restorableDatabaseAccount.Data.ApiType.Value.ToString(), Is.EqualTo(expectedApiType));
+            Assert.That(restorableDatabaseAccount.Data.RestorableLocations.Count, Is.EqualTo(expectedRestorableLocations));
+            Assert.That(restorableDatabaseAccount.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.DocumentDB/locations/restorableDatabaseAccounts"));
+            Assert.That(restorableDatabaseAccount.Data.Location, Is.EqualTo(_restorableDatabaseAccount.Data.Location));
+            Assert.That(restorableDatabaseAccount.Data.AccountName, Is.EqualTo(_restorableDatabaseAccount.Data.Name));
+            Assert.That(restorableDatabaseAccount.Data.CreatedOn.HasValue, Is.True);
         }
 
         internal async Task<CosmosDBTableResource> CreateTable(string tableName, AutoscaleSettings autoscale)

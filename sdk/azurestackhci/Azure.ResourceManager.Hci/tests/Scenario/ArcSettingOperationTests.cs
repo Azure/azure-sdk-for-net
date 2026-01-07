@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Hci.Tests
             };
             ArcSettingResource arcSettingFromUpdate = await arcSetting.UpdateAsync(patch);
             var properties = arcSettingFromUpdate.Data.ConnectivityProperties.ToObjectFromJson() as Dictionary<string, object>;
-            Assert.False((bool)properties["enabled"]);
+            Assert.That((bool)properties["enabled"], Is.False);
 
             ArcSettingResource arcSettingFromGet = await arcSettingFromUpdate.GetAsync();
-            Assert.AreEqual(arcSettingFromGet.Data.Name, arcSettingName);
+            Assert.That(arcSettingName, Is.EqualTo(arcSettingFromGet.Data.Name));
 
             await arcSettingFromGet.DeleteAsync(WaitUntil.Completed);
         }

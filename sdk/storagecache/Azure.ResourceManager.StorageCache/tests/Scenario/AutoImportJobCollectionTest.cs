@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
                 autoImportJob = await this.DefaultAmlFS.GetAutoImportJobs().GetAsync(name);
             }
 
-            Assert.IsTrue(autoImportJob.Data.State == AutoImportJobState.Disabled);
+            Assert.That(autoImportJob.Data.State == AutoImportJobState.Disabled, Is.True);
         }
 
         [TestCase]
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
                 count++;
             }
 
-            Assert.IsTrue(count >= 0);
+            Assert.That(count >= 0, Is.True);
         }
     }
 }

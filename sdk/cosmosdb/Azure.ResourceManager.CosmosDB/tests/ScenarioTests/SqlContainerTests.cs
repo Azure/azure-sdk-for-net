@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlContainerCreateAndUpdate()
         {
             var container = await CreateSqlContainer(null);
-            Assert.AreEqual(_containerName, container.Data.Resource.ContainerName);
+            Assert.That(container.Data.Resource.ContainerName, Is.EqualTo(_containerName));
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
 
             bool ifExists = await SqlContainerCollection.ExistsAsync(_containerName);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             // NOT WORKING API
             //ThroughputSettingData throughtput = await container.GetMongoDBCollectionThroughputAsync();
             CosmosDBSqlContainerResource container2 = await SqlContainerCollection.GetAsync(_containerName);
-            Assert.AreEqual(_containerName, container2.Data.Resource.ContainerName);
+            Assert.That(container2.Data.Resource.ContainerName, Is.EqualTo(_containerName));
             //Assert.AreEqual(TestThroughput1, container2.Data.Options.Throughput);
 
             VerifySqlContainers(container, container2);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
 
             container = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
-            Assert.AreEqual(_containerName, container.Data.Resource.ContainerName);
+            Assert.That(container.Data.Resource.ContainerName, Is.EqualTo(_containerName));
             container2 = await SqlContainerCollection.GetAsync(_containerName);
             VerifySqlContainers(container, container2);
         }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var containers = await SqlContainerCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(containers, Has.Count.EqualTo(1));
-            Assert.AreEqual(container.Data.Name, containers[0].Data.Name);
+            Assert.That(containers[0].Data.Name, Is.EqualTo(container.Data.Name));
 
             VerifySqlContainers(containers[0], container);
         }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var container = await CreateSqlContainer(null);
             CosmosDBSqlContainerThroughputSettingResource throughput = await container.GetCosmosDBSqlContainerThroughputSetting().GetAsync();
 
-            Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
+            Assert.That(throughput.Data.Resource.Throughput, Is.EqualTo(TestThroughput1));
 
             CosmosDBSqlContainerThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResourceInfo()
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     Throughput = TestThroughput2,
                 }))).Value;
 
-            Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
+            Assert.That(throughput2.Data.Resource.Throughput, Is.EqualTo(TestThroughput2));
         }
 
         [Test]
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             CosmosDBBackupInformation backupInfo = (await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
             long restoreTime = backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp.Value.ToUnixTimeMilliseconds();
-            Assert.True(restoreTime > 0);
+            Assert.That(restoreTime > 0, Is.True);
 
             var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(container.Id, _containerName, container.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             container = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
             backupInfo = (await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
             long latestRestoreTime = backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp.Value.ToUnixTimeMilliseconds();
-            Assert.True(latestRestoreTime > 0);
-            Assert.True(latestRestoreTime > restoreTime);
+            Assert.That(latestRestoreTime > 0, Is.True);
+            Assert.That(latestRestoreTime > restoreTime, Is.True);
         }
 
         [Test]
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await container.DeleteAsync(WaitUntil.Completed);
 
             bool exists = await SqlContainerCollection.ExistsAsync(_containerName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         internal async Task<CosmosDBSqlContainerResource> CreateSqlContainer(AutoscaleSettings autoscale)
@@ -248,13 +248,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifySqlContainers(CosmosDBSqlContainerResource expectedValue, CosmosDBSqlContainerResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Data.Id, actualValue.Data.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.ContainerName, actualValue.Data.Resource.ContainerName);
-            Assert.AreEqual(expectedValue.Data.Resource.IndexingPolicy.IndexingMode, actualValue.Data.Resource.IndexingPolicy.IndexingMode);
-            Assert.AreEqual(expectedValue.Data.Resource.PartitionKey.Kind, actualValue.Data.Resource.PartitionKey.Kind);
-            Assert.AreEqual(expectedValue.Data.Resource.PartitionKey.Paths, actualValue.Data.Resource.PartitionKey.Paths);
-            Assert.AreEqual(expectedValue.Data.Resource.DefaultTtl, actualValue.Data.Resource.DefaultTtl);
+            Assert.That(actualValue.Data.Id, Is.EqualTo(expectedValue.Data.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.Resource.ContainerName, Is.EqualTo(expectedValue.Data.Resource.ContainerName));
+            Assert.That(actualValue.Data.Resource.IndexingPolicy.IndexingMode, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.IndexingMode));
+            Assert.That(actualValue.Data.Resource.PartitionKey.Kind, Is.EqualTo(expectedValue.Data.Resource.PartitionKey.Kind));
+            Assert.That(actualValue.Data.Resource.PartitionKey.Paths, Is.EqualTo(expectedValue.Data.Resource.PartitionKey.Paths));
+            Assert.That(actualValue.Data.Resource.DefaultTtl, Is.EqualTo(expectedValue.Data.Resource.DefaultTtl));
         }
         protected async Task<CosmosDBAccountResource> CreateDatabaseAccount(string name)
         {

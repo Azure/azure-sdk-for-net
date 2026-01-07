@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Peering.Tests
             string peerAsnName = Recording.GenerateAssetName("peerAsn");
             await CreatePeerAsn(peerAsnName);
             bool flag = await _peerAsnCollection.ExistsAsync(peerAsnName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -73,24 +73,24 @@ namespace Azure.ResourceManager.Peering.Tests
             string peerAsnName = Recording.GenerateAssetName("peerAsn");
             var peerAsn = await CreatePeerAsn(peerAsnName);
             bool flag = await _peerAsnCollection.ExistsAsync(peerAsnName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await peerAsn.DeleteAsync(WaitUntil.Completed);
             flag = await _peerAsnCollection.ExistsAsync(peerAsnName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         private void ValidatePeeringService(PeerAsnResource peerAsn, string peerAsnName)
         {
-            Assert.IsNotNull(peerAsn);
-            Assert.AreEqual(peerAsnName, peerAsn.Data.Name);
-            Assert.AreEqual(peerAsnName, peerAsn.Data.PeerName);
-            Assert.IsTrue(peerAsn.Data.PeerAsn >= 1);
-            Assert.AreEqual("Microsoft.Peering/peerAsns", peerAsn.Data.ResourceType.ToString());
-            Assert.AreEqual("Pending", peerAsn.Data.ValidationState.ToString());
-            Assert.AreEqual("noc65003@contoso.com", peerAsn.Data.PeerContactDetail.FirstOrDefault().Email);
-            Assert.AreEqual("8888988888", peerAsn.Data.PeerContactDetail.FirstOrDefault().Phone);
-            Assert.AreEqual("Noc", peerAsn.Data.PeerContactDetail.FirstOrDefault().Role.ToString());
+            Assert.That(peerAsn, Is.Not.Null);
+            Assert.That(peerAsn.Data.Name, Is.EqualTo(peerAsnName));
+            Assert.That(peerAsn.Data.PeerName, Is.EqualTo(peerAsnName));
+            Assert.That(peerAsn.Data.PeerAsn >= 1, Is.True);
+            Assert.That(peerAsn.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Peering/peerAsns"));
+            Assert.That(peerAsn.Data.ValidationState.ToString(), Is.EqualTo("Pending"));
+            Assert.That(peerAsn.Data.PeerContactDetail.FirstOrDefault().Email, Is.EqualTo("noc65003@contoso.com"));
+            Assert.That(peerAsn.Data.PeerContactDetail.FirstOrDefault().Phone, Is.EqualTo("8888988888"));
+            Assert.That(peerAsn.Data.PeerContactDetail.FirstOrDefault().Role.ToString(), Is.EqualTo("Noc"));
         }
     }
 }

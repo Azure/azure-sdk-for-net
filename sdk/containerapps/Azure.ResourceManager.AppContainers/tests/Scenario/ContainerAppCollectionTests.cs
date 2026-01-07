@@ -25,32 +25,32 @@ namespace Azure.ResourceManager.AppContainers.Tests
             ResourceGroupResource rg = await CreateResourceGroupAsync();
             string envName = Recording.GenerateAssetName("env");
             var envResource = await CreateContainerAppManagedEnvironment(rg, envName);
-            Assert.AreEqual(envName, envResource.Data.Name);
+            Assert.That(envResource.Data.Name, Is.EqualTo(envName));
 
             var ContainerAppCollection = rg.GetContainerApps();
             string resourceName = Recording.GenerateAssetName("resource");
 
             // Create
             var resource = await CreateContainerApp(rg, envResource, resourceName);
-            Assert.AreEqual(resourceName, resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.EqualTo(resourceName));
 
             // Exists
             var result = await ContainerAppCollection.ExistsAsync(resourceName);
-            Assert.IsTrue(result);
+            Assert.That((bool)result, Is.True);
 
             // Get
             var getResult = await ContainerAppCollection.GetAsync(resourceName);
-            Assert.AreEqual(resourceName, getResult.Value.Data.Name);
+            Assert.That(getResult.Value.Data.Name, Is.EqualTo(resourceName));
 
             // List
             var listResult = await ContainerAppCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(listResult);
-            Assert.AreEqual(listResult[0].Data.Name, resourceName);
+            Assert.That(resourceName, Is.EqualTo(listResult[0].Data.Name));
 
             // Delete
             await resource.DeleteAsync(WaitUntil.Completed);
             result = await ContainerAppCollection.ExistsAsync(resourceName);
-            Assert.IsFalse(result);
+            Assert.That((bool)result, Is.False);
         }
     }
 }

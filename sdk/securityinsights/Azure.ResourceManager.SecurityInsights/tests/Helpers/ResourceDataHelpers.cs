@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
 
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
         }
 
         #region SecurityInsightsAlertRuleData
         public static void AssertSecurityInsightsAlertRuleData(SecurityInsightsAlertRuleData data1, SecurityInsightsAlertRuleData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Kind, data2.Kind);
+            Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
         }
         public static SecurityInsightsAlertRuleData GetSecurityInsightsAlertRuleData()
         {
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertAutomationRuleData(SecurityInsightsAutomationRuleData data1, SecurityInsightsAutomationRuleData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.DisplayName, data2.DisplayName);
-            Assert.AreEqual(data1.Order, data2.Order);
+            Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
+            Assert.That(data2.Order, Is.EqualTo(data1.Order));
         }
         public static SecurityInsightsAutomationRuleData GetAutomationRuleData(string resourcegroup)
         {
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertBookmarkData(SecurityInsightsBookmarkData data1, SecurityInsightsBookmarkData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.DisplayName, data2.DisplayName);
-            Assert.AreEqual(data1.Notes, data2.Notes);
-            Assert.AreEqual(data1.Query, data2.Query);
-            Assert.AreEqual(data1.QueryResult, data2.QueryResult);
+            Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
+            Assert.That(data2.Notes, Is.EqualTo(data1.Notes));
+            Assert.That(data2.Query, Is.EqualTo(data1.Query));
+            Assert.That(data2.QueryResult, Is.EqualTo(data1.QueryResult));
         }
         public static SecurityInsightsBookmarkData GetBookmarkData()
         {
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertIncidentData(SecurityInsightsIncidentData data1, SecurityInsightsIncidentData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Title, data2.Title);
-            Assert.AreEqual(data1.Classification, data2.Classification);
-            Assert.AreEqual(data1.Description, data2.Description);
-            Assert.AreEqual(data1.ClassificationComment, data2.ClassificationComment);
+            Assert.That(data2.Title, Is.EqualTo(data1.Title));
+            Assert.That(data2.Classification, Is.EqualTo(data1.Classification));
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.That(data2.ClassificationComment, Is.EqualTo(data1.ClassificationComment));
         }
         public static SecurityInsightsIncidentData GetIncidentData()
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertDataConnectorData(SecurityInsightsDataConnectorData data1, SecurityInsightsDataConnectorData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Kind, data2.Kind);
+            Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
         }
         public static SecurityInsightsDataConnectorData GetDataConnectorData()
         {
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertWatchlistItemData(SecurityInsightsWatchlistItemData data1, SecurityInsightsWatchlistItemData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.IsDeleted, data2.IsDeleted);
-            Assert.AreEqual(data1.WatchlistItemId, data2.WatchlistItemId);
-            Assert.AreEqual(data1.TenantId, data2.TenantId);
-            Assert.AreEqual(data1.WatchlistItemType, data2.WatchlistItemType);
+            Assert.That(data2.IsDeleted, Is.EqualTo(data1.IsDeleted));
+            Assert.That(data2.WatchlistItemId, Is.EqualTo(data1.WatchlistItemId));
+            Assert.That(data2.TenantId, Is.EqualTo(data1.TenantId));
+            Assert.That(data2.WatchlistItemType, Is.EqualTo(data1.WatchlistItemType));
         }
         public static SecurityInsightsWatchlistItemData GetWatchlistItemData()
         {
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertWatchlistData(SecurityInsightsWatchlistData data1, SecurityInsightsWatchlistData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.IsDeleted, data2.IsDeleted);
-            Assert.AreEqual(data1.Source, data2.Source);
-            Assert.AreEqual(data1.TenantId, data2.TenantId);
-            Assert.AreEqual(data1.Provider, data2.Provider);
+            Assert.That(data2.IsDeleted, Is.EqualTo(data1.IsDeleted));
+            Assert.That(data2.Source, Is.EqualTo(data1.Source));
+            Assert.That(data2.TenantId, Is.EqualTo(data1.TenantId));
+            Assert.That(data2.Provider, Is.EqualTo(data1.Provider));
         }
         public static SecurityInsightsWatchlistData GetWatchlistData()
         {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertSentinelOnboardingStateData(SecurityInsightsSentinelOnboardingStateData data1, SecurityInsightsSentinelOnboardingStateData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.IsCustomerManagedKeySet, data2.IsCustomerManagedKeySet);
+            Assert.That(data2.IsCustomerManagedKeySet, Is.EqualTo(data1.IsCustomerManagedKeySet));
         }
         public static SecurityInsightsSentinelOnboardingStateData GetSentinelOnboardingStateData()
         {

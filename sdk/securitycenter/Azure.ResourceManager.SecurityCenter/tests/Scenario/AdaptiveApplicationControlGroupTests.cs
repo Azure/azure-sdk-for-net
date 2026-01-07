@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             // Exist
             bool flag = await _adaptiveApplicationControlGroupCollection.ExistsAsync(groupName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var getAdaptiveApplicationControlGroup = await _adaptiveApplicationControlGroupCollection.GetAsync(groupName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             // Delete
             await adaptiveApplicationControlGroup.Value.DeleteAsync(WaitUntil.Completed);
             flag = await _adaptiveApplicationControlGroupCollection.ExistsAsync(groupName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

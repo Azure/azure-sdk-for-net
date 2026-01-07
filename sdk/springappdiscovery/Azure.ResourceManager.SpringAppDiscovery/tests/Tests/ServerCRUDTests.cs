@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             //create a server
             var createServerOperation = await serverColletion.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data, CancellationToken.None);
             await createServerOperation.WaitForCompletionAsync();
-            Assert.IsTrue(createServerOperation.HasCompleted);
-            Assert.IsTrue(createServerOperation.HasValue);
+            Assert.That(createServerOperation.HasCompleted, Is.True);
+            Assert.That(createServerOperation.HasValue, Is.True);
 
             //judge a server exist or not
-            Assert.IsTrue(await serverColletion.ExistsAsync(serverName));
+            Assert.That((bool)await serverColletion.ExistsAsync(serverName), Is.True);
 
             //get a server
             NullableResponse<SpringBootServerResource> getIfExistResponse = await serverColletion.GetIfExistsAsync(serverName);
-            Assert.True(getIfExistResponse.HasValue);
+            Assert.That(getIfExistResponse.HasValue, Is.True);
 
             //get all servers
             AsyncPageable<SpringBootServerResource> getServersResponse = serverColletion.GetAllAsync(CancellationToken.None);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             {
                 serverCount++;
             }
-            Assert.True(serverCount > 0);
+            Assert.That(serverCount > 0, Is.True);
 
             //get a server
             Response<SpringBootServerResource> getServerResponse = await serverColletion.GetAsync(serverName);
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
             //patch a server
             var updateOperataion = await serverModelResource.UpdateAsync(WaitUntil.Completed, serverPatch);
-            Assert.IsTrue(updateOperataion.HasCompleted);
-            Assert.IsTrue(updateOperataion.HasValue);
+            Assert.That(updateOperataion.HasCompleted, Is.True);
+            Assert.That(updateOperataion.HasValue, Is.True);
 
             //delete a server
             var deletetServerOperation = await serverModelResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deletetServerOperation.HasCompleted);
+            Assert.That(deletetServerOperation.HasCompleted, Is.True);
         }
     }
 }

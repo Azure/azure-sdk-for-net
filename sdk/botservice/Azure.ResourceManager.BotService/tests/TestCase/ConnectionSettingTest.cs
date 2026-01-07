@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.BotService.Tests
             string clientSecret = Recording.Random.NewGuid().ToString();
             var input = ResourceDataHelpers.GetBotConnectionSettingData(clientId, clientSecret, providerId);
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, input)).Value;
-            Assert.AreEqual(botName + "/" + settingName, resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.EqualTo(botName + "/" + settingName));
         }
 
         [TestCase]
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.BotService.Tests
             }
             Assert.GreaterOrEqual(count, 3);
             //4.Exist
-            Assert.IsTrue(await collection.ExistsAsync(settingName));
-            Assert.IsFalse(await collection.ExistsAsync(settingName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(settingName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(settingName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resouece operation

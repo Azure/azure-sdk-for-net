@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
             // Exist
             var flag = await policyAttestationCollection.ExistsAsync(attestationName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getattestation = await policyAttestationCollection.GetAsync(attestationName);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             // Delete
             await attestation.DeleteAsync(WaitUntil.Completed);
             flag = await policyAttestationCollection.ExistsAsync(attestationName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         [RecordedTest]
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
             // Exist
             var flag = await policyAttestationCollection.ExistsAsync(attestationName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getattestation = await policyAttestationCollection.GetAsync(attestationName);
@@ -125,18 +125,18 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             // Delete
             await attestation.DeleteAsync(WaitUntil.Completed);
             flag = await policyAttestationCollection.ExistsAsync(attestationName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         private void ValidateAttestation(PolicyAttestationData attestation, string attestationName)
         {
             Assert.IsNotNull(attestation);
             Assert.IsNotEmpty(attestation.Id);
-            Assert.AreEqual(attestationName, attestation.Name);
-            Assert.AreEqual(".NET SDK Test", attestation.Comments);
-            Assert.AreEqual("Compliant", attestation.ComplianceState.ToString());
-            Assert.AreEqual("Test Owner", attestation.Owner);
-            Assert.AreEqual(2, attestation.Evidence.Count);
+            Assert.That(attestation.Name, Is.EqualTo(attestationName));
+            Assert.That(attestation.Comments, Is.EqualTo(".NET SDK Test"));
+            Assert.That(attestation.ComplianceState.ToString(), Is.EqualTo("Compliant"));
+            Assert.That(attestation.Owner, Is.EqualTo("Test Owner"));
+            Assert.That(attestation.Evidence.Count, Is.EqualTo(2));
         }
     }
 }

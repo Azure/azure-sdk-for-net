@@ -58,34 +58,34 @@ namespace Azure.ResourceManager.Relay.Tests
             };
 
             RelayNamespaceAuthorizationRuleResource _relayAuthRuleResource = (await _relayAuthRule.CreateOrUpdateAsync(WaitUntil.Completed, "authRule1", relayAuthRule)).Value;
-            Assert.AreEqual(3, _relayAuthRuleResource.Data.Rights.Count);
+            Assert.That(_relayAuthRuleResource.Data.Rights.Count, Is.EqualTo(3));
 
             relayAuthRule.Rights.Remove(RelayAccessRight.Manage);
             relayAuthRule.Rights.Remove(RelayAccessRight.Listen);
             _relayAuthRuleResource = (await _relayAuthRuleResource.UpdateAsync(WaitUntil.Completed, relayAuthRule)).Value;
-            Assert.AreEqual(1, _relayAuthRuleResource.Data.Rights.Count);
+            Assert.That(_relayAuthRuleResource.Data.Rights.Count, Is.EqualTo(1));
 
             var listOfAuthRules = await _relayAuthRule.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(2, listOfAuthRules.Count);
+            Assert.That(listOfAuthRules.Count, Is.EqualTo(2));
 
             //Regenerate Keys on the authorization rule
             RelayAccessKeys keys1 = await _relayAuthRuleResource.GetKeysAsync();
-            Assert.NotNull(keys1);
-            Assert.NotNull(keys1.PrimaryConnectionString);
-            Assert.NotNull(keys1.SecondaryConnectionString);
+            Assert.That(keys1, Is.Not.Null);
+            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
 
             RelayAccessKeys keys2 = await _relayAuthRuleResource.RegenerateKeysAsync(new RelayRegenerateAccessKeyContent(RelayAccessKeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreNotEqual(keys1.PrimaryKey, keys2.PrimaryKey);
-                Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
+                Assert.That(keys2.PrimaryKey, Is.Not.EqualTo(keys1.PrimaryKey));
+                Assert.That(keys2.SecondaryKey, Is.EqualTo(keys1.SecondaryKey));
             }
 
             RelayAccessKeys keys3 = await _relayAuthRuleResource.RegenerateKeysAsync(new RelayRegenerateAccessKeyContent(RelayAccessKeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
-                Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
+                Assert.That(keys3.PrimaryKey, Is.EqualTo(keys2.PrimaryKey));
+                Assert.That(keys3.SecondaryKey, Is.Not.EqualTo(keys2.SecondaryKey));
             }
 
             var updatePrimaryKey = GenerateRandomKey();
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Relay.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(updatePrimaryKey, keys4.PrimaryKey);
-                Assert.AreEqual(currentKeys.SecondaryKey, keys4.SecondaryKey);
+                Assert.That(keys4.PrimaryKey, Is.EqualTo(updatePrimaryKey));
+                Assert.That(keys4.SecondaryKey, Is.EqualTo(currentKeys.SecondaryKey));
             }
 
             currentKeys = keys4;
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Relay.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
-                Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
+                Assert.That(keys5.SecondaryKey, Is.EqualTo(updateSecondaryKey));
+                Assert.That(keys5.PrimaryKey, Is.EqualTo(currentKeys.PrimaryKey));
             }
 
             await _relayAuthRuleResource.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _relayAuthRuleResource.GetAsync(); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsFalse(await _relayAuthRule.ExistsAsync("authRule1"));
+            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.That((bool)await _relayAuthRule.ExistsAsync("authRule1"), Is.False);
         }
 
         [Test]
@@ -131,34 +131,34 @@ namespace Azure.ResourceManager.Relay.Tests
             };
 
             RelayHybridConnectionAuthorizationRuleResource _relayAuthRuleResource = (await _hybridConnectionAuthRule.CreateOrUpdateAsync(WaitUntil.Completed, "authRule1", relayAuthRuleData)).Value;
-            Assert.AreEqual(1, _relayAuthRuleResource.Data.Rights.Count);
+            Assert.That(_relayAuthRuleResource.Data.Rights.Count, Is.EqualTo(1));
 
             relayAuthRuleData.Rights.Add(RelayAccessRight.Manage);
             relayAuthRuleData.Rights.Add(RelayAccessRight.Send);
             _relayAuthRuleResource = (await _relayAuthRuleResource.UpdateAsync(WaitUntil.Completed, relayAuthRuleData)).Value;
-            Assert.AreEqual(3, _relayAuthRuleResource.Data.Rights.Count);
+            Assert.That(_relayAuthRuleResource.Data.Rights.Count, Is.EqualTo(3));
 
             var listOfAuthRules = await _hybridConnectionAuthRule.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, listOfAuthRules.Count);
+            Assert.That(listOfAuthRules.Count, Is.EqualTo(1));
 
             //Regenerate Keys on the authorization rule
             RelayAccessKeys keys1 = await _relayAuthRuleResource.GetKeysAsync();
-            Assert.NotNull(keys1);
-            Assert.NotNull(keys1.PrimaryConnectionString);
-            Assert.NotNull(keys1.SecondaryConnectionString);
+            Assert.That(keys1, Is.Not.Null);
+            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
 
             RelayAccessKeys keys2 = await _relayAuthRuleResource.RegenerateKeysAsync(new RelayRegenerateAccessKeyContent(RelayAccessKeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreNotEqual(keys1.PrimaryKey, keys2.PrimaryKey);
-                Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
+                Assert.That(keys2.PrimaryKey, Is.Not.EqualTo(keys1.PrimaryKey));
+                Assert.That(keys2.SecondaryKey, Is.EqualTo(keys1.SecondaryKey));
             }
 
             RelayAccessKeys keys3 = await _relayAuthRuleResource.RegenerateKeysAsync(new RelayRegenerateAccessKeyContent(RelayAccessKeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
-                Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
+                Assert.That(keys3.PrimaryKey, Is.EqualTo(keys2.PrimaryKey));
+                Assert.That(keys3.SecondaryKey, Is.Not.EqualTo(keys2.SecondaryKey));
             }
 
             var updatePrimaryKey = GenerateRandomKey();
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.Relay.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(updatePrimaryKey, keys4.PrimaryKey);
-                Assert.AreEqual(currentKeys.SecondaryKey, keys4.SecondaryKey);
+                Assert.That(keys4.PrimaryKey, Is.EqualTo(updatePrimaryKey));
+                Assert.That(keys4.SecondaryKey, Is.EqualTo(currentKeys.SecondaryKey));
             }
 
             currentKeys = keys4;
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.Relay.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
-                Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
+                Assert.That(keys5.SecondaryKey, Is.EqualTo(updateSecondaryKey));
+                Assert.That(keys5.PrimaryKey, Is.EqualTo(currentKeys.PrimaryKey));
             }
 
             await _relayAuthRuleResource.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _relayAuthRuleResource.GetAsync(); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsFalse(await _hybridConnectionAuthRule.ExistsAsync("authRule1"));
+            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.That((bool)await _hybridConnectionAuthRule.ExistsAsync("authRule1"), Is.False);
         }
 
         [Test]
@@ -204,34 +204,34 @@ namespace Azure.ResourceManager.Relay.Tests
             };
 
             WcfRelayAuthorizationRuleResource _wcfAuthRuleResource = (await wcfAuthRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, "authRule1", relayAuthRuleData)).Value;
-            Assert.AreEqual(1, _wcfAuthRuleResource.Data.Rights.Count);
+            Assert.That(_wcfAuthRuleResource.Data.Rights.Count, Is.EqualTo(1));
 
             relayAuthRuleData.Rights.Add(RelayAccessRight.Manage);
             relayAuthRuleData.Rights.Add(RelayAccessRight.Send);
             _wcfAuthRuleResource = (await _wcfAuthRuleResource.UpdateAsync(WaitUntil.Completed, relayAuthRuleData)).Value;
-            Assert.AreEqual(3, _wcfAuthRuleResource.Data.Rights.Count);
+            Assert.That(_wcfAuthRuleResource.Data.Rights.Count, Is.EqualTo(3));
 
             var listOfAuthRules = await wcfAuthRuleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, listOfAuthRules.Count);
+            Assert.That(listOfAuthRules.Count, Is.EqualTo(1));
 
             //Regenerate Keys on the authorization rule
             RelayAccessKeys keys1 = await _wcfAuthRuleResource.GetKeysAsync();
-            Assert.NotNull(keys1);
-            Assert.NotNull(keys1.PrimaryConnectionString);
-            Assert.NotNull(keys1.SecondaryConnectionString);
+            Assert.That(keys1, Is.Not.Null);
+            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
 
             RelayAccessKeys keys2 = await _wcfAuthRuleResource.RegenerateKeysAsync(new RelayRegenerateAccessKeyContent(RelayAccessKeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreNotEqual(keys1.PrimaryKey, keys2.PrimaryKey);
-                Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
+                Assert.That(keys2.PrimaryKey, Is.Not.EqualTo(keys1.PrimaryKey));
+                Assert.That(keys2.SecondaryKey, Is.EqualTo(keys1.SecondaryKey));
             }
 
             RelayAccessKeys keys3 = await _wcfAuthRuleResource.RegenerateKeysAsync(new RelayRegenerateAccessKeyContent(RelayAccessKeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
-                Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
+                Assert.That(keys3.PrimaryKey, Is.EqualTo(keys2.PrimaryKey));
+                Assert.That(keys3.SecondaryKey, Is.Not.EqualTo(keys2.SecondaryKey));
             }
 
             var updatePrimaryKey = GenerateRandomKey();
@@ -243,8 +243,8 @@ namespace Azure.ResourceManager.Relay.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(updatePrimaryKey, keys4.PrimaryKey);
-                Assert.AreEqual(currentKeys.SecondaryKey, keys4.SecondaryKey);
+                Assert.That(keys4.PrimaryKey, Is.EqualTo(updatePrimaryKey));
+                Assert.That(keys4.SecondaryKey, Is.EqualTo(currentKeys.SecondaryKey));
             }
 
             currentKeys = keys4;
@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.Relay.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
-                Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
+                Assert.That(keys5.SecondaryKey, Is.EqualTo(updateSecondaryKey));
+                Assert.That(keys5.PrimaryKey, Is.EqualTo(currentKeys.PrimaryKey));
             }
 
             await _wcfAuthRuleResource.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _wcfAuthRuleResource.GetAsync(); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsFalse(await wcfAuthRuleCollection.ExistsAsync("authRule1"));
+            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.That((bool)await wcfAuthRuleCollection.ExistsAsync("authRule1"), Is.False);
         }
     }
 }

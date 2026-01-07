@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             await CreateApiServiceAsync();
 
             var list = await ApiServiceResource.GetApis().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
 
             var productCollections = ApiServiceResource.GetApiManagementProducts();
             var listResponse = await productCollections.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listResponse);
-            Assert.AreEqual(0, listResponse.Count());
+            Assert.That(listResponse, Is.Not.Null);
+            Assert.That(listResponse.Count(), Is.EqualTo(0));
 
             var productId = Recording.GenerateAssetName("prod-");
             var data = new ApiManagementProductData()
@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var product = (await productCollections.CreateOrUpdateAsync(WaitUntil.Completed, productId, data)).Value;
             var name = product.Data.Name;
             var result = (await product.GetAsync()).Value;
-            Assert.NotNull(result);
-            Assert.AreEqual(name, result.Data.Name);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Data.Name, Is.EqualTo(name));
 
             var getResult = await productCollections.GetAsync(name);
-            Assert.NotNull(getResult);
+            Assert.That(getResult, Is.Not.Null);
             var boolResult = await productCollections.ExistsAsync(name);
-            Assert.IsTrue(boolResult);
+            Assert.That((bool)boolResult, Is.True);
         }
     }
 }

@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
             };
             ConfluentOrganizationData inputData = new ConfluentOrganizationData(DefaultLocation, offerDetail, userDetail);
             var confluentNewOrg = await confluentOrgCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, inputData);
-            Assert.NotNull(confluentNewOrg);
-            Assert.NotNull(confluentNewOrg.Value.Id);
-            Assert.NotNull(confluentNewOrg.Value.Data.SsoUri);
+            Assert.That(confluentNewOrg, Is.Not.Null);
+            Assert.That(confluentNewOrg.Value.Id, Is.Not.Null);
+            Assert.That(confluentNewOrg.Value.Data.SsoUri, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
             ConfluentOrganizationData inputData = new ConfluentOrganizationData(DefaultLocation, offerDetail, userDetail);
             var confluentNewOrg = await confluentOrgCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, inputData);
             var result = await confluentNewOrg.Value.DeleteAsync(WaitUntil.Completed);
-            Assert.AreEqual(result.GetRawResponse().Status,200);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
         }
     }
 }

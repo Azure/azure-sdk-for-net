@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // list the properties
             var listResponse = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listResponse);
+            Assert.That(listResponse, Is.Not.Null);
 
-            Assert.AreEqual(2, listResponse.Count);
+            Assert.That(listResponse.Count, Is.EqualTo(2));
 
             // delete a property
             await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await collection.ExistsAsync(propertyId)).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
 
             // patch the secret property
             var updateProperty = new ApiManagementNamedValuePatch()
@@ -157,22 +157,22 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             bool isSecret,
             List<string> tags = null)
         {
-            Assert.NotNull(contract);
-            Assert.AreEqual(propertyDisplayName, contract.Data.DisplayName);
+            Assert.That(contract, Is.Not.Null);
+            Assert.That(contract.Data.DisplayName, Is.EqualTo(propertyDisplayName));
             if (isSecret)
             {
-                Assert.IsNull(contract.Data.Value);
+                Assert.That(contract.Data.Value, Is.Null);
             }
             else
             {
-                Assert.AreEqual(propertyValue, contract.Data.Value);
+                Assert.That(contract.Data.Value, Is.EqualTo(propertyValue));
             }
-            Assert.AreEqual(isSecret, contract.Data.IsSecret);
-            Assert.AreEqual(propertyId, contract.Data.Name);
+            Assert.That(contract.Data.IsSecret, Is.EqualTo(isSecret));
+            Assert.That(contract.Data.Name, Is.EqualTo(propertyId));
             if (tags != null)
             {
-                Assert.NotNull(contract.Data.Tags);
-                Assert.AreEqual(tags.Count, contract.Data.Tags.Count);
+                Assert.That(contract.Data.Tags, Is.Not.Null);
+                Assert.That(contract.Data.Tags.Count, Is.EqualTo(tags.Count));
             }
         }
     }

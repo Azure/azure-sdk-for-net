@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Exist()
         {
             var flag = await _supportTicketCommunicationCollection.ExistsAsync(_existSupportTicketCommunicationName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Support.Tests
             var content = new SupportNameAvailabilityContent(communicationName, SupportResourceType.MicrosoftSupportCommunications);
             var result = await _subscriptionSupportTicketResource.CheckCommunicationNameAvailabilityAsync(content);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.Value.IsNameAvailable, true);
+            Assert.That(result.Value.IsNameAvailable, Is.EqualTo(true));
         }
 
         [RecordedTest]
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Support.Tests
         {
             Assert.IsNotNull(supportTicketCommunication);
             Assert.IsNotEmpty(supportTicketCommunication.Id);
-            Assert.AreEqual(supportTicketCommunication.Name, comunicationName);
+            Assert.That(comunicationName, Is.EqualTo(supportTicketCommunication.Name));
         }
     }
 }

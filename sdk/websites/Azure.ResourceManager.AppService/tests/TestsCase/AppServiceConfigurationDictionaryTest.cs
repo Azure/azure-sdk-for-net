@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             AppServiceConfigurationDictionary appDic = await webSiteResource.GetApplicationSettingsAsync();
             AppServiceConfigurationDictionary metaData = await webSiteResource.GetMetadataAsync();
             Assert.NotZero(appDic.Properties.Count);
-            Assert.NotNull(metaData.Properties);
+            Assert.That(metaData.Properties, Is.Not.Null);
         }
 
         //Manual operation needed to create website/function resource, get it from existing one.

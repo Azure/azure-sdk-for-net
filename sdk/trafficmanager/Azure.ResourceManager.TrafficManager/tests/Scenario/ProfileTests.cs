@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             Assert.IsNotNull(profileResource);
             Assert.IsNotNull(profileResource.Data);
-            Assert.AreEqual(_profileName, profileResource.Data.Name);
-            Assert.AreEqual(TrafficRoutingMethod.Weighted, profileResource.Data.TrafficRoutingMethod);
+            Assert.That(profileResource.Data.Name, Is.EqualTo(_profileName));
+            Assert.That(profileResource.Data.TrafficRoutingMethod, Is.EqualTo(TrafficRoutingMethod.Weighted));
         }
 
         [RecordedTest]
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             profileResource = await GetDefaultProfile();
 
             Assert.IsNotNull(profileResource);
-            Assert.IsTrue(profileResource.HasData);
+            Assert.That(profileResource.HasData, Is.True);
             Assert.IsNotNull(profileResource.Data);
-            Assert.AreEqual(_profileName, profileResource.Data.Name);
-            Assert.AreEqual(TrafficRoutingMethod.Priority, profileResource.Data.TrafficRoutingMethod);
+            Assert.That(profileResource.Data.Name, Is.EqualTo(_profileName));
+            Assert.That(profileResource.Data.TrafficRoutingMethod, Is.EqualTo(TrafficRoutingMethod.Priority));
         }
 
         [RecordedTest]
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             Assert.IsNotNull(profileResource);
             Assert.IsNotNull(profileResource.Data);
-            Assert.AreEqual(_profileName, profileResource.Data.Name);
-            Assert.AreEqual(TrafficRoutingMethod.Priority, profileResource.Data.TrafficRoutingMethod);
+            Assert.That(profileResource.Data.Name, Is.EqualTo(_profileName));
+            Assert.That(profileResource.Data.TrafficRoutingMethod, Is.EqualTo(TrafficRoutingMethod.Priority));
         }
 
         [TestCase(null)]
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             profileResource = await GetDefaultProfile();
 
-            Assert.IsTrue(profileResource.Data.Tags.TryGetValue(ExpectedKey, out string value));
-            Assert.AreEqual(ExpectedValue, value);
+            Assert.That(profileResource.Data.Tags.TryGetValue(ExpectedKey, out string value), Is.True);
+            Assert.That(value, Is.EqualTo(ExpectedValue));
         }
 
         [TestCase(null)]
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             profileResource = await GetDefaultProfile();
 
-            Assert.AreEqual(expectedTags.Count, profileResource.Data.Tags.Count);
+            Assert.That(profileResource.Data.Tags.Count, Is.EqualTo(expectedTags.Count));
 
             foreach (var item in expectedTags)
             {
-                Assert.IsTrue(profileResource.Data.Tags.TryGetValue(item.Key, out string value));
-                Assert.AreEqual(item.Value, value);
+                Assert.That(profileResource.Data.Tags.TryGetValue(item.Key, out string value), Is.True);
+                Assert.That(value, Is.EqualTo(item.Value));
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             profileResource = await GetDefaultProfile();
 
-            Assert.AreEqual(0, profileResource.Data.Tags.Count);
+            Assert.That(profileResource.Data.Tags.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             TrafficManagerEndpointResource endpointResource = await profileResource.GetTrafficManagerEndpointAsync("externalEndpoints", EndpointName1);
 
             Assert.IsNotNull(endpointResource);
-            Assert.AreEqual(EndpointName1, endpointResource.Data.Name);
-            Assert.AreEqual(EndpointType, endpointResource.Data.ResourceType.ToString());
+            Assert.That(endpointResource.Data.Name, Is.EqualTo(EndpointName1));
+            Assert.That(endpointResource.Data.ResourceType.ToString(), Is.EqualTo(EndpointType));
         }
 
         [RecordedTest]
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
                 counter++;
             }
 
-            Assert.AreEqual(1, counter);
+            Assert.That(counter, Is.EqualTo(1));
         }
 
         [RecordedTest]
@@ -184,13 +184,13 @@ namespace Azure.ResourceManager.TrafficManager.Tests
                 counter++;
             }
 
-            Assert.AreEqual(1, counter);
+            Assert.That(counter, Is.EqualTo(1));
         }
 
         [RecordedTest]
         public async Task ExistsTest()
         {
-            Assert.IsTrue(await _profileCollection.ExistsAsync(_profileName));
+            Assert.That((bool)await _profileCollection.ExistsAsync(_profileName), Is.True);
         }
 
         private async Task HeatMapTest(IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null)
@@ -207,9 +207,9 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             TrafficManagerHeatMapResource heatMapModelResource = await profileResource.GetTrafficManagerHeatMapAsync(TrafficManagerHeatMapType.Default, topLeft, botRight);
 
             Assert.IsNotNull(heatMapModelResource);
-            Assert.IsTrue(heatMapModelResource.HasData);
+            Assert.That(heatMapModelResource.HasData, Is.True);
             Assert.IsNotNull(heatMapModelResource.Data);
-            Assert.IsTrue(heatMapModelResource.Data.TrafficFlows.Count > 0);
+            Assert.That(heatMapModelResource.Data.TrafficFlows.Count > 0, Is.True);
         }
     }
 }

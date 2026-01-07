@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Subscription.Tests
             string aliasName = Recording.GenerateAssetName("test-alias-");
             var alias = await CreateAliasResponse(aliasName);
             ValidateAliasResponse(alias);
-            Assert.AreEqual(aliasName, alias.Data.Name);
+            Assert.That(alias.Data.Name, Is.EqualTo(aliasName));
         }
 
         [RecordedTest]
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Subscription.Tests
             string aliasName = Recording.GenerateAssetName("test-alias-");
             var alias = await CreateAliasResponse(aliasName);
             bool flag = await _aliasCollection.ExistsAsync(aliasName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Subscription.Tests
             await CreateAliasResponse(aliasName);
             var alias = await _aliasCollection.GetAsync(aliasName);
             ValidateAliasResponse(alias);
-            Assert.AreEqual(aliasName, alias.Value.Data.Name);
+            Assert.That(alias.Value.Data.Name, Is.EqualTo(aliasName));
         }
 
         [RecordedTest]
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.Subscription.Tests
             string aliasName = Recording.GenerateAssetName("test-alias-");
             var alias = await CreateAliasResponse(aliasName);
             bool flag = await _aliasCollection.ExistsAsync(aliasName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await alias.DeleteAsync(WaitUntil.Completed);
             flag = await _aliasCollection.ExistsAsync(aliasName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         private void ValidateAliasResponse(SubscriptionAliasResource alias)
         {
             Assert.IsNotNull(alias);
-            Assert.AreEqual("Microsoft.Subscription", alias.Data.ResourceType.Namespace);
+            Assert.That(alias.Data.ResourceType.Namespace, Is.EqualTo("Microsoft.Subscription"));
         }
     }
 }

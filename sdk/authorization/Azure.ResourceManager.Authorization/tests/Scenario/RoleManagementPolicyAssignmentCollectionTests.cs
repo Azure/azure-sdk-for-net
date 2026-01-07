@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var name = definition.Data.Name + "_" + policy.Data.Name;
             var lro = await policyAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             var policyAssignment = lro.Value;
-            Assert.AreEqual(name, policyAssignment.Data.Name);
+            Assert.That(policyAssignment.Data.Name, Is.EqualTo(name));
         }
 
         [RecordedTest]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (policyAssignment1 != null)
             {
                 var policyAssignment2 = await policyAssignmentCollection.GetAsync(policyAssignment1.Data.Name);
-                Assert.AreEqual(policyAssignment2.Value.Data.Name, policyAssignment1.Data.Name);
+                Assert.That(policyAssignment1.Data.Name, Is.EqualTo(policyAssignment2.Value.Data.Name));
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (policyAssignment1 != null)
             {
                 var policyAssignment2 = await policyAssignmentCollection.ExistsAsync(policyAssignment1.Data.Name);
-                Assert.IsTrue(policyAssignment2.Value);
+                Assert.That(policyAssignment2.Value, Is.True);
             }
         }
     }

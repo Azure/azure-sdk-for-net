@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             await CreateSecurityContact();
             bool flag = await _SecurityContactCollection.ExistsAsync(_securityContactName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -80,19 +80,19 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var securityContact = await CreateSecurityContact();
             bool flag = await _SecurityContactCollection.ExistsAsync(_securityContactName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await securityContact.DeleteAsync(WaitUntil.Completed);
             flag = await _SecurityContactCollection.ExistsAsync(_securityContactName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         private void ValidateSecurityContactResource(SecurityContactResource securityContact, string securityContactName = _securityContactName)
         {
             Assert.IsNotNull(securityContact);
             Assert.IsNotNull(securityContact.Data.Id);
-            Assert.AreEqual(securityContactName, securityContact.Data.Name);
-            Assert.AreEqual("18800001111", securityContact.Data.Phone);
+            Assert.That(securityContact.Data.Name, Is.EqualTo(securityContactName));
+            Assert.That(securityContact.Data.Phone, Is.EqualTo("18800001111"));
         }
     }
 }

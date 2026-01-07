@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         /// <param name="versionName">ConfigurationProfileVersionResource name to verify</param>
         protected void AssertValues(AutomanageConfigurationProfileVersionResource version, string versionName)
         {
-            Assert.NotNull(version);
-            Assert.True(version.HasData);
-            Assert.AreEqual(versionName, version.Id.Name);
-            Assert.NotNull(version.Id);
-            Assert.NotNull(version.Data);
-            Assert.NotNull(version.Data.Configuration);
+            Assert.That(version, Is.Not.Null);
+            Assert.That(version.HasData, Is.True);
+            Assert.That(version.Id.Name, Is.EqualTo(versionName));
+            Assert.That(version.Id, Is.Not.Null);
+            Assert.That(version.Data, Is.Not.Null);
+            Assert.That(version.Data.Configuration, Is.Not.Null);
         }
     }
 }

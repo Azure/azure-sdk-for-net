@@ -147,59 +147,59 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LoadBalancerResource> getLoadBalancer = await resourceGroup.GetLoadBalancers().GetAsync(lbName);
 
             // Verify the GET LoadBalancer
-            Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(frontendIpConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString());
-            Assert.AreEqual(lbPublicIp.Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PublicIPAddress.Id);
-            Assert.Null(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress);
-            Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatRules[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[0].Id.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatRules[1].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[1].Id.ToString());
-            Assert.AreEqual(backEndAddressPoolName, getLoadBalancer.Value.Data.BackendAddressPools[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.BackendAddressPools[0].ProvisioningState.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.LoadBalancingRules[0].Id, getLoadBalancer.Value.Data.BackendAddressPools[0].LoadBalancingRules[0].Id.ToString());
-            Assert.AreEqual(loadBalancingRuleName, getLoadBalancer.Value.Data.LoadBalancingRules[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.LoadBalancingRules[0].ProvisioningState.ToString());
-            Assert.AreEqual(15, getLoadBalancer.Value.Data.LoadBalancingRules[0].IdleTimeoutInMinutes);
-            Assert.AreEqual(probeName, getLoadBalancer.Value.Data.Probes[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.Probes[0].ProvisioningState.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.Probes[0].Id, getLoadBalancer.Value.Data.LoadBalancingRules[0].Properties.ProbeId.ToString());
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.InboundNatRules[0].ProvisioningState.ToString());
-            Assert.AreEqual(inboundNatRule1Name, getLoadBalancer.Value.Data.InboundNatRules[0].Name);
-            Assert.AreEqual("Tcp", getLoadBalancer.Value.Data.InboundNatRules[0].Protocol.ToString());
-            Assert.AreEqual(3389, getLoadBalancer.Value.Data.InboundNatRules[0].FrontendPort);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.InboundNatRules[1].ProvisioningState.ToString());
-            Assert.AreEqual(3390, getLoadBalancer.Value.Data.InboundNatRules[1].FrontendPort);
-            Assert.AreEqual(15, getLoadBalancer.Value.Data.InboundNatRules[1].IdleTimeoutInMinutes);
-            Assert.NotNull(getLoadBalancer.Value.Data.ResourceGuid);
+            Assert.That(getLoadBalancer.Value.Data.Name, Is.EqualTo(lbName));
+            Assert.That(getLoadBalancer.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name, Is.EqualTo(frontendIpConfigName));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PublicIPAddress.Id, Is.EqualTo(lbPublicIp.Id));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress, Is.Null);
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[0].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.InboundNatRules[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[1].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.InboundNatRules[1].Id));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].Name, Is.EqualTo(backEndAddressPoolName));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].LoadBalancingRules[0].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.LoadBalancingRules[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].Name, Is.EqualTo(loadBalancingRuleName));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].IdleTimeoutInMinutes, Is.EqualTo(15));
+            Assert.That(getLoadBalancer.Value.Data.Probes[0].Name, Is.EqualTo(probeName));
+            Assert.That(getLoadBalancer.Value.Data.Probes[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].Properties.ProbeId.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.Probes[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].Name, Is.EqualTo(inboundNatRule1Name));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].Protocol.ToString(), Is.EqualTo("Tcp"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].FrontendPort, Is.EqualTo(3389));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[1].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[1].FrontendPort, Is.EqualTo(3390));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[1].IdleTimeoutInMinutes, Is.EqualTo(15));
+            Assert.That(getLoadBalancer.Value.Data.ResourceGuid, Is.Not.Null);
 
             // Verify List LoadBalancer
             AsyncPageable<LoadBalancerResource> listLoadBalancerAP = resourceGroup.GetLoadBalancers().GetAllAsync();
             List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancer);
-            Assert.AreEqual(lbName, listLoadBalancer.First().Data.Name);
-            Assert.AreEqual(getLoadBalancer.Value.Data.ETag, listLoadBalancer.First().Data.ETag);
+            Assert.That(listLoadBalancer.First().Data.Name, Is.EqualTo(lbName));
+            Assert.That(listLoadBalancer.First().Data.ETag, Is.EqualTo(getLoadBalancer.Value.Data.ETag));
 
             // Verify List LoadBalancerResource subscription
             AsyncPageable<LoadBalancerResource> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
             List<LoadBalancerResource> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);
-            Assert.AreEqual(lbName, listLoadBalancerSubscription[0].Data.Name);
-            Assert.NotNull(listLoadBalancerSubscription.First().Data.Name);
-            Assert.NotNull(listLoadBalancerSubscription.First().Data.ETag);
+            Assert.That(listLoadBalancerSubscription[0].Data.Name, Is.EqualTo(lbName));
+            Assert.That(listLoadBalancerSubscription.First().Data.Name, Is.Not.Null);
+            Assert.That(listLoadBalancerSubscription.First().Data.ETag, Is.Not.Null);
 
             // Verify List BackendAddressPools in LoadBalancer
             var backendAddressPoolCollection = resourceGroup.GetLoadBalancers().Get(lbName).Value.GetBackendAddressPools();
             AsyncPageable<BackendAddressPoolResource> listLoadBalancerBackendAddressPoolsAP = backendAddressPoolCollection.GetAllAsync();
             List<BackendAddressPoolResource> listLoadBalancerBackendAddressPools = await listLoadBalancerBackendAddressPoolsAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancerBackendAddressPools);
-            Assert.AreEqual(backEndAddressPoolName, listLoadBalancerBackendAddressPools.First().Data.Name);
-            Assert.NotNull(listLoadBalancerBackendAddressPools.First().Data.ETag);
+            Assert.That(listLoadBalancerBackendAddressPools.First().Data.Name, Is.EqualTo(backEndAddressPoolName));
+            Assert.That(listLoadBalancerBackendAddressPools.First().Data.ETag, Is.Not.Null);
 
             // Verify Get BackendAddressPoolResource in LoadBalancer
             Response<BackendAddressPoolResource> getLoadBalancerBackendAddressPool = await backendAddressPoolCollection.GetAsync(backEndAddressPoolName);
-            Assert.AreEqual(backEndAddressPoolName, getLoadBalancerBackendAddressPool.Value.Data.Name);
-            Assert.NotNull(getLoadBalancerBackendAddressPool.Value.Data.ETag);
+            Assert.That(getLoadBalancerBackendAddressPool.Value.Data.Name, Is.EqualTo(backEndAddressPoolName));
+            Assert.That(getLoadBalancerBackendAddressPool.Value.Data.ETag, Is.Not.Null);
 
             // Verify List FrontendIPConfigurations in LoadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.Network.Tests
             AsyncPageable<FrontendIPConfigurationResource> listLoadBalancerFrontendIPConfigurationsAP = loadBalancerOperations.GetFrontendIPConfigurations().GetAllAsync();
             List<FrontendIPConfigurationResource> listLoadBalancerFrontendIPConfigurations = await listLoadBalancerFrontendIPConfigurationsAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancerFrontendIPConfigurations);
-            Assert.AreEqual(frontendIpConfigName, listLoadBalancerFrontendIPConfigurations.First().Data.Name);
-            Assert.NotNull(listLoadBalancerFrontendIPConfigurations.First().Data.ETag);
+            Assert.That(listLoadBalancerFrontendIPConfigurations.First().Data.Name, Is.EqualTo(frontendIpConfigName));
+            Assert.That(listLoadBalancerFrontendIPConfigurations.First().Data.ETag, Is.Not.Null);
 
             // Verify Get FrontendIPConfigurationResource in LoadBalancer
             // TODO: ADO 5975
@@ -220,8 +220,8 @@ namespace Azure.ResourceManager.Network.Tests
             AsyncPageable<LoadBalancingRuleResource> listLoadBalancerLoadBalancingRulesAP = loadBalancerOperations.GetLoadBalancingRules().GetAllAsync();
             List<LoadBalancingRuleResource> listLoadBalancerLoadBalancingRules = await listLoadBalancerLoadBalancingRulesAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancerLoadBalancingRules);
-            Assert.AreEqual(loadBalancingRuleName, listLoadBalancerLoadBalancingRules.First().Data.Name);
-            Assert.NotNull(listLoadBalancerLoadBalancingRules.First().Data.ETag);
+            Assert.That(listLoadBalancerLoadBalancingRules.First().Data.Name, Is.EqualTo(loadBalancingRuleName));
+            Assert.That(listLoadBalancerLoadBalancingRules.First().Data.ETag, Is.Not.Null);
 
             // Verify Get LoadBalancingRuleResource in LoadBalancer
             // TODO: ADO 5975
@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.Network.Tests
             AsyncPageable<ProbeResource> listLoadBalancerProbesAP = loadBalancerOperations.GetProbes().GetAllAsync();
             List<ProbeResource> listLoadBalancerProbes = await listLoadBalancerProbesAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancerProbes);
-            Assert.AreEqual(probeName, listLoadBalancerProbes.First().Data.Name);
-            Assert.NotNull(listLoadBalancerProbes.First().Data.ETag);
+            Assert.That(listLoadBalancerProbes.First().Data.Name, Is.EqualTo(probeName));
+            Assert.That(listLoadBalancerProbes.First().Data.ETag, Is.Not.Null);
 
             // Verify Get ProbeResource in LoadBalancer
             // TODO: ADO 5975
@@ -264,29 +264,29 @@ namespace Azure.ResourceManager.Network.Tests
             var putInboundNatRuleOperation = await inboundNatRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, inboundNatRule3Name, inboundNatRule3Params);
             Response<InboundNatRuleResource> putInboundNatRule = await putInboundNatRuleOperation.WaitForCompletionAsync();
             ;
-            Assert.AreEqual(inboundNatRule3Name, putInboundNatRule.Value.Data.Name);
-            Assert.AreEqual(LoadBalancingTransportProtocol.Tcp, putInboundNatRule.Value.Data.Protocol);
-            Assert.AreEqual(3391, putInboundNatRule.Value.Data.FrontendPort);
-            Assert.AreEqual(3389, putInboundNatRule.Value.Data.BackendPort);
-            Assert.AreEqual(15, putInboundNatRule.Value.Data.IdleTimeoutInMinutes);
-            Assert.False(putInboundNatRule.Value.Data.EnableFloatingIP);
+            Assert.That(putInboundNatRule.Value.Data.Name, Is.EqualTo(inboundNatRule3Name));
+            Assert.That(putInboundNatRule.Value.Data.Protocol, Is.EqualTo(LoadBalancingTransportProtocol.Tcp));
+            Assert.That(putInboundNatRule.Value.Data.FrontendPort, Is.EqualTo(3391));
+            Assert.That(putInboundNatRule.Value.Data.BackendPort, Is.EqualTo(3389));
+            Assert.That(putInboundNatRule.Value.Data.IdleTimeoutInMinutes, Is.EqualTo(15));
+            Assert.That(putInboundNatRule.Value.Data.EnableFloatingIP, Is.False);
 
             // Verify Get InboundNatRuleResource in LoadBalancer
             Response<InboundNatRuleResource> getInboundNatRule = await inboundNatRuleCollection.GetAsync(inboundNatRule3Name);
-            Assert.AreEqual(inboundNatRule3Name, getInboundNatRule.Value.Data.Name);
-            Assert.AreEqual(LoadBalancingTransportProtocol.Tcp, getInboundNatRule.Value.Data.Protocol);
-            Assert.AreEqual(3391, getInboundNatRule.Value.Data.FrontendPort);
-            Assert.AreEqual(3389, getInboundNatRule.Value.Data.BackendPort);
-            Assert.AreEqual(15, getInboundNatRule.Value.Data.IdleTimeoutInMinutes);
-            Assert.False(getInboundNatRule.Value.Data.EnableFloatingIP);
+            Assert.That(getInboundNatRule.Value.Data.Name, Is.EqualTo(inboundNatRule3Name));
+            Assert.That(getInboundNatRule.Value.Data.Protocol, Is.EqualTo(LoadBalancingTransportProtocol.Tcp));
+            Assert.That(getInboundNatRule.Value.Data.FrontendPort, Is.EqualTo(3391));
+            Assert.That(getInboundNatRule.Value.Data.BackendPort, Is.EqualTo(3389));
+            Assert.That(getInboundNatRule.Value.Data.IdleTimeoutInMinutes, Is.EqualTo(15));
+            Assert.That(getInboundNatRule.Value.Data.EnableFloatingIP, Is.False);
 
             // Verify List InboundNatRules in LoadBalancer
             AsyncPageable<InboundNatRuleResource> listInboundNatRulesAP = inboundNatRuleCollection.GetAllAsync();
             List<InboundNatRuleResource> listInboundNatRules = await listInboundNatRulesAP.ToEnumerableAsync();
-            Assert.AreEqual(3, listInboundNatRules.Count());
-            Assert.AreEqual(inboundNatRule1Name, listInboundNatRules[0].Data.Name);
-            Assert.AreEqual(inboundNatRule2Name, listInboundNatRules[1].Data.Name);
-            Assert.AreEqual(inboundNatRule3Name, listInboundNatRules[2].Data.Name);
+            Assert.That(listInboundNatRules.Count(), Is.EqualTo(3));
+            Assert.That(listInboundNatRules[0].Data.Name, Is.EqualTo(inboundNatRule1Name));
+            Assert.That(listInboundNatRules[1].Data.Name, Is.EqualTo(inboundNatRule2Name));
+            Assert.That(listInboundNatRules[2].Data.Name, Is.EqualTo(inboundNatRule3Name));
 
             // Delete InboundNatRuleResource in LoadBalancer
             await getInboundNatRule.Value.DeleteAsync(WaitUntil.Completed);
@@ -414,42 +414,42 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LoadBalancerResource> getLoadBalancer = await resourceGroup.GetLoadBalancers().GetAsync(lbName);
 
             // Verify the GET LoadBalancer
-            Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(frontendIpConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString());
-            Assert.AreEqual(vnet.Data.Subnets[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Subnet.Id);
-            Assert.NotNull(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress);
-            Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatRules[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[0].Id.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatRules[1].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[1].Id.ToString());
-            Assert.AreEqual(backEndAddressPoolName, getLoadBalancer.Value.Data.BackendAddressPools[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.BackendAddressPools[0].ProvisioningState.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.LoadBalancingRules[0].Id, getLoadBalancer.Value.Data.BackendAddressPools[0].LoadBalancingRules[0].Id.ToString());
-            Assert.AreEqual(loadBalancingRuleName, getLoadBalancer.Value.Data.LoadBalancingRules[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.LoadBalancingRules[0].ProvisioningState.ToString());
-            Assert.AreEqual(probeName, getLoadBalancer.Value.Data.Probes[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.Probes[0].ProvisioningState.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.Probes[0].Id, getLoadBalancer.Value.Data.LoadBalancingRules[0].Properties.ProbeId.ToString());
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.InboundNatRules[0].ProvisioningState.ToString());
-            Assert.AreEqual(inboundNatRule1Name, getLoadBalancer.Value.Data.InboundNatRules[0].Name);
-            Assert.AreEqual("Tcp", getLoadBalancer.Value.Data.InboundNatRules[0].Protocol.ToString());
-            Assert.AreEqual(3389, getLoadBalancer.Value.Data.InboundNatRules[0].FrontendPort);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.InboundNatRules[1].ProvisioningState.ToString());
-            Assert.AreEqual(3390, getLoadBalancer.Value.Data.InboundNatRules[1].FrontendPort);
+            Assert.That(getLoadBalancer.Value.Data.Name, Is.EqualTo(lbName));
+            Assert.That(getLoadBalancer.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name, Is.EqualTo(frontendIpConfigName));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Subnet.Id, Is.EqualTo(vnet.Data.Subnets[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress, Is.Not.Null);
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[0].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.InboundNatRules[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[1].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.InboundNatRules[1].Id));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].Name, Is.EqualTo(backEndAddressPoolName));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].LoadBalancingRules[0].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.LoadBalancingRules[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].Name, Is.EqualTo(loadBalancingRuleName));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.Probes[0].Name, Is.EqualTo(probeName));
+            Assert.That(getLoadBalancer.Value.Data.Probes[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].Properties.ProbeId.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.Probes[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].Name, Is.EqualTo(inboundNatRule1Name));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].Protocol.ToString(), Is.EqualTo("Tcp"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].FrontendPort, Is.EqualTo(3389));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[1].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[1].FrontendPort, Is.EqualTo(3390));
 
             // Verify List LoadBalancer
             AsyncPageable<LoadBalancerResource> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
             List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancer);
-            Assert.AreEqual(lbName, listLoadBalancer.First().Data.Name);
-            Assert.AreEqual(getLoadBalancer.Value.Data.ETag, listLoadBalancer.First().Data.ETag);
+            Assert.That(listLoadBalancer.First().Data.Name, Is.EqualTo(lbName));
+            Assert.That(listLoadBalancer.First().Data.ETag, Is.EqualTo(getLoadBalancer.Value.Data.ETag));
 
             // Verify List LoadBalancerResource subscription
             AsyncPageable<LoadBalancerResource> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
             List<LoadBalancerResource> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);
-            Assert.NotNull(listLoadBalancerSubscription.First().Data.Name);
-            Assert.NotNull(listLoadBalancerSubscription.First().Data.ETag);
+            Assert.That(listLoadBalancerSubscription.First().Data.Name, Is.Not.Null);
+            Assert.That(listLoadBalancerSubscription.First().Data.ETag, Is.Not.Null);
 
             // Delete LoadBalancer
             await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
@@ -570,46 +570,46 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             // Verify the GET LoadBalancer
-            Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(frontendIpConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString());
-            Assert.AreEqual(vnet.Data.Subnets[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Subnet.Id);
-            Assert.NotNull(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress);
-            Assert.AreEqual("10.0.0.38", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress);
-            Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatRules[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[0].Id.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatRules[1].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[1].Id.ToString());
-            Assert.AreEqual(backEndAddressPoolName, getLoadBalancer.Value.Data.BackendAddressPools[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.BackendAddressPools[0].ProvisioningState.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.LoadBalancingRules[0].Id, getLoadBalancer.Value.Data.BackendAddressPools[0].LoadBalancingRules[0].Id.ToString());
-            Assert.AreEqual(loadBalancingRuleName, getLoadBalancer.Value.Data.LoadBalancingRules[0].Name);
-            Assert.AreEqual(LoadDistribution.Default, getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution);
-            Assert.AreEqual(4, getLoadBalancer.Value.Data.LoadBalancingRules[0].IdleTimeoutInMinutes);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.LoadBalancingRules[0].ProvisioningState.ToString());
-            Assert.AreEqual(probeName, getLoadBalancer.Value.Data.Probes[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.Probes[0].ProvisioningState.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.Probes[0].Id, getLoadBalancer.Value.Data.LoadBalancingRules[0].Properties.ProbeId.ToString());
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.InboundNatRules[0].ProvisioningState.ToString());
-            Assert.AreEqual(inboundNatRule1Name, getLoadBalancer.Value.Data.InboundNatRules[0].Name);
-            Assert.AreEqual("Tcp", getLoadBalancer.Value.Data.InboundNatRules[0].Protocol.ToString());
-            Assert.AreEqual(3389, getLoadBalancer.Value.Data.InboundNatRules[0].FrontendPort);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.InboundNatRules[1].ProvisioningState.ToString());
-            Assert.AreEqual(3390, getLoadBalancer.Value.Data.InboundNatRules[1].FrontendPort);
-            Assert.AreEqual(4, getLoadBalancer.Value.Data.InboundNatRules[1].IdleTimeoutInMinutes);
+            Assert.That(getLoadBalancer.Value.Data.Name, Is.EqualTo(lbName));
+            Assert.That(getLoadBalancer.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name, Is.EqualTo(frontendIpConfigName));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Subnet.Id, Is.EqualTo(vnet.Data.Subnets[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress, Is.Not.Null);
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress, Is.EqualTo("10.0.0.38"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[0].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.InboundNatRules[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[1].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.InboundNatRules[1].Id));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].Name, Is.EqualTo(backEndAddressPoolName));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].LoadBalancingRules[0].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.LoadBalancingRules[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].Name, Is.EqualTo(loadBalancingRuleName));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution, Is.EqualTo(LoadDistribution.Default));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].IdleTimeoutInMinutes, Is.EqualTo(4));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.Probes[0].Name, Is.EqualTo(probeName));
+            Assert.That(getLoadBalancer.Value.Data.Probes[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].Properties.ProbeId.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.Probes[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].Name, Is.EqualTo(inboundNatRule1Name));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].Protocol.ToString(), Is.EqualTo("Tcp"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].FrontendPort, Is.EqualTo(3389));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[1].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[1].FrontendPort, Is.EqualTo(3390));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[1].IdleTimeoutInMinutes, Is.EqualTo(4));
 
             // Verify List LoadBalancer
             AsyncPageable<LoadBalancerResource> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
             List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancer);
-            Assert.AreEqual(lbName, listLoadBalancer.First().Data.Name);
-            Assert.AreEqual(getLoadBalancer.Value.Data.ETag, listLoadBalancer.First().Data.ETag);
+            Assert.That(listLoadBalancer.First().Data.Name, Is.EqualTo(lbName));
+            Assert.That(listLoadBalancer.First().Data.ETag, Is.EqualTo(getLoadBalancer.Value.Data.ETag));
 
             // Verify List LoadBalancerResource subscription
             AsyncPageable<LoadBalancerResource> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
             List<LoadBalancerResource> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);
-            Assert.NotNull(listLoadBalancerSubscription.First().Data.Name);
-            Assert.NotNull(listLoadBalancerSubscription.First().Data.ETag);
+            Assert.That(listLoadBalancerSubscription.First().Data.Name, Is.Not.Null);
+            Assert.That(listLoadBalancerSubscription.First().Data.ETag, Is.Not.Null);
 
             // Delete LoadBalancer
             var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
@@ -722,51 +722,51 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             // Verify the GET LoadBalancer
-            Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(frontendIpConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString());
-            Assert.AreEqual(vnet.Data.Subnets[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Subnet.Id);
-            Assert.NotNull(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress);
-            Assert.AreEqual("10.0.0.38", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress);
-            Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatRules[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[0].Id.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatRules[1].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[1].Id.ToString());
-            Assert.AreEqual(backEndAddressPoolName, getLoadBalancer.Value.Data.BackendAddressPools[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.BackendAddressPools[0].ProvisioningState.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.LoadBalancingRules[0].Id, getLoadBalancer.Value.Data.BackendAddressPools[0].LoadBalancingRules[0].Id.ToString());
-            Assert.AreEqual(loadBalancingRuleName, getLoadBalancer.Value.Data.LoadBalancingRules[0].Name);
-            Assert.AreEqual(LoadDistribution.Default, getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution);
-            Assert.AreEqual(4, getLoadBalancer.Value.Data.LoadBalancingRules[0].IdleTimeoutInMinutes);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.LoadBalancingRules[0].ProvisioningState.ToString());
-            Assert.AreEqual(probeName, getLoadBalancer.Value.Data.Probes[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.Probes[0].ProvisioningState.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.Probes[0].Id, getLoadBalancer.Value.Data.LoadBalancingRules[0].Properties.ProbeId.ToString());
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.InboundNatRules[0].ProvisioningState.ToString());
-            Assert.AreEqual(inboundNatRule1Name, getLoadBalancer.Value.Data.InboundNatRules[0].Name);
-            Assert.AreEqual("Tcp", getLoadBalancer.Value.Data.InboundNatRules[0].Protocol.ToString());
-            Assert.AreEqual(3389, getLoadBalancer.Value.Data.InboundNatRules[0].FrontendPort);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.InboundNatRules[1].ProvisioningState.ToString());
-            Assert.AreEqual(3390, getLoadBalancer.Value.Data.InboundNatRules[1].FrontendPort);
-            Assert.AreEqual(4, getLoadBalancer.Value.Data.InboundNatRules[1].IdleTimeoutInMinutes);
+            Assert.That(getLoadBalancer.Value.Data.Name, Is.EqualTo(lbName));
+            Assert.That(getLoadBalancer.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name, Is.EqualTo(frontendIpConfigName));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Subnet.Id, Is.EqualTo(vnet.Data.Subnets[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress, Is.Not.Null);
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress, Is.EqualTo("10.0.0.38"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[0].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.InboundNatRules[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[1].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.InboundNatRules[1].Id));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].Name, Is.EqualTo(backEndAddressPoolName));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools[0].LoadBalancingRules[0].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.LoadBalancingRules[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].Name, Is.EqualTo(loadBalancingRuleName));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution, Is.EqualTo(LoadDistribution.Default));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].IdleTimeoutInMinutes, Is.EqualTo(4));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.Probes[0].Name, Is.EqualTo(probeName));
+            Assert.That(getLoadBalancer.Value.Data.Probes[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].Properties.ProbeId.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.Probes[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].Name, Is.EqualTo(inboundNatRule1Name));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].Protocol.ToString(), Is.EqualTo("Tcp"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[0].FrontendPort, Is.EqualTo(3389));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[1].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[1].FrontendPort, Is.EqualTo(3390));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules[1].IdleTimeoutInMinutes, Is.EqualTo(4));
 
             // Verify List LoadBalancer
             AsyncPageable<LoadBalancerResource> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
             List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
-            Assert.AreEqual(lbName, listLoadBalancer.First().Data.Name);
-            Assert.AreEqual(getLoadBalancer.Value.Data.ETag, listLoadBalancer.First().Data.ETag);
+            Assert.That(listLoadBalancer.First().Data.Name, Is.EqualTo(lbName));
+            Assert.That(listLoadBalancer.First().Data.ETag, Is.EqualTo(getLoadBalancer.Value.Data.ETag));
 
             // Do another put after changing the distribution policy
             loadbalancerparamater.LoadBalancingRules[0].LoadDistribution = LoadDistribution.SourceIP;
             await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
-            Assert.AreEqual(LoadDistribution.SourceIP, getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution);
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution, Is.EqualTo(LoadDistribution.SourceIP));
 
             loadbalancerparamater.LoadBalancingRules[0].LoadDistribution = LoadDistribution.SourceIPProtocol;
             await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
-            Assert.AreEqual(LoadDistribution.SourceIPProtocol, getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution);
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution, Is.EqualTo(LoadDistribution.SourceIPProtocol));
 
             // Delete LoadBalancer
             await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
@@ -803,13 +803,13 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
 
             // Verify the GET LoadBalancer
-            Assert.AreEqual(lbname, getLoadBalancer.Value.Data.Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.False(getLoadBalancer.Value.Data.FrontendIPConfigurations.Any());
-            Assert.False(getLoadBalancer.Value.Data.BackendAddressPools.Any());
-            Assert.False(getLoadBalancer.Value.Data.LoadBalancingRules.Any());
-            Assert.False(getLoadBalancer.Value.Data.Probes.Any());
-            Assert.False(getLoadBalancer.Value.Data.InboundNatRules.Any());
+            Assert.That(getLoadBalancer.Value.Data.Name, Is.EqualTo(lbname));
+            Assert.That(getLoadBalancer.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations.Any(), Is.False);
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools.Any(), Is.False);
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules.Any(), Is.False);
+            Assert.That(getLoadBalancer.Value.Data.Probes.Any(), Is.False);
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules.Any(), Is.False);
 
             // Delete LoadBalancer
             await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
@@ -883,13 +883,13 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
 
             // Verify the GET LoadBalancer
-            Assert.AreEqual(lbname, getLoadBalancer.Value.Data.Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(1, getLoadBalancer.Value.Data.FrontendIPConfigurations.Count);
-            Assert.AreEqual(1, getLoadBalancer.Value.Data.BackendAddressPools.Count);
-            Assert.AreEqual(1, getLoadBalancer.Value.Data.LoadBalancingRules.Count);
-            Assert.False(getLoadBalancer.Value.Data.Probes.Any());
-            Assert.False(getLoadBalancer.Value.Data.InboundNatRules.Any());
+            Assert.That(getLoadBalancer.Value.Data.Name, Is.EqualTo(lbname));
+            Assert.That(getLoadBalancer.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations.Count, Is.EqualTo(1));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools.Count, Is.EqualTo(1));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules.Count, Is.EqualTo(1));
+            Assert.That(getLoadBalancer.Value.Data.Probes.Any(), Is.False);
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules.Any(), Is.False);
 
             // Add a ProbeResource to the lb rule
             getLoadBalancer.Value.Data.Probes.Add(
@@ -913,14 +913,14 @@ namespace Azure.ResourceManager.Network.Tests
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
 
             // Verify the GET LoadBalancer
-            Assert.AreEqual(lbname, getLoadBalancer.Value.Data.Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(1, getLoadBalancer.Value.Data.FrontendIPConfigurations.Count);
-            Assert.AreEqual(1, getLoadBalancer.Value.Data.BackendAddressPools.Count);
-            Assert.AreEqual(1, getLoadBalancer.Value.Data.LoadBalancingRules.Count);
-            Assert.AreEqual(1, getLoadBalancer.Value.Data.Probes.Count);
-            Assert.AreEqual(getLoadBalancer.Value.Data.Probes[0].Id, getLoadBalancer.Value.Data.LoadBalancingRules[0].Properties.ProbeId.ToString());
-            Assert.False(getLoadBalancer.Value.Data.InboundNatRules.Any());
+            Assert.That(getLoadBalancer.Value.Data.Name, Is.EqualTo(lbname));
+            Assert.That(getLoadBalancer.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations.Count, Is.EqualTo(1));
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools.Count, Is.EqualTo(1));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules.Count, Is.EqualTo(1));
+            Assert.That(getLoadBalancer.Value.Data.Probes.Count, Is.EqualTo(1));
+            Assert.That(getLoadBalancer.Value.Data.LoadBalancingRules[0].Properties.ProbeId.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.Probes[0].Id));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules.Any(), Is.False);
 
             // Delete LoadBalancer
             await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
@@ -1084,15 +1084,15 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Verify the associations
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
-            Assert.AreEqual(2, getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations.Count);
-            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[0].Id, nic1.Data.IPConfigurations[0].Id);
-            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[1].Id, nic2.Data.IPConfigurations[0].Id);
-            Assert.AreEqual(nic1.Data.IPConfigurations[0].Id, getLoadBalancer.Value.Data.InboundNatRules.First().BackendIPConfiguration.Id);
+            Assert.That(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations.Count, Is.EqualTo(2));
+            Assert.That(nic1.Data.IPConfigurations[0].Id, Is.EqualTo(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[0].Id));
+            Assert.That(nic2.Data.IPConfigurations[0].Id, Is.EqualTo(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[1].Id));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatRules.First().BackendIPConfiguration.Id, Is.EqualTo(nic1.Data.IPConfigurations[0].Id));
 
             // Verify List NetworkInterfaces in LoadBalancer// Verify List NetworkInterfaces in LoadBalancer
             AsyncPageable<NetworkInterfaceResource> listLoadBalancerNetworkInterfacesAP = getLoadBalancer.Value.GetLoadBalancerNetworkInterfacesAsync();
             List<NetworkInterfaceResource> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
-            Assert.AreEqual(2, listLoadBalancerNetworkInterfaces.Count());
+            Assert.That(listLoadBalancerNetworkInterfaces.Count(), Is.EqualTo(2));
 
             // Delete LoadBalancer
             var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
@@ -1164,20 +1164,20 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             // Verify the GET LoadBalancer
-            Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(frontendIpConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
-            Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString());
+            Assert.That(getLoadBalancer.Value.Data.Name, Is.EqualTo(lbName));
+            Assert.That(getLoadBalancer.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name, Is.EqualTo(frontendIpConfigName));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             // Verify the nat pool
-            Assert.AreEqual(1, getLoadBalancer.Value.Data.InboundNatPools.Count);
-            Assert.AreEqual(inboundNatPool1Name, getLoadBalancer.Value.Data.InboundNatPools[0].Name);
-            Assert.AreEqual(81, getLoadBalancer.Value.Data.InboundNatPools[0].BackendPort);
-            Assert.AreEqual(100, getLoadBalancer.Value.Data.InboundNatPools[0].FrontendPortRangeStart);
-            Assert.AreEqual(105, getLoadBalancer.Value.Data.InboundNatPools[0].FrontendPortRangeEnd);
-            Assert.AreEqual(LoadBalancingTransportProtocol.Tcp, getLoadBalancer.Value.Data.InboundNatPools[0].Protocol);
-            Assert.AreEqual(GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName), getLoadBalancer.Value.Data.InboundNatPools[0].Properties.FrontendIPConfigurationId.ToString());
-            Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatPools[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatPools[0].Id.ToString());
+            Assert.That(getLoadBalancer.Value.Data.InboundNatPools.Count, Is.EqualTo(1));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatPools[0].Name, Is.EqualTo(inboundNatPool1Name));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatPools[0].BackendPort, Is.EqualTo(81));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatPools[0].FrontendPortRangeStart, Is.EqualTo(100));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatPools[0].FrontendPortRangeEnd, Is.EqualTo(105));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatPools[0].Protocol, Is.EqualTo(LoadBalancingTransportProtocol.Tcp));
+            Assert.That(getLoadBalancer.Value.Data.InboundNatPools[0].Properties.FrontendIPConfigurationId.ToString(), Is.EqualTo(GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)));
+            Assert.That(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatPools[0].Id.ToString(), Is.EqualTo(getLoadBalancer.Value.Data.InboundNatPools[0].Id));
 
             // Add a new nat pool
             LoadBalancerInboundNatPool natpool2 = new LoadBalancerInboundNatPool()
@@ -1192,7 +1192,7 @@ namespace Azure.ResourceManager.Network.Tests
             await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, getLoadBalancer.Value.Data);
 
             // Verify the nat pool
-            Assert.AreEqual(2, getLoadBalancer.Value.Data.InboundNatPools.Count);
+            Assert.That(getLoadBalancer.Value.Data.InboundNatPools.Count, Is.EqualTo(2));
 
             // Delete LoadBalancer
             var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
@@ -1361,8 +1361,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             await foreach (var natRule in loadBalancer.GetInboundNatRules())
             {
-                Assert.NotNull(natRule.Data.BackendIPConfiguration);
-                Assert.NotNull(natRule.Data.BackendIPConfiguration.Id);
+                Assert.That(natRule.Data.BackendIPConfiguration, Is.Not.Null);
+                Assert.That(natRule.Data.BackendIPConfiguration.Id, Is.Not.Null);
             }
 
             // Get lb with expanded nics from pools
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.Network.Tests
                 BackendAddressPoolResource firstPool = await GetFirstPoolAsync(loadBalancer);
                 foreach (var ipconfig in firstPool.Data.BackendIPConfigurations)
                 {
-                    Assert.NotNull(ipconfig.Id);
+                    Assert.That(ipconfig.Id, Is.Not.Null);
                 }
             }
 
@@ -1381,11 +1381,11 @@ namespace Azure.ResourceManager.Network.Tests
             loadBalancer = await loadBalancerCollection.GetAsync(lbName, "FrontendIPConfigurations/PublicIPAddress");
             foreach (var ipconfig in loadBalancer.Data.FrontendIPConfigurations)
             {
-                Assert.NotNull(ipconfig.PublicIPAddress);
-                Assert.NotNull(ipconfig.PublicIPAddress.Id);
-                Assert.NotNull(ipconfig.PublicIPAddress.Name);
-                Assert.NotNull(ipconfig.PublicIPAddress.ETag);
-                Assert.AreEqual(ipconfig.Id, ipconfig.PublicIPAddress.IPConfiguration.Id);
+                Assert.That(ipconfig.PublicIPAddress, Is.Not.Null);
+                Assert.That(ipconfig.PublicIPAddress.Id, Is.Not.Null);
+                Assert.That(ipconfig.PublicIPAddress.Name, Is.Not.Null);
+                Assert.That(ipconfig.PublicIPAddress.ETag, Is.Not.Null);
+                Assert.That(ipconfig.PublicIPAddress.IPConfiguration.Id, Is.EqualTo(ipconfig.Id));
             }
 
             // Delete LoadBalancer

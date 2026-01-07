@@ -186,75 +186,75 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             {
                 location = DefaultLocationString;
             }
-            Assert.NotNull(account);
-            Assert.NotNull(account.Id);
-            Assert.NotNull(account.Id.Name);
-            Assert.NotNull(account.Data);
-            Assert.NotNull(account.Data.Location);
-            Assert.NotNull(account.Data.SystemData);
+            Assert.That(account, Is.Not.Null);
+            Assert.That(account.Id, Is.Not.Null);
+            Assert.That(account.Id.Name, Is.Not.Null);
+            Assert.That(account.Data, Is.Not.Null);
+            Assert.That(account.Data.Location, Is.Not.Null);
+            Assert.That(account.Data.SystemData, Is.Not.Null);
 
             if (useDefaults)
             {
-                Assert.AreEqual(location, account.Data.Location.ToString());
+                Assert.That(account.Data.Location.ToString(), Is.EqualTo(location));
 
-                Assert.NotNull(account.Data.Tags);
+                Assert.That(account.Data.Tags, Is.Not.Null);
                 foreach (var tag in DefaultTags)
                 {
-                    Assert.AreEqual(account.Data.Tags[tag.Key], tag.Value);
+                    Assert.That(tag.Value, Is.EqualTo(account.Data.Tags[tag.Key]));
                 }
             }
         }
 
         public static void VerifyVolumeProperties(NetAppVolumeResource volume, bool useDefaults)
         {
-            Assert.NotNull(volume);
-            Assert.NotNull(volume.Id);
-            Assert.NotNull(volume.Id.Name);
-            Assert.NotNull(volume.Data);
-            Assert.NotNull(volume.Data.Location);
+            Assert.That(volume, Is.Not.Null);
+            Assert.That(volume.Id, Is.Not.Null);
+            Assert.That(volume.Id.Name, Is.Not.Null);
+            Assert.That(volume.Data, Is.Not.Null);
+            Assert.That(volume.Data.Location, Is.Not.Null);
 
             if (useDefaults)
             {
-                Assert.AreEqual(DefaultLocation, volume.Data.Location);
+                Assert.That(volume.Data.Location, Is.EqualTo(DefaultLocation));
 
-                Assert.NotNull(volume.Data.Tags);
+                Assert.That(volume.Data.Tags, Is.Not.Null);
                 //we cannot assert on count as a policy might add addional tags
                 //Assert.AreEqual(DefaultTags.Count, volume.Data.Tags.Count);
                 foreach (KeyValuePair<string, string> tag in DefaultTags)
                 {
                     Assert.That(volume.Data.Tags, new DictionaryContainsKeyValuePairConstraint(tag.Key, tag.Value));
                 }
-                Assert.AreEqual(_defaultUsageThreshold, volume.Data.UsageThreshold);
-                Assert.AreEqual(DefaultSubnetId, volume.Data.SubnetId);
+                Assert.That(volume.Data.UsageThreshold, Is.EqualTo(_defaultUsageThreshold));
+                Assert.That(volume.Data.SubnetId, Is.EqualTo(DefaultSubnetId));
             }
         }
 
         public static void AssertNetAppAccountEqual(NetAppAccountResource account1, NetAppAccountResource account2)
         {
-            Assert.AreEqual(account1.Id.Name, account2.Id.Name);
-            Assert.AreEqual(account1.Id.Location, account2.Id.Location);
+            Assert.That(account2.Id.Name, Is.EqualTo(account1.Id.Name));
+            Assert.That(account2.Id.Location, Is.EqualTo(account1.Id.Location));
         }
 
         public static void VerifyCapacityPoolProperties(CapacityPoolResource pool, bool useDefaults)
         {
-            Assert.NotNull(pool);
-            Assert.NotNull(pool.Id);
-            Assert.NotNull(pool.Id.Name);
-            Assert.NotNull(pool.Data);
-            Assert.NotNull(pool.Data.Location);
+            Assert.That(pool, Is.Not.Null);
+            Assert.That(pool.Id, Is.Not.Null);
+            Assert.That(pool.Id.Name, Is.Not.Null);
+            Assert.That(pool.Data, Is.Not.Null);
+            Assert.That(pool.Data.Location, Is.Not.Null);
             //Assert.NotNull(pool.Data.SystemData);
 
             if (useDefaults)
             {
-                Assert.AreEqual(DefaultLocation, pool.Data.Location);
+                Assert.That(pool.Data.Location, Is.EqualTo(DefaultLocation));
 
-                Assert.NotNull(pool.Data.Tags);
+                Assert.That(pool.Data.Tags, Is.Not.Null);
                 foreach (var tag in DefaultTags)
                 {
-                    Assert.AreEqual(pool.Data.Tags[tag.Key], tag.Value);
+                    Assert.That(tag.Value, Is.EqualTo(pool.Data.Tags[tag.Key]));
                 }
-                Assert.AreEqual(NetAppFileServiceLevel.Premium, pool.Data.ServiceLevel);
-                Assert.AreEqual(_poolSize, pool.Data.Size);
+                Assert.That(pool.Data.ServiceLevel, Is.EqualTo(NetAppFileServiceLevel.Premium));
+                Assert.That(pool.Data.Size, Is.EqualTo(_poolSize));
             }
         }
 

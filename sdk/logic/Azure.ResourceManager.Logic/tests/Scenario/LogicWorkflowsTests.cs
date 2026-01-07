@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string logicWorkflowName = Recording.GenerateAssetName("workflow");
             var logicWorkflow = await CreateLogicWorkflow(_resourceGroup, _integrationAccountIdentifier, logicWorkflowName);
-            Assert.IsNotNull(logicWorkflow);
-            Assert.AreEqual(logicWorkflowName, logicWorkflow.Data.Name);
+            Assert.That(logicWorkflow, Is.Not.Null);
+            Assert.That(logicWorkflow.Data.Name, Is.EqualTo(logicWorkflowName));
         }
 
         [RecordedTest]
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string logicWorkflowName = Recording.GenerateAssetName("workflow");
             await CreateLogicWorkflow(_resourceGroup, _integrationAccountIdentifier, logicWorkflowName);
             bool flag = await _logicWorkflowCollection.ExistsAsync(logicWorkflowName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Logic.Tests
             string logicWorkflowName = Recording.GenerateAssetName("workflow");
             await CreateLogicWorkflow(_resourceGroup, _integrationAccountIdentifier, logicWorkflowName);
             var logicWorkflow = await _logicWorkflowCollection.GetAsync(logicWorkflowName);
-            Assert.IsNotNull(logicWorkflow);
-            Assert.AreEqual(logicWorkflowName, logicWorkflow.Value.Data.Name);
+            Assert.That(logicWorkflow, Is.Not.Null);
+            Assert.That(logicWorkflow.Value.Data.Name, Is.EqualTo(logicWorkflowName));
         }
 
         [RecordedTest]
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string logicWorkflowName = Recording.GenerateAssetName("workflow");
             var logicWorkflow = await CreateLogicWorkflow(_resourceGroup, _integrationAccountIdentifier, logicWorkflowName);
             bool flag = await _logicWorkflowCollection.ExistsAsync(logicWorkflowName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await logicWorkflow.DeleteAsync(WaitUntil.Completed);
             flag = await _logicWorkflowCollection.ExistsAsync(logicWorkflowName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Logic.Tests
             var lro = await logicWorkflow.UpdateAsync(WaitUntil.Completed, input);
             var updatedLogicWorkflow = lro.Value;
 
-            Assert.AreEqual(updatedLogicWorkflow.Data.Tags.Count, 1);
+            Assert.That(updatedLogicWorkflow.Data.Tags.Count, Is.EqualTo(1));
         }
     }
 }

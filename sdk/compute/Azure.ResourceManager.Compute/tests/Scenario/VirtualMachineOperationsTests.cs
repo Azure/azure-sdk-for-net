@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var lro = await vm.UpdateAsync(WaitUntil.Completed, update);
             VirtualMachineResource updatedVM = lro.Value;
 
-            Assert.AreEqual(VirtualMachineSizeType.StandardF1, updatedVM.Data.HardwareProfile.VmSize);
+            Assert.That(updatedVM.Data.HardwareProfile.VmSize, Is.EqualTo(VirtualMachineSizeType.StandardF1));
         }
 
         [TestCase]
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             string vmName = Recording.GenerateAssetName("testVM-");
             VirtualMachineResource virtualMachine = await CreateVirtualMachineAsync(vmName);
-            Assert.IsNull(virtualMachine.Data.BootDiagnostics);
+            Assert.That(virtualMachine.Data.BootDiagnostics, Is.Null);
 
             VirtualMachinePatch updateOptions = new VirtualMachinePatch();
             updateOptions.BootDiagnostics = new BootDiagnostics();
             updateOptions.BootDiagnostics.Enabled = true;
             virtualMachine = (await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions)).Value;
-            Assert.AreEqual(true, virtualMachine.Data.BootDiagnostics.Enabled);
+            Assert.That(virtualMachine.Data.BootDiagnostics.Enabled, Is.EqualTo(true));
 
             updateOptions.BootDiagnostics = null;
             virtualMachine = (await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions)).Value;
@@ -87,28 +87,28 @@ namespace Azure.ResourceManager.Compute.Tests
 
             string vmName2 = Recording.GenerateAssetName("testVM-");
             VirtualMachineResource virtualMachine2 = await CreateVirtualMachineAsync(vmName2);
-            Assert.IsNull(virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics);
+            Assert.That(virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics, Is.Null);
 
             VirtualMachinePatch updateOptions2 = new VirtualMachinePatch();
             updateOptions2.DiagnosticsProfile = new DiagnosticsProfile();
             updateOptions2.DiagnosticsProfile.BootDiagnostics= new BootDiagnostics();
             updateOptions2.DiagnosticsProfile.BootDiagnostics.Enabled = true;
             virtualMachine2 = (await virtualMachine2.UpdateAsync(WaitUntil.Completed, updateOptions2)).Value;
-            Assert.AreEqual(true, virtualMachine2.Data.DiagnosticsProfile.BootDiagnostics.Enabled);
+            Assert.That(virtualMachine2.Data.DiagnosticsProfile.BootDiagnostics.Enabled, Is.EqualTo(true));
 
             updateOptions2.DiagnosticsProfile.BootDiagnostics = null;
             virtualMachine2 = (await virtualMachine2.UpdateAsync(WaitUntil.Completed, updateOptions2)).Value;
             var newBootDiag = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics;
             var newEnabled = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics?.Enabled;
-            Assert.AreEqual(originalBootDiag is null, newBootDiag is null);
-            Assert.AreEqual(originalEnabled, newEnabled);
+            Assert.That(newBootDiag is null, Is.EqualTo(originalBootDiag is null));
+            Assert.That(newEnabled, Is.EqualTo(originalEnabled));
 
             updateOptions2.DiagnosticsProfile = null;
             virtualMachine2 = (await virtualMachine2.UpdateAsync(WaitUntil.Completed, updateOptions2)).Value;
             newBootDiag = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics;
             newEnabled = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics?.Enabled;
-            Assert.AreEqual(originalBootDiag is null, newBootDiag is null);
-            Assert.AreEqual(originalEnabled, newEnabled);
+            Assert.That(newBootDiag is null, Is.EqualTo(originalBootDiag is null));
+            Assert.That(newEnabled, Is.EqualTo(originalEnabled));
         }
     }
 }

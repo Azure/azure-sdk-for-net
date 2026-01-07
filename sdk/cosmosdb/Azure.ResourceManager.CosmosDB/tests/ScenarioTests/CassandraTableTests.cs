@@ -74,18 +74,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var parameters = BuildCreateUpdateOptions(null);
             var table = await CreateCassandraTable(parameters);
-            Assert.AreEqual(_tableName, table.Data.Resource.TableName);
+            Assert.That(table.Data.Resource.TableName, Is.EqualTo(_tableName));
             VerifyCassandraTableCreation(table, parameters);
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, table.Data.Options.Throughput);
 
             bool ifExists = await CassandraTableCollection.ExistsAsync(_tableName);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             // NOT WORKING API
             //ThroughputSettingData throughtput = await table.GetCassandraTableThroughputAsync();
             CassandraTableResource table2 = await CassandraTableCollection.GetAsync(_tableName);
-            Assert.AreEqual(_tableName, table2.Data.Resource.TableName);
+            Assert.That(table2.Data.Resource.TableName, Is.EqualTo(_tableName));
             VerifyCassandraTableCreation(table2, parameters);
             //Assert.AreEqual(TestThroughput1, table2.Data.Options.Throughput);
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             parameters.Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 };
 
             table = (await CassandraTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, _tableName, parameters)).Value;
-            Assert.AreEqual(_tableName, table.Data.Resource.TableName);
+            Assert.That(table.Data.Resource.TableName, Is.EqualTo(_tableName));
             VerifyCassandraTableCreation(table, parameters);
             // Seems bug in swagger definition
             table2 = await CassandraTableCollection.GetAsync(_tableName);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var tables = await CassandraTableCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(tables, Has.Count.EqualTo(1));
-            Assert.AreEqual(table.Data.Name, tables[0].Data.Name);
+            Assert.That(tables[0].Data.Name, Is.EqualTo(table.Data.Name));
 
             VerifyCassandraTables(tables[0], table);
         }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var table = await CreateCassandraTable(null);
             CassandraTableThroughputSettingResource throughput = await table.GetCassandraTableThroughputSetting().GetAsync();
 
-            Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
+            Assert.That(throughput.Data.Resource.Throughput, Is.EqualTo(TestThroughput1));
 
             CassandraTableThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResourceInfo()
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     Throughput = TestThroughput2
                 }))).Value;
 
-            Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
+            Assert.That(throughput2.Data.Resource.Throughput, Is.EqualTo(TestThroughput2));
         }
 
         [Test]
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await table.DeleteAsync(WaitUntil.Completed);
 
             bool exists = await CassandraTableCollection.ExistsAsync(_tableName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         protected async Task<CassandraTableResource> CreateCassandraTable(CassandraTableCreateOrUpdateContent parameters)
@@ -204,41 +204,41 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyCassandraTableCreation(CassandraTableResource cassandraTable, CassandraTableCreateOrUpdateContent cassandraTableCreateUpdateOptions)
         {
-            Assert.AreEqual(cassandraTable.Data.Resource.TableName, cassandraTableCreateUpdateOptions.Resource.TableName);
-            Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns.Count, cassandraTableCreateUpdateOptions.Resource.Schema.Columns.Count);
+            Assert.That(cassandraTableCreateUpdateOptions.Resource.TableName, Is.EqualTo(cassandraTable.Data.Resource.TableName));
+            Assert.That(cassandraTableCreateUpdateOptions.Resource.Schema.Columns.Count, Is.EqualTo(cassandraTable.Data.Resource.Schema.Columns.Count));
             for (int i = 0; i < cassandraTable.Data.Resource.Schema.Columns.Count; i++)
             {
-                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].Name, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].Name);
-                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].CassandraColumnType, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].CassandraColumnType);
+                Assert.That(cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].Name, Is.EqualTo(cassandraTable.Data.Resource.Schema.Columns[i].Name));
+                Assert.That(cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].CassandraColumnType, Is.EqualTo(cassandraTable.Data.Resource.Schema.Columns[i].CassandraColumnType));
             }
 
-            Assert.AreEqual(cassandraTable.Data.Resource.Schema.ClusterKeys.Count, cassandraTableCreateUpdateOptions.Resource.Schema.ClusterKeys.Count);
+            Assert.That(cassandraTableCreateUpdateOptions.Resource.Schema.ClusterKeys.Count, Is.EqualTo(cassandraTable.Data.Resource.Schema.ClusterKeys.Count));
             for (int i = 0; i < cassandraTable.Data.Resource.Schema.ClusterKeys.Count; i++)
             {
-                Assert.AreEqual(cassandraTable.Data.Resource.Schema.ClusterKeys[i].Name, cassandraTableCreateUpdateOptions.Resource.Schema.ClusterKeys[i].Name);
+                Assert.That(cassandraTableCreateUpdateOptions.Resource.Schema.ClusterKeys[i].Name, Is.EqualTo(cassandraTable.Data.Resource.Schema.ClusterKeys[i].Name));
             }
 
-            Assert.AreEqual(cassandraTable.Data.Resource.Schema.PartitionKeys.Count, cassandraTableCreateUpdateOptions.Resource.Schema.PartitionKeys.Count);
+            Assert.That(cassandraTableCreateUpdateOptions.Resource.Schema.PartitionKeys.Count, Is.EqualTo(cassandraTable.Data.Resource.Schema.PartitionKeys.Count));
             for (int i = 0; i < cassandraTable.Data.Resource.Schema.PartitionKeys.Count; i++)
             {
-                Assert.AreEqual(cassandraTable.Data.Resource.Schema.PartitionKeys[i].Name, cassandraTableCreateUpdateOptions.Resource.Schema.PartitionKeys[i].Name);
+                Assert.That(cassandraTableCreateUpdateOptions.Resource.Schema.PartitionKeys[i].Name, Is.EqualTo(cassandraTable.Data.Resource.Schema.PartitionKeys[i].Name));
             }
         }
 
         private void VerifyCassandraTables(CassandraTableResource expectedValue, CassandraTableResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Location, actualValue.Data.Location);
-            Assert.AreEqual(expectedValue.Data.Tags, actualValue.Data.Tags);
-            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.Location, Is.EqualTo(expectedValue.Data.Location));
+            Assert.That(actualValue.Data.Tags, Is.EqualTo(expectedValue.Data.Tags));
+            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.AreEqual(expectedValue.Data.Options, actualValue.Data.Options);
+            Assert.That(actualValue.Data.Options, Is.EqualTo(expectedValue.Data.Options));
 
-            Assert.AreEqual(expectedValue.Data.Resource.TableName, actualValue.Data.Resource.TableName);
-            Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
-            Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
-            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
+            Assert.That(actualValue.Data.Resource.TableName, Is.EqualTo(expectedValue.Data.Resource.TableName));
+            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+            Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+            Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
         }
     }
 }

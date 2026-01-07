@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var createdDnsSecurityRule = await _dnsResolverPolicy.GetDnsSecurityRules().CreateOrUpdateAsync(WaitUntil.Completed, dnsSecurityRuleName, dnsSecurityRuleData);
 
             // ASSERT
-            Assert.AreEqual(createdDnsSecurityRule.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
+            Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(createdDnsSecurityRule.Value.Data.ProvisioningState));
         }
 
         [Test]
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var createdDnsSecurityRule = await _dnsResolverPolicy.GetDnsSecurityRules().CreateOrUpdateAsync(WaitUntil.Completed, dnsSecurityRuleName, dnsSecurityRuleData);
 
             // ASSERT
-            Assert.AreEqual(createdDnsSecurityRule.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
-            Assert.AreEqual(createdDnsSecurityRule.Value.Data.ManagedDomainLists.Count, 1);
+            Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(createdDnsSecurityRule.Value.Data.ProvisioningState));
+            Assert.That(createdDnsSecurityRule.Value.Data.ManagedDomainLists.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var retrievedDnsSecurityRule = await _dnsResolverPolicy.GetDnsSecurityRules().GetAsync(dnsSecurityRuleName);
 
             // ASSERT
-            Assert.AreEqual(retrievedDnsSecurityRule.Value.Data.Name, dnsSecurityRuleName);
+            Assert.That(dnsSecurityRuleName, Is.EqualTo(retrievedDnsSecurityRule.Value.Data.Name));
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
             // ASSERT
             var getDnsSecurityRule = await _dnsResolverPolicy.GetDnsSecurityRules().ExistsAsync(dnsSecurityRuleName);
-            Assert.AreEqual(getDnsSecurityRule.Value, false);
+            Assert.That(getDnsSecurityRule.Value, Is.EqualTo(false));
         }
     }
 }

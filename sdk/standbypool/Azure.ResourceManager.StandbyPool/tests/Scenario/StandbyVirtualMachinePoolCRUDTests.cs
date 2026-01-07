@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         private void VerifyStandbyVirtualMachinePool(StandbyVirtualMachinePoolTestProperties expected, StandbyVirtualMachinePoolResource actual)
         {
-            Assert.AreEqual(expected.StandbyPoolName, actual.Data.Name);
-            Assert.AreEqual(expected.MaxReadyCapacity, actual.Data.Properties.ElasticityProfile.MaxReadyCapacity);
-            Assert.AreEqual(expected.MinReadyCapacity, actual.Data.Properties.ElasticityProfile.MinReadyCapacity);
-            Assert.AreEqual(expected.AttachedVirtualMachineScaleSetId, actual.Data.Properties.AttachedVirtualMachineScaleSetId);
+            Assert.That(actual.Data.Name, Is.EqualTo(expected.StandbyPoolName));
+            Assert.That(actual.Data.Properties.ElasticityProfile.MaxReadyCapacity, Is.EqualTo(expected.MaxReadyCapacity));
+            Assert.That(actual.Data.Properties.ElasticityProfile.MinReadyCapacity, Is.EqualTo(expected.MinReadyCapacity));
+            Assert.That(actual.Data.Properties.AttachedVirtualMachineScaleSetId, Is.EqualTo(expected.AttachedVirtualMachineScaleSetId));
 
             if (expected.Id != null)
             {
-                Assert.AreEqual(expected.Id, actual.Data.Id);
+                Assert.That(actual.Data.Id, Is.EqualTo(expected.Id));
             }
 
-            Assert.AreEqual(expected.StandbyVirtualMachineState, actual.Data.Properties.VirtualMachineState);
+            Assert.That(actual.Data.Properties.VirtualMachineState, Is.EqualTo(expected.StandbyVirtualMachineState));
         }
 
         private async Task GetStandbyVirtualMachineRuntimeViewAndVerify(StandbyVirtualMachinePoolTestProperties expectedStandbyVirtualMachinePoolTestProperties, string runtimeViewName = "latest")
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             StandbyVirtualMachinePoolRuntimeViewResource standbyVirtualMachinePool_RUNTIMEVIEW =
                 await Client.GetStandbyVirtualMachinePoolRuntimeViewResource(expectedStandbyVirtualMachinePoolTestProperties.StandbyVirtualMachinePoolRuntimeViewResourceId).GetAsync();
 
-            Assert.AreEqual(runtimeViewName, standbyVirtualMachinePool_RUNTIMEVIEW.Data.Name);
-            Assert.IsTrue(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary.Count > 0);
-            Assert.IsTrue(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary[0].StandbyVirtualMachineInstanceCountsByState.Count > 0);
+            Assert.That(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Name, Is.EqualTo(runtimeViewName));
+            Assert.That(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary.Count > 0, Is.True);
+            Assert.That(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary[0].StandbyVirtualMachineInstanceCountsByState.Count > 0, Is.True);
             Assert.IsNotNull(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.Status);
 
             // Prediction is not available in the response. This field is only populated for StandbyPools that record scale out activity over a period of time.
             // However, this assertion verifies that the prediction field is available in the response for the StandbyVirtualMachinePoolRuntimeViewResource.
-            Assert.IsNull(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.Prediction);
+            Assert.That(standbyVirtualMachinePool_RUNTIMEVIEW.Data.Properties.Prediction, Is.Null);
         }
 
         private async Task<StandbyVirtualMachinePoolResource> CreateStandbyVirtualMachineStateAndVerify(StandbyVirtualMachinePoolTestProperties standbyVirtualMachinePoolResourceProperties)

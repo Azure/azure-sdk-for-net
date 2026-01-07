@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             var agreement = await CreateAgreement(agreementName);
-            Assert.IsNotNull(agreement);
-            Assert.AreEqual(agreementName, agreement.Data.Name);
-            Assert.AreEqual("AS2", agreement.Data.AgreementType.ToString());
+            Assert.That(agreement, Is.Not.Null);
+            Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
+            Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("AS2"));
         }
 
         [RecordedTest]
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             var agreement = await CreateAgreement(agreementName, "Edifact");
-            Assert.IsNotNull(agreement);
-            Assert.AreEqual(agreementName, agreement.Data.Name);
-            Assert.AreEqual("Edifact", agreement.Data.AgreementType.ToString());
+            Assert.That(agreement, Is.Not.Null);
+            Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
+            Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("Edifact"));
         }
 
         [RecordedTest]
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             var agreement = await CreateAgreement(agreementName, "X12");
-            Assert.IsNotNull(agreement);
-            Assert.AreEqual(agreementName, agreement.Data.Name);
-            Assert.AreEqual("X12", agreement.Data.AgreementType.ToString());
+            Assert.That(agreement, Is.Not.Null);
+            Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
+            Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("X12"));
         }
 
         [RecordedTest]
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             await CreateAgreement(agreementName);
             bool flag = await _agreementCollection.ExistsAsync(agreementName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Logic.Tests
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             await CreateAgreement(agreementName);
             var agreement = await _agreementCollection.GetAsync(agreementName);
-            Assert.IsNotNull(agreement);
-            Assert.AreEqual(agreementName, agreement.Value.Data.Name);
+            Assert.That(agreement, Is.Not.Null);
+            Assert.That(agreement.Value.Data.Name, Is.EqualTo(agreementName));
         }
 
         [RecordedTest]
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             var agreement = await CreateAgreement(agreementName);
             bool flag = await _agreementCollection.ExistsAsync(agreementName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await agreement.DeleteAsync(WaitUntil.Completed);
             flag = await _agreementCollection.ExistsAsync(agreementName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         private static IntegrationAccountAgreementContent GetAS2Content()

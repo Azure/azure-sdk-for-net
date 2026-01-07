@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             ResourceIdentifier nginxConfigurationResourceIdentifier = NginxConfigurationResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, "default");
             NginxConfigurationResource.ValidateResourceId(nginxConfigurationResourceIdentifier);
 
-            Assert.IsTrue(nginxConfigurationResourceIdentifier.ResourceType.Equals(NginxConfigurationResource.ResourceType));
+            Assert.That(nginxConfigurationResourceIdentifier.ResourceType, Is.EqualTo(NginxConfigurationResource.ResourceType));
         }
 
         [TestCase]
@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath, protectedVirtualPath);
             ResourceIdentifier nginxConfigurationResourceIdentifier = NginxConfigurationResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, nginxConfigurationName);
 
-            Assert.IsTrue(nginxConfiguration.HasData);
-            Assert.NotNull(nginxConfiguration.Data);
-            Assert.IsTrue(nginxConfiguration.Data.Name.Equals(nginxConfigurationName));
-            Assert.IsTrue(nginxConfiguration.Data.Id.Equals(nginxConfigurationResourceIdentifier));
-            Assert.IsTrue(nginxConfiguration.Data.ResourceType.Equals(NginxConfigurationResource.ResourceType));
-            Assert.IsNull(nginxConfiguration.Data.SystemData);
-            Assert.IsNotNull(nginxConfiguration.Data.Properties.ProvisioningState);
-            Assert.True(nginxConfiguration.Data.Properties.RootFile.Equals(virtualPath));
-            Assert.True(nginxConfiguration.Data.Properties.Files.Count != 0);
-            Assert.True(nginxConfiguration.Data.Properties.Files[0].VirtualPath.Equals(virtualPath));
-            Assert.True(nginxConfiguration.Data.Properties.Files[0].Content.Equals(NginxConfigurationContent));
-            Assert.True(nginxConfiguration.Data.Properties.ProtectedFiles.Count != 0);
-            Assert.True(nginxConfiguration.Data.Properties.ProtectedFiles[0].VirtualPath.Equals(protectedVirtualPath));
-            Assert.IsNotNull(nginxConfiguration.Data.Properties.ProtectedFiles[0].ContentHash);
-            Assert.IsNull(nginxConfiguration.Data.Properties.Package.Data);
-            Assert.True(nginxConfiguration.Data.Properties.Package.ProtectedFiles.Count == 0);
+            Assert.That(nginxConfiguration.HasData, Is.True);
+            Assert.That(nginxConfiguration.Data, Is.Not.Null);
+            Assert.That(nginxConfiguration.Data.Name, Is.EqualTo(nginxConfigurationName));
+            Assert.That(nginxConfiguration.Data.Id, Is.EqualTo(nginxConfigurationResourceIdentifier));
+            Assert.That(nginxConfiguration.Data.ResourceType, Is.EqualTo(NginxConfigurationResource.ResourceType));
+            Assert.That(nginxConfiguration.Data.SystemData, Is.Null);
+            Assert.That(nginxConfiguration.Data.Properties.ProvisioningState, Is.Not.Null);
+            Assert.That(nginxConfiguration.Data.Properties.RootFile, Is.EqualTo(virtualPath));
+            Assert.That(nginxConfiguration.Data.Properties.Files.Count != 0, Is.True);
+            Assert.That(nginxConfiguration.Data.Properties.Files[0].VirtualPath, Is.EqualTo(virtualPath));
+            Assert.That(nginxConfiguration.Data.Properties.Files[0].Content, Is.EqualTo(NginxConfigurationContent));
+            Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles.Count != 0, Is.True);
+            Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles[0].VirtualPath, Is.EqualTo(protectedVirtualPath));
+            Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles[0].ContentHash, Is.Not.Null);
+            Assert.That(nginxConfiguration.Data.Properties.Package.Data, Is.Null);
+            Assert.That(nginxConfiguration.Data.Properties.Package.ProtectedFiles.Count, Is.EqualTo(0));
         }
 
         [TestCase]
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             const string nginxConfigurationName = "default";
             const string virtualPath = "/etc/nginx/nginx.conf";
             NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath);
-            Assert.IsTrue(await collection.ExistsAsync(nginxConfigurationName));
+            Assert.That((bool)await collection.ExistsAsync(nginxConfigurationName), Is.True);
 
             await nginxConfiguration.DeleteAsync(WaitUntil.Completed);
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await collection.GetAsync(nginxConfigurationName));
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             };
             NginxConfigurationResource nginxConfiguration2 = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, nginxConfigurationCreateOrUpdateContent)).Value;
 
-            Assert.AreNotEqual(nginxConfiguration.Data.Properties.RootFile, nginxConfiguration2.Data.Properties.RootFile);
+            Assert.That(nginxConfiguration2.Data.Properties.RootFile, Is.Not.EqualTo(nginxConfiguration.Data.Properties.RootFile));
         }
 
         [TestCase]
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxAnalysisContent nginxAnalysisContent = new NginxAnalysisContent(nginxAnalysisConfig);
             NginxAnalysisResult analysisResult = await nginxConfiguration.AnalysisAsync(nginxAnalysisContent);
 
-            Assert.IsNotNull(analysisResult);
-            Assert.IsNotNull(analysisResult.Status);
-            Assert.IsNotNull(analysisResult.Data.Errors);
-            Assert.IsNotNull(analysisResult.Data.Diagnostics);
+            Assert.That(analysisResult, Is.Not.Null);
+            Assert.That(analysisResult.Status, Is.Not.Null);
+            Assert.That(analysisResult.Data.Errors, Is.Not.Null);
+            Assert.That(analysisResult.Data.Diagnostics, Is.Not.Null);
         }
     }
 }

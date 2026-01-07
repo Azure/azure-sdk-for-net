@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
 
             // Now fetch the resource details from the service
             singletonRetentionPolicy = await singletonRetentionPolicy.GetAsync();
-            Assert.AreEqual(3, singletonRetentionPolicy.Data.Properties.RetentionPolicies.Count);
+            Assert.That(singletonRetentionPolicy.Data.Properties.RetentionPolicies.Count, Is.EqualTo(3));
 
             // Assert the specific policy for Completed orchestrations has the expected retention period
             DurableTaskRetentionPolicyDetails completedPolicy = singletonRetentionPolicy.Data.Properties.RetentionPolicies
                 .SingleOrDefault(p => p.OrchestrationState == DurableTaskPurgeableOrchestrationState.Completed);
 
-            Assert.NotNull(completedPolicy, "Expected a retention policy with OrchestrationState=Completed.");
-            Assert.AreEqual(3, completedPolicy.RetentionPeriodInDays, "Unexpected retention days for Completed state.");
+            Assert.That(completedPolicy, Is.Not.Null, "Expected a retention policy with OrchestrationState=Completed.");
+            Assert.That(completedPolicy.RetentionPeriodInDays, Is.EqualTo(3), "Unexpected retention days for Completed state.");
 
             await singletonRetentionPolicy.DeleteAsync(WaitUntil.Completed);
 

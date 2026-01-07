@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
 
             DataReplicationVaultResource resource = await rg.GetDataReplicationVaults().GetAsync(
                 DataReplicationTestUtilities.DefaultVaultName);
-            Assert.NotNull(resource);
+            Assert.That(resource, Is.Not.Null);
         }
 
         [TestCase]
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 vaultName,
                 vaultData);
 
-            Assert.IsTrue(vaultCreateOperation.HasCompleted);
-            Assert.IsTrue(vaultCreateOperation.HasValue);
+            Assert.That(vaultCreateOperation.HasCompleted, Is.True);
+            Assert.That(vaultCreateOperation.HasValue, Is.True);
 
             // Get
             DataReplicationVaultResource resource = await rg.GetDataReplicationVaults().GetAsync(
                  vaultName);
-            Assert.NotNull(resource);
+            Assert.That(resource, Is.Not.Null);
 
             // Delete
             var deleteVaultOperation = await resource.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteVaultOperation.HasCompleted);
+            Assert.That(deleteVaultOperation.HasCompleted, Is.True);
         }
     }
 }

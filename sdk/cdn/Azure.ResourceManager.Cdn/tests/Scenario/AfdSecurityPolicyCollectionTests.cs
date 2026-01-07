@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             FrontDoorEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
             FrontDoorSecurityPolicyResource afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
-            Assert.AreEqual(afdSecurityPolicyName, afdSecurityPolicy.Data.Name);
+            Assert.That(afdSecurityPolicy.Data.Name, Is.EqualTo(afdSecurityPolicyName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetFrontDoorSecurityPolicies().CreateOrUpdateAsync(WaitUntil.Completed, null, afdSecurityPolicy.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetFrontDoorSecurityPolicies().CreateOrUpdateAsync(WaitUntil.Completed, afdSecurityPolicyName, null));
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]

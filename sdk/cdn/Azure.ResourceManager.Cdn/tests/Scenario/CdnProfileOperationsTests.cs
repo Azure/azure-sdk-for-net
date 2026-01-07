@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardVerizon);
             await cdnProfile.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await cdnProfile.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         //TODO: [TestCase(null)] Need to be able to re-record this case
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnProfileName = Recording.GenerateAssetName("profile-");
             ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardVerizon);
             SsoUri ssoUri = await cdnProfile.GenerateSsoUriAsync();
-            Assert.NotNull(ssoUri);
-            Assert.True(ssoUri.AvailableSsoUri.ToString().StartsWith("https://"));
+            Assert.That(ssoUri, Is.Not.Null);
+            Assert.That(ssoUri.AvailableSsoUri.ToString(), Does.StartWith("https://"));
         }
 
         [TestCase]
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnProfileName = Recording.GenerateAssetName("profile-");
             ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardVerizon);
             SupportedOptimizationTypesListResult optimizationTypesList = await cdnProfile.GetSupportedOptimizationTypesAsync();
-            Assert.NotNull(optimizationTypesList);
-            Assert.NotNull(optimizationTypesList.SupportedOptimizationTypes);
+            Assert.That(optimizationTypesList, Is.Not.Null);
+            Assert.That(optimizationTypesList.SupportedOptimizationTypes, Is.Not.Null);
             Assert.Greater(optimizationTypesList.SupportedOptimizationTypes.Count, 0);
         }
 
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             await foreach (var tempResourceUsage in cdnProfile.GetResourceUsagesAsync())
             {
                 count++;
-                Assert.AreEqual(tempResourceUsage.ResourceType, "endpoint");
-                Assert.AreEqual(tempResourceUsage.Unit, CdnUsageUnit.Count);
-                Assert.AreEqual(tempResourceUsage.CurrentValue, 0);
-                Assert.AreEqual(tempResourceUsage.Limit, 25);
+                Assert.That(tempResourceUsage.ResourceType, Is.EqualTo("endpoint"));
+                Assert.That(CdnUsageUnit.Count, Is.EqualTo(tempResourceUsage.Unit));
+                Assert.That(tempResourceUsage.CurrentValue, Is.EqualTo(0));
+                Assert.That(tempResourceUsage.Limit, Is.EqualTo(25));
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
     }
 }

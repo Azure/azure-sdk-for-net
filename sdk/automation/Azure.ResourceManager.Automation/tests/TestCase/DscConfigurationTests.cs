@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             var input3 = ResourceDataHelpers.GetDscConfigurationData(name3);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             DscConfigurationResource dscconfiguration = lro.Value;
-            Assert.AreEqual(name, dscconfiguration.Data.Name);
+            Assert.That(dscconfiguration.Data.Name, Is.EqualTo(name));
             //2.Get
             DscConfigurationResource dscconfiguration2 = await dscconfiguration.GetAsync();
             ResourceDataHelpers.AssertDscConfiguration(dscconfiguration.Data, dscconfiguration2.Data);
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 2);
             //4.Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resource

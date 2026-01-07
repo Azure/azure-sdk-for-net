@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, input);
             var host = lro.Value;
 
-            Assert.AreEqual(hostName, host.Data.Name);
+            Assert.That(host.Data.Name, Is.EqualTo(hostName));
         }
 
         [TestCase]
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicDedicatedHost(DefaultLocation, "DSv3-Type1", 0);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, input);
             DedicatedHostResource host = lro.Value;
-            Assert.IsTrue(await collection.ExistsAsync(hostName));
-            Assert.IsFalse(await collection.ExistsAsync(hostName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(hostName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(hostName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Communication.Tests
             await email.RemoveTagAsync("testkey");
             email = await collection.GetAsync(emailServiceName);
             var tag = email.Data.Tags;
-            Assert.That(tag.Count == 0, Is.True);
+            Assert.That(tag.Count, Is.EqualTo(0));
         }
 
         [TestCase(null)]
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Communication.Tests
             await email.SetTagsAsync(tag);
             email = await collection.GetAsync(emailServiceName);
             tagValue = email.Data.Tags.FirstOrDefault();
-            Assert.That(email.Data.Tags.Count == 1, Is.True);
+            Assert.That(email.Data.Tags.Count, Is.EqualTo(1));
             Assert.That(tagValue.Key, Is.EqualTo("newtestkey"));
             Assert.That(tagValue.Value, Is.EqualTo("newtestvalue"));
         }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.Tests
             };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, serverData);
             MySqlFlexibleServerResource server1 = lro.Value;
-            Assert.AreEqual(serverName, server1.Data.Name);
+            Assert.That(server1.Data.Name, Is.EqualTo(serverName));
 
             //create backup
             List<string> list1 = new List<string>();
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.MySql.Tests
 
             var lroBackupAndExport = await server1.CreateBackupAndExportAsync(Azure.WaitUntil.Completed, backupAndExportContent);
             MySqlFlexibleServerBackupAndExportResult resultBackupAndExport = lroBackupAndExport.Value;
-            Assert.AreEqual("Succeeded", resultBackupAndExport.Status.ToString());
-            Assert.AreEqual("100", resultBackupAndExport.PercentComplete.ToString());
+            Assert.That(resultBackupAndExport.Status.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(resultBackupAndExport.PercentComplete.ToString(), Is.EqualTo("100"));
         }
     }
 }

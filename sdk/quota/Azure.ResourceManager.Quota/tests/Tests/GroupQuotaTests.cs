@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             var createResponse = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupQuotaName, data);
             Assert.IsNotNull(createResponse);
             Assert.IsNotNull(createResponse.Value.Data.Properties);
-            Assert.IsTrue(createResponse.Value.Data.Name.Equals(groupQuotaName));
-            Assert.IsTrue(createResponse.Value.Data.Properties.DisplayName.Equals(data.Properties.DisplayName));
+            Assert.That(createResponse.Value.Data.Name, Is.EqualTo(groupQuotaName));
+            Assert.That(createResponse.Value.Data.Properties.DisplayName, Is.EqualTo(data.Properties.DisplayName));
 
             // Delete the created Group Quota for cleanup
             ResourceIdentifier groupQuotasEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             GroupQuotaLimitListResource getResponse = await groupQuotaLimitList.GetAsync();
             Assert.IsNotNull(getResponse.Data);
             Assert.IsNotNull(getResponse.Data.Properties);
-            Assert.IsTrue(getResponse.Data.Properties.Value.Count.Equals(1));
-            Assert.AreEqual(valList[0].Properties.Limit, getResponse.Data.Properties.Value.First().Properties.Limit);
+            Assert.That(getResponse.Data.Properties.Value.Count, Is.EqualTo(1));
+            Assert.That(getResponse.Data.Properties.Value.First().Properties.Limit, Is.EqualTo(valList[0].Properties.Limit));
 
             // Delete the created Group Quota for cleanup. The subscription needs to be deleted first.
             ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, defaultSubscriptionId);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             var result = await collection.GetAsync(groupQuotaName);
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Value.Data.Properties);
-            Assert.AreEqual(groupQuotaName, result.Value.Data.Name);
+            Assert.That(result.Value.Data.Name, Is.EqualTo(groupQuotaName));
         }
 
         [TestCase]
@@ -331,9 +331,9 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             ArmOperation<GroupQuotasEnforcementStatusResource> lro = await groupQuotaEnforcementStatusCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceProviderName, location, data);
             GroupQuotasEnforcementStatusResource result = lro.Value;
 
-            Assert.IsTrue(result.Data.Properties.ProvisioningState.Equals(Models.QuotaRequestStatus.Succeeded));
-            Assert.IsTrue(result.Data.Properties.EnforcementEnabled.Equals(EnforcementState.Enabled));
-            Assert.IsTrue(result.Data.Name.Equals(location));
+            Assert.That(result.Data.Properties.ProvisioningState, Is.EqualTo(Models.QuotaRequestStatus.Succeeded));
+            Assert.That(result.Data.Properties.EnforcementEnabled, Is.EqualTo(EnforcementState.Enabled));
+            Assert.That(result.Data.Name, Is.EqualTo(location));
 
             // The enforced group name is always of the form: <groupquotaname>-<location>.
             string enforcedGroupName = $"{groupQuotaName}-{location.Name}";
@@ -374,9 +374,9 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             GroupQuotasEnforcementStatusResource result = await collection.GetAsync(resourceProviderName, location);
 
             Assert.IsNotNull(result.Data);
-            Assert.IsTrue(result.Data.Properties.ProvisioningState.Equals(Models.QuotaRequestStatus.Succeeded));
-            Assert.IsTrue(result.Data.Properties.EnforcementEnabled.Equals(EnforcementState.Enabled));
-            Assert.IsTrue(result.Data.Name.Equals(location.Name));
+            Assert.That(result.Data.Properties.ProvisioningState, Is.EqualTo(Models.QuotaRequestStatus.Succeeded));
+            Assert.That(result.Data.Properties.EnforcementEnabled, Is.EqualTo(EnforcementState.Enabled));
+            Assert.That(result.Data.Name, Is.EqualTo(location.Name));
         }
 
         [TestCase]
@@ -420,8 +420,8 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             GroupQuotaLimitListResource getResponse = await groupQuotaLimitList.GetAsync();
             Assert.IsNotNull(getResponse.Data);
             Assert.IsNotNull(getResponse.Data.Properties);
-            Assert.IsTrue(getResponse.Data.Properties.Value.Any());
-            Assert.AreEqual(valList[0].Properties.Limit, getResponse.Data.Properties.Value.Single(limit => limit.Properties.ResourceName == valList[0].Properties.ResourceName).Properties.Limit);
+            Assert.That(getResponse.Data.Properties.Value.Any(), Is.True);
+            Assert.That(getResponse.Data.Properties.Value.Single(limit => limit.Properties.ResourceName == valList[0].Properties.ResourceName).Properties.Limit, Is.EqualTo(valList[0].Properties.Limit));
         }
 
         [TestCase]

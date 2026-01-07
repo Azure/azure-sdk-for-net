@@ -118,20 +118,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             }
 
             var globalPolicyResponse = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, "policy", policyContract)).Value;
-            Assert.NotNull(globalPolicyResponse);
+            Assert.That(globalPolicyResponse, Is.Not.Null);
 
             // get policy to check it was added
             var getPolicyResponse = (await collection.GetAsync("policy", PolicyExportFormat.Xml)).Value;
 
-            Assert.NotNull(getPolicyResponse);
-            Assert.NotNull(getPolicyResponse.Data.Value);
+            Assert.That(getPolicyResponse, Is.Not.Null);
+            Assert.That(getPolicyResponse.Data.Value, Is.Not.Null);
 
             // remove policy
             await getPolicyResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
 
             // get policy to check it was removed
             var resultFalse = (await collection.ExistsAsync("policy")).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
 
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, "policy", policyContract);
 
@@ -171,25 +171,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 data
                 )).Value;
 
-            Assert.NotNull(setResponse);
+            Assert.That(setResponse, Is.Not.Null);
 
             // get policy to check it was added
             var getApiPolicy = (await apiPolicyCollection.GetAsync("policy")).Value;
 
-            Assert.NotNull(getApiPolicy);
-            Assert.NotNull(getApiPolicy.Data.Value);
+            Assert.That(getApiPolicy, Is.Not.Null);
+            Assert.That(getApiPolicy.Data.Value, Is.Not.Null);
 
             // get policy in a blob link
             var getApiPolicyRawXml = (await apiPolicyCollection.GetAsync("policy", PolicyExportFormat.RawXml)).Value;
 
-            Assert.NotNull(getApiPolicyRawXml);
-            Assert.AreEqual(PolicyContentFormat.RawXml, getApiPolicyRawXml.Data.Format);
-            Assert.NotNull(getApiPolicyRawXml.Data.Value);
+            Assert.That(getApiPolicyRawXml, Is.Not.Null);
+            Assert.That(getApiPolicyRawXml.Data.Format, Is.EqualTo(PolicyContentFormat.RawXml));
+            Assert.That(getApiPolicyRawXml.Data.Value, Is.Not.Null);
 
             // remove policy
             await getApiPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
             resultFalse = (await apiPolicyCollection.ExistsAsync("policy")).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
 
             // test api operation policy
             var getOperationResponse = await api.GetApiOperations().GetAllAsync().ToEnumerableAsync();
@@ -223,20 +223,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 data,
                 ETag.All)).Value;
 
-            Assert.NotNull(setResponse2);
+            Assert.That(setResponse2, Is.Not.Null);
 
             // get policy to check it was added
             var getOperationPolicy = (await operationPolicyCollection.GetAsync("policy", PolicyExportFormat.Xml)).Value;
 
-            Assert.NotNull(getOperationPolicy);
-            Assert.AreEqual(PolicyContentFormat.Xml, getOperationPolicy.Data.Format);
-            Assert.NotNull(getOperationPolicy.Data.Value);
+            Assert.That(getOperationPolicy, Is.Not.Null);
+            Assert.That(getOperationPolicy.Data.Format, Is.EqualTo(PolicyContentFormat.Xml));
+            Assert.That(getOperationPolicy.Data.Value, Is.Not.Null);
 
             // remove policy
             await getOperationPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
 
             resultFalse = (await operationPolicyCollection.ExistsAsync("policy")).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
 
             // test product policy
 
@@ -273,26 +273,26 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 data,
                 ETag.All)).Value;
 
-            Assert.NotNull(setResponse3);
+            Assert.That(setResponse3, Is.Not.Null);
 
             // get policy to check it was added
             var getProductPolicy = (await productPolicyCollection.GetAsync("policy")).Value;
 
-            Assert.NotNull(getProductPolicy);
-            Assert.NotNull(getProductPolicy.Data.Value);
+            Assert.That(getProductPolicy, Is.Not.Null);
+            Assert.That(getProductPolicy.Data.Value, Is.Not.Null);
 
             // get policy in a blob link=
             var getProductPolicyXml = (await productPolicyCollection.GetAsync("policy", PolicyExportFormat.Xml)).Value;
 
-            Assert.NotNull(getProductPolicyXml);
-            Assert.AreEqual(PolicyContentFormat.Xml, getProductPolicyXml.Data.Format);
-            Assert.NotNull(getProductPolicyXml.Data.Value);
+            Assert.That(getProductPolicyXml, Is.Not.Null);
+            Assert.That(getProductPolicyXml.Data.Format, Is.EqualTo(PolicyContentFormat.Xml));
+            Assert.That(getProductPolicyXml.Data.Value, Is.Not.Null);
 
             // remove policy
             await getProductPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
 
             resultFalse = (await productPolicyCollection.ExistsAsync("policy")).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
         }
     }
 }

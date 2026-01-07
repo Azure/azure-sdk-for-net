@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             apiManagementService = await apiManagementService.GetAsync();
-            Assert.NotNull(apiManagementService.Data.Name);
+            Assert.That(apiManagementService.Data.Name, Is.Not.Null);
         }
 
         [Test]
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var result = (await apiManagementService.GetSsoTokenAsync()).Value;
-            Assert.NotNull(result.RedirectUri);
+            Assert.That(result.RedirectUri, Is.Not.Null);
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var result = (await apiManagementService.GetTenantAccessInfoAsync(AccessName.TenantAccess)).Value;
-            Assert.NotNull(result.Data.Name);
+            Assert.That(result.Data.Name, Is.Not.Null);
         }
 
         [Test]

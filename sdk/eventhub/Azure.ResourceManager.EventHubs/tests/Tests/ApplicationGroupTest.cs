@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 }
             })).Value;
             eventHubNamespace = await namespaceCollection.GetAsync(namespaceName);
-            Assert.IsTrue(await namespaceCollection.ExistsAsync(namespaceName));
+            Assert.That((bool)await namespaceCollection.ExistsAsync(namespaceName), Is.True);
            // VerifyNamespaceProperties(eventHubNamespace, true);
             _applicationGroupCollection = eventHubNamespace.GetEventHubsApplicationGroups();
         }
@@ -66,21 +66,21 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             };
             applicationgroupData.Policies.Add(new EventHubsThrottlingPolicy("Throttlingpolicy3", 3451, "IncomingBytes"));
             EventHubsApplicationGroupResource applicationgroup = (await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName,applicationgroupData)).Value;
-            Assert.IsNotNull(applicationgroup);
-            Assert.AreEqual(applicationgroup.Id.Name, applicationGroupName);
-            Assert.AreEqual(applicationgroup.Data.IsEnabled,applicationgroupData.IsEnabled);
-            Assert.AreEqual(applicationgroup.Data.ClientAppGroupIdentifier, applicationgroupData.ClientAppGroupIdentifier);
-            Assert.IsTrue(await _applicationGroupCollection.ExistsAsync(applicationGroupName));
+            Assert.That(applicationgroup, Is.Not.Null);
+            Assert.That(applicationGroupName, Is.EqualTo(applicationgroup.Id.Name));
+            Assert.That(applicationgroupData.IsEnabled, Is.EqualTo(applicationgroup.Data.IsEnabled));
+            Assert.That(applicationgroupData.ClientAppGroupIdentifier, Is.EqualTo(applicationgroup.Data.ClientAppGroupIdentifier));
+            Assert.That((bool)await _applicationGroupCollection.ExistsAsync(applicationGroupName), Is.True);
             List<EventHubsThrottlingPolicy> policy = new List<EventHubsThrottlingPolicy>();
 
             policy = applicationgroupData.Policies.Select(x => x as EventHubsThrottlingPolicy).ToList();
             // List<ThrottlingPolicy> lp = applicationgroupData.Policies.ConvertAll(new Converter<ApplicationGroupPolicy,ThrottlingPolicy>(ApplicationGroupPolicyToThrottling));
-            Assert.AreEqual("Throttlingpolicy1", policy[0].Name);
-            Assert.AreEqual(3452, policy[0].RateLimitThreshold);
-            Assert.AreEqual(EventHubsMetricId.IncomingMessages, policy[0].MetricId);
-            Assert.AreEqual("Throttlingpolicy3", policy[1].Name);
-            Assert.AreEqual(3451, policy[1].RateLimitThreshold);
-            Assert.AreEqual(EventHubsMetricId.IncomingBytes, policy[1].MetricId);
+            Assert.That(policy[0].Name, Is.EqualTo("Throttlingpolicy1"));
+            Assert.That(policy[0].RateLimitThreshold, Is.EqualTo(3452));
+            Assert.That(policy[0].MetricId, Is.EqualTo(EventHubsMetricId.IncomingMessages));
+            Assert.That(policy[1].Name, Is.EqualTo("Throttlingpolicy3"));
+            Assert.That(policy[1].RateLimitThreshold, Is.EqualTo(3451));
+            Assert.That(policy[1].MetricId, Is.EqualTo(EventHubsMetricId.IncomingBytes));
             applicationgroup = await _applicationGroupCollection.GetAsync(applicationGroupName);
 
             //delete applicationGroup
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 if (applicationgroup.Id.Name == applicationGroupName2)
                     count++;
             }
-            Assert.AreEqual(count, 2);
+            Assert.That(count, Is.EqualTo(2));
         }
     }
 }

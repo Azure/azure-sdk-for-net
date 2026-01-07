@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
         {
             // AzureKeyVaultSecretProviderClassCollection.ExistsAsync
             var exists = (await akvspcc.ExistsAsync(SpcName)).Value;
-            Assert.AreEqual(exists, shouldExist);
+            Assert.That(shouldExist, Is.EqualTo(exists));
 
             // AzureKeyVaultSecretProviderClassCollection.GetAsync
             if (shouldExist)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
 
             // AzureKeyVaultSecretProviderClassCollection.GetIfExistsAsync
             NullableResponse<KeyVaultSecretProviderClassResource> nr = await akvspcc.GetIfExistsAsync(SpcName);
-            Assert.AreEqual(nr.HasValue, shouldExist);
+            Assert.That(shouldExist, Is.EqualTo(nr.HasValue));
             if (shouldExist)
             {
                 CheckContents(nr.Value);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
 
             // AzureKeyVaultSecretProviderClassCollection.GetAllAsync
             List<KeyVaultSecretProviderClassResource> spcs = await akvspcc.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(spcs.Any(), shouldExist);
+            Assert.That(shouldExist, Is.EqualTo(spcs.Any()));
             if (shouldExist)
             {
-                Assert.AreEqual(spcs.Count, 1);
+                Assert.That(spcs.Count, Is.EqualTo(1));
                 CheckContents(spcs[0]);
             }
         }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
 
             // SecretsStoreExtensionExtensions.GetAzureKeyVaultSecretProviderClassesAsync (extends SubscriptionResource).
             List<KeyVaultSecretProviderClassResource> spcsAsync = await subscription.GetKeyVaultSecretProviderClassesAsync().ToEnumerableAsync();
-            Assert.AreEqual(spcsAsync.Count, 1);
+            Assert.That(spcsAsync.Count, Is.EqualTo(1));
             CheckContents(spcsAsync[0]);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
             await spc.DeleteAsync(WaitUntil.Completed);
 
             var exists = (await akvspcc.ExistsAsync(spc.Id.Name)).Value;
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         // Retrieve the latest version of the SPC.
@@ -205,27 +205,27 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
             string expectedSecretName1 = null, string expectedSecretName2 = null,
             Dictionary<string, string> expectedTags = null)
         {
-            Assert.AreEqual(SpcName, spc.Data.Name);
-            Assert.AreEqual(te.SpcKeyVaultName, spc.Data.Properties.KeyvaultName);
+            Assert.That(spc.Data.Name, Is.EqualTo(SpcName));
+            Assert.That(spc.Data.Properties.KeyvaultName, Is.EqualTo(te.SpcKeyVaultName));
 
-            Assert.AreEqual(te.SpcClientId, spc.Data.Properties.ClientId);
-            Assert.AreEqual(te.SpcTenantId, spc.Data.Properties.TenantId);
+            Assert.That(spc.Data.Properties.ClientId, Is.EqualTo(te.SpcClientId));
+            Assert.That(spc.Data.Properties.TenantId, Is.EqualTo(te.SpcTenantId));
 
             // Ensure the supplied object has the expected secret name.
             if (expectedSecretName1 is not null && expectedSecretName2 is not null)
             {
                 string expectedObjects = CreateObjectString(expectedSecretName1, expectedSecretName2);
-                Assert.AreEqual(spc.Data.Properties.Objects, expectedObjects);
+                Assert.That(expectedObjects, Is.EqualTo(spc.Data.Properties.Objects));
             }
 
             // Ensure the supplied object has the expected tags.
             if (expectedTags is not null)
             {
-                Assert.AreEqual(expectedTags.Count, spc.Data.Tags.Count);
+                Assert.That(spc.Data.Tags.Count, Is.EqualTo(expectedTags.Count));
                 foreach (KeyValuePair<string, string> kv in spc.Data.Tags)
                 {
-                    Assert.IsTrue(expectedTags.ContainsKey(kv.Key));
-                    Assert.AreEqual(expectedTags[kv.Key], kv.Value);
+                    Assert.That(expectedTags.ContainsKey(kv.Key), Is.True);
+                    Assert.That(kv.Value, Is.EqualTo(expectedTags[kv.Key]));
                 }
             }
         }

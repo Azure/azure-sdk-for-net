@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Blueprint.Tests
             //CreateOrUpdate(Template Artifact)
             var artifactInput = ResourceDataHelpers.GetTemplateArtifactData();
             var artifactResource = (await artifactCollection.CreateOrUpdateAsync(WaitUntil.Completed, templateArtifactName, artifactInput)).Value;
-            Assert.AreEqual(templateArtifactName, artifactResource.Data.Name);
+            Assert.That(artifactResource.Data.Name, Is.EqualTo(templateArtifactName));
             //Get
             var template2 = (await artifactCollection.GetAsync(templateArtifactName)).Value;
             ResourceDataHelpers.AssertArtifactData(artifactResource.Data, template2.Data);
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Blueprint.Tests
             }
             Assert.GreaterOrEqual(count, 2);
             //4.Exist
-            Assert.IsTrue(await artifactCollection.ExistsAsync(templateArtifactName));
-            Assert.IsFalse(await artifactCollection.ExistsAsync(templateArtifactName + "1"));
+            Assert.That((bool)await artifactCollection.ExistsAsync(templateArtifactName), Is.True);
+            Assert.That((bool)await artifactCollection.ExistsAsync(templateArtifactName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await artifactCollection.ExistsAsync(null));
             //Resouece operation

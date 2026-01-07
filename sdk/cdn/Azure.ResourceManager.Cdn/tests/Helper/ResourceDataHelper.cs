@@ -152,383 +152,383 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 
         public static void AssertValidProfile(ProfileResource model, ProfileResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
-            Assert.AreEqual(model.Data.Kind, getResult.Data.Kind);
-            Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.FrontDoorId, getResult.Data.FrontDoorId);
-            Assert.AreEqual(model.Data.OriginResponseTimeoutSeconds, getResult.Data.OriginResponseTimeoutSeconds);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.Sku.Name, Is.EqualTo(model.Data.Sku.Name));
+            Assert.That(getResult.Data.Kind, Is.EqualTo(model.Data.Kind));
+            Assert.That(getResult.Data.ResourceState, Is.EqualTo(model.Data.ResourceState));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.FrontDoorId, Is.EqualTo(model.Data.FrontDoorId));
+            Assert.That(getResult.Data.OriginResponseTimeoutSeconds, Is.EqualTo(model.Data.OriginResponseTimeoutSeconds));
         }
 
         public static void AssertProfileUpdate(ProfileResource updatedProfile, ProfilePatch updateOptions)
         {
-            Assert.AreEqual(updatedProfile.Data.Tags.Count, updateOptions.Tags.Count);
+            Assert.That(updateOptions.Tags.Count, Is.EqualTo(updatedProfile.Data.Tags.Count));
             foreach (var kv in updatedProfile.Data.Tags)
             {
-                Assert.True(updateOptions.Tags.ContainsKey(kv.Key));
-                Assert.AreEqual(kv.Value, updateOptions.Tags[kv.Key]);
+                Assert.That(updateOptions.Tags.ContainsKey(kv.Key), Is.True);
+                Assert.That(updateOptions.Tags[kv.Key], Is.EqualTo(kv.Value));
             }
         }
 
         public static void AssertProfileUpdate(ProfileResource updatedProfile, string key, string value)
         {
             Assert.GreaterOrEqual(updatedProfile.Data.Tags.Count, 1);
-            Assert.IsTrue(updatedProfile.Data.Tags.ContainsKey(key));
-            Assert.AreEqual(updatedProfile.Data.Tags[key], value);
+            Assert.That(updatedProfile.Data.Tags.ContainsKey(key), Is.True);
+            Assert.That(value, Is.EqualTo(updatedProfile.Data.Tags[key]));
         }
 
         public static void AssertValidEndpoint(CdnEndpointResource model, CdnEndpointResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.OriginPath, getResult.Data.OriginPath);
-            Assert.AreEqual(model.Data.OriginHostHeader, getResult.Data.OriginHostHeader);
-            Assert.AreEqual(model.Data.IsCompressionEnabled, getResult.Data.IsCompressionEnabled);
-            Assert.AreEqual(model.Data.IsHttpAllowed, getResult.Data.IsHttpAllowed);
-            Assert.AreEqual(model.Data.IsHttpsAllowed, getResult.Data.IsHttpsAllowed);
-            Assert.AreEqual(model.Data.QueryStringCachingBehavior, getResult.Data.QueryStringCachingBehavior);
-            Assert.AreEqual(model.Data.OptimizationType, getResult.Data.OptimizationType);
-            Assert.AreEqual(model.Data.ProbePath, getResult.Data.ProbePath);
-            Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
-            Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.OriginPath, Is.EqualTo(model.Data.OriginPath));
+            Assert.That(getResult.Data.OriginHostHeader, Is.EqualTo(model.Data.OriginHostHeader));
+            Assert.That(getResult.Data.IsCompressionEnabled, Is.EqualTo(model.Data.IsCompressionEnabled));
+            Assert.That(getResult.Data.IsHttpAllowed, Is.EqualTo(model.Data.IsHttpAllowed));
+            Assert.That(getResult.Data.IsHttpsAllowed, Is.EqualTo(model.Data.IsHttpsAllowed));
+            Assert.That(getResult.Data.QueryStringCachingBehavior, Is.EqualTo(model.Data.QueryStringCachingBehavior));
+            Assert.That(getResult.Data.OptimizationType, Is.EqualTo(model.Data.OptimizationType));
+            Assert.That(getResult.Data.ProbePath, Is.EqualTo(model.Data.ProbePath));
+            Assert.That(getResult.Data.HostName, Is.EqualTo(model.Data.HostName));
+            Assert.That(getResult.Data.ResourceState, Is.EqualTo(model.Data.ResourceState));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
             //Todo: ContentTypesToCompress, GeoFilters, DefaultOriginGroup, UrlSigningKeys, DeliveryPolicy, WebApplicationFirewallPolicyLink, Origins, OriginGroups
         }
 
         public static void AssertEndpointUpdate(CdnEndpointResource updatedEndpoint, CdnEndpointPatch updateOptions)
         {
-            Assert.AreEqual(updatedEndpoint.Data.IsHttpAllowed, updateOptions.IsHttpAllowed);
-            Assert.AreEqual(updatedEndpoint.Data.OriginPath, updateOptions.OriginPath);
-            Assert.AreEqual(updatedEndpoint.Data.OriginHostHeader, updateOptions.OriginHostHeader);
+            Assert.That(updateOptions.IsHttpAllowed, Is.EqualTo(updatedEndpoint.Data.IsHttpAllowed));
+            Assert.That(updateOptions.OriginPath, Is.EqualTo(updatedEndpoint.Data.OriginPath));
+            Assert.That(updateOptions.OriginHostHeader, Is.EqualTo(updatedEndpoint.Data.OriginHostHeader));
         }
 
         public static void AssertValidAfdEndpoint(FrontDoorEndpointResource model, FrontDoorEndpointResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.EnabledState, getResult.Data.EnabledState);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
-            Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.EnabledState, Is.EqualTo(model.Data.EnabledState));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.DeploymentStatus, Is.EqualTo(model.Data.DeploymentStatus));
+            Assert.That(getResult.Data.HostName, Is.EqualTo(model.Data.HostName));
         }
 
         public static void AssertAfdEndpointUpdate(FrontDoorEndpointResource updatedAfdEndpoint, FrontDoorEndpointPatch updateOptions)
         {
-            Assert.AreEqual(updatedAfdEndpoint.Data.Tags.Count, updateOptions.Tags.Count);
+            Assert.That(updateOptions.Tags.Count, Is.EqualTo(updatedAfdEndpoint.Data.Tags.Count));
             foreach (var kv in updatedAfdEndpoint.Data.Tags)
             {
-                Assert.True(updateOptions.Tags.ContainsKey(kv.Key));
-                Assert.AreEqual(kv.Value, updateOptions.Tags[kv.Key]);
+                Assert.That(updateOptions.Tags.ContainsKey(kv.Key), Is.True);
+                Assert.That(updateOptions.Tags[kv.Key], Is.EqualTo(kv.Value));
             }
         }
 
         public static void AssertValidOrigin(CdnOriginResource model, CdnOriginResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
-            Assert.AreEqual(model.Data.HttpPort, getResult.Data.HttpPort);
-            Assert.AreEqual(model.Data.HttpsPort, getResult.Data.HttpsPort);
-            Assert.AreEqual(model.Data.OriginHostHeader, getResult.Data.OriginHostHeader);
-            Assert.AreEqual(model.Data.Priority, getResult.Data.Priority);
-            Assert.AreEqual(model.Data.Weight, getResult.Data.Weight);
-            Assert.AreEqual(model.Data.Enabled, getResult.Data.Enabled);
-            Assert.AreEqual(model.Data.PrivateLinkAlias, getResult.Data.PrivateLinkAlias);
-            Assert.AreEqual(model.Data.PrivateLinkResourceId, getResult.Data.PrivateLinkResourceId);
-            Assert.AreEqual(model.Data.PrivateLinkLocation, getResult.Data.PrivateLinkLocation);
-            Assert.AreEqual(model.Data.PrivateLinkApprovalMessage, getResult.Data.PrivateLinkApprovalMessage);
-            Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.PrivateEndpointStatus, getResult.Data.PrivateEndpointStatus);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.HostName, Is.EqualTo(model.Data.HostName));
+            Assert.That(getResult.Data.HttpPort, Is.EqualTo(model.Data.HttpPort));
+            Assert.That(getResult.Data.HttpsPort, Is.EqualTo(model.Data.HttpsPort));
+            Assert.That(getResult.Data.OriginHostHeader, Is.EqualTo(model.Data.OriginHostHeader));
+            Assert.That(getResult.Data.Priority, Is.EqualTo(model.Data.Priority));
+            Assert.That(getResult.Data.Weight, Is.EqualTo(model.Data.Weight));
+            Assert.That(getResult.Data.Enabled, Is.EqualTo(model.Data.Enabled));
+            Assert.That(getResult.Data.PrivateLinkAlias, Is.EqualTo(model.Data.PrivateLinkAlias));
+            Assert.That(getResult.Data.PrivateLinkResourceId, Is.EqualTo(model.Data.PrivateLinkResourceId));
+            Assert.That(getResult.Data.PrivateLinkLocation, Is.EqualTo(model.Data.PrivateLinkLocation));
+            Assert.That(getResult.Data.PrivateLinkApprovalMessage, Is.EqualTo(model.Data.PrivateLinkApprovalMessage));
+            Assert.That(getResult.Data.ResourceState, Is.EqualTo(model.Data.ResourceState));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.PrivateEndpointStatus, Is.EqualTo(model.Data.PrivateEndpointStatus));
         }
 
         public static void AssertOriginUpdate(CdnOriginResource updatedOrigin, CdnOriginPatch updateOptions)
         {
-            Assert.AreEqual(updatedOrigin.Data.HttpPort, updateOptions.HttpPort);
-            Assert.AreEqual(updatedOrigin.Data.HttpsPort, updateOptions.HttpsPort);
-            Assert.AreEqual(updatedOrigin.Data.Priority, updateOptions.Priority);
-            Assert.AreEqual(updatedOrigin.Data.Weight, updateOptions.Weight);
+            Assert.That(updateOptions.HttpPort, Is.EqualTo(updatedOrigin.Data.HttpPort));
+            Assert.That(updateOptions.HttpsPort, Is.EqualTo(updatedOrigin.Data.HttpsPort));
+            Assert.That(updateOptions.Priority, Is.EqualTo(updatedOrigin.Data.Priority));
+            Assert.That(updateOptions.Weight, Is.EqualTo(updatedOrigin.Data.Weight));
         }
 
         public static void AssertValidAfdOrigin(FrontDoorOriginResource model, FrontDoorOriginResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
             if (model.Data.Origin != null || getResult.Data.Origin != null)
             {
-                Assert.NotNull(model.Data.Origin);
-                Assert.NotNull(getResult.Data.Origin);
-                Assert.AreEqual(model.Data.Origin.Id, getResult.Data.Origin.Id);
+                Assert.That(model.Data.Origin, Is.Not.Null);
+                Assert.That(getResult.Data.Origin, Is.Not.Null);
+                Assert.That(getResult.Data.Origin.Id, Is.EqualTo(model.Data.Origin.Id));
             }
-            Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
-            Assert.AreEqual(model.Data.HttpPort, getResult.Data.HttpPort);
-            Assert.AreEqual(model.Data.HttpsPort, getResult.Data.HttpsPort);
-            Assert.AreEqual(model.Data.OriginHostHeader, getResult.Data.OriginHostHeader);
-            Assert.AreEqual(model.Data.Priority, getResult.Data.Priority);
-            Assert.AreEqual(model.Data.Weight, getResult.Data.Weight);
-            Assert.AreEqual(model.Data.EnabledState, getResult.Data.EnabledState);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
+            Assert.That(getResult.Data.HostName, Is.EqualTo(model.Data.HostName));
+            Assert.That(getResult.Data.HttpPort, Is.EqualTo(model.Data.HttpPort));
+            Assert.That(getResult.Data.HttpsPort, Is.EqualTo(model.Data.HttpsPort));
+            Assert.That(getResult.Data.OriginHostHeader, Is.EqualTo(model.Data.OriginHostHeader));
+            Assert.That(getResult.Data.Priority, Is.EqualTo(model.Data.Priority));
+            Assert.That(getResult.Data.Weight, Is.EqualTo(model.Data.Weight));
+            Assert.That(getResult.Data.EnabledState, Is.EqualTo(model.Data.EnabledState));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.DeploymentStatus, Is.EqualTo(model.Data.DeploymentStatus));
             //Todo:SharedPrivateLinkResource
         }
 
         public static void AssertAfdOriginUpdate(FrontDoorOriginResource updatedAfdOrigin, FrontDoorOriginPatch updateOptions)
         {
-            Assert.AreEqual(updatedAfdOrigin.Data.Priority, updateOptions.Priority);
-            Assert.AreEqual(updatedAfdOrigin.Data.Weight, updateOptions.Weight);
+            Assert.That(updateOptions.Priority, Is.EqualTo(updatedAfdOrigin.Data.Priority));
+            Assert.That(updateOptions.Weight, Is.EqualTo(updatedAfdOrigin.Data.Weight));
         }
 
         public static void AssertValidOriginGroup(CdnOriginGroupResource model, CdnOriginGroupResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
             if (model.Data.HealthProbeSettings != null || getResult.Data.HealthProbeSettings != null)
             {
-                Assert.NotNull(model.Data.HealthProbeSettings);
-                Assert.NotNull(getResult.Data.HealthProbeSettings);
-                Assert.AreEqual(model.Data.HealthProbeSettings.ProbeIntervalInSeconds, getResult.Data.HealthProbeSettings.ProbeIntervalInSeconds);
-                Assert.AreEqual(model.Data.HealthProbeSettings.ProbePath, getResult.Data.HealthProbeSettings.ProbePath);
-                Assert.AreEqual(model.Data.HealthProbeSettings.ProbeProtocol, getResult.Data.HealthProbeSettings.ProbeProtocol);
-                Assert.AreEqual(model.Data.HealthProbeSettings.ProbeRequestType, getResult.Data.HealthProbeSettings.ProbeRequestType);
+                Assert.That(model.Data.HealthProbeSettings, Is.Not.Null);
+                Assert.That(getResult.Data.HealthProbeSettings, Is.Not.Null);
+                Assert.That(getResult.Data.HealthProbeSettings.ProbeIntervalInSeconds, Is.EqualTo(model.Data.HealthProbeSettings.ProbeIntervalInSeconds));
+                Assert.That(getResult.Data.HealthProbeSettings.ProbePath, Is.EqualTo(model.Data.HealthProbeSettings.ProbePath));
+                Assert.That(getResult.Data.HealthProbeSettings.ProbeProtocol, Is.EqualTo(model.Data.HealthProbeSettings.ProbeProtocol));
+                Assert.That(getResult.Data.HealthProbeSettings.ProbeRequestType, Is.EqualTo(model.Data.HealthProbeSettings.ProbeRequestType));
             }
-            Assert.AreEqual(model.Data.Origins.Count, getResult.Data.Origins.Count);
+            Assert.That(getResult.Data.Origins.Count, Is.EqualTo(model.Data.Origins.Count));
             for (int i = 0; i < model.Data.Origins.Count; ++i)
             {
-                Assert.AreEqual(model.Data.Origins[i].Id, getResult.Data.Origins[i].Id);
+                Assert.That(getResult.Data.Origins[i].Id, Is.EqualTo(model.Data.Origins[i].Id));
             }
-            Assert.AreEqual(model.Data.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes, getResult.Data.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes);
-            Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
+            Assert.That(getResult.Data.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes, Is.EqualTo(model.Data.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes));
+            Assert.That(getResult.Data.ResourceState, Is.EqualTo(model.Data.ResourceState));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
             //Todo: ResponseBasedOriginErrorDetectionSettings
         }
 
         public static void AssertOriginGroupUpdate(CdnOriginGroupResource updatedOriginGroup, CdnOriginGroupPatch updateOptions)
         {
-            Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbePath, updateOptions.HealthProbeSettings.ProbePath);
-            Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbeRequestType, updateOptions.HealthProbeSettings.ProbeRequestType);
-            Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbeProtocol, updateOptions.HealthProbeSettings.ProbeProtocol);
-            Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbeIntervalInSeconds, updateOptions.HealthProbeSettings.ProbeIntervalInSeconds);
+            Assert.That(updateOptions.HealthProbeSettings.ProbePath, Is.EqualTo(updatedOriginGroup.Data.HealthProbeSettings.ProbePath));
+            Assert.That(updateOptions.HealthProbeSettings.ProbeRequestType, Is.EqualTo(updatedOriginGroup.Data.HealthProbeSettings.ProbeRequestType));
+            Assert.That(updateOptions.HealthProbeSettings.ProbeProtocol, Is.EqualTo(updatedOriginGroup.Data.HealthProbeSettings.ProbeProtocol));
+            Assert.That(updateOptions.HealthProbeSettings.ProbeIntervalInSeconds, Is.EqualTo(updatedOriginGroup.Data.HealthProbeSettings.ProbeIntervalInSeconds));
         }
 
         public static void AssertValidAfdOriginGroup(FrontDoorOriginGroupResource model, FrontDoorOriginGroupResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
             if (model.Data.LoadBalancingSettings != null || getResult.Data.LoadBalancingSettings != null)
             {
-                Assert.NotNull(model.Data.LoadBalancingSettings);
-                Assert.NotNull(getResult.Data.LoadBalancingSettings);
-                Assert.AreEqual(model.Data.LoadBalancingSettings.SampleSize, getResult.Data.LoadBalancingSettings.SampleSize);
-                Assert.AreEqual(model.Data.LoadBalancingSettings.SuccessfulSamplesRequired, getResult.Data.LoadBalancingSettings.SuccessfulSamplesRequired);
-                Assert.AreEqual(model.Data.LoadBalancingSettings.AdditionalLatencyInMilliseconds, getResult.Data.LoadBalancingSettings.AdditionalLatencyInMilliseconds);
+                Assert.That(model.Data.LoadBalancingSettings, Is.Not.Null);
+                Assert.That(getResult.Data.LoadBalancingSettings, Is.Not.Null);
+                Assert.That(getResult.Data.LoadBalancingSettings.SampleSize, Is.EqualTo(model.Data.LoadBalancingSettings.SampleSize));
+                Assert.That(getResult.Data.LoadBalancingSettings.SuccessfulSamplesRequired, Is.EqualTo(model.Data.LoadBalancingSettings.SuccessfulSamplesRequired));
+                Assert.That(getResult.Data.LoadBalancingSettings.AdditionalLatencyInMilliseconds, Is.EqualTo(model.Data.LoadBalancingSettings.AdditionalLatencyInMilliseconds));
             }
             if (model.Data.HealthProbeSettings != null || getResult.Data.HealthProbeSettings != null)
             {
-                Assert.NotNull(model.Data.HealthProbeSettings);
-                Assert.NotNull(getResult.Data.HealthProbeSettings);
-                Assert.AreEqual(model.Data.HealthProbeSettings.ProbeIntervalInSeconds, getResult.Data.HealthProbeSettings.ProbeIntervalInSeconds);
-                Assert.AreEqual(model.Data.HealthProbeSettings.ProbePath, getResult.Data.HealthProbeSettings.ProbePath);
-                Assert.AreEqual(model.Data.HealthProbeSettings.ProbeProtocol, getResult.Data.HealthProbeSettings.ProbeProtocol);
-                Assert.AreEqual(model.Data.HealthProbeSettings.ProbeRequestType, getResult.Data.HealthProbeSettings.ProbeRequestType);
+                Assert.That(model.Data.HealthProbeSettings, Is.Not.Null);
+                Assert.That(getResult.Data.HealthProbeSettings, Is.Not.Null);
+                Assert.That(getResult.Data.HealthProbeSettings.ProbeIntervalInSeconds, Is.EqualTo(model.Data.HealthProbeSettings.ProbeIntervalInSeconds));
+                Assert.That(getResult.Data.HealthProbeSettings.ProbePath, Is.EqualTo(model.Data.HealthProbeSettings.ProbePath));
+                Assert.That(getResult.Data.HealthProbeSettings.ProbeProtocol, Is.EqualTo(model.Data.HealthProbeSettings.ProbeProtocol));
+                Assert.That(getResult.Data.HealthProbeSettings.ProbeRequestType, Is.EqualTo(model.Data.HealthProbeSettings.ProbeRequestType));
             }
-            Assert.AreEqual(model.Data.TrafficRestorationTimeInMinutes, getResult.Data.TrafficRestorationTimeInMinutes);
-            Assert.AreEqual(model.Data.SessionAffinityState, getResult.Data.SessionAffinityState);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
+            Assert.That(getResult.Data.TrafficRestorationTimeInMinutes, Is.EqualTo(model.Data.TrafficRestorationTimeInMinutes));
+            Assert.That(getResult.Data.SessionAffinityState, Is.EqualTo(model.Data.SessionAffinityState));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.DeploymentStatus, Is.EqualTo(model.Data.DeploymentStatus));
             //Todo: ResponseBasedAfdOriginErrorDetectionSettings
         }
 
         public static void AssertAfdOriginGroupUpdate(FrontDoorOriginGroupResource updatedAfdOriginGroup, FrontDoorOriginGroupPatch updateOptions)
         {
-            Assert.AreEqual(updatedAfdOriginGroup.Data.LoadBalancingSettings.SampleSize, updateOptions.LoadBalancingSettings.SampleSize);
-            Assert.AreEqual(updatedAfdOriginGroup.Data.LoadBalancingSettings.SuccessfulSamplesRequired, updateOptions.LoadBalancingSettings.SuccessfulSamplesRequired);
-            Assert.AreEqual(updatedAfdOriginGroup.Data.LoadBalancingSettings.AdditionalLatencyInMilliseconds, updateOptions.LoadBalancingSettings.AdditionalLatencyInMilliseconds);
+            Assert.That(updateOptions.LoadBalancingSettings.SampleSize, Is.EqualTo(updatedAfdOriginGroup.Data.LoadBalancingSettings.SampleSize));
+            Assert.That(updateOptions.LoadBalancingSettings.SuccessfulSamplesRequired, Is.EqualTo(updatedAfdOriginGroup.Data.LoadBalancingSettings.SuccessfulSamplesRequired));
+            Assert.That(updateOptions.LoadBalancingSettings.AdditionalLatencyInMilliseconds, Is.EqualTo(updatedAfdOriginGroup.Data.LoadBalancingSettings.AdditionalLatencyInMilliseconds));
         }
 
         public static void AssertValidCustomDomain(CdnCustomDomainResource model, CdnCustomDomainResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
-            Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
-            Assert.AreEqual(model.Data.CustomHttpsProvisioningState, getResult.Data.CustomHttpsProvisioningState);
-            Assert.AreEqual(model.Data.CustomHttpsAvailabilityState, getResult.Data.CustomHttpsAvailabilityState);
-            Assert.AreEqual(model.Data.ValidationData, getResult.Data.ValidationData);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.HostName, Is.EqualTo(model.Data.HostName));
+            Assert.That(getResult.Data.ResourceState, Is.EqualTo(model.Data.ResourceState));
+            Assert.That(getResult.Data.CustomHttpsProvisioningState, Is.EqualTo(model.Data.CustomHttpsProvisioningState));
+            Assert.That(getResult.Data.CustomHttpsAvailabilityState, Is.EqualTo(model.Data.CustomHttpsAvailabilityState));
+            Assert.That(getResult.Data.ValidationData, Is.EqualTo(model.Data.ValidationData));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
         }
 
         public static void AssertValidAfdCustomDomain(FrontDoorCustomDomainResource model, FrontDoorCustomDomainResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.TlsSettings.CertificateType, getResult.Data.TlsSettings.CertificateType);
-            Assert.AreEqual(model.Data.TlsSettings.MinimumTlsVersion, getResult.Data.TlsSettings.MinimumTlsVersion);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.TlsSettings.CertificateType, Is.EqualTo(model.Data.TlsSettings.CertificateType));
+            Assert.That(getResult.Data.TlsSettings.MinimumTlsVersion, Is.EqualTo(model.Data.TlsSettings.MinimumTlsVersion));
             if (model.Data.TlsSettings.Secret != null || getResult.Data.TlsSettings.Secret != null)
             {
-                Assert.NotNull(model.Data.TlsSettings.Secret);
-                Assert.NotNull(getResult.Data.TlsSettings.Secret);
-                Assert.AreEqual(model.Data.TlsSettings.Secret.Id, getResult.Data.TlsSettings.Secret.Id);
+                Assert.That(model.Data.TlsSettings.Secret, Is.Not.Null);
+                Assert.That(getResult.Data.TlsSettings.Secret, Is.Not.Null);
+                Assert.That(getResult.Data.TlsSettings.Secret.Id, Is.EqualTo(model.Data.TlsSettings.Secret.Id));
             }
             if (model.Data.DnsZone != null || getResult.Data.DnsZone != null)
             {
-                Assert.NotNull(model.Data.DnsZone);
-                Assert.NotNull(getResult.Data.DnsZone);
-                Assert.AreEqual(model.Data.DnsZone.Id, getResult.Data.DnsZone.Id);
+                Assert.That(model.Data.DnsZone, Is.Not.Null);
+                Assert.That(getResult.Data.DnsZone, Is.Not.Null);
+                Assert.That(getResult.Data.DnsZone.Id, Is.EqualTo(model.Data.DnsZone.Id));
             }
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
-            Assert.AreEqual(model.Data.DomainValidationState, getResult.Data.DomainValidationState);
-            Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.DeploymentStatus, Is.EqualTo(model.Data.DeploymentStatus));
+            Assert.That(getResult.Data.DomainValidationState, Is.EqualTo(model.Data.DomainValidationState));
+            Assert.That(getResult.Data.HostName, Is.EqualTo(model.Data.HostName));
             if (model.Data.ValidationProperties != null || getResult.Data.ValidationProperties != null)
             {
-                Assert.NotNull(model.Data.ValidationProperties);
-                Assert.NotNull(getResult.Data.ValidationProperties);
-                Assert.AreEqual(model.Data.ValidationProperties.ValidationToken, getResult.Data.ValidationProperties.ValidationToken);
-                Assert.AreEqual(model.Data.ValidationProperties.ExpiresOn, getResult.Data.ValidationProperties.ExpiresOn);
+                Assert.That(model.Data.ValidationProperties, Is.Not.Null);
+                Assert.That(getResult.Data.ValidationProperties, Is.Not.Null);
+                Assert.That(getResult.Data.ValidationProperties.ValidationToken, Is.EqualTo(model.Data.ValidationProperties.ValidationToken));
+                Assert.That(getResult.Data.ValidationProperties.ExpiresOn, Is.EqualTo(model.Data.ValidationProperties.ExpiresOn));
             }
         }
 
         public static void AssertAfdDomainUpdate(FrontDoorCustomDomainResource updatedAfdDomain, FrontDoorCustomDomainPatch updateOptions)
         {
-            Assert.AreEqual(updatedAfdDomain.Data.TlsSettings.CertificateType, updateOptions.TlsSettings.CertificateType);
-            Assert.AreEqual(updatedAfdDomain.Data.TlsSettings.MinimumTlsVersion, updateOptions.TlsSettings.MinimumTlsVersion);
+            Assert.That(updateOptions.TlsSettings.CertificateType, Is.EqualTo(updatedAfdDomain.Data.TlsSettings.CertificateType));
+            Assert.That(updateOptions.TlsSettings.MinimumTlsVersion, Is.EqualTo(updatedAfdDomain.Data.TlsSettings.MinimumTlsVersion));
         }
 
         public static void AssertValidAfdRuleSet(FrontDoorRuleSetResource model, FrontDoorRuleSetResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.DeploymentStatus, Is.EqualTo(model.Data.DeploymentStatus));
         }
 
         public static void AssertValidAfdRule(FrontDoorRuleResource model, FrontDoorRuleResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.Order, getResult.Data.Order);
-            Assert.AreEqual(model.Data.Conditions.Count, getResult.Data.Conditions.Count);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.Order, Is.EqualTo(model.Data.Order));
+            Assert.That(getResult.Data.Conditions.Count, Is.EqualTo(model.Data.Conditions.Count));
             for (int i = 0; i < model.Data.Conditions.Count; ++i)
             {
-                Assert.AreEqual(model.Data.Conditions[i].Name, getResult.Data.Conditions[i].Name);
+                Assert.That(getResult.Data.Conditions[i].Name, Is.EqualTo(model.Data.Conditions[i].Name));
             }
-            Assert.AreEqual(model.Data.Actions.Count, getResult.Data.Actions.Count);
+            Assert.That(getResult.Data.Actions.Count, Is.EqualTo(model.Data.Actions.Count));
             for (int i = 0; i < model.Data.Actions.Count; ++i)
             {
-                Assert.AreEqual(model.Data.Actions[i].Name, getResult.Data.Actions[i].Name);
+                Assert.That(getResult.Data.Actions[i].Name, Is.EqualTo(model.Data.Actions[i].Name));
             }
-            Assert.AreEqual(model.Data.MatchProcessingBehavior, getResult.Data.MatchProcessingBehavior);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
+            Assert.That(getResult.Data.MatchProcessingBehavior, Is.EqualTo(model.Data.MatchProcessingBehavior));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.DeploymentStatus, Is.EqualTo(model.Data.DeploymentStatus));
         }
 
         public static void AssertAfdRuleUpdate(FrontDoorRuleResource updatedRule, FrontDoorRulePatch updateOptions)
         {
-            Assert.AreEqual(updatedRule.Data.Order, updateOptions.Order);
+            Assert.That(updateOptions.Order, Is.EqualTo(updatedRule.Data.Order));
         }
 
         public static void AssertValidAfdRoute(FrontDoorRouteResource model, FrontDoorRouteResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.CustomDomains.Count, getResult.Data.CustomDomains.Count);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.CustomDomains.Count, Is.EqualTo(model.Data.CustomDomains.Count));
             for (int i = 0; i < model.Data.CustomDomains.Count; ++i)
             {
-                Assert.AreEqual(model.Data.CustomDomains[i].Id, getResult.Data.CustomDomains[i].Id);
+                Assert.That(getResult.Data.CustomDomains[i].Id, Is.EqualTo(model.Data.CustomDomains[i].Id));
             }
-            Assert.AreEqual(model.Data.OriginGroup.Id, getResult.Data.OriginGroup.Id);
-            Assert.AreEqual(model.Data.OriginPath, getResult.Data.OriginPath);
-            Assert.AreEqual(model.Data.RuleSets.Count, getResult.Data.RuleSets.Count);
+            Assert.That(getResult.Data.OriginGroup.Id, Is.EqualTo(model.Data.OriginGroup.Id));
+            Assert.That(getResult.Data.OriginPath, Is.EqualTo(model.Data.OriginPath));
+            Assert.That(getResult.Data.RuleSets.Count, Is.EqualTo(model.Data.RuleSets.Count));
             for (int i = 0; i < model.Data.RuleSets.Count; ++i)
             {
-                Assert.AreEqual(model.Data.RuleSets[i].Id, getResult.Data.RuleSets[i].Id);
+                Assert.That(getResult.Data.RuleSets[i].Id, Is.EqualTo(model.Data.RuleSets[i].Id));
             }
-            Assert.AreEqual(model.Data.SupportedProtocols.Count, getResult.Data.SupportedProtocols.Count);
+            Assert.That(getResult.Data.SupportedProtocols.Count, Is.EqualTo(model.Data.SupportedProtocols.Count));
             for (int i = 0; i < model.Data.SupportedProtocols.Count; ++i)
             {
-                Assert.AreEqual(model.Data.SupportedProtocols[i], getResult.Data.SupportedProtocols[i]);
+                Assert.That(getResult.Data.SupportedProtocols[i], Is.EqualTo(model.Data.SupportedProtocols[i]));
             }
-            Assert.AreEqual(model.Data.PatternsToMatch.Count, getResult.Data.PatternsToMatch.Count);
+            Assert.That(getResult.Data.PatternsToMatch.Count, Is.EqualTo(model.Data.PatternsToMatch.Count));
             for (int i = 0; i < model.Data.PatternsToMatch.Count; ++i)
             {
-                Assert.AreEqual(model.Data.PatternsToMatch[i], getResult.Data.PatternsToMatch[i]);
+                Assert.That(getResult.Data.PatternsToMatch[i], Is.EqualTo(model.Data.PatternsToMatch[i]));
             }
-            Assert.AreEqual(model.Data.EndpointName, getResult.Data.EndpointName);
-            Assert.AreEqual(model.Data.ForwardingProtocol, getResult.Data.ForwardingProtocol);
-            Assert.AreEqual(model.Data.LinkToDefaultDomain, getResult.Data.LinkToDefaultDomain);
-            Assert.AreEqual(model.Data.HttpsRedirect, getResult.Data.HttpsRedirect);
-            Assert.AreEqual(model.Data.EnabledState, getResult.Data.EnabledState);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
+            Assert.That(getResult.Data.EndpointName, Is.EqualTo(model.Data.EndpointName));
+            Assert.That(getResult.Data.ForwardingProtocol, Is.EqualTo(model.Data.ForwardingProtocol));
+            Assert.That(getResult.Data.LinkToDefaultDomain, Is.EqualTo(model.Data.LinkToDefaultDomain));
+            Assert.That(getResult.Data.HttpsRedirect, Is.EqualTo(model.Data.HttpsRedirect));
+            Assert.That(getResult.Data.EnabledState, Is.EqualTo(model.Data.EnabledState));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.DeploymentStatus, Is.EqualTo(model.Data.DeploymentStatus));
         }
 
         public static void AssertAfdRouteUpdate(FrontDoorRouteResource updatedRoute, FrontDoorRoutePatch updateOptions)
         {
-            Assert.AreEqual(updatedRoute.Data.EnabledState, updateOptions.EnabledState);
+            Assert.That(updateOptions.EnabledState, Is.EqualTo(updatedRoute.Data.EnabledState));
         }
 
         public static void AssertValidAfdSecurityPolicy(FrontDoorSecurityPolicyResource model, FrontDoorSecurityPolicyResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
-            Assert.AreEqual(model.Data.Properties.PolicyType, getResult.Data.Properties.PolicyType);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.DeploymentStatus, Is.EqualTo(model.Data.DeploymentStatus));
+            Assert.That(getResult.Data.Properties.PolicyType, Is.EqualTo(model.Data.Properties.PolicyType));
         }
 
         public static void AssertAfdSecurityPolicyUpdate(FrontDoorSecurityPolicyResource updatedSecurityPolicy, FrontDoorSecurityPolicyPatch updateOptions)
         {
-            Assert.AreEqual(((SecurityPolicyWebApplicationFirewall)updatedSecurityPolicy.Data.Properties).Associations.Count, 1);
-            Assert.AreEqual(((SecurityPolicyWebApplicationFirewall)updatedSecurityPolicy.Data.Properties).Associations[0].Domains.Count, 2);
+            Assert.That(((SecurityPolicyWebApplicationFirewall)updatedSecurityPolicy.Data.Properties).Associations.Count, Is.EqualTo(1));
+            Assert.That(((SecurityPolicyWebApplicationFirewall)updatedSecurityPolicy.Data.Properties).Associations[0].Domains.Count, Is.EqualTo(2));
         }
 
         public static void AssertValidPolicy(CdnWebApplicationFirewallPolicyResource model, CdnWebApplicationFirewallPolicyResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.ETag, getResult.Data.ETag);
-            Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.ETag, Is.EqualTo(model.Data.ETag));
+            Assert.That(getResult.Data.Sku.Name, Is.EqualTo(model.Data.Sku.Name));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.ResourceState, Is.EqualTo(model.Data.ResourceState));
             //Todo: PolicySettings, RateLimitRules, CustomRules, ManagedRules, EndpointLinks
         }
 
         public static void AssertPolicyUpdate(CdnWebApplicationFirewallPolicyResource updatedPolicy, string key, string value)
         {
             Assert.GreaterOrEqual(updatedPolicy.Data.Tags.Count, 1);
-            Assert.IsTrue(updatedPolicy.Data.Tags.ContainsKey(key));
-            Assert.AreEqual(updatedPolicy.Data.Tags[key], value);
+            Assert.That(updatedPolicy.Data.Tags.ContainsKey(key), Is.True);
+            Assert.That(value, Is.EqualTo(updatedPolicy.Data.Tags[key]));
         }
 
         public static void AssertValidAfdSecret(FrontDoorSecretResource model, FrontDoorSecretResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
-            Assert.AreEqual(model.Data.Properties.SecretType, getResult.Data.Properties.SecretType);
-            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).SecretVersion, ((CustomerCertificateProperties)getResult.Data.Properties).SecretVersion);
-            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).CertificateAuthority, ((CustomerCertificateProperties)getResult.Data.Properties).CertificateAuthority);
-            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).UseLatestVersion, ((CustomerCertificateProperties)getResult.Data.Properties).UseLatestVersion);
-            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).SecretSource.Id.Name.ToString().ToLower(), ((CustomerCertificateProperties)getResult.Data.Properties).SecretSource.Id.Name.ToString().ToLower());
-            Assert.True(((CustomerCertificateProperties)model.Data.Properties).SubjectAlternativeNames.SequenceEqual(((CustomerCertificateProperties)getResult.Data.Properties).SubjectAlternativeNames));
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
+            Assert.That(getResult.Data.DeploymentStatus, Is.EqualTo(model.Data.DeploymentStatus));
+            Assert.That(getResult.Data.Properties.SecretType, Is.EqualTo(model.Data.Properties.SecretType));
+            Assert.That(((CustomerCertificateProperties)getResult.Data.Properties).SecretVersion, Is.EqualTo(((CustomerCertificateProperties)model.Data.Properties).SecretVersion));
+            Assert.That(((CustomerCertificateProperties)getResult.Data.Properties).CertificateAuthority, Is.EqualTo(((CustomerCertificateProperties)model.Data.Properties).CertificateAuthority));
+            Assert.That(((CustomerCertificateProperties)getResult.Data.Properties).UseLatestVersion, Is.EqualTo(((CustomerCertificateProperties)model.Data.Properties).UseLatestVersion));
+            Assert.That(((CustomerCertificateProperties)getResult.Data.Properties).SecretSource.Id.Name.ToString().ToLower(), Is.EqualTo(((CustomerCertificateProperties)model.Data.Properties).SecretSource.Id.Name.ToString().ToLower()));
+            Assert.That(((CustomerCertificateProperties)model.Data.Properties).SubjectAlternativeNames.SequenceEqual(((CustomerCertificateProperties)getResult.Data.Properties).SubjectAlternativeNames), Is.True);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric.Tests
             string clusterName = SessionRecording.GenerateAssetName("cluster");
             var cluster = await CreateServiceFabricCluster(_resourceGroup, clusterName);
             Assert.IsNotNull(cluster);
-            Assert.AreEqual(clusterName, cluster.Data.Name);
+            Assert.That(cluster.Data.Name, Is.EqualTo(clusterName));
         }
 
         [RecordedTest]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceFabric.Tests
             string clusterName = SessionRecording.GenerateAssetName("cluster");
             await CreateServiceFabricCluster(_resourceGroup, clusterName);
             bool flag = await _serviceFabricClusterCollection.ExistsAsync(clusterName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabric.Tests
             await CreateServiceFabricCluster(_resourceGroup, clusterName);
             var cluster = await _serviceFabricClusterCollection.GetAsync(clusterName);
             Assert.IsNotNull(cluster);
-            Assert.AreEqual(clusterName, cluster.Value.Data.Name);
+            Assert.That(cluster.Value.Data.Name, Is.EqualTo(clusterName));
         }
 
         [RecordedTest]
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.ServiceFabric.Tests
             string clusterName = SessionRecording.GenerateAssetName("cluster");
             var cluster = await CreateServiceFabricCluster(_resourceGroup, clusterName);
             bool flag = await _serviceFabricClusterCollection.ExistsAsync(clusterName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await cluster.DeleteAsync(WaitUntil.Completed);
             flag = await _serviceFabricClusterCollection.ExistsAsync(clusterName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

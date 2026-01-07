@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // list caches: there should be none
             var cacheListResponse = await cacheCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(cacheListResponse);
+            Assert.That(cacheListResponse, Is.Not.Null);
             Assert.IsEmpty(cacheListResponse);
 
             // create new cache
@@ -62,25 +62,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             var createResponse = (await cacheCollection.CreateOrUpdateAsync(WaitUntil.Completed, cacheid, cacheContract)).Value;
 
-            Assert.NotNull(createResponse);
-            Assert.AreEqual(cacheid, createResponse.Data.Name);
-            Assert.AreEqual(cacheContract.Description, createResponse.Data.Description);
+            Assert.That(createResponse, Is.Not.Null);
+            Assert.That(createResponse.Data.Name, Is.EqualTo(cacheid));
+            Assert.That(createResponse.Data.Description, Is.EqualTo(cacheContract.Description));
 
             // get the certificate to check is was created
             var getResponse = (await cacheCollection.GetAsync(cacheid)).Value;
 
-            Assert.NotNull(getResponse);
-            Assert.AreEqual(cacheid, getResponse.Data.Name);
+            Assert.That(getResponse, Is.Not.Null);
+            Assert.That(getResponse.Data.Name, Is.EqualTo(cacheid));
 
             // list caches
             cacheListResponse = await cacheCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(cacheListResponse);
-            Assert.AreEqual(cacheListResponse.Count, 1);
+            Assert.That(cacheListResponse, Is.Not.Null);
+            Assert.That(cacheListResponse.Count, Is.EqualTo(1));
 
             // remove the cache
             await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await cacheCollection.ExistsAsync(cacheid));
-            Assert.IsFalse(resultFalse);
+            Assert.That((bool)resultFalse, Is.False);
         }
     }
 }

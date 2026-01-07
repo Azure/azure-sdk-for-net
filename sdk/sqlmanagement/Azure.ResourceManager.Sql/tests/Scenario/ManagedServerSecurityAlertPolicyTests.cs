@@ -61,22 +61,22 @@ namespace Azure.ResourceManager.Sql.Tests
             };
             var securityAlertPolicie = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityAlertPoliciesName, data);
             Assert.IsNotNull(securityAlertPolicie.Value.Data);
-            Assert.AreEqual(securityAlertPoliciesName, securityAlertPolicie.Value.Data.Name);
-            Assert.AreEqual("Enabled", securityAlertPolicie.Value.Data.State.ToString());
+            Assert.That(securityAlertPolicie.Value.Data.Name, Is.EqualTo(securityAlertPoliciesName));
+            Assert.That(securityAlertPolicie.Value.Data.State.ToString(), Is.EqualTo("Enabled"));
 
             // 2.CheckIfExist
-            Assert.IsTrue(await collection.ExistsAsync(securityAlertPoliciesName));
+            Assert.That((bool)await collection.ExistsAsync(securityAlertPoliciesName), Is.True);
 
             // 3.Get
             var getsecurityAlertPolicie = await collection.GetAsync(securityAlertPoliciesName);
             Assert.IsNotNull(getsecurityAlertPolicie.Value.Data);
-            Assert.AreEqual(securityAlertPoliciesName, getsecurityAlertPolicie.Value.Data.Name);
+            Assert.That(getsecurityAlertPolicie.Value.Data.Name, Is.EqualTo(securityAlertPoliciesName));
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(securityAlertPoliciesName, list.FirstOrDefault().Data.Name);
+            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(securityAlertPoliciesName));
         }
     }
 }

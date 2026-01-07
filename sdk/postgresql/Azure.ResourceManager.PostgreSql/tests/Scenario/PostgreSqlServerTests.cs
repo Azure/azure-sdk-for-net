@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, content);
             PostgreSqlServerResource server = lro.Value;
-            Assert.AreEqual(serverName, server.Data.Name);
+            Assert.That(server.Data.Name, Is.EqualTo(serverName));
             // Get
             PostgreSqlServerResource serverFromGet = await serverCollection.GetAsync(serverName);
-            Assert.AreEqual(serverName, serverFromGet.Data.Name);
+            Assert.That(serverFromGet.Data.Name, Is.EqualTo(serverName));
             // List
             await foreach (PostgreSqlServerResource serverFromList in serverCollection)
             {
-                Assert.AreEqual(serverName, serverFromList.Data.Name);
+                Assert.That(serverFromList.Data.Name, Is.EqualTo(serverName));
             }
         }
 
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, content);
             PostgreSqlServerResource server = lro.Value;
-            Assert.AreEqual(serverName, server.Data.Name);
+            Assert.That(server.Data.Name, Is.EqualTo(serverName));
             // Update
             lro = await server.UpdateAsync(WaitUntil.Completed, new PostgreSqlServerPatch()
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             });
             PostgreSqlServerResource serverFromUpdate = lro.Value;
-            Assert.AreEqual(serverName, serverFromUpdate.Data.Name);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, serverFromUpdate.Data.Identity.ManagedServiceIdentityType);
+            Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
+            Assert.That(serverFromUpdate.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
             // Get
             PostgreSqlServerResource serverFromGet = await serverFromUpdate.GetAsync();
-            Assert.AreEqual(serverName, serverFromGet.Data.Name);
+            Assert.That(serverFromGet.Data.Name, Is.EqualTo(serverName));
             // Delete
             await serverFromGet.DeleteAsync(WaitUntil.Completed);
         }

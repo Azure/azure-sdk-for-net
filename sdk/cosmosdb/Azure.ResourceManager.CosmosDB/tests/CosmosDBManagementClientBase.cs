@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         protected static void AssertAutoscale(ThroughputSettingData throughput)
         {
-            Assert.NotNull(throughput.Resource.AutoscaleSettings);
+            Assert.That(throughput.Resource.AutoscaleSettings, Is.Not.Null);
             Assert.That(throughput.Resource.AutoscaleSettings.MaxThroughput, Is.GreaterThan(0));
         }
 
         protected static void AssertManualThroughput(ThroughputSettingData throughput)
         {
             Assert.That(throughput.Resource.Throughput, Is.GreaterThan(0));
-            Assert.IsNull(throughput.Resource.AutoscaleSettings);
+            Assert.That(throughput.Resource.AutoscaleSettings, Is.Null);
         }
 
         protected async Task<ResourceIdentifier> GetSubnetId(string vnetName, VirtualNetworkData vnet)

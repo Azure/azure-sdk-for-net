@@ -40,23 +40,23 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
             // CreateOrUpdate
             var globalParameters = await CreateOrUpdateGlobalParameter(dataFactory, globalParameterName);
-            Assert.IsNotNull(globalParameters);
-            Assert.AreEqual(globalParameterName, globalParameters.Data.Name);
+            Assert.That(globalParameters, Is.Not.Null);
+            Assert.That(globalParameters.Data.Name, Is.EqualTo(globalParameterName));
             // Exist
             bool flag = await dataFactory.GetDataFactoryGlobalParameters().ExistsAsync(globalParameterName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             // Get
             var globalParametersGet = await dataFactory.GetDataFactoryGlobalParameters().GetAsync(globalParameterName);
-            Assert.IsNotNull(globalParameters);
-            Assert.AreEqual(globalParameterName, globalParametersGet.Value.Data.Name);
+            Assert.That(globalParameters, Is.Not.Null);
+            Assert.That(globalParametersGet.Value.Data.Name, Is.EqualTo(globalParameterName));
             // GetAll
             var list = await dataFactory.GetDataFactoryGlobalParameters().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(globalParameterName, list.FirstOrDefault().Data.Name);
+            Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(globalParameterName));
             // Delete
             await globalParameters.DeleteAsync(WaitUntil.Completed);
             flag = await dataFactory.GetDataFactoryGlobalParameters().ExistsAsync(globalParameterName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

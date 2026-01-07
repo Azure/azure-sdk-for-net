@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 
             // Exist
             bool flag = await _artifactSourceCollection.ExistsAsync(artifactSourceName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var artifactSource = await _artifactSourceCollection.GetAsync(artifactSourceName);
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 
         private void ValidateDevTestLabArtifactSource(DevTestLabArtifactSourceData artifactSource, string artifactSourceName)
         {
-            Assert.IsNotNull(artifactSource);
+            Assert.That(artifactSource, Is.Not.Null);
             Assert.IsNotEmpty(artifactSource.Id);
-            Assert.AreEqual(artifactSourceName, artifactSource.Name);
-            Assert.AreEqual(DevTestLabSourceControlType.GitHub, artifactSource.SourceType);
-            Assert.AreEqual(DevTestLabEnableStatus.Enabled, artifactSource.Status);
+            Assert.That(artifactSource.Name, Is.EqualTo(artifactSourceName));
+            Assert.That(artifactSource.SourceType, Is.EqualTo(DevTestLabSourceControlType.GitHub));
+            Assert.That(artifactSource.Status, Is.EqualTo(DevTestLabEnableStatus.Enabled));
         }
     }
 }

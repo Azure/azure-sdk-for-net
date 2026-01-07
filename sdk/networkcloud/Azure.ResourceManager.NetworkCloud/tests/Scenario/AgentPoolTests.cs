@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Create
             ArmOperation<NetworkCloudAgentPoolResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            Assert.AreEqual(agentPoolName, createResult.Value.Data.Name);
+            Assert.That(createResult.Value.Data.Name, Is.EqualTo(agentPoolName));
 
             // Get
             var getResult = await agentPool.GetAsync();
-            Assert.AreEqual(agentPoolName, getResult.Value.Data.Name);
+            Assert.That(getResult.Value.Data.Name, Is.EqualTo(agentPoolName));
 
             // List
             var listByKubernetesCluster = new List<NetworkCloudAgentPoolResource>();
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 }
             };
             ArmOperation<NetworkCloudAgentPoolResource> updateResult = await agentPool.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
+            Assert.That(updateResult.Value.Data.Tags, Is.EqualTo(patch.Tags));
 
             // Delete
             var deleteResult = await agentPool.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResult.HasCompleted);
+            Assert.That(deleteResult.HasCompleted, Is.True);
         }
     }
 }

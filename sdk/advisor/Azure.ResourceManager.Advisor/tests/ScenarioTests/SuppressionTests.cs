@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Advisor.Tests
             // standard properties must all be populated
             foreach (var rec in recs)
             {
-                Assert.IsFalse(string.IsNullOrWhiteSpace(rec.Data.Id));
-                Assert.IsFalse(string.IsNullOrWhiteSpace(rec.Data.Name));
-                Assert.IsFalse(string.IsNullOrWhiteSpace(rec.Data.RecommendationTypeId));
-                Assert.NotNull(rec.Data.Category);
-                Assert.NotNull(rec.Data.Impact);
-                Assert.NotNull(rec.Data.ShortDescription);
-                Assert.IsFalse(string.IsNullOrWhiteSpace(rec.Data.ShortDescription.Problem));
-                Assert.IsFalse(string.IsNullOrWhiteSpace(rec.Data.ShortDescription.Solution));
+                Assert.That(string.IsNullOrWhiteSpace(rec.Data.Id), Is.False);
+                Assert.That(string.IsNullOrWhiteSpace(rec.Data.Name), Is.False);
+                Assert.That(string.IsNullOrWhiteSpace(rec.Data.RecommendationTypeId), Is.False);
+                Assert.That(rec.Data.Category, Is.Not.Null);
+                Assert.That(rec.Data.Impact, Is.Not.Null);
+                Assert.That(rec.Data.ShortDescription, Is.Not.Null);
+                Assert.That(string.IsNullOrWhiteSpace(rec.Data.ShortDescription.Problem), Is.False);
+                Assert.That(string.IsNullOrWhiteSpace(rec.Data.ShortDescription.Solution), Is.False);
                 if (!string.IsNullOrWhiteSpace(rec.Data.ImpactedValue))
                 {
                     recommendation = rec;
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Advisor.Tests
             }
 
             // at least one recommendation must have ImpactedValue
-            Assert.NotNull(recommendation);
+            Assert.That(recommendation, Is.Not.Null);
 
             // we should be able to fetch the recommendation by name
             var output = (await collection.GetAsync(recommendation.Data.Name)).Value;
-            Assert.AreEqual(recommendation.Id, output.Id);
-            Assert.AreEqual(recommendation.Data.Name, output.Data.Name);
+            Assert.That(output.Id, Is.EqualTo(recommendation.Id));
+            Assert.That(output.Data.Name, Is.EqualTo(recommendation.Data.Name));
 
             // we should be able to create a suppression with a specific TTL
             var suppressionCollection = recommendation.GetSuppressionContracts();
@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.Advisor.Tests
                 WaitUntil.Completed,
                 suppressionName,
                 new SuppressionContractData() { Ttl = TimeToLive })).Value;
-            Assert.AreEqual(TimeToLive, suppression.Data.Ttl);
+            Assert.That(suppression.Data.Ttl, Is.EqualTo(TimeToLive));
 
             // we should be able to fetch the suppression by name
             var sup = (await suppressionCollection.GetAsync(suppressionName)).Value;
-            Assert.AreEqual(sup.Data.Name, suppressionName);
+            Assert.That(suppressionName, Is.EqualTo(sup.Data.Name));
 
             // we should be able to delete the suppression by name
             await sup.DeleteAsync(WaitUntil.Completed);
             var sups = (await suppressionCollection.ExistsAsync(suppressionName)).Value;
-            Assert.IsFalse(sups);
+            Assert.That(sups, Is.False);
         }
     }
 }

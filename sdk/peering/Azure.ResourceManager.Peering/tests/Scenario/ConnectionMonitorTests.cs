@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.Peering.Tests
             string connectionMonitorTestName = Recording.GenerateAssetName("connect");
             var data = new ConnectionMonitorTestData();
             var connect = await _connectionMonitorTestCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorTestName, data);
-            Assert.IsNotNull(connect);
-            Assert.AreEqual(connectionMonitorTestName, connect.Value.Data.Name);
+            Assert.That(connect, Is.Not.Null);
+            Assert.That(connect.Value.Data.Name, Is.EqualTo(connectionMonitorTestName));
 
             // Exist
             bool flag = await _connectionMonitorTestCollection.ExistsAsync(connectionMonitorTestName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var getResponse = await _connectionMonitorTestCollection.GetAsync(connectionMonitorTestName);
-            Assert.IsNotNull(getResponse);
-            Assert.AreEqual(connectionMonitorTestName, getResponse.Value.Data.Name);
+            Assert.That(getResponse, Is.Not.Null);
+            Assert.That(getResponse.Value.Data.Name, Is.EqualTo(connectionMonitorTestName));
 
             // GetAll
             var list = await _connectionMonitorTestCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
-            Assert.IsNotNull(list.First(item => item.Data.Name == connectionMonitorTestName));
+            Assert.That(list.First(item => item.Data.Name == connectionMonitorTestName), Is.Not.Null);
 
             // Delete
             await connect.Value.DeleteAsync(WaitUntil.Completed);
             flag = await _connectionMonitorTestCollection.ExistsAsync(connectionMonitorTestName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

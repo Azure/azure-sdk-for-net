@@ -60,18 +60,18 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             var beforeCreateSystemTopics = await SystemTopicCollection.GetAllAsync().ToEnumerableAsync();
             var createSystemTopicResponse = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, data)).Value;
-            Assert.NotNull(createSystemTopicResponse);
-            Assert.AreEqual(createSystemTopicResponse.Data.ProvisioningState, EventGridResourceProvisioningState.Succeeded);
+            Assert.That(createSystemTopicResponse, Is.Not.Null);
+            Assert.That(EventGridResourceProvisioningState.Succeeded, Is.EqualTo(createSystemTopicResponse.Data.ProvisioningState));
             var afterCreateSystemTopics = await SystemTopicCollection.GetAllAsync().ToEnumerableAsync();
 
             // List all system topics under resource group
             var systemTopicsUnderResourceGroup = await ResourceGroup.GetSystemTopics().GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(systemTopicsUnderResourceGroup.Count > 0);
+            Assert.That(systemTopicsUnderResourceGroup.Count > 0, Is.True);
 
             // List all system topics under subscription
             var systemTopicsInAzureSubscription = await DefaultSubscription.GetSystemTopicsAsync().ToEnumerableAsync();
-            Assert.NotNull(systemTopicsInAzureSubscription);
-            Assert.IsTrue(systemTopicsInAzureSubscription.Count >= 0);
+            Assert.That(systemTopicsInAzureSubscription, Is.Not.Null);
+            Assert.That(systemTopicsInAzureSubscription.Count >= 0, Is.True);
 
             var SystemTopicEventSubscriptionsCollection = createSystemTopicResponse.GetSystemTopicEventSubscriptions();
 
@@ -92,18 +92,18 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
             var createSystemTopicEventSubscriptionResponse1 = (await SystemTopicEventSubscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicEventSubscriptionName1, eventSubscriptionData)).Value;
             var createSystemTopicEventSubscriptionResponse2 = (await SystemTopicEventSubscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicEventSubscriptionName2, eventSubscriptionData)).Value;
-            Assert.NotNull(createSystemTopicEventSubscriptionResponse1);
-            Assert.AreEqual(createSystemTopicEventSubscriptionResponse1.Data.ProvisioningState, EventSubscriptionProvisioningState.Succeeded);
-            Assert.NotNull(createSystemTopicEventSubscriptionResponse2);
-            Assert.AreEqual(createSystemTopicEventSubscriptionResponse2.Data.ProvisioningState, EventSubscriptionProvisioningState.Succeeded);
+            Assert.That(createSystemTopicEventSubscriptionResponse1, Is.Not.Null);
+            Assert.That(EventSubscriptionProvisioningState.Succeeded, Is.EqualTo(createSystemTopicEventSubscriptionResponse1.Data.ProvisioningState));
+            Assert.That(createSystemTopicEventSubscriptionResponse2, Is.Not.Null);
+            Assert.That(EventSubscriptionProvisioningState.Succeeded, Is.EqualTo(createSystemTopicEventSubscriptionResponse2.Data.ProvisioningState));
 
             // Get created System topic
             var getSystemTopicSubscription1Response = (await SystemTopicEventSubscriptionsCollection.GetAsync(systemTopicEventSubscriptionName1)).Value;
             var getSystemTopicSubscription2Response = (await SystemTopicEventSubscriptionsCollection.GetAsync(systemTopicEventSubscriptionName2)).Value;
-            Assert.AreEqual(systemTopicEventSubscriptionName1, getSystemTopicSubscription1Response.Data.Name);
-            Assert.AreEqual(EndpointType.MonitorAlert, getSystemTopicSubscription1Response.Data.Destination.EndpointType);
-            Assert.AreEqual(systemTopicEventSubscriptionName2, getSystemTopicSubscription2Response.Data.Name);
-            Assert.AreEqual(EndpointType.MonitorAlert, getSystemTopicSubscription2Response.Data.Destination.EndpointType);
+            Assert.That(getSystemTopicSubscription1Response.Data.Name, Is.EqualTo(systemTopicEventSubscriptionName1));
+            Assert.That(getSystemTopicSubscription1Response.Data.Destination.EndpointType, Is.EqualTo(EndpointType.MonitorAlert));
+            Assert.That(getSystemTopicSubscription2Response.Data.Name, Is.EqualTo(systemTopicEventSubscriptionName2));
+            Assert.That(getSystemTopicSubscription2Response.Data.Destination.EndpointType, Is.EqualTo(EndpointType.MonitorAlert));
 
             // Update System topic
             EventGridSubscriptionPatch patch = new EventGridSubscriptionPatch()
@@ -122,27 +122,27 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 EventDeliverySchema = EventDeliverySchema.CloudEventSchemaV1_0
             };
             var updateSystemTopicSubscriptionResponse = (await getSystemTopicSubscription1Response.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.AreEqual("ExamplePrefix2", updateSystemTopicSubscriptionResponse.Data.Filter.SubjectBeginsWith);
-            Assert.AreEqual("ExampleSuffix2", updateSystemTopicSubscriptionResponse.Data.Filter.SubjectEndsWith);
-            Assert.AreEqual(MonitorAlertSeverity.Sev4, ((MonitorAlertEventSubscriptionDestination)updateSystemTopicSubscriptionResponse.Data.Destination).Severity);
+            Assert.That(updateSystemTopicSubscriptionResponse.Data.Filter.SubjectBeginsWith, Is.EqualTo("ExamplePrefix2"));
+            Assert.That(updateSystemTopicSubscriptionResponse.Data.Filter.SubjectEndsWith, Is.EqualTo("ExampleSuffix2"));
+            Assert.That(((MonitorAlertEventSubscriptionDestination)updateSystemTopicSubscriptionResponse.Data.Destination).Severity, Is.EqualTo(MonitorAlertSeverity.Sev4));
 
             // List all event subscriptions under system topics
             var eventSubscriptionCollection = createSystemTopicResponse.GetSystemTopicEventSubscriptions();
             var listSystemTopicsResponse = await eventSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listSystemTopicsResponse);
-            Assert.AreEqual(2, listSystemTopicsResponse.Count, "Expected 2 event subscriptions, but found " + listSystemTopicsResponse.Count);
+            Assert.That(listSystemTopicsResponse, Is.Not.Null);
+            Assert.That(listSystemTopicsResponse.Count, Is.EqualTo(2), "Expected 2 event subscriptions, but found " + listSystemTopicsResponse.Count);
 
             // Delete System topics event subscription
             await getSystemTopicSubscription1Response.DeleteAsync(WaitUntil.Completed);
             await getSystemTopicSubscription2Response.DeleteAsync(WaitUntil.Completed);
             var listSystemTopicsResponseAfterDeletion = await eventSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listSystemTopicsResponseAfterDeletion);
-            Assert.AreEqual(listSystemTopicsResponseAfterDeletion.Count, 0);
+            Assert.That(listSystemTopicsResponseAfterDeletion, Is.Not.Null);
+            Assert.That(listSystemTopicsResponseAfterDeletion.Count, Is.EqualTo(0));
 
             // Delete the System Topic
             await createSystemTopicResponse.DeleteAsync(WaitUntil.Completed);
             var resultFalse = (await SystemTopicCollection.ExistsAsync(systemTopicName)).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
         }
 
         [Test]
@@ -178,8 +178,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
             data.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk-eventgrid-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-eventgrid-test-userAssignedManagedIdentity"), userAssignedIdentity);
             var createSystemTopicResponse = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, data)).Value;
-            Assert.NotNull(createSystemTopicResponse);
-            Assert.AreEqual(createSystemTopicResponse.Data.ProvisioningState, EventGridResourceProvisioningState.Succeeded);
+            Assert.That(createSystemTopicResponse, Is.Not.Null);
+            Assert.That(EventGridResourceProvisioningState.Succeeded, Is.EqualTo(createSystemTopicResponse.Data.ProvisioningState));
 
             // Update the system topic
             SystemTopicPatch systemTopicPatch = new SystemTopicPatch()
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 }
             };
             var updateSystemTopicResponse = (await createSystemTopicResponse.UpdateAsync(WaitUntil.Completed, systemTopicPatch)).Value;
-            Assert.NotNull(updateSystemTopicResponse);
-            Assert.AreEqual(updateSystemTopicResponse.Data.Name, systemTopicName);
+            Assert.That(updateSystemTopicResponse, Is.Not.Null);
+            Assert.That(systemTopicName, Is.EqualTo(updateSystemTopicResponse.Data.Name));
 
             var SystemTopicEventSubscriptionsCollection = createSystemTopicResponse.GetSystemTopicEventSubscriptions();
 
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Get created System topic
             var getSystemTopicSubscription1Response = (await SystemTopicEventSubscriptionsCollection.GetAsync(systemTopicEventSubscriptionName1)).Value;
             var getSystemTopicSubscription2Response = (await SystemTopicEventSubscriptionsCollection.GetAsync(systemTopicEventSubscriptionName2)).Value;
-            Assert.AreEqual(systemTopicEventSubscriptionName1, getSystemTopicSubscription1Response.Data.Name);
-            Assert.AreEqual(EndpointType.NamespaceTopic, getSystemTopicSubscription1Response.Data.DeliveryWithResourceIdentity.Destination.EndpointType);
-            Assert.AreEqual(systemTopicEventSubscriptionName2, getSystemTopicSubscription2Response.Data.Name);
-            Assert.AreEqual(EndpointType.NamespaceTopic, getSystemTopicSubscription2Response.Data.DeliveryWithResourceIdentity.Destination.EndpointType);
+            Assert.That(getSystemTopicSubscription1Response.Data.Name, Is.EqualTo(systemTopicEventSubscriptionName1));
+            Assert.That(getSystemTopicSubscription1Response.Data.DeliveryWithResourceIdentity.Destination.EndpointType, Is.EqualTo(EndpointType.NamespaceTopic));
+            Assert.That(getSystemTopicSubscription2Response.Data.Name, Is.EqualTo(systemTopicEventSubscriptionName2));
+            Assert.That(getSystemTopicSubscription2Response.Data.DeliveryWithResourceIdentity.Destination.EndpointType, Is.EqualTo(EndpointType.NamespaceTopic));
 
             // Update System topic event subscription
             EventGridSubscriptionPatch patch = new EventGridSubscriptionPatch()
@@ -243,25 +243,25 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 EventDeliverySchema = EventDeliverySchema.CloudEventSchemaV1_0
             };
             var updateSystemTopicSubscriptionResponse = (await getSystemTopicSubscription1Response.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.AreEqual("ExamplePrefix2", updateSystemTopicSubscriptionResponse.Data.Filter.SubjectBeginsWith);
-            Assert.AreEqual("ExampleSuffix2", updateSystemTopicSubscriptionResponse.Data.Filter.SubjectEndsWith);
+            Assert.That(updateSystemTopicSubscriptionResponse.Data.Filter.SubjectBeginsWith, Is.EqualTo("ExamplePrefix2"));
+            Assert.That(updateSystemTopicSubscriptionResponse.Data.Filter.SubjectEndsWith, Is.EqualTo("ExampleSuffix2"));
 
             // List all event subscriptions under system topics
             var eventSubscriptionCollection = createSystemTopicResponse.GetSystemTopicEventSubscriptions();
             var listSystemTopicsResponse = await eventSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listSystemTopicsResponse);
-            Assert.AreEqual(listSystemTopicsResponse.Count, 2);
+            Assert.That(listSystemTopicsResponse, Is.Not.Null);
+            Assert.That(listSystemTopicsResponse.Count, Is.EqualTo(2));
 
             // Delete System topic event subscriptions
             await getSystemTopicSubscription1Response.DeleteAsync(WaitUntil.Completed);
             await getSystemTopicSubscription2Response.DeleteAsync(WaitUntil.Completed);
             var listSystemTopicsResponseAfterDeletion = await eventSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listSystemTopicsResponseAfterDeletion);
-            Assert.AreEqual(listSystemTopicsResponseAfterDeletion.Count, 0);
+            Assert.That(listSystemTopicsResponseAfterDeletion, Is.Not.Null);
+            Assert.That(listSystemTopicsResponseAfterDeletion.Count, Is.EqualTo(0));
             // Delete the System Topic
             await createSystemTopicResponse.DeleteAsync(WaitUntil.Completed);
             var resultFalse = (await SystemTopicCollection.ExistsAsync(systemTopicName)).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
         }
 
         [Test]
@@ -291,23 +291,23 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 systemTopicResource = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, systemTopicData)).Value;
             }
-            Assert.NotNull(systemTopicResource);
+            Assert.That(systemTopicResource, Is.Not.Null);
 
             // Get system topic from collection
             var getFromCollectionResponse = await SystemTopicCollection.GetAsync(systemTopicName);
-            Assert.NotNull(getFromCollectionResponse);
-            Assert.AreEqual(systemTopicName, getFromCollectionResponse.Value.Data.Name);
+            Assert.That(getFromCollectionResponse, Is.Not.Null);
+            Assert.That(getFromCollectionResponse.Value.Data.Name, Is.EqualTo(systemTopicName));
 
             // Get system topic from resource
             var getFromResourceResponse = await systemTopicResource.GetAsync();
-            Assert.NotNull(getFromResourceResponse);
-            Assert.AreEqual(systemTopicName, getFromResourceResponse.Value.Data.Name);
+            Assert.That(getFromResourceResponse, Is.Not.Null);
+            Assert.That(getFromResourceResponse.Value.Data.Name, Is.EqualTo(systemTopicName));
 
             // Add a tag
             var addTagResponse = await systemTopicResource.AddTagAsync("testTag", "testValue");
-            Assert.NotNull(addTagResponse);
-            Assert.IsTrue(addTagResponse.Value.Data.Tags.ContainsKey("testTag"));
-            Assert.AreEqual("testValue", addTagResponse.Value.Data.Tags["testTag"]);
+            Assert.That(addTagResponse, Is.Not.Null);
+            Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("testTag"), Is.True);
+            Assert.That(addTagResponse.Value.Data.Tags["testTag"], Is.EqualTo("testValue"));
 
             // Set tags
             var tagsToSet = new Dictionary<string, string>
@@ -316,17 +316,17 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 { "tagB", "valueB" }
             };
             var setTagsResponse = await systemTopicResource.SetTagsAsync(tagsToSet);
-            Assert.NotNull(setTagsResponse);
-            Assert.IsTrue(setTagsResponse.Value.Data.Tags.ContainsKey("tagA"));
-            Assert.AreEqual("valueA", setTagsResponse.Value.Data.Tags["tagA"]);
-            Assert.IsTrue(setTagsResponse.Value.Data.Tags.ContainsKey("tagB"));
-            Assert.AreEqual("valueB", setTagsResponse.Value.Data.Tags["tagB"]);
+            Assert.That(setTagsResponse, Is.Not.Null);
+            Assert.That(setTagsResponse.Value.Data.Tags.ContainsKey("tagA"), Is.True);
+            Assert.That(setTagsResponse.Value.Data.Tags["tagA"], Is.EqualTo("valueA"));
+            Assert.That(setTagsResponse.Value.Data.Tags.ContainsKey("tagB"), Is.True);
+            Assert.That(setTagsResponse.Value.Data.Tags["tagB"], Is.EqualTo("valueB"));
 
             // Remove a tag
             var removeTagResponse = await systemTopicResource.RemoveTagAsync("tagA");
-            Assert.NotNull(removeTagResponse);
-            Assert.IsFalse(removeTagResponse.Value.Data.Tags.ContainsKey("tagA"));
-            Assert.IsTrue(removeTagResponse.Value.Data.Tags.ContainsKey("tagB"));
+            Assert.That(removeTagResponse, Is.Not.Null);
+            Assert.That(removeTagResponse.Value.Data.Tags.ContainsKey("tagA"), Is.False);
+            Assert.That(removeTagResponse.Value.Data.Tags.ContainsKey("tagB"), Is.True);
 
             // ExtensionTopicResourceGetAsync
             var resourceId = SystemTopicResource.CreateResourceIdentifier(
@@ -337,9 +337,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var systemTopicFromId = Client.GetSystemTopicResource(resourceId);
             var response = await systemTopicFromId.GetAsync();
 
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
-            Assert.AreEqual(systemTopicName, response.Value.Data.Name);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Data.Name, Is.EqualTo(systemTopicName));
 
             // Cleanup
             await systemTopicResource.DeleteAsync(WaitUntil.Completed);
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 systemTopicResource = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, systemTopicData)).Value;
             }
-            Assert.NotNull(systemTopicResource);
+            Assert.That(systemTopicResource, Is.Not.Null);
 
             var eventSubscriptions = systemTopicResource.GetSystemTopicEventSubscriptions();
 
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var eventSubscriptionResource = (await eventSubscriptions.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, eventSubscriptionData)).Value;
-            Assert.NotNull(eventSubscriptionResource);
+            Assert.That(eventSubscriptionResource, Is.Not.Null);
 
             // Get delivery attributes
             IReadOnlyList<DeliveryAttributeMapping> deliveryAttributesList = null;
@@ -406,17 +406,17 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 deliveryAttributesList = Array.Empty<DeliveryAttributeMapping>();
             }
-            Assert.NotNull(deliveryAttributesList);
+            Assert.That(deliveryAttributesList, Is.Not.Null);
 
             // Get full URI
             var fullUriResponse = await eventSubscriptionResource.GetFullUriAsync();
-            Assert.NotNull(fullUriResponse);
-            Assert.NotNull(fullUriResponse.Value);
+            Assert.That(fullUriResponse, Is.Not.Null);
+            Assert.That(fullUriResponse.Value, Is.Not.Null);
 
             // Get event subscription resource from system topic
             var getEventSubscriptionResponse = await systemTopicResource.GetSystemTopicEventSubscriptionAsync(eventSubscriptionName);
-            Assert.NotNull(getEventSubscriptionResponse);
-            Assert.AreEqual(eventSubscriptionName, getEventSubscriptionResponse.Value.Data.Name);
+            Assert.That(getEventSubscriptionResponse, Is.Not.Null);
+            Assert.That(getEventSubscriptionResponse.Value.Data.Name, Is.EqualTo(eventSubscriptionName));
 
             // Cleanup
             await eventSubscriptionResource.DeleteAsync(WaitUntil.Completed);

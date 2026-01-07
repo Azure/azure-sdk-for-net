@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.Redis.Tests
             };
             var response = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
 
-            Assert.AreEqual(redisCacheName, response.Data.Name);
-            Assert.AreEqual("642", response.Data.RedisConfiguration.MaxMemoryDelta);
-            Assert.AreEqual("642", response.Data.RedisConfiguration.MaxMemoryReserved);
-            Assert.AreEqual(RedisSkuName.Premium, response.Data.Sku.Name);
-            Assert.AreEqual(RedisSkuFamily.Premium, response.Data.Sku.Family);
-            Assert.AreEqual(RedisTlsVersion.Tls1_2, response.Data.MinimumTlsVersion);
-            Assert.AreEqual(2, response.Data.ReplicasPerMaster);
-            Assert.AreEqual("6", response.Data.RedisVersion.Split('.')[0]);// 6 is the current 'latest' version. Will change in the future.
+            Assert.That(response.Data.Name, Is.EqualTo(redisCacheName));
+            Assert.That(response.Data.RedisConfiguration.MaxMemoryDelta, Is.EqualTo("642"));
+            Assert.That(response.Data.RedisConfiguration.MaxMemoryReserved, Is.EqualTo("642"));
+            Assert.That(response.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+            Assert.That(response.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+            Assert.That(response.Data.MinimumTlsVersion, Is.EqualTo(RedisTlsVersion.Tls1_2));
+            Assert.That(response.Data.ReplicasPerMaster, Is.EqualTo(2));
+            Assert.That(response.Data.RedisVersion.Split('.')[0], Is.EqualTo("6"));// 6 is the current 'latest' version. Will change in the future.
 
-            Assert.AreEqual(3, response.Data.Instances.Count);
+            Assert.That(response.Data.Instances.Count, Is.EqualTo(3));
             for (int i = 0; i < response.Data.Instances.Count; i++)
             {
-                Assert.AreEqual(15000 + i, response.Data.Instances[i].SslPort);
-                Assert.IsNull(response.Data.Instances[i].NonSslPort);
-                Assert.AreEqual(0, response.Data.Instances[i].ShardId);
-                Assert.IsNull(response.Data.Instances[i].Zone);
+                Assert.That(response.Data.Instances[i].SslPort, Is.EqualTo(15000 + i));
+                Assert.That(response.Data.Instances[i].NonSslPort, Is.Null);
+                Assert.That(response.Data.Instances[i].ShardId, Is.EqualTo(0));
+                Assert.That(response.Data.Instances[i].Zone, Is.Null);
             }
 
             await response.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
         }
     }
 }

@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             };
             ArmOperation<VMwareVmTemplateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmTemplateName, data);
             VMwareVmTemplateResource vmTemplate = lro.Value;
-            Assert.IsNotNull(vmTemplate);
+            Assert.That(vmTemplate, Is.Not.Null);
             VMwareVmTemplateData resourceData = vmTemplate.Data;
-            Assert.AreEqual(resourceData.Name, vmTemplateName);
+            Assert.That(vmTemplateName, Is.EqualTo(resourceData.Name));
 
             // Get
             VMwareVmTemplateResource result = await collection.GetAsync(vmTemplateName);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // Check exists
             bool isExist = await collection.ExistsAsync(vmTemplateName);
-            Assert.IsTrue(isExist);
+            Assert.That(isExist, Is.True);
 
             // Get if exists
             NullableResponse<VMwareVmTemplateResource> response = await collection.GetIfExistsAsync(vmTemplateName);
             result = response.HasValue ? response.Value : null;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // List
             isExist = false;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
                 if (item.Data.Name == vmTemplateName)
                     isExist = true;
             }
-            Assert.IsTrue(isExist);
+            Assert.That(isExist, Is.True);
 
             // Delete
             await vmTemplate.DeleteAsync(WaitUntil.Completed);

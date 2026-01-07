@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
-            Assert.AreEqual(afdProfileName, afdProfileResource.Data.Name);
+            Assert.That(afdProfileResource.Data.Name, Is.EqualTo(afdProfileName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, null, afdProfileResource.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, afdProfileName, null));
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         // disable due to a bug
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                     count++;
                 }
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]

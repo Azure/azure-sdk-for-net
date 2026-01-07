@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Cdn.Tests
                 if (tempResourceUsage.ResourceType.Equals("profile"))
                 {
                     Assert.Greater(tempResourceUsage.CurrentValue, 0);
-                    Assert.AreEqual(tempResourceUsage.Limit, 200);
+                    Assert.That(tempResourceUsage.Limit, Is.EqualTo(200));
                 }
             }
-            Assert.AreEqual(count, 2);
+            Assert.That(count, Is.EqualTo(2));
         }
     }
 }

@@ -10,18 +10,18 @@ namespace Azure.ResourceManager.Nginx.Tests.Helpers
     {
         public static void AssertTrackedResourceData(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.Name.ToLowerInvariant(), r2.Name.ToLowerInvariant());
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.Name.ToLowerInvariant(), Is.EqualTo(r1.Name.ToLowerInvariant()));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.That(r2.Location, Is.EqualTo(r1.Location));
+            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
         }
 
         public static void AssertResourceData(ResourceData r1, ResourceData r2)
         {
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.Name.ToLowerInvariant(), r2.Name.ToLowerInvariant());
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.Name.ToLowerInvariant(), Is.EqualTo(r1.Name.ToLowerInvariant()));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
         }
     }
 }

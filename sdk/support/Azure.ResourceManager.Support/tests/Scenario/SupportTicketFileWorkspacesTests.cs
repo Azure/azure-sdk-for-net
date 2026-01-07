@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Exist()
         {
             var flag = await _subscriptionFileWorkspaceCollection.ExistsAsync(_existSupportTicketFileWorkspaceName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Support.Tests
         {
             Assert.IsNotNull(supportTicketFileWorkspace);
             Assert.IsNotEmpty(supportTicketFileWorkspace.Id);
-            Assert.AreEqual(supportTicketFileWorkspace.Name, fileWorkspaceName);
+            Assert.That(fileWorkspaceName, Is.EqualTo(supportTicketFileWorkspace.Name));
         }
     }
 }

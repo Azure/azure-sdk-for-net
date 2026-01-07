@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Exist()
         {
             bool flag = await mediaPrivateLinkResourceCollection.ExistsAsync("keydelivery");
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Get()
         {
             var mediaPrivateLinkResource = await mediaPrivateLinkResourceCollection.GetAsync("keydelivery");
-            Assert.IsNotNull(mediaPrivateLinkResource);
-            Assert.AreEqual("keydelivery", mediaPrivateLinkResource.Value.Data.Name);
+            Assert.That(mediaPrivateLinkResource, Is.Not.Null);
+            Assert.That(mediaPrivateLinkResource.Value.Data.Name, Is.EqualTo("keydelivery"));
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Media.Tests
         {
             var list = await mediaPrivateLinkResourceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(3, list.Count);
+            Assert.That(list.Count, Is.EqualTo(3));
         }
     }
 }

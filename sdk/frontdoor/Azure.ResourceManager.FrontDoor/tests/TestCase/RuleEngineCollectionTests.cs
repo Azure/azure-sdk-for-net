@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
             var input = ResourceDataHelpers.GetRulesEngineData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             FrontDoorRulesEngineResource rules1 = lro.Value;
-            Assert.AreEqual(name, rules1.Data.Name);
+            Assert.That(rules1.Data.Name, Is.EqualTo(name));
             //2.Get
             FrontDoorRulesEngineResource rules2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertRuleEngine(rules1.Data, rules2.Data);
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);
             //4Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

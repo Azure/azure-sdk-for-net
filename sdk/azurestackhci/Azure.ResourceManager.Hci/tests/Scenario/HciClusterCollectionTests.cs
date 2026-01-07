@@ -31,23 +31,23 @@ namespace Azure.ResourceManager.Hci.Tests
             var clusterName = Recording.GenerateAssetName("hci-cluster");
             var cluster = await CreateHciClusterAsync(resourceGroup, clusterName);
             var clusterData = cluster.Data;
-            Assert.AreEqual(clusterData.Name, clusterName);
-            Assert.AreEqual(clusterData.Location, location);
-            Assert.AreEqual(clusterData.AadClientId, new Guid(TestEnvironment.ClientId));
-            Assert.AreEqual(clusterData.AadTenantId, new Guid(TestEnvironment.TenantId));
+            Assert.That(clusterName, Is.EqualTo(clusterData.Name));
+            Assert.That(location, Is.EqualTo(clusterData.Location));
+            Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterData.AadClientId));
+            Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterData.AadTenantId));
 
             HciClusterResource clusterFromGet = await clusterCollection.GetAsync(clusterName);
-            Assert.AreEqual(clusterFromGet.Data.Name, clusterName);
-            Assert.AreEqual(clusterFromGet.Data.Location, location);
-            Assert.AreEqual(clusterFromGet.Data.AadClientId, new Guid(TestEnvironment.ClientId));
-            Assert.AreEqual(clusterFromGet.Data.AadTenantId, new Guid(TestEnvironment.TenantId));
+            Assert.That(clusterName, Is.EqualTo(clusterFromGet.Data.Name));
+            Assert.That(location, Is.EqualTo(clusterFromGet.Data.Location));
+            Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterFromGet.Data.AadClientId));
+            Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterFromGet.Data.AadTenantId));
 
             await foreach (HciClusterResource clusterFromList in clusterCollection)
             {
-                Assert.AreEqual(clusterFromList.Data.Name, clusterName);
-                Assert.AreEqual(clusterFromList.Data.Location, location);
-                Assert.AreEqual(clusterFromList.Data.AadClientId, new Guid(TestEnvironment.ClientId));
-                Assert.AreEqual(clusterFromList.Data.AadTenantId, new Guid(TestEnvironment.TenantId));
+                Assert.That(clusterName, Is.EqualTo(clusterFromList.Data.Name));
+                Assert.That(location, Is.EqualTo(clusterFromList.Data.Location));
+                Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterFromList.Data.AadClientId));
+                Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterFromList.Data.AadTenantId));
             }
         }
     }

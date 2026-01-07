@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string partnerName = Recording.GenerateAssetName("partner");
             var partner = await CreatePartner(partnerName);
-            Assert.IsNotNull(partner);
-            Assert.AreEqual(partnerName, partner.Data.Name);
+            Assert.That(partner, Is.Not.Null);
+            Assert.That(partner.Data.Name, Is.EqualTo(partnerName));
         }
 
         [RecordedTest]
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string partnerName = Recording.GenerateAssetName("partner");
             await CreatePartner(partnerName);
             bool flag = await _partnerCollection.ExistsAsync(partnerName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Logic.Tests
             string partnerName = Recording.GenerateAssetName("partner");
             await CreatePartner(partnerName);
             var partner = await _partnerCollection.GetAsync(partnerName);
-            Assert.IsNotNull(partner);
-            Assert.AreEqual(partnerName, partner.Value.Data.Name);
+            Assert.That(partner, Is.Not.Null);
+            Assert.That(partner.Value.Data.Name, Is.EqualTo(partnerName));
         }
 
         [RecordedTest]
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string partnerName = Recording.GenerateAssetName("partner");
             var partner = await CreatePartner(partnerName);
             bool flag = await _partnerCollection.ExistsAsync(partnerName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await partner.DeleteAsync(WaitUntil.Completed);
             flag = await _partnerCollection.ExistsAsync(partnerName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

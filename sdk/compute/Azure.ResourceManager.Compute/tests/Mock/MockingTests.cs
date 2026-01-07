@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var vm = client.GetVirtualMachineResource(vmId);
             var set = client.GetAvailabilitySetResource(availablitySetId);
 
-            Assert.AreEqual(vmId, vm.Id);
-            Assert.AreEqual(availablitySetId, set.Id);
+            Assert.That(vm.Id, Is.EqualTo(vmId));
+            Assert.That(set.Id, Is.EqualTo(availablitySetId));
         }
 
         [Test]
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var vmLro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, vmData, default);
             var vmResource = vmLro.Value;
 
-            Assert.AreEqual(setId, setResource.Id);
-            Assert.AreEqual(setData, setResource.Data);
-            Assert.AreEqual(vmId, vmResource.Id);
-            Assert.AreEqual(vmData, vmResource.Data);
+            Assert.That(setResource.Id, Is.EqualTo(setId));
+            Assert.That(setResource.Data, Is.EqualTo(setData));
+            Assert.That(vmResource.Id, Is.EqualTo(vmId));
+            Assert.That(vmResource.Data, Is.EqualTo(vmData));
         }
 
         [Test]
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var rg = rgMock.Object;
             AvailabilitySetResource setResource = await rg.GetAvailabilitySetAsync(setName);
 
-            Assert.AreEqual(setId, setResource.Id);
-            Assert.AreEqual(setData, setResource.Data);
+            Assert.That(setResource.Id, Is.EqualTo(setId));
+            Assert.That(setResource.Data, Is.EqualTo(setData));
         }
 
         [Test]
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
                 switch (count)
                 {
                     case 0:
-                        Assert.AreEqual(setId1, set.Id);
-                        Assert.AreEqual(setData1, set.Data);
+                        Assert.That(set.Id, Is.EqualTo(setId1));
+                        Assert.That(set.Data, Is.EqualTo(setData1));
                         break;
                     case 1:
-                        Assert.AreEqual(setId2, set.Id);
-                        Assert.AreEqual(setData2, set.Data);
+                        Assert.That(set.Id, Is.EqualTo(setId2));
+                        Assert.That(set.Data, Is.EqualTo(setData2));
                         break;
                     default:
                         Assert.Fail("We should only contain 2 items in the result");
@@ -229,12 +229,12 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
                 switch (count)
                 {
                     case 0:
-                        Assert.AreEqual(setId1, set.Id);
-                        Assert.AreEqual(setData1, set.Data);
+                        Assert.That(set.Id, Is.EqualTo(setId1));
+                        Assert.That(set.Data, Is.EqualTo(setData1));
                         break;
                     case 1:
-                        Assert.AreEqual(setId2, set.Id);
-                        Assert.AreEqual(setData2, set.Data);
+                        Assert.That(set.Id, Is.EqualTo(setId2));
+                        Assert.That(set.Data, Is.EqualTo(setData2));
                         break;
                     default:
                         Assert.Fail("We should only contain 2 items in the result");

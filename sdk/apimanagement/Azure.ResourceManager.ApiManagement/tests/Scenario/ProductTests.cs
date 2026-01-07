@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var listResponse = await collection.GetAllAsync().ToEnumerableAsync();
 
-            Assert.NotNull(listResponse);
-            Assert.AreEqual(2, listResponse.Count);// there are 2 product Starter and Unlimited created by default
+            Assert.That(listResponse, Is.Not.Null);
+            Assert.That(listResponse.Count, Is.EqualTo(2));// there are 2 product Starter and Unlimited created by default
 
             string productId = Recording.GenerateAssetName("newproduct");
 
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 productId,
                 createParameters)).Value;
 
-            Assert.NotNull(createResponse);
-            Assert.AreEqual(productName, createResponse.Data.DisplayName);
-            Assert.AreEqual(productApprovalRequired, createResponse.Data.IsApprovalRequired);
-            Assert.AreEqual(productDescription, createResponse.Data.Description);
-            Assert.AreEqual(productState, createResponse.Data.State);
-            Assert.AreEqual(productSubscriptionRequired, createResponse.Data.IsSubscriptionRequired);
-            Assert.AreEqual(productSubscriptionsLimit, createResponse.Data.SubscriptionsLimit);
-            Assert.AreEqual(productTerms, createResponse.Data.Terms);
+            Assert.That(createResponse, Is.Not.Null);
+            Assert.That(createResponse.Data.DisplayName, Is.EqualTo(productName));
+            Assert.That(createResponse.Data.IsApprovalRequired, Is.EqualTo(productApprovalRequired));
+            Assert.That(createResponse.Data.Description, Is.EqualTo(productDescription));
+            Assert.That(createResponse.Data.State, Is.EqualTo(productState));
+            Assert.That(createResponse.Data.IsSubscriptionRequired, Is.EqualTo(productSubscriptionRequired));
+            Assert.That(createResponse.Data.SubscriptionsLimit, Is.EqualTo(productSubscriptionsLimit));
+            Assert.That(createResponse.Data.Terms, Is.EqualTo(productTerms));
 
             // update product
             string patchedName = Recording.GenerateAssetName("productName");
@@ -103,20 +103,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get to check it was updated
             var getUpdatedResponse = (await collection.GetAsync(productId)).Value;
 
-            Assert.NotNull(getUpdatedResponse);
+            Assert.That(getUpdatedResponse, Is.Not.Null);
 
-            Assert.AreEqual(patchedName, getUpdatedResponse.Data.DisplayName);
-            Assert.AreEqual(productApprovalRequired, getUpdatedResponse.Data.IsApprovalRequired);
-            Assert.AreEqual(patchedDescription, getUpdatedResponse.Data.Description);
-            Assert.AreEqual(productState, getUpdatedResponse.Data.State);
-            Assert.AreEqual(productSubscriptionRequired, getUpdatedResponse.Data.IsSubscriptionRequired);
-            Assert.AreEqual(productSubscriptionsLimit, getUpdatedResponse.Data.SubscriptionsLimit);
-            Assert.AreEqual(patchedTerms, getUpdatedResponse.Data.Terms);
+            Assert.That(getUpdatedResponse.Data.DisplayName, Is.EqualTo(patchedName));
+            Assert.That(getUpdatedResponse.Data.IsApprovalRequired, Is.EqualTo(productApprovalRequired));
+            Assert.That(getUpdatedResponse.Data.Description, Is.EqualTo(patchedDescription));
+            Assert.That(getUpdatedResponse.Data.State, Is.EqualTo(productState));
+            Assert.That(getUpdatedResponse.Data.IsSubscriptionRequired, Is.EqualTo(productSubscriptionRequired));
+            Assert.That(getUpdatedResponse.Data.SubscriptionsLimit, Is.EqualTo(productSubscriptionsLimit));
+            Assert.That(getUpdatedResponse.Data.Terms, Is.EqualTo(patchedTerms));
 
             // delete the product
             await getUpdatedResponse.DeleteAsync(WaitUntil.Completed, ETag.All, true);
             var resultFalse = (await collection.ExistsAsync(productId)).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
 
             //
             // Product API test
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // list product apis: there should be 1
             var listApisResponse = await product.GetProductApisAsync().ToEnumerableAsync();
 
-            Assert.NotNull(listApisResponse);
-            Assert.AreEqual(listApisResponse.Count, 1);
+            Assert.That(listApisResponse, Is.Not.Null);
+            Assert.That(listApisResponse.Count, Is.EqualTo(1));
 
             // get api
             var getResponse = listApisResponse.FirstOrDefault();
-            Assert.NotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
 
             // remove api from product
             await product.DeleteProductApiAsync(getResponse.Name);
@@ -144,13 +144,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // add the api to product
             var addResponse = product.CreateOrUpdateProductApiAsync(getResponse.Name);
 
-            Assert.NotNull(addResponse);
+            Assert.That(addResponse, Is.Not.Null);
 
             // list to check it was added
             listApisResponse = await product.GetProductApisAsync().ToEnumerableAsync();
 
-            Assert.NotNull(listApisResponse);
-            Assert.AreEqual(listApisResponse.Count, 1);
+            Assert.That(listApisResponse, Is.Not.Null);
+            Assert.That(listApisResponse.Count, Is.EqualTo(1));
 
             //
             // Product Group Test
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // list product groups: there sould be all three
             var listGroupsResponse = await product.GetProductGroupsAsync().ToEnumerableAsync();
 
-            Assert.NotNull(listGroupsResponse);
-            Assert.AreEqual(3, listGroupsResponse.Count);
+            Assert.That(listGroupsResponse, Is.Not.Null);
+            Assert.That(listGroupsResponse.Count, Is.EqualTo(3));
 
             // get group
             var getGroupResponse = (await ApiServiceResource.GetApiManagementGroups().GetAsync(listGroupsResponse.FirstOrDefault().Name)).Value;
 
-            Assert.NotNull(getGroupResponse);
+            Assert.That(getGroupResponse, Is.Not.Null);
 
             // remove group from product
             await product.DeleteProductGroupAsync(getGroupResponse.Data.Name);
@@ -173,28 +173,28 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // list to check it was removed
             listGroupsResponse = await product.GetProductGroupsAsync().ToEnumerableAsync();
 
-            Assert.NotNull(listGroupsResponse);
-            Assert.AreEqual(2, listGroupsResponse.Count);
+            Assert.That(listGroupsResponse, Is.Not.Null);
+            Assert.That(listGroupsResponse.Count, Is.EqualTo(2));
 
             // assign the group to the product
 
             var addGroupResponse = (await product.CreateOrUpdateProductGroupAsync(getGroupResponse.Data.Name)).Value;
 
-            Assert.NotNull(addGroupResponse);
+            Assert.That(addGroupResponse, Is.Not.Null);
 
             // list to check it was added
             listGroupsResponse = await product.GetProductGroupsAsync().ToEnumerableAsync();
 
-            Assert.NotNull(listGroupsResponse);
-            Assert.AreEqual(3, listGroupsResponse.Count);
+            Assert.That(listGroupsResponse, Is.Not.Null);
+            Assert.That(listGroupsResponse.Count, Is.EqualTo(3));
 
             //
             // Product Subscriptions test
             //
             var listSubscriptionsResponse = await product.GetAllProductSubscriptionDataAsync().ToEnumerableAsync();
 
-            Assert.NotNull(listSubscriptionsResponse);
-            Assert.AreEqual(listSubscriptionsResponse.Count, 1);
+            Assert.That(listSubscriptionsResponse, Is.Not.Null);
+            Assert.That(listSubscriptionsResponse.Count, Is.EqualTo(1));
         }
     }
 }

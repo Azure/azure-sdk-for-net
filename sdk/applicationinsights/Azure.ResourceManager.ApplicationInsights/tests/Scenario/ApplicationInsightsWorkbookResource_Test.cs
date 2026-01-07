@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.Scenario
             string sourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}";
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data, sourceId);
             var result = lro.Value;
-            Assert.True(result is ApplicationInsightsWorkbookResource);
+            Assert.That(result is ApplicationInsightsWorkbookResource, Is.True);
         }
     }
 }

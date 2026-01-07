@@ -85,34 +85,34 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.NotNull(createNamespaceResponse);
-            Assert.NotNull(createNamespaceResponse.Data);
-            Assert.NotNull(createNamespaceResponse.Data.Name);
-            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+            Assert.That(createNamespaceResponse, Is.Not.Null);
+            Assert.That(createNamespaceResponse.Data, Is.Not.Null);
+            Assert.That(createNamespaceResponse.Data.Name, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
 
             // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
-            Assert.NotNull(getNamespaceResponse);
-            Assert.NotNull(getNamespaceResponse.Data);
-            Assert.NotNull(getNamespaceResponse.Data.ProvisioningState);
-            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespaceResponse.Data.ProvisioningState);
-            Assert.NotNull(getNamespaceResponse.Data.Tags);
-            Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"));
-            Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag1"], "originalValue1");
-            Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"));
-            Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag2"], "originalValue2");
-            Assert.NotNull(getNamespaceResponse.Data.Sku);
-            Assert.NotNull(getNamespaceResponse.Data.Sku.Name);
-            Assert.AreEqual(getNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
-            Assert.NotNull(getNamespaceResponse.Data.Sku.Capacity);
-            Assert.AreEqual(getNamespaceResponse.Data.Sku.Capacity.Value, 1);
-            Assert.IsTrue(getNamespaceResponse.Data.IsZoneRedundant.Value);
+            Assert.That(getNamespaceResponse, Is.Not.Null);
+            Assert.That(getNamespaceResponse.Data, Is.Not.Null);
+            Assert.That(getNamespaceResponse.Data.ProvisioningState, Is.Not.Null);
+            Assert.That(getNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
+            Assert.That(getNamespaceResponse.Data.Tags, Is.Not.Null);
+            Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"), Is.True);
+            Assert.That(getNamespaceResponse.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
+            Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"), Is.True);
+            Assert.That(getNamespaceResponse.Data.Tags["originalTag2"], Is.EqualTo("originalValue2"));
+            Assert.That(getNamespaceResponse.Data.Sku, Is.Not.Null);
+            Assert.That(getNamespaceResponse.Data.Sku.Name, Is.Not.Null);
+            Assert.That(namespaceSkuName, Is.EqualTo(getNamespaceResponse.Data.Sku.Name.Value.ToString()));
+            Assert.That(getNamespaceResponse.Data.Sku.Capacity, Is.Not.Null);
+            Assert.That(getNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(1));
+            Assert.That(getNamespaceResponse.Data.IsZoneRedundant.Value, Is.True);
 
             // Validate original tags
             var tagsAfterCreate = getNamespaceResponse.Data.Tags;
-            Assert.AreEqual(2, tagsAfterCreate.Count);
-            Assert.AreEqual("originalValue1", tagsAfterCreate["originalTag1"]);
-            Assert.AreEqual("originalValue2", tagsAfterCreate["originalTag2"]);
+            Assert.That(tagsAfterCreate.Count, Is.EqualTo(2));
+            Assert.That(tagsAfterCreate["originalTag1"], Is.EqualTo("originalValue1"));
+            Assert.That(tagsAfterCreate["originalTag2"], Is.EqualTo("originalValue2"));
 
             // update the tags and capacity
             namespaceSku = new NamespaceSku()
@@ -130,96 +130,96 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
-            Assert.NotNull(updateNamespaceResponse);
-            Assert.NotNull(updateNamespaceResponse.Data);
-            Assert.NotNull(updateNamespaceResponse.Data.Name);
-            Assert.AreEqual(updateNamespaceResponse.Data.Name, namespaceName);
+            Assert.That(updateNamespaceResponse, Is.Not.Null);
+            Assert.That(updateNamespaceResponse.Data, Is.Not.Null);
+            Assert.That(updateNamespaceResponse.Data.Name, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
 
             // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
-            Assert.NotNull(getUpdatedNamespaceResponse);
-            Assert.NotNull(getUpdatedNamespaceResponse.Data);
-            Assert.NotNull(getUpdatedNamespaceResponse.Data.ProvisioningState);
-            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getUpdatedNamespaceResponse.Data.ProvisioningState);
-            Assert.NotNull(getUpdatedNamespaceResponse.Data.Tags);
-            Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"));
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], "updatedValue1");
-            Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"));
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], "updatedValue2");
-            Assert.NotNull(getUpdatedNamespaceResponse.Data.Sku);
-            Assert.NotNull(getUpdatedNamespaceResponse.Data.Sku.Name);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
-            Assert.NotNull(getUpdatedNamespaceResponse.Data.Sku.Capacity);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, 2);
-            Assert.IsTrue(getUpdatedNamespaceResponse.Data.IsZoneRedundant.Value);
+            Assert.That(getUpdatedNamespaceResponse, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
+            Assert.That(getUpdatedNamespaceResponse.Data.Tags, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"), Is.True);
+            Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], Is.EqualTo("updatedValue1"));
+            Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"), Is.True);
+            Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], Is.EqualTo("updatedValue2"));
+            Assert.That(getUpdatedNamespaceResponse.Data.Sku, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.Sku.Name, Is.Not.Null);
+            Assert.That(namespaceSkuName, Is.EqualTo(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString()));
+            Assert.That(getUpdatedNamespaceResponse.Data.Sku.Capacity, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(2));
+            Assert.That(getUpdatedNamespaceResponse.Data.IsZoneRedundant.Value, Is.True);
 
             // Validate updated tags
             var tagsAfterUpdate = getUpdatedNamespaceResponse.Data.Tags;
-            Assert.AreEqual(2, tagsAfterUpdate.Count);
-            Assert.AreEqual("updatedValue1", tagsAfterUpdate["updatedTag1"]);
-            Assert.AreEqual("updatedValue2", tagsAfterUpdate["updatedTag2"]);
+            Assert.That(tagsAfterUpdate.Count, Is.EqualTo(2));
+            Assert.That(tagsAfterUpdate["updatedTag1"], Is.EqualTo("updatedValue1"));
+            Assert.That(tagsAfterUpdate["updatedTag2"], Is.EqualTo("updatedValue2"));
 
             //Create 2nd and 3rd Namespace
             var createNamespaceResponse2 = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, nameSpace)).Value;
-            Assert.NotNull(createNamespaceResponse2);
-            Assert.NotNull(createNamespaceResponse2.Data);
-            Assert.NotNull(createNamespaceResponse2.Data.Name);
-            Assert.AreEqual(createNamespaceResponse2.Data.Name, namespaceName2);
+            Assert.That(createNamespaceResponse2, Is.Not.Null);
+            Assert.That(createNamespaceResponse2.Data, Is.Not.Null);
+            Assert.That(createNamespaceResponse2.Data.Name, Is.Not.Null);
+            Assert.That(namespaceName2, Is.EqualTo(createNamespaceResponse2.Data.Name));
             var createNamespaceResponse3 = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName3, nameSpace)).Value;
-            Assert.NotNull(createNamespaceResponse3);
-            Assert.NotNull(createNamespaceResponse3.Data);
-            Assert.NotNull(createNamespaceResponse3.Data.Name);
-            Assert.AreEqual(createNamespaceResponse3.Data.Name, namespaceName3);
+            Assert.That(createNamespaceResponse3, Is.Not.Null);
+            Assert.That(createNamespaceResponse3.Data, Is.Not.Null);
+            Assert.That(createNamespaceResponse3.Data.Name, Is.Not.Null);
+            Assert.That(namespaceName3, Is.EqualTo(createNamespaceResponse3.Data.Name));
 
             // Get the created namespaces
             var getNamespace2Response = (await NamespaceCollection.GetAsync(namespaceName2)).Value;
-            Assert.NotNull(getNamespace2Response);
-            Assert.NotNull(getNamespace2Response.Data);
-            Assert.NotNull(getNamespace2Response.Data.ProvisioningState);
-            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespace2Response.Data.ProvisioningState);
+            Assert.That(getNamespace2Response, Is.Not.Null);
+            Assert.That(getNamespace2Response.Data, Is.Not.Null);
+            Assert.That(getNamespace2Response.Data.ProvisioningState, Is.Not.Null);
+            Assert.That(getNamespace2Response.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
             var getNamespace3Response = (await NamespaceCollection.GetAsync(namespaceName3)).Value;
-            Assert.NotNull(getNamespace3Response);
-            Assert.NotNull(getNamespace3Response.Data);
-            Assert.NotNull(getNamespace3Response.Data.ProvisioningState);
-            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespace3Response.Data.ProvisioningState);
+            Assert.That(getNamespace3Response, Is.Not.Null);
+            Assert.That(getNamespace3Response.Data, Is.Not.Null);
+            Assert.That(getNamespace3Response.Data.ProvisioningState, Is.Not.Null);
+            Assert.That(getNamespace3Response.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
 
             // Validate created namespaces
-            Assert.AreEqual(getNamespace2Response.Data.Name, namespaceName2);
-            Assert.AreEqual(getNamespace3Response.Data.Name, namespaceName3);
-            Assert.NotNull(getNamespace2Response.Data.Tags);
-            Assert.NotNull(getNamespace2Response.Data.Sku);
-            Assert.NotNull(getNamespace2Response.Data.Sku.Name);
-            Assert.AreEqual(getNamespace2Response.Data.Sku.Name.Value.ToString(), namespaceSkuName);
-            Assert.NotNull(getNamespace3Response.Data.Tags);
-            Assert.NotNull(getNamespace3Response.Data.Sku);
-            Assert.NotNull(getNamespace3Response.Data.Sku.Name);
-            Assert.AreEqual(getNamespace3Response.Data.Sku.Name.Value.ToString(), namespaceSkuName);
-            Assert.NotNull(getNamespace2Response.Data.Sku.Capacity);
-            Assert.AreEqual(getNamespace2Response.Data.Sku.Capacity.Value, 1);
-            Assert.NotNull(getNamespace3Response.Data.Sku.Capacity);
-            Assert.AreEqual(getNamespace3Response.Data.Sku.Capacity.Value, 1);
-            Assert.IsTrue(getNamespace2Response.Data.IsZoneRedundant.Value);
-            Assert.IsTrue(getNamespace3Response.Data.IsZoneRedundant.Value);
-            Assert.IsTrue(getNamespace2Response.Data.Tags.Keys.Contains("originalTag1"));
-            Assert.AreEqual(getNamespace2Response.Data.Tags["originalTag1"], "originalValue1");
-            Assert.IsTrue(getNamespace3Response.Data.Tags.Keys.Contains("originalTag1"));
-            Assert.AreEqual(getNamespace3Response.Data.Tags["originalTag1"], "originalValue1");
+            Assert.That(namespaceName2, Is.EqualTo(getNamespace2Response.Data.Name));
+            Assert.That(namespaceName3, Is.EqualTo(getNamespace3Response.Data.Name));
+            Assert.That(getNamespace2Response.Data.Tags, Is.Not.Null);
+            Assert.That(getNamespace2Response.Data.Sku, Is.Not.Null);
+            Assert.That(getNamespace2Response.Data.Sku.Name, Is.Not.Null);
+            Assert.That(namespaceSkuName, Is.EqualTo(getNamespace2Response.Data.Sku.Name.Value.ToString()));
+            Assert.That(getNamespace3Response.Data.Tags, Is.Not.Null);
+            Assert.That(getNamespace3Response.Data.Sku, Is.Not.Null);
+            Assert.That(getNamespace3Response.Data.Sku.Name, Is.Not.Null);
+            Assert.That(namespaceSkuName, Is.EqualTo(getNamespace3Response.Data.Sku.Name.Value.ToString()));
+            Assert.That(getNamespace2Response.Data.Sku.Capacity, Is.Not.Null);
+            Assert.That(getNamespace2Response.Data.Sku.Capacity.Value, Is.EqualTo(1));
+            Assert.That(getNamespace3Response.Data.Sku.Capacity, Is.Not.Null);
+            Assert.That(getNamespace3Response.Data.Sku.Capacity.Value, Is.EqualTo(1));
+            Assert.That(getNamespace2Response.Data.IsZoneRedundant.Value, Is.True);
+            Assert.That(getNamespace3Response.Data.IsZoneRedundant.Value, Is.True);
+            Assert.That(getNamespace2Response.Data.Tags.Keys.Contains("originalTag1"), Is.True);
+            Assert.That(getNamespace2Response.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
+            Assert.That(getNamespace3Response.Data.Tags.Keys.Contains("originalTag1"), Is.True);
+            Assert.That(getNamespace3Response.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
 
             // Tag operations
             var addTagResponse = await getNamespaceResponse.AddTagAsync("env", "test");
-            Assert.NotNull(addTagResponse);
-            Assert.NotNull(addTagResponse.Value);
-            Assert.NotNull(addTagResponse.Value.Data);
-            Assert.NotNull(addTagResponse.Value.Data.Tags);
-            Assert.IsTrue(addTagResponse.Value.Data.Tags.ContainsKey("env"));
-            Assert.AreEqual("test", addTagResponse.Value.Data.Tags["env"]);
+            Assert.That(addTagResponse, Is.Not.Null);
+            Assert.That(addTagResponse.Value, Is.Not.Null);
+            Assert.That(addTagResponse.Value.Data, Is.Not.Null);
+            Assert.That(addTagResponse.Value.Data.Tags, Is.Not.Null);
+            Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("env"), Is.True);
+            Assert.That(addTagResponse.Value.Data.Tags["env"], Is.EqualTo("test"));
 
             addTagResponse = await getNamespaceResponse.SetTagsAsync(new Dictionary<string, string> { { "project", "sdk" } });
-            Assert.IsTrue(addTagResponse.Value.Data.Tags.ContainsKey("project"));
-            Assert.IsFalse(addTagResponse.Value.Data.Tags.ContainsKey("env"));
+            Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("project"), Is.True);
+            Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("env"), Is.False);
 
             addTagResponse = await getNamespaceResponse.RemoveTagAsync("project");
-            Assert.IsFalse(addTagResponse.Value.Data.Tags.ContainsKey("project"));
+            Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("project"), Is.False);
 
             // List Shared Access Keys and Regenerate keys
             var sharedAccessKeys = (await getNamespaceResponse.GetSharedAccessKeysAsync()).Value;
@@ -227,29 +227,29 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var sharedAccessKey2Before = sharedAccessKeys.Key2;
             NamespaceRegenerateKeyContent namespaceRegenerateKeyContent = new NamespaceRegenerateKeyContent("key1");
             var regenKeysResponse = (await getNamespaceResponse.RegenerateKeyAsync(WaitUntil.Completed, namespaceRegenerateKeyContent)).Value;
-            Assert.AreNotEqual(regenKeysResponse.Key1, sharedAccessKey1Before);
-            Assert.AreEqual(regenKeysResponse.Key2, sharedAccessKey2Before);
+            Assert.That(sharedAccessKey1Before, Is.Not.EqualTo(regenKeysResponse.Key1));
+            Assert.That(sharedAccessKey2Before, Is.EqualTo(regenKeysResponse.Key2));
 
             // List all namespaces
             var namespacesInResourceGroup = await NamespaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(namespacesInResourceGroup);
-            Assert.AreEqual(namespacesInResourceGroup.Count, 3);
+            Assert.That(namespacesInResourceGroup, Is.Not.Null);
+            Assert.That(namespacesInResourceGroup.Count, Is.EqualTo(3));
 
             // Check Exists method
             var namespaceExists = await NamespaceCollection.ExistsAsync(namespaceName3);
-            Assert.True(namespaceExists);
+            Assert.That((bool)namespaceExists, Is.True);
 
             // Delete namespace3
             await getNamespace3Response.DeleteAsync(WaitUntil.Completed);
 
             // List all namespaces under resourc group again to check updated number of namespaces.
             var namespacesInResourceGroupUpdated = await NamespaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(namespacesInResourceGroupUpdated);
-            Assert.AreEqual(namespacesInResourceGroupUpdated.Count, 2);
+            Assert.That(namespacesInResourceGroupUpdated, Is.Not.Null);
+            Assert.That(namespacesInResourceGroupUpdated.Count, Is.EqualTo(2));
 
             // Get all namespaces created within the subscription irrespective of the resourceGroup
             var namespacesInAzureSubscription = await DefaultSubscription.GetEventGridNamespacesAsync().ToEnumerableAsync();
-            Assert.NotNull(namespacesInAzureSubscription);
+            Assert.That(namespacesInAzureSubscription, Is.Not.Null);
             Assert.GreaterOrEqual(namespacesInAzureSubscription.Count, 1);
             var falseFlag = false;
             foreach (var item in namespacesInAzureSubscription)
@@ -260,24 +260,24 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     break;
                 }
             }
-            Assert.IsTrue(falseFlag);
+            Assert.That(falseFlag, Is.True);
 
             // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             await getNamespace2Response.DeleteAsync(WaitUntil.Completed);
             var namespace1Exists = await NamespaceCollection.ExistsAsync(namespaceName);
-            Assert.False(namespace1Exists);
+            Assert.That((bool)namespace1Exists, Is.False);
             var namespace2Exists = await NamespaceCollection.ExistsAsync(namespaceName2);
-            Assert.False(namespace2Exists);
+            Assert.That((bool)namespace2Exists, Is.False);
 
             // List all namespaces under resource group again to check updated number of namespaces.
             var namespacesInResourceGroupDeleted = await NamespaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(namespacesInResourceGroupDeleted);
-            Assert.AreEqual(namespacesInResourceGroupDeleted.Count, 0);
+            Assert.That(namespacesInResourceGroupDeleted, Is.Not.Null);
+            Assert.That(namespacesInResourceGroupDeleted.Count, Is.EqualTo(0));
 
-            Assert.False(await NamespaceCollection.ExistsAsync(namespaceName));
-            Assert.False(await NamespaceCollection.ExistsAsync(namespaceName2));
-            Assert.AreEqual(0, (await NamespaceCollection.GetAllAsync().ToEnumerableAsync()).Count);
+            Assert.That((bool)await NamespaceCollection.ExistsAsync(namespaceName), Is.False);
+            Assert.That((bool)await NamespaceCollection.ExistsAsync(namespaceName2), Is.False);
+            Assert.That((await NamespaceCollection.GetAllAsync().ToEnumerableAsync()).Count, Is.EqualTo(0));
 
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
@@ -307,20 +307,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
             nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_centraleaup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.NotNull(createNamespaceResponse);
-            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+            Assert.That(createNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
 
             // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
-            Assert.NotNull(getNamespaceResponse);
-            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespaceResponse.Data.ProvisioningState);
-            Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"));
-            Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag1"], "originalValue1");
-            Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"));
-            Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag2"], "originalValue2");
-            Assert.AreEqual(getNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
-            Assert.AreEqual(getNamespaceResponse.Data.Sku.Capacity.Value, 1);
-            Assert.IsTrue(getNamespaceResponse.Data.IsZoneRedundant.Value);
+            Assert.That(getNamespaceResponse, Is.Not.Null);
+            Assert.That(getNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
+            Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"), Is.True);
+            Assert.That(getNamespaceResponse.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
+            Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"), Is.True);
+            Assert.That(getNamespaceResponse.Data.Tags["originalTag2"], Is.EqualTo("originalValue2"));
+            Assert.That(namespaceSkuName, Is.EqualTo(getNamespaceResponse.Data.Sku.Name.Value.ToString()));
+            Assert.That(getNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(1));
+            Assert.That(getNamespaceResponse.Data.IsZoneRedundant.Value, Is.True);
 
             // update the tags and capacity
             namespaceSku = new NamespaceSku()
@@ -345,8 +345,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
              new CancellationToken()
             ).ConfigureAwait(false);
 
-            Assert.NotNull(customDomainValidationResponse);
-            Assert.IsNotNull(customDomainValidationResponse.Value);
+            Assert.That(customDomainValidationResponse, Is.Not.Null);
+            Assert.That(customDomainValidationResponse.Value, Is.Not.Null);
             namespacePatch.TopicsConfiguration.CustomDomains.Add(new CustomDomainConfiguration()
             {
                 FullyQualifiedDomainName = "www.contoso.com",
@@ -358,39 +358,39 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 CertificateUri = new Uri("https://sdk-centraleuap-testakv.vault.azure.net/certificates/test-custom-domain/"),
             });
             var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
-            Assert.NotNull(updateNamespaceResponse);
-            Assert.AreEqual(updateNamespaceResponse.Data.Name, namespaceName);
+            Assert.That(updateNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
 
             // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
-            Assert.NotNull(getUpdatedNamespaceResponse);
-            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getUpdatedNamespaceResponse.Data.ProvisioningState);
-            Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"));
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], "updatedValue1");
-            Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"));
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], "updatedValue2");
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, 2);
+            Assert.That(getUpdatedNamespaceResponse, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
+            Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"), Is.True);
+            Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], Is.EqualTo("updatedValue1"));
+            Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"), Is.True);
+            Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], Is.EqualTo("updatedValue2"));
+            Assert.That(namespaceSkuName, Is.EqualTo(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString()));
+            Assert.That(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(2));
             // verify custom domain
-            Assert.NotNull(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.Count, 1);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.FirstOrDefault().FullyQualifiedDomainName, "www.contoso.com");
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.Count, Is.EqualTo(1));
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.FirstOrDefault().FullyQualifiedDomainName, Is.EqualTo("www.contoso.com"));
 
             // Delete 1st custom domain
             namespacePatch.TopicsConfiguration.CustomDomains.RemoveAt(0);
             var updateNamespaceResponse2 = (await getUpdatedNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
-            Assert.NotNull(updateNamespaceResponse2);
-            Assert.AreEqual(NamespaceProvisioningState.Succeeded, updateNamespaceResponse2.Data.ProvisioningState);
+            Assert.That(updateNamespaceResponse2, Is.Not.Null);
+            Assert.That(updateNamespaceResponse2.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
 
             var getUpdatedNamespaceResponse2 = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             // verify 1st custom domain is deleted
-            Assert.NotNull(getUpdatedNamespaceResponse2.Data.TopicsConfiguration.CustomDomains);
-            Assert.AreEqual(getUpdatedNamespaceResponse2.Data.TopicsConfiguration.CustomDomains.Count, 0);
+            Assert.That(getUpdatedNamespaceResponse2.Data.TopicsConfiguration.CustomDomains, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse2.Data.TopicsConfiguration.CustomDomains.Count, Is.EqualTo(0));
 
             // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             var namespace1Exists = await NamespaceCollection.ExistsAsync(namespaceName);
-            Assert.False(namespace1Exists);
+            Assert.That((bool)namespace1Exists, Is.False);
 
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
@@ -427,13 +427,13 @@ namespace Azure.ResourceManager.EventGrid.Tests
             );
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.NotNull(createNamespaceResponse);
-            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+            Assert.That(createNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
 
             // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
-            Assert.NotNull(getNamespaceResponse);
-            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespaceResponse.Data.ProvisioningState);
+            Assert.That(getNamespaceResponse, Is.Not.Null);
+            Assert.That(getNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
 
             // Update the tags and capacity
             namespaceSku = new NamespaceSku()
@@ -469,25 +469,25 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
-            Assert.NotNull(updateNamespaceResponse);
-            Assert.AreEqual(updateNamespaceResponse.Data.Name, namespaceName);
+            Assert.That(updateNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
 
             // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
-            Assert.NotNull(getUpdatedNamespaceResponse);
-            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getUpdatedNamespaceResponse.Data.ProvisioningState);
+            Assert.That(getUpdatedNamespaceResponse, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
 
             // Verify custom JWT authentication
-            Assert.NotNull(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.Count, 1);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().CertificateUri.AbsoluteUri, KeyVaultCertificateUrl);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.TokenIssuer, "sts.windows.net");
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().Identity.IdentityType, CustomJwtAuthenticationManagedIdentityType.UserAssigned);
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.Count, Is.EqualTo(1));
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().CertificateUri.AbsoluteUri, Is.EqualTo(KeyVaultCertificateUrl));
+            Assert.That("sts.windows.net", Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.TokenIssuer));
+            Assert.That(CustomJwtAuthenticationManagedIdentityType.UserAssigned, Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().Identity.IdentityType));
 
             // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             var namespace1Exists = await NamespaceCollection.ExistsAsync(namespaceName);
-            Assert.False(namespace1Exists);
+            Assert.That((bool)namespace1Exists, Is.False);
 
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
@@ -524,13 +524,13 @@ namespace Azure.ResourceManager.EventGrid.Tests
             );
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.NotNull(createNamespaceResponse);
-            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+            Assert.That(createNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
 
             // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
-            Assert.NotNull(getNamespaceResponse);
-            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespaceResponse.Data.ProvisioningState);
+            Assert.That(getNamespaceResponse, Is.Not.Null);
+            Assert.That(getNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
 
             // Update the tags and capacity
             namespaceSku = new NamespaceSku()
@@ -562,25 +562,25 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
-            Assert.NotNull(updateNamespaceResponse);
-            Assert.AreEqual(updateNamespaceResponse.Data.Name, namespaceName);
+            Assert.That(updateNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
 
             // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
-            Assert.NotNull(getUpdatedNamespaceResponse);
-            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getUpdatedNamespaceResponse.Data.ProvisioningState);
+            Assert.That(getUpdatedNamespaceResponse, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
 
             // Verify custom Webhook authentication
-            Assert.NotNull(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri, EventSubscriptionDestinationEndpoint);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri, AzureActiveDirectoryApplicationId);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, AzureActiveDirectoryTenantId);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType, CustomWebhookAuthenticationManagedIdentityType.UserAssigned);
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri, Is.EqualTo(EventSubscriptionDestinationEndpoint));
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri, Is.EqualTo(AzureActiveDirectoryApplicationId));
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, Is.EqualTo(AzureActiveDirectoryTenantId));
+            Assert.That(CustomWebhookAuthenticationManagedIdentityType.UserAssigned, Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType));
 
             // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             var namespace1Exists = await NamespaceCollection.ExistsAsync(namespaceName);
-            Assert.False(namespace1Exists);
+            Assert.That((bool)namespace1Exists, Is.False);
 
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
@@ -616,20 +616,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.NotNull(createNamespaceResponse);
-            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+            Assert.That(createNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
 
             // create namespace topics
             var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
-            Assert.NotNull(namespaceTopicsCollection);
+            Assert.That(namespaceTopicsCollection, Is.Not.Null);
             var namespaceTopic = new NamespaceTopicData()
             {
                 EventRetentionInDays = 1
             };
             var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
-            Assert.NotNull(namespaceTopicsResponse1);
-            Assert.AreEqual(namespaceTopicsResponse1.Data.ProvisioningState, NamespaceTopicProvisioningState.Succeeded);
-            Assert.AreEqual(namespaceTopicsResponse1.Data.EventRetentionInDays, 1);
+            Assert.That(namespaceTopicsResponse1, Is.Not.Null);
+            Assert.That(NamespaceTopicProvisioningState.Succeeded, Is.EqualTo(namespaceTopicsResponse1.Data.ProvisioningState));
+            Assert.That(namespaceTopicsResponse1.Data.EventRetentionInDays, Is.EqualTo(1));
 
             // create subscriptions
             var subscriptionsCollection = namespaceTopicsResponse1.GetNamespaceTopicEventSubscriptions();
@@ -666,16 +666,16 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 ExpireOn = expirationTime,
             };
             var createEventsubscription1 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName1, subscriptionData)).Value;
-            Assert.NotNull(createEventsubscription1);
-            Assert.AreEqual(createEventsubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+            Assert.That(createEventsubscription1, Is.Not.Null);
+            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription1.Data.ProvisioningState));
 
             // Validate get event subscription
             var getEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
-            Assert.NotNull(getEventSubscription1);
-            Assert.AreEqual(getEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
-            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Queue.ToString());
+            Assert.That(getEventSubscription1, Is.Not.Null);
+            Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
+            Assert.That(DeliveryMode.Queue.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
             Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, TimeSpan.FromDays(1));
-            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount, 5);
+            Assert.AreEqual(5, getEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount);
 
             //update event subscription
             DeliveryConfiguration deliveryConfiguration2 = new DeliveryConfiguration()
@@ -693,26 +693,26 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 DeliveryConfiguration = deliveryConfiguration2
             };
             var updateEventSubscription1 = (await createEventsubscription1.UpdateAsync(WaitUntil.Completed, subscriptionPatch)).Value;
-            Assert.NotNull(updateEventSubscription1);
+            Assert.That(updateEventSubscription1, Is.Not.Null);
             Assert.AreEqual(updateEventSubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
 
             var getUpdatedEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
-            Assert.NotNull(getUpdatedEventSubscription1);
+            Assert.That(getUpdatedEventSubscription1, Is.Not.Null);
             Assert.AreEqual(getUpdatedEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
             Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Queue.ToString());
             Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, TimeSpan.FromDays(0.5));
-            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount, 6);
+            Assert.AreEqual(6, getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount);
 
             // List all event subscriptions
             var listAllSubscriptionsBefore = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listAllSubscriptionsBefore);
-            Assert.AreEqual(listAllSubscriptionsBefore.Count, 1);
+            Assert.That(listAllSubscriptionsBefore, Is.Not.Null);
+            Assert.AreEqual(1, listAllSubscriptionsBefore.Count);
 
             // Delete event subscriptions
             await getUpdatedEventSubscription1.DeleteAsync(WaitUntil.Completed);
             var listAllSubscriptionsAfter = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listAllSubscriptionsAfter);
-            Assert.AreEqual(listAllSubscriptionsAfter.Count, 0);
+            Assert.That(listAllSubscriptionsAfter, Is.Not.Null);
+            Assert.AreEqual(0, listAllSubscriptionsAfter.Count);
 
             // delete all resources
             await namespaceTopicsResponse1.DeleteAsync(WaitUntil.Completed);
@@ -749,20 +749,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
             nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.NotNull(createNamespaceResponse);
-            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+            Assert.That(createNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
 
             // create namespace topics
             var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
-            Assert.NotNull(namespaceTopicsCollection);
+            Assert.That(namespaceTopicsCollection, Is.Not.Null);
             var namespaceTopic = new NamespaceTopicData()
             {
                 EventRetentionInDays = 1
             };
             var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
-            Assert.NotNull(namespaceTopicsResponse1);
-            Assert.AreEqual(namespaceTopicsResponse1.Data.ProvisioningState, NamespaceTopicProvisioningState.Succeeded);
-            Assert.AreEqual(namespaceTopicsResponse1.Data.EventRetentionInDays, 1);
+            Assert.That(namespaceTopicsResponse1, Is.Not.Null);
+            Assert.That(NamespaceTopicProvisioningState.Succeeded, Is.EqualTo(namespaceTopicsResponse1.Data.ProvisioningState));
+            Assert.That(namespaceTopicsResponse1.Data.EventRetentionInDays, Is.EqualTo(1));
 
             // create subscriptions
             var subscriptionsCollection = namespaceTopicsResponse1.GetNamespaceTopicEventSubscriptions();
@@ -792,22 +792,22 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 DeliveryConfiguration = deliveryConfiguration
             };
             var createEventsubscription1 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName1, subscriptionData)).Value;
-            Assert.NotNull(createEventsubscription1);
-            Assert.AreEqual(createEventsubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+            Assert.That(createEventsubscription1, Is.Not.Null);
+            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription1.Data.ProvisioningState));
 
             var createEventsubscription2 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName2, subscriptionData)).Value;
-            Assert.NotNull(createEventsubscription2);
-            Assert.AreEqual(createEventsubscription2.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+            Assert.That(createEventsubscription2, Is.Not.Null);
+            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription2.Data.ProvisioningState));
 
             var createEventsubscription3 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName3, subscriptionData)).Value;
-            Assert.NotNull(createEventsubscription3);
-            Assert.AreEqual(createEventsubscription3.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+            Assert.That(createEventsubscription3, Is.Not.Null);
+            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription3.Data.ProvisioningState));
 
             // Validate get event subscription
             var getEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
-            Assert.NotNull(getEventSubscription1);
-            Assert.AreEqual(getEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
-            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
+            Assert.That(getEventSubscription1, Is.Not.Null);
+            Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
+            Assert.That(DeliveryMode.Push.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
 
             //update event subscription
             DeliveryConfiguration deliveryConfiguration2 = new DeliveryConfiguration()
@@ -834,31 +834,31 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 DeliveryConfiguration = deliveryConfiguration2
             };
             var updateEventSubscription1 = (await createEventsubscription1.UpdateAsync(WaitUntil.Completed, subscriptionPatch)).Value;
-            Assert.NotNull(updateEventSubscription1);
+            Assert.That(updateEventSubscription1, Is.Not.Null);
             Assert.AreEqual(updateEventSubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
 
             var getUpdatedEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
-            Assert.NotNull(getUpdatedEventSubscription1);
+            Assert.That(getUpdatedEventSubscription1, Is.Not.Null);
             Assert.AreEqual(getUpdatedEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
             Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
 
             // List all event subscriptions
             var listAllSubscriptionsBefore = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listAllSubscriptionsBefore);
-            Assert.AreEqual(listAllSubscriptionsBefore.Count, 3);
+            Assert.That(listAllSubscriptionsBefore, Is.Not.Null);
+            Assert.AreEqual(3, listAllSubscriptionsBefore.Count);
 
             // Delete event subscriptions
             await getUpdatedEventSubscription1.DeleteAsync(WaitUntil.Completed);
             var listAllSubscriptionsAfter = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listAllSubscriptionsAfter);
-            Assert.AreEqual(listAllSubscriptionsAfter.Count, 2);
+            Assert.That(listAllSubscriptionsAfter, Is.Not.Null);
+            Assert.AreEqual(2, listAllSubscriptionsAfter.Count);
 
             // delete all resources
             await createEventsubscription2.DeleteAsync(WaitUntil.Completed);
             await createEventsubscription3.DeleteAsync(WaitUntil.Completed);
             var listAllSubscriptionsAfterAllDeleted = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listAllSubscriptionsAfterAllDeleted);
-            Assert.AreEqual(listAllSubscriptionsAfterAllDeleted.Count, 0);
+            Assert.That(listAllSubscriptionsAfterAllDeleted, Is.Not.Null);
+            Assert.AreEqual(0, listAllSubscriptionsAfterAllDeleted.Count);
             await namespaceTopicsResponse1.DeleteAsync(WaitUntil.Completed);
             await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
@@ -893,20 +893,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
             nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.NotNull(createNamespaceResponse);
-            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+            Assert.That(createNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
 
             // create namespace topics
             var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
-            Assert.NotNull(namespaceTopicsCollection);
+            Assert.That(namespaceTopicsCollection, Is.Not.Null);
             var namespaceTopic = new NamespaceTopicData()
             {
                 EventRetentionInDays = 1
             };
             var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
-            Assert.NotNull(namespaceTopicsResponse1);
-            Assert.AreEqual(namespaceTopicsResponse1.Data.ProvisioningState, NamespaceTopicProvisioningState.Succeeded);
-            Assert.AreEqual(namespaceTopicsResponse1.Data.EventRetentionInDays, 1);
+            Assert.That(namespaceTopicsResponse1, Is.Not.Null);
+            Assert.That(NamespaceTopicProvisioningState.Succeeded, Is.EqualTo(namespaceTopicsResponse1.Data.ProvisioningState));
+            Assert.That(namespaceTopicsResponse1.Data.EventRetentionInDays, Is.EqualTo(1));
 
             // create subscriptions
             var subscriptionsCollection = namespaceTopicsResponse1.GetNamespaceTopicEventSubscriptions();
@@ -931,25 +931,25 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 EventDeliverySchema = DeliverySchema.CloudEventSchemaV10,
             };
             var createEventsubscription1 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName1, subscriptionData)).Value;
-            Assert.NotNull(createEventsubscription1);
-            Assert.AreEqual(createEventsubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+            Assert.That(createEventsubscription1, Is.Not.Null);
+            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription1.Data.ProvisioningState));
 
             var createEventsubscription2 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName2, subscriptionData)).Value;
-            Assert.NotNull(createEventsubscription2);
-            Assert.AreEqual(createEventsubscription2.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+            Assert.That(createEventsubscription2, Is.Not.Null);
+            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription2.Data.ProvisioningState));
 
             var createEventsubscription3 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName3, subscriptionData)).Value;
-            Assert.NotNull(createEventsubscription3);
-            Assert.AreEqual(createEventsubscription3.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+            Assert.That(createEventsubscription3, Is.Not.Null);
+            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription3.Data.ProvisioningState));
 
             // Validate get event subscription
             var getEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
-            Assert.NotNull(getEventSubscription1);
-            Assert.AreEqual(getEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
-            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
+            Assert.That(getEventSubscription1, Is.Not.Null);
+            Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
+            Assert.That(DeliveryMode.Push.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
             // test for full uri of event subscription
             var eventSubscription1FullUri = (await getEventSubscription1.GetFullUriAsync());
-            Assert.NotNull(eventSubscription1FullUri);
+            Assert.That(eventSubscription1FullUri, Is.Not.Null);
 
             //update event subscription
             DeliveryConfiguration deliveryConfiguration2 = new DeliveryConfiguration()
@@ -976,31 +976,31 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 DeliveryConfiguration = deliveryConfiguration2
             };
             var updateEventSubscription1 = (await createEventsubscription1.UpdateAsync(WaitUntil.Completed, subscriptionPatch)).Value;
-            Assert.NotNull(updateEventSubscription1);
+            Assert.That(updateEventSubscription1, Is.Not.Null);
             Assert.AreEqual(updateEventSubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
 
             var getUpdatedEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
-            Assert.NotNull(getUpdatedEventSubscription1);
+            Assert.That(getUpdatedEventSubscription1, Is.Not.Null);
             Assert.AreEqual(getUpdatedEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
             Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
 
             // List all event subscriptions
             var listAllSubscriptionsBefore = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listAllSubscriptionsBefore);
-            Assert.AreEqual(listAllSubscriptionsBefore.Count, 3);
+            Assert.That(listAllSubscriptionsBefore, Is.Not.Null);
+            Assert.AreEqual(3, listAllSubscriptionsBefore.Count);
 
             // Delete event subscriptions
             await getUpdatedEventSubscription1.DeleteAsync(WaitUntil.Completed);
             var listAllSubscriptionsAfter = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listAllSubscriptionsAfter);
-            Assert.AreEqual(listAllSubscriptionsAfter.Count, 2);
+            Assert.That(listAllSubscriptionsAfter, Is.Not.Null);
+            Assert.AreEqual(2, listAllSubscriptionsAfter.Count);
 
             // delete all resources
             await createEventsubscription2.DeleteAsync(WaitUntil.Completed);
             await createEventsubscription3.DeleteAsync(WaitUntil.Completed);
             var listAllSubscriptionsAfterAllDeleted = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(listAllSubscriptionsAfterAllDeleted);
-            Assert.AreEqual(listAllSubscriptionsAfterAllDeleted.Count, 0);
+            Assert.That(listAllSubscriptionsAfterAllDeleted, Is.Not.Null);
+            Assert.AreEqual(0, listAllSubscriptionsAfterAllDeleted.Count);
             await namespaceTopicsResponse1.DeleteAsync(WaitUntil.Completed);
             await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
@@ -1056,33 +1056,33 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var createCaCertificateResponse1 = (await caCertificatesCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testCertificate1", caCertificateData1)).Value;
-            Assert.IsNotNull(createCaCertificateResponse1);
-            Assert.AreEqual(createCaCertificateResponse1.Data.ProvisioningState, CaCertificateProvisioningState.Succeeded);
+            Assert.That(createCaCertificateResponse1, Is.Not.Null);
+            Assert.That(CaCertificateProvisioningState.Succeeded, Is.EqualTo(createCaCertificateResponse1.Data.ProvisioningState));
 
             var createCaCertificateResponse2 = (await caCertificatesCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testCertificate2", caCertificateData2)).Value;
-            Assert.IsNotNull(createCaCertificateResponse2);
-            Assert.AreEqual(createCaCertificateResponse2.Data.ProvisioningState, CaCertificateProvisioningState.Succeeded);
+            Assert.That(createCaCertificateResponse2, Is.Not.Null);
+            Assert.That(CaCertificateProvisioningState.Succeeded, Is.EqualTo(createCaCertificateResponse2.Data.ProvisioningState));
 
             var createCaCertificateResponse3 = (await caCertificatesCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testCertificate3", caCertificateData3)).Value;
-            Assert.IsNotNull(createCaCertificateResponse3);
-            Assert.AreEqual(createCaCertificateResponse3.Data.ProvisioningState, CaCertificateProvisioningState.Succeeded);
+            Assert.That(createCaCertificateResponse3, Is.Not.Null);
+            Assert.That(CaCertificateProvisioningState.Succeeded, Is.EqualTo(createCaCertificateResponse3.Data.ProvisioningState));
 
             //Get CaCertificate
             var getCaCertificate1Response = (await caCertificatesCollection.GetAsync("testCertificate1")).Value;
-            Assert.IsNotNull(getCaCertificate1Response);
-            Assert.AreEqual(getCaCertificate1Response.Data.Name, "testCertificate1");
-            Assert.AreEqual(getCaCertificate1Response.Data.EncodedCertificate, caCertificateData1.EncodedCertificate);
+            Assert.That(getCaCertificate1Response, Is.Not.Null);
+            Assert.That(getCaCertificate1Response.Data.Name, Is.EqualTo("testCertificate1"));
+            Assert.That(caCertificateData1.EncodedCertificate, Is.EqualTo(getCaCertificate1Response.Data.EncodedCertificate));
 
             //List CaCertificates
             var listCaCertificatesBeforeDeletion = await caCertificatesCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(listCaCertificatesBeforeDeletion);
-            Assert.AreEqual(listCaCertificatesBeforeDeletion.Count, 3);
+            Assert.That(listCaCertificatesBeforeDeletion, Is.Not.Null);
+            Assert.That(listCaCertificatesBeforeDeletion.Count, Is.EqualTo(3));
 
             await getCaCertificate1Response.DeleteAsync(WaitUntil.Completed);
 
             var listCaCertificatesAfterDeletion = await caCertificatesCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(listCaCertificatesAfterDeletion);
-            Assert.AreEqual(listCaCertificatesAfterDeletion.Count, 2);
+            Assert.That(listCaCertificatesAfterDeletion, Is.Not.Null);
+            Assert.That(listCaCertificatesAfterDeletion.Count, Is.EqualTo(2));
 
             // Update certificate by deleting and recreating with a new description
             await createCaCertificateResponse1.DeleteAsync(WaitUntil.Completed);
@@ -1092,16 +1092,16 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 EncodedCertificate = encodedCertificate
             };
             var recreateCaCertResponse = (await caCertificatesCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testCertificate1", updatedCaCertData)).Value;
-            Assert.IsNotNull(recreateCaCertResponse);
-            Assert.AreEqual("UpdatedDescription", recreateCaCertResponse.Data.Description);
+            Assert.That(recreateCaCertResponse, Is.Not.Null);
+            Assert.That(recreateCaCertResponse.Data.Description, Is.EqualTo("UpdatedDescription"));
 
             await recreateCaCertResponse.DeleteAsync(WaitUntil.Completed);
             await createCaCertificateResponse2.DeleteAsync(WaitUntil.Completed);
             await createCaCertificateResponse3.DeleteAsync(WaitUntil.Completed);
 
             var listCaCertificatesAfterAllDeleted = await caCertificatesCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(listCaCertificatesAfterAllDeleted);
-            Assert.AreEqual(listCaCertificatesAfterAllDeleted.Count, 0);
+            Assert.That(listCaCertificatesAfterAllDeleted, Is.Not.Null);
+            Assert.That(listCaCertificatesAfterAllDeleted.Count, Is.EqualTo(0));
 
             // create clients
             var clientCollection = createNamespaceResponse.GetEventGridNamespaceClients();
@@ -1119,13 +1119,13 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var createClientResponse1 = (await clientCollection.CreateOrUpdateAsync(WaitUntil.Completed, clientName1, clientData)).Value;
-            Assert.IsNotNull(createClientResponse1);
-            Assert.AreEqual(createClientResponse1.Data.Name, clientName1);
-            Assert.AreEqual(createClientResponse1.Data.ProvisioningState, EventGridNamespaceClientProvisioningState.Succeeded);
+            Assert.That(createClientResponse1, Is.Not.Null);
+            Assert.That(clientName1, Is.EqualTo(createClientResponse1.Data.Name));
+            Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(createClientResponse1.Data.ProvisioningState));
             var createClientResponse2 = (await clientCollection.CreateOrUpdateAsync(WaitUntil.Completed, clientName2, clientData)).Value;
-            Assert.IsNotNull(createClientResponse2);
-            Assert.AreEqual(createClientResponse2.Data.Name, clientName2);
-            Assert.AreEqual(createClientResponse2.Data.ProvisioningState, EventGridNamespaceClientProvisioningState.Succeeded);
+            Assert.That(createClientResponse2, Is.Not.Null);
+            Assert.That(clientName2, Is.EqualTo(createClientResponse2.Data.Name));
+            Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(createClientResponse2.Data.ProvisioningState));
 
             //update client
             EventGridNamespaceClientData updatedClientData = new EventGridNamespaceClientData()
@@ -1134,25 +1134,25 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Description = "After"
             };
             var updateClientResponse = (await createClientResponse1.UpdateAsync(WaitUntil.Completed, updatedClientData)).Value;
-            Assert.IsNotNull(updateClientResponse);
-            Assert.AreEqual(updateClientResponse.Data.ProvisioningState, EventGridNamespaceClientProvisioningState.Succeeded);
+            Assert.That(updateClientResponse, Is.Not.Null);
+            Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(updateClientResponse.Data.ProvisioningState));
 
             // Get updated client
             var getClientResponse = (await updateClientResponse.GetAsync()).Value;
-            Assert.IsNotNull(getClientResponse);
-            Assert.AreEqual(getClientResponse.Data.ProvisioningState, EventGridNamespaceClientProvisioningState.Succeeded);
-            Assert.AreEqual(getClientResponse.Data.Name, clientName1);
-            Assert.AreEqual(getClientResponse.Data.Description, "After");
+            Assert.That(getClientResponse, Is.Not.Null);
+            Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(getClientResponse.Data.ProvisioningState));
+            Assert.That(clientName1, Is.EqualTo(getClientResponse.Data.Name));
+            Assert.That(getClientResponse.Data.Description, Is.EqualTo("After"));
 
             // List clients
             var getAllClientsBeforeDeletion = await clientCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(getAllClientsBeforeDeletion);
-            Assert.AreEqual(getAllClientsBeforeDeletion.Count, 2);
+            Assert.That(getAllClientsBeforeDeletion, Is.Not.Null);
+            Assert.That(getAllClientsBeforeDeletion.Count, Is.EqualTo(2));
             await getClientResponse.DeleteAsync(WaitUntil.Completed);
             await createClientResponse2.DeleteAsync(WaitUntil.Completed);
             var getAllClientsAfterDeletion = await clientCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(getAllClientsAfterDeletion);
-            Assert.AreEqual(getAllClientsAfterDeletion.Count, 0);
+            Assert.That(getAllClientsAfterDeletion, Is.Not.Null);
+            Assert.That(getAllClientsAfterDeletion.Count, Is.EqualTo(0));
 
             //create client groups
             var clientGroupCollection = createNamespaceResponse.GetEventGridNamespaceClientGroups();
@@ -1164,29 +1164,29 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var createClientGroupResponse1 = (await clientGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, clientGroupName1, clientGroupData)).Value;
-            Assert.IsNotNull(createClientGroupResponse1);
-            Assert.AreEqual(createClientGroupResponse1.Data.Name, clientGroupName1);
-            Assert.AreEqual(createClientGroupResponse1.Data.ProvisioningState, ClientGroupProvisioningState.Succeeded);
+            Assert.That(createClientGroupResponse1, Is.Not.Null);
+            Assert.That(clientGroupName1, Is.EqualTo(createClientGroupResponse1.Data.Name));
+            Assert.That(ClientGroupProvisioningState.Succeeded, Is.EqualTo(createClientGroupResponse1.Data.ProvisioningState));
             var createClientGroupResponse2 = (await clientGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, clientGroupName2, clientGroupData)).Value;
-            Assert.IsNotNull(createClientGroupResponse2);
-            Assert.AreEqual(createClientGroupResponse2.Data.Name, clientGroupName2);
-            Assert.AreEqual(createClientGroupResponse2.Data.ProvisioningState, ClientGroupProvisioningState.Succeeded);
+            Assert.That(createClientGroupResponse2, Is.Not.Null);
+            Assert.That(clientGroupName2, Is.EqualTo(createClientGroupResponse2.Data.Name));
+            Assert.That(ClientGroupProvisioningState.Succeeded, Is.EqualTo(createClientGroupResponse2.Data.ProvisioningState));
 
             //Get Client Group
             var getClientGroup1Response = (await clientGroupCollection.GetAsync("clientGroupName1")).Value;
-            Assert.IsNotNull(getClientGroup1Response);
-            Assert.AreEqual(getClientGroup1Response.Data.Name, "clientGroupName1");
+            Assert.That(getClientGroup1Response, Is.Not.Null);
+            Assert.That(getClientGroup1Response.Data.Name, Is.EqualTo("clientGroupName1"));
 
             //List Client Groups ==> Note : 1 extra default client group is added by the service.
             var listCientGroupBeforeDeletion = await clientGroupCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(listCientGroupBeforeDeletion);
-            Assert.AreEqual(listCientGroupBeforeDeletion.Count, 3);
+            Assert.That(listCientGroupBeforeDeletion, Is.Not.Null);
+            Assert.That(listCientGroupBeforeDeletion.Count, Is.EqualTo(3));
 
             await getClientGroup1Response.DeleteAsync(WaitUntil.Completed);
 
             var listCientGroupAfterDeletion = await clientGroupCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(listCientGroupAfterDeletion);
-            Assert.AreEqual(listCientGroupAfterDeletion.Count, 2);
+            Assert.That(listCientGroupAfterDeletion, Is.Not.Null);
+            Assert.That(listCientGroupAfterDeletion.Count, Is.EqualTo(2));
 
             // Create topic spaces
             var topicSpacesCollection = createNamespaceResponse.GetTopicSpaces();
@@ -1195,39 +1195,39 @@ namespace Azure.ResourceManager.EventGrid.Tests
             TopicSpaceData topicSpaceData = new TopicSpaceData();
             topicSpaceData.TopicTemplates.Add("testTopicTemplate1");
             var topicSpaceResponse1 = (await topicSpacesCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicSpaceName1, topicSpaceData)).Value;
-            Assert.IsNotNull(topicSpaceResponse1);
-            Assert.AreEqual(topicSpaceResponse1.Data.ProvisioningState, TopicSpaceProvisioningState.Succeeded);
-            Assert.AreEqual(topicSpaceResponse1.Data.Name, topicSpaceName1);
+            Assert.That(topicSpaceResponse1, Is.Not.Null);
+            Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(topicSpaceResponse1.Data.ProvisioningState));
+            Assert.That(topicSpaceName1, Is.EqualTo(topicSpaceResponse1.Data.Name));
             var topicSpaceResponse2 = (await topicSpacesCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicSpaceName2, topicSpaceData)).Value;
-            Assert.IsNotNull(topicSpaceResponse2);
-            Assert.AreEqual(topicSpaceResponse2.Data.ProvisioningState, TopicSpaceProvisioningState.Succeeded);
-            Assert.AreEqual(topicSpaceResponse2.Data.Name, topicSpaceName2);
+            Assert.That(topicSpaceResponse2, Is.Not.Null);
+            Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(topicSpaceResponse2.Data.ProvisioningState));
+            Assert.That(topicSpaceName2, Is.EqualTo(topicSpaceResponse2.Data.Name));
 
             // get topic spaces
             var getTopicSpaceResponse1 = (await topicSpacesCollection.GetAsync(topicSpaceName1)).Value;
-            Assert.IsNotNull(getTopicSpaceResponse1);
-            Assert.AreEqual(getTopicSpaceResponse1.Data.ProvisioningState, TopicSpaceProvisioningState.Succeeded);
-            Assert.AreEqual(getTopicSpaceResponse1.Data.Name, topicSpaceName1);
-            Assert.AreEqual(getTopicSpaceResponse1.Data.TopicTemplates.Count, 1);
+            Assert.That(getTopicSpaceResponse1, Is.Not.Null);
+            Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(getTopicSpaceResponse1.Data.ProvisioningState));
+            Assert.That(topicSpaceName1, Is.EqualTo(getTopicSpaceResponse1.Data.Name));
+            Assert.That(getTopicSpaceResponse1.Data.TopicTemplates.Count, Is.EqualTo(1));
 
             // update topic spaces
             TopicSpaceData updateTopicSpaceData = new TopicSpaceData();
             updateTopicSpaceData.TopicTemplates.Add("testTopicTemplate1");
             updateTopicSpaceData.TopicTemplates.Add("testTopicTemplate2");
             var updateTopicSpaceResponse = (await getTopicSpaceResponse1.UpdateAsync(WaitUntil.Completed, updateTopicSpaceData)).Value;
-            Assert.IsNotNull(updateTopicSpaceResponse);
-            Assert.AreEqual(updateTopicSpaceResponse.Data.ProvisioningState, TopicSpaceProvisioningState.Succeeded);
-            Assert.AreEqual(updateTopicSpaceResponse.Data.Name, topicSpaceName1);
-            Assert.AreEqual(updateTopicSpaceResponse.Data.TopicTemplates.Count, 2);
+            Assert.That(updateTopicSpaceResponse, Is.Not.Null);
+            Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(updateTopicSpaceResponse.Data.ProvisioningState));
+            Assert.That(topicSpaceName1, Is.EqualTo(updateTopicSpaceResponse.Data.Name));
+            Assert.That(updateTopicSpaceResponse.Data.TopicTemplates.Count, Is.EqualTo(2));
 
             //List topic spaces
             var listTopicSpacesBeforeDeletion = await topicSpacesCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(listTopicSpacesBeforeDeletion);
-            Assert.AreEqual(listTopicSpacesBeforeDeletion.Count, 2);
+            Assert.That(listTopicSpacesBeforeDeletion, Is.Not.Null);
+            Assert.That(listTopicSpacesBeforeDeletion.Count, Is.EqualTo(2));
             await getTopicSpaceResponse1.DeleteAsync(WaitUntil.Completed);
             var listTopicSpacesAfterDeletion = await topicSpacesCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(listTopicSpacesAfterDeletion);
-            Assert.AreEqual(listTopicSpacesAfterDeletion.Count, 1);
+            Assert.That(listTopicSpacesAfterDeletion, Is.Not.Null);
+            Assert.That(listTopicSpacesAfterDeletion.Count, Is.EqualTo(1));
 
             // Create Permission Bindings
             var permissionBindingsCollection = createNamespaceResponse.GetEventGridNamespacePermissionBindings();
@@ -1240,15 +1240,15 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Permission = PermissionType.Subscriber
             };
             var permissionBindingResponse1 = (await permissionBindingsCollection.CreateOrUpdateAsync(WaitUntil.Completed, PermissionBindingName1, permissionBindingData)).Value;
-            Assert.IsNotNull(permissionBindingResponse1);
-            Assert.AreEqual(permissionBindingResponse1.Data.ProvisioningState, PermissionBindingProvisioningState.Succeeded);
-            Assert.AreEqual(permissionBindingResponse1.Data.Name, PermissionBindingName1);
-            Assert.AreEqual(permissionBindingResponse1.Data.Permission, PermissionType.Subscriber);
+            Assert.That(permissionBindingResponse1, Is.Not.Null);
+            Assert.That(PermissionBindingProvisioningState.Succeeded, Is.EqualTo(permissionBindingResponse1.Data.ProvisioningState));
+            Assert.That(PermissionBindingName1, Is.EqualTo(permissionBindingResponse1.Data.Name));
+            Assert.That(PermissionType.Subscriber, Is.EqualTo(permissionBindingResponse1.Data.Permission));
 
             var permissionBindingResponse2 = (await permissionBindingsCollection.CreateOrUpdateAsync(WaitUntil.Completed, PermissionBindingName2, permissionBindingData)).Value;
-            Assert.IsNotNull(permissionBindingResponse2);
-            Assert.AreEqual(permissionBindingResponse2.Data.ProvisioningState, PermissionBindingProvisioningState.Succeeded);
-            Assert.AreEqual(permissionBindingResponse2.Data.Name, PermissionBindingName2);
+            Assert.That(permissionBindingResponse2, Is.Not.Null);
+            Assert.That(PermissionBindingProvisioningState.Succeeded, Is.EqualTo(permissionBindingResponse2.Data.ProvisioningState));
+            Assert.That(PermissionBindingName2, Is.EqualTo(permissionBindingResponse2.Data.Name));
 
             // udpate permission bindings
             EventGridNamespacePermissionBindingData permissionBindingDataAfter = new EventGridNamespacePermissionBindingData()
@@ -1258,42 +1258,42 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Permission = PermissionType.Publisher
             };
             var updatePermissionBindingResponse = (await permissionBindingResponse1.UpdateAsync(WaitUntil.Completed, permissionBindingDataAfter)).Value;
-            Assert.IsNotNull(updatePermissionBindingResponse);
-            Assert.AreEqual(updatePermissionBindingResponse.Data.ProvisioningState, PermissionBindingProvisioningState.Succeeded);
+            Assert.That(updatePermissionBindingResponse, Is.Not.Null);
+            Assert.That(PermissionBindingProvisioningState.Succeeded, Is.EqualTo(updatePermissionBindingResponse.Data.ProvisioningState));
 
             // get permission bindings
             var getPermissionBindingResponse = (await permissionBindingsCollection.GetAsync(PermissionBindingName1)).Value;
-            Assert.IsNotNull(getPermissionBindingResponse);
-            Assert.AreEqual(getPermissionBindingResponse.Data.Name, PermissionBindingName1);
-            Assert.AreEqual(getPermissionBindingResponse.Data.Permission, PermissionType.Publisher);
+            Assert.That(getPermissionBindingResponse, Is.Not.Null);
+            Assert.That(PermissionBindingName1, Is.EqualTo(getPermissionBindingResponse.Data.Name));
+            Assert.That(PermissionType.Publisher, Is.EqualTo(getPermissionBindingResponse.Data.Permission));
 
             // list permission bindings
             var getAllPermissionBindingsBeforeDelete = await permissionBindingsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(getAllPermissionBindingsBeforeDelete);
-            Assert.AreEqual(getAllPermissionBindingsBeforeDelete.Count, 2);
+            Assert.That(getAllPermissionBindingsBeforeDelete, Is.Not.Null);
+            Assert.That(getAllPermissionBindingsBeforeDelete.Count, Is.EqualTo(2));
 
             // delete permission bindings
             await getPermissionBindingResponse.DeleteAsync(WaitUntil.Completed);
             await permissionBindingResponse2.DeleteAsync(WaitUntil.Completed);
 
             var getAllPermissionBindingsAfterDelete = await permissionBindingsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(getAllPermissionBindingsAfterDelete);
-            Assert.AreEqual(getAllPermissionBindingsAfterDelete.Count, 0);
+            Assert.That(getAllPermissionBindingsAfterDelete, Is.Not.Null);
+            Assert.That(getAllPermissionBindingsAfterDelete.Count, Is.EqualTo(0));
 
             //Delete client, client group and topic space
             await createClientResponse2.DeleteAsync(WaitUntil.Completed);
             await createClientGroupResponse2.DeleteAsync(WaitUntil.Completed);
             var listCientGroupAfterAllDeleted = await clientGroupCollection.GetAllAsync().ToEnumerableAsync();
             var listClientsAfterAllDeleted = await clientCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(listClientsAfterAllDeleted);
-            Assert.AreEqual(listClientsAfterAllDeleted.Count, 0);
-            Assert.IsNotNull(listCientGroupAfterAllDeleted);
-            Assert.AreEqual(listCientGroupAfterAllDeleted.Count, 1);
+            Assert.That(listClientsAfterAllDeleted, Is.Not.Null);
+            Assert.That(listClientsAfterAllDeleted.Count, Is.EqualTo(0));
+            Assert.That(listCientGroupAfterAllDeleted, Is.Not.Null);
+            Assert.That(listCientGroupAfterAllDeleted.Count, Is.EqualTo(1));
 
             await topicSpaceResponse2.DeleteAsync(WaitUntil.Completed);
             var listTopicSpaceAfterAllDeleted = await topicSpacesCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(listTopicSpaceAfterAllDeleted);
-            Assert.AreEqual(listTopicSpaceAfterAllDeleted.Count, 0);
+            Assert.That(listTopicSpaceAfterAllDeleted, Is.Not.Null);
+            Assert.That(listTopicSpaceAfterAllDeleted.Count, Is.EqualTo(0));
 
             // delete namespace and resource group
             await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests
             };
             DiskAccessResource updated = await diskAccess.SetTagsAsync(tags);
 
-            Assert.AreEqual(tags, updated.Data.Tags);
+            Assert.That(updated.Data.Tags, Is.EqualTo(tags));
         }
     }
 }

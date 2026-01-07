@@ -54,30 +54,30 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             string webhookName = Recording.GenerateAssetName("webhook");
             var webhook = await CreateWebhook(webhookName);
             ValidateWebhook(webhook.Data, webhookName);
-            Assert.IsNotNull(webhook.Data.Uri);
+            Assert.That(webhook.Data.Uri, Is.Not.Null);
 
             // Exist
             var flag = await _webhookCollection.ExistsAsync(webhookName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getwebhook = await _webhookCollection.GetAsync(webhookName);
             ValidateWebhook(getwebhook.Value.Data, webhookName);
-            Assert.IsNull(getwebhook.Value.Data.Uri);
+            Assert.That(getwebhook.Value.Data.Uri, Is.Null);
 
             // GetAll
             var list = await _webhookCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateWebhook(list.FirstOrDefault().Data, webhookName);
-            Assert.IsNull(list.FirstOrDefault().Data.Uri);
+            Assert.That(list.FirstOrDefault().Data.Uri, Is.Null);
         }
 
         private void ValidateWebhook(AutomationWebhookData webhook, string webhookName)
         {
-            Assert.IsNotNull(webhook);
+            Assert.That(webhook, Is.Not.Null);
             Assert.IsNotEmpty(webhook.Id);
-            Assert.AreEqual(webhookName, webhook.Name);
-            Assert.AreEqual(_runbook.Data.Name, webhook.RunbookName);
+            Assert.That(webhook.Name, Is.EqualTo(webhookName));
+            Assert.That(webhook.RunbookName, Is.EqualTo(_runbook.Data.Name));
         }
     }
 }

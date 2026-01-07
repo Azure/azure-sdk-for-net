@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 
             // Exist
             bool flag = await _artifactCollection.ExistsAsync(artifactName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var artifactSource = await _artifactCollection.GetAsync(artifactName);
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 
         private void ValidateDevTestLabArtifact(DevTestLabArtifactData artifact, string artifactName)
         {
-            Assert.IsNotNull(artifact);
+            Assert.That(artifact, Is.Not.Null);
             Assert.IsNotEmpty(artifact.Id);
             Assert.IsNotEmpty(artifact.FilePath);
             Assert.IsNotEmpty(artifact.Icon);
             Assert.IsNotEmpty(artifact.Publisher);
-            Assert.AreEqual(artifactName, artifact.Name);
+            Assert.That(artifact.Name, Is.EqualTo(artifactName));
         }
     }
 }

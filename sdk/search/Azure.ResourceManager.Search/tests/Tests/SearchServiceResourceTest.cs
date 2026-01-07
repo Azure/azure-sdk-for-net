@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var result = (await SearchResource.GetAsync()).Value;
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(name, result.Data.Name);
-            Assert.AreEqual(DefaultLocation, result.Data.Location);
-            Assert.AreEqual(SearchServiceSkuName.Standard, result.Data.SearchSkuName);
-            Assert.AreEqual(1, result.Data.PartitionCount);
-            Assert.AreEqual(1, result.Data.ReplicaCount);
-            Assert.AreEqual(SearchServiceHostingMode.Default, result.Data.HostingMode);
+            Assert.That(result.Data.Name, Is.EqualTo(name));
+            Assert.That(result.Data.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(result.Data.SearchSkuName, Is.EqualTo(SearchServiceSkuName.Standard));
+            Assert.That(result.Data.PartitionCount, Is.EqualTo(1));
+            Assert.That(result.Data.ReplicaCount, Is.EqualTo(1));
+            Assert.That(result.Data.HostingMode, Is.EqualTo(SearchServiceHostingMode.Default));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await SearchCollection.GetAsync(name));
             Assert.IsNotNull(exception);
             Assert.IsNotNull(exception.Message);
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             };
             SearchServiceResource item = (await SearchResource.UpdateAsync(patch)).Value;
             Assert.IsNotNull(item);
-            Assert.IsTrue(item.Data.Location == DefaultLocation);
-            Assert.AreEqual(name, item.Data.Name);
-            Assert.AreEqual(SearchServiceSkuName.Standard, item.Data.SearchSkuName);
-            Assert.AreEqual(2, item.Data.PartitionCount);
-            Assert.AreEqual(3, item.Data.ReplicaCount);
-            Assert.AreEqual(SearchServiceHostingMode.Default, item.Data.HostingMode);
+            Assert.That(item.Data.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(item.Data.Name, Is.EqualTo(name));
+            Assert.That(item.Data.SearchSkuName, Is.EqualTo(SearchServiceSkuName.Standard));
+            Assert.That(item.Data.PartitionCount, Is.EqualTo(2));
+            Assert.That(item.Data.ReplicaCount, Is.EqualTo(3));
+            Assert.That(item.Data.HostingMode, Is.EqualTo(SearchServiceHostingMode.Default));
         }
 
         [Test]
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             var result = await SearchResource.GetAdminKeyAsync();
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             var value = result.Value;
-            Assert.NotNull(value);
-            Assert.IsTrue(value is SearchServiceAdminKeyResult);
-            Assert.NotNull(value.PrimaryKey);
-            Assert.NotNull(value.SecondaryKey);
+            Assert.That(value, Is.Not.Null);
+            Assert.That(value is SearchServiceAdminKeyResult, Is.True);
+            Assert.That(value.PrimaryKey, Is.Not.Null);
+            Assert.That(value.SecondaryKey, Is.Not.Null);
         }
         [Test]
         public async Task RegenerateAdminKeyAsync()
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var originalAdminKey = (await SearchResource.GetAdminKeyAsync()).Value;
             var regenAdminPrimaryKey = (await SearchResource.RegenerateAdminKeyAsync(SearchServiceAdminKeyKind.Primary)).Value;
             var regenAdminSecondaryKey = (await SearchResource.RegenerateAdminKeyAsync(SearchServiceAdminKeyKind.Secondary)).Value;
-            Assert.NotNull(regenAdminPrimaryKey);
-            Assert.NotNull(regenAdminSecondaryKey);
+            Assert.That(regenAdminPrimaryKey, Is.Not.Null);
+            Assert.That(regenAdminSecondaryKey, Is.Not.Null);
             //Assert.AreNotEqual(originalAdminKey.PrimaryKey, regenAdminPrimaryKey.PrimaryKey);
             //Assert.AreEqual(originalAdminKey.SecondaryKey, regenAdminPrimaryKey.SecondaryKey);
             //Assert.AreNotEqual(originalAdminKey.PrimaryKey, regenAdminSecondaryKey.PrimaryKey);
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             var queryName = Recording.GenerateAssetName("queryKey-");
             var result = (await SearchResource.CreateQueryKeyAsync(queryName)).Value;
-            Assert.NotNull(result);
-            Assert.IsTrue(result is SearchServiceQueryKey);
-            Assert.NotNull(result.Key);
-            Assert.AreEqual(queryName, result.Name);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result is SearchServiceQueryKey, Is.True);
+            Assert.That(result.Key, Is.Not.Null);
+            Assert.That(result.Name, Is.EqualTo(queryName));
         }
         [Test]
         public async Task DeleteQueryKeyAsync()
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var queryName = Recording.GenerateAssetName("queryKey-");
             var key = SearchResource.CreateQueryKeyAsync(queryName).Result.Value.Key;
             var result = Mode == RecordedTestMode.Playback ? await SearchResource.DeleteQueryKeyAsync("Sanitized") : await SearchResource.DeleteQueryKeyAsync(key);
-            Assert.NotNull(result);
-            Assert.IsFalse(result.IsError);
-            Assert.NotNull(result.ReasonPhrase);
-            Assert.IsTrue(result.Status == 204 || result.Status == 200);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.IsError, Is.False);
+            Assert.That(result.ReasonPhrase, Is.Not.Null);
+            Assert.That(result.Status == 204 || result.Status == 200, Is.True);
         }
         [Test]
         public async Task GetQueryKeysBySearchServiceAsyncTest()
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var originKey = (await SearchResource.CreateQueryKeyAsync(queryName)).Value;
             var list = await SearchResource.GetQueryKeysBySearchServiceAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(queryName, list.First(item => item.Name == queryName).Name);
+            Assert.That(list.First(item => item.Name == queryName).Name, Is.EqualTo(queryName));
             Assert.IsNotNull(list.First(item => item.Name == queryName).Key);
             Assert.IsNotEmpty(list.First(item => item.Name == queryName).Key);
         }
@@ -225,9 +225,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var result = (await SearchResource.GetAsync()).Value;
             KeyValuePair<string, string> tag = result.Data.Tags.FirstOrDefault();
             Assert.IsNotNull(result);
-            Assert.NotNull(tag);
-            Assert.AreEqual("key1", tag.Key);
-            Assert.AreEqual("value1", tag.Value);
+            Assert.That(tag, Is.Not.Null);
+            Assert.That(tag.Key, Is.EqualTo("key1"));
+            Assert.That(tag.Value, Is.EqualTo("value1"));
         }
 
         [Test]
@@ -245,10 +245,10 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             Dictionary<string, string> tags = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" } };
             var result = (await SearchResource.SetTagsAsync(tags)).Value;
-            Assert.NotNull(result);
-            Assert.IsTrue(result.Data.Tags.Count == 2);
-            Assert.AreEqual("value1", result.Data.Tags["key1"]);
-            Assert.AreEqual("value2", result.Data.Tags["key2"]);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Data.Tags.Count, Is.EqualTo(2));
+            Assert.That(result.Data.Tags["key1"], Is.EqualTo("value1"));
+            Assert.That(result.Data.Tags["key2"], Is.EqualTo("value2"));
         }
         [Test]
         public async Task RemoveTagAsync()
@@ -267,9 +267,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             await SearchResource.SetTagsAsync(tags);
             await SearchResource.RemoveTagAsync("key1");
             var result = (await SearchResource.GetAsync()).Value;
-            Assert.NotNull(result);
-            Assert.IsFalse(result.Data.Tags.ContainsKey("key1"));
-            Assert.IsTrue(result.Data.Tags.ContainsKey("key2"));
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Data.Tags.ContainsKey("key1"), Is.False);
+            Assert.That(result.Data.Tags.ContainsKey("key2"), Is.True);
         }
 
         [Test]
@@ -287,14 +287,14 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             var result = (await SearchResource.GetAsync()).Value;
-            Assert.NotNull(result);
-            Assert.IsTrue(result.Data.IsLocalAuthDisabled);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Data.IsLocalAuthDisabled, Is.True);
 
             data.IsLocalAuthDisabled = false;
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
-            Assert.NotNull(result);
-            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Data.IsLocalAuthDisabled, Is.False);
 
             data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {
@@ -302,10 +302,10 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
-            Assert.NotNull(result);
-            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Data.IsLocalAuthDisabled, Is.False);
             Assert.IsNotNull(result.Data.AuthOptions);
-            Assert.IsNull(result.Data.AuthOptions.AadOrApiKey);
+            Assert.That(result.Data.AuthOptions.AadOrApiKey, Is.Null);
             Assert.IsNotNull(result.Data.AuthOptions.ApiKeyOnly);
 
             data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
@@ -314,12 +314,12 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
-            Assert.NotNull(result);
-            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Data.IsLocalAuthDisabled, Is.False);
             Assert.IsNotNull(result.Data.AuthOptions);
-            Assert.IsNull(result.Data.AuthOptions.ApiKeyOnly);
+            Assert.That(result.Data.AuthOptions.ApiKeyOnly, Is.Null);
             Assert.IsNotNull(result.Data.AuthOptions.AadOrApiKey);
-            Assert.AreEqual(SearchAadAuthFailureMode.Http401WithBearerChallenge, result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode);
+            Assert.That(result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode, Is.EqualTo(SearchAadAuthFailureMode.Http401WithBearerChallenge));
 
             data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {
@@ -327,12 +327,12 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
-            Assert.NotNull(result);
-            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Data.IsLocalAuthDisabled, Is.False);
             Assert.IsNotNull(result.Data.AuthOptions);
-            Assert.IsNull(result.Data.AuthOptions.ApiKeyOnly);
+            Assert.That(result.Data.AuthOptions.ApiKeyOnly, Is.Null);
             Assert.IsNotNull(result.Data.AuthOptions.AadOrApiKey);
-            Assert.AreEqual(SearchAadAuthFailureMode.Http403, result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode);
+            Assert.That(result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode, Is.EqualTo(SearchAadAuthFailureMode.Http403));
         }
 
         [Test]
@@ -349,20 +349,20 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             var result = (await SearchResource.GetAsync()).Value;
-            Assert.NotNull(result);
-            Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Disabled);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(SearchSemanticSearch.Disabled, Is.EqualTo(result.Data.SemanticSearch));
 
             data.SemanticSearch = SearchSemanticSearch.Free;
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
-            Assert.NotNull(result);
-            Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Free);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(SearchSemanticSearch.Free, Is.EqualTo(result.Data.SemanticSearch));
 
             data.SemanticSearch = SearchSemanticSearch.Standard;
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
-            Assert.NotNull(result);
-            Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Standard);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(SearchSemanticSearch.Standard, Is.EqualTo(result.Data.SemanticSearch));
         }
 
         [Test]
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var upgradedService = (await searchService.UpgradeAsync(WaitUntil.Completed)).Value;
 
             Assert.IsNotNull(upgradedService);
-            Assert.AreEqual(SearchServiceProvisioningState.Succeeded, upgradedService.Data.ProvisioningState);
+            Assert.That(upgradedService.Data.ProvisioningState, Is.EqualTo(SearchServiceProvisioningState.Succeeded));
         }
     }
 }

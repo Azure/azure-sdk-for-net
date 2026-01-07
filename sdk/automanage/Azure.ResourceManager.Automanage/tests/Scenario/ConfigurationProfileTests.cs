@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var profile = collection.GetAsync(profileName).Result.Value;
 
             // assert
-            Assert.NotNull(profile);
-            Assert.True(profile.HasData);
-            Assert.NotNull(profile.Id);
-            Assert.NotNull(profile.Id.Name);
-            Assert.NotNull(profile.Data);
-            Assert.NotNull(profile.Data.Configuration);
-            Assert.NotNull(profile.Data.Location);
+            Assert.That(profile, Is.Not.Null);
+            Assert.That(profile.HasData, Is.True);
+            Assert.That(profile.Id, Is.Not.Null);
+            Assert.That(profile.Id.Name, Is.Not.Null);
+            Assert.That(profile.Data, Is.Not.Null);
+            Assert.That(profile.Data.Configuration, Is.Not.Null);
+            Assert.That(profile.Data.Location, Is.Not.Null);
         }
 
         [TestCase]
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
                 count++;
 
             // assert
-            Assert.AreEqual(4, count);
+            Assert.That(count, Is.EqualTo(4));
         }
 
         [TestCase]
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
                 count++;
 
             //assert
-            Assert.AreEqual(1, count);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var exists = collection.ExistsAsync(profileName).Result.Value;
 
             // assert
-            Assert.False(exists);
+            Assert.That(exists, Is.False);
         }
     }
 }

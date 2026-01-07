@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var tag1IotCentralApp = tag1IotCentralAppResponse.Value;
 
             tag1IotCentralApp.Data.Tags.TryGetValue("key", out var tagReadVal);
-            Assert.AreEqual("value", tagReadVal);
+            Assert.That(tagReadVal, Is.EqualTo("value"));
         }
 
         [TestCase(null)]
@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var iotCentralAppOperation = await appsCollection.CreateOrUpdateAsync(WaitUntil.Completed, appName, iotCentralAppData, CancellationToken.None);
             var iotCentralApp = iotCentralAppOperation.Value;
 
-            Assert.IsTrue(iotCentralApp.Data.Tags.ContainsKey("key"));
+            Assert.That(iotCentralApp.Data.Tags.ContainsKey("key"), Is.True);
 
             // Remove a tag.
             var tag2IotCentralAppResource = await iotCentralApp.RemoveTagAsync("key", CancellationToken.None);
             var tag2IotCentralApp = tag2IotCentralAppResource.Value;
 
-            Assert.IsFalse(tag2IotCentralApp.Data.Tags.ContainsKey("key"));
+            Assert.That(tag2IotCentralApp.Data.Tags.ContainsKey("key"), Is.False);
         }
     }
 }

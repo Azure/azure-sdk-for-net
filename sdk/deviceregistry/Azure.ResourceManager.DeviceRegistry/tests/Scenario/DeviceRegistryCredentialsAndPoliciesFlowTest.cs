@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             var namespaceResponse = await namespacesCollection.GetAsync(_namespaceName, CancellationToken.None);
             DeviceRegistryNamespaceResource namespaceResource = namespaceResponse.Value;
 
-            Assert.IsNotNull(namespaceResource);
-            Assert.AreEqual(namespaceResource.Data.Location, _region);
-            Assert.AreEqual(namespaceResource.Data.Name, _namespaceName);
+            Assert.That(namespaceResource, Is.Not.Null);
+            Assert.That(_region, Is.EqualTo(namespaceResource.Data.Location));
+            Assert.That(_namespaceName, Is.EqualTo(namespaceResource.Data.Name));
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Namespace retrieved successfully\n");
 
             // Test Credential Flow
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                     credentialData,
                     CancellationToken.None);
                 credentialResource = credentialOperation.Value;
-                Assert.IsNotNull(credentialResource);
-                Assert.AreEqual(credentialResource.Data.Location, _region);
+                Assert.That(credentialResource, Is.Not.Null);
+                Assert.That(_region, Is.EqualTo(credentialResource.Data.Location));
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential created successfully\n");
 
                 // Allow backend propagation after credential creation
@@ -141,13 +141,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Credential already exists, retrieving...");
                 var credentialResponse = await credentialCollection.GetAsync(CancellationToken.None);
                 credentialResource = credentialResponse.Value;
-                Assert.IsNotNull(credentialResource);
+                Assert.That(credentialResource, Is.Not.Null);
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential retrieved successfully\n");
             }
 
             // Verify credential was created or retrieved successfully
-            Assert.IsNotNull(credentialResource.Data);
-            Assert.AreEqual(credentialResource.Data.Location, _region);
+            Assert.That(credentialResource.Data, Is.Not.Null);
+            Assert.That(_region, Is.EqualTo(credentialResource.Data.Location));
 
             // Test Policy Flow
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 4: Checking if policy '{_policyName}' exists...");
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                     policyData,
                     CancellationToken.None);
                 policyResource = policyOperation.Value;
-                Assert.IsNotNull(policyResource);
-                Assert.AreEqual(policyResource.Data.Location, _region);
-                Assert.AreEqual(policyResource.Data.Name, _policyName);
+                Assert.That(policyResource, Is.Not.Null);
+                Assert.That(_region, Is.EqualTo(policyResource.Data.Location));
+                Assert.That(_policyName, Is.EqualTo(policyResource.Data.Name));
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy created successfully\n");
 
                 // Allow backend propagation after policy creation
@@ -196,27 +196,27 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Policy already exists, retrieving...");
                 var policyResponse = await policyCollection.GetAsync(_policyName, CancellationToken.None);
                 policyResource = policyResponse.Value;
-                Assert.IsNotNull(policyResource);
+                Assert.That(policyResource, Is.Not.Null);
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy retrieved successfully\n");
             }
 
             // Verify policy was created or retrieved successfully
-            Assert.IsNotNull(policyResource.Data);
-            Assert.AreEqual(policyResource.Data.Location, _region);
-            Assert.IsNotNull(policyResource.Data.Properties);
-            Assert.IsNotNull(policyResource.Data.Properties.Certificate);
+            Assert.That(policyResource.Data, Is.Not.Null);
+            Assert.That(_region, Is.EqualTo(policyResource.Data.Location));
+            Assert.That(policyResource.Data.Properties, Is.Not.Null);
+            Assert.That(policyResource.Data.Properties.Certificate, Is.Not.Null);
 
             // Verify certificate configuration details
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Verifying certificate properties...");
-            Assert.AreEqual(SupportedKeyType.ECC,
-                policyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.KeyType);
-            Assert.AreEqual(90,
-                policyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays);
+            Assert.That(policyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.KeyType,
+                Is.EqualTo(SupportedKeyType.ECC));
+            Assert.That(policyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays,
+                Is.EqualTo(90));
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Certificate: ECC key type, 90-day validity");
 
             // Verify provisioning state
-            Assert.AreEqual(DeviceRegistryProvisioningState.Succeeded,
-                policyResource.Data.Properties.ProvisioningState);
+            Assert.That(policyResource.Data.Properties.ProvisioningState,
+                Is.EqualTo(DeviceRegistryProvisioningState.Succeeded));
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Provisioning state: Succeeded");
 
             // Test Policy List operation
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             {
                 allPolicies.Add(policy);
             }
-            Assert.IsTrue(allPolicies.Any(p => p.Data.Name == _policyName));
+            Assert.That(allPolicies.Any(p => p.Data.Name == _policyName), Is.True);
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ LIST operation successful, found {allPolicies.Count} policy(ies)\n");
 
             // Synchronize Credentials with IoT Hub
@@ -236,8 +236,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 CancellationToken.None);
 
             // Verify sync completed successfully
-            Assert.IsNotNull(syncOperation);
-            Assert.IsTrue(syncOperation.HasCompleted);
+            Assert.That(syncOperation, Is.Not.Null);
+            Assert.That(syncOperation.HasCompleted, Is.True);
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Synchronization completed successfully\n");
 
             // Allow extra time for IoT Hub synchronization propagation
@@ -286,8 +286,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(policyResource.Data, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
 
             // Verify update was successful
-            Assert.AreEqual(60,
-                policyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays);
+            Assert.That(policyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays,
+                Is.EqualTo(60));
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy updated successfully, validity now 60 days\n");
 
             // Clean up: Delete Policy
@@ -297,15 +297,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 CancellationToken.None);
 
             // Verify policy deletion completed
-            Assert.IsNotNull(policyDeleteOperation);
-            Assert.IsTrue(policyDeleteOperation.HasCompleted);
+            Assert.That(policyDeleteOperation, Is.Not.Null);
+            Assert.That(policyDeleteOperation.HasCompleted, Is.True);
 
             // Allow backend cleanup after policy deletion
             await DelayForPropagationAsync(10, "Waiting for policy deletion propagation...", sw);
 
             // Verify policy no longer exists
             bool policyExistsAfterDelete = await policyCollection.ExistsAsync(_policyName, CancellationToken.None);
-            Assert.IsFalse(policyExistsAfterDelete);
+            Assert.That(policyExistsAfterDelete, Is.False);
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy deleted successfully\n");
 
             // Clean up: Delete Credential
@@ -315,15 +315,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 CancellationToken.None);
 
             // Verify credential deletion completed
-            Assert.IsNotNull(credentialDeleteOperation);
-            Assert.IsTrue(credentialDeleteOperation.HasCompleted);
+            Assert.That(credentialDeleteOperation, Is.Not.Null);
+            Assert.That(credentialDeleteOperation.HasCompleted, Is.True);
 
             // Allow backend cleanup after credential deletion
             await DelayForPropagationAsync(10, "Waiting for credential deletion propagation...", sw);
 
             // Verify credential no longer exists
             bool credentialExistsAfterDelete = await credentialCollection.ExistsAsync(CancellationToken.None);
-            Assert.IsFalse(credentialExistsAfterDelete);
+            Assert.That(credentialExistsAfterDelete, Is.False);
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential deleted successfully\n");
 
             Console.WriteLine($"{'='*60}");

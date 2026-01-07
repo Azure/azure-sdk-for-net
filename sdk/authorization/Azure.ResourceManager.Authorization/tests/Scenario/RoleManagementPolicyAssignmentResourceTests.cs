@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (policyAssignment1 != null)
             {
                 var policyAssignment2 = await policyAssignment1.GetAsync();
-                Assert.AreEqual(policyAssignment2.Value.Data.Name, policyAssignment1.Data.Name);
+                Assert.That(policyAssignment1.Data.Name, Is.EqualTo(policyAssignment2.Value.Data.Name));
             }
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             {
                 var data = policyAssignment1.Data;
                 var policyAssignment2 = await policyAssignment1.UpdateAsync(WaitUntil.Completed, data);
-                Assert.AreEqual(policyAssignment2.Value.Data.Name, policyAssignment1.Data.Name);
+                Assert.That(policyAssignment1.Data.Name, Is.EqualTo(policyAssignment2.Value.Data.Name));
             }
         }
     }

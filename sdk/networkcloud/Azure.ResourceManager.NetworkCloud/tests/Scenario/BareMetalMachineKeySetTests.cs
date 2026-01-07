@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             ArmOperation<NetworkCloudBareMetalMachineKeySetResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bareMetalMachineKeySetName, data);
-            Assert.AreEqual(bareMetalMachineKeySetName, createResult.Value.Data.Name);
+            Assert.That(createResult.Value.Data.Name, Is.EqualTo(bareMetalMachineKeySetName));
 
             // Get
             var getResult = await bareMetalMachineKeySet.GetAsync();
-            Assert.AreEqual(bareMetalMachineKeySetName, getResult.Value.Data.Name);
+            Assert.That(getResult.Value.Data.Name, Is.EqualTo(bareMetalMachineKeySetName));
 
             // List by cluster
             var listByCluster = new List<NetworkCloudBareMetalMachineKeySetResource>();
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             ArmOperation<NetworkCloudBareMetalMachineKeySetResource> updateResult = await bareMetalMachineKeySet.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
+            Assert.That(updateResult.Value.Data.Tags, Is.EqualTo(patch.Tags));
 
             // Delete
             var deleteResult = await bareMetalMachineKeySet.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResult.HasCompleted);
+            Assert.That(deleteResult.HasCompleted, Is.True);
         }
     }
 }

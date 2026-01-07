@@ -61,25 +61,25 @@ namespace Azure.ResourceManager.Network.Tests
             var routeTableCollection = resourceGroup.GetRouteTables();
             var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable);
             Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
-            Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(putRouteTableResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             // Get RouteTable
             Response<RouteTableResource> getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
-            Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
-            Assert.AreEqual(1, getRouteTableResponse.Value.Data.Routes.Count);
-            Assert.AreEqual(route1Name, getRouteTableResponse.Value.Data.Routes[0].Name);
-            Assert.AreEqual("192.168.1.0/24", getRouteTableResponse.Value.Data.Routes[0].AddressPrefix);
-            Assert.AreEqual("23.108.1.1", getRouteTableResponse.Value.Data.Routes[0].NextHopIPAddress);
-            Assert.AreEqual(RouteNextHopType.VirtualAppliance, getRouteTableResponse.Value.Data.Routes[0].NextHopType);
+            Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
+            Assert.That(getRouteTableResponse.Value.Data.Routes.Count, Is.EqualTo(1));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[0].Name, Is.EqualTo(route1Name));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[0].AddressPrefix, Is.EqualTo("192.168.1.0/24"));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[0].NextHopIPAddress, Is.EqualTo("23.108.1.1"));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[0].NextHopType, Is.EqualTo(RouteNextHopType.VirtualAppliance));
 
             // Get Route
             Response<RouteResource> getRouteResponse = await getRouteTableResponse.Value.GetRoutes().GetAsync(route1Name);
-            Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
-            Assert.AreEqual(1, getRouteTableResponse.Value.Data.Routes.Count);
-            Assert.AreEqual(getRouteResponse.Value.Data.Name, getRouteTableResponse.Value.Data.Routes[0].Name);
-            Assert.AreEqual(getRouteResponse.Value.Data.AddressPrefix, getRouteTableResponse.Value.Data.Routes[0].AddressPrefix);
-            Assert.AreEqual(getRouteResponse.Value.Data.NextHopIPAddress, getRouteTableResponse.Value.Data.Routes[0].NextHopIPAddress);
-            Assert.AreEqual(getRouteResponse.Value.Data.NextHopType, getRouteTableResponse.Value.Data.Routes[0].NextHopType);
+            Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
+            Assert.That(getRouteTableResponse.Value.Data.Routes.Count, Is.EqualTo(1));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[0].Name, Is.EqualTo(getRouteResponse.Value.Data.Name));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[0].AddressPrefix, Is.EqualTo(getRouteResponse.Value.Data.AddressPrefix));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[0].NextHopIPAddress, Is.EqualTo(getRouteResponse.Value.Data.NextHopIPAddress));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[0].NextHopType, Is.EqualTo(getRouteResponse.Value.Data.NextHopType));
 
             // Add another route
             var route2 = new RouteData()
@@ -92,41 +92,41 @@ namespace Azure.ResourceManager.Network.Tests
             await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(WaitUntil.Completed, route2Name, route2);
 
             getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
-            Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
-            Assert.AreEqual(2, getRouteTableResponse.Value.Data.Routes.Count);
-            Assert.AreEqual(route2Name, getRouteTableResponse.Value.Data.Routes[1].Name);
-            Assert.AreEqual("10.0.1.0/24", getRouteTableResponse.Value.Data.Routes[1].AddressPrefix);
-            Assert.True(string.IsNullOrEmpty(getRouteTableResponse.Value.Data.Routes[1].NextHopIPAddress));
-            Assert.AreEqual(RouteNextHopType.VnetLocal, getRouteTableResponse.Value.Data.Routes[1].NextHopType);
+            Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
+            Assert.That(getRouteTableResponse.Value.Data.Routes.Count, Is.EqualTo(2));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[1].Name, Is.EqualTo(route2Name));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[1].AddressPrefix, Is.EqualTo("10.0.1.0/24"));
+            Assert.That(string.IsNullOrEmpty(getRouteTableResponse.Value.Data.Routes[1].NextHopIPAddress), Is.True);
+            Assert.That(getRouteTableResponse.Value.Data.Routes[1].NextHopType, Is.EqualTo(RouteNextHopType.VnetLocal));
 
             Response<RouteResource> getRouteResponse2 = await getRouteTableResponse.Value.GetRoutes().GetAsync(route2Name);
-            Assert.AreEqual(getRouteResponse2.Value.Data.Name, getRouteTableResponse.Value.Data.Routes[1].Name);
-            Assert.AreEqual(getRouteResponse2.Value.Data.AddressPrefix, getRouteTableResponse.Value.Data.Routes[1].AddressPrefix);
-            Assert.AreEqual(getRouteResponse2.Value.Data.NextHopIPAddress, getRouteTableResponse.Value.Data.Routes[1].NextHopIPAddress);
-            Assert.AreEqual(getRouteResponse2.Value.Data.NextHopType, getRouteTableResponse.Value.Data.Routes[1].NextHopType);
+            Assert.That(getRouteTableResponse.Value.Data.Routes[1].Name, Is.EqualTo(getRouteResponse2.Value.Data.Name));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[1].AddressPrefix, Is.EqualTo(getRouteResponse2.Value.Data.AddressPrefix));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[1].NextHopIPAddress, Is.EqualTo(getRouteResponse2.Value.Data.NextHopIPAddress));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[1].NextHopType, Is.EqualTo(getRouteResponse2.Value.Data.NextHopType));
 
             // list route
             AsyncPageable<RouteResource> listRouteResponseAP = getRouteTableResponse.Value.GetRoutes().GetAllAsync();
             List<RouteResource> listRouteResponse = await listRouteResponseAP.ToEnumerableAsync();
-            Assert.AreEqual(2, listRouteResponse.Count());
-            Assert.AreEqual(getRouteResponse.Value.Data.Name, listRouteResponse.First().Data.Name);
-            Assert.AreEqual(getRouteResponse.Value.Data.AddressPrefix, listRouteResponse.First().Data.AddressPrefix);
-            Assert.AreEqual(getRouteResponse.Value.Data.NextHopIPAddress, listRouteResponse.First().Data.NextHopIPAddress);
-            Assert.AreEqual(getRouteResponse.Value.Data.NextHopType, listRouteResponse.First().Data.NextHopType);
-            Assert.AreEqual(getRouteResponse2.Value.Data.Name, listRouteResponse.ElementAt(1).Data.Name);
-            Assert.AreEqual(getRouteResponse2.Value.Data.AddressPrefix, listRouteResponse.ElementAt(1).Data.AddressPrefix);
-            Assert.AreEqual(getRouteResponse2.Value.Data.NextHopIPAddress, listRouteResponse.ElementAt(1).Data.NextHopIPAddress);
-            Assert.AreEqual(getRouteResponse2.Value.Data.NextHopType, listRouteResponse.ElementAt(1).Data.NextHopType);
+            Assert.That(listRouteResponse.Count(), Is.EqualTo(2));
+            Assert.That(listRouteResponse.First().Data.Name, Is.EqualTo(getRouteResponse.Value.Data.Name));
+            Assert.That(listRouteResponse.First().Data.AddressPrefix, Is.EqualTo(getRouteResponse.Value.Data.AddressPrefix));
+            Assert.That(listRouteResponse.First().Data.NextHopIPAddress, Is.EqualTo(getRouteResponse.Value.Data.NextHopIPAddress));
+            Assert.That(listRouteResponse.First().Data.NextHopType, Is.EqualTo(getRouteResponse.Value.Data.NextHopType));
+            Assert.That(listRouteResponse.ElementAt(1).Data.Name, Is.EqualTo(getRouteResponse2.Value.Data.Name));
+            Assert.That(listRouteResponse.ElementAt(1).Data.AddressPrefix, Is.EqualTo(getRouteResponse2.Value.Data.AddressPrefix));
+            Assert.That(listRouteResponse.ElementAt(1).Data.NextHopIPAddress, Is.EqualTo(getRouteResponse2.Value.Data.NextHopIPAddress));
+            Assert.That(listRouteResponse.ElementAt(1).Data.NextHopType, Is.EqualTo(getRouteResponse2.Value.Data.NextHopType));
 
             // Delete a route
             await getRouteResponse.Value.DeleteAsync(WaitUntil.Completed);
             listRouteResponseAP = getRouteTableResponse.Value.GetRoutes().GetAllAsync();
             listRouteResponse = await listRouteResponseAP.ToEnumerableAsync();
             Has.One.EqualTo(listRouteResponse);
-            Assert.AreEqual(getRouteResponse2.Value.Data.Name, listRouteResponse.First().Data.Name);
-            Assert.AreEqual(getRouteResponse2.Value.Data.AddressPrefix, listRouteResponse.First().Data.AddressPrefix);
-            Assert.AreEqual(getRouteResponse2.Value.Data.NextHopIPAddress, listRouteResponse.First().Data.NextHopIPAddress);
-            Assert.AreEqual(getRouteResponse2.Value.Data.NextHopType, listRouteResponse.First().Data.NextHopType);
+            Assert.That(listRouteResponse.First().Data.Name, Is.EqualTo(getRouteResponse2.Value.Data.Name));
+            Assert.That(listRouteResponse.First().Data.AddressPrefix, Is.EqualTo(getRouteResponse2.Value.Data.AddressPrefix));
+            Assert.That(listRouteResponse.First().Data.NextHopIPAddress, Is.EqualTo(getRouteResponse2.Value.Data.NextHopIPAddress));
+            Assert.That(listRouteResponse.First().Data.NextHopType, Is.EqualTo(getRouteResponse2.Value.Data.NextHopType));
 
             // Delete route
             await getRouteResponse2.Value.DeleteAsync(WaitUntil.Completed);
@@ -176,13 +176,13 @@ namespace Azure.ResourceManager.Network.Tests
             var putRouteTableResponseOperation =
                 await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable);
             Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
-            Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(putRouteTableResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             // Get RouteTable
             Response<RouteTableResource> getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
-            Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
-            Assert.AreEqual(1, getRouteTableResponse.Value.Data.Routes.Count);
-            Assert.AreEqual(route1Name, getRouteTableResponse.Value.Data.Routes[0].Name);
+            Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
+            Assert.That(getRouteTableResponse.Value.Data.Routes.Count, Is.EqualTo(1));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[0].Name, Is.EqualTo(route1Name));
 
             // Add another route
             var route2 = new RouteData()
@@ -212,13 +212,13 @@ namespace Azure.ResourceManager.Network.Tests
             await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(WaitUntil.Completed, route4Name, route4);
 
             getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
-            Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
-            Assert.AreEqual(4, getRouteTableResponse.Value.Data.Routes.Count);
-            Assert.AreEqual(route2Name, getRouteTableResponse.Value.Data.Routes[1].Name);
-            Assert.AreEqual(RouteNextHopType.VirtualAppliance, getRouteTableResponse.Value.Data.Routes[0].NextHopType);
-            Assert.AreEqual(RouteNextHopType.VnetLocal, getRouteTableResponse.Value.Data.Routes[1].NextHopType);
-            Assert.AreEqual(RouteNextHopType.Internet, getRouteTableResponse.Value.Data.Routes[2].NextHopType);
-            Assert.AreEqual(RouteNextHopType.None, getRouteTableResponse.Value.Data.Routes[3].NextHopType);
+            Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
+            Assert.That(getRouteTableResponse.Value.Data.Routes.Count, Is.EqualTo(4));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[1].Name, Is.EqualTo(route2Name));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[0].NextHopType, Is.EqualTo(RouteNextHopType.VirtualAppliance));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[1].NextHopType, Is.EqualTo(RouteNextHopType.VnetLocal));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[2].NextHopType, Is.EqualTo(RouteNextHopType.Internet));
+            Assert.That(getRouteTableResponse.Value.Data.Routes[3].NextHopType, Is.EqualTo(RouteNextHopType.None));
 
             // Delete RouteTable
             await getRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed);

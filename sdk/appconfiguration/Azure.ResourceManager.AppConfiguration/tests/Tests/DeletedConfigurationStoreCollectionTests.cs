@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task GetTest()
         {
             DeletedAppConfigurationStoreResource deletedConfigurationStore = await subscription.GetDeletedAppConfigurationStores().GetAsync(Location, configurationStoreName);
-            Assert.AreEqual(deletedConfigurationStore.Data.Name, configurationStoreName);
+            Assert.That(configurationStoreName, Is.EqualTo(deletedConfigurationStore.Data.Name));
         }
     }
 }

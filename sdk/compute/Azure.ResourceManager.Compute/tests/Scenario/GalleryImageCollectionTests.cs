@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testImage_");
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, BasicGalleryImageData);
             GalleryImageResource image = lro.Value;
-            Assert.AreEqual(name, image.Data.Name);
+            Assert.That(image.Data.Name, Is.EqualTo(name));
         }
 
         [TestCase]
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testImage_");
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, BasicGalleryImageData);
             GalleryImageResource image = lro.Value;
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

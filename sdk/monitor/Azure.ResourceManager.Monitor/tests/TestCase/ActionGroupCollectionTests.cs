@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var input = ResourceDataHelper.GetBasicActionGroupData("global");
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var actionGroup = lro.Value;
-            Assert.AreEqual(name, actionGroup.Data.Name);
+            Assert.That(actionGroup.Data.Name, Is.EqualTo(name));
         }
 
         [TestCase]

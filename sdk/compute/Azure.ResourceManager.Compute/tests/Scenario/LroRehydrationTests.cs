@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.Compute.Tests.Scenario
             var token = originalLro.GetRehydrationToken();
             var resourceRehydratedLro = await ArmOperation.RehydrateAsync<VirtualMachineScaleSetResource>(Client, token.Value);
             await resourceRehydratedLro.WaitForCompletionAsync();
-            Assert.True(resourceRehydratedLro.HasValue);
+            Assert.That(resourceRehydratedLro.HasValue, Is.True);
             VirtualMachineScaleSetResource rehydratedResult = resourceRehydratedLro.Value;
             await originalLro.UpdateStatusAsync();
             VirtualMachineScaleSetResource originalResult = originalLro.Value;
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.Sku), JsonSerializer.Serialize(rehydratedResult.Data.Sku));
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.Plan), JsonSerializer.Serialize(rehydratedResult.Data.Plan));
-            Assert.AreEqual(originalResult.Data.Identity, rehydratedResult.Data.Identity);
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.Location), JsonSerializer.Serialize(rehydratedResult.Data.Location));
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.Properties), JsonSerializer.Serialize(rehydratedResult.Data.Properties));
+            Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Sku), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Sku)));
+            Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Plan), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Plan)));
+            Assert.That(rehydratedResult.Data.Identity, Is.EqualTo(originalResult.Data.Identity));
+            Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Location), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Location)));
+            Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Properties), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Properties)));
 
             var originalResponse = originalLro.GetRawResponse();
             var rehydratedResponse = resourceRehydratedLro.GetRawResponse();
-            Assert.AreEqual(originalResponse.Status, rehydratedResponse.Status);
+            Assert.That(rehydratedResponse.Status, Is.EqualTo(originalResponse.Status));
         }
     }
 }

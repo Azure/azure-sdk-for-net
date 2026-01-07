@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.ContainerService.Tests
             string clusterName = Recording.GenerateAssetName("akscluster");
             // Create
             ContainerServiceManagedClusterResource cluster = await CreateContainerServiceAsync(rg, clusterName, rg.Data.Location);
-            Assert.AreEqual(clusterName, cluster.Data.Name);
-            Assert.AreEqual(DnsPrefix, cluster.Data.DnsPrefix);
+            Assert.That(cluster.Data.Name, Is.EqualTo(clusterName));
+            Assert.That(cluster.Data.DnsPrefix, Is.EqualTo(DnsPrefix));
             // List
             await foreach (var clusterFromList in clusterCollection)
             {
-                Assert.AreEqual(clusterFromList.Data.Name, clusterName);
+                Assert.That(clusterName, Is.EqualTo(clusterFromList.Data.Name));
             }
             // Get
             ContainerServiceManagedClusterResource clusterFromGet = await cluster.GetAsync();
-            Assert.AreEqual(clusterFromGet.Data.Name, cluster.Data.Name);
-            Assert.AreEqual(clusterFromGet.Data.DnsPrefix, cluster.Data.DnsPrefix);
+            Assert.That(cluster.Data.Name, Is.EqualTo(clusterFromGet.Data.Name));
+            Assert.That(cluster.Data.DnsPrefix, Is.EqualTo(clusterFromGet.Data.DnsPrefix));
             // Delete
             await clusterFromGet.DeleteAsync(WaitUntil.Completed);
         }
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ContainerService.Tests
             clusterData.AgentPoolProfiles[0].Count = 2;
             var lro = await rg.GetContainerServiceManagedClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
             ContainerServiceManagedClusterResource clusterFromUpdate = lro.Value;
-            Assert.AreEqual(clusterFromUpdate.Data.Name, clusterName);
-            Assert.AreEqual(clusterFromUpdate.Data.AgentPoolProfiles[0].Count, 2);
+            Assert.That(clusterName, Is.EqualTo(clusterFromUpdate.Data.Name));
+            Assert.That(clusterFromUpdate.Data.AgentPoolProfiles[0].Count, Is.EqualTo(2));
             // Delete
             await clusterFromUpdate.DeleteAsync(WaitUntil.Completed);
         }
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.ContainerService.Tests
             // Create
             ContainerServiceManagedClusterResource cluster = await CreateContainerServiceAsync(rg, clusterName, rg.Data.Location);
             ManagedClusterCredentials adminCredentials = await cluster.GetClusterAdminCredentialsAsync();
-            Assert.True(adminCredentials.Kubeconfigs.Count > 0);
-            Assert.True(!string.IsNullOrWhiteSpace(adminCredentials.Kubeconfigs[0].Name));
+            Assert.That(adminCredentials.Kubeconfigs.Count > 0, Is.True);
+            Assert.That(!string.IsNullOrWhiteSpace(adminCredentials.Kubeconfigs[0].Name), Is.True);
             ManagedClusterCredentials userCredentials = await cluster.GetClusterUserCredentialsAsync();
-            Assert.True(userCredentials.Kubeconfigs.Count > 0);
+            Assert.That(userCredentials.Kubeconfigs.Count > 0, Is.True);
             // Delete
             await cluster.DeleteAsync(WaitUntil.Completed);
         }

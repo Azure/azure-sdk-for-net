@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             // Create
             var createOrderItemOperation = await _orderItemResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, orderItemName, orderItemResourceData);
             await createOrderItemOperation.WaitForCompletionAsync();
-            Assert.IsTrue(createOrderItemOperation.HasCompleted);
-            Assert.IsTrue(createOrderItemOperation.HasValue);
+            Assert.That(createOrderItemOperation.HasCompleted, Is.True);
+            Assert.That(createOrderItemOperation.HasValue, Is.True);
 
             // Get
             Response<EdgeOrderItemResource> getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
             EdgeOrderItemResource orderItemResource = getOrderItemResourceResponse.Value;
-            Assert.IsNotNull(orderItemResource);
+            Assert.That(orderItemResource, Is.Not.Null);
 
             // Update
             addressProperties.ContactDetails.ContactName = "Updated contact name";
@@ -72,28 +72,28 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             };
             var updateOrderItemOperation = await orderItemResource.UpdateAsync(WaitUntil.Completed, orderItemUpdateParameter);
             await updateOrderItemOperation.WaitForCompletionAsync();
-            Assert.IsTrue(updateOrderItemOperation.HasCompleted);
-            Assert.IsTrue(updateOrderItemOperation.HasValue);
+            Assert.That(updateOrderItemOperation.HasCompleted, Is.True);
+            Assert.That(updateOrderItemOperation.HasValue, Is.True);
 
             // Get
             getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
             orderItemResource = getOrderItemResourceResponse.Value;
-            Assert.IsNotNull(orderItemResource);
+            Assert.That(orderItemResource, Is.Not.Null);
 
             //Cancel
             Response cancelOrderItemResponse = await orderItemResource.CancelAsync(
                 new EdgeOrderItemCancellationReason("Order item cancelled"));
-            Assert.AreEqual(cancelOrderItemResponse.Status, 204);
+            Assert.That(cancelOrderItemResponse.Status, Is.EqualTo(204));
 
             // Get
             getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
             orderItemResource = getOrderItemResourceResponse.Value;
-            Assert.IsNotNull(orderItemResource);
+            Assert.That(orderItemResource, Is.Not.Null);
 
             // Delete
             var deleteOrderItemByNameOperation = await orderItemResource.DeleteAsync(WaitUntil.Completed);
             await deleteOrderItemByNameOperation.WaitForCompletionResponseAsync();
-            Assert.IsTrue(deleteOrderItemByNameOperation.HasCompleted);
+            Assert.That(deleteOrderItemByNameOperation.HasCompleted, Is.True);
         }
     }
 }

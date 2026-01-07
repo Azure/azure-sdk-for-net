@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.Sql.Tests
             Guid operationName = new Guid(list.FirstOrDefault().Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(await collection.ExistsAsync(operationName));
+            Assert.That((bool)await collection.ExistsAsync(operationName), Is.True);
 
             // 3.Get
             var getOperation = await collection.GetAsync(operationName);
-            Assert.AreEqual(operationName.ToString(), getOperation.Value.Data.Name);
+            Assert.That(getOperation.Value.Data.Name, Is.EqualTo(operationName.ToString()));
 
             // 4.GetIfExist
-            Assert.IsTrue(await collection.ExistsAsync(operationName));
+            Assert.That((bool)await collection.ExistsAsync(operationName), Is.True);
         }
     }
 }

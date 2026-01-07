@@ -33,22 +33,22 @@ namespace Azure.ResourceManager.DefenderEasm.Tests.Tests
 
             // create
             var createWorkspaceOperation = await workspaces.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, workspaceResourceData);
-            Assert.AreEqual(workspaceResourceData.Location, createWorkspaceOperation.Value.Data.Location);
+            Assert.That(createWorkspaceOperation.Value.Data.Location, Is.EqualTo(workspaceResourceData.Location));
 
             // get
             EasmWorkspaceResource getWorkspaceOperation = await workspaces.GetAsync(workspaceName);
-            Assert.AreEqual(workspaceResourceData.Location, getWorkspaceOperation.Data.Location);
+            Assert.That(getWorkspaceOperation.Data.Location, Is.EqualTo(workspaceResourceData.Location));
 
             // update
             EasmWorkspacePatch workspaceResourcePatch = new EasmWorkspacePatch();
             workspaceResourcePatch.Tags.Add(new KeyValuePair<string, string>("testkey", "testvalue"));
             EasmWorkspaceResource updateWorkspaceOperation = await getWorkspaceOperation.UpdateAsync(workspaceResourcePatch);
-            Assert.AreEqual(updateWorkspaceOperation.Data.Tags.Count, 1);
+            Assert.That(updateWorkspaceOperation.Data.Tags.Count, Is.EqualTo(1));
 
             // delete
             EasmWorkspaceResource w = await workspaces.GetAsync(workspaceName);
             ArmOperation operation = await w.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
         }
     }
 }

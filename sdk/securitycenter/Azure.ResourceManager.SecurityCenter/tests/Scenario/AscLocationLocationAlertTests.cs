@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task Exist()
         {
             bool flag = await _subscriptionSecurityAlertCollection.ExistsAsync(_existAlertName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsNotNull(alert.Data.AlertDisplayName);
             Assert.IsNotNull(alert.Data.AlertType);
             Assert.IsNotNull(alert.Data.AlertUri);
-            Assert.AreEqual(_existAlertName, alert.Data.Name);
-            Assert.AreEqual("Microsoft.Security/Locations/alerts", alert.Data.ResourceType.ToString());
+            Assert.That(alert.Data.Name, Is.EqualTo(_existAlertName));
+            Assert.That(alert.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/Locations/alerts"));
         }
     }
 }

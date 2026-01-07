@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
                 EdgeOrderExtensions.GetProductFamiliesMetadataAsync(Subscription);
             List<ProductFamiliesMetadata> productFamiliesMetadataResult = await productFamiliesMetadata.ToEnumerableAsync();
 
-            Assert.NotNull(productFamiliesMetadataResult);
-            Assert.IsTrue(productFamiliesMetadataResult.Count >= 1);
+            Assert.That(productFamiliesMetadataResult, Is.Not.Null);
+            Assert.That(productFamiliesMetadataResult.Count >= 1, Is.True);
         }
 
         [TestCase]
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             AsyncPageable<ProductFamily> productFamilies = EdgeOrderExtensions.GetProductFamiliesAsync(Subscription, productFamiliesRequest);
             List<ProductFamily> productFamiliesResult = await productFamilies.ToEnumerableAsync();
 
-            Assert.NotNull(productFamiliesResult);
-            Assert.IsTrue(productFamiliesResult.Count >= 1);
+            Assert.That(productFamiliesResult, Is.Not.Null);
+            Assert.That(productFamiliesResult.Count >= 1, Is.True);
         }
 
         [TestCase]
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
                 configurationsRequest);
             List<ProductConfiguration> configurationsResult = await configurations.ToEnumerableAsync();
 
-            Assert.NotNull(configurationsResult);
-            Assert.IsTrue(configurationsResult.Count >= 1);
+            Assert.That(configurationsResult, Is.Not.Null);
+            Assert.That(configurationsResult.Count >= 1, Is.True);
         }
     }
 }

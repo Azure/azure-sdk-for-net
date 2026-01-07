@@ -65,20 +65,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
                 new AppComplianceReportData(new AppComplianceReportProperties(new DateTimeOffset(univDateTime), "GMT Standard Time", resources)));
             // Create report: verify result
             AppComplianceReportResource reportResource = response.Value;
-            Assert.AreEqual(reportResource.Data.Name, reportName);
+            Assert.That(reportName, Is.EqualTo(reportResource.Data.Name));
 
             // Get report
             // Get report: send request
             Response<AppComplianceReportResource> getResponse = await reports.GetAsync(reportName);
             // Get report: verify result
             AppComplianceReportResource report = getResponse.Value;
-            Assert.AreEqual(report.Data.Name, reportName);
+            Assert.That(reportName, Is.EqualTo(report.Data.Name));
 
             // Delete report
             // Delete report: send request
             var operation = await report.DeleteAsync(WaitUntil.Completed);
             // Delete report: verify result
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
         }
     }
 }

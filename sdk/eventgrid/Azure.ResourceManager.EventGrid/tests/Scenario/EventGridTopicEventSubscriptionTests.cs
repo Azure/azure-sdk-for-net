@@ -71,16 +71,16 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             eventSubscriptionResponse = (await eventSubscriptionResponse.UpdateAsync(WaitUntil.Completed, eventSubscriptionUpdateParameters)).Value;
-            Assert.AreEqual(".jpg", eventSubscriptionResponse.Data.Filter.SubjectEndsWith);
-            Assert.IsTrue(eventSubscriptionResponse.Data.Labels.Contains("UpdatedLabel1"));
+            Assert.That(eventSubscriptionResponse.Data.Filter.SubjectEndsWith, Is.EqualTo(".jpg"));
+            Assert.That(eventSubscriptionResponse.Data.Labels.Contains("UpdatedLabel1"), Is.True);
 
             // Test getting full URL and delivery attributes
             var fullUrlResponse = (await eventSubscriptionResponse.GetFullUriAsync()).Value;
-            Assert.NotNull(fullUrlResponse);
-            Assert.NotNull(fullUrlResponse.Endpoint);
+            Assert.That(fullUrlResponse, Is.Not.Null);
+            Assert.That(fullUrlResponse.Endpoint, Is.Not.Null);
 
             var deliveryAttributesResponse = await eventSubscriptionResponse.GetDeliveryAttributesAsync().ToEnumerableAsync();
-            Assert.NotNull(deliveryAttributesResponse);
+            Assert.That(deliveryAttributesResponse, Is.Not.Null);
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string eventSubscriptionName = Recording.GenerateAssetName("topicSubscription");
             await CreateTopicEventSubscription(eventSubscriptionName);
             bool flag = await _topicEventSubscriptionCollection.ExistsAsync(eventSubscriptionName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string eventSubscriptionName = Recording.GenerateAssetName("topicSubscription");
             var topicEventSubscription = await CreateTopicEventSubscription(eventSubscriptionName);
             bool flag = await _topicEventSubscriptionCollection.ExistsAsync(eventSubscriptionName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await topicEventSubscription.DeleteAsync(WaitUntil.Completed);
             flag = await _topicEventSubscriptionCollection.ExistsAsync(eventSubscriptionName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         //TopicEventSubscriptionResource GetAsync'
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var response = await topicEventSubscriptionResource.GetAsync();
 
             // Assert
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotNull(response.Value.Data);
-            Assert.AreEqual(eventSubscriptionName, response.Value.Data.Name);
-            Assert.AreEqual("Succeeded", response.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual("EventGridSchema", response.Value.Data.EventDeliverySchema.ToString());
-            Assert.AreEqual("Microsoft.EventGrid/topics/eventSubscriptions", response.Value.Data.ResourceType.ToString());
-            Assert.AreEqual("WebHook", response.Value.Data.Destination.EndpointType.ToString());
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Data, Is.Not.Null);
+            Assert.That(response.Value.Data.Name, Is.EqualTo(eventSubscriptionName));
+            Assert.That(response.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(response.Value.Data.EventDeliverySchema.ToString(), Is.EqualTo("EventGridSchema"));
+            Assert.That(response.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/topics/eventSubscriptions"));
+            Assert.That(response.Value.Data.Destination.EndpointType.ToString(), Is.EqualTo("WebHook"));
 
             // Delete the event subscription resource
             await topicEventSubscriptionResource.DeleteAsync(WaitUntil.Completed);
@@ -151,13 +151,13 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         private void ValidateTopicEventSubscription(TopicEventSubscriptionResource topicEventSubscription, string eventSubscriptionName)
         {
-            Assert.IsNotNull(topicEventSubscription);
-            Assert.IsNotNull(topicEventSubscription.Data.Id);
-            Assert.AreEqual(eventSubscriptionName, topicEventSubscription.Data.Name);
-            Assert.AreEqual("Succeeded", topicEventSubscription.Data.ProvisioningState.ToString());
-            Assert.AreEqual("EventGridSchema", topicEventSubscription.Data.EventDeliverySchema.ToString());
-            Assert.AreEqual("Microsoft.EventGrid/topics/eventSubscriptions", topicEventSubscription.Data.ResourceType.ToString());
-            Assert.AreEqual("WebHook", topicEventSubscription.Data.Destination.EndpointType.ToString());
+            Assert.That(topicEventSubscription, Is.Not.Null);
+            Assert.That(topicEventSubscription.Data.Id, Is.Not.Null);
+            Assert.That(topicEventSubscription.Data.Name, Is.EqualTo(eventSubscriptionName));
+            Assert.That(topicEventSubscription.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(topicEventSubscription.Data.EventDeliverySchema.ToString(), Is.EqualTo("EventGridSchema"));
+            Assert.That(topicEventSubscription.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/topics/eventSubscriptions"));
+            Assert.That(topicEventSubscription.Data.Destination.EndpointType.ToString(), Is.EqualTo("WebHook"));
         }
     }
 }

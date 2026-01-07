@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.StorageCache.Tests
             await foreach (T scr in retrieved)
             {
                 T found = created.FirstOrDefault(cur => cur.Id == scr.Id);
-                Assert.IsTrue(found != null);
+                Assert.That(found, Is.Not.EqualTo(null));
                 created.Remove(found);
                 foundCount++;
             }
-            Assert.AreEqual(count, foundCount);
+            Assert.That(foundCount, Is.EqualTo(count));
         }
 
         public static async Task TestExists<T>(Func<Task<T>> createFunc, Func<Task<bool>> existsFunc)
         {
             bool result = await existsFunc();
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
 
             T res = await createFunc();
             result = await existsFunc();
 
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         public static async Task TestDelete<T>(Func<Task<T>> createFunc, Func<T, Task<ArmOperation>> deleteFunc, Func<T, Task<T>> getFunc)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             Assert.IsNotNull(gotBeforeDelete);
 
             var operation = await deleteFunc(res);
-            Assert.IsFalse(operation.WaitForCompletionResponse().IsError);
+            Assert.That(operation.WaitForCompletionResponse().IsError, Is.False);
 
             try
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual(e.Status, 404);
+                Assert.That(e.Status, Is.EqualTo(404));
             }
         }
     }

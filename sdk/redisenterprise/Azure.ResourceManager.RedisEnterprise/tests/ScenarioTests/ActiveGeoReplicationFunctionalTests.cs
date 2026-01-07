@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             };
 
             var clusterResponse1 = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName1, data)).Value;
-            Assert.AreEqual(DefaultLocation, clusterResponse1.Data.Location);
-            Assert.AreEqual(redisEnterpriseCacheName1, clusterResponse1.Data.Name);
-            Assert.AreEqual("Microsoft.Cache/redisEnterprise", clusterResponse1.Data.ResourceType);
-            Assert.AreEqual(RedisEnterpriseSkuName.EnterpriseE10, clusterResponse1.Data.Sku.Name);
-            Assert.AreEqual(2, clusterResponse1.Data.Sku.Capacity);
+            Assert.That(clusterResponse1.Data.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(clusterResponse1.Data.Name, Is.EqualTo(redisEnterpriseCacheName1));
+            Assert.That(clusterResponse1.Data.ResourceType, Is.EqualTo("Microsoft.Cache/redisEnterprise"));
+            Assert.That(clusterResponse1.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.EnterpriseE10));
+            Assert.That(clusterResponse1.Data.Sku.Capacity, Is.EqualTo(2));
 
             // Create cache in west us
             data = new RedisEnterpriseClusterData(
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             };
 
             var clusterResponse2 = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName2, data)).Value;
-            Assert.AreEqual(AzureLocation.WestUS, clusterResponse2.Data.Location);
-            Assert.AreEqual(redisEnterpriseCacheName2, clusterResponse2.Data.Name);
-            Assert.AreEqual("Microsoft.Cache/redisEnterprise", clusterResponse2.Data.ResourceType);
-            Assert.AreEqual(RedisEnterpriseSkuName.EnterpriseE10, clusterResponse2.Data.Sku.Name);
-            Assert.AreEqual(2, clusterResponse2.Data.Sku.Capacity);
+            Assert.That(clusterResponse2.Data.Location, Is.EqualTo(AzureLocation.WestUS));
+            Assert.That(clusterResponse2.Data.Name, Is.EqualTo(redisEnterpriseCacheName2));
+            Assert.That(clusterResponse2.Data.ResourceType, Is.EqualTo("Microsoft.Cache/redisEnterprise"));
+            Assert.That(clusterResponse2.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.EnterpriseE10));
+            Assert.That(clusterResponse2.Data.Sku.Capacity, Is.EqualTo(2));
 
             // create db for cluster 1
             string linkedDatabaseId1 = clusterResponse1.Id + "/databases/" + databaseName;
@@ -94,14 +94,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 }
             };
             var databaseResponse1 = (await databaseCollection1.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
-            Assert.AreEqual(databaseName, databaseResponse1.Data.Name);
-            Assert.AreEqual("Microsoft.Cache/redisEnterprise/databases", databaseResponse1.Data.ResourceType);
-            Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse1.Data.ClientProtocol);
-            Assert.AreEqual(RedisEnterpriseClusteringPolicy.EnterpriseCluster, databaseResponse1.Data.ClusteringPolicy);
-            Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse1.Data.EvictionPolicy);
-            Assert.AreEqual(groupNickname, databaseResponse1.Data.GeoReplication.GroupNickname);
-            Assert.AreEqual(linkedDatabaseId1, databaseResponse1.Data.GeoReplication.LinkedDatabases[0].Id);
-            Assert.AreEqual(RedisEnterpriseDatabaseLinkState.Linked, databaseResponse1.Data.GeoReplication.LinkedDatabases[0].State);
+            Assert.That(databaseResponse1.Data.Name, Is.EqualTo(databaseName));
+            Assert.That(databaseResponse1.Data.ResourceType, Is.EqualTo("Microsoft.Cache/redisEnterprise/databases"));
+            Assert.That(databaseResponse1.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
+            Assert.That(databaseResponse1.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.EnterpriseCluster));
+            Assert.That(databaseResponse1.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
+            Assert.That(databaseResponse1.Data.GeoReplication.GroupNickname, Is.EqualTo(groupNickname));
+            Assert.That(databaseResponse1.Data.GeoReplication.LinkedDatabases[0].Id, Is.EqualTo(linkedDatabaseId1));
+            Assert.That(databaseResponse1.Data.GeoReplication.LinkedDatabases[0].State, Is.EqualTo(RedisEnterpriseDatabaseLinkState.Linked));
 
             // create db for cluster 2
             string linkedDatabaseId2 = clusterResponse2.Id + "/databases/" + databaseName;
@@ -127,30 +127,30 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 }
             };
             var databaseResponse2 = (await databaseCollection2.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
-            Assert.AreEqual(databaseName, databaseResponse2.Data.Name);
-            Assert.AreEqual("Microsoft.Cache/redisEnterprise/databases", databaseResponse2.Data.ResourceType);
-            Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse2.Data.ClientProtocol);
-            Assert.AreEqual(RedisEnterpriseClusteringPolicy.EnterpriseCluster, databaseResponse2.Data.ClusteringPolicy);
-            Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse2.Data.EvictionPolicy);
-            Assert.AreEqual(groupNickname, databaseResponse2.Data.GeoReplication.GroupNickname);
-            Assert.AreEqual(2, databaseResponse2.Data.GeoReplication.LinkedDatabases.Count);
-            Assert.AreEqual(linkedDatabaseId1, databaseResponse2.Data.GeoReplication.LinkedDatabases[0].Id);
-            Assert.AreEqual(RedisEnterpriseDatabaseLinkState.Linked, databaseResponse2.Data.GeoReplication.LinkedDatabases[0].State);
-            Assert.AreEqual(linkedDatabaseId2, databaseResponse2.Data.GeoReplication.LinkedDatabases[1].Id);
-            Assert.AreEqual(RedisEnterpriseDatabaseLinkState.Linked, databaseResponse2.Data.GeoReplication.LinkedDatabases[1].State);
+            Assert.That(databaseResponse2.Data.Name, Is.EqualTo(databaseName));
+            Assert.That(databaseResponse2.Data.ResourceType, Is.EqualTo("Microsoft.Cache/redisEnterprise/databases"));
+            Assert.That(databaseResponse2.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
+            Assert.That(databaseResponse2.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.EnterpriseCluster));
+            Assert.That(databaseResponse2.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
+            Assert.That(databaseResponse2.Data.GeoReplication.GroupNickname, Is.EqualTo(groupNickname));
+            Assert.That(databaseResponse2.Data.GeoReplication.LinkedDatabases.Count, Is.EqualTo(2));
+            Assert.That(databaseResponse2.Data.GeoReplication.LinkedDatabases[0].Id, Is.EqualTo(linkedDatabaseId1));
+            Assert.That(databaseResponse2.Data.GeoReplication.LinkedDatabases[0].State, Is.EqualTo(RedisEnterpriseDatabaseLinkState.Linked));
+            Assert.That(databaseResponse2.Data.GeoReplication.LinkedDatabases[1].Id, Is.EqualTo(linkedDatabaseId2));
+            Assert.That(databaseResponse2.Data.GeoReplication.LinkedDatabases[1].State, Is.EqualTo(RedisEnterpriseDatabaseLinkState.Linked));
 
             // Check if all linked ids can be seen on database 1 as well
             databaseResponse1 = (await databaseCollection1.GetAsync(databaseName)).Value;
-            Assert.AreEqual(2, databaseResponse1.Data.GeoReplication.LinkedDatabases.Count);
+            Assert.That(databaseResponse1.Data.GeoReplication.LinkedDatabases.Count, Is.EqualTo(2));
 
             // Force unlink database 1 from active geo-replication group
             var content = new ForceUnlinkRedisEnterpriseDatabaseContent(new List<ResourceIdentifier>() { new ResourceIdentifier(linkedDatabaseId1) });
             await databaseResponse2.ForceUnlinkAsync(WaitUntil.Completed, content);
 
             databaseResponse2 = await databaseResponse2.GetAsync();
-            Assert.AreEqual(1, databaseResponse2.Data.GeoReplication.LinkedDatabases.Count);
-            Assert.AreEqual(linkedDatabaseId2, databaseResponse2.Data.GeoReplication.LinkedDatabases[0].Id);
-            Assert.AreEqual(RedisEnterpriseDatabaseLinkState.Linked, databaseResponse2.Data.GeoReplication.LinkedDatabases[0].State);
+            Assert.That(databaseResponse2.Data.GeoReplication.LinkedDatabases.Count, Is.EqualTo(1));
+            Assert.That(databaseResponse2.Data.GeoReplication.LinkedDatabases[0].Id, Is.EqualTo(linkedDatabaseId2));
+            Assert.That(databaseResponse2.Data.GeoReplication.LinkedDatabases[0].State, Is.EqualTo(RedisEnterpriseDatabaseLinkState.Linked));
         }
     }
 }

@@ -67,18 +67,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             string databaseName = _mongoDBDatabaseId.Name;
             var definition = await CreateMongoUserDefinition(databaseName, MongoUserDefinitionCollection);
-            Assert.AreEqual(_userDefinition.Data.Name, definition.Data.Name);
-            Assert.AreEqual(definition.Data.DatabaseName, databaseName);
-            Assert.AreEqual(definition.Data.UserName, _userDefinition.Data.UserName);
-            Assert.AreEqual(definition.Data.CustomData, _userDefinition.Data.CustomData);
-            Assert.AreEqual(definition.Data.Mechanisms, _userDefinition.Data.Mechanisms);
+            Assert.That(definition.Data.Name, Is.EqualTo(_userDefinition.Data.Name));
+            Assert.That(databaseName, Is.EqualTo(definition.Data.DatabaseName));
+            Assert.That(_userDefinition.Data.UserName, Is.EqualTo(definition.Data.UserName));
+            Assert.That(_userDefinition.Data.CustomData, Is.EqualTo(definition.Data.CustomData));
+            Assert.That(_userDefinition.Data.Mechanisms, Is.EqualTo(definition.Data.Mechanisms));
             Assert.That(definition.Data.Roles, Has.Count.EqualTo(1));
 
             bool ifExists = await MongoUserDefinitionCollection.ExistsAsync(this._userDefinitionId);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             MongoDBUserDefinitionResource definition2 = await MongoUserDefinitionCollection.GetAsync(this._userDefinitionId);
-            Assert.AreEqual(_userDefinition.Data.Name, definition2.Data.Name);
+            Assert.That(definition2.Data.Name, Is.EqualTo(_userDefinition.Data.Name));
             VerifyMongoUserDefinitions(definition, definition2);
 
             var password = Recording.GenerateAssetName("mongo-user-pass-");
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             updateParameters.Roles.Add(role);
 
             definition = await (await MongoUserDefinitionCollection.CreateOrUpdateAsync(WaitUntil.Completed, this._userDefinitionId, updateParameters)).WaitForCompletionAsync();
-            Assert.AreEqual(_userDefinition.Data.Name, definition.Data.Name);
-            Assert.AreEqual(definition.Data.DatabaseName, databaseName);
-            Assert.AreEqual(definition.Data.UserName, _userDefinition.Data.UserName);
-            Assert.AreEqual(definition.Data.CustomData, _userDefinition.Data.CustomData);
-            Assert.AreEqual(definition.Data.Mechanisms, _userDefinition.Data.Mechanisms);
+            Assert.That(definition.Data.Name, Is.EqualTo(_userDefinition.Data.Name));
+            Assert.That(databaseName, Is.EqualTo(definition.Data.DatabaseName));
+            Assert.That(_userDefinition.Data.UserName, Is.EqualTo(definition.Data.UserName));
+            Assert.That(_userDefinition.Data.CustomData, Is.EqualTo(definition.Data.CustomData));
+            Assert.That(_userDefinition.Data.Mechanisms, Is.EqualTo(definition.Data.Mechanisms));
             Assert.That(definition.Data.Roles, Has.Count.EqualTo(1));
 
             definition2 = await MongoUserDefinitionCollection.GetAsync(this._userDefinitionId);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var definitions = await MongoUserDefinitionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(definitions, Is.Not.Zero);
-            Assert.AreEqual(definition.Data.Name, definitions[0].Data.Name);
+            Assert.That(definitions[0].Data.Name, Is.EqualTo(definition.Data.Name));
 
             VerifyMongoUserDefinitions(definitions[0], definition);
         }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var definition = await CreateMongoUserDefinition(databaseName, MongoUserDefinitionCollection);
             await definition.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsFalse(await MongoUserDefinitionCollection.ExistsAsync(this._userDefinition.Data.Id.Name));
+            Assert.That((bool)await MongoUserDefinitionCollection.ExistsAsync(this._userDefinition.Data.Id.Name), Is.False);
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var definition = await CreateMongoUserDefinition(databaseName, MongoUserDefinitionCollection);
             var definition2 = await definition.GetAsync();
 
-            Assert.IsTrue(await MongoUserDefinitionCollection.ExistsAsync(this._userDefinition.Data.Id.Name));
+            Assert.That((bool)await MongoUserDefinitionCollection.ExistsAsync(this._userDefinition.Data.Id.Name), Is.True);
             VerifyMongoUserDefinitions(definition, definition2);
         }
 
@@ -180,24 +180,24 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyMongoUserDefinitions(MongoDBUserDefinitionResource expectedValue, MongoDBUserDefinitionResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.AreEqual(expectedValue.Data.UserName, actualValue.Data.UserName);
-            Assert.AreEqual(expectedValue.Data.Mechanisms, actualValue.Data.Mechanisms);
-            Assert.AreEqual(expectedValue.Data.CustomData, actualValue.Data.CustomData);
+            Assert.That(actualValue.Data.UserName, Is.EqualTo(expectedValue.Data.UserName));
+            Assert.That(actualValue.Data.Mechanisms, Is.EqualTo(expectedValue.Data.Mechanisms));
+            Assert.That(actualValue.Data.CustomData, Is.EqualTo(expectedValue.Data.CustomData));
 
             VerifyRoles(expectedValue.Data.Roles, actualValue.Data.Roles);
         }
 
         private void VerifyRoles(IList<MongoDBRole> expected, IList<MongoDBRole> actualValue)
         {
-            Assert.AreEqual(expected.Count, actualValue.Count);
+            Assert.That(actualValue.Count, Is.EqualTo(expected.Count));
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].DBName, actualValue[i].DBName);
-                Assert.AreEqual(expected[i].Role, actualValue[i].Role);
+                Assert.That(actualValue[i].DBName, Is.EqualTo(expected[i].DBName));
+                Assert.That(actualValue[i].Role, Is.EqualTo(expected[i].Role));
             }
         }
     }

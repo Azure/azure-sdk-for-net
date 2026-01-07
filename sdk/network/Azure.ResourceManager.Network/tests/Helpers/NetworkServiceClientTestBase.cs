@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var circuitCollection = resourceGroup.GetExpressRouteCircuits();
             Operation<ExpressRouteCircuitResource> circuitOperation = await circuitCollection.CreateOrUpdateAsync(WaitUntil.Completed, circuitName, circuit);
             Response<ExpressRouteCircuitResource> circuitResponse = await circuitOperation.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", circuitResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(circuitResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Response<ExpressRouteCircuitResource> getCircuitResponse = await circuitCollection.GetAsync(circuitName);
 
             return getCircuitResponse;
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var circuitCollection = resourceGroup.GetExpressRouteCircuits();
             Operation<ExpressRouteCircuitPeeringResource> peerOperation = await circuitCollection.Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(WaitUntil.Completed, ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeeringResource> peerResponse = await peerOperation.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(peerResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Response<ExpressRouteCircuitResource> getCircuitResponse = await circuitCollection.GetAsync(circuitName);
 
             return getCircuitResponse;
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var circuitCollection = resourceGroup.GetExpressRouteCircuits();
             Operation<ExpressRouteCircuitPeeringResource> peerOperation = await circuitCollection.Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(WaitUntil.Completed, ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeeringResource> peerResponse = await peerOperation.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(peerResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Response<ExpressRouteCircuitResource> getCircuitResponse = await circuitCollection.GetAsync(circuitName);
 
             return getCircuitResponse;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             Operation<ExpressRouteCircuitPeeringResource> peerOperation = await GetResourceGroup(resourceGroupName).GetExpressRouteCircuits().Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(WaitUntil.Completed, ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeeringResource> peerResponse = await peerOperation.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(peerResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Response<ExpressRouteCircuitResource> getCircuitResponse = await GetResourceGroup(resourceGroupName).GetExpressRouteCircuits().GetAsync(circuitName);
 
             return getCircuitResponse;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             // Put nic1PublicIpAddress
             Operation<PublicIPAddressResource> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, publicIp);
             Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Response<PublicIPAddressResource> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
 
             return getPublicIpAddressResponse;
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             // Put nic1PublicIpAddress
             Operation<PublicIPAddressResource> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, publicIp);
             Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Response<PublicIPAddressResource> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
 
             return getPublicIpAddressResponse;
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var publicIPAddressCollection = GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
             Operation<PublicIPAddressResource> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, publicIp);
             Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Response<PublicIPAddressResource> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
 
             return getPublicIpAddressResponse;
@@ -621,12 +621,12 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var networkInterfaceCollection = GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
             await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, nicParameters);
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(name);
-            Assert.AreEqual(getNicResponse.Value.Data.Name, name);
+            Assert.That(name, Is.EqualTo(getNicResponse.Value.Data.Name));
 
             // because its a single CA nic, primaryOnCA is always true
-            Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
+            Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Primary, Is.True);
 
-            Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(getNicResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             return getNicResponse;
         }
@@ -657,12 +657,12 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var operation = InstrumentOperation(await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, nicParameters));
             await operation.WaitForCompletionAsync();
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(name);
-            Assert.AreEqual(getNicResponse.Value.Data.Name, name);
+            Assert.That(name, Is.EqualTo(getNicResponse.Value.Data.Name));
 
             // because its a single CA nic, primaryOnCA is always true
-            Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
+            Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Primary, Is.True);
 
-            Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(getNicResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             return getNicResponse;
         }

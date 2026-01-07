@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.Media.Tests
             // Create
             string filterName = Recording.GenerateAssetName("mediaAssetFilter");
             var filter =await CreateDefaultAssetFilter(filterName);
-            Assert.IsNotNull(filter);
-            Assert.AreEqual(filterName, filter.Data.Name);
+            Assert.That(filter, Is.Not.Null);
+            Assert.That(filter.Data.Name, Is.EqualTo(filterName));
             // Check exists
             bool flag = await assetFilterCollection.ExistsAsync(filterName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             // Get
             var result = await assetFilterCollection.GetAsync(filterName);
-            Assert.IsNotNull(filter);
-            Assert.AreEqual(filterName, result.Value.Data.Name);
+            Assert.That(filter, Is.Not.Null);
+            Assert.That(result.Value.Data.Name, Is.EqualTo(filterName));
             // List
             var list = await assetFilterCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             // Delete
             await filter.DeleteAsync(WaitUntil.Completed);
             flag = await assetFilterCollection.ExistsAsync(filterName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

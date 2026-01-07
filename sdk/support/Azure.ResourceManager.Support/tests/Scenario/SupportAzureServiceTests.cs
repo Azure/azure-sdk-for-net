@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Exist()
         {
             var flag = await _supportAzureServiceCollection.ExistsAsync(_existAzureSupportServiceName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Support.Tests
         {
             Assert.IsNotNull(supportAzureService);
             Assert.IsNotEmpty(supportAzureService.DisplayName);
-            Assert.AreEqual(supportAzureService.Name, supportAzureServiceName);
+            Assert.That(supportAzureServiceName, Is.EqualTo(supportAzureService.Name));
         }
     }
 }

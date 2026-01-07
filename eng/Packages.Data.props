@@ -60,7 +60,8 @@
     <MicrosoftExtensionsLoggingVersion>10.0.1</MicrosoftExtensionsLoggingVersion>
     <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
     <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
-    <NUnitVersion>4.4.0</NUnitVersion>
+    <NUnitVersion>3.13.0</NUnitVersion>
+    <NUnitAnalyzersVersion>4.3.0</NUnitAnalyzersVersion>
     <OpenTelemetryInstrumentationHttpVersion>1.14.0</OpenTelemetryInstrumentationHttpVersion>
     <OpenTelemetryVersion>1.14.0</OpenTelemetryVersion>
   </PropertyGroup>
@@ -359,6 +360,7 @@
     <PackageReference Update="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="$(NUnitVersion)" />
+    <PackageReference Update="NUnit.Analyzers" Version="$(NUnitAnalyzersVersion)" />
     <PackageReference Update="NUnit3TestAdapter" Version="6.0.1" />
     <PackageReference Update="Microsoft.NET.Sdk.Functions" Version="4.2.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.0.0" />

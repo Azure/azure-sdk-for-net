@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
             string dpsName = Recording.GenerateAssetName("dps");
             await CreateDefaultDps(_resourceGroup, dpsName);
             var flag = await _dpsCollection.ExistsAsync(dpsName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
             string dpsName = Recording.GenerateAssetName("dps");
             var dps = await CreateDefaultDps(_resourceGroup, dpsName);
             var flag = await _dpsCollection.ExistsAsync(dpsName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             await dps.DeleteAsync(WaitUntil.Completed);
             flag = await _dpsCollection.ExistsAsync(dpsName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         [TestCase(null)]
@@ -90,24 +90,24 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
             // AddTag
             await dps.AddTagAsync("addtagkey", "addtagvalue");
             dps = await _dpsCollection.GetAsync(dpsName);
-            Assert.AreEqual(1, dps.Data.Tags.Count);
+            Assert.That(dps.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = dps.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await dps.RemoveTagAsync("addtagkey");
             dps = await _dpsCollection.GetAsync(dpsName);
-            Assert.AreEqual(0, dps.Data.Tags.Count);
+            Assert.That(dps.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private void ValidateDeviceProvisioningServices(DeviceProvisioningServiceData dpsData, string dpsName)
         {
-            Assert.IsNotNull(dpsData);
-            Assert.AreEqual(dpsName, dpsData.Name);
-            Assert.AreEqual(false, dpsData.Properties.IsDataResidencyEnabled);
-            Assert.AreEqual("S1", dpsData.Sku.Name.ToString());
-            Assert.AreEqual(1, dpsData.Sku.Capacity);
+            Assert.That(dpsData, Is.Not.Null);
+            Assert.That(dpsData.Name, Is.EqualTo(dpsName));
+            Assert.That(dpsData.Properties.IsDataResidencyEnabled, Is.EqualTo(false));
+            Assert.That(dpsData.Sku.Name.ToString(), Is.EqualTo("S1"));
+            Assert.That(dpsData.Sku.Capacity, Is.EqualTo(1));
         }
     }
 }

@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task CassandraKeyspaceCreateAndUpdate()
         {
             var keyspace = await CreateCassandraKeyspace(null);
-            Assert.AreEqual(_keyspaceName, keyspace.Data.Resource.KeyspaceName);
+            Assert.That(keyspace.Data.Resource.KeyspaceName, Is.EqualTo(_keyspaceName));
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, keyspace.Data.Options.Throughput);
 
             bool ifExists = await CassandraKeyspaceCollection.ExistsAsync(_keyspaceName);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             // NOT WORKING API
             //ThroughputSettingData throughtput = await keyspace.GetMongoDBCollectionThroughputAsync();
             CassandraKeyspaceResource keyspace2 = await CassandraKeyspaceCollection.GetAsync(_keyspaceName);
-            Assert.AreEqual(_keyspaceName, keyspace2.Data.Resource.KeyspaceName);
+            Assert.That(keyspace2.Data.Resource.KeyspaceName, Is.EqualTo(_keyspaceName));
             //Assert.AreEqual(TestThroughput1, keyspace2.Data.Options.Throughput);
 
             VerifyCassandraKeyspaces(keyspace, keyspace2);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
 
             keyspace = (await CassandraKeyspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, _keyspaceName, updateOptions)).Value;
-            Assert.AreEqual(_keyspaceName, keyspace.Data.Resource.KeyspaceName);
+            Assert.That(keyspace.Data.Resource.KeyspaceName, Is.EqualTo(_keyspaceName));
             keyspace2 = await CassandraKeyspaceCollection.GetAsync(_keyspaceName);
             VerifyCassandraKeyspaces(keyspace, keyspace2);
         }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var keyspaces = await CassandraKeyspaceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(keyspaces, Has.Count.EqualTo(1));
-            Assert.AreEqual(keyspace.Data.Name, keyspaces[0].Data.Name);
+            Assert.That(keyspaces[0].Data.Name, Is.EqualTo(keyspace.Data.Name));
 
             VerifyCassandraKeyspaces(keyspaces[0], keyspace);
         }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var keyspace = await CreateCassandraKeyspace(null);
             CassandraKeyspaceThroughputSettingResource throughput = await keyspace.GetCassandraKeyspaceThroughputSetting().GetAsync();
 
-            Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
+            Assert.That(throughput.Data.Resource.Throughput, Is.EqualTo(TestThroughput1));
 
             CassandraKeyspaceThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResourceInfo()
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     Throughput = TestThroughput2
                 }))).Value;
 
-            Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
+            Assert.That(throughput2.Data.Resource.Throughput, Is.EqualTo(TestThroughput2));
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await keyspace.DeleteAsync(WaitUntil.Completed);
 
             bool exists = await CassandraKeyspaceCollection.ExistsAsync(_keyspaceName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         internal async Task<CassandraKeyspaceResource> CreateCassandraKeyspace(AutoscaleSettings autoscale)
@@ -193,18 +193,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyCassandraKeyspaces(CassandraKeyspaceResource expectedValue, CassandraKeyspaceResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Location, actualValue.Data.Location);
-            Assert.AreEqual(expectedValue.Data.Tags, actualValue.Data.Tags);
-            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.Location, Is.EqualTo(expectedValue.Data.Location));
+            Assert.That(actualValue.Data.Tags, Is.EqualTo(expectedValue.Data.Tags));
+            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.AreEqual(expectedValue.Data.Options, actualValue.Data.Options);
+            Assert.That(actualValue.Data.Options, Is.EqualTo(expectedValue.Data.Options));
 
-            Assert.AreEqual(expectedValue.Data.Resource.KeyspaceName, actualValue.Data.Resource.KeyspaceName);
-            Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
-            Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
-            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
+            Assert.That(actualValue.Data.Resource.KeyspaceName, Is.EqualTo(expectedValue.Data.Resource.KeyspaceName));
+            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+            Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+            Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
         }
     }
 }

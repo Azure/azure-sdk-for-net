@@ -42,18 +42,18 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             var request = TestHelpers.CreateSavingsPlanOrderAliasPurchaseRequest(BillingBenefitsAppliedScopeType.Shared);
             var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, "mockSavingsPlanAliasTest", request);
 
-            Assert.NotNull(createResponse);
-            Assert.IsTrue(createResponse.HasCompleted);
-            Assert.IsTrue(createResponse.HasValue);
-            Assert.NotNull(createResponse.Value);
-            Assert.IsTrue(createResponse.Value.HasData);
-            Assert.NotNull(createResponse.Value.Data);
+            Assert.That(createResponse, Is.Not.Null);
+            Assert.That(createResponse.HasCompleted, Is.True);
+            Assert.That(createResponse.HasValue, Is.True);
+            Assert.That(createResponse.Value, Is.Not.Null);
+            Assert.That(createResponse.Value.HasData, Is.True);
+            Assert.That(createResponse.Value.Data, Is.Not.Null);
 
             ValidateResponseProperties(createResponse.Value.Data, BillingBenefitsAppliedScopeType.Shared);
 
             var getAliasResponse = await _modelResource.GetAsync("mockSavingsPlanAliasTest");
 
-            Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
+            Assert.That(getAliasResponse.GetRawResponse().Status, Is.EqualTo(200));
             ValidateResponseProperties(getAliasResponse.Value.Data, BillingBenefitsAppliedScopeType.Shared);
         }
 
@@ -65,18 +65,18 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             var request = TestHelpers.CreateSavingsPlanOrderAliasPurchaseRequest(BillingBenefitsAppliedScopeType.Single);
             var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, "mockSingleSavingsPlanAliasTestNew", request);
 
-            Assert.NotNull(createResponse);
-            Assert.IsTrue(createResponse.HasCompleted);
-            Assert.IsTrue(createResponse.HasValue);
-            Assert.NotNull(createResponse.Value);
-            Assert.IsTrue(createResponse.Value.HasData);
-            Assert.NotNull(createResponse.Value.Data);
+            Assert.That(createResponse, Is.Not.Null);
+            Assert.That(createResponse.HasCompleted, Is.True);
+            Assert.That(createResponse.HasValue, Is.True);
+            Assert.That(createResponse.Value, Is.Not.Null);
+            Assert.That(createResponse.Value.HasData, Is.True);
+            Assert.That(createResponse.Value.Data, Is.Not.Null);
 
             ValidateResponseProperties(createResponse.Value.Data, BillingBenefitsAppliedScopeType.Single);
 
             var getAliasResponse = await _modelResource.GetAsync("mockSingleSavingsPlanAliasTestNew");
 
-            Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
+            Assert.That(getAliasResponse.GetRawResponse().Status, Is.EqualTo(200));
             ValidateResponseProperties(getAliasResponse.Value.Data, BillingBenefitsAppliedScopeType.Single);
         }
 
@@ -92,18 +92,18 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             };
             var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, "mockSingleRGSavingsPlanAliasTest", request);
 
-            Assert.NotNull(createResponse);
-            Assert.IsTrue(createResponse.HasCompleted);
-            Assert.IsTrue(createResponse.HasValue);
-            Assert.NotNull(createResponse.Value);
-            Assert.IsTrue(createResponse.Value.HasData);
-            Assert.NotNull(createResponse.Value.Data);
+            Assert.That(createResponse, Is.Not.Null);
+            Assert.That(createResponse.HasCompleted, Is.True);
+            Assert.That(createResponse.HasValue, Is.True);
+            Assert.That(createResponse.Value, Is.Not.Null);
+            Assert.That(createResponse.Value.HasData, Is.True);
+            Assert.That(createResponse.Value.Data, Is.Not.Null);
 
             ValidateResponseProperties(createResponse.Value.Data, BillingBenefitsAppliedScopeType.Single, true);
 
             var getAliasResponse = await _modelResource.GetAsync("mockSingleRGSavingsPlanAliasTest");
 
-            Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
+            Assert.That(getAliasResponse.GetRawResponse().Status, Is.EqualTo(200));
             ValidateResponseProperties(getAliasResponse.Value.Data, BillingBenefitsAppliedScopeType.Single, true);
         }
 
@@ -115,18 +115,18 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             var request = TestHelpers.CreateSavingsPlanOrderAliasPurchaseRequest(BillingBenefitsAppliedScopeType.ManagementGroup);
             var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, "mockManagementGroupSavingsPlanAliasTest", request);
 
-            Assert.NotNull(createResponse);
-            Assert.IsTrue(createResponse.HasCompleted);
-            Assert.IsTrue(createResponse.HasValue);
-            Assert.NotNull(createResponse.Value);
-            Assert.IsTrue(createResponse.Value.HasData);
-            Assert.NotNull(createResponse.Value.Data);
+            Assert.That(createResponse, Is.Not.Null);
+            Assert.That(createResponse.HasCompleted, Is.True);
+            Assert.That(createResponse.HasValue, Is.True);
+            Assert.That(createResponse.Value, Is.Not.Null);
+            Assert.That(createResponse.Value.HasData, Is.True);
+            Assert.That(createResponse.Value.Data, Is.Not.Null);
 
             ValidateResponseProperties(createResponse.Value.Data, BillingBenefitsAppliedScopeType.ManagementGroup);
 
             var getAliasResponse = await _modelResource.GetAsync("mockManagementGroupSavingsPlanAliasTest");
 
-            Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
+            Assert.That(getAliasResponse.GetRawResponse().Status, Is.EqualTo(200));
             ValidateResponseProperties(getAliasResponse.Value.Data, BillingBenefitsAppliedScopeType.ManagementGroup);
         }
 
@@ -141,21 +141,21 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
             var response = await _tenantResource.ValidatePurchaseAsync(requestContent).ToEnumerableAsync();
 
-            Assert.NotNull(response);
-            Assert.AreEqual(1, response.Count);
-            Assert.IsTrue(response[0].IsValid);
-            Assert.Null(response[0].Reason);
-            Assert.Null(response[0].ReasonCode);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Count, Is.EqualTo(1));
+            Assert.That(response[0].IsValid, Is.True);
+            Assert.That(response[0].Reason, Is.Null);
+            Assert.That(response[0].ReasonCode, Is.Null);
         }
 
         private void ValidateResponseProperties(BillingBenefitsSavingsPlanOrderAliasData Data, BillingBenefitsAppliedScopeType scope, bool isRG = false)
         {
             if (scope == BillingBenefitsAppliedScopeType.Single)
             {
-                Assert.NotNull(Data.AppliedScopeProperties);
+                Assert.That(Data.AppliedScopeProperties, Is.Not.Null);
                 if (isRG)
                 {
-                    Assert.IsNull(Data.AppliedScopeProperties.SubscriptionId);
+                    Assert.That(Data.AppliedScopeProperties.SubscriptionId, Is.Null);
                     Assert.IsNotEmpty(Data.AppliedScopeProperties.ResourceGroupId);
                 }
                 else
@@ -165,33 +165,33 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             }
             else if (scope == BillingBenefitsAppliedScopeType.ManagementGroup)
             {
-                Assert.NotNull(Data.AppliedScopeProperties);
+                Assert.That(Data.AppliedScopeProperties, Is.Not.Null);
                 Assert.IsNotEmpty(Data.AppliedScopeProperties.ManagementGroupId);
             }
             else
             {
-                Assert.Null(Data.AppliedScopeProperties);
+                Assert.That(Data.AppliedScopeProperties, Is.Null);
             }
 
-            Assert.AreEqual(scope, Data.AppliedScopeType);
-            Assert.AreEqual(BillingBenefitsBillingPlan.P1M, Data.BillingPlan);
-            Assert.AreEqual("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47", Data.BillingScopeId.ToString());
-            Assert.NotNull(Data.Commitment);
-            Assert.AreEqual(0.001, Data.Commitment.Amount);
-            Assert.AreEqual("USD", Data.Commitment.CurrencyCode);
-            Assert.AreEqual(BillingBenefitsCommitmentGrain.Hourly, Data.Commitment.Grain);
-            Assert.NotNull(Data.Id);
+            Assert.That(Data.AppliedScopeType, Is.EqualTo(scope));
+            Assert.That(Data.BillingPlan, Is.EqualTo(BillingBenefitsBillingPlan.P1M));
+            Assert.That(Data.BillingScopeId.ToString(), Is.EqualTo("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"));
+            Assert.That(Data.Commitment, Is.Not.Null);
+            Assert.That(Data.Commitment.Amount, Is.EqualTo(0.001));
+            Assert.That(Data.Commitment.CurrencyCode, Is.EqualTo("USD"));
+            Assert.That(Data.Commitment.Grain, Is.EqualTo(BillingBenefitsCommitmentGrain.Hourly));
+            Assert.That(Data.Id, Is.Not.Null);
             Assert.IsNotEmpty(Data.Name);
             Assert.IsNotEmpty(Data.DisplayName);
-            Assert.NotNull(Data.ResourceType);
-            Assert.AreEqual("Microsoft.BillingBenefits", Data.ResourceType.Namespace);
-            Assert.AreEqual("savingsPlanOrderAliases", Data.ResourceType.Type);
-            Assert.AreEqual(BillingBenefitsProvisioningState.Created, Data.ProvisioningState);
+            Assert.That(Data.ResourceType, Is.Not.Null);
+            Assert.That(Data.ResourceType.Namespace, Is.EqualTo("Microsoft.BillingBenefits"));
+            Assert.That(Data.ResourceType.Type, Is.EqualTo("savingsPlanOrderAliases"));
+            Assert.That(Data.ProvisioningState, Is.EqualTo(BillingBenefitsProvisioningState.Created));
             Assert.IsNotEmpty(Data.SavingsPlanOrderId);
-            Assert.NotNull(Data.Sku);
-            Assert.AreEqual("Compute_Savings_Plan", Data.Sku.Name);
-            Assert.AreEqual("Compute_Savings_Plan", Data.SkuName);
-            Assert.AreEqual(BillingBenefitsTerm.P3Y, Data.Term);
+            Assert.That(Data.Sku, Is.Not.Null);
+            Assert.That(Data.Sku.Name, Is.EqualTo("Compute_Savings_Plan"));
+            Assert.That(Data.SkuName, Is.EqualTo("Compute_Savings_Plan"));
+            Assert.That(Data.Term, Is.EqualTo(BillingBenefitsTerm.P3Y));
         }
     }
 }

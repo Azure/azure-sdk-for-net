@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 SchemaType = EventHubsSchemaType.Avro
             };
             EventHubsSchemaGroupResource schemaGroup = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName, parameters)).Value;
-            Assert.NotNull(schemaGroup);
-            Assert.AreEqual(schemaGroupName, schemaGroup.Id.Name);
+            Assert.That(schemaGroup, Is.Not.Null);
+            Assert.That(schemaGroup.Id.Name, Is.EqualTo(schemaGroupName));
 
             //validate if created successfully
-            Assert.IsTrue(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
+            Assert.That((bool)await _schemaGroupCollection.ExistsAsync(schemaGroupName), Is.True);
             schemaGroup = await _schemaGroupCollection.GetAsync(schemaGroupName);
 
             //delete eventhub
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 if (schemaGroup.Id.Name == schemaGroupName1)
                     count++;
             }
-            Assert.AreEqual(1, count);
+            Assert.That(count, Is.EqualTo(1));
         }
     }
 }

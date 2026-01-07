@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Tests
         {
             string sqlServerName = Recording.GenerateAssetName("sqlserver-");
             await CreateOrUpdateSqlServer(sqlServerName);
-            Assert.AreEqual(true, (await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value);
+            Assert.That((await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value, Is.EqualTo(true));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string sqlServerName = Recording.GenerateAssetName("sqlserver-");
             var SqlServer = await CreateOrUpdateSqlServer(sqlServerName);
             Assert.IsNotNull(SqlServer.Data);
-            Assert.AreEqual(sqlServerName, SqlServer.Data.Name);
+            Assert.That(SqlServer.Data.Name, Is.EqualTo(sqlServerName));
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Tests
             await CreateOrUpdateSqlServer(sqlServerName);
             var SqlServer = await _resourceGroup.GetSqlServers().GetAsync(sqlServerName);
             Assert.IsNotNull(SqlServer.Value.Data);
-            Assert.AreEqual(sqlServerName, SqlServer.Value.Data.Name);
+            Assert.That(SqlServer.Value.Data.Name, Is.EqualTo(sqlServerName));
         }
 
         [Test]
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Sql.Tests
             await CreateOrUpdateSqlServer(sqlServerName);
             var SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(SqlServerList);
-            Assert.AreEqual(1,SqlServerList.Count);
-            Assert.AreEqual(sqlServerName, SqlServerList[0].Data.Name);
+            Assert.That(SqlServerList.Count, Is.EqualTo(1));
+            Assert.That(SqlServerList[0].Data.Name, Is.EqualTo(sqlServerName));
         }
 
         [Test]
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Sql.Tests
             string SqlServerName = Recording.GenerateAssetName("sqlserver-");
             await CreateOrUpdateSqlServer(SqlServerName);
             var SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, SqlServerList.Count);
+            Assert.That(SqlServerList.Count, Is.EqualTo(1));
 
             await SqlServerList[0].DeleteAsync(WaitUntil.Completed);
             SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, SqlServerList.Count);
+            Assert.That(SqlServerList.Count, Is.EqualTo(0));
         }
     }
 }

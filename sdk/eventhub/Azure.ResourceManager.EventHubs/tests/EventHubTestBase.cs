@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         public static void VerifyNamespaceProperties(EventHubsNamespaceResource eventHubNamespace, bool useDefaults)
         {
-            Assert.NotNull(eventHubNamespace);
-            Assert.NotNull(eventHubNamespace.Id);
-            Assert.NotNull(eventHubNamespace.Id.Name);
-            Assert.NotNull(eventHubNamespace.Data);
-            Assert.NotNull(eventHubNamespace.Data.Location);
-            Assert.NotNull(eventHubNamespace.Data.CreatedOn);
-            Assert.NotNull(eventHubNamespace.Data.Sku);
+            Assert.That(eventHubNamespace, Is.Not.Null);
+            Assert.That(eventHubNamespace.Id, Is.Not.Null);
+            Assert.That(eventHubNamespace.Id.Name, Is.Not.Null);
+            Assert.That(eventHubNamespace.Data, Is.Not.Null);
+            Assert.That(eventHubNamespace.Data.Location, Is.Not.Null);
+            Assert.That(eventHubNamespace.Data.CreatedOn, Is.Not.Null);
+            Assert.That(eventHubNamespace.Data.Sku, Is.Not.Null);
             if (useDefaults)
             {
-                Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
-                Assert.AreEqual(EventHubsSkuTier.Standard, eventHubNamespace.Data.Sku.Tier);
+                Assert.That(eventHubNamespace.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(eventHubNamespace.Data.Sku.Tier, Is.EqualTo(EventHubsSkuTier.Standard));
             }
         }
     }

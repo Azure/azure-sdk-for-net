@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             MaintenanceConfigurationCollection collection = _resourceGroup.GetMaintenanceConfigurations();
 
             var exist = await collection.ExistsAsync(maintenanceConfigurationResource.Data.Name);
-            Assert.IsFalse(exist.Value);
+            Assert.That(exist.Value, Is.False);
         }
 
         [RecordedTest]
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Maintenance.Tests
         {
             MaintenanceConfigurationResource maintenanceConfigurationResource = await CreateMaintenanceConfiguration();
             Assert.IsNotEmpty(maintenanceConfigurationResource.Data.Id);
-            Assert.AreEqual(maintenanceConfigurationResource.Data.StartOn, new DateTimeOffset(2024, 12, 31, 14, 0, 0, TimeSpan.Zero));
-            Assert.AreEqual(maintenanceConfigurationResource.Data.ExpireOn, new DateTimeOffset(9999, 12, 31, 0, 0, 0, TimeSpan.Zero));
+            Assert.That(new DateTimeOffset(2024, 12, 31, 14, 0, 0, TimeSpan.Zero), Is.EqualTo(maintenanceConfigurationResource.Data.StartOn));
+            Assert.That(new DateTimeOffset(9999, 12, 31, 0, 0, 0, TimeSpan.Zero), Is.EqualTo(maintenanceConfigurationResource.Data.ExpireOn));
         }
 
         [RecordedTest]
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Maintenance.Tests
             MaintenanceConfigurationResource config2 = await CreateMaintenanceConfiguration();
 
             var list = await _configCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(list.Count >= 2);
+            Assert.That(list.Count >= 2, Is.True);
             Assert.IsNotEmpty(list);
-            Assert.IsTrue(list.Exists(item => item.Data.Name == config1.Data.Name));
-            Assert.IsTrue(list.Exists(item => item.Data.Name == config2.Data.Name));
+            Assert.That(list.Exists(item => item.Data.Name == config1.Data.Name), Is.True);
+            Assert.That(list.Exists(item => item.Data.Name == config2.Data.Name), Is.True);
         }
 
         [RecordedTest]

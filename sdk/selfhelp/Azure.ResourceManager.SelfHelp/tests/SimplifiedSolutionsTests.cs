@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             SelfHelpSimplifiedSolutionData resourceData = CreateSelfHelpSimplifiedSolutionData(scope);
 
             var createSolutionData = await Client.GetSelfHelpSimplifiedSolutions(scope).CreateOrUpdateAsync(WaitUntil.Started, solutionResourceName, resourceData);
-            Assert.NotNull(createSolutionData);
+            Assert.That(createSolutionData, Is.Not.Null);
 
             var readSolutionData = await Client.GetSelfHelpSimplifiedSolutionAsync(scope, solutionResourceName);
-            Assert.NotNull(readSolutionData);
+            Assert.That(readSolutionData, Is.Not.Null);
         }
 
         private SelfHelpSimplifiedSolutionData CreateSelfHelpSimplifiedSolutionData(ResourceIdentifier scope)

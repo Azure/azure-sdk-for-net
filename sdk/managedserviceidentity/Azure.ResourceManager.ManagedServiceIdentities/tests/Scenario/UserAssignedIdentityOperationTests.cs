@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
 
             UserAssignedIdentityResource userAssignedIdentity2 = await userAssignedIdentity.GetAsync();
 
-            Assert.AreEqual(userAssignedIdentity.Data.Id, userAssignedIdentity2.Data.Id);
-            Assert.AreEqual(userAssignedIdentity.Data.Name, userAssignedIdentity2.Data.Name);
-            Assert.AreEqual(userAssignedIdentity.Data.ResourceType, userAssignedIdentity2.Data.ResourceType);
-            Assert.AreEqual(userAssignedIdentity.Data.TenantId, userAssignedIdentity2.Data.TenantId);
-            Assert.AreEqual(userAssignedIdentity.Data.ClientId, userAssignedIdentity2.Data.ClientId);
-            Assert.AreEqual(userAssignedIdentity.Data.PrincipalId, userAssignedIdentity2.Data.PrincipalId);
+            Assert.That(userAssignedIdentity2.Data.Id, Is.EqualTo(userAssignedIdentity.Data.Id));
+            Assert.That(userAssignedIdentity2.Data.Name, Is.EqualTo(userAssignedIdentity.Data.Name));
+            Assert.That(userAssignedIdentity2.Data.ResourceType, Is.EqualTo(userAssignedIdentity.Data.ResourceType));
+            Assert.That(userAssignedIdentity2.Data.TenantId, Is.EqualTo(userAssignedIdentity.Data.TenantId));
+            Assert.That(userAssignedIdentity2.Data.ClientId, Is.EqualTo(userAssignedIdentity.Data.ClientId));
+            Assert.That(userAssignedIdentity2.Data.PrincipalId, Is.EqualTo(userAssignedIdentity.Data.PrincipalId));
         }
 
         [RecordedTest]
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
             var value = "value";
             userAssignedIdentity = await userAssignedIdentity.AddTagAsync(key, value);
 
-            Assert.IsTrue(userAssignedIdentity.Data.Tags.ContainsKey(key));
-            Assert.AreEqual(value, userAssignedIdentity.Data.Tags[key]);
+            Assert.That(userAssignedIdentity.Data.Tags.ContainsKey(key), Is.True);
+            Assert.That(userAssignedIdentity.Data.Tags[key], Is.EqualTo(value));
         }
 
         [TestCase(null)]
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
 
             userAssignedIdentity = await userAssignedIdentity.RemoveTagAsync("key1");
 
-            Assert.IsFalse(userAssignedIdentity.Data.Tags.ContainsKey("key1"));
-            Assert.IsTrue(userAssignedIdentity.Data.Tags.ContainsKey("key2"));
+            Assert.That(userAssignedIdentity.Data.Tags.ContainsKey("key1"), Is.False);
+            Assert.That(userAssignedIdentity.Data.Tags.ContainsKey("key2"), Is.True);
         }
     }
 }

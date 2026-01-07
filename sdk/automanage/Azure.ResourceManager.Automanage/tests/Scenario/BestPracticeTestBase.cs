@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         /// <param name="versionName">BestPracticeResource name to verify</param>
         protected void AssertValues(AutomanageBestPracticeResource profile, string profileName)
         {
-            Assert.NotNull(profile);
-            Assert.True(profile.HasData);
-            Assert.AreEqual(profileName, profile.Id.Name);
-            Assert.NotNull(profile.Id);
-            Assert.NotNull(profile.Data);
-            Assert.NotNull(profile.Data.Configuration);
+            Assert.That(profile, Is.Not.Null);
+            Assert.That(profile.HasData, Is.True);
+            Assert.That(profile.Id.Name, Is.EqualTo(profileName));
+            Assert.That(profile.Id, Is.Not.Null);
+            Assert.That(profile.Data, Is.Not.Null);
+            Assert.That(profile.Data.Configuration, Is.Not.Null);
         }
     }
 }

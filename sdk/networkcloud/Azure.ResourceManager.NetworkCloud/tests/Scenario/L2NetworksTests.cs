@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             NetworkCloudL2NetworkData data = new NetworkCloudL2NetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"), new ResourceIdentifier(TestEnvironment.L2IsolationDomainId))
             {};
             ArmOperation<NetworkCloudL2NetworkResource> l2NetworkResourceOp = await l2NetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, l2NetworkName, data);
-            Assert.AreEqual(l2NetworkResourceOp.Value.Data.Name ,l2NetworkName);
+            Assert.That(l2NetworkName, Is.EqualTo(l2NetworkResourceOp.Value.Data.Name));
 
             // Get
             NetworkCloudL2NetworkResource getResult = await l2Network.GetAsync();
-            Assert.AreEqual(getResult.Data.Name, l2NetworkName);
+            Assert.That(l2NetworkName, Is.EqualTo(getResult.Data.Name));
 
             // List by Resource Group
             var listByResourceGroup = new List<NetworkCloudL2NetworkResource>();
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     },
             };
             NetworkCloudL2NetworkResource updateResult = await l2Network.UpdateAsync(patch);
-            Assert.AreEqual(updateResult.Data.Tags, patch.Tags);
+            Assert.That(patch.Tags, Is.EqualTo(updateResult.Data.Tags));
 
             // Delete
             var deleteResponse = await l2Network.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

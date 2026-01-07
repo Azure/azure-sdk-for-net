@@ -59,20 +59,20 @@ namespace Azure.ResourceManager.Sql.Tests
             //Assert.AreEqual(keyName,key.Value.Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(await collection.ExistsAsync(keyName));
+            Assert.That((bool)await collection.ExistsAsync(keyName), Is.True);
 
             // 3.Get
             var getKey =await collection.GetAsync(keyName);
             Assert.IsNotNull(getKey.Value.Data);
-            Assert.AreEqual(keyName, getKey.Value.Data.Name);
-            Assert.AreEqual("servicemanaged", getKey.Value.Data.Kind);
-            Assert.AreEqual("ServiceManaged", getKey.Value.Data.ServerKeyType.ToString());
+            Assert.That(getKey.Value.Data.Name, Is.EqualTo(keyName));
+            Assert.That(getKey.Value.Data.Kind, Is.EqualTo("servicemanaged"));
+            Assert.That(getKey.Value.Data.ServerKeyType.ToString(), Is.EqualTo("ServiceManaged"));
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1,list.Count);
-            Assert.AreEqual(keyName,list.FirstOrDefault().Data.Name);
+            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(keyName));
 
             // 5.Delete - Ignore("The operation could not be completed.")
             //var deleteKey =await collection.GetAsync(keyName);

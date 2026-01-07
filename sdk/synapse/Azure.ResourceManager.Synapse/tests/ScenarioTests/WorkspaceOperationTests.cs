@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Synapse.Tests
             var createParams = CommonData.PrepareWorkspaceCreateParams();
             SynapseWorkspaceCollection workspaceCollection = ResourceGroup.GetSynapseWorkspaces();
             var workspaceCreate = (await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, createParams)).Value;
-            Assert.AreEqual(CommonTestFixture.WorkspaceType, workspaceCreate.Id.ResourceType);
-            Assert.AreEqual(workspaceName, workspaceCreate.Id.Name);
+            Assert.That(workspaceCreate.Id.ResourceType, Is.EqualTo(CommonTestFixture.WorkspaceType));
+            Assert.That(workspaceCreate.Id.Name, Is.EqualTo(workspaceName));
 
             // update workspace
             createParams.Tags.Add("TestTag", "TestUpdate");
             var workspaceUpdate = (await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, createParams)).Value;
-            Assert.NotNull(workspaceUpdate.Data.Tags);
-            Assert.AreEqual("TestUpdate", workspaceUpdate.Data.Tags["TestTag"]);
+            Assert.That(workspaceUpdate.Data.Tags, Is.Not.Null);
+            Assert.That(workspaceUpdate.Data.Tags["TestTag"], Is.EqualTo("TestUpdate"));
 
             // list workspace from resource group
             var workspaceFromResourceGroup = workspaceCollection.GetAllAsync();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             var workspaceCount = workspaceList.Count;
             var workspace = workspaceList.Single(workspace => workspace.Data.Name == workspaceName);
 
-            Assert.True(workspace != null, string.Format("Workspace created earlier is not found when listing all in resource group {0}", CommonData.ResourceGroupName));
+            Assert.That(workspace, Is.Not.EqualTo(null), string.Format("Workspace created earlier is not found when listing all in resource group {0}", CommonData.ResourceGroupName));
 
             try
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             }
 
             workspaceList = await workspaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(workspaceCount - 1, workspaceList.Count);
+            Assert.That(workspaceList.Count, Is.EqualTo(workspaceCount - 1));
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var input = ResourceDataHelpers.GetWatchlistItemData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             SecurityInsightsWatchlistItemResource item1 = lro.Value;
-            Assert.AreEqual(name, item1.Data.Name);
+            Assert.That(item1.Data.Name, Is.EqualTo(name));
             //2.Get
             SecurityInsightsWatchlistItemResource item2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertWatchlistItemData(item1.Data, item2.Data);
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);
             //4Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync("6d37a904-d199-43ff-892b-53653b784123"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync("6d37a904-d199-43ff-892b-53653b784123"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

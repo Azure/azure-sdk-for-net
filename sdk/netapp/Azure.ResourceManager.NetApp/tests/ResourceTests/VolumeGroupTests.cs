@@ -96,20 +96,20 @@ namespace Azure.ResourceManager.NetApp.Tests
             // create a volumeGroup
             string volumeGroupName = Recording.GenerateAssetName("volumeGroupName-");
             NetAppVolumeGroupResource volumeGroupDetailsResource1 = await CreateVolumeGroup(_volumeGroupCollection, volumeGroupName);
-            Assert.IsNotNull(volumeGroupDetailsResource1);
+            Assert.That(volumeGroupDetailsResource1, Is.Not.Null);
 
             //validate
             NetAppVolumeGroupResource volumeGroupDetailsResource2 = await _volumeGroupCollection.GetAsync(volumeGroupName);
-            Assert.IsNotNull(volumeGroupDetailsResource2);
-            Assert.AreEqual(volumeGroupDetailsResource1.Data.Name, volumeGroupDetailsResource2.Data.Name);
-            Assert.AreEqual(volumeGroupDetailsResource1.Data.GroupMetaData.DeploymentSpecId, volumeGroupDetailsResource2.Data.GroupMetaData.DeploymentSpecId);
-            Assert.AreEqual(volumeGroupDetailsResource1.Data.GroupMetaData.GroupDescription, volumeGroupDetailsResource2.Data.GroupMetaData.GroupDescription);
+            Assert.That(volumeGroupDetailsResource2, Is.Not.Null);
+            Assert.That(volumeGroupDetailsResource2.Data.Name, Is.EqualTo(volumeGroupDetailsResource1.Data.Name));
+            Assert.That(volumeGroupDetailsResource2.Data.GroupMetaData.DeploymentSpecId, Is.EqualTo(volumeGroupDetailsResource1.Data.GroupMetaData.DeploymentSpecId));
+            Assert.That(volumeGroupDetailsResource2.Data.GroupMetaData.GroupDescription, Is.EqualTo(volumeGroupDetailsResource1.Data.GroupMetaData.GroupDescription));
 
             //check non existance and exitance
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _volumeCollection.GetAsync(volumeGroupName + "1"); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsTrue(await _volumeGroupCollection.ExistsAsync(volumeGroupName));
-            Assert.IsFalse(await _volumeGroupCollection.ExistsAsync(volumeGroupName + "1"));
+            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.That((bool)await _volumeGroupCollection.ExistsAsync(volumeGroupName), Is.True);
+            Assert.That((bool)await _volumeGroupCollection.ExistsAsync(volumeGroupName + "1"), Is.False);
 
             //Before deleting the volumeGroup, delete all volumes under it and pool
             await ClearVolumeGroupVolumesAndPool();
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             //delete VolumeGroup
             await volumeGroupDetailsResource2.DeleteAsync(WaitUntil.Completed);
             //validate if deleted successfully
-            Assert.IsFalse(await _capacityPoolCollection.ExistsAsync(volumeGroupName));
+            Assert.That((bool)await _capacityPoolCollection.ExistsAsync(volumeGroupName), Is.False);
             exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _capacityPoolCollection.GetAsync(volumeGroupName); });
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         private async Task<NetAppVolumeGroupResource> CreateVolumeGroup(NetAppVolumeGroupCollection volumeGroupCollection = null, string volumeGroupName = "")

@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 }
             };
             var cloudServicesNetworkToCreate = await cloudServicesNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServicesNetworkName, data);
-            Assert.AreEqual(cloudServicesNetworkToCreate.Value.Data.Name, cloudServicesNetworkName);
+            Assert.That(cloudServicesNetworkName, Is.EqualTo(cloudServicesNetworkToCreate.Value.Data.Name));
 
             // Get
             var retrievedCloudServicesNetwork = await cloudServicesNetworkCollection.GetAsync(cloudServicesNetworkName);
-            Assert.AreEqual(retrievedCloudServicesNetwork.Value.Data.Name, cloudServicesNetworkName);
+            Assert.That(cloudServicesNetworkName, Is.EqualTo(retrievedCloudServicesNetwork.Value.Data.Name));
 
             // Update
             var patchData = new NetworkCloudCloudServicesNetworkPatch()
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 }
             };
             var patchedCloudServicesNetwork = await cloudServicesNetwork.UpdateAsync(WaitUntil.Completed, patchData);
-            Assert.AreEqual(patchedCloudServicesNetwork.Value.Data.Tags["key1"], "myvalue1");
+            Assert.That(patchedCloudServicesNetwork.Value.Data.Tags["key1"], Is.EqualTo("myvalue1"));
 
             // List by Resource Group
             var cloudServicesNetworkListByResourceGroup = new List<NetworkCloudCloudServicesNetworkResource>();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Delete
             var response = await cloudServicesNetwork.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(response.HasCompleted);
+            Assert.That(response.HasCompleted, Is.True);
         }
     }
 }

@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             ArmOperation<NetworkCloudClusterMetricsConfigurationResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, metricsConfigurationName, createData);
-            Assert.AreEqual(metricsConfigurationName, createResult.Value.Data.Name);
+            Assert.That(createResult.Value.Data.Name, Is.EqualTo(metricsConfigurationName));
 
             // Get
             NetworkCloudClusterMetricsConfigurationResource clusterMetricsConfiguration = Client.GetNetworkCloudClusterMetricsConfigurationResource(createResult.Value.Data.Id);
             var getResult = await clusterMetricsConfiguration.GetAsync();
-            Assert.AreEqual(metricsConfigurationName, getResult.Value.Data.Name);
+            Assert.That(getResult.Value.Data.Name, Is.EqualTo(metricsConfigurationName));
 
             // Update
             NetworkCloudClusterMetricsConfigurationPatch patch = new NetworkCloudClusterMetricsConfigurationPatch()
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Delete
             var deleteResult = await clusterMetricsConfiguration.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResult.HasCompleted);
+            Assert.That(deleteResult.HasCompleted, Is.True);
         }
     }
 }

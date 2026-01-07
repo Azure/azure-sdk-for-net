@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Attestation.Tests.Helpers
     {
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
         }
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.That(r2.Location, Is.EqualTo(r1.Location));
+            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
         }
 
         #region PrivateEndpointConnection
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Attestation.Tests.Helpers
         }
         public static void AssetConnectionState(AttestationPrivateLinkServiceConnectionState data1, AttestationPrivateLinkServiceConnectionState data2)
         {
-            Assert.AreEqual(data1.Status, data2.Status);
-            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.That(data2.Status, Is.EqualTo(data1.Status));
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
         }
         public static void AssetPrivateEndpointConnection(AttestationPrivateEndpointConnectionData data1, AttestationPrivateEndpointConnectionData data2)
         {
             AssertResource(data1, data2);
             AssetConnectionState(data1.ConnectionState, data2.ConnectionState);
-            Assert.AreEqual(data1.ProvisioningState, data2.ProvisioningState);
+            Assert.That(data2.ProvisioningState, Is.EqualTo(data1.ProvisioningState));
         }
         #endregion
 
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Attestation.Tests.Helpers
         public static void AssertProvider(AttestationProviderData data1, AttestationProviderData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.Status, data2.Status);
-            Assert.AreEqual(data1.AttestUri, data2.AttestUri);
-            Assert.AreEqual(data1.PublicNetworkAccess, data2.PublicNetworkAccess);
-            Assert.AreEqual(data1.TrustModel, data2.TrustModel);
+            Assert.That(data2.Status, Is.EqualTo(data1.Status));
+            Assert.That(data2.AttestUri, Is.EqualTo(data1.AttestUri));
+            Assert.That(data2.PublicNetworkAccess, Is.EqualTo(data1.PublicNetworkAccess));
+            Assert.That(data2.TrustModel, Is.EqualTo(data1.TrustModel));
         }
         #endregion
     }

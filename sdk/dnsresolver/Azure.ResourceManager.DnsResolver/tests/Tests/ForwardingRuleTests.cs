@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var createdForwardingRule = await _dnsForwardingRuleset.GetDnsForwardingRules().CreateOrUpdateAsync(WaitUntil.Completed, forwardingRuleName, forwardingRuleData);
 
             // ASSERT
-            Assert.AreEqual(createdForwardingRule.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
+            Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(createdForwardingRule.Value.Data.ProvisioningState));
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var retrievedForwardingRule = await _dnsForwardingRuleset.GetDnsForwardingRules().GetAsync(forwardingRuleName);
 
             // ASSERT
-            Assert.AreEqual(retrievedForwardingRule.Value.Data.Name, forwardingRuleName);
+            Assert.That(forwardingRuleName, Is.EqualTo(retrievedForwardingRule.Value.Data.Name));
         }
 
         [Test]
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
             // ASSERT
             var getForwardingRule = await _dnsForwardingRuleset.GetDnsForwardingRules().ExistsAsync(forwardingRuleName);
-            Assert.AreEqual(getForwardingRule.Value, false);
+            Assert.That(getForwardingRule.Value, Is.EqualTo(false));
         }
     }
 }

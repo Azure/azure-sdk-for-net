@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             trafficManagerGeographicHierarchyResource = await trafficManagerGeographicHierarchyResource.GetAsync();
 
             Assert.IsNotNull(trafficManagerGeographicHierarchyResource);
-            Assert.IsTrue(trafficManagerGeographicHierarchyResource.HasData);
+            Assert.That(trafficManagerGeographicHierarchyResource.HasData, Is.True);
             Assert.IsNotNull(trafficManagerGeographicHierarchyResource.Data);
-            Assert.IsTrue(trafficManagerGeographicHierarchyResource.Data.GeographicHierarchy.Regions.Count > 0);
+            Assert.That(trafficManagerGeographicHierarchyResource.Data.GeographicHierarchy.Regions.Count > 0, Is.True);
         }
     }
 }

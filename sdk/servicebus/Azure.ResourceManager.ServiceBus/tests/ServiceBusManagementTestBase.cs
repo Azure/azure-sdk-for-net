@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         public static void VerifyNamespaceProperties(ServiceBusNamespaceResource sBNamespace, bool useDefaults)
         {
-            Assert.NotNull(sBNamespace);
-            Assert.NotNull(sBNamespace.Id);
-            Assert.NotNull(sBNamespace.Id.Name);
-            Assert.NotNull(sBNamespace.Data);
-            Assert.NotNull(sBNamespace.Data.Location);
-            Assert.NotNull(sBNamespace.Data.CreatedOn);
-            Assert.NotNull(sBNamespace.Data.Sku);
+            Assert.That(sBNamespace, Is.Not.Null);
+            Assert.That(sBNamespace.Id, Is.Not.Null);
+            Assert.That(sBNamespace.Id.Name, Is.Not.Null);
+            Assert.That(sBNamespace.Data, Is.Not.Null);
+            Assert.That(sBNamespace.Data.Location, Is.Not.Null);
+            Assert.That(sBNamespace.Data.CreatedOn, Is.Not.Null);
+            Assert.That(sBNamespace.Data.Sku, Is.Not.Null);
             if (useDefaults)
             {
-                Assert.AreEqual(DefaultLocation, sBNamespace.Data.Location);
-                Assert.AreEqual(ServiceBusSkuTier.Standard, sBNamespace.Data.Sku.Tier);
+                Assert.That(sBNamespace.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(sBNamespace.Data.Sku.Tier, Is.EqualTo(ServiceBusSkuTier.Standard));
             }
         }
 

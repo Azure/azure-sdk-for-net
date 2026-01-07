@@ -107,16 +107,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             CosmosDBForPostgreSqlRoleCollection roles = _cluster.GetCosmosDBForPostgreSqlRoles();
             var lro = await roles.CreateOrUpdateAsync(WaitUntil.Completed, roleName, data);
             CosmosDBForPostgreSqlRoleResource role = lro.Value;
-            Assert.AreEqual(roleName, role.Data.Name);
+            Assert.That(role.Data.Name, Is.EqualTo(roleName));
 
             // Get
             CosmosDBForPostgreSqlRoleResource roleFromGet = await _cluster.GetCosmosDBForPostgreSqlRoleAsync(roleName);
-            Assert.AreEqual(roleName, roleFromGet.Data.Name);
+            Assert.That(roleFromGet.Data.Name, Is.EqualTo(roleName));
 
             // List
             await foreach (CosmosDBForPostgreSqlRoleResource roleFromList in roles)
             {
-                Assert.AreEqual(roleName, roleFromList.Data.Name);
+                Assert.That(roleFromList.Data.Name, Is.EqualTo(roleName));
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             CosmosDBForPostgreSqlRoleCollection roles = _cluster.GetCosmosDBForPostgreSqlRoles();
             var lro = await roles.CreateOrUpdateAsync(WaitUntil.Completed, roleName, data);
             CosmosDBForPostgreSqlRoleResource role = lro.Value;
-            Assert.AreEqual(roleName, role.Data.Name);
+            Assert.That(role.Data.Name, Is.EqualTo(roleName));
 
             // Delete
             CosmosDBForPostgreSqlRoleResource roleFromGet = await _cluster.GetCosmosDBForPostgreSqlRoleAsync(roleName);

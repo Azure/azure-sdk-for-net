@@ -318,8 +318,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             AssertEquality(expectedCosmosDbDataConnectionData.CosmosDBAccountResourceId, actualCosmosDbDataConnectionData.CosmosDBAccountResourceId);
             AssertEquality(expectedCosmosDbDataConnectionData.CosmosDBDatabase, actualCosmosDbDataConnectionData.CosmosDBDatabase);
             AssertEquality(expectedCosmosDbDataConnectionData.CosmosDBContainer, actualCosmosDbDataConnectionData.CosmosDBContainer);
-            Assert.IsTrue(actualCosmosDbDataConnectionData.ManagedIdentityObjectId.HasValue);
-            Assert.NotNull(actualCosmosDbDataConnectionData.RetrievalStartOn);
+            Assert.That(actualCosmosDbDataConnectionData.ManagedIdentityObjectId.HasValue, Is.True);
+            Assert.That(actualCosmosDbDataConnectionData.RetrievalStartOn, Is.Not.Null);
         }
     }
 }

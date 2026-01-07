@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var input = ResourceDataHelper.GetBasicLogProfileData("westus");
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var logProfile = lro.Value;
-            Assert.AreEqual(name, logProfile.Data.Name);
+            Assert.That(logProfile.Data.Name, Is.EqualTo(name));
         }
 
         [RecordedTest]
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             LogProfileResource lgoProfile1 = lro.Value;
             Thread.Sleep(1000);
             LogProfileResource logProfile2 = await collection.GetAsync(logProfileName);
-            Assert.AreEqual(lgoProfile1.Data.Name, logProfile2.Data.Name);
+            Assert.That(logProfile2.Data.Name, Is.EqualTo(lgoProfile1.Data.Name));
         }
 
         [RecordedTest]
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var input = ResourceDataHelper.GetBasicLogProfileData("westus");
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testLogProfile-"), input);
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(list.Count, 1);
+            Assert.That(list.Count, Is.EqualTo(1));
         }
     }
 }

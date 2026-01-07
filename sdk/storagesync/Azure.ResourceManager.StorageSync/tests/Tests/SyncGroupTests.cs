@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Create StorageSyncGroup
             StorageSyncGroupResource syncGroupResource = (await _storageSyncServiceResource.GetStorageSyncGroups().CreateOrUpdateAsync(WaitUntil.Completed, _syncGroupName, _storageSyncGroupCreateOrUpdateContent)).Value;
-            Assert.NotNull(syncGroupResource);
+            Assert.That(syncGroupResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifySyncGroupProperties(syncGroupResource, true);
         }
 
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Create StorageSyncGroup
             StorageSyncGroupResource syncGroupResource = (await _storageSyncServiceResource.GetStorageSyncGroups().CreateOrUpdateAsync(WaitUntil.Completed, _syncGroupName, _storageSyncGroupCreateOrUpdateContent)).Value;
-            Assert.NotNull(syncGroupResource);
+            Assert.That(syncGroupResource, Is.Not.Null);
 
             // Get StorageSyncGroup
             syncGroupResource = (await _storageSyncServiceResource.GetStorageSyncGroupAsync(_syncGroupName)).Value;
-            Assert.NotNull(syncGroupResource);
+            Assert.That(syncGroupResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifySyncGroupProperties(syncGroupResource, false);
         }
 
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Get SyncGroupCollection
             StorageSyncGroupCollection syncGroupCollection = _storageSyncServiceResource.GetStorageSyncGroups();
-            Assert.NotNull(syncGroupCollection);
+            Assert.That(syncGroupCollection, Is.Not.Null);
 
             // Create StorageSyncGroup
             StorageSyncGroupResource syncGroupResource = (await syncGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, _syncGroupName, _storageSyncGroupCreateOrUpdateContent)).Value;
-            Assert.NotNull(syncGroupResource);
+            Assert.That(syncGroupResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifySyncGroupProperties(syncGroupResource, true);
 
             // Verify StorageSyncGroupCollection contains a single CloudEndpoint
             List<StorageSyncGroupResource> syncGroupResources = await syncGroupCollection.ToEnumerableAsync();
-            Assert.NotNull(syncGroupResources);
-            Assert.AreEqual(syncGroupResources.Count(), 1);
+            Assert.That(syncGroupResources, Is.Not.Null);
+            Assert.That(syncGroupResources.Count(), Is.EqualTo(1));
             StorageSyncManagementTestUtilities.VerifySyncGroupProperties(syncGroupResources.First(), false);
         }
 
@@ -95,23 +95,23 @@ namespace Azure.ResourceManager.StorageSync.Tests
         {
             // Get SyncGroupCollection
             StorageSyncGroupCollection syncGroupCollection = _storageSyncServiceResource.GetStorageSyncGroups();
-            Assert.NotNull(syncGroupCollection);
+            Assert.That(syncGroupCollection, Is.Not.Null);
 
             // Delete SyncGroup before it's created
             var deleteException = Assert.ThrowsAsync<RequestFailedException>(async () => (await _storageSyncServiceResource.GetStorageSyncGroupAsync(_syncGroupName)).Value?.Delete(WaitUntil.Completed));
-            Assert.AreEqual(404, deleteException.Status);
-            Assert.IsFalse((await syncGroupCollection.ExistsAsync(_syncGroupName)).Value);
+            Assert.That(deleteException.Status, Is.EqualTo(404));
+            Assert.That((await syncGroupCollection.ExistsAsync(_syncGroupName)).Value, Is.False);
 
             // Create StorageSyncGroup
             StorageSyncGroupResource syncGroupResource = (await syncGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, _syncGroupName, _storageSyncGroupCreateOrUpdateContent)).Value;
-            Assert.NotNull(syncGroupResource);
+            Assert.That(syncGroupResource, Is.Not.Null);
             StorageSyncManagementTestUtilities.VerifySyncGroupProperties(syncGroupResource, true);
 
             // Delete StorageSyncGroup
             await syncGroupResource.DeleteAsync(WaitUntil.Completed);
 
             // Verify StorageSyncGroup has been deleted.
-            Assert.IsFalse((await syncGroupCollection.ExistsAsync(_syncGroupName)).Value);
+            Assert.That((await syncGroupCollection.ExistsAsync(_syncGroupName)).Value, Is.False);
         }
     }
 }

@@ -69,14 +69,14 @@ namespace Azure.ResourceManager.Sql.Tests
             string databaseId = list.FirstOrDefault().Data.Id.ToString();
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(databaseId));
+            Assert.That((bool)collection.Exists(databaseId), Is.True);
 
             // 3.Get
             var getDatabase = await collection.GetAsync(databaseId);
             Assert.IsNotNull(getDatabase);
 
             // 4.GetIfExist
-            Assert.IsTrue(await collection.ExistsAsync(databaseId));
+            Assert.That((bool)await collection.ExistsAsync(databaseId), Is.True);
         }
     }
 }

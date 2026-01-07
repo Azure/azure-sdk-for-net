@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             await CreateIotHub(_resourceGroup, iotHubName);
             bool isExisted = await _resourceGroup.GetIotHubDescriptions().ExistsAsync(iotHubName);
-            Assert.IsTrue(isExisted);
+            Assert.That(isExisted, Is.True);
         }
 
         [Test]
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             };
             IotHubDescriptionData data = new IotHubDescriptionData(AzureLocation.WestUS2, sku) { };
             var iotHub = await _resourceGroup.GetIotHubDescriptions().CreateOrUpdateAsync(WaitUntil.Completed, iotHubName, data);
-            Assert.IsNotNull(iotHub);
-            Assert.AreEqual(iotHubName, iotHub.Value.Data.Name);
-            Assert.AreEqual("westus2", iotHub.Value.Data.Location.Name);
+            Assert.That(iotHub, Is.Not.Null);
+            Assert.That(iotHub.Value.Data.Name, Is.EqualTo(iotHubName));
+            Assert.That(iotHub.Value.Data.Location.Name, Is.EqualTo("westus2"));
         }
 
         [Test]
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             await CreateIotHub(_resourceGroup, iotHubName);
             var getIotHub = await _resourceGroup.GetIotHubDescriptions().GetAsync(iotHubName);
-            Assert.IsNotNull(getIotHub);
-            Assert.AreEqual(iotHubName, getIotHub.Value.Data.Name);
-            Assert.AreEqual("westus2", getIotHub.Value.Data.Location.Name);
+            Assert.That(getIotHub, Is.Not.Null);
+            Assert.That(getIotHub.Value.Data.Name, Is.EqualTo(iotHubName));
+            Assert.That(getIotHub.Value.Data.Location.Name, Is.EqualTo("westus2"));
         }
 
         [Test]
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             var deleteIotHub = await CreateIotHub(_resourceGroup, iotHubName);
             bool isExisted = await _resourceGroup.GetIotHubDescriptions().ExistsAsync(iotHubName);
-            Assert.IsTrue(isExisted);
+            Assert.That(isExisted, Is.True);
             await deleteIotHub.DeleteAsync(WaitUntil.Completed);
             isExisted = await _resourceGroup.GetIotHubDescriptions().ExistsAsync(iotHubName);
-            Assert.IsFalse(isExisted);
+            Assert.That(isExisted, Is.False);
         }
     }
 }

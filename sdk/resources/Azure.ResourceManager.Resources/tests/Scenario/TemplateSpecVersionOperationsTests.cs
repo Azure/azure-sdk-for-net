@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Tests
             TemplateSpecVersionResource templateSpecVersion = (await templateSpec.GetTemplateSpecVersions().CreateOrUpdateAsync(WaitUntil.Completed, version, templateSpecVersionData)).Value;
             await templateSpecVersion.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await templateSpecVersion.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
     }
 }

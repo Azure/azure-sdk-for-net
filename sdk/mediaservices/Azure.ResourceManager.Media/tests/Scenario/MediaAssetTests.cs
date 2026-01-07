@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Media.Tests
         {
             string assetName = Recording.GenerateAssetName("asset");
             var mediaAsset = await mediaAssetCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, new MediaAssetData());
-            Assert.IsNotNull(mediaAsset);
-            Assert.AreEqual(assetName, mediaAsset.Value.Data.Name);
+            Assert.That(mediaAsset, Is.Not.Null);
+            Assert.That(mediaAsset.Value.Data.Name, Is.EqualTo(assetName));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Tests
             string assetName = Recording.GenerateAssetName("asset");
             await mediaAssetCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, new MediaAssetData());
             bool flag = await mediaAssetCollection.ExistsAsync(assetName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Media.Tests
             string assetName = Recording.GenerateAssetName("asset");
             await mediaAssetCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, new MediaAssetData());
             var mediaAsset = await mediaAssetCollection.GetAsync(assetName);
-            Assert.IsNotNull(mediaAsset);
-            Assert.AreEqual(assetName, mediaAsset.Value.Data.Name);
+            Assert.That(mediaAsset, Is.Not.Null);
+            Assert.That(mediaAsset.Value.Data.Name, Is.EqualTo(assetName));
         }
 
         [Test]
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.Media.Tests
             string assetName = Recording.GenerateAssetName("asset");
             var mediaAsset = await mediaAssetCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, new MediaAssetData());
             bool flag = await mediaAssetCollection.ExistsAsync(assetName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await mediaAsset.Value.DeleteAsync(WaitUntil.Completed);
             flag = await mediaAssetCollection.ExistsAsync(assetName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 }
             };
             var channel = await _partnerNamespaceChannelCollection.CreateOrUpdateAsync(WaitUntil.Completed, channelName, data);
-            Assert.IsNotNull(channel);
+            Assert.That(channel, Is.Not.Null);
 
             // Exist
             bool flag = await _partnerNamespaceChannelCollection.ExistsAsync(channelName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var getResponse = await _partnerNamespaceChannelCollection.GetAsync(channelName);
-            Assert.IsNotNull(getResponse);
+            Assert.That(getResponse, Is.Not.Null);
 
             // GetAll
             var list = await _partnerNamespaceChannelCollection.GetAllAsync().ToEnumerableAsync();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Get Full URL
             var fullUrlResponse = await getResponse.Value.GetFullUriAsync();
-            Assert.IsNotNull(fullUrlResponse);
+            Assert.That(fullUrlResponse, Is.Not.Null);
 
             // List By Partner Namespace
             var listByNamespace = await _partnerNamespaceChannelCollection.GetAllAsync().ToEnumerableAsync();
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 }
             };
             var updateResponse = await channel.Value.UpdateAsync(updateData, new System.Threading.CancellationToken());
-            Assert.IsNotNull(updateResponse);
+            Assert.That(updateResponse, Is.Not.Null);
 
             // Delete
             await channel.Value.DeleteAsync(WaitUntil.Completed);
             flag = await _partnerNamespaceChannelCollection.ExistsAsync(channelName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

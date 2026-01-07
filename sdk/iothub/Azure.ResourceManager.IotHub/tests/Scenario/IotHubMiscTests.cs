@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var quota = subs.GetIotHubUserSubscriptionQuotaAsync().ConfigureAwait(false);
             await foreach (var q in quota)
             {
-                Assert.IsNotNull(q.Name.Value);
-                Assert.IsNotNull(q.Name.LocalizedValue);
-                Assert.IsTrue(q.Limit > 0);
+                Assert.That(q.Name.Value, Is.Not.Null);
+                Assert.That(q.Name.LocalizedValue, Is.Not.Null);
+                Assert.That(q.Limit > 0, Is.True);
             }
         }
     }

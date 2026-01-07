@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             DataBoundaryData resourceData = result.Data;
 
-            Assert.AreEqual(DataBoundaryRegion.EU, resourceData.Properties.DataBoundary);
+            Assert.That(resourceData.Properties.DataBoundary, Is.EqualTo(DataBoundaryRegion.EU));
         }
 
         [TestCase]
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Resources.Tests
             DataBoundaryResource dataBoundary = Client.GetDataBoundaryResource(resourceId);
             DataBoundaryResource result = await dataBoundary.GetAsync(name);
             DataBoundaryData resourceData = result.Data;
-            Assert.AreEqual(DataBoundaryRegion.Global, resourceData.Properties.DataBoundary);
-            Assert.AreEqual(DataBoundaryProvisioningState.Succeeded, resourceData.Properties.ProvisioningState);
+            Assert.That(resourceData.Properties.DataBoundary, Is.EqualTo(DataBoundaryRegion.Global));
+            Assert.That(resourceData.Properties.ProvisioningState, Is.EqualTo(DataBoundaryProvisioningState.Succeeded));
         }
 
         [TestCase]
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Resources.Tests
 
             DataBoundaryData resourceData = result.Data;
 
-            Assert.AreEqual(DataBoundaryRegion.Global, resourceData.Properties.DataBoundary);
-            Assert.AreEqual(DataBoundaryProvisioningState.Succeeded, resourceData.Properties.ProvisioningState);
+            Assert.That(resourceData.Properties.DataBoundary, Is.EqualTo(DataBoundaryRegion.Global));
+            Assert.That(resourceData.Properties.ProvisioningState, Is.EqualTo(DataBoundaryProvisioningState.Succeeded));
         }
 
         [TestCase]
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.Tests
             };
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await tenantDataBoundary.UpdateAsync(WaitUntil.Completed, data));
-            Assert.IsTrue(ex.Message.Contains("does not have authorization to perform action"));
+            Assert.That(ex.Message, Does.Contain("does not have authorization to perform action"));
         }
     }
 }

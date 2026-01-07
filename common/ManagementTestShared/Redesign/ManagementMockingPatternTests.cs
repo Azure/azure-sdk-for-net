@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.TestFramework
         {
             var testAssembly = Assembly.GetExecutingAssembly();
             var assemblyName = testAssembly.GetName().Name;
-            Assert.That(assemblyName.EndsWith(TestAssemblySuffix), Is.True, $"The test assembly should end with {TestAssemblySuffix}");
+            Assert.That(assemblyName, Does.EndWith(TestAssemblySuffix), $"The test assembly should end with {TestAssemblySuffix}");
             var rpNamespace = assemblyName.Substring(0, assemblyName.Length - TestAssemblySuffix.Length);
 
             if (rpNamespace == ResourceManagerAssemblyName || rpNamespace == TestFrameworkAssembly)

@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.That(r2.Location, Is.EqualTo(r1.Location));
+            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
         }
 
         #region AppServicePlan
         public static void AssertPlan(AppServicePlanData plan1, AppServicePlanData plan2)
         {
             AssertTrackedResource(plan1, plan2);
-            Assert.AreEqual(plan1.ExtendedLocation, plan2.ExtendedLocation);
+            Assert.That(plan2.ExtendedLocation, Is.EqualTo(plan1.ExtendedLocation));
         }
 
         public static AppServicePlanData GetBasicAppServicePlanData(AzureLocation location)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         public static void AssertSite(WebSiteData site1, WebSiteData site2)
         {
             AssertTrackedResource(site1, site2);
-            Assert.AreEqual(site1.EnabledHostNames, site2.EnabledHostNames);
+            Assert.That(site2.EnabledHostNames, Is.EqualTo(site1.EnabledHostNames));
         }
 
         public static WebSiteData GetBasicSiteData(AzureLocation location)//, string description = null)
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         public static void AssertSiteSlot(WebSiteData site1, WebSiteData site2)
         {
             AssertTrackedResource(site1, site2);
-            Assert.AreEqual(site1.EnabledHostNames, site2.EnabledHostNames);
+            Assert.That(site2.EnabledHostNames, Is.EqualTo(site1.EnabledHostNames));
         }
 
         public static WebSiteData GetBasicSiteSlotData(AzureLocation location, string description = null)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         public static void AssertSiteSlotConfigWeb(SiteConfigData site1, SiteConfigData site2)
         {
             //AssertTrackedResource(site1, site2);
-            Assert.AreEqual(site1.AppSettings, site2.AppSettings);
+            Assert.That(site2.AppSettings, Is.EqualTo(site1.AppSettings));
         }
         public static SiteConfigData GetBasicSiteConfigResourceData(AzureLocation location, string description = null)
         {
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         #region SiteSourceControlData(SiteSlotSourcecontrol)
         public static void AssertSiteSourceControlData(SiteSourceControlData sscd1, SiteSourceControlData sscd2)
         {
-            Assert.AreEqual(sscd1.Name, sscd2.Name);
-            Assert.AreEqual(sscd1.Id, sscd2.Id);
-            Assert.AreEqual(sscd1.ResourceType, sscd2.ResourceType);
-            Assert.AreEqual(sscd1.Branch, sscd2.Branch);
+            Assert.That(sscd2.Name, Is.EqualTo(sscd1.Name));
+            Assert.That(sscd2.Id, Is.EqualTo(sscd1.Id));
+            Assert.That(sscd2.ResourceType, Is.EqualTo(sscd1.ResourceType));
+            Assert.That(sscd2.Branch, Is.EqualTo(sscd1.Branch));
         }
 
         public static SiteSourceControlData GetBasicSiteSourceControlData()
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         public static void AssertStaticSiteARMResourceData(StaticSiteData ssrd1, StaticSiteData ssrd2)
         {
             AssertTrackedResource(ssrd1, ssrd2);
-            Assert.AreEqual(ssrd1.Branch, ssrd2.Branch);
-            Assert.AreEqual(ssrd1.RepositoryUri, ssrd2.RepositoryUri);
-            Assert.AreEqual(ssrd1.Kind, ssrd2.Kind);
+            Assert.That(ssrd2.Branch, Is.EqualTo(ssrd1.Branch));
+            Assert.That(ssrd2.RepositoryUri, Is.EqualTo(ssrd1.RepositoryUri));
+            Assert.That(ssrd2.Kind, Is.EqualTo(ssrd1.Kind));
         }
 
         public static StaticSiteData GetBasicStaticSiteARMResourceData(AzureLocation location)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         public static void AssertCertificate(AppCertificateData certificate1, AppCertificateData certificate2)
         {
             AssertTrackedResource(certificate1, certificate2);
-            Assert.AreEqual(certificate1.CanonicalName, certificate2.CanonicalName);
+            Assert.That(certificate2.CanonicalName, Is.EqualTo(certificate1.CanonicalName));
         }
 
         public static AppCertificateData GetBasicCertificateData(AzureLocation location)

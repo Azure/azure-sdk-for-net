@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             };
             var createResult = await clusterManagerCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterManagerName, createData);
             // check a specific tag as the subscription policies add more automatically.
-            Assert.AreEqual(createResult.Value.Data.Tags["DisableFabricIntegration"], createData.Tags["DisableFabricIntegration"]);
+            Assert.That(createData.Tags["DisableFabricIntegration"], Is.EqualTo(createResult.Value.Data.Tags["DisableFabricIntegration"]));
 
             // Get
             var getResult =await clusterManagerCollection.GetAsync(clusterManagerName);
-            Assert.AreEqual(getResult.Value.Data.Name, clusterManagerName);
+            Assert.That(clusterManagerName, Is.EqualTo(getResult.Value.Data.Name));
             NetworkCloudClusterManagerResource clusterManagerResource = Client.GetNetworkCloudClusterManagerResource(getResult.Value.Data.Id);
 
             // Update
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 }
             };
             NetworkCloudClusterManagerResource updateResponse = await clusterManagerResource.UpdateAsync(newTags);
-            Assert.AreEqual(updateResponse.Data.Tags["DisableFabricIntegration"], "true");
-            Assert.AreEqual(updateResponse.Data.Tags["PatchTag"], "patchTag");
+            Assert.That(updateResponse.Data.Tags["DisableFabricIntegration"], Is.EqualTo("true"));
+            Assert.That(updateResponse.Data.Tags["PatchTag"], Is.EqualTo("patchTag"));
 
             // List by Resource Group
             var listByResourceGroup = new List<NetworkCloudClusterManagerResource>();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Delete
             var deleteResult = await clusterManagerResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResult.HasCompleted);
+            Assert.That(deleteResult.HasCompleted, Is.True);
         }
     }
 }

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
         {
             string authorizationRuleName = Recording.GenerateAssetName("CustomPolicy");
             var authorizationRule = await CreateAuthorizationRule(authorizationRuleName);
-            Assert.IsNotNull(authorizationRule);
-            Assert.AreEqual(authorizationRuleName, authorizationRule.Data.Name);
+            Assert.That(authorizationRule, Is.Not.Null);
+            Assert.That(authorizationRule.Data.Name, Is.EqualTo(authorizationRuleName));
         }
 
         [RecordedTest]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string authorizationRuleName = Recording.GenerateAssetName("CustomPolicy");
             await CreateAuthorizationRule(authorizationRuleName);
             bool flag = await _authorizationRuleCollection.ExistsAsync(authorizationRuleName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string authorizationRuleName = Recording.GenerateAssetName("CustomPolicy");
             await CreateAuthorizationRule(authorizationRuleName);
             var authorizationRule = await _authorizationRuleCollection.GetAsync(authorizationRuleName);
-            Assert.IsNotNull(authorizationRule);
-            Assert.AreEqual(authorizationRuleName, authorizationRule.Value.Data.Name);
+            Assert.That(authorizationRule, Is.Not.Null);
+            Assert.That(authorizationRule.Value.Data.Name, Is.EqualTo(authorizationRuleName));
         }
 
         [RecordedTest]
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string authorizationRuleName = Recording.GenerateAssetName("CustomPolicy");
             var authorizationRule = await CreateAuthorizationRule(authorizationRuleName);
             bool flag = await _authorizationRuleCollection.ExistsAsync(authorizationRuleName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await authorizationRule.DeleteAsync(WaitUntil.Completed);
             flag = await _authorizationRuleCollection.ExistsAsync(authorizationRuleName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string authorizationRuleName = Recording.GenerateAssetName("CustomPolicy");
             var authoriaztionRule = await CreateAuthorizationRule(authorizationRuleName);
             var key = await authoriaztionRule.GetKeysAsync();
-            Assert.IsNotNull(key);
-            Assert.IsNotNull(key.Value.PrimaryKey);
-            Assert.IsNotNull(key.Value.SecondaryKey);
-            Assert.IsNotNull(key.Value.SecondaryConnectionString);
-            Assert.AreEqual(authorizationRuleName, key.Value.KeyName);
+            Assert.That(key, Is.Not.Null);
+            Assert.That(key.Value.PrimaryKey, Is.Not.Null);
+            Assert.That(key.Value.SecondaryKey, Is.Not.Null);
+            Assert.That(key.Value.SecondaryConnectionString, Is.Not.Null);
+            Assert.That(key.Value.KeyName, Is.EqualTo(authorizationRuleName));
         }
 
         [RecordedTest]
@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
                 PolicyKey = "PrimaryKey"
             };
             var key = await authoriaztionRule.RegenerateKeysAsync(notificationHubPolicyKey);
-            Assert.IsNotNull(key);
-            Assert.IsNotNull(key.Value.PrimaryKey);
-            Assert.IsNotNull(key.Value.SecondaryKey);
-            Assert.IsNotNull(key.Value.SecondaryConnectionString);
-            Assert.AreEqual(authorizationRuleName, key.Value.KeyName);
+            Assert.That(key, Is.Not.Null);
+            Assert.That(key.Value.PrimaryKey, Is.Not.Null);
+            Assert.That(key.Value.SecondaryKey, Is.Not.Null);
+            Assert.That(key.Value.SecondaryConnectionString, Is.Not.Null);
+            Assert.That(key.Value.KeyName, Is.EqualTo(authorizationRuleName));
         }
     }
 }

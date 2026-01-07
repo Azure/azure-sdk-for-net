@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Tests.TestCase
             var collection = rg.GetSessionPools();
             var resource_lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             var resource = resource_lro.Value;
-            Assert.AreEqual(name, resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.EqualTo(name));
             //2.Get
             var resource2 = await resource.GetAsync();
             ResourceDataHelpers.AssertSessionPoolData(resource.Data, resource2.Value.Data);

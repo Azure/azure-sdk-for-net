@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             };
             ArmOperation<VMwareVirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
             VMwareVirtualNetworkResource virtualNetwork = lro.Value;
-            Assert.IsNotNull(virtualNetwork);
+            Assert.That(virtualNetwork, Is.Not.Null);
             VMwareVirtualNetworkData resourceData = virtualNetwork.Data;
-            Assert.AreEqual(resourceData.Name, virtualNetworkName);
+            Assert.That(virtualNetworkName, Is.EqualTo(resourceData.Name));
 
             // Get
             VMwareVirtualNetworkResource result = await collection.GetAsync(virtualNetworkName);
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // Check exists
             bool isExist = await collection.ExistsAsync(virtualNetworkName);
-            Assert.IsTrue(isExist);
+            Assert.That(isExist, Is.True);
 
             // Get if exists
             NullableResponse<VMwareVirtualNetworkResource> response = await collection.GetIfExistsAsync(virtualNetworkName);
             result = response.HasValue ? response.Value : null;
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
 
             // List
             isExist = false;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
                 if (item.Data.Name == virtualNetworkName)
                     isExist = true;
             }
-            Assert.IsTrue(isExist);
+            Assert.That(isExist, Is.True);
 
             // Delete
             await virtualNetwork.DeleteAsync(WaitUntil.Completed);

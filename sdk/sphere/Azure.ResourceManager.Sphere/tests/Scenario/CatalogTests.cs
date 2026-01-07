@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
             SphereCatalogData data = new SphereCatalogData("global");
             var catalog = await _resourceGroup.GetSphereCatalogs().CreateOrUpdateAsync(WaitUntil.Completed, catalogName, data);
             Assert.IsNotNull(catalog);
-            Assert.AreEqual(catalogName, catalog.Value.Data.Name);
+            Assert.That(catalog.Value.Data.Name, Is.EqualTo(catalogName));
 
             await catalog.Value.DeleteAsync(WaitUntil.Completed);
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
             string catalogName = Recording.GenerateAssetName("catalog-");
             var catalog = await CreateCatalog(_resourceGroup, catalogName);
             bool flag = await _resourceGroup.GetSphereCatalogs().ExistsAsync(catalogName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await catalog.DeleteAsync(WaitUntil.Completed);
         }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
             await CreateCatalog(_resourceGroup, catalogName);
             var catalog = await _resourceGroup.GetSphereCatalogs().GetAsync(catalogName);
             Assert.IsNotNull(catalog);
-            Assert.AreEqual(catalogName, catalog.Value.Data.Name);
+            Assert.That(catalog.Value.Data.Name, Is.EqualTo(catalogName));
 
             await catalog.Value.DeleteAsync(WaitUntil.Completed);
         }
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
             string catalogName = Recording.GenerateAssetName("catalog-");
             var catalog = await CreateCatalog(_resourceGroup, catalogName);
             bool flag = await _resourceGroup.GetSphereCatalogs().ExistsAsync(catalogName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             await catalog.DeleteAsync(WaitUntil.Completed);
             flag = await _resourceGroup.GetSphereCatalogs().ExistsAsync(catalogName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

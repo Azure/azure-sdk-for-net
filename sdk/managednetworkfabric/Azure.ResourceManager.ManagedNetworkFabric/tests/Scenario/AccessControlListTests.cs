@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             };
             ArmOperation<NetworkFabricAccessControlListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.AccessControlListName, data);
             NetworkFabricAccessControlListResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, TestEnvironment.AccessControlListName);
+            Assert.That(TestEnvironment.AccessControlListName, Is.EqualTo(createResult.Data.Name));
 
             NetworkFabricAccessControlListResource accessControlList = Client.GetNetworkFabricAccessControlListResource(accessControlListResourceId);
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkFabricAccessControlListResource getResult = await accessControlList.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.AccessControlListName);
+            Assert.That(TestEnvironment.AccessControlListName, Is.EqualTo(getResult.Data.Name));
 
             // Patch not supported now. Will enable it once supported.
             /*
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             var deleteResponse = await accessControlList.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

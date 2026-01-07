@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
                 count++;
 
             // assert
-            Assert.AreEqual(3, count);
+            Assert.That(count, Is.EqualTo(3));
         }
 
         [TestCase]
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var assignment = await CreateAssignment(vmId, version.Value.Id);
 
             // assert
-            Assert.True(assignment.HasData);
-            Assert.NotNull(assignment.Data.Name);
-            Assert.NotNull(assignment.Data.Id);
-            Assert.AreEqual(vmId, assignment.Data.Properties.TargetId);
+            Assert.That(assignment.HasData, Is.True);
+            Assert.That(assignment.Data.Name, Is.Not.Null);
+            Assert.That(assignment.Data.Id, Is.Not.Null);
+            Assert.That(assignment.Data.Properties.TargetId, Is.EqualTo(vmId));
         }
 
         [TestCase]
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
                 count++;
 
             // assert
-            Assert.AreEqual(0, count);
-            Assert.AreEqual(200, statusCode);
+            Assert.That(count, Is.EqualTo(0));
+            Assert.That(statusCode, Is.EqualTo(200));
         }
     }
 }

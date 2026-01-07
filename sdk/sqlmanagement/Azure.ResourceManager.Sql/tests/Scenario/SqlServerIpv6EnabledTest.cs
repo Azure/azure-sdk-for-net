@@ -63,18 +63,18 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, sqlServerName, data);
 
             // Check if the server is exist
-            Assert.AreEqual(true, (await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value);
+            Assert.That((await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value, Is.EqualTo(true));
 
             // Verify IPv6 is enabled
             Assert.IsNotNull(SqlServer.Value);
-            Assert.AreEqual("Enabled", SqlServer.Value.Data.IsIPv6Enabled.ToString());
+            Assert.That(SqlServer.Value.Data.IsIPv6Enabled.ToString(), Is.EqualTo("Enabled"));
 
             // 2. Disable IPv6
             data.IsIPv6Enabled = Models.ServerNetworkAccessFlag.Disabled;
             SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, sqlServerName, data);
 
             // Verify IPv6 is disabled
-            Assert.AreEqual("Disabled", SqlServer.Value.Data.IsIPv6Enabled.ToString());
+            Assert.That(SqlServer.Value.Data.IsIPv6Enabled.ToString(), Is.EqualTo("Disabled"));
         }
 
         [Ignore("Issue: https://github.com/Azure/azure-sdk-for-net/issues/41823")]
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, sqlServerName, data);
 
             // Check if the server is exist
-            Assert.AreEqual(true, (await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value);
+            Assert.That((await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value, Is.EqualTo(true));
 
             // 2. Update the sever with IPv6 enabled
             data.IsIPv6Enabled = Models.ServerNetworkAccessFlag.Enabled;
             SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, sqlServerName, data);
 
             // Verify IPv6 is enabled
-            Assert.AreEqual("Enabled", SqlServer.Value.Data.IsIPv6Enabled.ToString());
+            Assert.That(SqlServer.Value.Data.IsIPv6Enabled.ToString(), Is.EqualTo("Enabled"));
         }
     }
 }

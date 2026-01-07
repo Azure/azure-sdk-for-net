@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
             var disk = lro.Value;
-            Assert.AreEqual(diskName, disk.Data.Name);
+            Assert.That(disk.Data.Name, Is.EqualTo(diskName));
         }
 
         [TestCase]
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
             ManagedDiskResource disk = lro.Value;
-            Assert.IsTrue(await collection.ExistsAsync(diskName));
-            Assert.IsFalse(await collection.ExistsAsync(diskName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(diskName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(diskName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     disk2 = disk;
             }
 
-            Assert.NotNull(disk1);
-            Assert.NotNull(disk2);
+            Assert.That(disk1, Is.Not.Null);
+            Assert.That(disk2, Is.Not.Null);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
         var input = ResourceDataHelpers.GetEndPointData();
         var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
         StreamAnalyticsPrivateEndpointResource account1 = lro.Value;
-        Assert.AreEqual(name, account1.Data.Name);
+            Assert.That(account1.Data.Name, Is.EqualTo(name));
         //2.Get
         StreamAnalyticsPrivateEndpointResource account2 = await container.GetAsync(name);
         ResourceDataHelpers.AssertEndPoint(account1.Data, account2.Data);
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             count++;
         }
         Assert.GreaterOrEqual(count, 1);
-        //4Exists
-        Assert.IsTrue(await container.ExistsAsync(name));
-        Assert.IsFalse(await container.ExistsAsync(name + "1"));
+            //4Exists
+            Assert.That((bool)await container.ExistsAsync(name), Is.True);
+            Assert.That((bool)await container.ExistsAsync(name + "1"), Is.False);
 
         Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
     }

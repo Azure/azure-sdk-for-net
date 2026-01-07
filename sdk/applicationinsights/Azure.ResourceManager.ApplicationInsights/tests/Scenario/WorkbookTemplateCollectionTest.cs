@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.Scenario
             var data = new ApplicationInsightsWorkbookTemplateData(AzureLocation.EastUS);
             var lro = await workbookTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             var workbookTemplate = lro.Value;
-            Assert.AreEqual(resourceName, workbookTemplate.Data.Name);
+            Assert.That(workbookTemplate.Data.Name, Is.EqualTo(resourceName));
         }
 
         [TestCase]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.Scenario
             var lro = await workbookTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             var workbookTemplate1 = lro.Value;
             var workbookTemplate2 = (await workbookTemplateCollection.GetAsync(resourceName)).Value;
-            Assert.AreEqual(workbookTemplate1.Data.Name, workbookTemplate2.Data.Name);
+            Assert.That(workbookTemplate2.Data.Name, Is.EqualTo(workbookTemplate1.Data.Name));
         }
 
         [TestCase]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.Scenario
             {
                 count++;
             }
-            Assert.AreEqual(2, count);
+            Assert.That(count, Is.EqualTo(2));
         }
 
         [TestCase]
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.Scenario
             var resourceName = Recording.GenerateAssetName("workbookTemplate");
             var data = new ApplicationInsightsWorkbookTemplateData(AzureLocation.EastUS);
             _ = await workbookTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
-            Assert.IsTrue(await workbookTemplateCollection.ExistsAsync(resourceName));
-            Assert.IsFalse(await workbookTemplateCollection.ExistsAsync(resourceName + "1"));
+            Assert.That((bool)await workbookTemplateCollection.ExistsAsync(resourceName), Is.True);
+            Assert.That((bool)await workbookTemplateCollection.ExistsAsync(resourceName + "1"), Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await workbookTemplateCollection.ExistsAsync(null));
         }
     }

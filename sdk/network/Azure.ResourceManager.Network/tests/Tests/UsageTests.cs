@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Tests
             var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
             var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroupResource> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
-            Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(putNsgResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             Response<NetworkSecurityGroupResource> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
 
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.Network.Tests
             AsyncPageable<NetworkUsage> usagesResponseAP = subscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.ToString().Replace(" ", string.Empty));
             List<NetworkUsage> usagesResponse = await usagesResponseAP.ToEnumerableAsync();
             // Verify that the strings are populated
-            Assert.NotNull(usagesResponse);
-            Assert.True(usagesResponse.Any());
+            Assert.That(usagesResponse, Is.Not.Null);
+            Assert.That(usagesResponse.Any(), Is.True);
 
             foreach (NetworkUsage usage in usagesResponse)
             {
-                Assert.True(usage.Limit > 0);
-                Assert.NotNull(usage.Name);
-                Assert.True(!string.IsNullOrEmpty(usage.Name.LocalizedValue));
-                Assert.True(!string.IsNullOrEmpty(usage.Name.Value));
+                Assert.That(usage.Limit > 0, Is.True);
+                Assert.That(usage.Name, Is.Not.Null);
+                Assert.That(!string.IsNullOrEmpty(usage.Name.LocalizedValue), Is.True);
+                Assert.That(!string.IsNullOrEmpty(usage.Name.Value), Is.True);
             }
         }
     }

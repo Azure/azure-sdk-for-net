@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.WestUS);
             string moverResourceSetName = Recording.GenerateAssetName("MoverResourceSet-");
             MoverResourceSetResource moverResourceSet = await CreateMoverResourceSet(rg, moverResourceSetName);
-            Assert.AreEqual(moverResourceSetName, moverResourceSet.Data.Name);
+            Assert.That(moverResourceSet.Data.Name, Is.EqualTo(moverResourceSetName));
         }
 
         [TestCase]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             MoverResourceSetResource moverResourceSet = await CreateMoverResourceSet(rg, moverResourceSetName);
             await moverResourceSet.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await moverResourceSet.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [TestCase]
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.ResourceMover.Tests
                 Identity = moverResourceSet.Data.Identity
             };
             MoverResourceSetResource updatedMoverResourceSet = await moverResourceSet.UpdateAsync(updateOptions);
-            Assert.AreEqual(updateOptions.Tags, updatedMoverResourceSet.Data.Tags);
-            Assert.AreEqual(updateOptions.Identity.ManagedServiceIdentityType, updatedMoverResourceSet.Data.Identity.ManagedServiceIdentityType);
+            Assert.That(updatedMoverResourceSet.Data.Tags, Is.EqualTo(updateOptions.Tags));
+            Assert.That(updatedMoverResourceSet.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(updateOptions.Identity.ManagedServiceIdentityType));
         }
 
         [TestCase]
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
                 ++count;
                 unresolvedDependencyId = dependency.Id;
             };
-            Assert.AreEqual(count, 0);
+            Assert.That(count, Is.EqualTo(0));
 
             // Prepare, initiate, discard and commit the move for the Vnet.
             IEnumerable<ResourceIdentifier> moverVnet = new List<ResourceIdentifier> { virtualNetwork.Id };
@@ -140,35 +140,35 @@ namespace Azure.ResourceManager.ResourceMover.Tests
                 MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
             };
             lro = await moverResourceSet.PrepareAsync(WaitUntil.Completed, prepareContent);
-            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+            Assert.That(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase), Is.True);
 
             MoverResourceMoveContent initiateContent = new MoverResourceMoveContent(moverVnet)
             {
                 MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
             };
             lro = await moverResourceSet.InitiateMoveAsync(WaitUntil.Completed, initiateContent);
-            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+            Assert.That(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase), Is.True);
 
             MoverDiscardContent discardContent = new MoverDiscardContent(moverVnet)
             {
                 MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
             };
             lro = await moverResourceSet.DiscardAsync(WaitUntil.Completed, discardContent);
-            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+            Assert.That(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase), Is.True);
 
             initiateContent = new MoverResourceMoveContent(moverVnet)
             {
                 MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
             };
             lro = await moverResourceSet.InitiateMoveAsync(WaitUntil.Completed, initiateContent);
-            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+            Assert.That(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase), Is.True);
 
             MoverCommitContent commitContent = new MoverCommitContent(moverVnet)
             {
                 MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
             };
             lro = await moverResourceSet.CommitAsync(WaitUntil.Completed, commitContent);
-            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+            Assert.That(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase), Is.True);
 
             // Bulk remove
             MoverBulkRemoveContent bulkRemoveContent = new MoverBulkRemoveContent()
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
                 MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
             };
             lro = await moverResourceSet.BulkRemoveAsync(WaitUntil.Completed, bulkRemoveContent);
-            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+            Assert.That(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase), Is.True);
         }
 
         [TestCase(null)]
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
             var moverResourceSet = await AddTag();
 
-            Assert.IsTrue(moverResourceSet.Data.Tags.TryGetValue(ExpectedKey, out string value));
-            Assert.AreEqual(ExpectedValue, value);
+            Assert.That(moverResourceSet.Data.Tags.TryGetValue(ExpectedKey, out string value), Is.True);
+            Assert.That(value, Is.EqualTo(ExpectedValue));
         }
 
         [TestCase(null)]
@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
             moverResourceSet = await moverResourceSet.SetTagsAsync(expectedTags);
 
-            Assert.AreEqual(expectedTags.Count, moverResourceSet.Data.Tags.Count);
+            Assert.That(moverResourceSet.Data.Tags.Count, Is.EqualTo(expectedTags.Count));
 
             foreach (var item in expectedTags)
             {
-                Assert.IsTrue(moverResourceSet.Data.Tags.TryGetValue(item.Key, out string value));
-                Assert.AreEqual(item.Value, value);
+                Assert.That(moverResourceSet.Data.Tags.TryGetValue(item.Key, out string value), Is.True);
+                Assert.That(value, Is.EqualTo(item.Value));
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
             moverResourceSet = await moverResourceSet.RemoveTagAsync(ExpectedKey);
 
-            Assert.AreEqual(0, moverResourceSet.Data.Tags.Count);
+            Assert.That(moverResourceSet.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private async Task<MoverResourceSetResource> AddTag()
@@ -248,22 +248,22 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
         private void AssertValidMoverResourceSet(MoverResourceSetResource model, MoverResourceSetResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.ETag, getResult.Data.ETag);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.ETag, Is.EqualTo(model.Data.ETag));
             if (model.Data.Identity != null || getResult.Data.Identity != null)
             {
-                Assert.NotNull(model.Data.Identity);
-                Assert.NotNull(getResult.Data.Identity);
-                Assert.AreEqual(model.Data.Identity.ManagedServiceIdentityType, getResult.Data.Identity.ManagedServiceIdentityType);
+                Assert.That(model.Data.Identity, Is.Not.Null);
+                Assert.That(getResult.Data.Identity, Is.Not.Null);
+                Assert.That(getResult.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(model.Data.Identity.ManagedServiceIdentityType));
             }
             if (model.Data.Properties != null || getResult.Data.Properties != null)
             {
-                Assert.NotNull(model.Data.Properties);
-                Assert.NotNull(getResult.Data.Properties);
-                Assert.AreEqual(model.Data.Properties.SourceLocation, getResult.Data.Properties.SourceLocation);
-                Assert.AreEqual(model.Data.Properties.TargetLocation, getResult.Data.Properties.TargetLocation);
+                Assert.That(model.Data.Properties, Is.Not.Null);
+                Assert.That(getResult.Data.Properties, Is.Not.Null);
+                Assert.That(getResult.Data.Properties.SourceLocation, Is.EqualTo(model.Data.Properties.SourceLocation));
+                Assert.That(getResult.Data.Properties.TargetLocation, Is.EqualTo(model.Data.Properties.TargetLocation));
             }
         }
     }

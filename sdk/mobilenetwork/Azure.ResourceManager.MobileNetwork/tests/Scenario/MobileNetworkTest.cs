@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.MobileNetwork.Tests.Scenario
             // Get Mobile Network
             Response<MobileNetworkResource> getMobileNetworkResponse = await mobileNetwork.GetAsync();
             MobileNetworkResource mobileNetworkResourceRetrived = getMobileNetworkResponse.Value;
-            Assert.IsNotNull(mobileNetworkResourceRetrived);
-            Assert.AreEqual(mobileNetwork.Data.Location, mobileNetworkResourceRetrived.Data.Location);
-            Assert.AreEqual("001", mobileNetworkResourceRetrived.Data.PublicLandMobileNetworkIdentifier.Mcc);
+            Assert.That(mobileNetworkResourceRetrived, Is.Not.Null);
+            Assert.That(mobileNetworkResourceRetrived.Data.Location, Is.EqualTo(mobileNetwork.Data.Location));
+            Assert.That(mobileNetworkResourceRetrived.Data.PublicLandMobileNetworkIdentifier.Mcc, Is.EqualTo("001"));
 
             // Delete Mobile Network
             await mobileNetwork.DeleteAsync(WaitUntil.Completed);

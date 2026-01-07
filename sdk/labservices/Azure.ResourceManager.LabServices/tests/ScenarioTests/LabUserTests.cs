@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.LabServices.Tests
 
             // Exists test
             bool boolResult = await userCollection.ExistsAsync(userName);
-            Assert.IsTrue(boolResult);
+            Assert.That(boolResult, Is.True);
 
             // GetAll test
             var list = await userCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
             AssertUserData(userData, list[0].Data);
 
             // Delete test
             await user.DeleteAsync(WaitUntil.Completed);
             boolResult = await userCollection.ExistsAsync(userName);
-            Assert.IsFalse(boolResult);
+            Assert.That(boolResult, Is.False);
         }
 
         public LabData GetLabData()
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.LabServices.Tests
 
         public void AssertUserData(LabUserData expected, LabUserData actual)
         {
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.AdditionalUsageQuota, actual.AdditionalUsageQuota);
+            Assert.That(actual.Email, Is.EqualTo(expected.Email));
+            Assert.That(actual.AdditionalUsageQuota, Is.EqualTo(expected.AdditionalUsageQuota));
         }
     }
 }

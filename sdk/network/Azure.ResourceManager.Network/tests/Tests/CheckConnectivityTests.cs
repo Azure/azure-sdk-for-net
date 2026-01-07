@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Network.Tests
             Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();;
 
             //Validation
-            Assert.AreEqual("Reachable", connectivityCheck.Value.NetworkConnectionStatus.ToString());
-            Assert.AreEqual(0, connectivityCheck.Value.ProbesFailed);
-            Assert.AreEqual("Source", connectivityCheck.Value.Hops.FirstOrDefault().ConnectivityHopType);
-            Assert.AreEqual("Internet", connectivityCheck.Value.Hops.LastOrDefault().ConnectivityHopType);
+            Assert.That(connectivityCheck.Value.NetworkConnectionStatus.ToString(), Is.EqualTo("Reachable"));
+            Assert.That(connectivityCheck.Value.ProbesFailed, Is.EqualTo(0));
+            Assert.That(connectivityCheck.Value.Hops.FirstOrDefault().ConnectivityHopType, Is.EqualTo("Source"));
+            Assert.That(connectivityCheck.Value.Hops.LastOrDefault().ConnectivityHopType, Is.EqualTo("Internet"));
         }
     }
 }

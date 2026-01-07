@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
             ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
-            Assert.IsNotNull(rg);
+            Assert.That(rg, Is.Not.Null);
             HostPoolCollection hostPoolCollection = rg.GetHostPools();
             HostPoolData hostPoolData = new HostPoolData(
                 DefaultLocation,
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 applicationGroupName,
                 agData);
 
-            Assert.IsNotNull(opApplicationGroupCreate);
-            Assert.IsTrue(opApplicationGroupCreate.HasCompleted);
-            Assert.AreEqual(opApplicationGroupCreate.Value.Data.Name, applicationGroupName);
+            Assert.That(opApplicationGroupCreate, Is.Not.Null);
+            Assert.That(opApplicationGroupCreate.HasCompleted, Is.True);
+            Assert.That(applicationGroupName, Is.EqualTo(opApplicationGroupCreate.Value.Data.Name));
 
             VirtualApplicationGroupResource railApplicationGroup = opApplicationGroupCreate.Value;
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             AsyncPageable<VirtualApplicationResource> applications = railApplications.GetAllAsync();
 
-            Assert.IsNotNull(applications);
+            Assert.That(applications, Is.Not.Null);
 
             VirtualApplicationData applicationData = new VirtualApplicationData(VirtualApplicationCommandLineSetting.DoNotAllow);
             applicationData.FilePath = "c:\\notepad.exe";
@@ -74,39 +74,39 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             ArmOperation<VirtualApplicationResource> opCreate = await railApplications.CreateOrUpdateAsync(WaitUntil.Completed, "notepad", applicationData);
 
-            Assert.IsNotNull(opCreate);
+            Assert.That(opCreate, Is.Not.Null);
 
-            Assert.AreEqual("testRemoteApplicationCrudAG/notepad", opCreate.Value.Data.Name);
-            Assert.AreEqual("Note Pad", opCreate.Value.Data.Description);
+            Assert.That(opCreate.Value.Data.Name, Is.EqualTo("testRemoteApplicationCrudAG/notepad"));
+            Assert.That(opCreate.Value.Data.Description, Is.EqualTo("Note Pad"));
 
             Response<VirtualApplicationResource> opGet = await railApplications.GetAsync("notepad");
 
-            Assert.IsNotNull(opGet);
+            Assert.That(opGet, Is.Not.Null);
 
-            Assert.AreEqual("c:\\notepad.exe", opGet.Value.Data.FilePath);
-            Assert.AreEqual("c:\\notepad.exe", opGet.Value.Data.IconPath);
-            Assert.AreEqual("Note Pad", opGet.Value.Data.Description);
+            Assert.That(opGet.Value.Data.FilePath, Is.EqualTo("c:\\notepad.exe"));
+            Assert.That(opGet.Value.Data.IconPath, Is.EqualTo("c:\\notepad.exe"));
+            Assert.That(opGet.Value.Data.Description, Is.EqualTo("Note Pad"));
 
             applicationData.Description = "NotePad";
 
             ArmOperation<VirtualApplicationResource> opUpdate = await railApplications.CreateOrUpdateAsync(WaitUntil.Completed, "notepad", applicationData);
 
-            Assert.IsNotNull(opUpdate);
+            Assert.That(opUpdate, Is.Not.Null);
 
-            Assert.AreEqual("testRemoteApplicationCrudAG/notepad", opUpdate.Value.Data.Name);
-            Assert.AreEqual("NotePad", opUpdate.Value.Data.Description);
+            Assert.That(opUpdate.Value.Data.Name, Is.EqualTo("testRemoteApplicationCrudAG/notepad"));
+            Assert.That(opUpdate.Value.Data.Description, Is.EqualTo("NotePad"));
 
             ArmOperation opDelete = await opUpdate.Value.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsNotNull(opDelete);
+            Assert.That(opDelete, Is.Not.Null);
 
-            Assert.AreEqual(200, opDelete.GetRawResponse().Status);
+            Assert.That(opDelete.GetRawResponse().Status, Is.EqualTo(200));
 
             opDelete = await opUpdate.Value.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsNotNull(opDelete);
+            Assert.That(opDelete, Is.Not.Null);
 
-            Assert.AreEqual(204, opDelete.GetRawResponse().Status);
+            Assert.That(opDelete.GetRawResponse().Status, Is.EqualTo(204));
 
             try
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status);
+                Assert.That(ex.Status, Is.EqualTo(404));
             }
 
             await opApplicationGroupCreate.Value.DeleteAsync(WaitUntil.Completed);

@@ -42,23 +42,23 @@ namespace Azure.ResourceManager.Attestation.Tests
             var connections = await endpointCollection.GetAllAsync().ToEnumerableAsync();
             string privateEndpointConnectionName = connections.FirstOrDefault().Data.Name;
             var privateEndpointConnectionData = connections.FirstOrDefault().Data;
-            Assert.NotNull(privateEndpointConnectionData);
-            Assert.AreEqual("Approved", privateEndpointConnectionData.ConnectionState.Status.ToString());
+            Assert.That(privateEndpointConnectionData, Is.Not.Null);
+            Assert.That(privateEndpointConnectionData.ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
             //3.GetAll
             var list = await endpointCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
             //4.CheckIfExist
-            Assert.True(await endpointCollection.ExistsAsync(list[0].Data.Name));
-            Assert.False(await endpointCollection.ExistsAsync(list[0].Data.Name + "01"));
+            Assert.That((bool)await endpointCollection.ExistsAsync(list[0].Data.Name), Is.True);
+            Assert.That((bool)await endpointCollection.ExistsAsync(list[0].Data.Name + "01"), Is.False);
             //Resouece operation
             //Delete
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
             foreach (var item in list)
             {
                 await item.DeleteAsync(WaitUntil.Completed);
             }
             list = await endpointCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
         }
 
         public async Task<PrivateEndpointResource> GetEndpointResource(ResourceGroupResource resourceGroup, ResourceIdentifier providerId)

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task Exist()
         {
             bool flag = await _secureScoreItemCollection.ExistsAsync(_existSecureScoreItemName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             Assert.IsNotNull(secureScoreItem);
             Assert.IsNotNull(secureScoreItem.Data.Id);
-            Assert.AreEqual(_existSecureScoreItemName, secureScoreItem.Data.Name);
-            Assert.AreEqual("ASC score", secureScoreItem.Data.DisplayName);
-            Assert.AreEqual("Microsoft.Security/secureScores", secureScoreItem.Data.ResourceType.ToString());
+            Assert.That(secureScoreItem.Data.Name, Is.EqualTo(_existSecureScoreItemName));
+            Assert.That(secureScoreItem.Data.DisplayName, Is.EqualTo("ASC score"));
+            Assert.That(secureScoreItem.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/secureScores"));
         }
     }
 }

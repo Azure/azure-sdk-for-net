@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 }
             };
             ArmOperation<NetworkToNetworkInterconnectResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkToNetworkInterConnectName, data);
-            Assert.AreEqual(createResult.Value.Data.Name, TestEnvironment.NetworkToNetworkInterConnectName);
+            Assert.That(TestEnvironment.NetworkToNetworkInterConnectName, Is.EqualTo(createResult.Value.Data.Name));
 
             #endregion
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkToNetworkInterconnectResource getResult = await networkToNetworkInterconnect.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkToNetworkInterConnectName);
+            Assert.That(TestEnvironment.NetworkToNetworkInterConnectName, Is.EqualTo(getResult.Data.Name));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Fabric started.....");
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             ArmOperation deleteResponse = await networkToNetworkInterconnect.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

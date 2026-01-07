@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
             IotOperationsDataflowEndpointResource dataflowEndpointsResource =
                 await dataflowEndpointsResourceCollection.GetAsync(DataflowEndpointsName);
 
-            Assert.IsNotNull(dataflowEndpointsResource);
-            Assert.IsNotNull(dataflowEndpointsResource.Data);
-            Assert.AreEqual(dataflowEndpointsResource.Data.Name, DataflowEndpointsName);
+            Assert.That(dataflowEndpointsResource, Is.Not.Null);
+            Assert.That(dataflowEndpointsResource.Data, Is.Not.Null);
+            Assert.That(DataflowEndpointsName, Is.EqualTo(dataflowEndpointsResource.Data.Name));
 
             // Create new DataflowEndpoint
 
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 );
             IotOperationsDataflowEndpointResource createdDataflowEndpoint = resp.Value;
 
-            Assert.IsNotNull(createdDataflowEndpoint);
-            Assert.IsNotNull(createdDataflowEndpoint.Data);
-            Assert.IsNotNull(createdDataflowEndpoint.Data.Properties);
+            Assert.That(createdDataflowEndpoint, Is.Not.Null);
+            Assert.That(createdDataflowEndpoint.Data, Is.Not.Null);
+            Assert.That(createdDataflowEndpoint.Data.Properties, Is.Not.Null);
 
             // Delete DataflowEndpoint
             await createdDataflowEndpoint.DeleteAsync(WaitUntil.Completed);

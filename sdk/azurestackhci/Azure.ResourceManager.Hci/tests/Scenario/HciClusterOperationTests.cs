@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Hci.Tests
             };
 
             HciClusterResource clusterFromUpdate = await cluster.UpdateAsync(patch);
-            Assert.AreEqual(HciClusterDiagnosticLevel.Enhanced, clusterFromUpdate.Data.DesiredProperties.DiagnosticLevel);
+            Assert.That(clusterFromUpdate.Data.DesiredProperties.DiagnosticLevel, Is.EqualTo(HciClusterDiagnosticLevel.Enhanced));
 
             HciClusterResource clusterFromGet = await clusterFromUpdate.GetAsync();
-            Assert.AreEqual(clusterFromGet.Data.Name, clusterName);
-            Assert.AreEqual(clusterFromGet.Data.AadClientId, new Guid(TestEnvironment.ClientId));
-            Assert.AreEqual(clusterFromGet.Data.AadTenantId, new Guid(TestEnvironment.TenantId));
-            Assert.AreEqual(HciClusterDiagnosticLevel.Enhanced, clusterFromGet.Data.DesiredProperties.DiagnosticLevel);
+            Assert.That(clusterName, Is.EqualTo(clusterFromGet.Data.Name));
+            Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterFromGet.Data.AadClientId));
+            Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterFromGet.Data.AadTenantId));
+            Assert.That(clusterFromGet.Data.DesiredProperties.DiagnosticLevel, Is.EqualTo(HciClusterDiagnosticLevel.Enhanced));
 
             await clusterFromGet.DeleteAsync(WaitUntil.Completed);
         }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Tests
             };
             HciClusterResource updatedCluster = await cluster.SetTagsAsync(tags);
 
-            Assert.AreEqual(tags, updatedCluster.Data.Tags);
+            Assert.That(updatedCluster.Data.Tags, Is.EqualTo(tags));
         }
     }
 }

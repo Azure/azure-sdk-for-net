@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
 
             // exist
             bool flag = await _dpsCertificateCollection.ExistsAsync(certName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // get
             var getCert = await _dpsCertificateCollection.GetAsync(certName);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
             // delete
             await cert.DeleteAsync(WaitUntil.Completed, cert.Data.ETag.ToString());
             flag = await _dpsCertificateCollection.ExistsAsync(certName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         private async Task<DeviceProvisioningServicesCertificateResource> CreateDpsCertificate(string certName)
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
 
         private void ValidateDpsCertificate(DeviceProvisioningServicesCertificateData dpsData, string dpsName)
         {
-            Assert.IsNotNull(dpsData);
-            Assert.IsNotNull(dpsData.Id);
-            Assert.IsNotNull(dpsData.ETag);
-            Assert.AreEqual(dpsData.Name, dpsName);
-            Assert.AreEqual("Microsoft.Devices/provisioningServices/Certificates", dpsData.ResourceType.ToString());
+            Assert.That(dpsData, Is.Not.Null);
+            Assert.That(dpsData.Id, Is.Not.Null);
+            Assert.That(dpsData.ETag, Is.Not.Null);
+            Assert.That(dpsName, Is.EqualTo(dpsData.Name));
+            Assert.That(dpsData.ResourceType.ToString(), Is.EqualTo("Microsoft.Devices/provisioningServices/Certificates"));
         }
     }
 }

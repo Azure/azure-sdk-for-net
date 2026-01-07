@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             FrontDoorRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfileResource, afdRuleSetName);
             await afdRuleSet.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdRuleSet.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [TestCase]
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             await foreach (var tempUsage in afdRuleSet.GetResourceUsagesAsync())
             {
                 count++;
-                Assert.AreEqual(tempUsage.Unit, FrontDoorUsageUnit.Count);
-                Assert.AreEqual(tempUsage.CurrentValue, 0);
+                Assert.That(FrontDoorUsageUnit.Count, Is.EqualTo(tempUsage.Unit));
+                Assert.That(tempUsage.CurrentValue, Is.EqualTo(0));
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
     }
 }

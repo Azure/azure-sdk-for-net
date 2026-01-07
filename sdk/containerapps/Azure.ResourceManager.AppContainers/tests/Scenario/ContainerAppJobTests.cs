@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.AppContainers.Tests
             var job = await resourceGroup.GetContainerAppJobs().CreateOrUpdateAsync(WaitUntil.Completed, jobName, data);
             await job.Value.StartAsync(WaitUntil.Completed);
             var executions = await job.Value.GetContainerAppJobExecutions().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(executions.FirstOrDefault().Data.StartOn);
-            Assert.AreEqual(1, executions.FirstOrDefault().Data.Template.Containers.Count);
+            Assert.That(executions.FirstOrDefault().Data.StartOn, Is.Not.Null);
+            Assert.That(executions.FirstOrDefault().Data.Template.Containers.Count, Is.EqualTo(1));
         }
     }
 }

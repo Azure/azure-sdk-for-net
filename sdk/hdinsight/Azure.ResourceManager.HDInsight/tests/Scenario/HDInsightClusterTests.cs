@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _clusterName, _storageAccountName, _containerName, _accessKey);
             ValidateCluster(cluster);
-            Assert.AreEqual(_clusterName, cluster.Data.Name);
+            Assert.That(cluster.Data.Name, Is.EqualTo(_clusterName));
         }
 
         [RecordedTest]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             await CreateDefaultHadoopCluster(_resourceGroup, _clusterName, _storageAccountName, _containerName, _accessKey);
             bool flag = await _clusterCollection.ExistsAsync(_clusterName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             await CreateDefaultHadoopCluster(_resourceGroup, _clusterName, _storageAccountName, _containerName, _accessKey);
             var cluster = await _clusterCollection.GetAsync(_clusterName);
             ValidateCluster(cluster);
-            Assert.AreEqual(_clusterName, cluster.Value.Data.Name);
+            Assert.That(cluster.Value.Data.Name, Is.EqualTo(_clusterName));
         }
 
         [RecordedTest]
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             await CreateDefaultHadoopCluster(_resourceGroup, _clusterName, _storageAccountName, _containerName, _accessKey);
             var list = await _clusterCollection.GetAllAsync().ToEnumerableAsync();
             ValidateCluster(list.FirstOrDefault());
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
         }
 
         [RecordedTest]
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _clusterName, _storageAccountName, _containerName, _accessKey);
             bool flag = await _clusterCollection.ExistsAsync(_clusterName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await cluster.DeleteAsync(WaitUntil.Completed);
             flag = await _clusterCollection.ExistsAsync(_clusterName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _clusterName, _storageAccountName, _containerName, _accessKey);
 
             var extension = await cluster.GetExtensionAsync("azuremonitor");
-            Assert.IsNotNull(extension);
-            Assert.IsFalse(extension.Value.IsClusterMonitoringEnabled);
-            Assert.IsNull(extension.Value.WorkspaceId);
+            Assert.That(extension, Is.Not.Null);
+            Assert.That(extension.Value.IsClusterMonitoringEnabled, Is.False);
+            Assert.That(extension.Value.WorkspaceId, Is.Null);
         }
 
         [RecordedTest]
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
             cluster = await _clusterCollection.GetAsync(_clusterName);
             KeyValuePair<string, string> tag = cluster.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
         }
 
         [RecordedTest]
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.HDInsight.Tests
             await cluster.UpdateAsync(patch);
 
             cluster = await _clusterCollection.GetAsync(_clusterName);
-            Assert.AreEqual("SystemAssigned,UserAssigned", cluster.Data.Identity.ManagedServiceIdentityType.ToString());
-            Assert.AreEqual(2, cluster.Data.Identity.UserAssignedIdentities.Count);
+            Assert.That(cluster.Data.Identity.ManagedServiceIdentityType.ToString(), Is.EqualTo("SystemAssigned,UserAssigned"));
+            Assert.That(cluster.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(2));
         }
         private void ValidateCluster(HDInsightClusterResource cluster)
         {
-            Assert.IsNotNull(cluster);
-            Assert.AreEqual(1, cluster.Data.Tags.Count);
-            Assert.AreEqual("Linux", cluster.Data.Properties.OSType.ToString());
-            Assert.AreEqual(1, cluster.Data.Properties.StorageAccounts.Count);
-            Assert.AreEqual("standard", cluster.Data.Properties.Tier.ToString());
-            Assert.AreEqual(true, cluster.Data.Properties.IsEncryptionInTransitEnabled);
+            Assert.That(cluster, Is.Not.Null);
+            Assert.That(cluster.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(cluster.Data.Properties.OSType.ToString(), Is.EqualTo("Linux"));
+            Assert.That(cluster.Data.Properties.StorageAccounts.Count, Is.EqualTo(1));
+            Assert.That(cluster.Data.Properties.Tier.ToString(), Is.EqualTo("standard"));
+            Assert.That(cluster.Data.Properties.IsEncryptionInTransitEnabled, Is.EqualTo(true));
         }
     }
 }

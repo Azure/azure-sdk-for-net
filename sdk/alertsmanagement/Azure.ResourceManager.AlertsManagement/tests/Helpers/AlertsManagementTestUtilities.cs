@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
 
                 if (exp.Properties.IsEnabled != null && act.Properties.IsEnabled != null)
                 {
-                    Assert.AreEqual(exp.Properties.IsEnabled, act.Properties.IsEnabled);
+                    Assert.That(act.Properties.IsEnabled, Is.EqualTo(exp.Properties.IsEnabled));
                 }
 
                 AreEqual(exp.Properties.Scopes, act.Properties.Scopes);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
         {
             if (exp != null && act != null)
             {
-                Assert.AreEqual(exp.Count, act.Count);
+                Assert.That(act.Count, Is.EqualTo(exp.Count));
 
                 foreach (var value in exp)
                 {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
         {
             if (exp != null)
             {
-                Assert.False(exp == null || act == null);
-                Assert.AreEqual(exp.Count, act.Count);
+                Assert.That(exp == null || act == null, Is.False);
+                Assert.That(act.Count, Is.EqualTo(exp.Count));
                 foreach (AlertProcessingRuleCondition actCond in act)
                 {
                     AlertProcessingRuleCondition expCond = exp.Where(condition => condition.Field.Equals(actCond.Field)).FirstOrDefault();
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
         {
             if (exp != null)
             {
-                Assert.AreEqual(exp.Field, act.Field);
-                Assert.AreEqual(exp.Operator, act.Operator);
+                Assert.That(act.Field, Is.EqualTo(exp.Field));
+                Assert.That(act.Operator, Is.EqualTo(exp.Operator));
             }
         }
     }

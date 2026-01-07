@@ -30,45 +30,45 @@ namespace Azure.ResourceManager.SiteManager.Tests
             // Create
             var site = await CreateSiteAsync(resourceGroup, siteName);
             var siteData = site.Data;
-            Assert.AreEqual(siteData.Name, siteName);
-            Assert.AreEqual(siteData.Properties.DisplayName, "Seattle Site");
-            Assert.AreEqual(siteData.Properties.SiteAddress.Country, "USA");
+            Assert.That(siteName, Is.EqualTo(siteData.Name));
+            Assert.That(siteData.Properties.DisplayName, Is.EqualTo("Seattle Site"));
+            Assert.That(siteData.Properties.SiteAddress.Country, Is.EqualTo("USA"));
 
             // Get
             ResourceGroupEdgeSiteResource siteResourceFromGet = await siteCollection.GetAsync(siteName);
             siteData = siteResourceFromGet.Data;
-            Assert.AreEqual(siteData.Name, siteName);
-            Assert.AreEqual(siteData.Properties.DisplayName, "Seattle Site");
-            Assert.AreEqual(siteData.Properties.SiteAddress.Country, "USA");
+            Assert.That(siteName, Is.EqualTo(siteData.Name));
+            Assert.That(siteData.Properties.DisplayName, Is.EqualTo("Seattle Site"));
+            Assert.That(siteData.Properties.SiteAddress.Country, Is.EqualTo("USA"));
             Assert.That(siteData.Properties.Labels, Does.ContainKey("city").WithValue("Seattle"));
 
             await foreach (var siteResourceFromCollection in siteCollection)
             {
-                Assert.AreEqual(siteResourceFromCollection.Data.Name, siteName);
-                Assert.AreEqual(siteResourceFromCollection.Data.Properties.DisplayName, "Seattle Site");
-                Assert.AreEqual(siteResourceFromCollection.Data.Properties.SiteAddress.Country, "USA");
+                Assert.That(siteName, Is.EqualTo(siteResourceFromCollection.Data.Name));
+                Assert.That(siteResourceFromCollection.Data.Properties.DisplayName, Is.EqualTo("Seattle Site"));
+                Assert.That(siteResourceFromCollection.Data.Properties.SiteAddress.Country, Is.EqualTo("USA"));
             }
 
             // Update
             var UpdatedSite = await UpdateSiteAsync(resourceGroup, siteName);
             var UpdatedSiteData = UpdatedSite.Data;
-            Assert.AreEqual(UpdatedSiteData.Name, siteName);
-            Assert.AreEqual(UpdatedSiteData.Properties.DisplayName, "New York Site");
-            Assert.AreEqual(UpdatedSiteData.Properties.SiteAddress.Country, "USA");
-            Assert.AreEqual(UpdatedSiteData.Properties.SiteAddress.City, "New York");
+            Assert.That(siteName, Is.EqualTo(UpdatedSiteData.Name));
+            Assert.That(UpdatedSiteData.Properties.DisplayName, Is.EqualTo("New York Site"));
+            Assert.That(UpdatedSiteData.Properties.SiteAddress.Country, Is.EqualTo("USA"));
+            Assert.That(UpdatedSiteData.Properties.SiteAddress.City, Is.EqualTo("New York"));
 
             // Get
             siteResourceFromGet = await siteCollection.GetAsync(siteName);
             siteData = siteResourceFromGet.Data;
-            Assert.AreEqual(siteData.Name, siteName);
-            Assert.AreEqual(siteData.Properties.DisplayName, "New York Site");
-            Assert.AreEqual(siteData.Properties.SiteAddress.Country, "USA");
+            Assert.That(siteName, Is.EqualTo(siteData.Name));
+            Assert.That(siteData.Properties.DisplayName, Is.EqualTo("New York Site"));
+            Assert.That(siteData.Properties.SiteAddress.Country, Is.EqualTo("USA"));
             Assert.That(UpdatedSiteData.Properties.Labels, Does.ContainKey("city").WithValue("New York"));
 
             // Delete
             var deleteSite = await siteResourceFromGet.DeleteAsync(WaitUntil.Completed);
             await deleteSite.WaitForCompletionResponseAsync();
-            Assert.IsTrue(deleteSite.HasCompleted);
+            Assert.That(deleteSite.HasCompleted, Is.True);
         }
     }
 }

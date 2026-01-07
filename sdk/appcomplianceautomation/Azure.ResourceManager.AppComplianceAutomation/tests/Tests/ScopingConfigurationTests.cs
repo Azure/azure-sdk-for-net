@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             AppComplianceReportScopingConfigurationResource result = await appComplianceReportScopingConfiguration.GetAsync();
             // Get scoping configuration: verify result
             AppComplianceReportScopingConfigurationData resourceData = result.Data;
-            Assert.IsNotNull(resourceData.Id);
+            Assert.That(resourceData.Id, Is.Not.Null);
 
             // Update scoping configuration
             // Update scoping configuration: prepare data
@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             ArmOperation<AppComplianceReportScopingConfigurationResource> updateResponse = await appComplianceReportScopingConfiguration.UpdateAsync(WaitUntil.Completed, data);
             // Update scoping configuration: verify result
             AppComplianceReportScopingConfigurationResource scopingconfiguration = updateResponse.Value;
-            Assert.IsNotNull(scopingconfiguration.Data.Properties.Answers);
+            Assert.That(scopingconfiguration.Data.Properties.Answers, Is.Not.Null);
 
             // Delete scoping configuration
             // Delete scoping configuration: send request
             var operation = await appComplianceReportScopingConfiguration.DeleteAsync(WaitUntil.Completed);
             // Delete scoping configuration: verify result
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
         }
     }
 }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             var application = await CreateApplication(_applicationName, _scriptActionName);
             ValidateApplication(application);
-            Assert.AreEqual(_applicationName, application.Data.Name);
+            Assert.That(application.Data.Name, Is.EqualTo(_applicationName));
         }
 
         [RecordedTest]
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             await CreateApplication(_applicationName, _scriptActionName);
             bool flag = await _applicationCollection.ExistsAsync(_applicationName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             await CreateApplication(_applicationName, _scriptActionName);
             var application = await _applicationCollection.GetAsync(_applicationName);
             ValidateApplication(application);
-            Assert.AreEqual(_applicationName, application.Value.Data.Name);
+            Assert.That(application.Value.Data.Name, Is.EqualTo(_applicationName));
         }
 
         [RecordedTest]
@@ -105,19 +105,19 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             var application = await CreateApplication(_applicationName, _scriptActionName);
             bool flag = await _applicationCollection.ExistsAsync(_applicationName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await application.DeleteAsync(WaitUntil.Completed);
             flag = await _applicationCollection.ExistsAsync(_applicationName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         private void ValidateApplication(HDInsightApplicationResource application)
         {
-            Assert.IsNotNull(application);
-            Assert.IsNotNull(application.Data.Properties.CreatedOn);
-            Assert.AreEqual("CustomApplication", application.Data.Properties.ApplicationType);
-            Assert.AreEqual(1, application.Data.Properties.InstallScriptActions.Count);
+            Assert.That(application, Is.Not.Null);
+            Assert.That(application.Data.Properties.CreatedOn, Is.Not.Null);
+            Assert.That(application.Data.Properties.ApplicationType, Is.EqualTo("CustomApplication"));
+            Assert.That(application.Data.Properties.InstallScriptActions.Count, Is.EqualTo(1));
         }
         [Test]
         // regressation test for issue https://github.com/Azure/azure-sdk-for-net/issues/45709  only for not throwing exception

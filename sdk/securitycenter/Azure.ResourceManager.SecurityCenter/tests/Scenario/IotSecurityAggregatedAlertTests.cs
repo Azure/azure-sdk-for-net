@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             string aggregatedAlertName = "";
             var aggregatedAlert = await _iotSecurityAggregatedAlertCollection.GetAsync(aggregatedAlertName);
-            Assert.NotNull(aggregatedAlert);
+            Assert.That(aggregatedAlert, Is.Not.Null);
         }
 
         [RecordedTest]

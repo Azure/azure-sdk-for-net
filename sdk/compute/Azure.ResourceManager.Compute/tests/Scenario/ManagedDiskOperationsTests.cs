@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var lro = await disk.UpdateAsync(WaitUntil.Completed, update);
             ManagedDiskResource updatedDisk = lro.Value;
 
-            Assert.AreEqual(newDiskSize, updatedDisk.Data.DiskSizeGB);
+            Assert.That(updatedDisk.Data.DiskSizeGB, Is.EqualTo(newDiskSize));
         }
 
         [RecordedTest]
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Tests
             };
             ManagedDiskResource updated = await disk.SetTagsAsync(tags);
 
-            Assert.AreEqual(tags, updated.Data.Tags);
+            Assert.That(updated.Data.Tags, Is.EqualTo(tags));
         }
     }
 }

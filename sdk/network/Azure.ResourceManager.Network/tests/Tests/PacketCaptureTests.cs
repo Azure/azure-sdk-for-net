@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Network.Tests
             await queryPCOperation.WaitForCompletionAsync();;
 
             //Validation
-            Assert.AreEqual(pcName1, createPacketCapture1.Value.Data.Name);
-            Assert.AreEqual(1073741824, createPacketCapture1.Value.Data.TotalBytesPerSession);
-            Assert.AreEqual(0, createPacketCapture1.Value.Data.BytesToCapturePerPacket);
-            Assert.AreEqual(18000, createPacketCapture1.Value.Data.TimeLimitInSeconds);
-            Assert.AreEqual(@"C:\tmp\Capture.cap", createPacketCapture1.Value.Data.StorageLocation.FilePath);
-            Assert.AreEqual("Succeeded", getPacketCapture.Value.Data.ProvisioningState.ToString());
+            Assert.That(createPacketCapture1.Value.Data.Name, Is.EqualTo(pcName1));
+            Assert.That(createPacketCapture1.Value.Data.TotalBytesPerSession, Is.EqualTo(1073741824));
+            Assert.That(createPacketCapture1.Value.Data.BytesToCapturePerPacket, Is.EqualTo(0));
+            Assert.That(createPacketCapture1.Value.Data.TimeLimitInSeconds, Is.EqualTo(18000));
+            Assert.That(createPacketCapture1.Value.Data.StorageLocation.FilePath, Is.EqualTo(@"C:\tmp\Capture.cap"));
+            Assert.That(getPacketCapture.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             var  packetCapturesCreateOperation = await packetCaptureCollection.CreateOrUpdateAsync(WaitUntil.Completed, pcName2, pcProperties);
             await packetCapturesCreateOperation.WaitForCompletionAsync();;
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.Network.Tests
             AsyncPageable<PacketCaptureResource> listPCByRg2 = packetCaptureCollection.GetAllAsync();
 
             //Validation
-            Assert.AreEqual(2, listPCByRg1.Count());
-            Assert.AreEqual("Stopped", queryPCAfterStop.Value.PacketCaptureStatus.ToString());
-            Assert.AreEqual("Manual", queryPCAfterStop.Value.StopReason);
+            Assert.That(listPCByRg1.Count(), Is.EqualTo(2));
+            Assert.That(queryPCAfterStop.Value.PacketCaptureStatus.ToString(), Is.EqualTo("Stopped"));
+            Assert.That(queryPCAfterStop.Value.StopReason, Is.EqualTo("Manual"));
             Has.One.EqualTo(listPCByRg2);
         }
     }

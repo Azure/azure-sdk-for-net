@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
             var configuration = (CreatePartnerConfiguration(_resourceGroup, Recording.GenerateAssetName("registration"))).Result;
 
-            Assert.IsNotNull(configuration);
-            Assert.AreEqual("Microsoft.EventGrid/partnerConfigurations", configuration.Data.ResourceType.ToString());
+            Assert.That(configuration, Is.Not.Null);
+            Assert.That(configuration.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/partnerConfigurations"));
 
             // Authorize partner in configuration
             var registration = await CreatePartnerRegistration(_resourceGroup, Recording.GenerateAssetName("registration"));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 PartnerRegistrationImmutableId = registration.Data.PartnerRegistrationImmutableId,
             };
             var authorizeResponse = await configuration.AuthorizePartnerAsync(eventGridPartnerContent);
-            Assert.AreEqual("Succeeded", authorizeResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(authorizeResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             // Update
             var partnerConfigurationPatch = new PartnerConfigurationPatch()
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 DefaultMaximumExpirationTimeInDays = 14,
             };
             var response = await configuration.UpdateAsync(WaitUntil.Completed, partnerConfigurationPatch);
-            Assert.IsNotNull(response);
-            Assert.AreEqual("Succeeded", response.Value.Data.ProvisioningState.ToString());
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             // List all partner configurations under the entire subscription
             var partnerConfigurationsInSubscription = await DefaultSubscription.GetPartnerConfigurationsAsync().ToEnumerableAsync();
 
-            Assert.NotNull(partnerConfigurationsInSubscription);
+            Assert.That(partnerConfigurationsInSubscription, Is.Not.Null);
 
             Assert.GreaterOrEqual(partnerConfigurationsInSubscription.Count, 1);
 
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
             var configuration = (CreatePartnerConfiguration(_resourceGroup, Recording.GenerateAssetName("registration"))).Result;
             var response = await configuration.GetAsync();
-            Assert.IsNotNull(response.Value);
-            Assert.AreEqual("Microsoft.EventGrid/partnerConfigurations", response.Value.Data.ResourceType.ToString());
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/partnerConfigurations"));
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await configuration.AuthorizePartnerAsync(eventGridPartnerContent);
 
             var unauthorizeResponse = await configuration.UnauthorizePartnerAsync(eventGridPartnerContent);
-            Assert.AreEqual("Succeeded", unauthorizeResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(unauthorizeResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
         }
     }
 }

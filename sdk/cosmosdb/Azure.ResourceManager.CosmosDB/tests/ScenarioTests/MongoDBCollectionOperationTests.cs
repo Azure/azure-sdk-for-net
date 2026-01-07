@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task MongoDBCollectionCreateAndUpdate()
         {
             var collection = await CreateMongoDBCollection(null);
-            Assert.AreEqual(_collectionName, collection.Data.Resource.CollectionName);
+            Assert.That(collection.Data.Resource.CollectionName, Is.EqualTo(_collectionName));
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, collection.Data.Options.Throughput);
 
             bool ifExists = await MongoDBCollectionCollection.ExistsAsync(_collectionName);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             // NOT WORKING API
             //ThroughputSettingData throughtput = await collection.GetMongoDBCollectionThroughputAsync();
             MongoDBCollectionResource collection2 = await MongoDBCollectionCollection.GetAsync(_collectionName);
-            Assert.AreEqual(_collectionName, collection2.Data.Resource.CollectionName);
+            Assert.That(collection2.Data.Resource.CollectionName, Is.EqualTo(_collectionName));
             //Assert.AreEqual(TestThroughput1, collection2.Data.Options.Throughput);
 
             VerifyMongoDBCollections(collection, collection2);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 AzureLocation.WestUS, collection.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
 
             collection = await (await MongoDBCollectionCollection.CreateOrUpdateAsync(WaitUntil.Started, _collectionName, updateOptions)).WaitForCompletionAsync();
-            Assert.AreEqual(_collectionName, collection.Data.Resource.CollectionName);
+            Assert.That(collection.Data.Resource.CollectionName, Is.EqualTo(_collectionName));
             collection2 = await MongoDBCollectionCollection.GetAsync(_collectionName);
             VerifyMongoDBCollections(collection, collection2);
         }
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task MongoDBCollectionRestoreTest()
         {
             var collection = await CreateMongoDBCollection(null);
-            Assert.AreEqual(_collectionName, collection.Data.Resource.CollectionName);
+            Assert.That(collection.Data.Resource.CollectionName, Is.EqualTo(_collectionName));
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, collection.Data.Options.Throughput);
 
             bool ifExists = await MongoDBCollectionCollection.ExistsAsync(_collectionName);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             var collections = await MongoDBCollectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(collections, Has.Count.EqualTo(1));
-            Assert.AreEqual(collection.Data.Name, collections[0].Data.Name);
+            Assert.That(collections[0].Data.Name, Is.EqualTo(collection.Data.Name));
 
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
             var restorableDatabaseAccount = restorableAccounts.SingleOrDefault(account => account.Data.AccountName == _databaseAccount.Data.Name);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             await collection.DeleteAsync(WaitUntil.Completed);
             bool exists = await MongoDBCollectionCollection.ExistsAsync(_collectionName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
 
             ExtendedMongoDBCollectionResourceInfo resource = new ExtendedMongoDBCollectionResourceInfo(collection.Data.Name)
             {
@@ -144,14 +144,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 AzureLocation.WestUS, resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
 
             var collection2 = await (await MongoDBCollectionCollection.CreateOrUpdateAsync(WaitUntil.Started, _collectionName, updateOptions)).WaitForCompletionAsync();
-            Assert.AreEqual(_collectionName, collection.Data.Resource.CollectionName);
+            Assert.That(collection.Data.Resource.CollectionName, Is.EqualTo(_collectionName));
             var collection3 = await MongoDBCollectionCollection.GetAsync(_collectionName);
             VerifyMongoDBCollections(collection, collection2, true);
 
             //clean up
             await collection.DeleteAsync(WaitUntil.Completed);
             exists = await MongoDBCollectionCollection.ExistsAsync(_collectionName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         [Test]
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var collections = await MongoDBCollectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(collections, Has.Count.EqualTo(1));
-            Assert.AreEqual(collection.Data.Name, collections[0].Data.Name);
+            Assert.That(collections[0].Data.Name, Is.EqualTo(collection.Data.Name));
 
             VerifyMongoDBCollections(collections[0], collection);
         }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var collection = await CreateMongoDBCollection(null);
             MongoDBCollectionThroughputSettingResource throughput = await collection.GetMongoDBCollectionThroughputSetting().GetAsync();
 
-            Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
+            Assert.That(throughput.Data.Resource.Throughput, Is.EqualTo(TestThroughput1));
 
             MongoDBCollectionThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResourceInfo()
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     Throughput = TestThroughput2
                 }))).Value;
 
-            Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
+            Assert.That(throughput2.Data.Resource.Throughput, Is.EqualTo(TestThroughput2));
         }
 
         [Test]
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await collection.DeleteAsync(WaitUntil.Completed);
 
             bool exists = await MongoDBCollectionCollection.ExistsAsync(_collectionName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         internal async Task<MongoDBCollectionResource> CreateMongoDBCollection(AutoscaleSettings autoscale)
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyMongoDBCollections(MongoDBCollectionResource expectedValue, MongoDBCollectionResource actualValue, bool isRestoreRequest = false)
         {
-            Assert.AreEqual(expectedValue.Data.Id, actualValue.Data.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.CollectionName, actualValue.Data.Resource.CollectionName);
-            Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
+            Assert.That(actualValue.Data.Id, Is.EqualTo(expectedValue.Data.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.Resource.CollectionName, Is.EqualTo(expectedValue.Data.Resource.CollectionName));
+            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
             if (!isRestoreRequest)
             {
-                Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
-                Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
+                Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+                Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
             }
         }
 

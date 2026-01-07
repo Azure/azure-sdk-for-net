@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http }
             };
             var result = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
-            Assert.AreEqual(result.Data.Name, apiName);
-            Assert.AreEqual(result.Data.Path, "newapiPath");
+            Assert.That(apiName, Is.EqualTo(result.Data.Name));
+            Assert.That(result.Data.Path, Is.EqualTo("newapiPath"));
             var resultTrue = await collection.ExistsAsync(apiName);
             var resultFalse = await collection.ExistsAsync("foo");
-            Assert.IsTrue(resultTrue);
-            Assert.IsFalse(resultFalse);
+            Assert.That((bool)resultTrue, Is.True);
+            Assert.That((bool)resultFalse, Is.False);
 
             await foreach (var item in collection.GetAllAsync())
             {
                 var newitem = (await item.GetAsync()).Value;
-                Assert.NotNull(newitem.Data.DisplayName);
+                Assert.That(newitem.Data.DisplayName, Is.Not.Null);
                 await newitem.DeleteAsync(WaitUntil.Completed, ETag.All);
             }
         }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 sum++;
             }
-            Assert.IsTrue(sum > 0);
+            Assert.That(sum > 0, Is.True);
         }
     }
 }

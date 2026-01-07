@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var input = ResourceDataHelpers.GetSentinelOnboardingStateData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             SecurityInsightsSentinelOnboardingStateResource onboard1 = lro.Value;
-            Assert.AreEqual(name, onboard1.Data.Name);
+            Assert.That(onboard1.Data.Name, Is.EqualTo(name));
             //2.Get
             SecurityInsightsSentinelOnboardingStateResource onboard2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertSentinelOnboardingStateData(onboard1.Data, onboard2.Data);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 1);
             //4Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
             //Assert.IsFalse(await collection.ExistsAsync(name + "1"));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));

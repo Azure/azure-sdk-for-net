@@ -256,8 +256,8 @@ namespace Azure.ResourceManager.Reservations.Tests
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
 
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
+            Assert.That(catalogResult, Is.Not.Null);
+            Assert.That(catalogResult.Count > 0, Is.True);
             TestGetCatalogResponse(catalogResult, "NetAppStorage", null, true, "westus", "West US");
         }
 
@@ -299,26 +299,26 @@ namespace Azure.ResourceManager.Reservations.Tests
 
         private void TestGetCatalogResponse(List<ReservationCatalog> catalogResult, string resourceTypeName, string alternateResourceTypeName = null, bool hasLocation = false, string location = null, string locationDisplayName = null)
         {
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
+            Assert.That(catalogResult, Is.Not.Null);
+            Assert.That(catalogResult.Count > 0, Is.True);
 
             catalogResult.ForEach(item =>
             {
                 if (alternateResourceTypeName != null)
                 {
-                    Assert.IsTrue(item.AppliedResourceType.Equals(resourceTypeName) || item.AppliedResourceType.Equals(alternateResourceTypeName));
+                    Assert.That(item.AppliedResourceType.Equals(resourceTypeName) || item.AppliedResourceType.Equals(alternateResourceTypeName), Is.True);
                 }
                 else
                 {
-                    Assert.AreEqual(resourceTypeName, item.AppliedResourceType);
+                    Assert.That(item.AppliedResourceType, Is.EqualTo(resourceTypeName));
                 }
 
                 if (hasLocation)
                 {
-                    Assert.NotNull(item.Locations);
-                    Assert.IsTrue(item.Locations.Count == 1);
-                    Assert.AreEqual(location, item.Locations[0].Name);
-                    Assert.AreEqual(locationDisplayName, item.Locations[0].DisplayName);
+                    Assert.That(item.Locations, Is.Not.Null);
+                    Assert.That(item.Locations.Count, Is.EqualTo(1));
+                    Assert.That(item.Locations[0].Name, Is.EqualTo(location));
+                    Assert.That(item.Locations[0].DisplayName, Is.EqualTo(locationDisplayName));
                 }
             });
         }

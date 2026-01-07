@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.That(r2.Location, Is.EqualTo(r1.Location));
+            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
         }
         #region ActionGroup
         public static void AssertActionGroup(ActionGroupData group1, ActionGroupData group2)
         {
             AssertTrackedResource(group1, group2);
-            Assert.AreEqual(group1.AzureFunctionReceivers, group2.AzureFunctionReceivers);
+            Assert.That(group2.AzureFunctionReceivers, Is.EqualTo(group1.AzureFunctionReceivers));
         }
 
         public static ActionGroupData GetBasicActionGroupData(AzureLocation location)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         public static void AssertActivityLogAlert(ActivityLogAlertData data1, ActivityLogAlertData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
         }
 
         public static ActivityLogAlertData GetBasicActivityLogAlertData(AzureLocation location, string subID)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         public static void AssertAlertRule(AlertRuleData data1, AlertRuleData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
         }
 
         public static AlertRuleData GetBasicAlertRuleData(AzureLocation location)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         public static void AssertAutoscaleSetting(AutoscaleSettingData setting1, AutoscaleSettingData setting2)
         {
             AssertTrackedResource(setting1, setting2);
-            Assert.AreEqual(setting1.AutoscaleSettingName, setting2.AutoscaleSettingName);
+            Assert.That(setting2.AutoscaleSettingName, Is.EqualTo(setting1.AutoscaleSettingName));
         }
 
         public static AutoscaleSettingData GetBasicAutoscaleSettingData(AzureLocation location)
@@ -218,8 +218,8 @@ namespace Azure.ResourceManager.Monitor.Tests
         public static void AssertDiagnosticSetting(DiagnosticSettingData data1, DiagnosticSettingData data2)
         {
             //AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.Id, data2.Id);
-            Assert.AreEqual(data1.Name, data2.Name);
+            Assert.That(data2.Id, Is.EqualTo(data1.Id));
+            Assert.That(data2.Name, Is.EqualTo(data1.Name));
         }
 
         public static DiagnosticSettingData GetBasicDiagnosticSettingsData()
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         public static void AssertLogProfile(LogProfileData data1, LogProfileData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.ServiceBusRuleId, data2.ServiceBusRuleId);
+            Assert.That(data2.ServiceBusRuleId, Is.EqualTo(data1.ServiceBusRuleId));
         }
 
         public static LogProfileData GetBasicLogProfileData(AzureLocation location)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         public static void AssertMetricAlert(MetricAlertData data1, MetricAlertData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
         }
 
         public static MetricAlertData GetBasicMetricAlertData(AzureLocation location, ActionGroupResource actionGroup, string storageAccountId)

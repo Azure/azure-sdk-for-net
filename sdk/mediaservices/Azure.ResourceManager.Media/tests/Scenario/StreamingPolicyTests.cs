@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Media.Tests
         {
             string policyName = Recording.GenerateAssetName("streamingPolicy");
             var streamingPolicy = await CreateStreamingPolicy(policyName);
-            Assert.IsNotNull(streamingPolicy);
-            Assert.AreEqual(policyName, streamingPolicy.Data.Name);
+            Assert.That(streamingPolicy, Is.Not.Null);
+            Assert.That(streamingPolicy.Data.Name, Is.EqualTo(policyName));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Tests
             string policyName = Recording.GenerateAssetName("streamingPolicy");
             await CreateStreamingPolicy(policyName);
             bool flag = await streamingPolicyCollection.ExistsAsync(policyName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Media.Tests
             string policyName = Recording.GenerateAssetName("streamingPolicy");
             await CreateStreamingPolicy(policyName);
             var streamingPolicy = await streamingPolicyCollection.GetAsync(policyName);
-            Assert.IsNotNull(policyName);
-            Assert.AreEqual(policyName, streamingPolicy.Value.Data.Name);
+            Assert.That(policyName, Is.Not.Null);
+            Assert.That(streamingPolicy.Value.Data.Name, Is.EqualTo(policyName));
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media.Tests
             await CreateStreamingPolicy(policyName);
             var list = await streamingPolicyCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.IsTrue(list.Exists(item => item.Data.Name == "Predefined_ClearKey"));
+            Assert.That(list.Exists(item => item.Data.Name == "Predefined_ClearKey"), Is.True);
         }
 
         [Test]
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Media.Tests
             string policyName = Recording.GenerateAssetName("streamingPolicy");
             var streamingPolicy = await CreateStreamingPolicy(policyName);
             bool flag = await streamingPolicyCollection.ExistsAsync(policyName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await streamingPolicy.DeleteAsync(WaitUntil.Completed);
             flag = await streamingPolicyCollection.ExistsAsync(policyName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

@@ -107,18 +107,18 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             var PrivateEndpointConnection = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAsync(list[0].Data.Name);
-            Assert.NotNull(PrivateEndpointConnection.Value.Data);
-            Assert.AreEqual("Approved", PrivateEndpointConnection.Value.Data.ConnectionState.Status.ToString());
+            Assert.That(PrivateEndpointConnection.Value.Data, Is.Not.Null);
+            Assert.That(PrivateEndpointConnection.Value.Data.ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
         }
 
         [RecordedTest]
         public async Task GetAll()
         {
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
             await CreatePrivateEndpointConnection(_privateEndPointName);
             list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
         }
 
         [RecordedTest]
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.True(await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name));
-            Assert.False(await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name + "01"));
+            Assert.That((bool)await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name), Is.True);
+            Assert.That((bool)await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name + "01"), Is.False);
         }
 
         [RecordedTest]
@@ -135,13 +135,13 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
             foreach (var item in list)
             {
                 await item.DeleteAsync(WaitUntil.Completed);
             }
             list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
         }
     }
 }

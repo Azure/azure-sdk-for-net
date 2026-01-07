@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             }
 
             // Assert all apps created were found and deleted.
-            Assert.IsFalse(appNames.Any());
+            Assert.That(appNames.Any(), Is.False);
         }
 
         [TestCase]
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             }
 
             // Assert all apps created were found and deleted.
-            Assert.IsFalse(appNames.Any());
+            Assert.That(appNames.Any(), Is.False);
         }
 
         [TestCase]
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var appAvailabilityInfoResponse = await subscription.CheckIotCentralAppNameAvailabilityAsync(new IotCentralAppNameAvailabilityContent(GetRandomTestName()), CancellationToken.None);
             var appAvailabilityInfo = appAvailabilityInfoResponse.Value;
 
-            Assert.IsTrue(appAvailabilityInfo.IsNameAvailable);
+            Assert.That(appAvailabilityInfo.IsNameAvailable, Is.True);
         }
 
         [TestCase]
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var appAvailabilityInfoResponse = await subscription.CheckIotCentralAppSubdomainAvailabilityAsync(new IotCentralAppNameAvailabilityContent(GetRandomTestName()), CancellationToken.None);
             var appAvailabilityInfo = appAvailabilityInfoResponse.Value;
 
-            Assert.IsTrue(appAvailabilityInfo.IsNameAvailable);
+            Assert.That(appAvailabilityInfo.IsNameAvailable, Is.True);
         }
 
         [TestCase]
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var firstAppTemplate = await subscription.GetTemplatesAppsAsync(CancellationToken.None).FirstOrDefaultAsync((_) => true, CancellationToken.None);
 
-            Assert.IsNotNull(firstAppTemplate);
+            Assert.That(firstAppTemplate, Is.Not.Null);
         }
     }
 }

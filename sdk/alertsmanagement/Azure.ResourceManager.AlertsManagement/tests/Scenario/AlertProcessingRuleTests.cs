@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
 
             var createAlertProcessingRuleOperation = await rg.GetAlertProcessingRules().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, alertProcessingRule);
             await createAlertProcessingRuleOperation.WaitForCompletionAsync();
-            Assert.IsTrue(createAlertProcessingRuleOperation.HasCompleted);
-            Assert.IsTrue(createAlertProcessingRuleOperation.HasValue);
+            Assert.That(createAlertProcessingRuleOperation.HasCompleted, Is.True);
+            Assert.That(createAlertProcessingRuleOperation.HasValue, Is.True);
 
             // Get Alert processing rule by name
             AlertProcessingRuleResource fetchedAlertProcessingRule = await rg.GetAlertProcessingRules().GetAsync(resourceName);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
               Console.WriteLine(alertProcessingRule.Data.Name);
             }
 
-            Assert.NotNull(alertProcessingRules);
+            Assert.That(alertProcessingRules, Is.Not.Null);
         }
 
         [TestCase]
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
                 Console.WriteLine(alertProcessingRule.Data.Name);
             }
 
-            Assert.NotNull(alertProcessingRules);
+            Assert.That(alertProcessingRules, Is.Not.Null);
         }
     }
 }

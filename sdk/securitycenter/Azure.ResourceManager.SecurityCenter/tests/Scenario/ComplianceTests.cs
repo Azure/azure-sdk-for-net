@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task Exist()
         {
             bool flag = await _complianceCollection.ExistsAsync(_existComplianceName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             Assert.IsNotNull(compliance);
             Assert.IsNotNull(compliance.Data.Id);
-            Assert.AreEqual(_existComplianceName, compliance.Data.Name);
-            Assert.AreEqual("Microsoft.Security/compliances", compliance.Data.ResourceType.ToString());
+            Assert.That(compliance.Data.Name, Is.EqualTo(_existComplianceName));
+            Assert.That(compliance.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/compliances"));
         }
     }
 }

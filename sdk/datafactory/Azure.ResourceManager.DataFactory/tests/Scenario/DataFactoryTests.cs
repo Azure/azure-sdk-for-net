@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             // Create a DataFactory
             string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
             DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            Assert.IsNotNull(dataFactory);
-            Assert.AreEqual(dataFactoryName, dataFactory.Data.Name);
+            Assert.That(dataFactory, Is.Not.Null);
+            Assert.That(dataFactory.Data.Name, Is.EqualTo(dataFactoryName));
             // Exist
             bool flag = await resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             // Get
             var dataFactoryGet = await resourceGroup.GetDataFactories().GetAsync(dataFactoryName);
-            Assert.IsNotNull(dataFactoryGet);
-            Assert.AreEqual(dataFactoryName, dataFactoryGet.Value.Data.Name);
+            Assert.That(dataFactoryGet, Is.Not.Null);
+            Assert.That(dataFactoryGet.Value.Data.Name, Is.EqualTo(dataFactoryName));
             // GetAll
             var list = await resourceGroup.GetDataFactories().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             // Delete
             await dataFactory.DeleteAsync(WaitUntil.Completed);
             flag = await resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 expectedClusterData.PublicIPType ?? KustoClusterPublicIPType.IPv4, actualClusterData.PublicIPType
             );
             AssertEquality(KustoClusterState.Running, actualClusterData.State);
-            Assert.IsNull(actualClusterData.VirtualClusterGraduationProperties);
+            Assert.That(actualClusterData.VirtualClusterGraduationProperties, Is.Null);
 
             AssertEquality(expectedClusterData.Identity, actualClusterData.Identity, IdentityEquals);
             AssertEquality(
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             if (systemAssigned)
             {
-                Assert.IsNotNull(actual.PrincipalId);
+                Assert.That(actual.PrincipalId, Is.Not.Null);
             }
             else
             {
-                Assert.IsNull(actual.PrincipalId);
+                Assert.That(actual.PrincipalId, Is.Null);
             }
 
             AssertEquality(Guid.Parse(TE.KustoTenantId), actual.TenantId);

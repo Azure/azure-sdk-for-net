@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             FrontDoorEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             await afdEndpointInstance.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdEndpointInstance.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [TestCase]
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             await foreach (var tempUsage in afdEndpointInstance.GetResourceUsagesAsync())
             {
                 count++;
-                Assert.AreEqual(tempUsage.CurrentValue, 0);
-                Assert.AreEqual(tempUsage.Unit, FrontDoorUsageUnit.Count);
+                Assert.That(tempUsage.CurrentValue, Is.EqualTo(0));
+                Assert.That(FrontDoorUsageUnit.Count, Is.EqualTo(tempUsage.Unit));
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             FrontDoorEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             ValidateCustomDomainContent validateCustomDomainContent = new ValidateCustomDomainContent("customdomain4afd.azuretest.net");
             ValidateCustomDomainResult validateCustomDomainOutput  = await afdEndpointInstance.ValidateCustomDomainAsync(validateCustomDomainContent);
-            Assert.False(validateCustomDomainOutput.IsCustomDomainValid);
+            Assert.That(validateCustomDomainOutput.IsCustomDomainValid, Is.False);
         }
     }
 }

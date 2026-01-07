@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Exist()
         {
             var flag = await _problemClassificationCollection.ExistsAsync(_existProblemClassificationName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]

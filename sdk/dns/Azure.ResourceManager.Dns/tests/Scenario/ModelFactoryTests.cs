@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         public void AaaaRecordData_Empty_Test()
         {
             DnsAaaaRecordData aaaa = ArmDnsModelFactory.DnsAaaaRecordData(null, null, default, null, null, null, null, null, null, null);
-            Assert.IsNull(aaaa.Id);
-            Assert.IsNull(aaaa.Name);
-            Assert.IsNull(aaaa.SystemData);
+            Assert.That(aaaa.Id, Is.Null);
+            Assert.That(aaaa.Name, Is.Null);
+            Assert.That(aaaa.SystemData, Is.Null);
             Assert.IsEmpty(aaaa.Metadata);
-            Assert.IsNull(aaaa.TtlInSeconds);
-            Assert.IsNull(aaaa.Fqdn);
-            Assert.IsNull(aaaa.ProvisioningState);
-            Assert.IsNull(aaaa.TargetResource);
+            Assert.That(aaaa.TtlInSeconds, Is.Null);
+            Assert.That(aaaa.Fqdn, Is.Null);
+            Assert.That(aaaa.ProvisioningState, Is.Null);
+            Assert.That(aaaa.TargetResource, Is.Null);
             Assert.IsEmpty(aaaa.DnsAaaaRecords);
         }
 
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             };
             DnsAaaaRecordData aaaa = ArmDnsModelFactory.DnsAaaaRecordData(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, aaaaRecords);
             BasicAssert(aaaa);
-            Assert.AreEqual(id, aaaa.Id);
-            Assert.AreEqual(resourceType, aaaa.ResourceType);
-            Assert.AreEqual(2, aaaa.DnsAaaaRecords.Count);
+            Assert.That(aaaa.Id, Is.EqualTo(id));
+            Assert.That(aaaa.ResourceType, Is.EqualTo(resourceType));
+            Assert.That(aaaa.DnsAaaaRecords.Count, Is.EqualTo(2));
         }
 
         [Test]
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             DnsCnameRecordData cname = ArmDnsModelFactory.DnsCnameRecordData(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, aliasValue);
             BasicAssert(cname);
-            Assert.AreEqual(id, cname.Id);
-            Assert.AreEqual(resourceType, cname.ResourceType);
-            Assert.AreEqual(aliasValue, cname.DnsCnameRecord.Cname);
+            Assert.That(cname.Id, Is.EqualTo(id));
+            Assert.That(cname.ResourceType, Is.EqualTo(resourceType));
+            Assert.That(cname.DnsCnameRecord.Cname, Is.EqualTo(aliasValue));
         }
 
         [Test]
@@ -97,25 +97,25 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
             DnsSoaRecordData soa = ArmDnsModelFactory.DnsSoaRecordData(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, soaRecord);
             BasicAssert(soa);
-            Assert.AreEqual(id, soa.Id);
-            Assert.AreEqual(resourceType, soa.ResourceType);
-            Assert.AreEqual("azuredns-hostmaster.microsoft.com", soa.DnsSoaRecord.Email);
-            Assert.AreEqual("ns1-03.azure-dns.com.", soa.DnsSoaRecord.Host);
-            Assert.AreEqual(2419200, soa.DnsSoaRecord.ExpireTimeInSeconds);
-            Assert.AreEqual(3600, soa.DnsSoaRecord.RefreshTimeInSeconds);
-            Assert.AreEqual(300, soa.DnsSoaRecord.RetryTimeInSeconds);
-            Assert.AreEqual(300, soa.DnsSoaRecord.MinimumTtlInSeconds);
-            Assert.AreEqual(1, soa.DnsSoaRecord.SerialNumber);
+            Assert.That(soa.Id, Is.EqualTo(id));
+            Assert.That(soa.ResourceType, Is.EqualTo(resourceType));
+            Assert.That(soa.DnsSoaRecord.Email, Is.EqualTo("azuredns-hostmaster.microsoft.com"));
+            Assert.That(soa.DnsSoaRecord.Host, Is.EqualTo("ns1-03.azure-dns.com."));
+            Assert.That(soa.DnsSoaRecord.ExpireTimeInSeconds, Is.EqualTo(2419200));
+            Assert.That(soa.DnsSoaRecord.RefreshTimeInSeconds, Is.EqualTo(3600));
+            Assert.That(soa.DnsSoaRecord.RetryTimeInSeconds, Is.EqualTo(300));
+            Assert.That(soa.DnsSoaRecord.MinimumTtlInSeconds, Is.EqualTo(300));
+            Assert.That(soa.DnsSoaRecord.SerialNumber, Is.EqualTo(1));
         }
 
         private static void BasicAssert(DnsBaseRecordData recordData)
         {
-            Assert.AreEqual(name, recordData.Name);
-            Assert.AreEqual(provisioningState, recordData.ProvisioningState);
-            Assert.AreEqual(fqdn, recordData.Fqdn);
-            Assert.AreEqual(etag, recordData.ETag);
-            Assert.AreEqual(ttl, recordData.TtlInSeconds);
-            Assert.IsNull(recordData.TargetResource);
+            Assert.That(recordData.Name, Is.EqualTo(name));
+            Assert.That(recordData.ProvisioningState, Is.EqualTo(provisioningState));
+            Assert.That(recordData.Fqdn, Is.EqualTo(fqdn));
+            Assert.That(recordData.ETag, Is.EqualTo(etag));
+            Assert.That(recordData.TtlInSeconds, Is.EqualTo(ttl));
+            Assert.That(recordData.TargetResource, Is.Null);
         }
     }
 }

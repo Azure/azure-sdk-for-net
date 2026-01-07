@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var appServicePlan = lro.Value;
-            Assert.AreEqual(name, appServicePlan.Data.Name);
+            Assert.That(appServicePlan.Data.Name, Is.EqualTo(name));
         }
 
         [TestCase]
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, planName, input);
             AppServicePlanResource plan = lro.Value;
-            Assert.IsTrue(await container.ExistsAsync(planName));
-            Assert.IsFalse(await container.ExistsAsync(planName + "1"));
+            Assert.That((bool)await container.ExistsAsync(planName), Is.True);
+            Assert.That((bool)await container.ExistsAsync(planName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }

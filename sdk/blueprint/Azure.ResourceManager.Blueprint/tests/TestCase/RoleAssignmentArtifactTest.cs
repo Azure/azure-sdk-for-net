@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Blueprint.Tests
             //CreateOrUpdate(role assignment Artifact)
             var roleAssignmentArtifactInput = ResourceDataHelpers.GetRoleAssignmentData();
             var roleAssignmentArtifactResource = (await artifactCollection.CreateOrUpdateAsync(WaitUntil.Completed, roleassignmentArtifactName, roleAssignmentArtifactInput)).Value;
-            Assert.AreEqual(roleassignmentArtifactName, roleAssignmentArtifactResource.Data.Name);
+            Assert.That(roleAssignmentArtifactResource.Data.Name, Is.EqualTo(roleassignmentArtifactName));
             //Get
             var policy2 = (await artifactCollection.GetAsync(roleassignmentArtifactName)).Value;
             ResourceDataHelpers.AssertArtifactData(roleAssignmentArtifactResource.Data, policy2.Data);
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Blueprint.Tests
             }
             Assert.GreaterOrEqual(count, 2);
             //4.Exist
-            Assert.IsTrue(await artifactCollection.ExistsAsync(roleassignmentArtifactName));
-            Assert.IsFalse(await artifactCollection.ExistsAsync(roleassignmentArtifactName + "1"));
+            Assert.That((bool)await artifactCollection.ExistsAsync(roleassignmentArtifactName), Is.True);
+            Assert.That((bool)await artifactCollection.ExistsAsync(roleassignmentArtifactName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await artifactCollection.ExistsAsync(null));
             //Resouece operation

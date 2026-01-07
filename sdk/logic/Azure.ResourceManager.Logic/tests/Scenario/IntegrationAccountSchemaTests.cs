@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string schemaName = Recording.GenerateAssetName("schema");
             var schema = await CreateSchema(schemaName);
-            Assert.IsNotNull(schema);
-            Assert.AreEqual(schemaName, schema.Data.Name);
+            Assert.That(schema, Is.Not.Null);
+            Assert.That(schema.Data.Name, Is.EqualTo(schemaName));
         }
 
         [RecordedTest]
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string schemaName = Recording.GenerateAssetName("schema");
             await CreateSchema(schemaName);
             bool flag = await _schemaCollection.ExistsAsync(schemaName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Logic.Tests
             string schemaName = Recording.GenerateAssetName("schema");
             await CreateSchema(schemaName);
             var schema = await _schemaCollection.GetAsync(schemaName);
-            Assert.IsNotNull(schema);
-            Assert.AreEqual(schemaName, schema.Value.Data.Name);
+            Assert.That(schema, Is.Not.Null);
+            Assert.That(schema.Value.Data.Name, Is.EqualTo(schemaName));
         }
 
         [RecordedTest]
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string schemaName = Recording.GenerateAssetName("schema");
             var schema = await CreateSchema(schemaName);
             bool flag = await _schemaCollection.ExistsAsync(schemaName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await schema.DeleteAsync(WaitUntil.Completed);
             flag = await _schemaCollection.ExistsAsync(schemaName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

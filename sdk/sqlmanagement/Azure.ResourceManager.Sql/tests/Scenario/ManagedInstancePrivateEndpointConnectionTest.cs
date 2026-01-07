@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 2.CheckIfExist
             bool flag = await collection.ExistsAsync(privateEndpointName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // 3.Get
             var getprivateEndpoint = await collection.GetAsync(privateEndpointName);
