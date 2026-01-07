@@ -220,6 +220,9 @@ namespace Azure.Generator.Management.Models
             {
                 var contextualParams = ContextualParameterBuilder.BuildContextualParameters(this);
                 _contextualParameters = contextualParams.ToDictionary(p => p.VariableName);
+                // Keys are unique by design - each key represents a distinct segment type in the resource path hierarchy
+                // (e.g., "subscriptions", "resourceGroups", "fleets"). If there were duplicate keys, it would indicate
+                // a malformed path pattern.
                 _contextualParametersByKey = contextualParams.Where(p => !string.IsNullOrEmpty(p.Key)).ToDictionary(p => p.Key);
             }
 
