@@ -47,5 +47,25 @@ namespace Azure.Generator.Management.Tests
             var descendantPattern = new RequestPathPattern("/tenants/{tenantId}/resourceGroups/{resourceGroupName}");
             Assert.IsFalse(ancestorPattern.IsAncestorOf(descendantPattern));
         }
+
+        [TestCase("resourceGroup", "resourceGroup", true, Description = "Exact match should return true")]
+        [TestCase("resourceGroupName", "resourceGroupName", true, Description = "Exact match with Name suffix should return true")]
+        [TestCase("resourceGroup", "resourceGroupName", true, Description = "resourceGroup should match resourceGroupName")]
+        [TestCase("resourceGroupName", "resourceGroup", true, Description = "resourceGroupName should match resourceGroup (bidirectional)")]
+        [TestCase("subscriptionId", "subscriptionIdName", true, Description = "subscriptionId should match subscriptionIdName")]
+        [TestCase("subscriptionIdName", "subscriptionId", true, Description = "subscriptionIdName should match subscriptionId (bidirectional)")]
+        [TestCase("RESOURCEGROUP", "resourceGroupName", true, Description = "Case-insensitive matching should work")]
+        [TestCase("resourceGroup", "RESOURCEGROUPNAME", true, Description = "Case-insensitive matching should work (reverse)")]
+        [TestCase("resource", "resourceName", false, Description = "False positive: resource should NOT match resourceName")]
+        [TestCase("resourceName", "resource", false, Description = "False positive: resourceName should NOT match resource")]
+        [TestCase("subscription", "subscriptionId", false, Description = "Different parameters should not match")]
+        [TestCase("resourceGroup", "subscriptionId", false, Description = "Unrelated parameters should not match")]
+        [TestCase("name", "resourceName", false, Description = "Suffix-only match should not work")]
+        [TestCase("resourceGroupName", "resourceGroupNameExtra", false, Description = "Extra suffix should not match")]
+        public void AreParameterNamesEquivalent_VariousCases(string name1, string name2, bool expected)
+        {
+            var result = RequestPathPattern.AreParameterNamesEquivalent(name1, name2);
+            Assert.AreEqual(expected, result, $"AreParameterNamesEquivalent(\"{name1}\", \"{name2}\") should return {expected}");
+        }
     }
 }

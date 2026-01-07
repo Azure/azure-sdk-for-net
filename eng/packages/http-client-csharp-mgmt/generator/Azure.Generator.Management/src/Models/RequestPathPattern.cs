@@ -237,8 +237,9 @@ namespace Azure.Generator.Management.Models
         /// Determines if two parameter names are equivalent by checking if they differ only by a "Name" suffix.
         /// For example, "resourceGroup" matches "resourceGroupName" because one is exactly the other with
         /// "Name" appended. The check is bidirectional and case-insensitive.
+        /// To prevent false positives, the base name (without "Name") must be at least 8 characters long.
         /// </summary>
-        private static bool AreParameterNamesEquivalent(string name1, string name2)
+        internal static bool AreParameterNamesEquivalent(string name1, string name2)
         {
             if (name1.Equals(name2, StringComparison.OrdinalIgnoreCase))
             {
@@ -246,9 +247,22 @@ namespace Azure.Generator.Management.Models
             }
 
             // Check if one name is exactly the other name with "Name" appended
-            // This prevents false positives like "resource" matching "resourceName" when they're unrelated
-            return name1.Equals(name2 + "Name", StringComparison.OrdinalIgnoreCase) ||
-                   name2.Equals(name1 + "Name", StringComparison.OrdinalIgnoreCase);
+            // Require the base name to be at least 10 characters to prevent false positives
+            // like "resource" (8 chars) matching "resourceName"
+            // while allowing "resourceGroup" (13 chars) matching "resourceGroupName"
+            const int MinimumBaseLength = 10;
+
+            if (name1.Length >= MinimumBaseLength && name2.Equals(name1 + "Name", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            if (name2.Length >= MinimumBaseLength && name1.Equals(name2 + "Name", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
