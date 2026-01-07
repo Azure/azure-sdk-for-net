@@ -223,18 +223,43 @@ namespace Azure.Generator.Management.Models
                 return true;
             }
 
-            // Handle resource group parameter name variations
-            // If the parameter is named "resourceGroup", also try "resourceGroupName" and vice versa
-            if (parameterName.Equals("resourceGroup", StringComparison.OrdinalIgnoreCase))
+            // If no exact match, try to find a contextual parameter by matching the parameter name
+            // against variable segments in the route path, accounting for common naming variations.
+            // This handles cases like "resourceGroup" vs "resourceGroupName" where both refer to the
+            // same logical resource group parameter.
+            foreach (var candidateParam in _contextualParameters.Values)
             {
-                return _contextualParameters.TryGetValue("resourceGroupName", out contextualParameter);
-            }
-            else if (parameterName.Equals("resourceGroupName", StringComparison.OrdinalIgnoreCase))
-            {
-                return _contextualParameters.TryGetValue("resourceGroup", out contextualParameter);
+                // Check if the parameter name matches the contextual parameter's variable name with common variations
+                if (AreParameterNamesEquivalent(parameterName, candidateParam.VariableName))
+                {
+                    contextualParameter = candidateParam;
+                    return true;
+                }
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Determines if two parameter names are equivalent, accounting for common naming variations.
+        /// For example, "resourceGroup" and "resourceGroupName" are considered equivalent.
+        /// </summary>
+        private static bool AreParameterNamesEquivalent(string name1, string name2)
+        {
+            if (name1.Equals(name2, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            // Handle common suffix variations like "Name"
+            var name1WithoutSuffix = name1.EndsWith("Name", StringComparison.OrdinalIgnoreCase)
+                ? name1.Substring(0, name1.Length - 4)
+                : name1;
+            var name2WithoutSuffix = name2.EndsWith("Name", StringComparison.OrdinalIgnoreCase)
+                ? name2.Substring(0, name2.Length - 4)
+                : name2;
+
+            return name1WithoutSuffix.Equals(name2WithoutSuffix, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
