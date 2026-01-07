@@ -19,6 +19,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private static string? s_prefix;
         internal static string s_sdkVersion = GetSdkVersion();
         internal static SdkVersionType s_sdkVersionType = SdkVersionType.Exporter;
+        internal static string? s_extensionVersion;
+        internal static string? s_extensionVersionOverride;
 
         internal static string? SdkVersionPrefix
         {
@@ -40,10 +42,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        internal static string? ExtensionsVersion { get; private set; }
-
-        internal static string? GetVersion(Type type)
+        internal static string? ExtensionVersion
         {
+            get => s_extensionVersionOverride ?? s_extensionVersion;
+            set => s_extensionVersionOverride = value;
+        }
+
+        internal static string? ExtensionLabel { get; set; }
+
+        internal static string? GetVersion(Type? type = default)
+        {
+            if (type == null)
+            {
+                return ExtensionLabel + ExtensionVersion;
+            }
+
             try
             {
                 string versionString = type
@@ -84,13 +97,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static string GetSdkVersion()
+        internal static string GetSdkVersion()
         {
             try
             {
                 string? sdkVersionPrefix = !string.IsNullOrWhiteSpace(SdkVersionPrefix) ? $"{SdkVersionPrefix}_" : null;
                 string? dotnetSdkVersion = GetVersion(typeof(object));
                 string? otelSdkVersion = GetVersion(typeof(Sdk));
+
 #if AZURE_MONITOR_EXPORTER
                 string? extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
 #elif ASP_NET_CORE_DISTRO
@@ -99,36 +113,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 string? extensionVersion = GetVersion(typeof(LiveMetrics.AzureMonitorLiveMetricsEventSource));
 #endif
 
-                string extensionLabel;
                 switch (VersionType)
                 {
                     case SdkVersionType.Distro:
-                        extensionLabel = "dst";
+                        ExtensionLabel = "dst";
                         break;
                     case SdkVersionType.ShimBase:
-                        extensionLabel = "sha";
+                        ExtensionLabel = "sha";
                         break;
                     case SdkVersionType.ShimAspNetCore:
-                        extensionLabel = "shc";
+                        ExtensionLabel = "shc";
                         break;
                     case SdkVersionType.ShimWorkerService:
-                        extensionLabel = "shw";
+                        ExtensionLabel = "shw";
                         break;
                     case SdkVersionType.ShimWeb:
-                        extensionLabel = "shf";
+                        ExtensionLabel = "shf";
                         break;
                     case SdkVersionType.ShimNLog:
-                        extensionLabel = "shn";
+                        ExtensionLabel = "shn";
                         break;
                     case SdkVersionType.Exporter:
                     default:
-                        extensionLabel = "ext";
+                        ExtensionLabel = "ext";
                         break;
                 }
 
-                ExtensionsVersion = extensionVersion ?? "u"; // 'u' for Unknown
+                s_extensionVersion = extensionVersion ?? "u"; // 'u' for Unknown
 
-                return string.Format(CultureInfo.InvariantCulture, $"{sdkVersionPrefix}dotnet{dotnetSdkVersion}:otel{otelSdkVersion}:{extensionLabel}{extensionVersion}");
+                return string.Format(CultureInfo.InvariantCulture, $"{sdkVersionPrefix}dotnet{dotnetSdkVersion}:otel{otelSdkVersion}:{ExtensionLabel}{ExtensionVersion}");
             }
             catch (Exception ex)
             {

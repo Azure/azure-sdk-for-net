@@ -16,6 +16,7 @@ internal static class ResourceExtensions
 {
     private const string AiSdkPrefixKey = "ai.sdk.prefix";
     private const string TelemetryDistroNameKey = "telemetry.distro.name";
+    private const string TelemetryDistroVersionKey = "telemetry.distro.version";
     private const string DefaultServiceName = "unknown_service";
     private const int Version = 2;
 
@@ -41,6 +42,7 @@ internal static class ResourceExtensions
         string? serviceNamespace = null;
         string? serviceInstance = null;
         string? serviceVersion = null;
+        string? distroVersion = null;
         bool? hasDefaultServiceName = null;
 
         if (instrumentationKey != null && resource.Attributes.Any())
@@ -86,6 +88,9 @@ internal static class ResourceExtensions
                         _ => SdkVersionUtils.VersionType
                     };
                     break;
+                case TelemetryDistroVersionKey when attribute.Value is string _aiSdkDistroVersionValue:
+                    distroVersion = _aiSdkDistroVersionValue;
+                    break;
                 default:
                     if (attribute.Key.StartsWith("k8s"))
                     {
@@ -93,6 +98,11 @@ internal static class ResourceExtensions
                         aksResourceProcessor.MapAttributeToProperty(attribute);
                     }
                     break;
+            }
+
+            if (distroVersion != null)
+            {
+                SdkVersionUtils.ExtensionVersion = distroVersion;
             }
 
             if (metricsData != null && attribute.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && attribute.Value != null)

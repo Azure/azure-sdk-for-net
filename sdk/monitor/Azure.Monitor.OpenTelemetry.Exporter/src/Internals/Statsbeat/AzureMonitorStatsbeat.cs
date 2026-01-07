@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private static string? s_runtimeVersion => SdkVersionUtils.GetVersion(typeof(object));
 
-        private static string? s_sdkVersion => SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter));
+        private static string? s_sdkVersion => SdkVersionUtils.GetVersion();
 
         private static bool s_hasSdkPrefix => SdkVersionUtils.SdkVersionPrefix != null;
 
