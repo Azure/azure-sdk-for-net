@@ -45,9 +45,10 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
+            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
+
             foreach (var method in methodCollection)
             {
-                visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added to all the client methods
                 Assert.That(method.Signature.Parameters, Has.Count.EqualTo(2));
                 Assert.That(method.Signature.Parameters[0].Name, Is.EqualTo("requestConditions"));
@@ -81,7 +82,7 @@ namespace Azure.Generator.Tests.Visitors
             Assert.That(methods.Count, Is.GreaterThan(0), "RestClient should have methods defined.");
 
             // visit the method
-            _ = visitor.VisitScmMethod(methods[0]);
+            _ = visitor.VisitCreateRequest(serviceMethod, restClient, methods[0]);
 
             var writer = new TypeProviderWriter(clientProvider!.RestClient);
             var file = writer.Write();
@@ -122,9 +123,10 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
+            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
+
             foreach (var method in methodCollection)
             {
-                visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added to all the client methods
                 Assert.That(method.Signature.Parameters, Has.Count.EqualTo(2));
                 Assert.Multiple(() =>
@@ -171,7 +173,7 @@ namespace Azure.Generator.Tests.Visitors
             Assert.That(methods.Count, Is.GreaterThan(0), "RestClient should have methods defined.");
 
             // visit the method
-            _ = visitor.VisitScmMethod(methods[0]);
+            _ = visitor.VisitCreateRequest(serviceMethod, restClient, methods[0]);
 
             var writer = new TypeProviderWriter(clientProvider!.RestClient);
             var file = writer.Write();
@@ -218,7 +220,7 @@ namespace Azure.Generator.Tests.Visitors
             Assert.That(methods.Count, Is.GreaterThan(0), "RestClient should have methods defined.");
 
             // visit the method
-            _ = visitor.VisitScmMethod(methods[0]);
+            _ = visitor.VisitCreateRequest(serviceMethod, restClient, methods[0]);
 
             var writer = new TypeProviderWriter(clientProvider!.RestClient);
             var file = writer.Write();
@@ -259,9 +261,10 @@ namespace Azure.Generator.Tests.Visitors
             MethodProvider? protocolMethod = null;
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
+            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
+
             foreach (var method in methodCollection)
             {
-                visitor.VisitScmMethod(method);
                 if (method.Kind == ScmMethodKind.Protocol && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
                 {
                     protocolMethod = method;
@@ -309,9 +312,10 @@ namespace Azure.Generator.Tests.Visitors
             MethodProvider? protocolMethod = null;
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
+            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
+
             foreach (var method in methodCollection)
             {
-                visitor.VisitScmMethod(method);
                 if (method.Kind == ScmMethodKind.Protocol && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
                 {
                     protocolMethod = method;
@@ -356,9 +360,10 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
+            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
+
             foreach (var method in methodCollection)
             {
-                visitor.VisitScmMethod(method);
                 // Verify that the RequestConditions parameter is added to all the client methods
                 Assert.That(method.Signature.Parameters, Has.Count.EqualTo(3));
                 Assert.Multiple(() =>
@@ -401,9 +406,10 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
+            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
+
             foreach (var method in methodCollection)
             {
-                visitor.VisitScmMethod(method);
                 // Verify that the parameters are unchanged
                 Assert.That(method.Signature.Parameters, Has.Count.EqualTo(3));
                 Assert.Multiple(() =>
@@ -449,10 +455,10 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
+            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
+
             foreach (var method in methodCollection)
             {
-                visitor.VisitScmMethod(method);
-
                 // Verify that the MatchConditions parameter is added
                 Assert.That(method.Signature.Parameters, Has.Count.EqualTo(2));
                 Assert.Multiple(() =>
@@ -495,10 +501,10 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
+            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
+
             foreach (var method in methodCollection)
             {
-                visitor.VisitScmMethod(method);
-
                 // Verify that the RequestConditions parameter is added
                 Assert.That(method.Signature.Parameters, Has.Count.EqualTo(2));
                 Assert.Multiple(() =>
@@ -543,10 +549,10 @@ namespace Azure.Generator.Tests.Visitors
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
 
+            visitor.VisitScmMethodCollection(serviceMethod, clientProvider!, methodCollection);
+
             foreach (var method in methodCollection)
             {
-                visitor.VisitScmMethod(method);
-
                 // Verify that the RequestConditions parameter is added
                 Assert.That(method.Signature.Parameters, Has.Count.EqualTo(3));
                 Assert.Multiple(() =>
@@ -593,7 +599,7 @@ namespace Azure.Generator.Tests.Visitors
             Assert.That(methods.Count, Is.GreaterThan(0), "RestClient should have methods defined.");
             foreach (var method in methods)
             {
-                visitor.VisitScmMethod(method);
+                visitor.VisitCreateRequest(inputServiceMethod, restClient, method as ScmMethodProvider);
             }
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
@@ -698,19 +704,25 @@ namespace Azure.Generator.Tests.Visitors
 
         private class TestMatchConditionsHeaderVisitor : MatchConditionsHeadersVisitor
         {
-            public ScmMethodProvider? VisitScmMethod(ScmMethodProvider method)
+            public ScmMethodProviderCollection? VisitScmMethodCollection(
+                InputServiceMethod serviceMethod,
+                ClientProvider enclosingType,
+                ScmMethodProviderCollection? methodProviderCollection)
             {
-                return base.VisitMethod(method);
+                return base.Visit(serviceMethod, enclosingType, methodProviderCollection);
+            }
+
+            public ScmMethodProvider? VisitCreateRequest(
+                InputServiceMethod serviceMethod,
+                RestClientProvider enclosingType,
+                MethodProvider? methodProvider)
+            {
+                return base.VisitCreateRequestMethod(serviceMethod, enclosingType, methodProvider as ScmMethodProvider);
             }
 
             public TypeProvider? TestVisitType(TypeProvider type)
             {
                 return base.VisitType(type);
-            }
-
-            internal MethodProvider? VisitScmMethod(MethodProvider method)
-            {
-                return base.VisitMethod(method);
             }
         }
     }

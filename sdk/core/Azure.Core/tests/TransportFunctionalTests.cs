@@ -1049,7 +1049,7 @@ namespace Azure.Core.Tests
 
                 tcs.SetResult(null);
 
-                Assert.ThrowsAsync<IOException>(async () => await response.ContentStream.CopyToAsync(new MemoryStream()));
+                Assert.ThrowsAsync(Is.InstanceOf<IOException>(), async () => await response.ContentStream.CopyToAsync(new MemoryStream()));
             }
         }
 
