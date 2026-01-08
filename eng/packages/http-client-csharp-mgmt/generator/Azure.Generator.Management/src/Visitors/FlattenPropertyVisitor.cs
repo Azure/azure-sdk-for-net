@@ -90,7 +90,7 @@ namespace Azure.Generator.Management.Visitors
                         var propertyParameter = flattenedProperty.AsParameter;
 
                         // The same parameter is used in public constructor, we need a new copy for model factory method with different nullability.
-                        var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, propertyParameter.Type, propertyParameter.DefaultValue,
+                        var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, propertyParameter.Type.InputType, propertyParameter.DefaultValue,
                             propertyParameter.IsRef, propertyParameter.IsOut, propertyParameter.IsIn, propertyParameter.IsParams, propertyParameter.Attributes, propertyParameter.Property,
                             propertyParameter.Field, propertyParameter.InitializationValue, propertyParameter.Location, propertyParameter.WireInfo, propertyParameter.Validation);
 
@@ -200,7 +200,6 @@ namespace Azure.Generator.Management.Visitors
 
             var parameters = new List<ValueExpression>();
             var additionalPropertyIndex = GetAdditionalPropertyIndex();
-
             for (int flattenedPropertyIndex = 0, fullConstructorParameterIndex = 0; ; fullConstructorParameterIndex++)
             {
                 // If we have processed all the flattened properties or all the constructor parameters, we can break the loop.
@@ -222,15 +221,24 @@ namespace Azure.Generator.Management.Visitors
                     fullConstructorParameterIndex++;
                 }
 
-                var (flattenedProperty, _) = flattenedProperties[flattenedPropertyIndex];
-                var flattenedPropertyType = flattenedProperty.Type;
-                var constructorParameterType = constructorParameters[fullConstructorParameterIndex].Type;
+                var constructorParameter = constructorParameters[fullConstructorParameterIndex];
+                var constructorParameterType = constructorParameter.Type;
 
-                // If the internal property type is the same as the property type, we can use the flattened property directly.
-                if ((publicConstructor && constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType)) ||
-                    constructorParameterType.AreNamesEqual(flattenedPropertyType) ||
-                    constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType))
+                // First, try to find a match by name (ignoring case) in remaining flattened properties
+                var nameMatchIndex = -1;
+                for (int i = flattenedPropertyIndex; i < flattenedProperties.Count; i++)
                 {
+                    if (string.Equals(constructorParameter.Name, flattenedProperties[i].FlattenedProperty.Name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        nameMatchIndex = i;
+                        break;
+                    }
+                }
+
+                if (nameMatchIndex >= 0)
+                {
+                    // Found a name match - use that flattened property
+                    var (flattenedProperty, _) = flattenedProperties[nameMatchIndex];
                     var propertyParameter = flattenedProperty.AsParameter;
                     var parameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
                         ? updatedParameter
@@ -244,22 +252,48 @@ namespace Azure.Generator.Management.Visitors
                         ? parameter.Property("Value")
                         : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
-                    // only increase flattenedPropertyIndex when we use a flattened property
-                    flattenedPropertyIndex++;
+                    // Move past the matched property
+                    flattenedPropertyIndex = nameMatchIndex + 1;
                 }
                 else
                 {
-                    if (_flattenedModelTypes.TryGetValue(propertyType, out var result))
+                    // No name match found, try to match by type with current flattened property
+                    var (flattenedProperty, _) = flattenedProperties[flattenedPropertyIndex];
+                    var flattenedPropertyType = flattenedProperty.Type;
+
+                    if (constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType) ||
+                        constructorParameterType.AreNamesEqual(flattenedPropertyType))
                     {
-                        var (_, propertyTypeMap) = result;
-                        if (propertyTypeMap.TryGetValue(constructorParameterType, out var list))
+                        var propertyParameter = flattenedProperty.AsParameter;
+                        var parameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
+                            ? updatedParameter
+                            : propertyParameter);
+
+                        // TODO: Ideally we could just call parameter.ToPublicInputParameter() to build the input type parameter, which is not working properly
+                        // update the parameter type to match the constructor parameter type for now
+                        parameter.Update(type: parameter.Type.InputType);
+
+                        parameters.Add(parameter.Type.IsValueType && parameter.Type.IsNullable && !constructorParameterType.IsNullable
+                            ? parameter.Property("Value")
+                            : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
+
+                        // only increase flattenedPropertyIndex when we use a flattened property
+                        flattenedPropertyIndex++;
+                    }
+                    else
+                    {
+                        if (_flattenedModelTypes.TryGetValue(propertyType, out var result))
                         {
-                            // Theoretically there should be only one flattened property for the constructor parameter type, and the corresponding parameter should be singleton as well.
-                            // For some reason, there are multiple parameters of the same type in some constructors, we need to enforce that we use the correct one.
-                            var flattenPropertyNames = list.Select(x => x.FlattenedProperty.Type).ToHashSet();
-                            var innerFlattenedProperties = flattenedProperties.Where(x => flattenPropertyNames.Contains(x.FlattenedProperty.Type)).ToList();
-                            var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
-                            parameters.Add(New.Instance(constructorParameterType, innerParameters));
+                            var (_, propertyTypeMap) = result;
+                            if (propertyTypeMap.TryGetValue(constructorParameterType, out var list))
+                            {
+                                // Theoretically there should be only one flattened property for the constructor parameter type, and the corresponding parameter should be singleton as well.
+                                // For some reason, there are multiple parameters of the same type in some constructors, we need to enforce that we use the correct one.
+                                var flattenPropertyTypes = list.Select(x => x.FlattenedProperty.Type).ToHashSet();
+                                var innerFlattenedProperties = flattenedProperties.Where(x => flattenPropertyTypes.Contains(x.FlattenedProperty.Type)).ToList();
+                                var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
+                                parameters.Add(New.Instance(constructorParameterType, innerParameters));
+                            }
                         }
                     }
                 }
