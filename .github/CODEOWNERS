@@ -1216,12 +1216,13 @@
 /eng/azure-typespec-http-client-csharp-emitter-package-lock.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 /eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 /eng/azure-typespec-http-client-csharp-mgmt-emitter-package-lock.json   @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/http-client-csharp-emitter-package.json                            @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/http-client-csharp-emitter-package-lock.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
 # ######## Code Generation ########
 
 #PRLabel: %CodeGen %Client
 /eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire @christothes
-/eng/http-client-csharp*                                           @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire @christothes
 
 #PRLabel: %CodeGen %Mgmt
 /eng/packages/http-client-csharp-mgmt/                             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
