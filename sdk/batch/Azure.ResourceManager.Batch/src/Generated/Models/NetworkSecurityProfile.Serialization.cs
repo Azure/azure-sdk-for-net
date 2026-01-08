@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("accessRulesVersion"u8);
                 writer.WriteNumberValue(AccessRulesVersion.Value);
             }
-            if (Optional.IsCollectionDefined(AccessRules))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AccessRules))
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("diagnosticSettingsVersion"u8);
                 writer.WriteNumberValue(DiagnosticSettingsVersion.Value);
             }
-            if (Optional.IsCollectionDefined(EnabledLogCategories))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EnabledLogCategories))
             {
                 writer.WritePropertyName("enabledLogCategories"u8);
                 writer.WriteStartArray();

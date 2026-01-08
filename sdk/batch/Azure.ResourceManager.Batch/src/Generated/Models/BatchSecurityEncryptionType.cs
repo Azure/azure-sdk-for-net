@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Batch.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DiskWithVmGuestStateValue = "DiskWithVMGuestState";
-        private const string VmGuestStateOnlyValue = "VMGuestStateOnly";
         private const string NonPersistedTPMValue = "NonPersistedTPM";
+        private const string VmGuestStateOnlyValue = "VMGuestStateOnly";
+        private const string DiskWithVmGuestStateValue = "DiskWithVMGuestState";
 
-        /// <summary> EncryptionType of the managed disk is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob. It is not supported in data disks. </summary>
-        public static BatchSecurityEncryptionType DiskWithVmGuestState { get; } = new BatchSecurityEncryptionType(DiskWithVmGuestStateValue);
-        /// <summary> EncryptionType of the managed disk is set to VMGuestStateOnly for encryption of just the VMGuestState blob. </summary>
-        public static BatchSecurityEncryptionType VmGuestStateOnly { get; } = new BatchSecurityEncryptionType(VmGuestStateOnlyValue);
         /// <summary> EncryptionType of the managed disk is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. </summary>
         public static BatchSecurityEncryptionType NonPersistedTPM { get; } = new BatchSecurityEncryptionType(NonPersistedTPMValue);
+        /// <summary> EncryptionType of the managed disk is set to VMGuestStateOnly for encryption of just the VMGuestState blob. </summary>
+        public static BatchSecurityEncryptionType VmGuestStateOnly { get; } = new BatchSecurityEncryptionType(VmGuestStateOnlyValue);
+        /// <summary> EncryptionType of the managed disk is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob. It is not supported in data disks. </summary>
+        public static BatchSecurityEncryptionType DiskWithVmGuestState { get; } = new BatchSecurityEncryptionType(DiskWithVmGuestStateValue);
         /// <summary> Determines if two <see cref="BatchSecurityEncryptionType"/> values are the same. </summary>
         public static bool operator ==(BatchSecurityEncryptionType left, BatchSecurityEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchSecurityEncryptionType"/> values are not the same. </summary>

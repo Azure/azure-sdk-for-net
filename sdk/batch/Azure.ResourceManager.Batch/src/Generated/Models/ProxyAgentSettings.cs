@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="ProxyAgentSettings"/>. </summary>
         /// <param name="enabled"> Specifies whether Metadata Security Protocol feature should be enabled on the virtual machine or virtual machine scale set. Default is False. </param>
-        /// <param name="imds"> Specifies particular host endpoint settings. </param>
-        /// <param name="wireServer"> Specifies particular host endpoint settings. </param>
+        /// <param name="imds"> Settings for the IMDS endpoint. </param>
+        /// <param name="wireServer"> Settings for the WireServer endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProxyAgentSettings(bool? enabled, HostEndpointSettings imds, HostEndpointSettings wireServer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Specifies whether Metadata Security Protocol feature should be enabled on the virtual machine or virtual machine scale set. Default is False. </summary>
         public bool? Enabled { get; set; }
-        /// <summary> Specifies particular host endpoint settings. </summary>
+        /// <summary> Settings for the IMDS endpoint. </summary>
         public HostEndpointSettings Imds { get; set; }
-        /// <summary> Specifies particular host endpoint settings. </summary>
+        /// <summary> Settings for the WireServer endpoint. </summary>
         public HostEndpointSettings WireServer { get; set; }
     }
 }

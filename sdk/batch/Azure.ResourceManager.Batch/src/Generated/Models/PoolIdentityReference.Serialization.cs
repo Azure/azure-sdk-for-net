@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.Batch.Models
                 throw new FormatException($"The model {nameof(PoolIdentityReference)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ResourceId))
-            {
-                writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
-            }
+            writer.WritePropertyName("resourceId"u8);
+            writer.WriteStringValue(ResourceId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

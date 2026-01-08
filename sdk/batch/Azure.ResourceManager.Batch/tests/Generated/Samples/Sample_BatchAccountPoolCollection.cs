@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Batch.Samples
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4ds_v5",
+                VmSize = "STANDARD_D4",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
-                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
-                }, "batch.node.ubuntu 24.04"),
+                    Id = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
+                }, "batch.node.ubuntu 18.04"),
             };
             ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
             BatchAccountPoolResource result = lro.Value;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Batch.Samples
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4d_v5",
+                VmSize = "STANDARD_D4",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
                     Offer = "WindowsServer",
-                    Sku = "2025-datacenter-smalldisk",
+                    Sku = "2016-Datacenter-SmallDisk",
                     Version = "latest",
                 }, "batch.node.windows amd64")
                 {
@@ -163,7 +163,7 @@ SourcePortRanges = {"*"},
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -176,14 +176,14 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4ds_v5",
+                VmSize = "STANDARD_D4",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
-                    Publisher = "canonical",
-                    Offer = "ubuntu-24_04-lts",
-                    Sku = "server",
+                    Publisher = "Canonical",
+                    Offer = "UbuntuServer",
+                    Sku = "18.04-LTS",
                     Version = "latest",
-                }, "batch.node.ubuntu 24.04"),
+                }, "batch.node.ubuntu 18.04"),
                 ScaleSettings = new BatchAccountPoolScaleSettings
                 {
                     AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
@@ -216,7 +216,7 @@ SourcePortRanges = {"*"},
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -229,14 +229,14 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4ds_v5",
+                VmSize = "STANDARD_D4",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
-                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
-                }, "batch.node.ubuntu 24.04"),
+                    Id = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
+                }, "batch.node.ubuntu 18.04"),
                 NetworkConfiguration = new BatchNetworkConfiguration
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
+                    SubnetId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
                     PublicIPAddressConfiguration = new BatchPublicIPAddressConfiguration
                     {
                         Provision = BatchIPAddressProvisioningType.NoPublicIPAddresses,
@@ -267,7 +267,7 @@ SourcePortRanges = {"*"},
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -280,18 +280,18 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4ds_v5",
+                VmSize = "STANDARD_D4",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
-                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
-                }, "batch.node.ubuntu 24.04"),
+                    Id = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
+                }, "batch.node.ubuntu 18.04"),
                 NetworkConfiguration = new BatchNetworkConfiguration
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
+                    SubnetId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
                     PublicIPAddressConfiguration = new BatchPublicIPAddressConfiguration
                     {
                         Provision = BatchIPAddressProvisioningType.UserManaged,
-                        IPAddressIds = { new ResourceIdentifier("/subscriptions/subid1/resourceGroups/rg13/providers/Microsoft.Network/publicIPAddresses/ip135") },
+                        IPAddressIds = { new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-1234567890121/resourceGroups/rg13/providers/Microsoft.Network/publicIPAddresses/ip135") },
                     },
                 },
             };
@@ -319,7 +319,7 @@ SourcePortRanges = {"*"},
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -332,14 +332,14 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4ds_v5",
+                VmSize = "Standard_d4s_v3",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
-                    Publisher = "canonical",
-                    Offer = "ubuntu-24_04-lts",
-                    Sku = "server",
+                    Publisher = "Canonical",
+                    Offer = "UbuntuServer",
+                    Sku = "18_04-lts-gen2",
                     Version = "latest",
-                }, "batch.node.ubuntu 24.04")
+                }, "batch.node.ubuntu 18.04")
                 {
                     SecurityProfile = new BatchSecurityProfile
                     {
@@ -385,7 +385,7 @@ SourcePortRanges = {"*"},
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -398,14 +398,14 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4ds_v5",
+                VmSize = "Standard_d4s_v3",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "Canonical",
-                    Offer = "ubuntu-24_04-lts",
-                    Sku = "server",
+                    Offer = "0001-com-ubuntu-server-jammy",
+                    Sku = "22_04-lts",
                     Version = "latest",
-                }, "batch.node.ubuntu 24.04"),
+                }, "batch.node.ubuntu 22.04"),
                 ScaleSettings = new BatchAccountPoolScaleSettings
                 {
                     FixedScale = new BatchAccountFixedScaleSettings
@@ -414,11 +414,6 @@ SourcePortRanges = {"*"},
                         TargetLowPriorityNodes = 0,
                     },
                 },
-                Tags =
-{
-["TagName1"] = "TagValue1",
-["TagName2"] = "TagValue2"
-},
             };
             ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
             BatchAccountPoolResource result = lro.Value;
@@ -444,7 +439,7 @@ SourcePortRanges = {"*"},
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -457,7 +452,7 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4ds_v5",
+                VmSize = "Standard_d4s_v3",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
@@ -522,7 +517,7 @@ SourcePortRanges = {"*"},
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -539,18 +534,18 @@ SourcePortRanges = {"*"},
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-[new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity()
+[new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity()
 },
                 },
-                VmSize = "Standard_D4ds_v5",
+                VmSize = "STANDARD_D4",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
-                    Publisher = "canonical",
-                    Offer = "ubuntu-24_04-lts",
-                    Sku = "server",
+                    Publisher = "Canonical",
+                    Offer = "UbuntuServer",
+                    Sku = "18.04-LTS",
                     Version = "latest",
-                }, "batch.node.ubuntu 24.04"),
+                }, "batch.node.ubuntu 18.04"),
                 ScaleSettings = new BatchAccountPoolScaleSettings
                 {
                     AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
@@ -583,7 +578,7 @@ SourcePortRanges = {"*"},
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -596,13 +591,13 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4d_v5",
+                VmSize = "STANDARD_D4",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "Canonical",
-                    Offer = "ubuntu-24_04-lts",
-                    Sku = "server",
-                }, "batch.node.ubuntu 24.04")
+                    Offer = "0001-com-ubuntu-server-focal",
+                    Sku = "20_04-lts",
+                }, "batch.node.ubuntu 20.04")
                 {
                     Extensions = {new BatchVmExtension("batchextension1", "Microsoft.Azure.KeyVault", "KeyVaultForLinux")
 {
@@ -648,7 +643,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -661,7 +656,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4ds_v5",
+                VmSize = "Standard_d2s_v3",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "microsoftwindowsserver",
@@ -713,7 +708,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -726,7 +721,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4ds_v5",
+                VmSize = "Standard_d4s_v3",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
@@ -736,7 +731,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
                 }, "batch.node.windows amd64")
                 {
                     IsAutomaticUpdateEnabled = false,
-                    ServiceArtifactReferenceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/galleries/myGallery/serviceArtifacts/myServiceArtifact/vmArtifactsProfiles/vmArtifactsProfile"),
+                    ServiceArtifactReferenceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/galleries/myGallery/serviceArtifacts/myServiceArtifact/vmArtifactsProfiles/vmArtifactsProfile"),
                 },
                 ScaleSettings = new BatchAccountPoolScaleSettings
                 {
@@ -778,7 +773,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -791,12 +786,12 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_D4d_v5",
+                VmSize = "STANDARD_D1_V2",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
                     Offer = "WindowsServer",
-                    Sku = "2025-datacenter-smalldisk",
+                    Sku = "2016-datacenter-smalldisk",
                     Version = "latest",
                 }, "batch.node.windows amd64"),
                 ScaleSettings = new BatchAccountPoolScaleSettings
@@ -809,8 +804,304 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
                 },
                 NetworkConfiguration = new BatchNetworkConfiguration
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
+                    SubnetId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
                     EnableAcceleratedNetworking = true,
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolConfidentialDiskEncryptionSetForUserSubscriptionAccounts()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_ConfidentialDiskEncryptionSet_ForUserSubscriptionAccounts.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "Standard_DC2as_v5",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "MicrosoftWindowsServer",
+                    Offer = "WindowsServer",
+                    Sku = "2019-datacenter-core-g2",
+                    Version = "latest",
+                }, "batch.node.windows amd64")
+                {
+                    DataDisks = {new BatchVmDataDisk(0, 1024)
+{
+ManagedDisk = new ManagedDisk
+{
+StorageAccountType = BatchStorageAccountType.StandardLrs,
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId"),
+},
+}},
+                    OSDisk = new BatchOSDisk
+                    {
+                        ManagedDisk = new ManagedDisk
+                        {
+                            StorageAccountType = BatchStorageAccountType.StandardLrs,
+                            SecurityProfile = new VmDiskSecurityProfile
+                            {
+                                SecurityEncryptionType = BatchSecurityEncryptionType.DiskWithVmGuestState,
+                                DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/ConfidentialDiskEncryptionSetId"),
+                            },
+                            DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId"),
+                        },
+                    },
+                    SecurityProfile = new BatchSecurityProfile
+                    {
+                        SecurityType = BatchSecurityType.ConfidentialVm,
+                        EncryptionAtHost = false,
+                        UefiSettings = new BatchUefiSettings
+                        {
+                            IsSecureBootEnabled = true,
+                            IsVTpmEnabled = true,
+                        },
+                    },
+                },
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings
+                    {
+                        ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
+                        TargetDedicatedNodes = 1,
+                    },
+                },
+                TaskSchedulingPolicy = new TaskSchedulingPolicy(BatchNodeFillType.Pack),
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolCustomerManagedKeyForBatchManagedAccounts()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_CustomerManagedKey_ForBatchManagedAccounts.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity()
+},
+                },
+                VmSize = "Standard_D4ds_v5",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "MicrosoftWindowsServer",
+                    Offer = "WindowsServer",
+                    Sku = "2022-Datacenter",
+                    Version = "latest",
+                }, "batch.node.windows amd64")
+                {
+                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                    {
+                        Targets = { BatchDiskEncryptionTarget.OSDisk },
+                        CustomerManagedKey = new DiskCustomerManagedKey
+                        {
+                            KeyUri = new Uri("https://<vaultEndpoint>/keys/<keyName>/<keyVersion>"),
+                            IdentityReferenceResourceId = "/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1",
+                        },
+                    },
+                },
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings
+                    {
+                        ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
+                        TargetDedicatedNodes = 1,
+                    },
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolDiskEncryptionSetForUserSubscriptionAccounts()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_DiskEncryptionSet_ForUserSubscriptionAccounts.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "Standard_D4ds_v5",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "MicrosoftWindowsServer",
+                    Offer = "WindowsServer",
+                    Sku = "2022-Datacenter",
+                    Version = "latest",
+                }, "batch.node.windows amd64")
+                {
+                    OSDisk = new BatchOSDisk
+                    {
+                        ManagedDisk = new ManagedDisk
+                        {
+                            StorageAccountType = BatchStorageAccountType.StandardLrs,
+                            DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId"),
+                        },
+                    },
+                    SecurityProfile = new BatchSecurityProfile
+                    {
+                        EncryptionAtHost = false,
+                    },
+                },
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings
+                    {
+                        ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
+                        TargetDedicatedNodes = 1,
+                    },
+                },
+                TaskSchedulingPolicy = new TaskSchedulingPolicy(BatchNodeFillType.Pack),
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolDualStackNetworking()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_DualStackNetworking.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
+            string resourceGroupName = "default-azurebatch";
+            string accountName = "exampleacc";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "dualstackpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "Standard_D4ds_v5",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "Canonical",
+                    Offer = "ubuntu-24_04-lts",
+                    Sku = "server",
+                }, "batch.node.ubuntu 24.04"),
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings
+                    {
+                        TargetDedicatedNodes = 1,
+                        TargetLowPriorityNodes = 0,
+                    },
+                },
+                NetworkConfiguration = new BatchNetworkConfiguration
+                {
+                    EndpointInboundNatPools = {new BatchInboundNatPool("sshpool", BatchInboundEndpointProtocol.Tcp, 22, 40000, 40500)
+{
+NetworkSecurityGroupRules = {new BatchNetworkSecurityGroupRule(1000, BatchNetworkSecurityGroupRuleAccess.Allow, "*")
+{
+SourcePortRanges = {"*"},
+}},
+}},
+                    PublicIPAddressConfiguration = new BatchPublicIPAddressConfiguration
+                    {
+                        IPFamilies = { IPFamily.IPv4, IPFamily.IPv6 },
+                    },
                 },
             };
             ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
@@ -837,7 +1128,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -871,7 +1162,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -905,7 +1196,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -939,7 +1230,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -973,7 +1264,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1007,7 +1298,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1041,7 +1332,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1075,7 +1366,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1111,7 +1402,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1122,7 +1413,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // invoke the operation and iterate over the result
             string select = "properties/allocationState,properties/provisioningStateTransitionTime,properties/currentDedicatedNodes,properties/currentLowPriorityNodes";
-            string filter = "startswith(name, 'po') or (properties/allocationState eq 'Steady' and properties/provisioningStateTransitionTime lt datetime'2025-02-02')";
+            string filter = "startswith(name, 'po') or (properties/allocationState eq 'Steady' and properties/provisioningStateTransitionTime lt datetime'2017-02-02')";
             await foreach (BatchAccountPoolResource item in collection.GetAllAsync(select: select, filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -1149,7 +1440,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1179,7 +1470,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1209,7 +1500,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1239,7 +1530,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1269,7 +1560,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1299,7 +1590,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1329,7 +1620,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1359,7 +1650,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1401,7 +1692,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1443,7 +1734,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1485,7 +1776,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1527,7 +1818,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1569,7 +1860,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1611,7 +1902,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> The IPTag. </summary>
+    /// <summary> Specifies how tasks should be distributed across compute nodes. </summary>
     public partial class IPTag
     {
         /// <summary>

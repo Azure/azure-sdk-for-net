@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TaskSchedulingPolicy"/>. </summary>
-        /// <param name="jobDefaultOrder"> If not specified, the default is none. </param>
+        /// <param name="jobDefaultOrder"> The order for scheduling tasks from different jobs with the same priority. </param>
         /// <param name="nodeFillType"> How tasks should be distributed across compute nodes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TaskSchedulingPolicy(JobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
         }
 
-        /// <summary> If not specified, the default is none. </summary>
+        /// <summary> The order for scheduling tasks from different jobs with the same priority. </summary>
         public JobDefaultOrder? JobDefaultOrder { get; set; }
         /// <summary> How tasks should be distributed across compute nodes. </summary>
         public BatchNodeFillType NodeFillType { get; set; }

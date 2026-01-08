@@ -230,13 +230,13 @@ namespace Azure.ResourceManager.Batch
                 name,
                 type,
                 systemData,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 state,
                 format,
                 storageUrl,
                 storageUrlExpiry,
                 lastActivationTime,
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

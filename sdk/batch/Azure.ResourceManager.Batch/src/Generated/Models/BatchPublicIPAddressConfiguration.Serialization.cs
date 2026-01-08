@@ -56,20 +56,13 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (Optional.IsCollectionDefined(IPFamilies))
             {
-                if (IPFamilies != null)
+                writer.WritePropertyName("ipFamilies"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPFamilies)
                 {
-                    writer.WritePropertyName("ipFamilies"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in IPFamilies)
-                    {
-                        writer.WriteStringValue(item.ToString());
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.ToSerialString());
                 }
-                else
-                {
-                    writer.WriteNull("ipFamilies");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(IPTags))
             {
@@ -160,13 +153,12 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        ipFamilies = null;
                         continue;
                     }
                     List<IPFamily> array = new List<IPFamily>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new IPFamily(item.GetString()));
+                        array.Add(item.GetString().ToIPFamily());
                     }
                     ipFamilies = array;
                     continue;

@@ -73,12 +73,7 @@ namespace Azure.ResourceManager.Batch.Models
         public string IdentityReferenceResourceId
         {
             get => IdentityReference is null ? default : IdentityReference.ResourceId;
-            set
-            {
-                if (IdentityReference is null)
-                    IdentityReference = new PoolIdentityReference();
-                IdentityReference.ResourceId = value;
-            }
+            set => IdentityReference = new PoolIdentityReference(value);
         }
     }
 }

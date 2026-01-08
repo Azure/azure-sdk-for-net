@@ -273,17 +273,17 @@ namespace Azure.ResourceManager.Batch
         /// <param name="filter">
         /// OData filter expression. Valid properties for filtering are:
         ///
-        ///  name
-        ///  properties/allocationState
-        ///  properties/allocationStateTransitionTime
-        ///  properties/creationTime
-        ///  properties/provisioningState
-        ///  properties/provisioningStateTransitionTime
-        ///  properties/lastModified
-        ///  properties/vmSize
-        ///  properties/interNodeCommunication
-        ///  properties/scaleSettings/autoScale
-        ///  properties/scaleSettings/fixedScale
+        /// name
+        /// properties/allocationState
+        /// properties/allocationStateTransitionTime
+        /// properties/creationTime
+        /// properties/provisioningState
+        /// properties/provisioningStateTransitionTime
+        /// properties/lastModified
+        /// properties/vmSize
+        /// properties/interNodeCommunication
+        /// properties/scaleSettings/autoScale
+        /// properties/scaleSettings/fixedScale
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BatchAccountPoolResource"/> that may take multiple service requests to iterate over. </returns>
@@ -320,17 +320,17 @@ namespace Azure.ResourceManager.Batch
         /// <param name="filter">
         /// OData filter expression. Valid properties for filtering are:
         ///
-        ///  name
-        ///  properties/allocationState
-        ///  properties/allocationStateTransitionTime
-        ///  properties/creationTime
-        ///  properties/provisioningState
-        ///  properties/provisioningStateTransitionTime
-        ///  properties/lastModified
-        ///  properties/vmSize
-        ///  properties/interNodeCommunication
-        ///  properties/scaleSettings/autoScale
-        ///  properties/scaleSettings/fixedScale
+        /// name
+        /// properties/allocationState
+        /// properties/allocationStateTransitionTime
+        /// properties/creationTime
+        /// properties/provisioningState
+        /// properties/provisioningStateTransitionTime
+        /// properties/lastModified
+        /// properties/vmSize
+        /// properties/interNodeCommunication
+        /// properties/scaleSettings/autoScale
+        /// properties/scaleSettings/fixedScale
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BatchAccountPoolResource"/> that may take multiple service requests to iterate over. </returns>

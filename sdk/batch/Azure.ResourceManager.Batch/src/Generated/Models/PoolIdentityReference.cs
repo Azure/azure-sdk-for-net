@@ -46,8 +46,13 @@ namespace Azure.ResourceManager.Batch.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PoolIdentityReference"/>. </summary>
-        public PoolIdentityReference()
+        /// <param name="resourceId"> The ARM resource id of the user assigned identity. This reference must be included in the pool identities. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        public PoolIdentityReference(string resourceId)
         {
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+
+            ResourceId = resourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="PoolIdentityReference"/>. </summary>
@@ -57,6 +62,11 @@ namespace Azure.ResourceManager.Batch.Models
         {
             ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PoolIdentityReference"/> for deserialization. </summary>
+        internal PoolIdentityReference()
+        {
         }
 
         /// <summary> The ARM resource id of the user assigned identity. This reference must be included in the pool identities. </summary>

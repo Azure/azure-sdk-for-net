@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Batch.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BatchResourceAssociation"/>. </summary>
-        internal BatchResourceAssociation()
+        public BatchResourceAssociation()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Name of the resource association. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> Access mode of the resource association. </summary>
-        public ResourceAssociationAccessMode? AccessMode { get; }
+        public ResourceAssociationAccessMode? AccessMode { get; set; }
     }
 }

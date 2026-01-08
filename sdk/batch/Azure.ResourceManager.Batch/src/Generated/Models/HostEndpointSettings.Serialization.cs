@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             if (Optional.IsDefined(InVmAccessControlProfileReferenceId))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    mode = new HostEndpointSettingsModeType(property.Value.GetString());
+                    mode = property.Value.GetString().ToHostEndpointSettingsModeType();
                     continue;
                 }
                 if (property.NameEquals("inVMAccessControlProfileReferenceId"u8))

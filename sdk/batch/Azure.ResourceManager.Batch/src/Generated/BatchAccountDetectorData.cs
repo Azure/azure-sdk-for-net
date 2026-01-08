@@ -61,23 +61,23 @@ namespace Azure.ResourceManager.Batch
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="value"> A base64 encoded string that represents the content of a detector. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="value"> A base64 encoded string that represents the content of a detector. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, ETag? etag, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BatchAccountDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, string value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Value = value;
             ETag = etag;
             Tags = tags;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A base64 encoded string that represents the content of a detector. </summary>
-        public string Value { get; set; }
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
         public ETag? ETag { get; }
         /// <summary> The tags of the resource. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> A base64 encoded string that represents the content of a detector. </summary>
+        public string Value { get; set; }
     }
 }

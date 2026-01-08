@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Batch
 namespace: Azure.ResourceManager.Batch
-require: https://github.com/Azure/azure-rest-api-specs/blob/642265ba67a59559f1a91e4bb1ff98d71d594190/specification/batch/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0b003dad5fc0997a2e6bfffc238cb98c93040f24/specification/batch/resource-manager/readme.md
 #tag: package-2024-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -96,6 +96,14 @@ rename-mapping:
   AutoScaleRun: BatchAccountPoolAutoScaleRun
   ResizeOperationStatus: BatchResizeOperationStatus
   ComputeNodeDeallocationOption: BatchNodeDeallocationOption
+  Certificate: BatchAccountCertificate
+  CertificateCreateOrUpdateParameters: BatchAccountCertificateCreateOrUpdateContent
+  CertificateFormat: BatchAccountCertificateFormat
+  CertificateProvisioningState: BatchAccountCertificateProvisioningState
+  Certificate.properties.provisioningStateTransitionTime: provisioningStateTransitOn
+  Certificate.properties.previousProvisioningStateTransitionTime: previousProvisioningStateTransitOn
+  CertificateStoreLocation: BatchCertificateStoreLocation
+  CertificateVisibility: BatchCertificateVisibility
   PoolProvisioningState: BatchAccountPoolProvisioningState
   DeploymentConfiguration: BatchDeploymentConfiguration
   DeploymentConfiguration.virtualMachineConfiguration: vmConfiguration
@@ -115,6 +123,8 @@ rename-mapping:
   AllocationState: BatchAccountPoolAllocationState
   ApplicationPackageReference: BatchApplicationPackageReference
   ApplicationPackageReference.id: -|arm-id
+  CertificateReference: BatchCertificateReference
+  CertificateReference.id: -|arm-id
   MetadataItem: BatchAccountPoolMetadataItem
   MountConfiguration: BatchMountConfiguration
   AzureBlobFileSystemConfiguration: BatchBlobFileSystemConfiguration
@@ -182,6 +192,7 @@ rename-mapping:
   UserIdentity: BatchUserIdentity
   ImageReference: BatchImageReference
   ImageReference.id: -|arm-id
+  CertificateCreateOrUpdateParameters.properties.data: -|any
   KeyVaultProperties.keyIdentifier: -|uri
   AzureFileShareConfiguration.azureFileUrl: FileUrl
   MountConfiguration.azureBlobFileSystemConfiguration: BlobFileSystemConfiguration
@@ -190,6 +201,8 @@ rename-mapping:
   ResourceFile.autoStorageContainerName: AutoBlobContainerName
   AccountKeyType: BatchAccountKeyType
   BatchAccountRegenerateKeyParameters.keyName: KeyType
+  Certificate.properties.thumbprint: ThumbprintString
+  CertificateCreateOrUpdateParameters.properties.thumbprint: ThumbprintString
   OSDisk: BatchOSDisk
   OSDisk.writeAcceleratorEnabled: IsWriteAcceleratorEnabled
   SecurityProfile: BatchSecurityProfile
@@ -201,18 +214,21 @@ rename-mapping:
 
 directive:
 # TODO -- remove this and use rename-mapping when it is supported
-  - from: BatchManagement.json
+  - from: openapi.json
     where: $.definitions.PublicIPAddressConfiguration.properties.ipAddressIds.items
     transform: $["x-ms-format"] = "arm-id"
 # resume the setter on tags of BatchAccountData
-  - from: BatchManagement.json
+  - from: openapi.json
     where: $.definitions.BatchAccount
     transform: $["x-csharp-usage"] = "model,input,output"
 # change the type to extensible so that the BatchPoolIdentity could be replaced
-  - from: BatchManagement.json
+  - from: openapi.json
+    where: $.definitions.PoolIdentityType
+    transform: >
+      $["x-ms-enum"].modelAsString = true;
+  - from: openapi.json
     where: $.definitions.BatchPoolIdentity.properties
     transform: >
-      $.type["x-ms-enum"].modelAsString = true;
       $["principalId"] = {
         "type": "string",
         "readOnly": true
@@ -222,14 +238,15 @@ directive:
         "readOnly": true
       };
 # make provisioning state enumerations all extensible because they are meant to be extensible
-  - from: BatchManagement.json
+  - from: openapi.json
     where: $.definitions
     transform: >
-      $.BatchAccountProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
-      $.PrivateEndpointConnectionProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
-      $.PoolProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
+      $.ProvisioningState["x-ms-enum"].modelAsString = true;
+      $.CertificateProvisioningState["x-ms-enum"].modelAsString = true;
+      $.PrivateEndpointConnectionProvisioningState["x-ms-enum"].modelAsString = true;
+      $.PoolProvisioningState["x-ms-enum"].modelAsString = true;
 # add some missing properties to ResizeError so that it could be replaced by Azure.ResponseError
-  - from: BatchManagement.json
+  - from: openapi.json
     where: $.definitions.ResizeError.properties
     transform: >
       $.code["readOnly"] = true;
@@ -241,7 +258,7 @@ directive:
           "description": "The error target."
         };
 # add some missing properties to AutoScaleRunError so that it could be replaced by Azure.ResponseError
-  - from: BatchManagement.json
+  - from: openapi.json
     where: $.definitions.AutoScaleRunError.properties
     transform: >
       $.code["readOnly"] = true;
@@ -252,7 +269,67 @@ directive:
           "type": "string",
           "description": "The error target."
         };
-  - from: BatchManagement.json
+  - from: openapi.json
     where: $.definitions.CheckNameAvailabilityParameters.properties.type
     transform: $["x-ms-constant"] = true;
+  - from: swagger-document
+    where: $.definitions.AccessRuleProperties.properties
+    transform: >
+      $.phoneNumbers["readOnly"] = true;
+      $.emailAddresses["readOnly"] = true;
+      $.addressPrefixes["readOnly"] = true;
+      $.subscriptions["readOnly"] = true;
+      $.networkSecurityPerimeters["readOnly"] = true;
+      $.networkSecurityPerimeters["readOnly"] = true;
+  - from: swagger-document
+    where: $.definitions.NetworkSecurityProfile.properties
+    transform: >
+      $.enabledLogCategories["readOnly"] = true;
+      $.accessRules["readOnly"] = true;
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.AzureResource = {
+          "type": "object",
+          "properties": {
+            "id": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The ID of the resource."
+            },
+            "name": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The name of the resource."
+            },
+            "type": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The type of the resource."
+            },
+            "location": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The location of the resource."
+            },
+            "tags": {
+              "readOnly": true,
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "The tags of the resource."
+            }
+          },
+          "description": "A definition of an Azure resource.",
+          "x-ms-azure-resource": true
+        };
+  - from: swagger-document
+    where: $.definitions.BatchAccount
+    transform: >
+      $['allOf'] = [
+        {
+          "$ref": "#/definitions/AzureResource"
+        }
+      ];
 ```

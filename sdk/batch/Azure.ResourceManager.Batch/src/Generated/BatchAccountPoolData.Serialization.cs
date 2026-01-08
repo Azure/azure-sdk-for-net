@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningStateTransitOn))
             {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            provisioningState = new BatchAccountPoolProvisioningState(property0.Value.GetString());
+                            provisioningState = property0.Value.GetString().ToBatchAccountPoolProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("provisioningStateTransitionTime"u8))
@@ -567,6 +567,8 @@ namespace Azure.ResourceManager.Batch
                 type,
                 systemData,
                 identity,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 displayName,
                 lastModified,
                 creationTime,
@@ -591,8 +593,6 @@ namespace Azure.ResourceManager.Batch
                 resizeOperationStatus,
                 mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>(),
                 upgradePolicy,
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

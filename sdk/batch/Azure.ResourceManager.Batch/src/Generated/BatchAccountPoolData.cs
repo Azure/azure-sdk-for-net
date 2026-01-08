@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Initializes a new instance of <see cref="BatchAccountPoolData"/>. </summary>
         public BatchAccountPoolData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
             UserAccounts = new ChangeTrackingList<BatchUserAccount>();
             Metadata = new ChangeTrackingList<BatchAccountPoolMetadataItem>();
             ApplicationPackages = new ChangeTrackingList<BatchApplicationPackageReference>();
             MountConfiguration = new ChangeTrackingList<BatchMountConfiguration>();
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountPoolData"/>. </summary>
@@ -67,6 +67,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="identity"> The type of identity used for the Batch Pool. Current supported identity types: UserAssigned, None. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="displayName"> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="lastModifiedOn"> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </param>
         /// <param name="createdOn"> The creation time of the pool. </param>
@@ -91,12 +93,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resizeOperationStatus"> Describes either the current operation (if the pool AllocationState is Resizing) or the previously completed operation (if the AllocationState is Steady). </param>
         /// <param name="mountConfiguration"> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
         /// <param name="upgradePolicy"> Describes an upgrade policy - automatic, manual, or rolling. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, BatchDeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, TaskSchedulingPolicy taskSchedulingPolicy, IList<BatchUserAccount> userAccounts, IList<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IList<BatchApplicationPackageReference> applicationPackages, BatchResizeOperationStatus resizeOperationStatus, IList<BatchMountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, ETag? etag, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, string> tags, string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, BatchDeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, TaskSchedulingPolicy taskSchedulingPolicy, IList<BatchUserAccount> userAccounts, IList<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IList<BatchApplicationPackageReference> applicationPackages, BatchResizeOperationStatus resizeOperationStatus, IList<BatchMountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
+            ETag = etag;
+            Tags = tags;
             DisplayName = displayName;
             LastModifiedOn = lastModifiedOn;
             CreatedOn = createdOn;
@@ -121,13 +123,15 @@ namespace Azure.ResourceManager.Batch
             ResizeOperationStatus = resizeOperationStatus;
             MountConfiguration = mountConfiguration;
             UpgradePolicy = upgradePolicy;
-            ETag = etag;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of identity used for the Batch Pool. Current supported identity types: UserAssigned, None. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The ETag of the resource, used for concurrency statements. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The tags of the resource. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </summary>
         public string DisplayName { get; set; }
         /// <summary> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </summary>
@@ -186,9 +190,5 @@ namespace Azure.ResourceManager.Batch
         public IList<BatchMountConfiguration> MountConfiguration { get; }
         /// <summary> Describes an upgrade policy - automatic, manual, or rolling. </summary>
         public UpgradePolicy UpgradePolicy { get; set; }
-        /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The tags of the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }
