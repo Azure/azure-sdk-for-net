@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRules"> The outbound rules. </param>
         /// <param name="resourceGuid"> The resource GUID property of the load balancer resource. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancer resource. </param>
-        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, LoadBalancerSku sku, ETag? etag, IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<LoadBalancerInboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="scope"> Indicates the scope of the load balancer: external (Public) or internal (Private). </param>
+        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, LoadBalancerSku sku, ETag? etag, IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<LoadBalancerInboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState, LoadBalancerScope? scope) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
@@ -64,31 +65,47 @@ namespace Azure.ResourceManager.Network
             OutboundRules = outboundRules;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            Scope = scope;
         }
 
         /// <summary> The extended location of the load balancer. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The load balancer SKU. </summary>
+        [WirePath("sku")]
         public LoadBalancerSku Sku { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Object representing the frontend IPs to be used for the load balancer. </summary>
+        [WirePath("properties.frontendIPConfigurations")]
         public IList<FrontendIPConfigurationData> FrontendIPConfigurations { get; }
         /// <summary> Collection of backend address pools used by a load balancer. </summary>
+        [WirePath("properties.backendAddressPools")]
         public IList<BackendAddressPoolData> BackendAddressPools { get; }
         /// <summary> Object collection representing the load balancing rules Gets the provisioning. </summary>
+        [WirePath("properties.loadBalancingRules")]
         public IList<LoadBalancingRuleData> LoadBalancingRules { get; }
         /// <summary> Collection of probe objects used in the load balancer. </summary>
+        [WirePath("properties.probes")]
         public IList<ProbeData> Probes { get; }
         /// <summary> Collection of inbound NAT Rules used by a load balancer. Defining inbound NAT rules on your load balancer is mutually exclusive with defining an inbound NAT pool. Inbound NAT pools are referenced from virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an Inbound NAT pool. They have to reference individual inbound NAT rules. </summary>
+        [WirePath("properties.inboundNatRules")]
         public IList<InboundNatRuleData> InboundNatRules { get; }
         /// <summary> Defines an external port range for inbound NAT to a single backend port on NICs associated with a load balancer. Inbound NAT rules are created automatically for each NIC associated with the Load Balancer using an external port from this range. Defining an Inbound NAT pool on your Load Balancer is mutually exclusive with defining inbound NAT rules. Inbound NAT pools are referenced from virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an inbound NAT pool. They have to reference individual inbound NAT rules. </summary>
+        [WirePath("properties.inboundNatPools")]
         public IList<LoadBalancerInboundNatPool> InboundNatPools { get; }
         /// <summary> The outbound rules. </summary>
+        [WirePath("properties.outboundRules")]
         public IList<OutboundRuleData> OutboundRules { get; }
         /// <summary> The resource GUID property of the load balancer resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the load balancer resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> Indicates the scope of the load balancer: external (Public) or internal (Private). </summary>
+        [WirePath("properties.scope")]
+        public LoadBalancerScope? Scope { get; set; }
     }
 }

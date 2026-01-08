@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.InformaticaDataManagement;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableInformaticaDataManagementResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableInformaticaDataManagementResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableInformaticaDataManagementResourceGroupResource for mocking. </summary>
         protected MockableInformaticaDataManagementResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableInformaticaDataManagementResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableInformaticaDataManagementResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableInformaticaDataManagementResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of InformaticaOrganizationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of InformaticaOrganizationResources and their operations over a InformaticaOrganizationResource. </returns>
+        /// <summary> Gets a collection of InformaticaOrganizations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of InformaticaOrganizations and their operations over a InformaticaOrganizationResource. </returns>
         public virtual InformaticaOrganizationCollection GetInformaticaOrganizations()
         {
             return GetCachedClient(client => new InformaticaOrganizationCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// Get a InformaticaOrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformaticaOrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<InformaticaOrganizationResource>> GetInformaticaOrganizationAsync(string organizationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
             return await GetInformaticaOrganizations().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// Get a InformaticaOrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformaticaOrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         [ForwardsClientCalls]
         public virtual Response<InformaticaOrganizationResource> GetInformaticaOrganization(string organizationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
             return GetInformaticaOrganizations().Get(organizationName, cancellationToken);
         }
     }

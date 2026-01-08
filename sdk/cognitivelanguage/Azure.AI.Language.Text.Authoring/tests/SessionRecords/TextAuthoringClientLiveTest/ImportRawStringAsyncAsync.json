@@ -1,0 +1,77 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProjectRaw0718/:import?api-version=2025-05-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "1016",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250718.1 (.NET 9.0.7; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "projectFileVersion": "2025-05-15-preview",
+        "stringIndexType": "Utf16CodeUnit",
+        "metadata": {
+          "projectKind": "CustomSingleLabelClassification",
+          "storageInputContainerName": "single-class-example",
+          "language": "en",
+          "description": "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
+          "multilingual": false,
+          "settings": {}
+        },
+        "assets": {
+          "projectKind": "CustomSingleLabelClassification",
+          "classes": [
+            {
+              "category": "Date"
+            },
+            {
+              "category": "LenderName"
+            },
+            {
+              "category": "LenderAddress"
+            }
+          ],
+          "documents": [
+            {
+              "class": {
+                "category": "Date"
+              },
+              "location": "01.txt",
+              "language": "en"
+            },
+            {
+              "class": {
+                "category": "LenderName"
+              },
+              "location": "02.txt",
+              "language": "en"
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "95b4f384-44da-4329-902e-a2d874323f83",
+        "Content-Length": "0",
+        "Date": "Fri, 18 Jul 2025 17:17:28 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProjectRaw0718/import/jobs/16b5cc6d-18ef-45dc-87cd-88f491f32e51_638883936000000000?api-version=2025-05-15-preview",
+        "request-id": "95b4f384-44da-4329-902e-a2d874323f83",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "337",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1610496894"
+  }
+}

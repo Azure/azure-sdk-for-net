@@ -4,11 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
+using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 
 namespace Azure.Monitor.Ingestion.Tests.Samples
 {
@@ -108,7 +109,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             string countQueryId = batch.AddWorkspaceQuery(
                 workspaceId,
                 query,
-                new QueryTimeRange(TimeSpan.FromDays(1)));
+                new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 
             Response<LogsBatchQueryResultCollection> queryResponse =
                 logsQueryClient.QueryBatch(batch);

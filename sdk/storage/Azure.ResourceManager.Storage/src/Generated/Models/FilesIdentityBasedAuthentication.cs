@@ -54,14 +54,16 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="FilesIdentityBasedAuthentication"/>. </summary>
         /// <param name="directoryServiceOptions"> Indicates the directory service used. Note that this enum may be extended in the future. </param>
-        /// <param name="activeDirectoryProperties"> Required if directoryServiceOptions are AD, optional if they are AADKERB. </param>
+        /// <param name="activeDirectoryProperties"> Additional information about the directory service. Required if directoryServiceOptions is AD (AD DS authentication). Optional for directoryServiceOptions AADDS (Entra DS authentication) and AADKERB (Entra authentication). </param>
         /// <param name="defaultSharePermission"> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </param>
+        /// <param name="smbOAuthSettings"> Required for Managed Identities access using OAuth over SMB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions, StorageActiveDirectoryProperties activeDirectoryProperties, DefaultSharePermission? defaultSharePermission, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions, StorageActiveDirectoryProperties activeDirectoryProperties, DefaultSharePermission? defaultSharePermission, SmbOAuthSettings smbOAuthSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DirectoryServiceOptions = directoryServiceOptions;
             ActiveDirectoryProperties = activeDirectoryProperties;
             DefaultSharePermission = defaultSharePermission;
+            SmbOAuthSettings = smbOAuthSettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,11 +75,25 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Indicates the directory service used. Note that this enum may be extended in the future. </summary>
         [WirePath("directoryServiceOptions")]
         public DirectoryServiceOption DirectoryServiceOptions { get; set; }
-        /// <summary> Required if directoryServiceOptions are AD, optional if they are AADKERB. </summary>
+        /// <summary> Additional information about the directory service. Required if directoryServiceOptions is AD (AD DS authentication). Optional for directoryServiceOptions AADDS (Entra DS authentication) and AADKERB (Entra authentication). </summary>
         [WirePath("activeDirectoryProperties")]
         public StorageActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
         /// <summary> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </summary>
         [WirePath("defaultSharePermission")]
         public DefaultSharePermission? DefaultSharePermission { get; set; }
+        /// <summary> Required for Managed Identities access using OAuth over SMB. </summary>
+        internal SmbOAuthSettings SmbOAuthSettings { get; set; }
+        /// <summary> Specifies if managed identities can access SMB shares using OAuth. The default interpretation is false for this property. </summary>
+        [WirePath("smbOAuthSettings.isSmbOAuthEnabled")]
+        public bool? IsSmbOAuthEnabled
+        {
+            get => SmbOAuthSettings is null ? default : SmbOAuthSettings.IsSmbOAuthEnabled;
+            set
+            {
+                if (SmbOAuthSettings is null)
+                    SmbOAuthSettings = new SmbOAuthSettings();
+                SmbOAuthSettings.IsSmbOAuthEnabled = value;
+            }
+        }
     }
 }

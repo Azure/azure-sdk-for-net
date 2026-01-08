@@ -77,10 +77,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The exceptions that are applied on the policy. </summary>
+        [WirePath("exceptions")]
         public IList<ExceptionEntry> Exceptions { get; }
         /// <summary> The Exclusions that are applied on the policy. </summary>
+        [WirePath("exclusions")]
         public IList<OwaspCrsExclusionEntry> Exclusions { get; }
         /// <summary> The managed rule sets that are associated with the policy. </summary>
+        [WirePath("managedRuleSets")]
         public IList<ManagedRuleSet> ManagedRuleSets { get; }
     }
 }

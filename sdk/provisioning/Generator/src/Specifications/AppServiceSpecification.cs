@@ -36,13 +36,10 @@ public class AppServiceSpecification() :
         RemoveProperty<WebSiteSlotPublicCertificateResource>("Thumbprint");
         RemoveProperty<WebSiteSlotResource>("Slot");
         RemoveProperty<AppServiceCertificateDetails>("Thumbprint");
-        RemoveProperty<CustomDnsSuffixConfigurationData>("ResourceType");
-        RemoveProperty<AseV3NetworkingConfigurationData>("ResourceType");
         RemoveProperty<AppServiceTableStorageApplicationLogsConfig>("SasUri");
         RemoveProperty<AppServiceVirtualNetworkRoute>("ResourceType");
         RemoveProperty<ResponseMessageEnvelopeRemotePrivateEndpointConnection>("ResourceType");
         RemoveProperty<RemotePrivateEndpointConnection>("ResourceType");
-        RemoveProperty<StaticSiteUserProvidedFunctionAppData>("ResourceType");
         RemoveProperty<WebAppPushSettings>("ResourceType");
         RemoveProperty<HostNameSslState>("Thumbprint");
 
@@ -51,6 +48,7 @@ public class AppServiceSpecification() :
             r.ResourceType = "Microsoft.Web/sites/config";
         });
         CustomizeProperty<SiteAuthSettingsV2>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `authsettingsV2`
+        CustomizeProperty<SlotConfigNamesResource>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `slotConfigNames`
 
         // Not generated today:
         // CustomizePropertyIsoDuration<MetricAvailability>("BlobDuration");
@@ -59,6 +57,18 @@ public class AppServiceSpecification() :
         CustomizeProperty<FunctionAppScaleAndConcurrency>("MaximumInstanceCount", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
         CustomizeProperty<FunctionAppScaleAndConcurrency>("InstanceMemoryMB", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
         CustomizeProperty<FunctionAppScaleAndConcurrency>("HttpPerInstanceConcurrency", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
+        CustomizeProperty<WebSiteSlotResource>("Name", p => { p.IsReadOnly = false; }); // make writable for slot name
+        CustomizeProperty<AppServiceEnvironmentResource>("CustomDnsSuffixConfiguration", p => { p.Name = "CustomDnsSuffixConfig"; });
+        CustomizeProperty<AppServiceEnvironmentResource>("NetworkingConfiguration", p => { p.Name = "NetworkingConfig"; });
+        CustomizeResource<AppServiceEnvironmentResource>(r =>
+        {
+            r.GeneratePartialPropertyDefinition = true;
+        });
+        CustomizeProperty<StaticSiteResource>("UserProvidedFunctionApps", p => { p.Name = "UserFunctionApps"; });
+        CustomizeResource<StaticSiteResource>(r =>
+        {
+            r.GeneratePartialPropertyDefinition = true;
+        });
 
         // Naming requirements
         AddNameRequirements<AppCertificateResource>(min: 1, max: 260, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: false);
@@ -72,7 +82,7 @@ public class AppServiceSpecification() :
         Roles.Add(new Role("WebsiteContributor", "de139f84-1756-47ae-9be6-808fbbe84772", "Manage websites, but not web plans. Does not allow you to assign roles in Azure RBAC."));
     }
 
-    protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
+    private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
     {
         // Add missing resources
         var dict = base.FindConstructibleResources();

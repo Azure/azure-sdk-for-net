@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.IotCentral.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
@@ -13,6 +16,29 @@ namespace Azure.ResourceManager.IotCentral
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(IotCentralAppData))]
+    [ModelReaderWriterBuildable(typeof(IotCentralAppListResult))]
+    [ModelReaderWriterBuildable(typeof(IotCentralAppNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(IotCentralAppNameAvailabilityResponse))]
+    [ModelReaderWriterBuildable(typeof(IotCentralAppPatch))]
+    [ModelReaderWriterBuildable(typeof(IotCentralAppResource))]
+    [ModelReaderWriterBuildable(typeof(IotCentralAppSkuInfo))]
+    [ModelReaderWriterBuildable(typeof(IotCentralAppTemplate))]
+    [ModelReaderWriterBuildable(typeof(IotCentralAppTemplateLocation))]
+    [ModelReaderWriterBuildable(typeof(IotCentralAppTemplatesResult))]
+    [ModelReaderWriterBuildable(typeof(IotCentralNetworkRuleSetIPRule))]
+    [ModelReaderWriterBuildable(typeof(IotCentralNetworkRuleSets))]
+    [ModelReaderWriterBuildable(typeof(IotCentralPrivateEndpointConnectionData))]
+    [ModelReaderWriterBuildable(typeof(IotCentralPrivateEndpointConnectionListResult))]
+    [ModelReaderWriterBuildable(typeof(IotCentralPrivateEndpointConnectionResource))]
+    [ModelReaderWriterBuildable(typeof(IotCentralPrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(IotCentralPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(IotCentralPrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(IotCentralPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerIotCentralContext : ModelReaderWriterContext
     {
     }

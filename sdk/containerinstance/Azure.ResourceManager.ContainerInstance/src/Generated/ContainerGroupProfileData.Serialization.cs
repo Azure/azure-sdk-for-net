@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ContainerInstance.Models;
@@ -154,12 +155,12 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("securityContext"u8);
                 writer.WriteObjectValue(SecurityContext, options);
             }
-            if (Optional.IsDefined(Revision))
+            if (options.Format != "W" && Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
             }
-            if (Optional.IsCollectionDefined(RegisteredRevisions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RegisteredRevisions))
             {
                 writer.WritePropertyName("registeredRevisions"u8);
                 writer.WriteStartArray();
@@ -220,8 +221,8 @@ namespace Azure.ResourceManager.ContainerInstance
             ContainerGroupPriority? priority = default;
             ConfidentialComputeProperties confidentialComputeProperties = default;
             ContainerSecurityContextDefinition securityContext = default;
-            long? revision = default;
-            IList<long> registeredRevisions = default;
+            int? revision = default;
+            IReadOnlyList<int> registeredRevisions = default;
             bool? useKrypton = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -281,7 +282,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerInstanceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -468,7 +469,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            revision = property0.Value.GetInt64();
+                            revision = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("registeredRevisions"u8))
@@ -477,10 +478,10 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            List<long> array = new List<long>();
+                            List<int> array = new List<int>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetInt64());
+                                array.Add(item.GetInt32());
                             }
                             registeredRevisions = array;
                             continue;
@@ -527,7 +528,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 confidentialComputeProperties,
                 securityContext,
                 revision,
-                registeredRevisions ?? new ChangeTrackingList<long>(),
+                registeredRevisions ?? new ChangeTrackingList<int>(),
                 useKrypton,
                 zones ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

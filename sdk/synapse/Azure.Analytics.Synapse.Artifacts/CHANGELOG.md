@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.22 (Unreleased)
+## 1.0.0-preview.23 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,65 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-preview.22 (2025-09-05)
+
+### Features Added
+- Model ServiceNowV2ObjectDataset has a new parameter value_type
+- Added Presto server linked service
+- Model DynamicsSink has a new parameter bypass_business_logic_execution
+- Model DynamicsSink has a new parameter bypass_power_automate_flows
+- Model AzurePostgreSqlSink has a new parameter write_method
+- Model AzurePostgreSqlSink has a new parameter upsert_settings
+- Model SnowflakeV2LinkedService has a new parameter role
+- Model SnowflakeV2LinkedService has a new parameter schema
+- Model AzurePostgreSqlLinkedService has a new parameter service_principal_embedded_cert
+- Model AzurePostgreSqlLinkedService has a new parameter service_principal_embedded_cert_password
+- Model ODataLinkedService has a new parameter service_principal_embedded_cert
+- Model ODataLinkedService has a new parameter service_principal_embedded_cert_password
+- Model Office365LinkedService has a new parameter service_principal_embedded_cert
+- Model Office365LinkedService has a new parameter service_principal_embedded_cert_password
+- Model RestServiceLinkedService has a new parameter service_principal_embedded_cert
+- Model RestServiceLinkedService has a new parameter service_principal_embedded_cert_password
+- Model SharePointOnlineListLinkedService has a new parameter service_principal_embedded_cert
+- Model SharePointOnlineListLinkedService has a new parameter service_principal_embedded_cert_password
+- Model AzureDatabricksLinkedService has a new parameter data_security_mode
+- Model AmazonRdsForOracleLinkedService has a new parameter server
+- Model AmazonRdsForOracleLinkedService has a new parameter authentication_type
+- Model AmazonRdsForOracleLinkedService has a new parameter username
+- Model AmazonRdsForOracleLinkedService has a new parameter encryption_client
+- Model AmazonRdsForOracleLinkedService has a new parameter encryption_types_client
+- Model AmazonRdsForOracleLinkedService has a new parameter crypto_checksum_client
+- Model AmazonRdsForOracleLinkedService has a new parameter crypto_checksum_types_client
+- Model AmazonRdsForOracleLinkedService has a new parameter initial_lob_fetch_size
+- Model AmazonRdsForOracleLinkedService has a new parameter fetch_size
+- Model AmazonRdsForOracleLinkedService has a new parameter statement_cache_size
+- Model AmazonRdsForOracleLinkedService has a new parameter initialization_string
+- Model AmazonRdsForOracleLinkedService has a new parameter enable_bulk_load
+- Model AmazonRdsForOracleLinkedService has a new parameter fetch_tswtz_as_timestamp
+- Model AmazonRdsForOracleLinkedService has a new parameter support_v1_data_types
+- Model FtpServerLinkedService has a new parameter enable_server_certificate_validation
+- Model HiveLinkedService has a new parameter enable_server_certificate_validation
+- Model HttpLinkedService has a new parameter enable_server_certificate_validation
+- Model ImpalaLinkedService has a new parameter enable_server_certificate_validation
+- Model RestServiceLinkedService has a new parameter enable_server_certificate_validation
+- Model SparkLinkedService has a new parameter enable_server_certificate_validation
+- Model QuickBooksLinkedService has a new parameter refresh_token
+- Model AmazonRdsForOracleSource has a new parameter number_precision
+- Model AmazonRdsForOracleSource has a new parameter number_scale
+- Model OracleSource has a new parameter number_precision
+- Model OracleSource has a new parameter number_scale
+- Model LakeHouseLinkedService has a new parameter authentication_type
+- Model LakeHouseLinkedService has a new parameter credential
+- Model WarehouseLinkedService has a new parameter authentication_type
+- Model WarehouseLinkedService has a new parameter credential
+- Model HDInsightLinkedService has a new parameter cluster_auth_type
+- Model HDInsightLinkedService has a new parameter credential
+
+### Breaking Changes
+- Model OracleLinkedService parameter connection_string now is not required
+- Model GreenplumLinkedService remove parameter password
+- Model ExpressionV2 parameter value change its type from string to object
 
 ## 1.0.0-preview.21 (2025-03-07)
 

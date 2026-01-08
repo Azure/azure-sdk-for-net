@@ -4,10 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -20,8 +16,8 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentsAdministrationClient
     {
         private static readonly bool s_is_test_run = AppContextSwitchHelper.GetConfigValue(
-            PersistantAgensConstants.UseOldConnectionString,
-            PersistantAgensConstants.UseOldConnectionStringEnvVar);
+            PersistentAgentsConstants.UseOldConnectionString,
+            PersistentAgentsConstants.UseOldConnectionStringEnvVar);
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal virtual ClientDiagnostics ClientDiagnostics { get; }
         // TODO: Replace project connections string by PROJECT_ENDPOINT when 1DP will be available.
@@ -163,7 +159,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Gets a list of agents that were previously created. </summary>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
@@ -171,19 +167,25 @@ namespace Azure.AI.Agents.Persistent
         public virtual AsyncPageable<PersistentAgent> GetAgentsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageableAsync<PersistentAgent>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgent.DeserializePersistentAgent(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 
         /// <summary> Gets a list of agents that were previously created. </summary>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
@@ -191,14 +193,20 @@ namespace Azure.AI.Agents.Persistent
         public virtual Pageable<PersistentAgent> GetAgents(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageable<PersistentAgent>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgent.DeserializePersistentAgent(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 
@@ -217,7 +225,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
@@ -247,7 +255,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>

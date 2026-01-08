@@ -1,9 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.Data.AppConfiguration
 {
+    // CUSTOM:
+    // - Renamed.
     /// <summary> A label used to group key-values. </summary>
+    [CodeGenType("Label")]
     public partial class SettingLabel
     {
         /// <summary> Initializes a new instance of <see cref="SettingLabel"/>.</summary>
@@ -12,8 +17,5 @@ namespace Azure.Data.AppConfiguration
         {
             Name = name;
         }
-
-        /// <summary> The name of the label. </summary>
-        public string Name { get; }
     }
 }

@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://github.com/Azure/azure-rest-api-specs/blob/8600539fa5ba6c774b4454a401d9cd3cf01a36a7/specification/dnsresolver/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/372ba0f0c00017c7b85a910d8689bf6ff3adeb5f/specification/dnsresolver/resource-manager/Microsoft.Network/DnsResolver/readme.md
 # tag: package-2025-05 - Commented to default to latest
 library-name: dnsresolver
 namespace: Azure.ResourceManager.DnsResolver

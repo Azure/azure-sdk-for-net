@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -93,12 +94,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
-                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
+                ((IJsonModel<WritableSubResource>)ProximityPlacementGroup).Write(writer, options);
             }
             if (Optional.IsDefined(HostGroup))
             {
                 writer.WritePropertyName("hostGroup"u8);
-                JsonSerializer.Serialize(writer, HostGroup);
+                ((IJsonModel<WritableSubResource>)HostGroup).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalCapabilities))
             {
@@ -149,6 +150,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("skuProfile"u8);
                 writer.WriteObjectValue(SkuProfile, options);
+            }
+            if (Optional.IsDefined(HighSpeedInterconnectPlacement))
+            {
+                writer.WritePropertyName("highSpeedInterconnectPlacement"u8);
+                writer.WriteStringValue(HighSpeedInterconnectPlacement.Value.ToString());
             }
             foreach (var item in AdditionalProperties)
             {
@@ -207,6 +213,7 @@ namespace Azure.ResourceManager.Compute.Models
             ResiliencyPolicy resiliencyPolicy = default;
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
             ComputeSkuProfile skuProfile = default;
+            HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -308,7 +315,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    proximityPlacementGroup = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("hostGroup"u8))
@@ -317,7 +324,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hostGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    hostGroup = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("additionalCapabilities"u8))
@@ -410,6 +417,15 @@ namespace Azure.ResourceManager.Compute.Models
                     skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("highSpeedInterconnectPlacement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    highSpeedInterconnectPlacement = new HighSpeedInterconnectPlacement(property.Value.GetString());
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
@@ -437,6 +453,7 @@ namespace Azure.ResourceManager.Compute.Models
                 resiliencyPolicy,
                 zonalPlatformFaultDomainAlignMode,
                 skuProfile,
+                highSpeedInterconnectPlacement,
                 additionalProperties);
         }
 

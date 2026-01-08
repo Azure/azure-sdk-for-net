@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("securityDataAccessSAS"u8);
                 writer.WriteStringValue(SecurityDataAccessSas);
             }
+            if (options.Format != "W" && Optional.IsDefined(SecurityMetadataAccessSas))
+            {
+                writer.WritePropertyName("securityMetadataAccessSAS"u8);
+                writer.WriteStringValue(SecurityMetadataAccessSas);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string accessSas = default;
             string securityDataAccessSas = default;
+            string securityMetadataAccessSas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,13 +103,18 @@ namespace Azure.ResourceManager.Compute.Models
                     securityDataAccessSas = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("securityMetadataAccessSAS"u8))
+                {
+                    securityMetadataAccessSas = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccessUri(accessSas, securityDataAccessSas, serializedAdditionalRawData);
+            return new AccessUri(accessSas, securityDataAccessSas, securityMetadataAccessSas, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessUri>.Write(ModelReaderWriterOptions options)

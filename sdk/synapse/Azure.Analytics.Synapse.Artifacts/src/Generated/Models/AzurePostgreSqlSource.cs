@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> A copy activity Azure PostgreSQL source. </summary>
+    /// <summary> A copy activity Azure Database for PostgreSQL source. </summary>
     public partial class AzurePostgreSqlSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlSource"/>. </summary>

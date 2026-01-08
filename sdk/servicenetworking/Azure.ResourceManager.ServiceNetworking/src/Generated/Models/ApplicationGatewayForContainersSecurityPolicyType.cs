@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -14,35 +15,57 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     public readonly partial struct ApplicationGatewayForContainersSecurityPolicyType : IEquatable<ApplicationGatewayForContainersSecurityPolicyType>
     {
         private readonly string _value;
+        /// <summary> Policy of Type WAF. </summary>
+        private const string WAFValue = "waf";
+        /// <summary> Policy of Type IpAccessRules. </summary>
+        private const string IPAccessRulesValue = "ipAccessRules";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayForContainersSecurityPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayForContainersSecurityPolicyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WAFValue = "waf";
+            _value = value;
+        }
 
         /// <summary> Policy of Type WAF. </summary>
         public static ApplicationGatewayForContainersSecurityPolicyType WAF { get; } = new ApplicationGatewayForContainersSecurityPolicyType(WAFValue);
+
+        /// <summary> Policy of Type IpAccessRules. </summary>
+        public static ApplicationGatewayForContainersSecurityPolicyType IPAccessRules { get; } = new ApplicationGatewayForContainersSecurityPolicyType(IPAccessRulesValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayForContainersSecurityPolicyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayForContainersSecurityPolicyType left, ApplicationGatewayForContainersSecurityPolicyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayForContainersSecurityPolicyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayForContainersSecurityPolicyType left, ApplicationGatewayForContainersSecurityPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayForContainersSecurityPolicyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayForContainersSecurityPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayForContainersSecurityPolicyType(string value) => new ApplicationGatewayForContainersSecurityPolicyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayForContainersSecurityPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayForContainersSecurityPolicyType?(string value) => value == null ? null : new ApplicationGatewayForContainersSecurityPolicyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayForContainersSecurityPolicyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayForContainersSecurityPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

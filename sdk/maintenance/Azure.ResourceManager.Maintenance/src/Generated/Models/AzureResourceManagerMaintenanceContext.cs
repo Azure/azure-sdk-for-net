@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Maintenance.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
@@ -13,6 +15,21 @@ namespace Azure.ResourceManager.Maintenance
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(MaintenanceApplyUpdateData))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceApplyUpdateListResult))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceApplyUpdateResource))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentData))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentListResult))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationData))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationListResult))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(MaintenancePublicConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceUpdate))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceUpdateListResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceGetApplyUpdatesByParentOptions))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerMaintenanceContext : ModelReaderWriterContext
     {
     }

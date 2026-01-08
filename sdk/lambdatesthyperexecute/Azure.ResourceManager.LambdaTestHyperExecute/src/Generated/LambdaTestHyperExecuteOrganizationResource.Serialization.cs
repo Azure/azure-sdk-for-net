@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute
 {
+    /// <summary></summary>
     public partial class LambdaTestHyperExecuteOrganizationResource : IJsonModel<LambdaTestHyperExecuteOrganizationData>
     {
-        private static LambdaTestHyperExecuteOrganizationData s_dataDeserializationInstance;
-        private static LambdaTestHyperExecuteOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LambdaTestHyperExecuteOrganizationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LambdaTestHyperExecuteOrganizationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LambdaTestHyperExecuteOrganizationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LambdaTestHyperExecuteOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LambdaTestHyperExecuteOrganizationData>)Data).Write(writer, options);
 
-        LambdaTestHyperExecuteOrganizationData IJsonModel<LambdaTestHyperExecuteOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LambdaTestHyperExecuteOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LambdaTestHyperExecuteOrganizationData IJsonModel<LambdaTestHyperExecuteOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LambdaTestHyperExecuteOrganizationData>(Data, options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LambdaTestHyperExecuteOrganizationData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LambdaTestHyperExecuteOrganizationData>(data, options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
 
-        string IPersistableModel<LambdaTestHyperExecuteOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LambdaTestHyperExecuteOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LambdaTestHyperExecuteOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

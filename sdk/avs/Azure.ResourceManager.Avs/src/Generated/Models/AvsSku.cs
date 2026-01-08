@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AvsSku"/>. </summary>
-        /// <param name="name"> The name of the SKU. E.g. P3. It is typically a letter+number code. </param>
+        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AvsSku(string name)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsSku"/>. </summary>
-        /// <param name="name"> The name of the SKU. E.g. P3. It is typically a letter+number code. </param>
+        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
         /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
         }
 
-        /// <summary> The name of the SKU. E.g. P3. It is typically a letter+number code. </summary>
+        /// <summary> The name of the SKU. Ex - P3. It is typically a letter+number code. </summary>
         public string Name { get; set; }
         /// <summary> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </summary>
         public AvsSkuTier? Tier { get; set; }

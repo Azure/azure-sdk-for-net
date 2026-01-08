@@ -33,10 +33,11 @@ ToolResources toolResource = new()
 
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
    model: modelDeploymentName,
    name: "my-agent",
-   instructions: "You are a helpful agent.",
+   instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
    tools: [new AzureAISearchToolDefinition()],
    toolResources: toolResource);
 ```
@@ -57,10 +58,11 @@ ToolResources toolResource = new()
 
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
-   instructions: "You are a helpful agent.",
+   instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
    tools: [ new AzureAISearchToolDefinition() ],
    toolResources: toolResource);
 ```
@@ -155,12 +157,14 @@ await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming
 
 Synchronous sample:
 ```C# Snippet:AgentsAzureAISearchStreamingExample_Cleanup
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 client.Threads.DeleteThread(thread.Id);
 client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsAzureAISearchStreamingExample_Cleanup_Async
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 await client.Threads.DeleteThreadAsync(thread.Id);
 await client.Administration.DeleteAgentAsync(agent.Id);
 ```

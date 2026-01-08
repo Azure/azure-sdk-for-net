@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Maintenance.Models;
@@ -64,11 +65,6 @@ namespace Azure.ResourceManager.Maintenance
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
-            }
-            if (Optional.IsDefined(InstallPatches))
-            {
-                writer.WritePropertyName("installPatches"u8);
-                writer.WriteObjectValue(InstallPatches, options);
             }
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();
@@ -131,7 +127,6 @@ namespace Azure.ResourceManager.Maintenance
             IDictionary<string, string> extensionProperties = default;
             MaintenanceScope? maintenanceScope = default;
             MaintenanceConfigurationVisibility? visibility = default;
-            MaintenancePatchConfiguration installPatches = default;
             DateTimeOffset? startDateTime = default;
             DateTimeOffset? expirationDateTime = default;
             TimeSpan? duration = default;
@@ -181,7 +176,7 @@ namespace Azure.ResourceManager.Maintenance
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMaintenanceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -228,15 +223,6 @@ namespace Azure.ResourceManager.Maintenance
                                 continue;
                             }
                             visibility = new MaintenanceConfigurationVisibility(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("installPatches"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            installPatches = MaintenancePatchConfiguration.DeserializeMaintenancePatchConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -308,7 +294,6 @@ namespace Azure.ResourceManager.Maintenance
                 extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
                 maintenanceScope,
                 visibility,
-                installPatches,
                 startDateTime,
                 expirationDateTime,
                 duration,

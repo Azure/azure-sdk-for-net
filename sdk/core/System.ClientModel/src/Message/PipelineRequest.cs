@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Diagnostics;
 
 namespace System.ClientModel.Primitives;
@@ -10,7 +11,7 @@ namespace System.ClientModel.Primitives;
 /// The type of a <see cref="PipelineRequest"/> is specific to the type of the
 /// <see cref="PipelineTransport"/> used by the <see cref="ClientPipeline"/>
 /// that sends the request.  Because of this,
-/// <see cref="ClientPipeline.CreateMessage"/> is used to create an instance of
+/// <see cref="ClientPipeline.CreateMessage()"/> is used to create an instance of
 /// <see cref="PipelineRequest"/> for a given pipeline.
 /// </summary>
 public abstract class PipelineRequest : IDisposable
@@ -70,10 +71,18 @@ public abstract class PipelineRequest : IDisposable
     /// </summary>
     protected abstract BinaryContent? ContentCore { get; set; }
 
+    private string? _clientRequestId;
+
     /// <summary>
-    /// The client request id to include in log entries.
+    /// Gets the client request id used for logging.
+    /// Custom policies can optionally send this value to the service.
+    /// A value is automatically generated on first access using
+    /// <see cref="Activity.Current"/>?.Id if available, otherwise a new <see cref="Guid"/>.
     /// </summary>
-    internal string? ClientRequestId { get; set; }
+    public virtual string ClientRequestId
+    {
+        get => _clientRequestId ??= Activity.Current?.Id ?? Guid.NewGuid().ToString();
+    }
 
     /// <inheritdoc/>
     public abstract void Dispose();

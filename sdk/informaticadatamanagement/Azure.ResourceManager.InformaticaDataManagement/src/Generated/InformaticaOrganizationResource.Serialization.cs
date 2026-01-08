@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
+    /// <summary></summary>
     public partial class InformaticaOrganizationResource : IJsonModel<InformaticaOrganizationData>
     {
-        private static InformaticaOrganizationData s_dataDeserializationInstance;
-        private static InformaticaOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<InformaticaOrganizationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<InformaticaOrganizationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new InformaticaOrganizationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformaticaOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaOrganizationData>)Data).Write(writer, options);
 
-        InformaticaOrganizationData IJsonModel<InformaticaOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformaticaOrganizationData IJsonModel<InformaticaOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InformaticaOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InformaticaOrganizationData>(Data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         InformaticaOrganizationData IPersistableModel<InformaticaOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaOrganizationData>(data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
 
-        string IPersistableModel<InformaticaOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InformaticaOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

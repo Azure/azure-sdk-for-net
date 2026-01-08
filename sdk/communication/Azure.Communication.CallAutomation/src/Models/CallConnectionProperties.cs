@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
         {
             CallConnectionId = callConnectionPropertiesDtoInternal.CallConnectionId;
             ServerCallId = callConnectionPropertiesDtoInternal.ServerCallId;
-            Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
+            Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer_2025_06_30.Deserialize(t)).ToList();
 
             if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState == default(CallConnectionState))
             {
@@ -65,9 +65,10 @@ namespace Azure.Communication.CallAutomation
                 new TranscriptionSubscription(
                     callConnectionPropertiesDtoInternal.TranscriptionSubscription.Id,
                     callConnectionPropertiesDtoInternal.TranscriptionSubscription.State,
-                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.SubscribedResultTypes)
+                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.SubscribedResultTypes,
+                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.Locale)
                 : null;
-            Source = callConnectionPropertiesDtoInternal.Source == null ? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
+            Source = callConnectionPropertiesDtoInternal.Source == null ? null : CommunicationIdentifierSerializer_2025_06_30.Deserialize(callConnectionPropertiesDtoInternal.Source);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
             CorrelationId = callConnectionPropertiesDtoInternal.CorrelationId;
             AnsweredBy = callConnectionPropertiesDtoInternal.AnsweredBy == null ? null : new CommunicationUserIdentifier(callConnectionPropertiesDtoInternal.AnsweredBy.Id);

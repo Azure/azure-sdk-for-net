@@ -53,6 +53,25 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="ElasticMonitoredSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticMonitoredSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="ElasticMonitoredSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableElasticArmClient.GetElasticMonitoredSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ElasticMonitoredSubscriptionResource"/> object. </returns>
+        public static ElasticMonitoredSubscriptionResource GetElasticMonitoredSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableElasticArmClient(client).GetElasticMonitoredSubscriptionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="ElasticOpenAIIntegrationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ElasticOpenAIIntegrationResource.CreateResourceIdentifier" /> to create an <see cref="ElasticOpenAIIntegrationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -108,7 +127,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get the properties of a specific monitor resource.
+        /// Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -116,11 +135,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,7 +165,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get the properties of a specific monitor resource.
+        /// Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -154,11 +173,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +203,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List all monitors under the specified subscription.
+        /// List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -192,11 +211,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_List</description>
+        /// <description>ElasticMonitorResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -220,7 +239,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List all monitors under the specified subscription.
+        /// List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -228,11 +247,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_List</description>
+        /// <description>ElasticMonitorResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,7 +275,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get a list of available versions for a region.
+        /// Retrieve a list of all available Elastic versions for a specified region, helping you choose the best version for your deployment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -264,11 +283,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ElasticVersions_List</description>
+        /// <description>ElasticVersionsOperationGroup_GetElasticVersions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -289,7 +308,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get a list of available versions for a region.
+        /// Retrieve a list of all available Elastic versions for a specified region, helping you choose the best version for your deployment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -297,11 +316,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ElasticVersions_List</description>
+        /// <description>ElasticVersionsOperationGroup_GetElasticVersions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -322,7 +341,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Fetch User API Key from internal database, if it was generated and stored while creating the Elasticsearch Organization.
+        /// Fetch the User API Key from the internal database, if it was generated and stored during the creation of the Elasticsearch Organization.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -330,11 +349,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_GetApiKey</description>
+        /// <description>OrganizationsOperationGroup_GetApiKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -343,7 +362,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<ElasticUserApiKeyResult>> GetApiKeyAsync(this SubscriptionResource subscriptionResource, ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
@@ -354,7 +373,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Fetch User API Key from internal database, if it was generated and stored while creating the Elasticsearch Organization.
+        /// Fetch the User API Key from the internal database, if it was generated and stored during the creation of the Elasticsearch Organization.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -362,11 +381,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_GetApiKey</description>
+        /// <description>OrganizationsOperationGroup_GetApiKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -375,7 +394,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<ElasticUserApiKeyResult> GetApiKey(this SubscriptionResource subscriptionResource, ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
@@ -386,7 +405,9 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get Elastic Organization To Azure Subscription Mapping details for the logged-in user.
+        /// &gt;;
+        ///   /**
+        /// Retrieve mapping details between the Elastic Organization and Azure Subscription for the logged-in user.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -394,11 +415,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_GetElasticToAzureSubscriptionMapping</description>
+        /// <description>OrganizationsOperationGroup_GetElasticToAzureSubscriptionMapping</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -417,7 +438,9 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get Elastic Organization To Azure Subscription Mapping details for the logged-in user.
+        /// &gt;;
+        ///   /**
+        /// Retrieve mapping details between the Elastic Organization and Azure Subscription for the logged-in user.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -425,11 +448,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_GetElasticToAzureSubscriptionMapping</description>
+        /// <description>OrganizationsOperationGroup_GetElasticToAzureSubscriptionMapping</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>

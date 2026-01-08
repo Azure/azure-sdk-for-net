@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> Details for the long-term backup schedule. </summary>
     public partial class LongTermBackUpScheduleDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LongTermBackUpScheduleDetails"/>. </summary>
         public LongTermBackUpScheduleDetails()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="backupOn"> The timestamp for the long-term backup schedule. For a MONTHLY cadence, months having fewer days than the provided date will have the backup taken on the last day of that month. </param>
         /// <param name="retentionPeriodInDays"> Retention period, in days, for backups. </param>
         /// <param name="isDisabled"> Indicates if the long-term backup schedule should be deleted. The default value is `FALSE`. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LongTermBackUpScheduleDetails(RepeatCadenceType? repeatCadence, DateTimeOffset? backupOn, int? retentionPeriodInDays, bool? isDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LongTermBackUpScheduleDetails(RepeatCadenceType? repeatCadence, DateTimeOffset? backupOn, int? retentionPeriodInDays, bool? isDisabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RepeatCadence = repeatCadence;
             BackupOn = backupOn;
             RetentionPeriodInDays = retentionPeriodInDays;
             IsDisabled = isDisabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The frequency of the long-term backup schedule. </summary>
         public RepeatCadenceType? RepeatCadence { get; set; }
+
         /// <summary> The timestamp for the long-term backup schedule. For a MONTHLY cadence, months having fewer days than the provided date will have the backup taken on the last day of that month. </summary>
         public DateTimeOffset? BackupOn { get; set; }
+
         /// <summary> Retention period, in days, for backups. </summary>
         public int? RetentionPeriodInDays { get; set; }
+
         /// <summary> Indicates if the long-term backup schedule should be deleted. The default value is `FALSE`. </summary>
         public bool? IsDisabled { get; set; }
     }

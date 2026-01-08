@@ -21,17 +21,17 @@ namespace Azure.Developer.Playwright
     }
     public partial class PlaywrightServiceBrowserClientOptions : Azure.Core.ClientOptions
     {
-        public PlaywrightServiceBrowserClientOptions(Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions.ServiceVersion serviceVersion = Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview) { }
+        public PlaywrightServiceBrowserClientOptions(Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions.ServiceVersion serviceVersion = Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01) { }
         public string ExposeNetwork { get { throw null; } set { } }
         public Microsoft.Extensions.Logging.ILogger? Logger { get { throw null; } set { } }
         public System.Runtime.InteropServices.OSPlatform OS { get { throw null; } set { } }
         public string RunId { get { throw null; } set { } }
+        public string RunName { get { throw null; } set { } }
         public Azure.Developer.Playwright.ServiceAuthType ServiceAuth { get { throw null; } set { } }
         public string? ServiceEndpoint { get { throw null; } set { } }
-        public bool UseCloudHostedBrowsers { get { throw null; } set { } }
         public enum ServiceVersion
         {
-            V2025_07_01_Preview = 1,
+            V2025_09_01 = 1,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

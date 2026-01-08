@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The list of Public IP addresses associated with azure firewall or IP addresses to be retained. </summary>
+        [WirePath("addresses")]
         public IList<AzureFirewallPublicIPAddress> Addresses { get; }
         /// <summary> The number of Public IP addresses associated with azure firewall. </summary>
+        [WirePath("count")]
         public int? Count { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
         // Remove this file until https://github.com/Azure/azure-sdk-for-net/issues/47572 fixed
         IList<ExpressRouteFailoverTestDetails> IOperationSource<IList<ExpressRouteFailoverTestDetails>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<ExpressRouteFailoverTestDetails> array = new List<ExpressRouteFailoverTestDetails>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
 
         async ValueTask<IList<ExpressRouteFailoverTestDetails>> IOperationSource<IList<ExpressRouteFailoverTestDetails>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<ExpressRouteFailoverTestDetails> array = new List<ExpressRouteFailoverTestDetails>();
             foreach (var item in document.RootElement.EnumerateArray())
             {

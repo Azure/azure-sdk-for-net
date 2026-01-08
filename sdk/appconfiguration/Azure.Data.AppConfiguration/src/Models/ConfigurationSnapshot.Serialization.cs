@@ -2,48 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    public partial class ConfigurationSnapshot : IUtf8JsonSerializable
+    public partial class ConfigurationSnapshot
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("filters");
-            writer.WriteStartArray();
-            foreach (var item in Filters)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(SnapshotComposition))
-            {
-                writer.WritePropertyName("composition_type");
-                writer.WriteStringValue(SnapshotComposition.Value.ToString());
-            }
-            if (Optional.IsDefined(RetentionPeriod))
-            {
-                writer.WritePropertyName("retention_period");
-                writer.WriteNumberValue(RetentionPeriod.Value.TotalSeconds);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ConfigurationSnapshot DeserializeSnapshot(JsonElement element)
         {
             string name = default;
@@ -79,7 +46,7 @@ namespace Azure.Data.AppConfiguration
                     List<ConfigurationSettingsFilter> array = new List<ConfigurationSettingsFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationSettingsFilter.DeserializeKeyValueFilter(item));
+                        array.Add(ConfigurationSettingsFilter.DeserializeConfigurationSettingsFilter(item, ModelSerializationExtensions.WireOptions));
                     }
                     filters = array;
                     continue;
@@ -179,19 +146,108 @@ namespace Azure.Data.AppConfiguration
                 new ETag(etag));
         }
 
-        // Mapping raw response to model
-        internal static ConfigurationSnapshot FromResponse(Response response)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSnapshot(document.RootElement);
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfigurationSnapshot)} does not support writing '{format}' format.");
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            writer.WritePropertyName("filters"u8);
+            writer.WriteStartArray();
+            foreach (ConfigurationSettingsFilter item in Filters)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(SnapshotComposition))
+            {
+                writer.WritePropertyName("composition_type"u8);
+                writer.WriteStringValue(SnapshotComposition.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("created"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
+            {
+                writer.WritePropertyName("expires"u8);
+                writer.WriteStringValue(ExpiresOn.Value, "O");
+            }
+            if (Optional.IsDefined(RetentionPeriod))
+            {
+                writer.WritePropertyName("retention_period"u8);
+                writer.WriteNumberValue(RetentionPeriod.Value.TotalSeconds);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SizeInBytes))
+            {
+                writer.WritePropertyName("size"u8);
+                writer.WriteNumberValue(SizeInBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ItemCount))
+            {
+                writer.WritePropertyName("items_count"u8);
+                writer.WriteNumberValue(ItemCount.Value);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteObjectValue(ETag, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        // Mapping model to raw request
-        internal static RequestContent ToRequestContent(ConfigurationSnapshot snapshot)
+        internal static ConfigurationSnapshot DeserializeConfigurationSnapshot(JsonElement element, ModelReaderWriterOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(snapshot);
-            return content;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+
+            return DeserializeSnapshot(element);
         }
     }
 }

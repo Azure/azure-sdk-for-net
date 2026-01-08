@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -435,6 +435,98 @@ namespace Azure.ResourceManager.DataMigration
                 var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retry on going migration for the database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}/retry</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseMigrationsSqlDb_Retry</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="input"> Required migration operation ID for which retry will be initiated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public virtual async Task<ArmOperation<DatabaseMigrationSqlDBResource>> RetryAsync(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(input, nameof(input));
+
+            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Retry");
+            scope.Start();
+            try
+            {
+                var response = await _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.RetryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input, cancellationToken).ConfigureAwait(false);
+                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(new DatabaseMigrationSqlDBOperationSource(Client), _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateRetryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retry on going migration for the database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}/retry</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseMigrationsSqlDb_Retry</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="input"> Required migration operation ID for which retry will be initiated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public virtual ArmOperation<DatabaseMigrationSqlDBResource> Retry(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(input, nameof(input));
+
+            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Retry");
+            scope.Start();
+            try
+            {
+                var response = _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.Retry(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input, cancellationToken);
+                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(new DatabaseMigrationSqlDBOperationSource(Client), _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateRetryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceBus
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceBusContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.ServiceBus
                 name,
                 type,
                 systemData,
+                location,
                 provisioningState,
                 pendingReplicationOperationsCount,
                 partnerNamespace,
                 alternateName,
                 role,
-                location,
                 serializedAdditionalRawData);
         }
 

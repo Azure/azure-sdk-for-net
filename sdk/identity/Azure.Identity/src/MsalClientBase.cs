@@ -108,20 +108,5 @@ namespace Azure.Identity
 
             return asyncLock.HasValue ? asyncLock.Value.Cache : null;
         }
-
-        public UriBuilder BuildTenantIdWithAuthorityHost(string tenantId)
-        {
-            UriBuilder uriBuilder = new(AuthorityHost);
-            if (uriBuilder.Path.EndsWith("/"))
-            {
-                uriBuilder.Path += tenantId;
-            }
-            else
-            {
-                uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
-            }
-
-            return uriBuilder;
-        }
     }
 }

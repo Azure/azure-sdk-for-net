@@ -85,16 +85,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Defines the source of the SSL certificate. </summary>
+        [WirePath("certificateSource")]
         public FrontDoorCertificateSource CertificateSource { get; set; }
         /// <summary> Defines the TLS extension protocol that is used for secure delivery. </summary>
+        [WirePath("protocolType")]
         public FrontDoorTlsProtocolType ProtocolType { get; set; }
         /// <summary> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </summary>
+        [WirePath("minimumTlsVersion")]
         public FrontDoorRequiredMinimumTlsVersion MinimumTlsVersion { get; set; }
         /// <summary> Defines the type of the certificate used for secure connections to a frontendEndpoint. </summary>
+        [WirePath("frontDoorCertificateSourceParameters.certificateType")]
         public FrontDoorEndpointConnectionCertificateType? CertificateType { get; set; }
         /// <summary> The Key Vault containing the SSL certificate. </summary>
         internal WritableSubResource Vault { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("keyVaultCertificateSourceParameters.vault.id")]
         public ResourceIdentifier VaultId
         {
             get => Vault is null ? default : Vault.Id;
@@ -107,8 +112,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The name of the Key Vault secret representing the full certificate PFX. </summary>
+        [WirePath("keyVaultCertificateSourceParameters.secretName")]
         public string SecretName { get; set; }
         /// <summary> The version of the Key Vault secret representing the full certificate PFX. </summary>
+        [WirePath("keyVaultCertificateSourceParameters.secretVersion")]
         public string SecretVersion { get; set; }
     }
 }

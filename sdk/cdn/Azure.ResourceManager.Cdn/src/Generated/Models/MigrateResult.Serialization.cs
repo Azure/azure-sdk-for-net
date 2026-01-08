@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (options.Format != "W" && Optional.IsDefined(MigratedProfileResourceId))
             {
                 writer.WritePropertyName("migratedProfileResourceId"u8);
-                JsonSerializer.Serialize(writer, MigratedProfileResourceId);
+                ((IJsonModel<WritableSubResource>)MigratedProfileResourceId).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            migratedProfileResourceId = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            migratedProfileResourceId = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                             continue;
                         }
                     }
@@ -141,6 +142,82 @@ namespace Azure.ResourceManager.Cdn.Models
             return new MigrateResult(id, type, migratedProfileResourceId, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceId))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{ResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrateResultType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MigrateResultType))
+                {
+                    builder.Append("  type: ");
+                    if (MigrateResultType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MigrateResultType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MigrateResultType}'");
+                    }
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("MigratedProfileResourceIdId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    migratedProfileResourceId: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      migratedProfileResourceId: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(MigratedProfileResourceId))
+                {
+                    builder.Append("    migratedProfileResourceId: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MigratedProfileResourceId, options, 4, false, "    migratedProfileResourceId: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MigrateResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -149,6 +226,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MigrateResult)} does not support writing '{options.Format}' format.");
             }

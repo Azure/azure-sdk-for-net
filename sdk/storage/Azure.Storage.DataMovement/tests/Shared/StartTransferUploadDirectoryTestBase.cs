@@ -182,16 +182,18 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewObjectName(),
             };
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
-            await SetupDirectoryAsync(
-                disposingLocalDirectory.DirectoryPath,
-                files.Select(path => (path, objectSize)).ToList(),
-                cancellationToken);
-            await UploadDirectoryAndVerifyAsync(
-                disposingLocalDirectory.DirectoryPath,
-                test.Container,
-                expectedTransfers: files.Count,
-                cancellationToken: cancellationToken);
+            using (CancellationTokenSource cts = TestHelper.GetTimeoutTokenSource(waitTimeInSec))
+            {
+                await SetupDirectoryAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    files.Select(path => (path, objectSize)).ToList(),
+                    cts.Token);
+                await UploadDirectoryAndVerifyAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    test.Container,
+                    expectedTransfers: files.Count,
+                    cancellationToken: cts.Token);
+            }
         }
 
         [RecordedTest]
@@ -213,54 +215,56 @@ namespace Azure.Storage.DataMovement.Tests
                 files.Add(GetNewObjectName());
             }
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
-            await InitializeDestinationDataAsync(
-                test.Container,
-                files.Skip(skipCount).Take(preexistingFileCount).Select(path => (path, DefaultObjectSize)).ToList(),
-                cancellationToken);
-            await SetupDirectoryAsync(
-                disposingLocalDirectory.DirectoryPath,
-                files.Select(path => (path, DefaultObjectSize)).ToList(),
-            cancellationToken);
-
-            TransferOptions options = new()
+            using (CancellationTokenSource cts = TestHelper.GetTimeoutTokenSource(waitTimeInSec))
             {
-                CreationMode = StorageResourceCreationMode.FailIfExists
-            };
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            TransferManagerOptions transferManagerOptions = new()
-            {
-                ErrorMode = TransferErrorMode.ContinueOnFailure
-            };
+                await InitializeDestinationDataAsync(
+                    test.Container,
+                    files.Skip(skipCount).Take(preexistingFileCount).Select(path => (path, DefaultObjectSize)).ToList(),
+                    cts.Token);
+                await SetupDirectoryAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    files.Select(path => (path, DefaultObjectSize)).ToList(),
+                    cts.Token);
 
-            StorageResourceContainer sourceResource = LocalFilesStorageResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
-            StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
-            TransferOperation transfer = await new TransferManager(transferManagerOptions)
-                .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
-            await TestTransferWithTimeout.WaitForCompletionAsync(
-                transfer,
-                testEventsRaised,
-                cancellationToken);
+                TransferOptions options = new()
+                {
+                    CreationMode = StorageResourceCreationMode.FailIfExists
+                };
+                TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+                TransferManagerOptions transferManagerOptions = new()
+                {
+                    ErrorMode = TransferErrorMode.ContinueOnFailure
+                };
 
-            // check if expected files exist, but not necessarily for contents
-            if (errorMode == TransferErrorMode.ContinueOnFailure)
-            {
-                await testEventsRaised.AssertContainerCompletedWithFailedCheckContinue(preexistingFileCount);
+                StorageResourceContainer sourceResource = LocalFilesStorageResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
+                StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
+                TransferOperation transfer = await new TransferManager(transferManagerOptions)
+                    .StartTransferAsync(sourceResource, destinationResource, options, cts.Token);
+                await TestTransferWithTimeout.WaitForCompletionAsync(
+                    transfer,
+                    testEventsRaised,
+                    cts.Token);
 
-                // Verify all files exist, meaning files without conflict were transferred.
-                List<string> localFiles = (await TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath)
-                    .Invoke(cancellationToken))
-                    .Select(item => item.RelativePath)
-                    .ToList();
-                List<string> destinationObjects = (await GetStorageResourceLister(test.Container)
-                    .Invoke(cancellationToken))
-                    .Select(item => item.RelativePath)
-                    .ToList();
-                Assert.That(localFiles, Is.EquivalentTo(destinationObjects));
-            }
-            else if (errorMode == TransferErrorMode.StopOnAnyFailure)
-            {
-                Assert.That(transfer.Status.HasFailedItems, Is.True);
+                // check if expected files exist, but not necessarily for contents
+                if (errorMode == TransferErrorMode.ContinueOnFailure)
+                {
+                    await testEventsRaised.AssertContainerCompletedWithFailedCheckContinue(preexistingFileCount);
+
+                    // Verify all files exist, meaning files without conflict were transferred.
+                    List<string> localFiles = (await TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath)
+                        .Invoke(cts.Token))
+                        .Select(item => item.RelativePath)
+                        .ToList();
+                    List<string> destinationObjects = (await GetStorageResourceLister(test.Container)
+                        .Invoke(cts.Token))
+                        .Select(item => item.RelativePath)
+                        .ToList();
+                    Assert.That(localFiles, Is.EquivalentTo(destinationObjects));
+                }
+                else if (errorMode == TransferErrorMode.StopOnAnyFailure)
+                {
+                    Assert.That(transfer.Status.HasFailedItems, Is.True);
+                }
             }
         }
 
@@ -282,48 +286,50 @@ namespace Azure.Storage.DataMovement.Tests
                 files.Add(GetNewObjectName());
             }
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
-            await InitializeDestinationDataAsync(
-                test.Container,
-                files.Skip(skipCount).Take(preexistingFileCount).Select(path => (path, DefaultObjectSize)).ToList(),
-                cancellationToken);
-            await SetupDirectoryAsync(
-                disposingLocalDirectory.DirectoryPath,
-                files.Select(path => (path, DefaultObjectSize)).ToList(),
-            cancellationToken);
-
-            TransferOptions options = new()
+            using (CancellationTokenSource cts = TestHelper.GetTimeoutTokenSource(waitTimeInSec))
             {
-                CreationMode = StorageResourceCreationMode.SkipIfExists
-            };
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            TransferManagerOptions transferManagerOptions = new()
-            {
-                ErrorMode = TransferErrorMode.ContinueOnFailure
-            };
+                await InitializeDestinationDataAsync(
+                    test.Container,
+                    files.Skip(skipCount).Take(preexistingFileCount).Select(path => (path, DefaultObjectSize)).ToList(),
+                    cts.Token);
+                await SetupDirectoryAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    files.Select(path => (path, DefaultObjectSize)).ToList(),
+                    cts.Token);
 
-            StorageResourceContainer sourceResource = LocalFilesStorageResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
-            StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
-            TransferOperation transfer = await new TransferManager(transferManagerOptions)
-                .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
-            await TestTransferWithTimeout.WaitForCompletionAsync(
-                transfer,
-                testEventsRaised,
-                cancellationToken);
+                TransferOptions options = new()
+                {
+                    CreationMode = StorageResourceCreationMode.SkipIfExists
+                };
+                TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+                TransferManagerOptions transferManagerOptions = new()
+                {
+                    ErrorMode = TransferErrorMode.ContinueOnFailure
+                };
 
-            // check if expected files exist, but not necessarily for contents
-            await testEventsRaised.AssertContainerCompletedWithSkippedCheck(preexistingFileCount);
+                StorageResourceContainer sourceResource = LocalFilesStorageResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
+                StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
+                TransferOperation transfer = await new TransferManager(transferManagerOptions)
+                    .StartTransferAsync(sourceResource, destinationResource, options, cts.Token);
+                await TestTransferWithTimeout.WaitForCompletionAsync(
+                    transfer,
+                    testEventsRaised,
+                    cts.Token);
 
-            // Verify all files exist, meaning files without conflict were transferred.
-            List<string> localFiles = (await TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath)
-                .Invoke(cancellationToken))
-                .Select(item => item.RelativePath)
-                .ToList();
-            List<string> destinationObjects = (await GetStorageResourceLister(test.Container)
-                .Invoke(cancellationToken))
-                .Select(item => item.RelativePath)
-                .ToList();
-            Assert.That(localFiles, Is.EquivalentTo(destinationObjects));
+                // check if expected files exist, but not necessarily for contents
+                await testEventsRaised.AssertContainerCompletedWithSkippedCheck(preexistingFileCount);
+
+                // Verify all files exist, meaning files without conflict were transferred.
+                List<string> localFiles = (await TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath)
+                    .Invoke(cts.Token))
+                    .Select(item => item.RelativePath)
+                    .ToList();
+                List<string> destinationObjects = (await GetStorageResourceLister(test.Container)
+                    .Invoke(cts.Token))
+                    .Select(item => item.RelativePath)
+                    .ToList();
+                Assert.That(localFiles, Is.EquivalentTo(destinationObjects));
+            }
         }
 
         [RecordedTest]
@@ -345,25 +351,27 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreationMode = StorageResourceCreationMode.OverwriteIfExists
             };
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
-            await InitializeDestinationDataAsync(
-                test.Container,
-                files.Take(1).Select(path => (path, DefaultObjectSize)).ToList(),
-                cancellationToken);
-            await SetupDirectoryAsync(
-                disposingLocalDirectory.DirectoryPath,
-                files.Select(path => (path, DefaultObjectSize)).ToList(),
-                cancellationToken);
-            await UploadDirectoryAndVerifyAsync(
-                disposingLocalDirectory.DirectoryPath,
-                test.Container,
-                expectedTransfers: files.Count,
-                options: options,
-                cancellationToken: cancellationToken);
+            using (CancellationTokenSource cts = TestHelper.GetTimeoutTokenSource(waitTimeInSec))
+            {
+                await InitializeDestinationDataAsync(
+                    test.Container,
+                    files.Take(1).Select(path => (path, DefaultObjectSize)).ToList(),
+                    cts.Token);
+                await SetupDirectoryAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    files.Select(path => (path, DefaultObjectSize)).ToList(),
+                    cts.Token);
+                await UploadDirectoryAndVerifyAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    test.Container,
+                    expectedTransfers: files.Count,
+                    options: options,
+                    cancellationToken: cts.Token);
+            }
         }
 
         [RecordedTest]
-        [TestCase(Constants.KB, Constants.KB/4, 10)]
+        [TestCase(Constants.KB, Constants.KB / 4, 10)]
         [TestCase(10 * Constants.KB, 4 * Constants.KB, 15)]
         [TestCase(Constants.KB, 97, 10)]
         public async Task UploadSmallChunks(long objectSize, long chunkSize, int waitTimeInSec)
@@ -384,16 +392,18 @@ namespace Azure.Storage.DataMovement.Tests
                 MaximumTransferChunkSize = chunkSize,
             };
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
-            await SetupDirectoryAsync(
-                disposingLocalDirectory.DirectoryPath,
-                files.Select(path => (path, objectSize)).ToList(),
-                cancellationToken);
-            await UploadDirectoryAndVerifyAsync(
-                disposingLocalDirectory.DirectoryPath,
-                test.Container,
-                expectedTransfers: files.Count,
-                cancellationToken: cancellationToken);
+            using (CancellationTokenSource cts = TestHelper.GetTimeoutTokenSource(waitTimeInSec))
+            {
+                await SetupDirectoryAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    files.Select(path => (path, objectSize)).ToList(),
+                    cts.Token);
+                await UploadDirectoryAndVerifyAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    test.Container,
+                    expectedTransfers: files.Count,
+                    cancellationToken: cts.Token);
+            }
         }
 
         [RecordedTest]
@@ -420,12 +430,14 @@ namespace Azure.Storage.DataMovement.Tests
             }
             BuildFolders(disposingLocalDirectory.DirectoryPath, folderDepth);
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
-            await UploadDirectoryAndVerifyAsync(
+            using (CancellationTokenSource cts = TestHelper.GetTimeoutTokenSource(waitTimeInSec))
+            {
+                await UploadDirectoryAndVerifyAsync(
                 disposingLocalDirectory.DirectoryPath,
                 test.Container,
                 expectedTransfers: 0,
-                cancellationToken: cancellationToken);
+                cancellationToken: cts.Token);
+            }
         }
 
         [Ignore("Times out on linux/mac, currently unsure why.")]
@@ -453,16 +465,18 @@ namespace Azure.Storage.DataMovement.Tests
             }
             BuildFilePaths(disposingLocalDirectory.DirectoryPath, folderDepth);
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
-            await SetupDirectoryAsync(
-                disposingLocalDirectory.DirectoryPath,
-                files.Select(path => (path, DefaultObjectSize)).ToList(),
-                cancellationToken);
-            await UploadDirectoryAndVerifyAsync(
-                disposingLocalDirectory.DirectoryPath,
-                test.Container,
+            using (CancellationTokenSource cts = TestHelper.GetTimeoutTokenSource(waitTimeInSec))
+            {
+                await SetupDirectoryAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    files.Select(path => (path, DefaultObjectSize)).ToList(),
+                    cts.Token);
+                await UploadDirectoryAndVerifyAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    test.Container,
                 expectedTransfers: 1 << folderDepth,
-                cancellationToken: cancellationToken);
+                cancellationToken: cts.Token);
+            }
         }
 
         [RecordedTest]
@@ -480,16 +494,75 @@ namespace Azure.Storage.DataMovement.Tests
                 string.Join(Path.DirectorySeparatorChar.ToString(), Enumerable.Range(0, folderDepth).Select(_ => GetNewObjectName()).ToList())
             };
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
+            using (CancellationTokenSource cts = TestHelper.GetTimeoutTokenSource(waitTimeInSec))
+            {
+                await SetupDirectoryAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    files.Select(path => (path, DefaultObjectSize)).ToList(),
+                    cts.Token);
+                await UploadDirectoryAndVerifyAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    test.Container,
+                    expectedTransfers: 1,
+                    cancellationToken: cts.Token);
+            }
+        }
+
+        [RecordedTest]
+        [TestCase("source=path@#%")]
+        [TestCase("source%21path%40%23%25")]
+        public async Task Upload_SpecialChars(string prefix)
+        {
+            // Arrange
+            string directoryName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName(), prefix);
+            using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory(directoryName);
+            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
+
+            List<string> files =
+            [
+                string.Join("/", "file=test!@#$%"),
+                string.Join("/", "file%3Dtest%26"),  // Already encoded
+                string.Join("/", "folder=bar", "subfile=test!@#$%"),
+                string.Join("/", "folder=bar", "subfile%3Dtest%26"),
+                string.Join("/", "folder%40bar", "different!file"),
+                string.Join("/", "space folder", "space file"),
+            ];
+
+            using (CancellationTokenSource cts = TestHelper.GetTimeoutTokenSource(30))
+            {
+                await SetupDirectoryAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    files.Select(path => (path, (long)Constants.KB)).ToList(),
+                    cts.Token);
+                await UploadDirectoryAndVerifyAsync(
+                    disposingLocalDirectory.DirectoryPath,
+                    test.Container,
+                    expectedTransfers: files.Count,
+                    cancellationToken: cts.Token);
+            }
+        }
+
+        [RecordedTest]
+        public async Task Upload_TrailingSlash()
+        {
+            using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
+
+            List<string> files = [ "file1", "file2", "dir1/file1" ];
+
+            using CancellationTokenSource cancellationTokenSource = TestHelper.GetTimeoutTokenSource(30);
             await SetupDirectoryAsync(
                 disposingLocalDirectory.DirectoryPath,
-                files.Select(path => (path, DefaultObjectSize)).ToList(),
-                cancellationToken);
+                files.Select(path => (path, (long)Constants.KB)).ToList(),
+                cancellationTokenSource.Token);
+
+            // Intentionally append trailing slash
+            string sourcePath = disposingLocalDirectory.DirectoryPath + Path.DirectorySeparatorChar;
             await UploadDirectoryAndVerifyAsync(
-                disposingLocalDirectory.DirectoryPath,
+                sourcePath,
                 test.Container,
-                expectedTransfers: 1,
-                cancellationToken: cancellationToken);
+                expectedTransfers: files.Count,
+                cancellationToken: cancellationTokenSource.Token);
         }
     }
 }

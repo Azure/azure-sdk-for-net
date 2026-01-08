@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -58,8 +59,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="createdOn"> The certificate's create date and time. </param>
         /// <param name="updatedOn"> The certificate's last update date and time. </param>
         /// <param name="certificate"> The certificate content. </param>
+        /// <param name="policyResourceId"> The reference to policy stored in Azure Device Registry (ADR). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate, ResourceIdentifier policyResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subject = subject;
             ExpireOn = expireOn;
@@ -68,6 +70,7 @@ namespace Azure.ResourceManager.IotHub.Models
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
             Certificate = certificate;
+            PolicyResourceId = policyResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -114,5 +117,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// </para>
         /// </summary>
         public BinaryData Certificate { get; set; }
+        /// <summary> The reference to policy stored in Azure Device Registry (ADR). </summary>
+        public ResourceIdentifier PolicyResourceId { get; set; }
     }
 }

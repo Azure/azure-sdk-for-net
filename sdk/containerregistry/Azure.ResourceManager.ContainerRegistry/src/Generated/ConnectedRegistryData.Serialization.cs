@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             string version = default;
             ConnectedRegistryConnectionState? connectionState = default;
             DateTimeOffset? lastActivityTime = default;
-            ConnectedRegistryPropertiesActivation activation = default;
+            ConnectedRegistryActivation activation = default;
             ConnectedRegistryParent parent = default;
             IList<ResourceIdentifier> clientTokenIds = default;
             ConnectedRegistryLoginServer loginServer = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerRegistryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            activation = ConnectedRegistryPropertiesActivation.DeserializeConnectedRegistryPropertiesActivation(property0.Value, options);
+                            activation = ConnectedRegistryActivation.DeserializeConnectedRegistryActivation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parent"u8))

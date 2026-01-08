@@ -8,19 +8,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.SiteManager.Models;
 
 namespace Azure.ResourceManager.SiteManager.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableSiteManagerSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _sitesBySubscriptionClientDiagnostics;
-        private SitesBySubscriptionRestOperations _sitesBySubscriptionRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="MockableSiteManagerSubscriptionResource"/> class for mocking. </summary>
         protected MockableSiteManagerSubscriptionResource()
         {
@@ -33,65 +27,17 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         {
         }
 
-        private ClientDiagnostics SitesBySubscriptionClientDiagnostics => _sitesBySubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SiteManager", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SitesBySubscriptionRestOperations SitesBySubscriptionRestClient => _sitesBySubscriptionRestClient ??= new SitesBySubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary>
-        /// List Site resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeSiteResource> GetEdgeSitesAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of SubscriptionEdgeSiteResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SubscriptionEdgeSiteResources and their operations over a SubscriptionEdgeSiteResource. </returns>
+        public virtual SubscriptionEdgeSiteCollection GetSubscriptionEdgeSites()
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SitesBySubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SitesBySubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeSiteResource(Client, EdgeSiteData.DeserializeEdgeSiteData(e)), SitesBySubscriptionClientDiagnostics, Pipeline, "MockableSiteManagerSubscriptionResource.GetEdgeSites", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List Site resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeSiteResource> GetEdgeSites(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SitesBySubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SitesBySubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeSiteResource(Client, EdgeSiteData.DeserializeEdgeSiteData(e)), SitesBySubscriptionClientDiagnostics, Pipeline, "MockableSiteManagerSubscriptionResource.GetEdgeSites", "value", "nextLink", cancellationToken);
+            return GetCachedClient(client => new SubscriptionEdgeSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -107,30 +53,22 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="siteName"> Name of Site resource. </param>
+        /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
-        public virtual async Task<Response<EdgeSiteResource>> GetSitesBySubscriptionAsync(string siteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionEdgeSiteResource>> GetSubscriptionEdgeSiteAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            using var scope = SitesBySubscriptionClientDiagnostics.CreateScope("MockableSiteManagerSubscriptionResource.GetSitesBySubscription");
-            scope.Start();
-            try
-            {
-                var response = await SitesBySubscriptionRestClient.GetAsync(Id.SubscriptionId, siteName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new EdgeSiteResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await GetSubscriptionEdgeSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -146,280 +84,22 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="siteName"> Name of Site resource. </param>
+        /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
-        public virtual Response<EdgeSiteResource> GetSitesBySubscription(string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            using var scope = SitesBySubscriptionClientDiagnostics.CreateScope("MockableSiteManagerSubscriptionResource.GetSitesBySubscription");
-            scope.Start();
-            try
-            {
-                var response = SitesBySubscriptionRestClient.Get(Id.SubscriptionId, siteName, cancellationToken);
-                return Response.FromValue(new EdgeSiteResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create a Site
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="siteName"> Name of Site resource. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeSiteResource>> CreateOrUpdateSitesBySubscriptionAsync(WaitUntil waitUntil, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionEdgeSiteResource> GetSubscriptionEdgeSite(string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = SitesBySubscriptionClientDiagnostics.CreateScope("MockableSiteManagerSubscriptionResource.CreateOrUpdateSitesBySubscription");
-            scope.Start();
-            try
-            {
-                var response = await SitesBySubscriptionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, siteName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteManagerArmOperation<EdgeSiteResource>(new EdgeSiteOperationSource(Client), SitesBySubscriptionClientDiagnostics, Pipeline, SitesBySubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create a Site
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="siteName"> Name of Site resource. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<EdgeSiteResource> CreateOrUpdateSitesBySubscription(WaitUntil waitUntil, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = SitesBySubscriptionClientDiagnostics.CreateScope("MockableSiteManagerSubscriptionResource.CreateOrUpdateSitesBySubscription");
-            scope.Start();
-            try
-            {
-                var response = SitesBySubscriptionRestClient.CreateOrUpdate(Id.SubscriptionId, siteName, data, cancellationToken);
-                var operation = new SiteManagerArmOperation<EdgeSiteResource>(new EdgeSiteOperationSource(Client), SitesBySubscriptionClientDiagnostics, Pipeline, SitesBySubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a Site
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="siteName"> Name of Site resource. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<EdgeSiteResource>> UpdateSitesBySubscriptionAsync(string siteName, EdgeSitePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = SitesBySubscriptionClientDiagnostics.CreateScope("MockableSiteManagerSubscriptionResource.UpdateSitesBySubscription");
-            scope.Start();
-            try
-            {
-                var response = await SitesBySubscriptionRestClient.UpdateAsync(Id.SubscriptionId, siteName, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new EdgeSiteResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a Site
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="siteName"> Name of Site resource. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="patch"/> is null. </exception>
-        public virtual Response<EdgeSiteResource> UpdateSitesBySubscription(string siteName, EdgeSitePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = SitesBySubscriptionClientDiagnostics.CreateScope("MockableSiteManagerSubscriptionResource.UpdateSitesBySubscription");
-            scope.Start();
-            try
-            {
-                var response = SitesBySubscriptionRestClient.Update(Id.SubscriptionId, siteName, patch, cancellationToken);
-                return Response.FromValue(new EdgeSiteResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Site
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="siteName"> Name of Site resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
-        public virtual async Task<Response> DeleteSitesBySubscriptionAsync(string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            using var scope = SitesBySubscriptionClientDiagnostics.CreateScope("MockableSiteManagerSubscriptionResource.DeleteSitesBySubscription");
-            scope.Start();
-            try
-            {
-                var response = await SitesBySubscriptionRestClient.DeleteAsync(Id.SubscriptionId, siteName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Site
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="siteName"> Name of Site resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
-        public virtual Response DeleteSitesBySubscription(string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            using var scope = SitesBySubscriptionClientDiagnostics.CreateScope("MockableSiteManagerSubscriptionResource.DeleteSitesBySubscription");
-            scope.Start();
-            try
-            {
-                var response = SitesBySubscriptionRestClient.Delete(Id.SubscriptionId, siteName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetSubscriptionEdgeSites().Get(siteName, cancellationToken);
         }
     }
 }

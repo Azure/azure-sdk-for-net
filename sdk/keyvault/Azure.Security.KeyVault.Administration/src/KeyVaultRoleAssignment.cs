@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role Assignments. </summary>
-    [CodeGenModel("RoleAssignment")]
+    [CodeGenType("RoleAssignment")]
     public partial class KeyVaultRoleAssignment
     {
     }

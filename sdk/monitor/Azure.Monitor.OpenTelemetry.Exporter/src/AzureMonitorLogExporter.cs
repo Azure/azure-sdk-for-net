@@ -47,10 +47,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
+                (var telemetryItems, var telemetrySchemaTypeCounter) = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
                 if (telemetryItems.Count > 0)
                 {
-                    exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();
+                    exportResult = _transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();
                 }
             }
             catch (Exception ex)

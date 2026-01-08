@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SiteManager.Models
             }
             string displayName = default;
             string description = default;
-            SiteAddressProperties siteAddress = default;
+            EdgeSiteAddressProperties siteAddress = default;
             IDictionary<string, string> labels = default;
             EdgeSiteProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SiteManager.Models
                     {
                         continue;
                     }
-                    siteAddress = SiteAddressProperties.DeserializeSiteAddressProperties(property.Value, options);
+                    siteAddress = EdgeSiteAddressProperties.DeserializeEdgeSiteAddressProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("labels"u8))

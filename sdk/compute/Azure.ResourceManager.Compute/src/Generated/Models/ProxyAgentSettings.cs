@@ -56,14 +56,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="keyIncarnationId"> Increase the value of this property allows users to reset the key used for securing communication channel between guest and host. </param>
         /// <param name="wireServer"> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
         /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
+        /// <param name="addProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyAgentSettings(bool? enabled, Mode? mode, int? keyIncarnationId, HostEndpointSettings wireServer, HostEndpointSettings imds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProxyAgentSettings(bool? enabled, Mode? mode, int? keyIncarnationId, HostEndpointSettings wireServer, HostEndpointSettings imds, bool? addProxyAgentExtension, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Mode = mode;
             KeyIncarnationId = keyIncarnationId;
             WireServer = wireServer;
             Imds = imds;
+            AddProxyAgentExtension = addProxyAgentExtension;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,5 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
         public HostEndpointSettings WireServer { get; set; }
         /// <summary> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </summary>
         public HostEndpointSettings Imds { get; set; }
+        /// <summary> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </summary>
+        public bool? AddProxyAgentExtension { get; set; }
     }
 }

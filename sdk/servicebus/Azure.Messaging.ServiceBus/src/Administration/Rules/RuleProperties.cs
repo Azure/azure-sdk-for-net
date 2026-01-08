@@ -110,15 +110,10 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <inheritdoc/>
         public bool Equals(RuleProperties other)
         {
-            if (other is RuleProperties otherProperties
-                && string.Equals(Name, otherProperties.Name, StringComparison.OrdinalIgnoreCase)
-                && (Filter == null || Filter.Equals(otherProperties.Filter))
-                && (Action == null || Action.Equals(otherProperties.Action)))
-            {
-                return true;
-            }
-
-            return false;
+            return other is not null
+                   && string.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase)
+                   && Filter?.Equals(other.Filter) != false
+                   && Action?.Equals(other.Action) != false;
         }
 
         /// <summary>Compares two <see cref="RuleProperties"/> values for equality.</summary>

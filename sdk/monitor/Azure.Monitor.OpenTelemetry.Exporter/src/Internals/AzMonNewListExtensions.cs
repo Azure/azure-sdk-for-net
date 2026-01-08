@@ -142,7 +142,7 @@ internal static class AzMonNewListExtensions
             case OperationType.Http:
                 return tagObjects.GetNewSchemaHttpDependencyTarget();
             case OperationType.Db:
-                return tagObjects.GetDbDependencyTargetAndName().DbTarget;
+                return tagObjects.GetDbDependencyTargetAndName(type.HasFlag(OperationType.V2)).DbTarget;
             default:
                 return null;
         }

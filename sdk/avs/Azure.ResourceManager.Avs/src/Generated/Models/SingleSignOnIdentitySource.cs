@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="SingleSignOnIdentitySource"/>. </summary>
         /// <param name="name"> The name of the identity source. </param>
         /// <param name="alias"> The domain's NetBIOS name. </param>
-        /// <param name="domain"> The domain's dns name. </param>
+        /// <param name="domain"> The domain's DNS name. </param>
         /// <param name="baseUserDN"> The base distinguished name for users. </param>
         /// <param name="baseGroupDN"> The base distinguished name for groups. </param>
         /// <param name="primaryServer"> Primary server URL. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Avs.Models
         public string Name { get; set; }
         /// <summary> The domain's NetBIOS name. </summary>
         public string Alias { get; set; }
-        /// <summary> The domain's dns name. </summary>
+        /// <summary> The domain's DNS name. </summary>
         public string Domain { get; set; }
         /// <summary> The base distinguished name for users. </summary>
         public string BaseUserDN { get; set; }

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using Azure.Core;
 using Azure.Search.Documents.Models;
@@ -59,7 +58,7 @@ namespace Azure.Search.Documents
         /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
         internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, string queryRewritesRaw, string semanticFieldsRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode, HybridSearch hybridSearch)
         {
-            SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null || semanticQuery != null || semanticFieldsRaw != null || debug != null) ? new SemanticSearchOptions() : null;
+            SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null || semanticQuery != null || semanticFieldsRaw != null) ? new SemanticSearchOptions() : null;
             if (SemanticSearch != null)
             {
                 SemanticSearch.QueryAnswer = queryAnswerRaw != null ? new QueryAnswer() : null;
@@ -341,20 +340,6 @@ namespace Azure.Search.Documents
             }
         }
 
-        /// <summary> Enables a debugging tool that can be used to further explore your reranked results. </summary>
-        [CodeGenMember("Debug")]
-        private QueryDebugMode? Debug
-        {
-            get { return SemanticSearch?.Debug; }
-            set
-            {
-                if (SemanticSearch != null)
-                {
-                    SemanticSearch.Debug = value;
-                }
-            }
-        }
-
         /// <summary> Allows the user to choose whether a semantic call should fail completely (default / current behavior), or to return partial results. </summary>
         [CodeGenMember("SemanticErrorHandling")]
         private SemanticErrorMode? SemanticErrorMode
@@ -443,6 +428,7 @@ namespace Azure.Search.Documents
             destination.Skip = source.Skip;
             destination.QueryLanguage = source.QueryLanguage;
             destination.QuerySpeller = source.QuerySpeller;
+            destination.Debug = source.Debug;
             destination.SemanticSearch = source.SemanticSearch;
             destination.VectorSearch = source.VectorSearch;
             destination.HybridSearch  = source.HybridSearch;

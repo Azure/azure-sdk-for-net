@@ -82,22 +82,31 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The type of the hop. </summary>
+        [WirePath("type")]
         public string ConnectivityHopType { get; }
         /// <summary> The ID of the hop. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The IP address of the hop. </summary>
+        [WirePath("address")]
         public string Address { get; }
         /// <summary> The ID of the resource corresponding to this hop. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
         /// <summary> List of next hop identifiers. </summary>
+        [WirePath("nextHopIds")]
         public IReadOnlyList<string> NextHopIds { get; }
         /// <summary> List of previous hop identifiers. </summary>
+        [WirePath("previousHopIds")]
         public IReadOnlyList<string> PreviousHopIds { get; }
         /// <summary> List of hop links. </summary>
+        [WirePath("links")]
         public IReadOnlyList<HopLink> Links { get; }
         /// <summary> List of previous hop links. </summary>
+        [WirePath("previousLinks")]
         public IReadOnlyList<HopLink> PreviousLinks { get; }
         /// <summary> List of issues. </summary>
+        [WirePath("issues")]
         public IReadOnlyList<ConnectivityIssueInfo> Issues { get; }
     }
 }

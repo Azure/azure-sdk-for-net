@@ -301,26 +301,21 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public bool Equals(SubscriptionProperties other)
         {
-            if (other is SubscriptionProperties otherDescription
-                && SubscriptionName.Equals(otherDescription.SubscriptionName, StringComparison.OrdinalIgnoreCase)
-                && TopicName.Equals(otherDescription.TopicName, StringComparison.OrdinalIgnoreCase)
-                && AutoDeleteOnIdle.Equals(otherDescription.AutoDeleteOnIdle)
-                && DefaultMessageTimeToLive.Equals(otherDescription.DefaultMessageTimeToLive)
-                && EnableBatchedOperations == otherDescription.EnableBatchedOperations
-                && DeadLetteringOnMessageExpiration == otherDescription.DeadLetteringOnMessageExpiration
-                && EnableDeadLetteringOnFilterEvaluationExceptions == otherDescription.EnableDeadLetteringOnFilterEvaluationExceptions
-                && string.Equals(ForwardDeadLetteredMessagesTo, otherDescription.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(ForwardTo, otherDescription.ForwardTo, StringComparison.OrdinalIgnoreCase)
-                && LockDuration.Equals(otherDescription.LockDuration)
-                && MaxDeliveryCount == otherDescription.MaxDeliveryCount
-                && RequiresSession.Equals(otherDescription.RequiresSession)
-                && Status.Equals(otherDescription.Status)
-                && string.Equals(_userMetadata, otherDescription._userMetadata, StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-
-            return false;
+            return other is not null
+                   && SubscriptionName.Equals(other.SubscriptionName, StringComparison.OrdinalIgnoreCase)
+                   && TopicName.Equals(other.TopicName, StringComparison.OrdinalIgnoreCase)
+                   && AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
+                   && DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
+                   && EnableBatchedOperations == other.EnableBatchedOperations
+                   && DeadLetteringOnMessageExpiration == other.DeadLetteringOnMessageExpiration
+                   && EnableDeadLetteringOnFilterEvaluationExceptions == other.EnableDeadLetteringOnFilterEvaluationExceptions
+                   && string.Equals(ForwardDeadLetteredMessagesTo, other.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
+                   && string.Equals(ForwardTo, other.ForwardTo, StringComparison.OrdinalIgnoreCase)
+                   && LockDuration.Equals(other.LockDuration)
+                   && MaxDeliveryCount == other.MaxDeliveryCount
+                   && RequiresSession.Equals(other.RequiresSession)
+                   && Status.Equals(other.Status)
+                   && string.Equals(_userMetadata, other._userMetadata, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

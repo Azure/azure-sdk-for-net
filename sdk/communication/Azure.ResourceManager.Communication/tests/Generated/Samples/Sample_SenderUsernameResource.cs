@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSenderUsernamesResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/senderUsernames/get.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/senderUsernames/get.json
             // this example is just showing the usage of "SenderUsernames_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSenderUsernamesResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/senderUsernames/delete.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/senderUsernames/delete.json
             // this example is just showing the usage of "SenderUsernames_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateSenderUsernamesResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/senderUsernames/createOrUpdate.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2025-09-01/examples/senderUsernames/createOrUpdate.json
             // this example is just showing the usage of "SenderUsernames_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -41,6 +41,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public float SamplingRatio { get; set; } = 1.0F;
 
         /// <summary>
+        /// Gets or sets the number of traces per second to be sampled when using rate-limited sampling.
+        /// For example, specifying 0.5 means one request every two seconds.
+        /// When both TracesPerSecond and SamplingRatio are specified, TracesPerSecond takes precedence.
+        /// </summary>
+        public double? TracesPerSecond { get; set; }
+
+        /// <summary>
         /// The <see cref="ServiceVersion"/> of the Azure Monitor ingestion API.
         /// </summary>
         public ServiceVersion Version { get; set; } = LatestVersion;
@@ -100,9 +107,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public bool EnableLiveMetrics { get; set; } = true;
 
         /// <summary>
+        /// Enables or disables filtering logs based on trace sampling decisions.
+        /// </summary>
+        /// <remarks>
+        /// When enabled, only logs associated with sampled traces are exported.
+        /// Logs without trace context are always exported.
+        /// This reduces log volume while maintaining trace-log correlation.
+        /// </remarks>
+        public bool EnableTraceBasedLogsSampler { get; set; } = true;
+
+        /// <summary>
         /// Internal flag to control if Statsbeat is enabled.
         /// </summary>
         internal bool EnableStatsbeat { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether standard metrics should be collected.
+        /// Default is true.
+        /// </summary>
+        internal bool EnableStandardMetrics { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether performance counters should be collected.
+        /// Default is true.
+        /// </summary>
+        internal bool EnablePerfCounters { get; set; } = true;
 
         internal void SetValueToLiveMetricsOptions(AzureMonitorLiveMetricsOptions liveMetricsOptions)
         {

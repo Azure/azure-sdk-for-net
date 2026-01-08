@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in CapacityReservations)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachinesAssociated)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,6 +68,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("sharingProfile"u8);
                 writer.WriteObjectValue(SharingProfile, options);
+            }
+            if (Optional.IsDefined(ReservationType))
+            {
+                writer.WritePropertyName("reservationType"u8);
+                writer.WriteStringValue(ReservationType.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -96,6 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
             IReadOnlyList<SubResource> virtualMachinesAssociated = default;
             CapacityReservationGroupInstanceView instanceView = default;
             ResourceSharingProfile sharingProfile = default;
+            CapacityReservationType? reservationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
                             }
                             capacityReservations = array;
                             continue;
@@ -146,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
                             }
                             virtualMachinesAssociated = array;
                             continue;
@@ -169,6 +176,15 @@ namespace Azure.ResourceManager.Compute.Models
                             sharingProfile = ResourceSharingProfile.DeserializeResourceSharingProfile(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("reservationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            reservationType = new CapacityReservationType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -184,7 +200,8 @@ namespace Azure.ResourceManager.Compute.Models
                 capacityReservations ?? new ChangeTrackingList<SubResource>(),
                 virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
                 instanceView,
-                sharingProfile);
+                sharingProfile,
+                reservationType);
         }
 
         BinaryData IPersistableModel<CapacityReservationGroupPatch>.Write(ModelReaderWriterOptions options)

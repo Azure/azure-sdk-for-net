@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 roleInstance: "testRoleInstance",
                 serviceVersion: null,
                 monitorBaseData: null);
-            var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(new Batch<Metric>(metrics.ToArray(), 1), metricResource, "00000000-0000-0000-0000-000000000000");
+            (var telemetryItems, var telemetryCounter) = MetricHelper.OtelToAzureMonitorMetrics(new Batch<Metric>(metrics.ToArray(), 1), metricResource, "00000000-0000-0000-0000-000000000000");
             Assert.Single(telemetryItems);
             Assert.Equal("MetricData", telemetryItems[0].Data.BaseType);
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItems[0].InstrumentationKey);
@@ -54,6 +54,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Contains(metricsData.Properties, kvp => kvp.Key == "tag1" && kvp.Value == "value1");
             Assert.Contains(metricsData.Properties, kvp => kvp.Key == "tag2" && kvp.Value == "1,2,3");
             Assert.Contains(metricsData.Properties, kvp => kvp.Key == "tag3" && kvp.Value == string.Empty);
+
+            // Validate TelemetryCounter
+            Assert.Equal(1, telemetryCounter._metricCount);
+            Assert.Equal(0, telemetryCounter._requestCount);
+            Assert.Equal(0, telemetryCounter._dependencyCount);
+            Assert.Equal(0, telemetryCounter._exceptionCount);
+            Assert.Equal(0, telemetryCounter._eventCount);
+            Assert.Equal(0, telemetryCounter._traceCount);
         }
     }
 }

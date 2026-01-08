@@ -29,6 +29,27 @@ namespace Azure.AI.Language.Conversations.Models
         private const string NumericIdentifierValue = "NumericIdentifier";
         private const string PhoneValue = "Phone";
         private const string UsSocialSecurityNumberValue = "USSocialSecurityNumber";
+        private const string DriversLicenseNumberValue = "DriversLicenseNumber";
+        private const string PassportNumberValue = "PassportNumber";
+        private const string PersonTypeValue = "PersonType";
+        private const string OrganizationValue = "Organization";
+        private const string ABARoutingNumberValue = "ABARoutingNumber";
+        private const string BankAccountNumberValue = "BankAccountNumber";
+        private const string DateOfBirthValue = "DateOfBirth";
+        private const string InternationalBankingAccountNumberValue = "InternationalBankingAccountNumber";
+        private const string SWIFTCodeValue = "SWIFTCode";
+        private const string VehicleIdentificationNumberValue = "VehicleIdentificationNumber";
+        private const string AgeValue = "Age";
+        private const string DateValue = "Date";
+        private const string ZipCodeValue = "ZipCode";
+        private const string GovernmentIssuedIdValue = "GovernmentIssuedId";
+        private const string CVVValue = "CVV";
+        private const string HealthCardNumberValue = "HealthCardNumber";
+        private const string CASocialInsuranceNumberValue = "CASocialInsuranceNumber";
+        private const string USMedicareBeneficiaryIdValue = "USMedicareBeneficiaryId";
+        private const string GithubAccountValue = "GithubAccount";
+        private const string LocationValue = "Location";
+        private const string GPEValue = "GPE";
 
         /// <summary> Address category. </summary>
         public static ConversationPiiCategoryExclusions Address { get; } = new ConversationPiiCategoryExclusions(AddressValue);
@@ -44,6 +65,48 @@ namespace Azure.AI.Language.Conversations.Models
         public static ConversationPiiCategoryExclusions Phone { get; } = new ConversationPiiCategoryExclusions(PhoneValue);
         /// <summary> US social security number category. </summary>
         public static ConversationPiiCategoryExclusions UsSocialSecurityNumber { get; } = new ConversationPiiCategoryExclusions(UsSocialSecurityNumberValue);
+        /// <summary> Driver's license number category. </summary>
+        public static ConversationPiiCategoryExclusions DriversLicenseNumber { get; } = new ConversationPiiCategoryExclusions(DriversLicenseNumberValue);
+        /// <summary> Passport number category. </summary>
+        public static ConversationPiiCategoryExclusions PassportNumber { get; } = new ConversationPiiCategoryExclusions(PassportNumberValue);
+        /// <summary> Person type category. </summary>
+        public static ConversationPiiCategoryExclusions PersonType { get; } = new ConversationPiiCategoryExclusions(PersonTypeValue);
+        /// <summary> Organization category. </summary>
+        public static ConversationPiiCategoryExclusions Organization { get; } = new ConversationPiiCategoryExclusions(OrganizationValue);
+        /// <summary> ABA routing number category. </summary>
+        public static ConversationPiiCategoryExclusions ABARoutingNumber { get; } = new ConversationPiiCategoryExclusions(ABARoutingNumberValue);
+        /// <summary> Bank account number category. </summary>
+        public static ConversationPiiCategoryExclusions BankAccountNumber { get; } = new ConversationPiiCategoryExclusions(BankAccountNumberValue);
+        /// <summary> Date of birth category. </summary>
+        public static ConversationPiiCategoryExclusions DateOfBirth { get; } = new ConversationPiiCategoryExclusions(DateOfBirthValue);
+        /// <summary> International Bank Account Number category. </summary>
+        public static ConversationPiiCategoryExclusions InternationalBankingAccountNumber { get; } = new ConversationPiiCategoryExclusions(InternationalBankingAccountNumberValue);
+        /// <summary> SWIFT code category. </summary>
+        public static ConversationPiiCategoryExclusions SWIFTCode { get; } = new ConversationPiiCategoryExclusions(SWIFTCodeValue);
+        /// <summary> Vehicle identification number category. </summary>
+        public static ConversationPiiCategoryExclusions VehicleIdentificationNumber { get; } = new ConversationPiiCategoryExclusions(VehicleIdentificationNumberValue);
+        /// <summary> Age category. </summary>
+        public static ConversationPiiCategoryExclusions Age { get; } = new ConversationPiiCategoryExclusions(AgeValue);
+        /// <summary> Date category. </summary>
+        public static ConversationPiiCategoryExclusions Date { get; } = new ConversationPiiCategoryExclusions(DateValue);
+        /// <summary> Zip code category. </summary>
+        public static ConversationPiiCategoryExclusions ZipCode { get; } = new ConversationPiiCategoryExclusions(ZipCodeValue);
+        /// <summary> Government issued ID category. </summary>
+        public static ConversationPiiCategoryExclusions GovernmentIssuedId { get; } = new ConversationPiiCategoryExclusions(GovernmentIssuedIdValue);
+        /// <summary> Card verification value category. </summary>
+        public static ConversationPiiCategoryExclusions CVV { get; } = new ConversationPiiCategoryExclusions(CVVValue);
+        /// <summary> Health card number category. </summary>
+        public static ConversationPiiCategoryExclusions HealthCardNumber { get; } = new ConversationPiiCategoryExclusions(HealthCardNumberValue);
+        /// <summary> CA Social insurance number category. </summary>
+        public static ConversationPiiCategoryExclusions CASocialInsuranceNumber { get; } = new ConversationPiiCategoryExclusions(CASocialInsuranceNumberValue);
+        /// <summary> US Medicare beneficiary ID category. </summary>
+        public static ConversationPiiCategoryExclusions USMedicareBeneficiaryId { get; } = new ConversationPiiCategoryExclusions(USMedicareBeneficiaryIdValue);
+        /// <summary> Github account category. </summary>
+        public static ConversationPiiCategoryExclusions GithubAccount { get; } = new ConversationPiiCategoryExclusions(GithubAccountValue);
+        /// <summary> Location category. </summary>
+        public static ConversationPiiCategoryExclusions Location { get; } = new ConversationPiiCategoryExclusions(LocationValue);
+        /// <summary> GPE category. </summary>
+        public static ConversationPiiCategoryExclusions GPE { get; } = new ConversationPiiCategoryExclusions(GPEValue);
         /// <summary> Determines if two <see cref="ConversationPiiCategoryExclusions"/> values are the same. </summary>
         public static bool operator ==(ConversationPiiCategoryExclusions left, ConversationPiiCategoryExclusions right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConversationPiiCategoryExclusions"/> values are not the same. </summary>

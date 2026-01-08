@@ -31,10 +31,16 @@ extends:
       safeName: MicrosoftExtensionsAzure
     - name: Azure.Extensions.AspNetCore.DataProtection.Blobs
       safeName: AzureExtensionsAspNetCoreDataProtectionBlobs
+      triggeringPaths:
+      - sdk/storage/Azure.Storage.Blobs/
     - name: Azure.Extensions.AspNetCore.DataProtection.Keys
       safeName: AzureExtensionsAspNetCoreDataProtectionKeys
+      triggeringPaths:
+      - sdk/keyvault/Azure.Security.KeyVault.Keys/
     - name: Azure.Extensions.AspNetCore.Configuration.Secrets
       safeName: AzureExtensionsAspNetCoreConfigurationSecrets
+      triggeringPaths:
+      - sdk/keyvault/Azure.Security.KeyVault.Secrets/
     - name: Microsoft.Azure.WebJobs.Extensions.Clients
       safeName: MicrosoftAzureWebJobsExtensionsClients
     CheckAOTCompat: false

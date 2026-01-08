@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/virtualenclaves/Azure.ResourceManager.VirtualEnclaves",
+  "Tag": ""
+}

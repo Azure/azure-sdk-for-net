@@ -41,11 +41,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
             long blockOffset = shardCursor?.BlockOffset ?? 0;
             long eventIndex = shardCursor?.EventIndex ?? 0;
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Prefix = shardPath,
+            };
+
             // Get Chunks
             if (async)
             {
                 await foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchyAsync(
-                    prefix: shardPath).ConfigureAwait(false))
+                    options: options).ConfigureAwait(false))
                 {
                     if (blobHierarchyItem.IsPrefix)
                         continue;
@@ -57,7 +62,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             else
             {
                 foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchy(
-                    prefix: shardPath))
+                    options: options))
                 {
                     if (blobHierarchyItem.IsPrefix)
                         continue;

@@ -4,12 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
+using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 using NUnit.Framework;
 
 namespace Azure.Monitor.Ingestion.Tests.Samples
@@ -89,7 +91,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             string countQueryId = batch.AddWorkspaceQuery(
                 workspaceId,
                 query,
-                new QueryTimeRange(TimeSpan.FromDays(1)));
+                new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 
             Response<LogsBatchQueryResultCollection> queryResponse =
                 await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
@@ -184,6 +186,36 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             #endregion
         }
 
+        public async Task LogDataIEnumerableAsyncAot()
+        {
+            #region Snippet:UploadLogDataIEnumerableAsyncAot
+            var endpoint = new Uri("<data_collection_endpoint_uri>");
+            var ruleId = "<data_collection_rule_id>";
+            var streamName = "<stream_name>";
+
+#if SNIPPET
+            var credential = new DefaultAzureCredential();
+#else
+            TokenCredential credential = new DefaultAzureCredential();
+            endpoint = new Uri(TestEnvironment.DCREndpoint);
+            credential = TestEnvironment.Credential;
+#endif
+            LogsIngestionClient client = new(endpoint, credential);
+
+            DateTimeOffset currentTime = DateTimeOffset.UtcNow;
+
+            var entries = new List<BinaryData>();
+            for (int i = 0; i < 100; i++)
+            {
+                entries.Add(BinaryData.FromBytes(
+                    JsonSerializer.SerializeToUtf8Bytes(new Person($"Person{i}", "Department{i}", i))));
+            }
+
+            // Upload our logs
+            Response response = await client.UploadAsync(ruleId, streamName, entries).ConfigureAwait(false);
+            #endregion
+        }
+
         public async Task UploadWithMaxConcurrencyAsync(){
             #region Snippet:UploadWithMaxConcurrencyAsync
             var endpoint = new Uri("<data_collection_endpoint_uri>");
@@ -223,4 +255,18 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             #endregion
         }
     }
+
+#pragma warning disable SA1402 // File may only contain a single class
+    #region Snippet:IngestionAotSerializationTypes
+
+    public record Person(string Name, string Department, int EmployeeNumber)
+    {
+    }
+
+    [JsonSerializable(typeof(Person))]
+    public partial class ExampleDeserializationContext : JsonSerializerContext
+    {
+    }
+    #endregion
+#pragma warning restore SA1402 // File may only contain a single class
 }

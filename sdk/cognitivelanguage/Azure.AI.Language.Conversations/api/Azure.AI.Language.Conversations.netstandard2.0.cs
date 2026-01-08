@@ -36,15 +36,15 @@ namespace Azure.AI.Language.Conversations
     }
     public partial class ConversationsClientOptions : Azure.Core.ClientOptions
     {
-        public ConversationsClientOptions(Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview) { }
+        public ConversationsClientOptions(Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview) { }
         public enum ServiceVersion
         {
             V2022_05_01 = 1,
             V2023_04_01 = 2,
             V2024_05_01 = 3,
             V2024_11_01 = 4,
-            V2024_11_15_Preview = 5,
-            V2025_05_15_Preview = 6,
+            V2025_05_15_Preview = 5,
+            V2025_11_15_Preview = 6,
         }
     }
     public static partial class ConversationsModelFactory
@@ -243,20 +243,6 @@ namespace Azure.AI.Language.Conversations.Models
         public static implicit operator Azure.AI.Language.Conversations.Models.AgeUnit (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Conversations.Models.AgeUnit left, Azure.AI.Language.Conversations.Models.AgeUnit right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class AIConversation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AIConversation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AIConversation>
-    {
-        public AIConversation(string id, Azure.AI.Language.Conversations.Models.InputModality modality, string language, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ConversationalAIItem> conversationItems) { }
-        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Models.ConversationalAIItem> ConversationItems { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string Language { get { throw null; } }
-        public Azure.AI.Language.Conversations.Models.InputModality Modality { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.AIConversation System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AIConversation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AIConversation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.AIConversation System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AIConversation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AIConversation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AIConversation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AIConversationLanguageUnderstandingActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AIConversationLanguageUnderstandingActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AIConversationLanguageUnderstandingActionContent>
     {
@@ -547,8 +533,8 @@ namespace Azure.AI.Language.Conversations.Models
     }
     public partial class ConversationalAIAnalysisInput : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput>
     {
-        public ConversationalAIAnalysisInput(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AIConversation> conversations) { }
-        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Models.AIConversation> Conversations { get { throw null; } }
+        public ConversationalAIAnalysisInput(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.TextConversation> conversations) { }
+        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Models.TextConversation> Conversations { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -588,19 +574,6 @@ namespace Azure.AI.Language.Conversations.Models
         Azure.AI.Language.Conversations.Models.ConversationalAIIntent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIIntent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIIntent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIIntent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ConversationalAIItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>
-    {
-        public ConversationalAIItem(string id, string participantId, string text) { }
-        public string Id { get { throw null; } }
-        public string ParticipantId { get { throw null; } }
-        public string Text { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.ConversationalAIItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.ConversationalAIItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ConversationalAIResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIResult>
     {
@@ -883,15 +856,36 @@ namespace Azure.AI.Language.Conversations.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ConversationPiiCategories(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories ABARoutingNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Address { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Age { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories All { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories BankAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories CASocialInsuranceNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories CreditCard { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories CVV { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Date { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories DateOfBirth { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Default { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories DriversLicenseNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Email { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories GithubAccount { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories GovernmentIssuedId { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories GPE { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories HealthCardNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories InternationalBankingAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Location { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories NumericIdentifier { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Organization { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories PassportNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Person { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories PersonType { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Phone { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories SWIFTCode { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories USMedicareBeneficiaryId { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories UsSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories VehicleIdentificationNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories ZipCode { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.ConversationPiiCategories other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -908,13 +902,34 @@ namespace Azure.AI.Language.Conversations.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ConversationPiiCategoryExclusions(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions ABARoutingNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Address { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Age { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions BankAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions CASocialInsuranceNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions CreditCard { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions CVV { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Date { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions DateOfBirth { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions DriversLicenseNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Email { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions GithubAccount { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions GovernmentIssuedId { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions GPE { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions HealthCardNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions InternationalBankingAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Location { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions NumericIdentifier { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Organization { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions PassportNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Person { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions PersonType { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Phone { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions SWIFTCode { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions USMedicareBeneficiaryId { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions UsSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions VehicleIdentificationNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions ZipCode { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

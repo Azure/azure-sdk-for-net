@@ -59,6 +59,16 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(PolicyEffect))
+            {
+                writer.WritePropertyName("policyEffect"u8);
+                writer.WriteStringValue(PolicyEffect);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -100,6 +110,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             string defaultValue = default;
             IReadOnlyList<string> values = default;
             PolicyReference policy = default;
+            string policyEffect = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,13 +153,30 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policy = PolicyReference.DeserializePolicyReference(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("policyEffect"u8))
+                {
+                    policyEffect = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("reason"u8))
+                {
+                    reason = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FieldRestriction(result, defaultValue, values ?? new ChangeTrackingList<string>(), policy, serializedAdditionalRawData);
+            return new FieldRestriction(
+                result,
+                defaultValue,
+                values ?? new ChangeTrackingList<string>(),
+                policy,
+                policyEffect,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FieldRestriction>.Write(ModelReaderWriterOptions options)

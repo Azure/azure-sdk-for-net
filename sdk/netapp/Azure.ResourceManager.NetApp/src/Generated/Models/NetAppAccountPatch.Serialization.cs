@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -39,8 +40,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("multiAdStatus"u8);
                 writer.WriteStringValue(MultiAdStatus.Value.ToString());
             }
+            if (Optional.IsDefined(LdapConfiguration))
+            {
+                writer.WritePropertyName("ldapConfiguration"u8);
+                writer.WriteObjectValue(LdapConfiguration, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? disableShowmount = default;
             string nfsV4IdDomain = default;
             MultiAdStatus? multiAdStatus = default;
+            LdapConfiguration ldapConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,8 +145,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -183,7 +188,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -252,6 +257,15 @@ namespace Azure.ResourceManager.NetApp.Models
                             multiAdStatus = new MultiAdStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("ldapConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ldapConfiguration = LdapConfiguration.DeserializeLdapConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -275,6 +289,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 disableShowmount,
                 nfsV4IdDomain,
                 multiAdStatus,
+                ldapConfiguration,
                 serializedAdditionalRawData);
         }
 

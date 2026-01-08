@@ -8,44 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> SecurityPolicyConfigurations Subresource of Traffic Controller. </summary>
-    internal partial class SecurityPolicyConfigurations
+    public partial class SecurityPolicyConfigurations
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyConfigurations"/>. </summary>
         public SecurityPolicyConfigurations()
@@ -53,25 +23,45 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyConfigurations"/>. </summary>
-        /// <param name="wafSecurityPolicy"> Contains reference to a WAF-type security policy that is applied at the Traffic Controller level. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityPolicyConfigurations(WritableSubResource wafSecurityPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="wafSecurityPolicy"> Contains reference to a WAF-type security policy. </param>
+        /// <param name="ipAccessRulesSecurityPolicy"> Contains reference to a IpAccessRules-type security policy. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityPolicyConfigurations(WafSecurityPolicy wafSecurityPolicy, ServiceNetworkingIPAccessRulesSecurityPolicy ipAccessRulesSecurityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WafSecurityPolicy = wafSecurityPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            IPAccessRulesSecurityPolicy = ipAccessRulesSecurityPolicy;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Contains reference to a WAF-type security policy that is applied at the Traffic Controller level. </summary>
-        internal WritableSubResource WafSecurityPolicy { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        /// <summary> Contains reference to a WAF-type security policy. </summary>
+        internal WafSecurityPolicy WafSecurityPolicy { get; set; }
+
+        /// <summary> Contains reference to a IpAccessRules-type security policy. </summary>
+        internal ServiceNetworkingIPAccessRulesSecurityPolicy IPAccessRulesSecurityPolicy { get; set; }
+
+        /// <summary> Resource ID of the Waf Security Policy. </summary>
         public ResourceIdentifier WafSecurityPolicyId
         {
-            get => WafSecurityPolicy is null ? default : WafSecurityPolicy.Id;
+            get
+            {
+                return WafSecurityPolicy is null ? default : WafSecurityPolicy.Id;
+            }
             set
             {
-                if (WafSecurityPolicy is null)
-                    WafSecurityPolicy = new WritableSubResource();
-                WafSecurityPolicy.Id = value;
+                WafSecurityPolicy = new WafSecurityPolicy(value);
+            }
+        }
+
+        /// <summary> Resource ID of the Ip Access Rules Security Policy. </summary>
+        public ResourceIdentifier IPAccessRulesSecurityPolicyId
+        {
+            get
+            {
+                return IPAccessRulesSecurityPolicy is null ? default : IPAccessRulesSecurityPolicy.Id;
+            }
+            set
+            {
+                IPAccessRulesSecurityPolicy = new ServiceNetworkingIPAccessRulesSecurityPolicy(value);
             }
         }
     }

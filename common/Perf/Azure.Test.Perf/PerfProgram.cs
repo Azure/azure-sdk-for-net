@@ -7,6 +7,7 @@ using CommandLine;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime;
@@ -457,6 +458,11 @@ namespace Azure.Test.Perf
                 {
                     PrintLatencies("Corrected Latency Distribution", _correctedLatencies);
                 }
+
+                if (!string.IsNullOrEmpty(options.ResultsFile))
+                {
+                    WriteResults(options.ResultsFile, (options as SizeOptions)?.Size ?? -1);
+                }
             }
 
             if (jobStatistics)
@@ -496,6 +502,20 @@ namespace Azure.Test.Perf
                 Console.WriteLine($"{percentile * 100,7:N3}%   {sortedLatencies[(int)(sortedLatencies.Length * percentile) - 1].TotalMilliseconds,8:N2}ms");
             }
             Console.WriteLine();
+        }
+
+        private static void WriteResults(string path, long operationSize)
+        {
+            var latencies = _latencies.SelectMany(x => x).Select(l => new OperationResult
+            {
+                Time = l.TotalMilliseconds,
+                Size = operationSize,
+            }).ToArray();
+            string json = JsonSerializer.Serialize(latencies, options: new JsonSerializerOptions()
+            {
+                WriteIndented = true,
+            });
+            File.WriteAllText(path, json);
         }
 
         private static Thread WritePendingOperations(int rate, CancellationToken token)

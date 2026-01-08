@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PineconeVectorDB;
 
 namespace Azure.ResourceManager.PineconeVectorDB.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
     public readonly partial struct PineconeVectorDBSingleSignOnType : IEquatable<PineconeVectorDBSingleSignOnType>
     {
         private readonly string _value;
+        /// <summary> Security Assertion Markup Language (SAML) based Single Sign-On. </summary>
+        private const string SamlValue = "Saml";
+        /// <summary> OpenID Connect based Single Sign-On. </summary>
+        private const string OpenIdValue = "OpenId";
 
         /// <summary> Initializes a new instance of <see cref="PineconeVectorDBSingleSignOnType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PineconeVectorDBSingleSignOnType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SamlValue = "Saml";
-        private const string OpenIdValue = "OpenId";
+            _value = value;
+        }
 
         /// <summary> Security Assertion Markup Language (SAML) based Single Sign-On. </summary>
         public static PineconeVectorDBSingleSignOnType Saml { get; } = new PineconeVectorDBSingleSignOnType(SamlValue);
+
         /// <summary> OpenID Connect based Single Sign-On. </summary>
         public static PineconeVectorDBSingleSignOnType OpenId { get; } = new PineconeVectorDBSingleSignOnType(OpenIdValue);
+
         /// <summary> Determines if two <see cref="PineconeVectorDBSingleSignOnType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PineconeVectorDBSingleSignOnType left, PineconeVectorDBSingleSignOnType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PineconeVectorDBSingleSignOnType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PineconeVectorDBSingleSignOnType left, PineconeVectorDBSingleSignOnType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PineconeVectorDBSingleSignOnType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PineconeVectorDBSingleSignOnType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PineconeVectorDBSingleSignOnType(string value) => new PineconeVectorDBSingleSignOnType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PineconeVectorDBSingleSignOnType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PineconeVectorDBSingleSignOnType?(string value) => value == null ? null : new PineconeVectorDBSingleSignOnType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PineconeVectorDBSingleSignOnType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PineconeVectorDBSingleSignOnType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

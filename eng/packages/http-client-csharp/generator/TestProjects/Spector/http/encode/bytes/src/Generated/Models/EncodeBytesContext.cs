@@ -9,6 +9,10 @@ using System.ClientModel.Primitives;
 
 namespace Encode.Bytes
 {
+    [ModelReaderWriterBuildable(typeof(Base64BytesProperty))]
+    [ModelReaderWriterBuildable(typeof(Base64urlArrayBytesProperty))]
+    [ModelReaderWriterBuildable(typeof(Base64urlBytesProperty))]
+    [ModelReaderWriterBuildable(typeof(DefaultBytesProperty))]
     public partial class EncodeBytesContext : ModelReaderWriterContext
     {
     }

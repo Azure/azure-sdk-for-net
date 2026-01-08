@@ -1,6 +1,6 @@
+emit:
+  - "@azure-typespec/http-client-csharp-mgmt"
 options:
-  "@azure-tools/typespec-csharp":
-    flavor: "azure"
-    namespace: "MgmtTypeSpec"
-    clear-output-folder: true
-    examples-dir: "{project-root}/examples"
+  "@azure-typespec/http-client-csharp-mgmt":
+    namespace: "Azure.Generator.MgmtTypeSpec.Tests"
+    enable-wire-path-attribute: true

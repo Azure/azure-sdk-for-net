@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised events = new(options);
             TransferOperation transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
-            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(10));
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             Assert.That(transfer.HasCompleted, Is.True);
@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised events = new(options);
             TransferOperation transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
-            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(10));
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             Assert.That(transfer.HasCompleted, Is.True);

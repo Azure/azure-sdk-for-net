@@ -41,6 +41,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 })
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
+                HighAvailability = RedisEnterpriseHighAvailability.Enabled,
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled,
                 Zones = { "1", "2", "3" }
             };
 
@@ -122,7 +124,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 })
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
-                HighAvailability = RedisEnterpriseHighAvailability.Disabled
+                HighAvailability = RedisEnterpriseHighAvailability.Disabled,
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
@@ -144,11 +147,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 ClientProtocol = RedisEnterpriseClientProtocol.Encrypted,
                 ClusteringPolicy = RedisEnterpriseClusteringPolicy.OssCluster,
                 EvictionPolicy = RedisEnterpriseEvictionPolicy.NoEviction,
-                Persistence = new RedisPersistenceSettings()
-                {
-                    IsAofEnabled = true,
-                    AofFrequency = PersistenceSettingAofFrequency.OneSecond
-                },
             };
 
             var databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
@@ -187,7 +185,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.IsFalse(falseResult);
         }
 
-        [Test]
+       [Test]
         public async Task CreateUpdateTestWithNoClusterPolicy()
         {
             await SetCollectionsAsync();
@@ -198,20 +196,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1))
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
-                HighAvailability = RedisEnterpriseHighAvailability.Disabled
+                HighAvailability = RedisEnterpriseHighAvailability.Enabled,
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
-            Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
-            Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
 
             var databaseCollection = clusterResponse.GetRedisEnterpriseDatabases();
             string databaseName = "default";

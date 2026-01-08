@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WritePropertyName("validationCategory"u8);
-            writer.WriteStringValue(ValidationCategory.ToString());
+            writer.WriteStringValue(ValidationCategory);
             writer.WritePropertyName("individualRequestDetails"u8);
             writer.WriteStartArray();
             foreach (var item in IndividualRequestDetails)

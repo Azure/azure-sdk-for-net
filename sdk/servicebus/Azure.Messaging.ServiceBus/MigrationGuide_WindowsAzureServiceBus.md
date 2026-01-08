@@ -163,7 +163,7 @@ In `Azure.Messaging.ServiceBus`, all of the send-related features are combined i
 
 The feature to send a list of messages in a single call was implemented by batching all the messages into a single AMQP message and sending that to the service.
 
-While we continue to support this feature, it had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender. To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.  The batch allows you to measure your message with the `TryAdd` method, returning `false` when a message is too large to fit in the batch.  
+While we continue to support this feature, it had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender. To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.  The batch allows you to measure your message with the `TryAdd` method, returning `false` when a message is too large to fit in the batch. It is important to note that it is no longer supported to batch messages together which are bound for multiple partitions.
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 // add the messages that we plan to send to a local queue

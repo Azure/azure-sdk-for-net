@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -55,6 +56,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("enabledFilteringCriteria"u8);
                 writer.WriteStringValue(EnabledFilteringCriteria);
+            }
+            if (Optional.IsDefined(RecordTypes))
+            {
+                writer.WritePropertyName("recordTypes"u8);
+                writer.WriteStringValue(RecordTypes);
             }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
@@ -111,6 +117,7 @@ namespace Azure.ResourceManager.Network.Models
             ManagedServiceIdentity identity = default;
             ResourceIdentifier storageId = default;
             string enabledFilteringCriteria = default;
+            string recordTypes = default;
             bool enabled = default;
             RetentionPolicyParameters retentionPolicy = default;
             FlowLogProperties format = default;
@@ -138,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -158,6 +165,11 @@ namespace Azure.ResourceManager.Network.Models
                         if (property0.NameEquals("enabledFilteringCriteria"u8))
                         {
                             enabledFilteringCriteria = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("recordTypes"u8))
+                        {
+                            recordTypes = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))
@@ -198,10 +210,181 @@ namespace Azure.ResourceManager.Network.Models
                 identity,
                 storageId,
                 enabledFilteringCriteria,
+                recordTypes,
                 enabled,
                 retentionPolicy,
                 format,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetResourceId))
+                {
+                    builder.Append("  targetResourceId: ");
+                    builder.AppendLine($"'{TargetResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("TrafficAnalyticsConfiguration", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  flowAnalyticsConfiguration: ");
+                builder.AppendLine("{");
+                builder.Append("    networkWatcherFlowAnalyticsConfiguration: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FlowAnalyticsConfiguration))
+                {
+                    builder.Append("  flowAnalyticsConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FlowAnalyticsConfiguration, options, 2, false, "  flowAnalyticsConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageId))
+                {
+                    builder.Append("    storageId: ");
+                    builder.AppendLine($"'{StorageId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnabledFilteringCriteria), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enabledFilteringCriteria: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnabledFilteringCriteria))
+                {
+                    builder.Append("    enabledFilteringCriteria: ");
+                    if (EnabledFilteringCriteria.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EnabledFilteringCriteria}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EnabledFilteringCriteria}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecordTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    recordTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecordTypes))
+                {
+                    builder.Append("    recordTypes: ");
+                    if (RecordTypes.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RecordTypes}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RecordTypes}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("    enabled: ");
+                var boolValue = Enabled == true ? "true" : "false";
+                builder.AppendLine($"{boolValue}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    retentionPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionPolicy))
+                {
+                    builder.Append("    retentionPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RetentionPolicy, options, 4, false, "    retentionPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    format: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Format))
+                {
+                    builder.Append("    format: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Format, options, 4, false, "    format: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<FlowLogInformation>.Write(ModelReaderWriterOptions options)
@@ -212,6 +395,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FlowLogInformation)} does not support writing '{options.Format}' format.");
             }

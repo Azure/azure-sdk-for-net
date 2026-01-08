@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -19,6 +22,41 @@ namespace Azure.Storage.Queues.Test
         public QueueSasBuilderTests(bool async, QueueClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+        }
+
+        [RecordedTest]
+        public void QueueSasBuilder_ToSasQueryParameters_IdentitySas()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string queueName = GetNewQueueName();
+            QueueSasBuilder queueSasBuilder = BuildQueueSasBuilder(constants, queueName);
+            string signature = BuildUserDelegationSignature(constants, queueName);
+            string stringToSign = null;
+
+            // Act
+            QueueSasQueryParameters sasQueryParameters = queueSasBuilder.ToSasQueryParameters(GetUserDelegationKey(constants), constants.Sas.Account, out stringToSign);
+
+            // Assert
+            Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
+            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
+            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
+            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
+            Assert.AreEqual(String.Empty, sasQueryParameters.Identifier);
+            Assert.AreEqual(constants.Sas.KeyObjectId, sasQueryParameters.KeyObjectId);
+            Assert.AreEqual(constants.Sas.KeyTenantId, sasQueryParameters.KeyTenantId);
+            Assert.AreEqual(constants.Sas.KeyStart, sasQueryParameters.KeyStartsOn);
+            Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
+            Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
+            Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
+            Assert.AreEqual(Constants.Sas.Resource.Queue, sasQueryParameters.Resource);
+            Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
+            Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
+            Assert.AreEqual(signature, sasQueryParameters.Signature);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -285,6 +323,7 @@ namespace Azure.Storage.Queues.Test
                 IPRange = constants.Sas.IPRange,
                 Identifier = constants.Sas.Identifier,
                 QueueName = queueName,
+                DelegatedUserObjectId = constants.Sas.DelegatedObjectId,
             };
             queueSasBuilder.SetPermissions(Permissions);
 
@@ -305,5 +344,45 @@ namespace Azure.Storage.Queues.Test
 
             return StorageSharedKeyCredentialInternals.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
+
+        private string BuildUserDelegationSignature(TestConstants constants, string queueName)
+        {
+            var stringToSign = string.Join("\n",
+                Permissions,
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.StartTime),
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
+                "/queue/" + constants.Sas.Account + "/" + queueName,
+                constants.Sas.KeyObjectId,
+                constants.Sas.KeyTenantId,
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.KeyStart),
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.KeyExpiry),
+                constants.Sas.KeyService,
+                constants.Sas.KeyVersion,
+                null,
+                constants.Sas.DelegatedObjectId,
+                constants.Sas.IPRange.ToString(),
+                SasExtensions.ToProtocolString(SasProtocol.Https),
+                SasQueryParametersInternals.DefaultSasVersionInternal);
+
+            return ComputeHMACSHA256(constants.Sas.KeyValue, stringToSign);
+        }
+
+        private string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
+            Convert.ToBase64String(
+                new HMACSHA256(
+                    Convert.FromBase64String(userDelegationKeyValue))
+                .ComputeHash(Encoding.UTF8.GetBytes(message)));
+
+        private static UserDelegationKey GetUserDelegationKey(TestConstants constants)
+            => new UserDelegationKey
+            {
+                SignedObjectId = constants.Sas.KeyObjectId,
+                SignedTenantId = constants.Sas.KeyTenantId,
+                SignedStartsOn = constants.Sas.KeyStart,
+                SignedExpiresOn = constants.Sas.KeyExpiry,
+                SignedService = constants.Sas.KeyService,
+                SignedVersion = constants.Sas.KeyVersion,
+                Value = constants.Sas.KeyValue
+            };
     }
 }

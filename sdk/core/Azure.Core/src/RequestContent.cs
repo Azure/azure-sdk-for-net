@@ -3,6 +3,8 @@
 
 using System;
 using System.Buffers;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
@@ -65,7 +67,7 @@ namespace Azure.Core
         /// <param name="content">The <see cref="string"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="string"/>.</returns>
         /// <remarks>The returned content represents the UTF-8 Encoding of the given string.</remarks>
-        public static RequestContent Create(string content) => Create(s_UTF8NoBomEncoding.GetBytes(content));
+        public static RequestContent Create(string content) => new CustomStringContent(content, s_UTF8NoBomEncoding);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryData"/>.
@@ -119,6 +121,18 @@ namespace Azure.Core
             JsonSerializerOptions serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
             ObjectSerializer serializer = new JsonObjectSerializer(serializerOptions);
             return Create(serializer.Serialize(serializable));
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps an <see cref="IPersistableModel{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the model.</typeparam>
+        /// <param name="model">The <see cref="IPersistableModel{T}"/> to use.</param>
+        /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps an <see cref="IPersistableModel{T}"/>.</returns>
+        public static RequestContent Create<T>(T model, ModelReaderWriterOptions? options = null) where T : IPersistableModel<T>
+        {
+            return new PersistableModelRequestContent<T>(model, options);
         }
 
         /// <summary>
@@ -207,13 +221,8 @@ namespace Azure.Core
 
             public override bool TryComputeLength(out long length)
             {
-                if (_stream.CanSeek)
-                {
-                    length = _stream.Length - _origin;
-                    return true;
-                }
-                length = 0;
-                return false;
+                length = _stream.Length - _origin;
+                return true;
             }
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
@@ -247,7 +256,11 @@ namespace Azure.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
+#if NET6_0_OR_GREATER
+                stream.Write(_bytes.AsSpan(_contentStart, _contentLength));
+#else
                 stream.Write(_bytes, _contentStart, _contentLength);
+#endif
             }
 
             public override bool TryComputeLength(out long length)
@@ -258,9 +271,11 @@ namespace Azure.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
-#pragma warning disable CA1835 // WriteAsync(Memory<>) overload is not available in all targets
+#if NET6_0_OR_GREATER
+                await stream.WriteAsync(_bytes.AsMemory(_contentStart, _contentLength), cancellation).ConfigureAwait(false);
+#else
                 await stream.WriteAsync(_bytes, _contentStart, _contentLength, cancellation).ConfigureAwait(false);
-#pragma warning restore // WriteAsync(Memory<>) overload is not available in all targets
+#endif
             }
         }
 
@@ -275,8 +290,13 @@ namespace Azure.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
+#if NET6_0_OR_GREATER
+                stream.Write(_bytes.Span);
+#else
+
                 byte[] buffer = _bytes.ToArray();
                 stream.Write(buffer, 0, buffer.Length);
+#endif
             }
 
             public override bool TryComputeLength(out long length)
@@ -302,8 +322,15 @@ namespace Azure.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
+#if NET6_0_OR_GREATER
+                foreach (var memory in _bytes)
+                {
+                    stream.Write(memory.Span);
+                }
+#else
                 byte[] buffer = _bytes.ToArray();
                 stream.Write(buffer, 0, buffer.Length);
+#endif
             }
 
             public override bool TryComputeLength(out long length)
@@ -315,6 +342,56 @@ namespace Azure.Core
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
+            }
+        }
+
+        private sealed class CustomStringContent : RequestContent
+        {
+            private readonly byte[] _buffer;
+            private readonly int _actualByteCount;
+
+            public CustomStringContent(string value, Encoding? encoding = null)
+            {
+                encoding ??= Encoding.UTF8;
+#if NET6_0_OR_GREATER
+                var byteCount = encoding.GetMaxByteCount(value.Length);
+                _buffer = ArrayPool<byte>.Shared.Rent(byteCount);
+                _actualByteCount = encoding.GetBytes(value, _buffer);
+#else
+                _buffer  = encoding.GetBytes(value);
+                _actualByteCount = _buffer.Length;
+#endif
+            }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+#if NET6_0_OR_GREATER
+                await stream.WriteAsync(_buffer.AsMemory(0, _actualByteCount), cancellation).ConfigureAwait(false);
+#else
+                await stream.WriteAsync(_buffer, 0, _actualByteCount, cancellation).ConfigureAwait(false);
+#endif
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+#if NET6_0_OR_GREATER
+                stream.Write(_buffer.AsSpan(0, _actualByteCount));
+#else
+                stream.Write(_buffer, 0, _actualByteCount);
+#endif
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = _actualByteCount;
+                return true;
+            }
+
+            public override void Dispose()
+            {
+#if NET6_0_OR_GREATER
+                ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
+#endif
             }
         }
 
@@ -336,7 +413,7 @@ namespace Azure.Core
 
             public override bool TryComputeLength(out long length)
             {
-                length = default;
+                length = 0;
                 return false;
             }
 
@@ -344,6 +421,36 @@ namespace Azure.Core
             {
                 _data.WriteTo(stream);
                 return Task.CompletedTask;
+            }
+        }
+
+        private sealed class PersistableModelRequestContent<T> : RequestContent where T : IPersistableModel<T>
+        {
+            private readonly BinaryContent _binaryContent;
+
+            public PersistableModelRequestContent(T model, ModelReaderWriterOptions? options)
+            {
+                _binaryContent = BinaryContent.Create(model, options);
+            }
+
+            public override void Dispose()
+            {
+                _binaryContent.Dispose();
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                _binaryContent.WriteTo(stream, cancellation);
+            }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                await _binaryContent.WriteToAsync(stream, cancellation).ConfigureAwait(false);
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                return _binaryContent.TryComputeLength(out length);
             }
         }
     }

@@ -11,33 +11,39 @@ namespace Azure.Generator.Management.InputTransformation
     {
         public static InputClient? TransformInputClient(InputClient client)
         {
-            var methodsToKeep = new List<InputServiceMethod>();
             foreach (var method in client.Methods)
             {
                 var operation = method.Operation;
-                // operations_list has been covered in Azure.ResourceManager already, we don't need to generate it in the client
-                if (operation.CrossLanguageDefinitionId != "Azure.ResourceManager.Operations.list")
-                {
-                    SetSubscriptionIdToMethodParameter(operation);
-                    methodsToKeep.Add(method);
-                }
+                SetSubscriptionIdToMethodParameter(operation);
+                RemoveSubscriptionIdFromClient(client);
             }
 
-            // We removed the list operation above, we should skip the empty client afterwards
-            // There is no need to check sub-clients or custom code since it is specific to handle the above removing
-            if (methodsToKeep.Count == 0) return null;
+            return client;
+        }
 
-            return new InputClient(client.Name, client.Namespace, client.CrossLanguageDefinitionId, client.Summary, client.Doc, methodsToKeep, client.Parameters, client.Parent, client.Children);
+        // Remove subscriptionId from client parameter, this is needed due to MTG.
+        // Otherwise, subscriptionId will be added to client constructor
+        private static void RemoveSubscriptionIdFromClient(InputClient client)
+        {
+            var updatedParameters = new List<InputParameter>();
+            foreach (var parameter in client.Parameters)
+            {
+                if (!parameter.SerializedName.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
+                {
+                    updatedParameters.Add(parameter);
+                }
+            }
+            client.Update(parameters: updatedParameters);
         }
 
         private static void SetSubscriptionIdToMethodParameter(InputOperation operation)
         {
             foreach (var parameter in operation.Parameters)
             {
-                if (parameter.NameInRequest.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
+                if (parameter is InputPathParameter pathParameter && pathParameter.SerializedName.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
                 {
                     // Always set subscriptionId to method parameter
-                    parameter.Update(InputParameterKind.Method);
+                    pathParameter.Update(InputParameterScope.Method);
                 }
             }
         }

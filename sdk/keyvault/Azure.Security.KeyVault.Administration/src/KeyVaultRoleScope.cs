@@ -3,12 +3,14 @@
 
 using System;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    [CodeGenModel("RoleScope")]
+    [CodeGenType("RoleScope")]
     public readonly partial struct KeyVaultRoleScope
     {
+        private readonly string _value;
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultRoleScope"/> structure.
         /// </summary>

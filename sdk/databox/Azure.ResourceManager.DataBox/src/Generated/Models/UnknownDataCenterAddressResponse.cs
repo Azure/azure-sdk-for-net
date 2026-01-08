@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Unknown version of DatacenterAddressResponse. </summary>
+    /// <summary> Unknown version of DataCenterAddressResult. </summary>
     internal partial class UnknownDataCenterAddressResponse : DataCenterAddressResult
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResponse"/>. </summary>
-        /// <param name="dataCenterAddressType"> Data center address type. </param>
+        /// <param name="datacenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataCenterAddressResponse(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataCenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, serializedAdditionalRawData)
+        internal UnknownDataCenterAddressResponse(DatacenterAddressType datacenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(datacenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, serializedAdditionalRawData)
         {
-            DataCenterAddressType = dataCenterAddressType;
+            DatacenterAddressType = datacenterAddressType;
         }
 
         /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResponse"/> for deserialization. </summary>

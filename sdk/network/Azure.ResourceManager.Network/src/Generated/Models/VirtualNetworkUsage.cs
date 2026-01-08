@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Indicates number of IPs used from the Subnet. </summary>
+        [WirePath("currentValue")]
         public double? CurrentValue { get; }
         /// <summary> Subnet identifier. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Indicates the size of the subnet. </summary>
+        [WirePath("limit")]
         public double? Limit { get; }
         /// <summary> The name containing common and localized value for usage. </summary>
+        [WirePath("name")]
         public VirtualNetworkUsageName Name { get; }
         /// <summary> Usage units. Returns 'Count'. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
     }
 }

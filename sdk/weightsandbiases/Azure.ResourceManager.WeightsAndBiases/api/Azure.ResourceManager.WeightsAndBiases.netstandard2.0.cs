@@ -37,7 +37,10 @@ namespace Azure.ResourceManager.WeightsAndBiases
         public WeightsAndBiasesInstanceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WeightsAndBiases.WeightsAndBiasesInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.WeightsAndBiasesInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.WeightsAndBiasesInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WeightsAndBiases.WeightsAndBiasesInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.WeightsAndBiasesInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -96,15 +99,20 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
     public static partial class ArmWeightsAndBiasesModelFactory
     {
         public static Azure.ResourceManager.WeightsAndBiases.WeightsAndBiasesInstanceData WeightsAndBiasesInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch WeightsAndBiasesInstancePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties WeightsAndBiasesInstanceProperties(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails marketplace = null, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails user = null, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState? provisioningState = default(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState?), Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties partnerProperties = null, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2 singleSignOnProperties = null) { throw null; }
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails WeightsAndBiasesMarketplaceDetails(string subscriptionId = null, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus?), Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails offerDetails = null) { throw null; }
+        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2 WeightsAndBiasesSingleSignOnPropertiesV2(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType type = default(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType), Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState? state = default(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState?), string enterpriseAppId = null, string uri = null, System.Collections.Generic.IEnumerable<string> aadDomains = null) { throw null; }
     }
     public partial class WeightsAndBiasesInstancePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch>
     {
         public WeightsAndBiasesInstancePatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -113,13 +121,16 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
     }
     public partial class WeightsAndBiasesInstanceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties>
     {
-        public WeightsAndBiasesInstanceProperties(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails marketplace, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails user) { }
+        public WeightsAndBiasesInstanceProperties(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails marketplace, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails user, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties partnerProperties) { }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails Marketplace { get { throw null; } set { } }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties PartnerProperties { get { throw null; } set { } }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2 SingleSignOnProperties { get { throw null; } set { } }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails User { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -132,7 +143,10 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails OfferDetails { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus? SubscriptionStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -156,6 +170,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -168,7 +183,10 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public string PublisherId { get { throw null; } set { } }
         public string TermId { get { throw null; } set { } }
         public string TermUnit { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -180,7 +198,10 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public WeightsAndBiasesPartnerProperties(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion region, string subdomain) { }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion Region { get { throw null; } set { } }
         public string Subdomain { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -203,6 +224,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -225,6 +247,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion right) { throw null; }
         public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -236,7 +259,10 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState? State { get { throw null; } set { } }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType Type { get { throw null; } set { } }
         public string Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2 JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2 PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -259,6 +285,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -277,6 +304,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -288,7 +316,10 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public string LastName { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
         public string Upn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

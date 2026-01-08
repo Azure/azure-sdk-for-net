@@ -1,6 +1,6 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.12.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.11.0 (2025-12-01)
+
+### Features Added
+
+- Added Netezza V2 linked service and dataset definitions.
+- Added Jira V2 connector support in Azure Data Factory.
+- Added enable/disable Interactive Query management APIs.
+- Added `clusterResourceGroupAuthType` to the HDInsight OnDemand linked service definition.
+- Expanded Snowflake V2 options to cover additional data types.
+- Added `partitionOption` property for the Salesforce V2 connector.
+
+## 1.10.0 (2025-09-03)
+
+### Features Added
+- Added Managed Identity (MI) authentication support for Lakehouse, Warehouse, and HDInsight linked services.
+- Added support for custom number precision and scale in Oracle V2.
 
 ## 1.9.0 (2025-06-13)
 

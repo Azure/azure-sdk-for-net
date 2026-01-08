@@ -53,13 +53,27 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
+            }
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Placement))
+            {
+                writer.WritePropertyName("placement"u8);
+                writer.WriteObjectValue(Placement, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -203,6 +217,11 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("routingPreference"u8);
                 writer.WriteObjectValue(RoutingPreference, options);
             }
+            if (Optional.IsDefined(DualStackEndpointPreference))
+            {
+                writer.WritePropertyName("dualStackEndpointPreference"u8);
+                writer.WriteObjectValue(DualStackEndpointPreference, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(BlobRestoreStatus))
             {
                 writer.WritePropertyName("blobRestoreStatus"u8);
@@ -273,6 +292,11 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("accountMigrationInProgress"u8);
                 writer.WriteBooleanValue(IsAccountMigrationInProgress.Value);
             }
+            if (Optional.IsDefined(GeoPriorityReplicationStatus))
+            {
+                writer.WritePropertyName("geoPriorityReplicationStatus"u8);
+                writer.WriteObjectValue(GeoPriorityReplicationStatus, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -300,6 +324,8 @@ namespace Azure.ResourceManager.Storage
             StorageKind? kind = default;
             ManagedServiceIdentity identity = default;
             ExtendedLocation extendedLocation = default;
+            IList<string> zones = default;
+            Placement placement = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -333,6 +359,7 @@ namespace Azure.ResourceManager.Storage
             LargeFileSharesState? largeFileSharesState = default;
             IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections = default;
             StorageRoutingPreference routingPreference = default;
+            DualStackEndpointPreference dualStackEndpointPreference = default;
             BlobRestoreStatus blobRestoreStatus = default;
             bool? allowBlobPublicAccess = default;
             StorageMinimumTlsVersion? minimumTlsVersion = default;
@@ -347,6 +374,7 @@ namespace Azure.ResourceManager.Storage
             StorageDnsEndpointType? dnsEndpointType = default;
             bool? isSkuConversionBlocked = default;
             bool? accountMigrationInProgress = default;
+            GeoPriorityReplicationStatus geoPriorityReplicationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -375,8 +403,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerStorageContext.Default);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -385,7 +412,30 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerStorageContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
+                    continue;
+                }
+                if (property.NameEquals("placement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placement = Placement.DeserializePlacement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -428,7 +478,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -688,6 +738,15 @@ namespace Azure.ResourceManager.Storage
                             routingPreference = StorageRoutingPreference.DeserializeStorageRoutingPreference(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("dualStackEndpointPreference"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dualStackEndpointPreference = DualStackEndpointPreference.DeserializeDualStackEndpointPreference(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("blobRestoreStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -814,6 +873,15 @@ namespace Azure.ResourceManager.Storage
                             accountMigrationInProgress = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("geoPriorityReplicationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            geoPriorityReplicationStatus = GeoPriorityReplicationStatus.DeserializeGeoPriorityReplicationStatus(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -834,6 +902,8 @@ namespace Azure.ResourceManager.Storage
                 kind,
                 identity,
                 extendedLocation,
+                zones ?? new ChangeTrackingList<string>(),
+                placement,
                 provisioningState,
                 primaryEndpoints,
                 primaryLocation,
@@ -861,6 +931,7 @@ namespace Azure.ResourceManager.Storage
                 largeFileSharesState,
                 privateEndpointConnections ?? new ChangeTrackingList<StoragePrivateEndpointConnectionData>(),
                 routingPreference,
+                dualStackEndpointPreference,
                 blobRestoreStatus,
                 allowBlobPublicAccess,
                 minimumTlsVersion,
@@ -875,6 +946,7 @@ namespace Azure.ResourceManager.Storage
                 dnsEndpointType,
                 isSkuConversionBlocked,
                 accountMigrationInProgress,
+                geoPriorityReplicationStatus,
                 serializedAdditionalRawData);
         }
 
@@ -1018,6 +1090,60 @@ namespace Azure.ResourceManager.Storage
                 {
                     builder.Append("  extendedLocation: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ExtendedLocation, options, 2, false, "  extendedLocation: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Zones), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  zones: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Zones))
+                {
+                    if (Zones.Any())
+                    {
+                        builder.Append("  zones: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Zones)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ZonePlacementPolicy", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  placement: ");
+                builder.AppendLine("{");
+                builder.Append("    zonePlacementPolicy: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Placement))
+                {
+                    builder.Append("  placement: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Placement, options, 2, false, "  placement: ");
                 }
             }
 
@@ -1479,6 +1605,26 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsIPv6EndpointToBePublished", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    dualStackEndpointPreference: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      dualStackEndpointPreference: {");
+                builder.Append("        publishIpv6Endpoint: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(DualStackEndpointPreference))
+                {
+                    builder.Append("    dualStackEndpointPreference: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DualStackEndpointPreference, options, 4, false, "    dualStackEndpointPreference: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobRestoreStatus), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -1693,6 +1839,26 @@ namespace Azure.ResourceManager.Storage
                     builder.Append("    accountMigrationInProgress: ");
                     var boolValue = IsAccountMigrationInProgress.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsBlobEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    geoPriorityReplicationStatus: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      geoPriorityReplicationStatus: {");
+                builder.Append("        isBlobEnabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(GeoPriorityReplicationStatus))
+                {
+                    builder.Append("    geoPriorityReplicationStatus: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GeoPriorityReplicationStatus, options, 4, false, "    geoPriorityReplicationStatus: ");
                 }
             }
 

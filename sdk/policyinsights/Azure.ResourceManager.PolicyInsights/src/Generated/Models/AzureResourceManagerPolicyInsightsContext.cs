@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
@@ -13,6 +15,67 @@ namespace Azure.ResourceManager.PolicyInsights
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions))]
+    [ModelReaderWriterBuildable(typeof(AttestationEvidence))]
+    [ModelReaderWriterBuildable(typeof(AttestationListResult))]
+    [ModelReaderWriterBuildable(typeof(CheckManagementGroupPolicyRestrictionsContent))]
+    [ModelReaderWriterBuildable(typeof(CheckPolicyRestrictionsContent))]
+    [ModelReaderWriterBuildable(typeof(CheckPolicyRestrictionsResult))]
+    [ModelReaderWriterBuildable(typeof(CheckRestrictionEvaluationDetails))]
+    [ModelReaderWriterBuildable(typeof(CheckRestrictionsResourceDetails))]
+    [ModelReaderWriterBuildable(typeof(CheckRestrictionsResultContentEvaluationResult))]
+    [ModelReaderWriterBuildable(typeof(ComplianceDetail))]
+    [ModelReaderWriterBuildable(typeof(ComponentEventDetails))]
+    [ModelReaderWriterBuildable(typeof(ComponentExpressionEvaluationDetails))]
+    [ModelReaderWriterBuildable(typeof(ComponentPolicyEvaluationDetails))]
+    [ModelReaderWriterBuildable(typeof(ComponentPolicyState))]
+    [ModelReaderWriterBuildable(typeof(ComponentPolicyStatesQueryResults))]
+    [ModelReaderWriterBuildable(typeof(ComponentStateDetails))]
+    [ModelReaderWriterBuildable(typeof(ExpressionEvaluationDetails))]
+    [ModelReaderWriterBuildable(typeof(FieldRestriction))]
+    [ModelReaderWriterBuildable(typeof(FieldRestrictions))]
+    [ModelReaderWriterBuildable(typeof(IfNotExistsEvaluationDetails))]
+    [ModelReaderWriterBuildable(typeof(PendingField))]
+    [ModelReaderWriterBuildable(typeof(PolicyAssignmentSummary))]
+    [ModelReaderWriterBuildable(typeof(PolicyAttestationData))]
+    [ModelReaderWriterBuildable(typeof(PolicyAttestationResource))]
+    [ModelReaderWriterBuildable(typeof(PolicyDefinitionSummary))]
+    [ModelReaderWriterBuildable(typeof(PolicyDetails))]
+    [ModelReaderWriterBuildable(typeof(PolicyEffectDetails))]
+    [ModelReaderWriterBuildable(typeof(PolicyEvaluationDetails))]
+    [ModelReaderWriterBuildable(typeof(PolicyEvaluationResult))]
+    [ModelReaderWriterBuildable(typeof(PolicyEvent))]
+    [ModelReaderWriterBuildable(typeof(PolicyEventsQueryResults))]
+    [ModelReaderWriterBuildable(typeof(PolicyGroupSummary))]
+    [ModelReaderWriterBuildable(typeof(Models.PolicyMetadataCollection))]
+    [ModelReaderWriterBuildable(typeof(PolicyMetadataData))]
+    [ModelReaderWriterBuildable(typeof(PolicyMetadataResource))]
+    [ModelReaderWriterBuildable(typeof(PolicyQuerySettings))]
+    [ModelReaderWriterBuildable(typeof(PolicyReference))]
+    [ModelReaderWriterBuildable(typeof(PolicyRemediationData))]
+    [ModelReaderWriterBuildable(typeof(PolicyRemediationResource))]
+    [ModelReaderWriterBuildable(typeof(PolicyState))]
+    [ModelReaderWriterBuildable(typeof(PolicyStatesQueryResults))]
+    [ModelReaderWriterBuildable(typeof(PolicySummary))]
+    [ModelReaderWriterBuildable(typeof(PolicySummaryResults))]
+    [ModelReaderWriterBuildable(typeof(PolicyTrackedResourceRecord))]
+    [ModelReaderWriterBuildable(typeof(PolicyTrackedResourcesQueryResults))]
+    [ModelReaderWriterBuildable(typeof(RemediationDeployment))]
+    [ModelReaderWriterBuildable(typeof(RemediationDeploymentsListResult))]
+    [ModelReaderWriterBuildable(typeof(RemediationDeploymentSummary))]
+    [ModelReaderWriterBuildable(typeof(RemediationFilters))]
+    [ModelReaderWriterBuildable(typeof(RemediationListResult))]
+    [ModelReaderWriterBuildable(typeof(RemediationPropertiesFailureThreshold))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceGetQueryResultsForResourceGroupComponentPolicyStatesOptions))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesOptions))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SlimPolicyMetadata))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions))]
+    [ModelReaderWriterBuildable(typeof(SummarizeResults))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TrackedResourceModificationDetails))]
     public partial class AzureResourceManagerPolicyInsightsContext : ModelReaderWriterContext
     {
     }

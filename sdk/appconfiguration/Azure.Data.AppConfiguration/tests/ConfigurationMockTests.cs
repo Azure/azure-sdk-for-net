@@ -90,7 +90,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
 
@@ -156,7 +156,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("\"v1\"", ifNoneMatch);
             Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(responseSetting, setting));
@@ -177,7 +177,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("\"v1\"", ifNoneMatch);
             Assert.AreEqual(304, response.GetRawResponse().Status);
@@ -209,7 +209,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("Accept-Datetime", out var acceptDateTime));
             Assert.AreEqual(DateTimeOffset.MaxValue.UtcDateTime.ToString("R", CultureInfo.InvariantCulture), acceptDateTime);
             Assert.False(request.Headers.TryGetValue("If-Match", out var ifMatch));
@@ -230,7 +230,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("*", ifNoneMatch);
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
@@ -266,7 +266,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
@@ -306,7 +306,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
             Assert.AreEqual("\"v1\"", ifMatch);
             AssertContent(SerializationHelpers.Serialize(requestSetting, SerializeRequestSetting), request);
@@ -338,7 +338,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
             Assert.AreEqual("\"v1\"", ifMatch);
         }
@@ -374,7 +374,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
         }
 
         [Test]
@@ -425,7 +425,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
             Assert.AreEqual("\"v1\"", ifMatch);
             Assert.AreEqual(200, response.Status);
@@ -456,7 +456,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
             Assert.AreEqual("\"v1\"", ifMatch);
         }
@@ -716,7 +716,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
         }
 
@@ -789,7 +789,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?label=test_label&api-version={s_version}", request.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
         }
 
@@ -997,30 +997,90 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task SupportsCustomTransportUse()
+        public async Task QueryParametersAreSorted()
         {
-            var expectedKey = "abc";
-            var expectedValue = "ghi";
-            var expectedLabel = "def";
-            var expectedContent = @$"{{""key"":""{expectedKey}"",""label"":""{expectedLabel}"",""value"":""{expectedValue}""}}";
+            var response1 = new MockResponse(200);
+            var mockTags = new Dictionary<string, string>
+            {
+                { "tag2", "value2" },
+                { "tag1", "value1" }
+            };
+            ConfigurationSetting testSetting = CreateSetting(0, mockTags);
+            response1.SetContent(SerializationHelpers.Serialize((Settings: new[] { testSetting }, NextLink: $"/kv?key=key%2A&label=label&tags=tag2%3Dvalue2&tags=tag1%3Dvalue1&after=test_after&api-version={s_version}"), SerializeBatch));
 
-            var client = new ConfigurationClient(
-                s_connectionString,
-                new ConfigurationClientOptions
-                {
-                    Transport = new HttpClientTransport(new EchoHttpMessageHandler(expectedContent))
-                }
-            );
+            var response2 = new MockResponse(200);
+            var testSetting2 = CreateSetting(1, mockTags);
+            response2.SetContent(SerializationHelpers.Serialize((Settings: new[] { testSetting2 }, NextLink: (string)null), SerializeBatch));
 
-            var result = await client.GetConfigurationSettingAsync("doesnt-matter");
-            Assert.AreEqual(expectedKey, result.Value.Key);
-            Assert.AreEqual(expectedValue, result.Value.Value);
-            Assert.AreEqual(expectedLabel, result.Value.Label);
+            var mockTransport = new MockTransport(response1, response2);
+            ConfigurationClient service = CreateTestService(mockTransport);
 
-            var result2 = await client.SetConfigurationSettingAsync("whatever", "somevalue");
-            Assert.AreEqual(expectedKey, result.Value.Key);
-            Assert.AreEqual(expectedValue, result.Value.Value);
-            Assert.AreEqual(expectedLabel, result.Value.Label);
+            var query = new SettingSelector
+            {
+                KeyFilter = "key*",
+                LabelFilter = "label"
+            };
+            foreach (var tag in mockTags)
+            {
+                query.TagsFilter.Add($"{tag.Key}={tag.Value}");
+            }
+
+            await foreach (ConfigurationSetting value in service.GetConfigurationSettingsAsync(query, CancellationToken.None))
+            {
+                continue;
+            }
+
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            // Verify the first request has sorted query parameters (lowercase, alphabetically ordered)
+            MockRequest request1 = mockTransport.Requests[0];
+            var expectedUri1 = $"https://contoso.appconfig.io/kv?api-version={s_version}&key=key%2A&label=label&tags=tag2%3Dvalue2&tags=tag1%3Dvalue1";
+            Assert.AreEqual(expectedUri1, request1.Uri.ToString());
+
+            // Verify the next link request has sorted query parameters including "after"
+            MockRequest request2 = mockTransport.Requests[1];
+            var expectedUri2 = $"https://contoso.appconfig.io/kv?after=test_after&api-version={s_version}&key=key%2A&label=label&tags=tag2%3Dvalue2&tags=tag1%3Dvalue1";
+            Assert.AreEqual(expectedUri2, request2.Uri.ToString());
+        }
+
+        [Test]
+        public async Task GetSnapshot()
+        {
+            var mockResponse = new MockResponse(200);
+            // Minimal snapshot payload; we only validate the request URI
+            mockResponse.SetContent("{\"name\":\"test-snapshot\"}");
+
+            var mockTransport = new MockTransport(mockResponse);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            await service.GetSnapshotAsync("test-snapshot");
+
+            MockRequest request = mockTransport.SingleRequest;
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/snapshots/test-snapshot?api-version={s_version}", request.Uri.ToString());
+        }
+
+        [Test]
+        public async Task GetConfigurationSettingsForSnapshot()
+        {
+            var mockResponse = new MockResponse(200);
+            // Reuse existing batch serialization helper for key-values
+            var settings = new[] { s_testSetting };
+            mockResponse.SetContent(SerializationHelpers.Serialize((Settings: settings, NextLink: (string)null), SerializeBatch));
+
+            var mockTransport = new MockTransport(mockResponse);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            await foreach (ConfigurationSetting setting in service.GetConfigurationSettingsForSnapshotAsync("test-snapshot", CancellationToken.None))
+            {
+                break;
+            }
+
+            MockRequest request = mockTransport.SingleRequest;
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv?api-version={s_version}&snapshot=test-snapshot", request.Uri.ToString());
         }
 
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)

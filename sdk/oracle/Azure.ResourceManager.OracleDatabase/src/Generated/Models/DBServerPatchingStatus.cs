@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DBServerPatchingStatus : IEquatable<DBServerPatchingStatus>
     {
         private readonly string _value;
+        /// <summary> Patching scheduled. </summary>
+        private const string ScheduledValue = "Scheduled";
+        /// <summary> Patching in progress. </summary>
+        private const string MaintenanceInProgressValue = "MaintenanceInProgress";
+        /// <summary> Patching failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Patching completed. </summary>
+        private const string CompleteValue = "Complete";
 
         /// <summary> Initializes a new instance of <see cref="DBServerPatchingStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DBServerPatchingStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ScheduledValue = "Scheduled";
-        private const string MaintenanceInProgressValue = "MaintenanceInProgress";
-        private const string FailedValue = "Failed";
-        private const string CompleteValue = "Complete";
+            _value = value;
+        }
 
         /// <summary> Patching scheduled. </summary>
         public static DBServerPatchingStatus Scheduled { get; } = new DBServerPatchingStatus(ScheduledValue);
+
         /// <summary> Patching in progress. </summary>
         public static DBServerPatchingStatus MaintenanceInProgress { get; } = new DBServerPatchingStatus(MaintenanceInProgressValue);
+
         /// <summary> Patching failed. </summary>
         public static DBServerPatchingStatus Failed { get; } = new DBServerPatchingStatus(FailedValue);
+
         /// <summary> Patching completed. </summary>
         public static DBServerPatchingStatus Complete { get; } = new DBServerPatchingStatus(CompleteValue);
+
         /// <summary> Determines if two <see cref="DBServerPatchingStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DBServerPatchingStatus left, DBServerPatchingStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DBServerPatchingStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DBServerPatchingStatus left, DBServerPatchingStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DBServerPatchingStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DBServerPatchingStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DBServerPatchingStatus(string value) => new DBServerPatchingStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DBServerPatchingStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DBServerPatchingStatus?(string value) => value == null ? null : new DBServerPatchingStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DBServerPatchingStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DBServerPatchingStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

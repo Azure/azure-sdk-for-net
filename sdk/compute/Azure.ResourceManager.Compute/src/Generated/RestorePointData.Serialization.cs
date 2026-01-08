@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in ExcludeDisks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,12 +74,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SourceRestorePoint))
             {
                 writer.WritePropertyName("sourceRestorePoint"u8);
-                JsonSerializer.Serialize(writer, SourceRestorePoint);
+                ((IJsonModel<WritableSubResource>)SourceRestorePoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView, options);
+            }
+            if (Optional.IsDefined(InstantAccessDurationMinutes))
+            {
+                writer.WritePropertyName("instantAccessDurationMinutes"u8);
+                writer.WriteNumberValue(InstantAccessDurationMinutes.Value);
             }
             writer.WriteEndObject();
         }
@@ -114,6 +120,7 @@ namespace Azure.ResourceManager.Compute
             DateTimeOffset? timeCreated = default;
             WritableSubResource sourceRestorePoint = default;
             RestorePointInstanceView instanceView = default;
+            int? instantAccessDurationMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +146,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -160,7 +167,7 @@ namespace Azure.ResourceManager.Compute
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
                             }
                             excludeDisks = array;
                             continue;
@@ -203,7 +210,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            sourceRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            sourceRestorePoint = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("instanceView"u8))
@@ -213,6 +220,15 @@ namespace Azure.ResourceManager.Compute
                                 continue;
                             }
                             instanceView = RestorePointInstanceView.DeserializeRestorePointInstanceView(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("instantAccessDurationMinutes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            instantAccessDurationMinutes = property0.Value.GetInt32();
                             continue;
                         }
                     }
@@ -236,6 +252,7 @@ namespace Azure.ResourceManager.Compute
                 timeCreated,
                 sourceRestorePoint,
                 instanceView,
+                instantAccessDurationMinutes,
                 serializedAdditionalRawData);
         }
 

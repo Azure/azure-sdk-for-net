@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerEventHubsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.EventHubs
                 name,
                 type,
                 systemData,
+                location,
                 provisioningState,
                 partnerNamespace,
                 alternateName,
                 role,
                 pendingReplicationOperationsCount,
-                location,
                 serializedAdditionalRawData);
         }
 

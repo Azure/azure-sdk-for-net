@@ -5,92 +5,87 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PureStorageBlock;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PureStorageBlock.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockablePureStorageBlockSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _pureStorageReservationReservationsClientDiagnostics;
-        private ReservationsRestOperations _pureStorageReservationReservationsRestClient;
-        private ClientDiagnostics _pureStoragePoolStoragePoolsClientDiagnostics;
-        private StoragePoolsRestOperations _pureStoragePoolStoragePoolsRestClient;
+        private ClientDiagnostics _reservationsClientDiagnostics;
+        private Reservations _reservationsRestClient;
+        private ClientDiagnostics _storagePoolsClientDiagnostics;
+        private StoragePools _storagePoolsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePureStorageBlockSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePureStorageBlockSubscriptionResource for mocking. </summary>
         protected MockablePureStorageBlockSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePureStorageBlockSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePureStorageBlockSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePureStorageBlockSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics PureStorageReservationReservationsClientDiagnostics => _pureStorageReservationReservationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStorageReservationResource.ResourceType.Namespace, Diagnostics);
-        private ReservationsRestOperations PureStorageReservationReservationsRestClient => _pureStorageReservationReservationsRestClient ??= new ReservationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PureStorageReservationResource.ResourceType));
-        private ClientDiagnostics PureStoragePoolStoragePoolsClientDiagnostics => _pureStoragePoolStoragePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStoragePoolResource.ResourceType.Namespace, Diagnostics);
-        private StoragePoolsRestOperations PureStoragePoolStoragePoolsRestClient => _pureStoragePoolStoragePoolsRestClient ??= new StoragePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PureStoragePoolResource.ResourceType));
+        private ClientDiagnostics ReservationsClientDiagnostics => _reservationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Reservations ReservationsRestClient => _reservationsRestClient ??= new Reservations(ReservationsClientDiagnostics, Pipeline, Endpoint, "2024-11-01");
+
+        private ClientDiagnostics StoragePoolsClientDiagnostics => _storagePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private StoragePools StoragePoolsRestClient => _storagePoolsRestClient ??= new StoragePools(StoragePoolsClientDiagnostics, Pipeline, Endpoint, "2024-11-01");
 
         /// <summary>
         /// List reservations by Azure subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/PureStorage.Block/reservations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PureStorage.Block/reservations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Reservation_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Reservations_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageReservationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PureStorageReservationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PureStorageReservationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PureStorageReservationResource> GetPureStorageReservationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PureStorageReservationReservationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PureStorageReservationReservationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PureStorageReservationResource(Client, PureStorageReservationData.DeserializePureStorageReservationData(e)), PureStorageReservationReservationsClientDiagnostics, Pipeline, "MockablePureStorageBlockSubscriptionResource.GetPureStorageReservations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetBySubscriptionAsyncCollectionResultOfT(ReservationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PureStorageReservationResource(Client, data));
         }
 
         /// <summary>
         /// List reservations by Azure subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/PureStorage.Block/reservations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PureStorage.Block/reservations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Reservation_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Reservations_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageReservationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -98,59 +93,55 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <returns> A collection of <see cref="PureStorageReservationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PureStorageReservationResource> GetPureStorageReservations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PureStorageReservationReservationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PureStorageReservationReservationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PureStorageReservationResource(Client, PureStorageReservationData.DeserializePureStorageReservationData(e)), PureStorageReservationReservationsClientDiagnostics, Pipeline, "MockablePureStorageBlockSubscriptionResource.GetPureStorageReservations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetBySubscriptionCollectionResultOfT(ReservationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PureStorageReservationResource(Client, data));
         }
 
         /// <summary>
         /// List storage pools by Azure subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/PureStorage.Block/storagePools</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PureStorage.Block/storagePools. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StoragePool_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PureStoragePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PureStoragePoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PureStoragePoolResource> GetPureStoragePoolsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PureStoragePoolStoragePoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PureStoragePoolStoragePoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PureStoragePoolResource(Client, PureStoragePoolData.DeserializePureStoragePoolData(e)), PureStoragePoolStoragePoolsClientDiagnostics, Pipeline, "MockablePureStorageBlockSubscriptionResource.GetPureStoragePools", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetBySubscriptionAsyncCollectionResultOfT(StoragePoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PureStoragePoolResource(Client, data));
         }
 
         /// <summary>
         /// List storage pools by Azure subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/PureStorage.Block/storagePools</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PureStorage.Block/storagePools. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StoragePool_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,9 +149,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <returns> A collection of <see cref="PureStoragePoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PureStoragePoolResource> GetPureStoragePools(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PureStoragePoolStoragePoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PureStoragePoolStoragePoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PureStoragePoolResource(Client, PureStoragePoolData.DeserializePureStoragePoolData(e)), PureStoragePoolStoragePoolsClientDiagnostics, Pipeline, "MockablePureStorageBlockSubscriptionResource.GetPureStoragePools", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetBySubscriptionCollectionResultOfT(StoragePoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PureStoragePoolResource(Client, data));
         }
     }
 }

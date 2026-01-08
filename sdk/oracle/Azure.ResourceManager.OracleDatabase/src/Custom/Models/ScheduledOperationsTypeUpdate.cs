@@ -4,8 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -16,5 +14,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public ScheduledOperationsTypeUpdate()
         {
         }
+
+        /// <summary> Initializes a new instance of <see cref="ScheduledOperationsTypeUpdate"/>. </summary>
+        /// <param name="dayOfWeek"> Day of week. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dayOfWeek"/> is null. </exception>
+        public ScheduledOperationsTypeUpdate(OracleDatabaseDayOfWeekUpdate dayOfWeek)
+        {
+            Argument.AssertNotNull(dayOfWeek, nameof(dayOfWeek));
+
+            DayOfWeek = dayOfWeek;
+        }
+
+        /// <summary> Day of week. </summary>
+        public OracleDatabaseDayOfWeekUpdate DayOfWeek { get; set; }
     }
 }

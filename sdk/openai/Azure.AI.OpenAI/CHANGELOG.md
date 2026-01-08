@@ -1,12 +1,106 @@
 # Release History
 
-## 2.2.0-beta.4 (2025-03-18)
+## 2.8.0-beta.1 (2025-12-12)
 
-This update brings compatibility with the `2025-03-01-preview` service API version, including support for the new `/responses` API via `OpenAIResponseClient`.
+This update restores compatibility with the latest `2.8.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.8.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#280-2025-12-11).
 
 ### Features Added
 
-- To use the new `/responses` endpoint, call `GetOpenAIResponseClient()` on an `AzureOpenAIClient` instance, following the same pattern as other operations. Using the overload without a deployment name will not be able to create new responses, only retrieve and list existing response data.
+- A substantial number of new features are carried forward from the `OpenAI` library. Please see [the full OpenAI 2.8.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#280-2025-12-11) for details.
+
+## 2.7.0-beta.2 (2025-12-01)
+
+### Bugs fixed
+
+- Addressed a Thanksgiving mistake in the `beta.1` release wherein the `SetNewMaxCompletionTokensPropertyEnabled()` extension method was unintentionally removed from the public surface.
+
+## 2.7.0-beta.1 (2025-11-24)
+
+This update restores compatibility with the latest `2.7.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.7.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#270-2025-11-13).
+
+### Features Added
+
+- A substantial number of new features are carried forward from the `OpenAI` library. Please see [the full OpenAI 2.7.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#270-2025-11-13) for details.
+
+### Breaking Changes
+
+**`[Experimental]` Chat Extensions**
+
+- Explicitly assigning `null` to the `MaxOutputTokens` property of a `ChatCompletionOptions` instance will now reset opt-in to
+  contemporary serialization of `max_output_tokens` via `.SetNewMaxOutputTokensPropertyEnabled()`. Please ensure the extension
+  method is invoked after non-null assignment of `MaxOutputTokens`.
+
+## 2.5.0-beta.1 (2025-10-03)
+
+This update restores compatibility with the latest `2.5.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.5.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#250-2025-09-23).
+
+### Features Added
+
+- A substantial number of new features are carried forward from the `OpenAI` library. Please see [the full OpenAI 2.5.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#250-2025-09-23) for details.
+
+## 2.3.0-beta.2 (2025-08-21)
+
+### Features Added
+
+This small update includes `[Experimental]` additions to `AzureOpenAIClientOptions` that enables providing custom key/value pairs for headers and query string parameters via `DefaultHeaders` and `DefaultQueryParameters`, respectively.
+
+## 2.3.0-beta.1 (2025-08-07)
+
+This update restores compatibility with the latest `2.3.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.3.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#230-2025-08-01).
+
+### Features Added
+
+- A substantial number of new features are carried forward from the `OpenAI` library. Please see [the full OpenAI 2.3.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#230-2025-08-01) for details.
+
+## 2.2.0-beta.5 (2025-07-11)
+
+This update converges new feature updates from the recent `2.2.0` release of `OpenAI` together with support based on the contemporary `2025-04-01-preview` Azure OpenAI Service API label.
+
+### Features Added
+
+- A substantial number of new features are carried forward from the `OpenAI` library. Please see [the full 2.2.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#220-2025-07-02) for details.
+
+### Breaking Changes (Preview APIs)
+
+The following are carried forward from changes in the 2.2.0 release of `OpenAI`. Please see [the changelog](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#220-2025-07-02) for full details.
+
+- Removed the implicit operator from all models that converts a model to `BinaryContent`.
+- Removed the explicit operator from all models that converts a `ClientResult` to a model.
+- OpenAI:
+  - Renamed the `GetRealtimeConversationClient` method from `OpenAIClient` to `GetRealtimeClient`.
+- OpenAI.FineTuning:
+  - Renamed the `FineTuningJobOperation` class to `FineTuningJob`.
+  - Removed protocol methods for `CreateFineTuningJob`, `GetJob`, and `GetJobs` and added convenience methods for them.
+- OpenAI.Realtime:
+  - Updated namespace from `OpenAI.Conversations` to `OpenAI.Realtime`. All APIs and types related to real-time conversations have been moved to the new `OpenAI.Realtime` namespace.
+- OpenAI.Responses:
+  - Removed the `SummaryTextParts` property of `ReasoningResponseItem` in favor a new property called `SummaryParts`.
+  - Removed the following public constructors:
+    - `FileSearchCallResponseItem(IEnumerable<string> queries, IEnumerable<FileSearchCallResult> results)`
+    - `FunctionCallOutputResponseItem(string callId, string functionOutput)`
+    - `FunctionCallResponseItem(string callId, string functionName, BinaryData functionArguments)`
+  - Made several properties read-only that were previously settable:
+    - `CallId` and `Output` in `ComputerCallOutputResponseItem`
+    - `Action`, `CallId`, and `Status` in `ComputerCallResponseItem`
+    - `Results` and `Status` in `FileSearchCallResponseItem`
+    - `CallId` in `FunctionCallOutputResponseItem`
+    - `CallId` in `FunctionCallResponseItem`
+  - Changed the following property types:
+    - `Attributes` in `FileSearchCallResult` is now `IReadOnlyDictionary<string, BinaryData>` instead of `IDictionary<string, BinaryData>`.
+    - `Status` properties are now nullable in multiple response item types.
+    - `Code` in `ResponseError` is now `ResponseErrorCode` instead of `string`.
+  - Renamed the `WebSearchToolContextSize` extensible enum to `WebSearchContextSize`.
+  - Renamed the `WebSearchToolLocation` class to `WebSearchUserLocation`.
+- OpenAI.VectorStores:
+  - Renamed method parameters from `vectorStore` to `options` in `CreateVectorStore` and `ModifyVectorStore` methods in `VectorStoreClient`.
+
+## 2.2.0-beta.4 (2025-03-18)
+
+This update brings compatibility with the `2025-03-01-preview` service API version, including support for the new `/responses` API via `ResponsesClient`.
+
+### Features Added
+
+- To use the new `/responses` endpoint, call `GetResponsesClient()` on an `AzureOpenAIClient` instance, following the same pattern as other operations. Using the overload without a deployment name will not be able to create new responses, only retrieve and list existing response data.
 
 In addition to the new features transitive via the `OpenAI` library:
 

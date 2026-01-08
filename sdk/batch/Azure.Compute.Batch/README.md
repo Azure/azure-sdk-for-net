@@ -147,12 +147,6 @@ The following section provides several synchronous code snippets covering some o
   * [Node File Properties](#get-node-file-properties)
   * [Get Remote Login Settings](#getremoteloginsettings)
   * [Upload Compute Node BatchService Logs](#uploadcomputenodebatchservicelogs)
-* [Certificate Operations](#certificate-operations)
-  * [Create a Certificate](#createcertificate)
-  * [Get a Certificatec](#getcertificate)
-  * [List Certificates](#listcertificates)
-  * [Delete Certificate](#deletecertificate)
-  * [Cancel Delete Certificate](#canceldeletecertificate)
 * [Application Operations](#application-operations)
   * [Get Application](#get-application)
   * [List Applications](#list-application)
@@ -330,15 +324,7 @@ BatchApplicationPackageReference[] batchApplicationPackageReferences = new Batch
         }
     };
 
-BatchCertificateReference[] certificateReferences = new BatchCertificateReference[] {
-        new BatchCertificateReference("thumbprint","thumbprintAlgorithm")
-        {
-            StoreLocation = "storeLocation",
-            StoreName = "storeName"
-        }
-};
-
-BatchPoolReplaceOptions replaceOptions = new BatchPoolReplaceOptions(certificateReferences, batchApplicationPackageReferences, metadataItems);
+BatchPoolReplaceOptions replaceOptions = new BatchPoolReplaceOptions(batchApplicationPackageReferences, metadataItems);
 batchClient.ReplacePoolProperties("poolID", replaceOptions);
 ```
 #### Resize Pool
@@ -1157,85 +1143,6 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 UploadBatchServiceLogsOptions uploadBatchServiceLogsOptions = new UploadBatchServiceLogsOptions(new Uri("containerUrl"), DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
 
 UploadBatchServiceLogsResult uploadBatchServiceLogsResult = batchClient.UploadNodeLogs("poolId", "computeNodeId", uploadBatchServiceLogsOptions);
-```
-
-### Certificate Operations
-
-> Note: Certificates has been [deprecated].
-
-#### CreateCertificate
-
-Call `CreateCertificate` with a `BatchCertificate` param to create a Certificate.
-
-```C# Snippet:Batch_Migration_CreateCerCertificate
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-byte[] certData = File.ReadAllBytes("certPath");
-BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", BinaryData.FromBytes(certData))
-{
-    CertificateFormat = BatchCertificateFormat.Cer,
-    Password = "",
-};
-
-Response response = batchClient.CreateCertificate(cerCertificate);
-```
-
-#### GetCertificate
-
-Call `GetCertificate` to get the certificate which will return a `GetCertificateResponse`.
-
-```C# Snippet:Batch_Migration_GetCertificate
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-BatchCertificate cerCertificateResponse = batchClient.GetCertificate("ThumbprintAlgorithm", "Thumbprint");
-```
-
-#### ListCertificates
-
-Call `GetCertificates` to get a list of certificates.
-
-```C# Snippet:Batch_Migration_ListCertificate
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-foreach (BatchCertificate item in batchClient.GetCertificates())
-{
-    // do something
-}
-```
-
-#### DeleteCertificate
-
-Call `DeleteCertificate` to delete a Certificate.
-
-```C# Snippet:Batch_Migration_DeleteCertificate
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-batchClient.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
-```
-Optionally you can use the returned `DeleteCertificateOperation` object to wait for the operation to complete.
-
-```C# Snippet:Batch_Migration_DeleteCertificate_Operation
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-DeleteCertificateOperation operation = batchClient.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
-
-// Optional, wait for operation to complete
-operation.WaitForCompletion();
-```
-
-#### CancelDeleteCertificate
-
-Call `CancelCertificateDeletion` to cancel a delete of a certificate.
-
-```C# Snippet:Batch_Migration_CancelDeleteCertificate
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-batchClient.CancelCertificateDeletion("ThumbprintAlgorithm", "Thumbprint");
 ```
 
 ### Application Operations

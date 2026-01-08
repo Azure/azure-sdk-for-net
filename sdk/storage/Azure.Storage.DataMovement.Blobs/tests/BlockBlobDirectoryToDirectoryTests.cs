@@ -87,7 +87,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         private async Task PopulateVirtualDirectoryContainer(
             BlobContainerClient containerClient,
-            long objectLength)
+            long objectLength,
+            string prefix = default)
         {
             byte[] data = GetRandomBuffer(objectLength);
             Metadata folderMetadata = new Dictionary<string, string>()
@@ -110,8 +111,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             ];
             foreach (string file in files)
             {
+                string fileName = prefix != default ? $"{prefix}/{file}" : file;
                 using MemoryStream stream = new(data);
-                BlobClient blobClient = containerClient.GetBlobClient(file);
+                BlobClient blobClient = containerClient.GetBlobClient(fileName);
                 await blobClient.UploadAsync(stream);
             }
 
@@ -119,7 +121,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string[] emptyDirs = ["emptyDir", "recursiveDir/emptySubDir"];
             foreach (string dir in emptyDirs)
             {
-                BlobClient blobClient = containerClient.GetBlobClient(dir);
+                string dirName = prefix != default ? $"{prefix}/{dir}" : dir;
+                BlobClient blobClient = containerClient.GetBlobClient(dirName);
                 await blobClient.UploadAsync(Stream.Null, new BlobUploadOptions()
                 {
                     Metadata = folderMetadata
@@ -128,7 +131,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task DirectoryCopyWithVirtualDirectories([Values(true, false)] bool hns)
+        public async Task DirectoryCopyWithVirtualDirectories(
+            [Values(true, false)] bool hns,
+            [Values(true, false)] bool usePrefix)
         {
             BlobServiceClient serviceClient = SourceClientBuilder.GetServiceClientFromOauthConfig(
                 hns ? Tenants.TestConfigHierarchicalNamespace : Tenants.TestConfigDefault,
@@ -137,7 +142,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await using DisposingBlobContainer sourceContainer = await SourceClientBuilder.GetTestContainerAsync(serviceClient);
             await using DisposingBlobContainer destinationContainer = await DestinationClientBuilder.GetTestContainerAsync(serviceClient);
 
-            await PopulateVirtualDirectoryContainer(sourceContainer.Container, 1024);
+            string sourcePrefix = usePrefix ? "source" : default;
+            string destinationPrefix = usePrefix ? "destination" : default;
+            await PopulateVirtualDirectoryContainer(sourceContainer.Container, 1024, prefix: sourcePrefix);
 
             TransferManager transferManager = new();
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
@@ -146,11 +153,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TestEventsRaised testEventsRaised = new(transferOptions);
 
             TransferOperation transfer = await transferManager.StartTransferAsync(
-                GetSourceStorageResourceContainer(sourceContainer.Container, default),
-                GetSourceStorageResourceContainer(destinationContainer.Container, default),
+                GetSourceStorageResourceContainer(sourceContainer.Container, sourcePrefix),
+                GetSourceStorageResourceContainer(destinationContainer.Container, destinationPrefix),
                 transferOptions);
 
-            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -158,8 +165,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             testEventsRaised.AssertUnexpectedFailureCheck();
             await VerifyResultsAsync(
-                sourceContainer.Container, string.Empty,
-                destinationContainer.Container, string.Empty);
+                sourceContainer.Container, sourcePrefix,
+                destinationContainer.Container, destinationPrefix);
         }
     }
 }

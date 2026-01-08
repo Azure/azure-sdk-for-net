@@ -69,6 +69,7 @@ ipch/
 # VS Code
 **/.vscode/*
 !.vscode/cspell.json
+!.vscode/mcp.json
 
 # Code analysis
 *.CodeAnalysisLog.xml
@@ -177,6 +178,7 @@ artifacts
 
 # Temporary typespec folders for typespec generation
 TempTypeSpecFiles/
+tsp_client_metadata.yaml
 
 # Common toolchain intermediate files
 temp

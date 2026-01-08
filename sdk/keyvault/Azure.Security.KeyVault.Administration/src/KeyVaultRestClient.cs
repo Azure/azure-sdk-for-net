@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
     /// The rest client for the KeyVault service.
     /// </summary>
-    [CodeGenClient("KeyVaultRestClient")]
+    [CodeGenType("KeyVaultRestClient")]
     internal partial class KeyVaultRestClient
     {
         /// <summary> Initializes a new instance of KeyVaultRestClient. </summary>
@@ -38,7 +39,7 @@ namespace Azure.Security.KeyVault.Administration
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options,
+            Pipeline = HttpPipelineBuilder.Build(options,
                     new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
             _endpoint = endpoint;
             _apiVersion = options.GetVersionString();

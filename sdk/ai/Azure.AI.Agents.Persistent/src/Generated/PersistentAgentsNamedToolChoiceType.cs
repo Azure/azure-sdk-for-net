@@ -31,6 +31,9 @@ namespace Azure.AI.Agents.Persistent
         private const string AzureAISearchValue = "azure_ai_search";
         private const string BingCustomSearchValue = "bing_custom_search";
         private const string ConnectedAgentValue = "connected_agent";
+        private const string DeepResearchValue = "deep_research";
+        private const string McpValue = "mcp";
+        private const string ComputerUsePreviewValue = "computer_use_preview";
 
         /// <summary> Tool type `function`. </summary>
         public static PersistentAgentsNamedToolChoiceType Function { get; } = new PersistentAgentsNamedToolChoiceType(FunctionValue);
@@ -50,6 +53,12 @@ namespace Azure.AI.Agents.Persistent
         public static PersistentAgentsNamedToolChoiceType BingCustomSearch { get; } = new PersistentAgentsNamedToolChoiceType(BingCustomSearchValue);
         /// <summary> Tool type `connected_agent`. </summary>
         public static PersistentAgentsNamedToolChoiceType ConnectedAgent { get; } = new PersistentAgentsNamedToolChoiceType(ConnectedAgentValue);
+        /// <summary> Tool type `deep_research`. </summary>
+        public static PersistentAgentsNamedToolChoiceType DeepResearch { get; } = new PersistentAgentsNamedToolChoiceType(DeepResearchValue);
+        /// <summary> Tool type `mcp`. </summary>
+        public static PersistentAgentsNamedToolChoiceType Mcp { get; } = new PersistentAgentsNamedToolChoiceType(McpValue);
+        /// <summary> Tool type `computer_use_preview`. </summary>
+        public static PersistentAgentsNamedToolChoiceType ComputerUsePreview { get; } = new PersistentAgentsNamedToolChoiceType(ComputerUsePreviewValue);
         /// <summary> Determines if two <see cref="PersistentAgentsNamedToolChoiceType"/> values are the same. </summary>
         public static bool operator ==(PersistentAgentsNamedToolChoiceType left, PersistentAgentsNamedToolChoiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PersistentAgentsNamedToolChoiceType"/> values are not the same. </summary>

@@ -7,96 +7,93 @@
 
 using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DevOpsInfrastructure;
 using Azure.ResourceManager.DevOpsInfrastructure.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableDevOpsInfrastructureSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _devOpsPoolPoolsClientDiagnostics;
-        private PoolsRestOperations _devOpsPoolPoolsRestClient;
-        private ClientDiagnostics _skuClientDiagnostics;
-        private SkuRestOperations _skuRestClient;
+        private ClientDiagnostics _poolsClientDiagnostics;
+        private Pools _poolsRestClient;
         private ClientDiagnostics _subscriptionUsagesClientDiagnostics;
-        private SubscriptionUsagesRestOperations _subscriptionUsagesRestClient;
+        private SubscriptionUsages _subscriptionUsagesRestClient;
+        private ClientDiagnostics _skuClientDiagnostics;
+        private Sku _skuRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDevOpsInfrastructureSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDevOpsInfrastructureSubscriptionResource for mocking. </summary>
         protected MockableDevOpsInfrastructureSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDevOpsInfrastructureSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDevOpsInfrastructureSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDevOpsInfrastructureSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DevOpsPoolPoolsClientDiagnostics => _devOpsPoolPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", DevOpsPoolResource.ResourceType.Namespace, Diagnostics);
-        private PoolsRestOperations DevOpsPoolPoolsRestClient => _devOpsPoolPoolsRestClient ??= new PoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DevOpsPoolResource.ResourceType));
-        private ClientDiagnostics SkuClientDiagnostics => _skuClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SkuRestOperations SkuRestClient => _skuRestClient ??= new SkuRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SubscriptionUsagesClientDiagnostics => _subscriptionUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SubscriptionUsagesRestOperations SubscriptionUsagesRestClient => _subscriptionUsagesRestClient ??= new SubscriptionUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics PoolsClientDiagnostics => _poolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Pools PoolsRestClient => _poolsRestClient ??= new Pools(PoolsClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
+
+        private ClientDiagnostics SubscriptionUsagesClientDiagnostics => _subscriptionUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SubscriptionUsages SubscriptionUsagesRestClient => _subscriptionUsagesRestClient ??= new SubscriptionUsages(SubscriptionUsagesClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
+
+        private ClientDiagnostics SkuClientDiagnostics => _skuClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Sku SkuRestClient => _skuRestClient ??= new Sku(SkuClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
 
         /// <summary>
         /// List Pool resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/pools</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/pools. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevOpsPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevOpsPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevOpsPoolResource> GetDevOpsPoolsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DevOpsPoolPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevOpsPoolPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevOpsPoolResource(Client, DevOpsPoolData.DeserializeDevOpsPoolData(e)), DevOpsPoolPoolsClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetDevOpsPools", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetBySubscriptionAsyncCollectionResultOfT(PoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
         /// List Pool resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/pools</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/pools. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,114 +101,152 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// <returns> A collection of <see cref="DevOpsPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevOpsPoolResource> GetDevOpsPools(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DevOpsPoolPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevOpsPoolPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevOpsPoolResource(Client, DevOpsPoolData.DeserializeDevOpsPoolData(e)), DevOpsPoolPoolsClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetDevOpsPools", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetBySubscriptionCollectionResultOfT(PoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
-        /// List ResourceSku resources by subscription ID
+        /// Checks that the pool name is valid and is not already in use.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/locations/{locationName}/skus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceSku_ListByLocation</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationName"> Name of the location. </param>
+        /// <param name="body"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DevOpsResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevOpsResourceSku> GetSkusByLocationAsync(string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<DevOpsCheckNameAvailabilityResult>> CheckDevOpsPoolNameAvailabilityAsync(CheckNameAvailability body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNull(body, nameof(body));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkuRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkuRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevOpsResourceSku.DeserializeDevOpsResourceSku(e), SkuClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetSkusByLocation", "value", "nextLink", cancellationToken);
+            using DiagnosticScope scope = PoolsClientDiagnostics.CreateScope("MockableDevOpsInfrastructureSubscriptionResource.CheckDevOpsPoolNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PoolsRestClient.CreateCheckDevOpsPoolNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailability.ToRequestContent(body), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevOpsCheckNameAvailabilityResult> response = Response.FromValue(DevOpsCheckNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// List ResourceSku resources by subscription ID
+        /// Checks that the pool name is valid and is not already in use.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/locations/{locationName}/skus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceSku_ListByLocation</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationName"> Name of the location. </param>
+        /// <param name="body"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> A collection of <see cref="DevOpsResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevOpsResourceSku> GetSkusByLocation(string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<DevOpsCheckNameAvailabilityResult> CheckDevOpsPoolNameAvailability(CheckNameAvailability body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNull(body, nameof(body));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkuRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkuRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevOpsResourceSku.DeserializeDevOpsResourceSku(e), SkuClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetSkusByLocation", "value", "nextLink", cancellationToken);
+            using DiagnosticScope scope = PoolsClientDiagnostics.CreateScope("MockableDevOpsInfrastructureSubscriptionResource.CheckDevOpsPoolNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PoolsRestClient.CreateCheckDevOpsPoolNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailability.ToRequestContent(body), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevOpsCheckNameAvailabilityResult> response = Response.FromValue(DevOpsCheckNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// List Quota resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/locations/{location}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/locations/{location}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubscriptionUsages_GetUsages</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionUsages_Usages. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevOpsResourceQuota"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevOpsResourceQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevOpsResourceQuota> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionUsagesRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SubscriptionUsagesRestClient.CreateGetUsagesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevOpsResourceQuota.DeserializeDevOpsResourceQuota(e), SubscriptionUsagesClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SubscriptionUsagesGetUsagesAsyncCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
 
         /// <summary>
         /// List Quota resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/locations/{location}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/locations/{location}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubscriptionUsages_GetUsages</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionUsages_Usages. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,9 +255,77 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// <returns> A collection of <see cref="DevOpsResourceQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevOpsResourceQuota> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionUsagesRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SubscriptionUsagesRestClient.CreateGetUsagesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevOpsResourceQuota.DeserializeDevOpsResourceQuota(e), SubscriptionUsagesClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SubscriptionUsagesGetUsagesCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+        }
+
+        /// <summary>
+        /// List ResourceSku resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/locations/{locationName}/skus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Sku_ListByLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> Name of the location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DevOpsResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevOpsResourceSku> GetSkusByLocationAsync(string locationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SkuGetSkusByLocationAsyncCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+        }
+
+        /// <summary>
+        /// List ResourceSku resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/locations/{locationName}/skus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Sku_ListByLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> Name of the location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DevOpsResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevOpsResourceSku> GetSkusByLocation(string locationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SkuGetSkusByLocationCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
         }
     }
 }

@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Authorization
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAuthorizationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("roleDefinitionId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("principalId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("createdOn"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("updatedOn"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("delegatedManagedIdentityResourceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 delegatedManagedIdentityResourceId = null;
                                 continue;

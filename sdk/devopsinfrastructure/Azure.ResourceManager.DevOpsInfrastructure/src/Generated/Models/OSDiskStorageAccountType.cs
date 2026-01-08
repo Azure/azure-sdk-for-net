@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct OSDiskStorageAccountType : IEquatable<OSDiskStorageAccountType>
     {
         private readonly string _value;
+        /// <summary> Standard OS disk type. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Premium OS disk type. </summary>
+        private const string PremiumValue = "Premium";
+        /// <summary> Standard SSD OS disk type. </summary>
+        private const string StandardSsdValue = "StandardSSD";
 
         /// <summary> Initializes a new instance of <see cref="OSDiskStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OSDiskStorageAccountType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string PremiumValue = "Premium";
-        private const string StandardSsdValue = "StandardSSD";
+            _value = value;
+        }
 
         /// <summary> Standard OS disk type. </summary>
         public static OSDiskStorageAccountType Standard { get; } = new OSDiskStorageAccountType(StandardValue);
+
         /// <summary> Premium OS disk type. </summary>
         public static OSDiskStorageAccountType Premium { get; } = new OSDiskStorageAccountType(PremiumValue);
+
         /// <summary> Standard SSD OS disk type. </summary>
         public static OSDiskStorageAccountType StandardSsd { get; } = new OSDiskStorageAccountType(StandardSsdValue);
+
         /// <summary> Determines if two <see cref="OSDiskStorageAccountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OSDiskStorageAccountType left, OSDiskStorageAccountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OSDiskStorageAccountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OSDiskStorageAccountType left, OSDiskStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OSDiskStorageAccountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OSDiskStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OSDiskStorageAccountType(string value) => new OSDiskStorageAccountType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OSDiskStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OSDiskStorageAccountType?(string value) => value == null ? null : new OSDiskStorageAccountType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OSDiskStorageAccountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OSDiskStorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

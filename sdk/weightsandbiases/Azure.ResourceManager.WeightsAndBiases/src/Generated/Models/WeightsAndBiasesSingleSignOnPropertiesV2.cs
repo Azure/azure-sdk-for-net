@@ -7,49 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.WeightsAndBiases;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Models
 {
     /// <summary> Properties specific to Single Sign On Resource. </summary>
     public partial class WeightsAndBiasesSingleSignOnPropertiesV2
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesSingleSignOnPropertiesV2"/>. </summary>
         /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
-        public WeightsAndBiasesSingleSignOnPropertiesV2(WeightsAndBiasesSingleSignOnType type)
+        public WeightsAndBiasesSingleSignOnPropertiesV2(WeightsAndBiasesSingleSignOnType @type)
         {
-            Type = type;
+            Type = @type;
             AadDomains = new ChangeTrackingList<string>();
         }
 
@@ -59,30 +31,29 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
         /// <param name="uri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WeightsAndBiasesSingleSignOnPropertiesV2(WeightsAndBiasesSingleSignOnType type, WeightsAndBiasesSingleSignOnState? state, string enterpriseAppId, string uri, IList<string> aadDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WeightsAndBiasesSingleSignOnPropertiesV2(WeightsAndBiasesSingleSignOnType @type, WeightsAndBiasesSingleSignOnState? state, string enterpriseAppId, string uri, IList<string> aadDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             State = state;
             EnterpriseAppId = enterpriseAppId;
             Uri = uri;
             AadDomains = aadDomains;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesSingleSignOnPropertiesV2"/> for deserialization. </summary>
-        internal WeightsAndBiasesSingleSignOnPropertiesV2()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of Single Sign-On mechanism being used. </summary>
         public WeightsAndBiasesSingleSignOnType Type { get; set; }
+
         /// <summary> State of the Single Sign On for the resource. </summary>
         public WeightsAndBiasesSingleSignOnState? State { get; set; }
+
         /// <summary> AAD enterprise application Id used to setup SSO. </summary>
         public string EnterpriseAppId { get; set; }
+
         /// <summary> URL for SSO to be used by the partner to redirect the user to their system. </summary>
         public string Uri { get; set; }
+
         /// <summary> List of AAD domains fetched from Microsoft Graph for user. </summary>
         public IList<string> AadDomains { get; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct MarketplaceSubscriptionStatus : IEquatable<MarketplaceSubscriptionStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MarketplaceSubscriptionStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
         private const string SubscribedValue = "Subscribed";
         private const string SuspendedValue = "Suspended";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         private const string NotStartedValue = "NotStarted";
         private const string FulfillmentRequestedValue = "FulfillmentRequested";
 
-        /// <summary> PendingFulfillmentStart. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MarketplaceSubscriptionStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the PendingFulfillmentStart. </summary>
         public static MarketplaceSubscriptionStatus PendingFulfillmentStart { get; } = new MarketplaceSubscriptionStatus(PendingFulfillmentStartValue);
-        /// <summary> Subscribed. </summary>
+
+        /// <summary> Gets the Subscribed. </summary>
         public static MarketplaceSubscriptionStatus Subscribed { get; } = new MarketplaceSubscriptionStatus(SubscribedValue);
-        /// <summary> Suspended. </summary>
+
+        /// <summary> Gets the Suspended. </summary>
         public static MarketplaceSubscriptionStatus Suspended { get; } = new MarketplaceSubscriptionStatus(SuspendedValue);
-        /// <summary> Unsubscribed. </summary>
+
+        /// <summary> Gets the Unsubscribed. </summary>
         public static MarketplaceSubscriptionStatus Unsubscribed { get; } = new MarketplaceSubscriptionStatus(UnsubscribedValue);
-        /// <summary> NotStarted. </summary>
+
+        /// <summary> Gets the NotStarted. </summary>
         public static MarketplaceSubscriptionStatus NotStarted { get; } = new MarketplaceSubscriptionStatus(NotStartedValue);
-        /// <summary> FulfillmentRequested. </summary>
+
+        /// <summary> Gets the FulfillmentRequested. </summary>
         public static MarketplaceSubscriptionStatus FulfillmentRequested { get; } = new MarketplaceSubscriptionStatus(FulfillmentRequestedValue);
+
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MarketplaceSubscriptionStatus left, MarketplaceSubscriptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MarketplaceSubscriptionStatus left, MarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MarketplaceSubscriptionStatus(string value) => new MarketplaceSubscriptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MarketplaceSubscriptionStatus?(string value) => value == null ? null : new MarketplaceSubscriptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MarketplaceSubscriptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

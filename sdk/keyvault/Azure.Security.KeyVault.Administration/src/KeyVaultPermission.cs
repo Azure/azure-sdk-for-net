@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    [CodeGenModel("Permission")]
+    [CodeGenType("Permission")]
     public partial class KeyVaultPermission
     {
     }

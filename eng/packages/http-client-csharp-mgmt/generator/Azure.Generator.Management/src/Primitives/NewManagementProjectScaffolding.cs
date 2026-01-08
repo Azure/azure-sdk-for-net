@@ -1,14 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using Azure.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Primitives;
 
 namespace Azure.Generator.Management.Primitives
 {
     internal class NewManagementProjectScaffolding : NewAzureProjectScaffolding
     {
-        // TODO -- call the hook to add new files that mgmt projects need
-        // current list:
-        // - ForwardsClientCallsAttribute.cs
+        protected override IReadOnlyList<CSharpProjectCompileInclude> BuildCompileIncludes()
+            => Array.Empty<CSharpProjectCompileInclude>();
     }
 }

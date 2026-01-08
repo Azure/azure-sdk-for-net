@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Storage.Tests
                     new ExecutionTrigger(
                         ExecutionTriggerType.OnSchedule,
                         new ExecutionTriggerParameters(
-                            new DateTimeOffset(2025, 7, 1, 1, 1, 1, new TimeSpan()),
+                            new DateTimeOffset(2026, 7, 1, 1, 1, 1, new TimeSpan()),
                             10,
                             ExecutionIntervalUnit.Days,
-                            new DateTimeOffset(2025, 8, 1, 1, 1, 1, new TimeSpan()),
+                            new DateTimeOffset(2026, 8, 1, 1, 1, 1, new TimeSpan()),
                             null,
                             null)),
                     null),
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     new ExecutionTrigger(
                         ExecutionTriggerType.RunOnce,
                         new ExecutionTriggerParameters(null,null,null,null,
-                            startOn: new DateTimeOffset(2025, 8, 1, 1, 1, 1, new TimeSpan()),
+                            startOn: new DateTimeOffset(2026, 10, 1, 1, 1, 1, new TimeSpan()),
                             null)),
                     null),
                 report: new StorageTaskAssignmentReport("container1"));
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 new StorageTaskAssignmentData(assignmentProperties))).Value;
 
             // list TaskAssignmentInstancesReport
-            var assignments = await _storageTaskAssignmentCollection.GetAllAsync(maxpagesize:1).ToEnumerableAsync();
+            var assignments = await _storageTaskAssignmentCollection.GetAllAsync(top:1).ToEnumerableAsync();
             Assert.IsTrue(assignments.Count >= 2);
         }
 
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     new ExecutionTrigger(
                         ExecutionTriggerType.RunOnce,
                         new ExecutionTriggerParameters(null, null, null, null,
-                            startOn: new DateTimeOffset(2025, 8, 1, 1, 1, 1, new TimeSpan()),
+                            startOn: new DateTimeOffset(2026, 8, 1, 1, 1, 1, new TimeSpan()),
                             null)),
                     null),
                 report: new StorageTaskAssignmentReport("container1"));

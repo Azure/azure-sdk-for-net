@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CloudHsmClusterCreateOrUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-31/CloudHsmCluster_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudHsmCluster_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CloudHsmClusterGetMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-31/CloudHsmCluster_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudHsmCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CloudHsmClusterListByResourceGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-31/CloudHsmCluster_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudHsmCluster_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_CloudHsmClusterGetMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-31/CloudHsmCluster_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudHsmCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CloudHsmClusterGetMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-31/CloudHsmCluster_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudHsmCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

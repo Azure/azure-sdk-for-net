@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="DataCenterAddressInstructionResult"/>. </summary>
         internal DataCenterAddressInstructionResult()
         {
-            DataCenterAddressType = DataCenterAddressType.DataCenterAddressInstruction;
+            DatacenterAddressType = DatacenterAddressType.DatacenterAddressInstruction;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataCenterAddressInstructionResult"/>. </summary>
-        /// <param name="dataCenterAddressType"> Data center address type. </param>
+        /// <param name="datacenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="communicationInstruction"> Data center communication instruction. </param>
-        internal DataCenterAddressInstructionResult(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> serializedAdditionalRawData, string communicationInstruction) : base(dataCenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, serializedAdditionalRawData)
+        internal DataCenterAddressInstructionResult(DatacenterAddressType datacenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> serializedAdditionalRawData, string communicationInstruction) : base(datacenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, serializedAdditionalRawData)
         {
             CommunicationInstruction = communicationInstruction;
-            DataCenterAddressType = dataCenterAddressType;
+            DatacenterAddressType = datacenterAddressType;
         }
 
         /// <summary> Data center communication instruction. </summary>

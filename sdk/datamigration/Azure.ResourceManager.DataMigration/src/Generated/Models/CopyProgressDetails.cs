@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="dataWritten"> Bytes written. </param>
         /// <param name="rowsRead"> Rows read. </param>
         /// <param name="rowsCopied"> Rows Copied. </param>
-        /// <param name="copyStart"> Copy Start. </param>
+        /// <param name="copyStartOn"> Copy Start. </param>
         /// <param name="copyThroughput"> Copy throughput in KBps. </param>
         /// <param name="copyDuration"> Copy Duration in seconds. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CopyProgressDetails(string tableName, string status, string parallelCopyType, int? usedParallelCopies, long? dataRead, long? dataWritten, long? rowsRead, long? rowsCopied, DateTimeOffset? copyStart, double? copyThroughput, int? copyDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CopyProgressDetails(string tableName, string status, string parallelCopyType, int? usedParallelCopies, long? dataRead, long? dataWritten, long? rowsRead, long? rowsCopied, DateTimeOffset? copyStartOn, double? copyThroughput, int? copyDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TableName = tableName;
             Status = status;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             DataWritten = dataWritten;
             RowsRead = rowsRead;
             RowsCopied = rowsCopied;
-            CopyStart = copyStart;
+            CopyStartOn = copyStartOn;
             CopyThroughput = copyThroughput;
             CopyDuration = copyDuration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Rows Copied. </summary>
         public long? RowsCopied { get; }
         /// <summary> Copy Start. </summary>
-        public DateTimeOffset? CopyStart { get; }
+        public DateTimeOffset? CopyStartOn { get; }
         /// <summary> Copy throughput in KBps. </summary>
         public double? CopyThroughput { get; }
         /// <summary> Copy Duration in seconds. </summary>
