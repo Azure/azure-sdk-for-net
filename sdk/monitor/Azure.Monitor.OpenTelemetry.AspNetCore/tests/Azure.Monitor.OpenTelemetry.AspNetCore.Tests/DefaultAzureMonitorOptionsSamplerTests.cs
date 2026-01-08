@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             configurator.Configure(options);
 
             Assert.Equal(15d, options.TracesPerSecond);
-            Assert.Equal(1.0f, options.SamplingRatio); // default unchanged
+            Assert.Null(options.SamplingRatio);
         }
 
         [Fact]
@@ -60,8 +60,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             var configurator = new DefaultAzureMonitorOptions(configuration);
             var options = new AzureMonitorOptions();
             configurator.Configure(options);
-            Assert.Equal(1.0f, options.SamplingRatio); // default
-            Assert.Equal(5.0, options.TracesPerSecond); // Default value retained
+            // these should be null, the default gets set directly in the RateLimitedSampler constructor
+            Assert.Null(options.SamplingRatio);
+            Assert.Null(options.TracesPerSecond);
 
             // invalid negative rate
             configValues = new List<KeyValuePair<string, string?>>
@@ -73,8 +74,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             configurator = new DefaultAzureMonitorOptions(configuration);
             options = new AzureMonitorOptions();
             configurator.Configure(options);
-            Assert.Equal(5.0, options.TracesPerSecond); // Default value retained
-            Assert.Equal(1.0f, options.SamplingRatio);
+            // these should be null, the default gets set directly in the RateLimitedSampler constructor
+            Assert.Null(options.TracesPerSecond);
+            Assert.Null(options.SamplingRatio);
         }
 
         [Fact]
@@ -124,6 +126,30 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
                 Assert.Equal(0.55f, options.SamplingRatio);
                 Assert.Null(options.TracesPerSecond);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", prevSampler);
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", prevSamplerArg);
+            }
+        }
+
+        [Fact]
+        public void Configure_Sampler_EnvironmentVariable_Only_RateLimited()
+        {
+            string? prevSampler = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER");
+            string? prevSamplerArg = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG");
+            try
+            {
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", "microsoft.rate_limited");
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", "11");
+
+                var configurator = new DefaultAzureMonitorOptions();
+                var options = new AzureMonitorOptions();
+                configurator.Configure(options);
+
+                Assert.Equal(11d, options.TracesPerSecond);
+                Assert.Null(options.SamplingRatio);
             }
             finally
             {

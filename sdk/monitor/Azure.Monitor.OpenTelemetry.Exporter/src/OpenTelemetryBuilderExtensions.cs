@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -79,9 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             builder.Services.ConfigureOpenTelemetryTracerProvider((sp, tracerProviderBuilder) =>
             {
                 var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
-                tracerProviderBuilder.SetSampler(exporterOptions.TracesPerSecond != null ?
-                    new RateLimitedSampler(exporterOptions.TracesPerSecond.Value) :
-                    new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
+                    tracerProviderBuilder.SetSampler(GetSampler(exporterOptions));
             });
 
             builder.Services.Configure<OpenTelemetryLoggerOptions>((loggingOptions) =>
@@ -128,6 +127,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             });
 
             return builder;
+        }
+
+        private static Sampler GetSampler(AzureMonitorExporterOptions options)
+        {
+            if (options.TracesPerSecond != null)
+            {
+                return new RateLimitedSampler(options.TracesPerSecond.Value);
+            }
+            else if (options.SamplingRatio != null)
+            {
+                return new ApplicationInsightsSampler(options.SamplingRatio.Value);
+            }
+            else
+            {
+                return new RateLimitedSampler(5.0);
+            }
         }
     }
 }

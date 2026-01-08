@@ -202,11 +202,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         }
 
         [Theory]
-        [InlineData(true, true)]
-        [InlineData(false, true)]
-        [InlineData(true, false)]
-        [InlineData(false, false)]
-        public async Task VerifySamplingOptions(bool isRateLimitedSampler, bool useExporter)
+        [InlineData(true, true, 10.0, null)]
+        [InlineData(true, true, 10.0, 0.5f)]
+        [InlineData(true, true, null, null)]
+        [InlineData(false, true, null, 0.5f)]
+        [InlineData(true, false, 10.0, null)]
+        [InlineData(true, false, 10.0, 0.5f)]
+        [InlineData(true, false, null, null)]
+        [InlineData(false, false, null, 0.5f)]
+        public async Task VerifySamplingOptions(bool isRateLimitedSampler, bool useExporter, double? tracesPerSecond, float? samplingRatio)
         {
             var serviceCollection = new ServiceCollection();
             if (useExporter)
@@ -215,7 +219,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 .UseAzureMonitorExporter(options =>
                 {
                     options.ConnectionString = TestConnectionString;
-                    options.TracesPerSecond = isRateLimitedSampler ? 10 : null;
+                    options.TracesPerSecond = tracesPerSecond;
+                    options.SamplingRatio = samplingRatio;
                 });
             }
             else // use distro
@@ -223,7 +228,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 serviceCollection.AddOpenTelemetry()
                 .UseAzureMonitor(options => {
                     options.ConnectionString = TestConnectionString;
-                    options.TracesPerSecond = isRateLimitedSampler ? 10 : null;
+                    options.TracesPerSecond = tracesPerSecond;
+                    options.SamplingRatio = samplingRatio;
                 });
             }
 

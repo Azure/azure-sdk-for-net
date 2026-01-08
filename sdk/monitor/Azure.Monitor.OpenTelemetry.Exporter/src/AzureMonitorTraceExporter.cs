@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal AzureMonitorTraceExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
         {
-            _sampleRate = (float)Math.Round(options.SamplingRatio * 100);
+            _sampleRate = (float)Math.Round((options.SamplingRatio ?? 1.0f) * 100);
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
         }

@@ -166,7 +166,6 @@ Some key concepts for OpenTelemetry include:
   ```csharp
   .AddAzureMonitorTraceExporter(options => {
       options.SamplingRatio = 0.5f; // Sample 50% of traces
-      options.TracesPerSecond = null;
   })
   ```
 

@@ -151,7 +151,6 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
 builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
 {
     options.SamplingRatio = 0.5F; // Sample 50% of traces
-    options.TracesPerSecond = null; // Disable rate-limited sampling
 });
 ```
 

@@ -82,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
-            builder.SetSampler(new ApplicationInsightsSampler(options.SamplingRatio));
+            builder.SetSampler(new ApplicationInsightsSampler(options.SamplingRatio ?? 1.0f));
 
             return builder.AddProcessor(new SimpleActivityExportProcessor(new AzureMonitorTraceExporter(options, new MockTransmitter(telemetryItems))));
         }

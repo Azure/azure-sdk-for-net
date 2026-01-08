@@ -85,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 builder.SetSampler(exporterOptions.TracesPerSecond != null ?
                     new RateLimitedSampler(exporterOptions.TracesPerSecond.Value) :
-                    new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
+                    new ApplicationInsightsSampler(exporterOptions.SamplingRatio ?? 1.0f));
 
                 if (credential != null)
                 {
@@ -281,6 +281,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     ? new LogFilteringProcessor(exporter)
                     : new BatchLogRecordExportProcessor(exporter);
             });
+        }
+
+        private static Sampler GetSampler(AzureMonitorExporterOptions options)
+        {
+            if (options.TracesPerSecond != null)
+            {
+                return new RateLimitedSampler(options.TracesPerSecond.Value);
+            }
+            else if (options.SamplingRatio != null)
+            {
+                return new ApplicationInsightsSampler(options.SamplingRatio.Value);
+            }
+            else
+            {
+                return new RateLimitedSampler(5.0);
+            }
         }
     }
 }
