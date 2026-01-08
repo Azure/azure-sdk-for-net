@@ -258,6 +258,18 @@ namespace Azure.ResourceManager.Batch
             Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, poolName, data, ifMatch, ifNoneMatch);
+
+            try
+            {
+                var contentOutputStream = new System.IO.MemoryStream();
+                message.Request.Content?.WriteToAsync(contentOutputStream, cancellationToken).ConfigureAwait(false);
+                string content = System.Text.Encoding.UTF8.GetString(contentOutputStream.ToArray());
+                int length = content.Length;
+            }
+            catch
+            {
+                // Intentionally left blank
+            }
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
