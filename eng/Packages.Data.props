@@ -181,6 +181,7 @@
     <PackageReference Update="Azure.ResourceManager.Network" Version="1.14.0" />
     <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.PostgreSql" Version="1.2.0" />
+    <PackageReference Update="Azure.ResourceManager.PrivateDns" Version="1.2.1" />
     <PackageReference Update="Azure.ResourceManager.Redis" Version="1.5.0" />
     <PackageReference Update="Azure.ResourceManager.RedisEnterprise" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.11.0" />
@@ -512,7 +513,7 @@
   <!-- Versions for internal tooling mapped to the dev feed -->
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20251209.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20260106.3</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20251223.1</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260108.1</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20260107.1</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

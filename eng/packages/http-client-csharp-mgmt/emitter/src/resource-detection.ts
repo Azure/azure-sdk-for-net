@@ -16,7 +16,8 @@ import {
   ResourceScope,
   ArmProviderSchema,
   ArmResourceSchema,
-  convertArmProviderSchemaToArguments
+  convertArmProviderSchemaToArguments,
+  sortResourceMethods
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -153,17 +154,20 @@ export function buildArmProviderSchema(
               // If we can't calculate resource type, try string matching
             }
 
-            // If resource types match, this list operation belongs to this resource
+            // If resource types match exactly, this list operation belongs to this resource
             if (existingResourceType && operationResourceType === existingResourceType) {
               resourcePath = existingPath;
               break;
             }
 
             // Fallback: check if the operation path ends with a segment that matches the existing path
-            const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
-            if (operationPath.startsWith(existingParentPath)) {
-              resourcePath = existingPath;
-              break;
+            // But only if we haven't found a better match yet
+            if (!resourcePath) {
+              const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
+              if (operationPath.startsWith(existingParentPath)) {
+                // Store this as a potential match, but continue looking for exact matches
+                resourcePath = existingPath;
+              }
             }
           }
         }
@@ -883,6 +887,9 @@ function buildArmProviderSchemaFromDetectedResources(
           });
           continue;
         }
+
+        // Sort methods by kind (CRUD, List, Action) and then by methodId for deterministic ordering
+        sortResourceMethods(metadata.methods);
 
         resources.push({
           resourceModelId: model.crossLanguageDefinitionId,
