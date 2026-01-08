@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -86,7 +87,16 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Array)
+                    {
+                        var items = property.Value.EnumerateArray()
+                            .Select(item => $"\"{item.GetString()}\"");
+                        type = $"[{string.Join(",", items)}]";
+                    }
+                    else
+                    {
+                        type = property.Value.GetString();
+                    }
                     continue;
                 }
                 if (property.NameEquals("description"u8))
