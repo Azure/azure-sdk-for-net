@@ -43,7 +43,3 @@ extends:
       - sdk/keyvault/Azure.Security.KeyVault.Secrets/
     - name: Microsoft.Azure.WebJobs.Extensions.Clients
       safeName: MicrosoftAzureWebJobsExtensionsClients
-    CheckAOTCompat: false
-    AOTTestInputs:
-    - ArtifactName: Microsoft.Extensions.Azure
-      ExpectedWarningsFilepath: None

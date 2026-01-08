@@ -124,7 +124,8 @@
     <GenerateAPIListing Condition="'$(GenerateAPIListing)' == '' AND '$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">true</EnableSourceLink>
     <DefineConstants Condition="'$(BuildSnippets)' == 'true'">$(DefineConstants);SNIPPET</DefineConstants>
-    <AotCompatOptOut>false</AotCompatOptOut>
+    <AotCompatOptOut Condition="'$(IsShippingLibrary)' == 'true'">false</AotCompatOptOut>
+    <AotAnalyzersOptOut Condition="'$(IsShippingLibrary)' == 'true'">false</AotAnalyzersOptOut>
 
     <!-- All current generation client libraries must support .NET Standard 2.0 unless the architects approve a specific exception. -->
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == '' and '$(IsClientLibrary)' == 'true'">true</SupportsNetStandard20>
