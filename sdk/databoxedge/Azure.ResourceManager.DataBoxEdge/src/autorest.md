@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: DataBoxEdge
 namespace: Azure.ResourceManager.DataBoxEdge
-require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/databoxedge/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d90b6facf816cc5d9c8cb3597fbb11ec657d9229/specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/DataBoxEdge/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -258,11 +258,11 @@ suppress-abstract-base-class:
 
 directive:
   - remove-operation: OperationsStatus_Get
-  - from: databoxedge.json
+  - from: openapi.json
     where: $.definitions.DataBoxEdgeSku.properties
     transform: >
       $.locations.items['x-ms-format'] = 'azure-location';
-  - from: databoxedge.json
+  - from: openapi.json
     where: $.definitions
     transform: >
       $.GenerateCertResponse.properties.expiryTimeInUTC['format'] = 'date-time';

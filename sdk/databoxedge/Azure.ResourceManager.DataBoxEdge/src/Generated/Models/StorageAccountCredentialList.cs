@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountCredentialList"/>. </summary>
-        internal StorageAccountCredentialList()
+        /// <param name="value"> The StorageAccountCredential items on this page. </param>
+        internal StorageAccountCredentialList(IEnumerable<DataBoxEdgeStorageAccountCredentialData> value)
         {
-            Value = new ChangeTrackingList<DataBoxEdgeStorageAccountCredentialData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountCredentialList"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <param name="nextLink"> Link to the next set of results. </param>
+        /// <param name="value"> The StorageAccountCredential items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountCredentialList(IReadOnlyList<DataBoxEdgeStorageAccountCredentialData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageAccountCredentialList(IReadOnlyList<DataBoxEdgeStorageAccountCredentialData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The value. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCredentialList"/> for deserialization. </summary>
+        internal StorageAccountCredentialList()
+        {
+        }
+
+        /// <summary> The StorageAccountCredential items on this page. </summary>
         public IReadOnlyList<DataBoxEdgeStorageAccountCredentialData> Value { get; }
-        /// <summary> Link to the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

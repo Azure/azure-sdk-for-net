@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerList"/>. </summary>
-        internal ContainerList()
+        /// <param name="value"> The Container items on this page. </param>
+        internal ContainerList(IEnumerable<DataBoxEdgeStorageContainerData> value)
         {
-            Value = new ChangeTrackingList<DataBoxEdgeStorageContainerData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerList"/>. </summary>
-        /// <param name="value"> The list of containers. </param>
-        /// <param name="nextLink"> Link to the next set of results. </param>
+        /// <param name="value"> The Container items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerList(IReadOnlyList<DataBoxEdgeStorageContainerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerList(IReadOnlyList<DataBoxEdgeStorageContainerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of containers. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerList"/> for deserialization. </summary>
+        internal ContainerList()
+        {
+        }
+
+        /// <summary> The Container items on this page. </summary>
         public IReadOnlyList<DataBoxEdgeStorageContainerData> Value { get; }
-        /// <summary> Link to the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
