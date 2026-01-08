@@ -226,8 +226,20 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
             };
 
+            // Check if we have an array body parameter and generate serialization code
+            VariableExpression? arrayContentVariable = null;
+            if (RequestPathPatternExtensions.HasArrayBodyParameter(_signature.Parameters, out var arrayParam, out var elementType))
+            {
+                // Generate array serialization statements
+                var serializationStatements = RequestPathPatternExtensions.GenerateArraySerializationStatements(
+                    arrayParam!,
+                    elementType!,
+                    out arrayContentVariable);
+                tryStatements.AddRange(serializationStatements);
+            }
+
             // Populate arguments for the REST client method call
-            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType);
+            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType, arrayContentVariable);
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 

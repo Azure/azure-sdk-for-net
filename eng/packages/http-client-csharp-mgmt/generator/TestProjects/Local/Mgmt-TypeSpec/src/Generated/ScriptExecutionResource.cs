@@ -222,7 +222,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptExecutionsRestClient.CreateGetExecutionLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
+                RequestContent content = null;
+                if (scriptOutputStreamType != null)
+                {
+                    object jsonContent = new object();
+                    jsonContent.JsonWriter.WriteStartArray();
+                    foreach (ScriptOutputStreamType item in scriptOutputStreamType)
+                    {
+                        jsonContent.JsonWriter.WriteStringValue(item.ToString());
+                    }
+                    jsonContent.JsonWriter.WriteEndArray();
+                    content = jsonContent;
+                }
+                HttpMessage message = _scriptExecutionsRestClient.CreateGetExecutionLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, content, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScriptExecutionData> response = Response.FromValue(ScriptExecutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -271,7 +283,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptExecutionsRestClient.CreateGetExecutionLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
+                RequestContent content = null;
+                if (scriptOutputStreamType != null)
+                {
+                    object jsonContent = new object();
+                    jsonContent.JsonWriter.WriteStartArray();
+                    foreach (ScriptOutputStreamType item in scriptOutputStreamType)
+                    {
+                        jsonContent.JsonWriter.WriteStringValue(item.ToString());
+                    }
+                    jsonContent.JsonWriter.WriteEndArray();
+                    content = jsonContent;
+                }
+                HttpMessage message = _scriptExecutionsRestClient.CreateGetExecutionLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, content, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScriptExecutionData> response = Response.FromValue(ScriptExecutionData.FromResponse(result), result);
                 if (response.Value == null)

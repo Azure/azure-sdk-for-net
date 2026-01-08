@@ -68,23 +68,74 @@ namespace Azure.Generator.Management.Utilities
 
         /// <summary>
         /// Generates statements to serialize an array parameter to RequestContent.
-        /// TODO: Implement full array serialization logic.
         /// </summary>
         public static IReadOnlyList<MethodBodyStatement> GenerateArraySerializationStatements(
             ParameterProvider arrayParameter,
             CSharpType elementType,
             out VariableExpression contentVariable)
         {
-            // TODO: This method needs to be fully implemented to generate the array serialization code.
-            // For now, we just declare the content variable as null.
             var statements = new List<MethodBodyStatement>();
 
+            // Declare: RequestContent content = null;
             var contentDeclaration = Declare(
                 "content",
                 typeof(RequestContent),
                 Null,
                 out contentVariable);
             statements.Add(contentDeclaration);
+
+            // Generate: if (arrayParameter != null) { ... }
+            var paramRef = (ValueExpression)arrayParameter;
+
+            var serializationStatements = new List<MethodBodyStatement>();
+
+            // Create a type reference to Utf8JsonRequestContent which is generated
+            // We'll use RequestContent as the base and cast it
+            var utf8Type = typeof(Azure.Core.RequestContent);
+
+            // var jsonContent = new Utf8JsonRequestContent();
+            // Since we can't reference the generated type directly, we use dynamic typing
+            serializationStatements.Add(
+                Declare("jsonContent", utf8Type, New.Instance(utf8Type), out var jsonContent));
+
+            // jsonContent.JsonWriter.WriteStartArray();
+            serializationStatements.Add(
+                jsonContent.Property("JsonWriter").Invoke("WriteStartArray").Terminate());
+
+            // foreach (var item in arrayParameter)
+            var foreachStatement = new ForEachStatement(
+                elementType,
+                "item",
+                paramRef,
+                false,
+                out var itemVar);
+            var foreachBody = new List<MethodBodyStatement>
+            {
+                // jsonContent.JsonWriter.WriteStringValue(item.ToString());
+                jsonContent.Property("JsonWriter").Invoke("WriteStringValue", [itemVar.InvokeToString()]).Terminate()
+            };
+            foreach (var stmt in foreachBody)
+            {
+                foreachStatement.Add(stmt);
+            }
+
+            serializationStatements.Add(foreachStatement);
+
+            // jsonContent.JsonWriter.WriteEndArray();
+            serializationStatements.Add(
+                jsonContent.Property("JsonWriter").Invoke("WriteEndArray").Terminate());
+
+            // content = jsonContent;
+            serializationStatements.Add(
+                contentVariable.Assign(jsonContent).Terminate());
+
+            // Wrap in if statement: if (arrayParameter != null) { ... }
+            var ifStatement = new IfStatement(paramRef.NotEqual(Null));
+            foreach (var stmt in serializationStatements)
+            {
+                ifStatement.Add(stmt);
+            }
+            statements.Add(ifStatement);
 
             return statements;
         }
@@ -95,7 +146,8 @@ namespace Azure.Generator.Management.Utilities
             IReadOnlyList<ParameterProvider> requestParameters,
             VariableExpression requestContext,
             IReadOnlyList<ParameterProvider> methodParameters,
-            TypeProvider? enclosingType = null)
+            TypeProvider? enclosingType = null,
+            VariableExpression? arrayBodyContent = null)
         {
             var arguments = new List<ValueExpression>();
             // here we always assume that the parameter name matches the parameter name in the request path.
@@ -120,10 +172,16 @@ namespace Azure.Generator.Management.Utilities
                         // Check if the body parameter is a collection type
                         if (IsCollectionType(bodyParameter.Type, out var elementType))
                         {
-                            // TODO: Array body parameters need special serialization handling
-                            // For now, we pass null which will cause a compilation error that clearly indicates
-                            // the issue needs to be fixed
-                            arguments.Add(Null);
+                            // Use the pre-serialized array content if provided
+                            if (arrayBodyContent != null)
+                            {
+                                arguments.Add(arrayBodyContent);
+                            }
+                            else
+                            {
+                                // This shouldn't happen if GenerateArraySerializationStatements was called
+                                arguments.Add(Null);
+                            }
                         }
                         else
                         {
