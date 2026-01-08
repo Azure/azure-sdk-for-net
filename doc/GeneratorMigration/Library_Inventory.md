@@ -15,8 +15,8 @@
 - Total libraries: 400
 - Management Plane (MPG): 227
   - Autorest/Swagger: 156
-  - New Emitter (TypeSpec): 52
-  - Old TypeSpec: 19
+  - New Emitter (TypeSpec): 53
+  - Old TypeSpec: 18
 - Data Plane (DPG): 173
   - Autorest/Swagger: 86
   - New Emitter (TypeSpec): 22
@@ -170,7 +170,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 52 / 71 (73.2%)
+**Migration Status**: 53 / 71 (74.6%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -211,7 +211,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
 | iotoperations | Azure.ResourceManager.IotOperations | ✅ |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
-| mongocluster | Azure.ResourceManager.MongoCluster |  |
+| mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
 | mysql | Azure.ResourceManager.MySql |  |
 | neonpostgres | Azure.ResourceManager.NeonPostgres |  |

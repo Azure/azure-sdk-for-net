@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), new AzureMonitorExporterOptions());
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), new AzureMonitorExporterOptions());
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -123,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), new AzureMonitorExporterOptions());
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -176,7 +176,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), new AzureMonitorExporterOptions());
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -244,7 +244,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), new AzureMonitorExporterOptions());
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -311,7 +311,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), new AzureMonitorExporterOptions());
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -379,7 +379,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), new AzureMonitorExporterOptions());
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
@@ -427,7 +427,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), new AzureMonitorExporterOptions());
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
@@ -475,7 +475,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), new AzureMonitorExporterOptions());
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
@@ -582,6 +582,219 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 }
             }
             return null;
+        }
+
+        [Fact]
+        public void ValidateStandardMetricsDisabled()
+        {
+            var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateStandardMetricsDisabled));
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
+
+            var options = new AzureMonitorExporterOptions { EnableStandardMetrics = false };
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), options);
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .AddSource(nameof(StandardMetricTests.ValidateStandardMetricsDisabled))
+                .AddProcessor(standardMetricCustomProcessor)
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
+                .Build();
+
+            // Generate Server activity (should not create request duration metric)
+            using (var activity = activitySource.StartActivity("Test", ActivityKind.Server))
+            {
+                activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+            }
+
+            // Generate Client activity (should not create dependency duration metric)
+            using (var activity = activitySource.StartActivity("Test", ActivityKind.Client))
+            {
+                activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+            }
+
+            tracerProvider?.ForceFlush();
+            WaitForActivityExport(traceTelemetryItems);
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+
+            // Standard metrics should not be present
+            var requestMetric = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.RequestDurationMetricIdValue);
+            Assert.Null(requestMetric);
+
+            var dependencyMetric = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.DependencyDurationMetricIdValue);
+            Assert.Null(dependencyMetric);
+        }
+
+        [Fact]
+        public void ValidatePerfCountersDisabled()
+        {
+            var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidatePerfCountersDisabled));
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
+
+            var options = new AzureMonitorExporterOptions { EnablePerfCounters = false };
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), options);
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .AddSource(nameof(StandardMetricTests.ValidatePerfCountersDisabled))
+                .AddProcessor(standardMetricCustomProcessor)
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
+                .Build();
+
+            // Generate some activities
+            for (int i = 0; i < 5; i++)
+            {
+                using var a = activitySource.StartActivity("Req", ActivityKind.Server);
+                a?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+            }
+
+            tracerProvider?.ForceFlush();
+            WaitForActivityExport(traceTelemetryItems);
+
+            // Wait briefly for any potential perf counter collection
+            Thread.Sleep(1000);
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+
+            // Performance counter metrics should not be present
+            MetricsData? FindMetric(string expectedName) => metricTelemetryItems
+                .Select(ti => (MetricsData)ti.Data.BaseData)
+                .FirstOrDefault(md => md.Metrics.Count > 0 && md.Metrics[0].Name == expectedName);
+
+            var requestRate = FindMetric(PerfCounterConstants.RequestRateMetricIdValue);
+            Assert.Null(requestRate);
+
+            var privateBytes = FindMetric(PerfCounterConstants.ProcessPrivateBytesMetricIdValue);
+            Assert.Null(privateBytes);
+
+            var cpu = FindMetric(PerfCounterConstants.ProcessCpuMetricIdValue);
+            Assert.Null(cpu);
+
+            var cpuNormalized = FindMetric(PerfCounterConstants.ProcessCpuNormalizedMetricIdValue);
+            Assert.Null(cpuNormalized);
+
+            var exceptionRate = FindMetric(PerfCounterConstants.ExceptionRateMetricIdValue);
+            Assert.Null(exceptionRate);
+        }
+
+        [Fact]
+        public void ValidateBothMetricsAndPerfCountersDisabled()
+        {
+            var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateBothMetricsAndPerfCountersDisabled));
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
+
+            var options = new AzureMonitorExporterOptions
+            {
+                EnableStandardMetrics = false,
+                EnablePerfCounters = false
+            };
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), options);
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .AddSource(nameof(StandardMetricTests.ValidateBothMetricsAndPerfCountersDisabled))
+                .AddProcessor(standardMetricCustomProcessor)
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
+                .Build();
+
+            // Generate Server and Client activities
+            using (var activity = activitySource.StartActivity("Test", ActivityKind.Server))
+            {
+                activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+            }
+
+            using (var activity = activitySource.StartActivity("Test", ActivityKind.Client))
+            {
+                activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+            }
+
+            tracerProvider?.ForceFlush();
+            WaitForActivityExport(traceTelemetryItems);
+
+            Thread.Sleep(1000);
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+
+            // No metrics should be present at all
+            Assert.Empty(metricTelemetryItems);
+        }
+
+        [Theory]
+        [InlineData(true, true)]
+        [InlineData(true, false)]
+        [InlineData(false, true)]
+        [InlineData(false, false)]
+        public void ValidateEnablePropertiesConfiguration(bool enableStandardMetrics, bool enablePerfCounters)
+        {
+            var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateEnablePropertiesConfiguration));
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
+
+            var options = new AzureMonitorExporterOptions
+            {
+                EnableStandardMetrics = enableStandardMetrics,
+                EnablePerfCounters = enablePerfCounters
+            };
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), options);
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .AddSource(nameof(StandardMetricTests.ValidateEnablePropertiesConfiguration))
+                .AddProcessor(standardMetricCustomProcessor)
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
+                .Build();
+
+            // Generate Server activity
+            using (var activity = activitySource.StartActivity("TestRequest", ActivityKind.Server))
+            {
+                activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+            }
+
+            // Generate Client activity
+            using (var activity = activitySource.StartActivity("TestDependency", ActivityKind.Client))
+            {
+                activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+            }
+
+            tracerProvider?.ForceFlush();
+            WaitForActivityExport(traceTelemetryItems);
+
+            Thread.Sleep(1000);
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+
+            // Verify standard metrics
+            var requestMetric = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.RequestDurationMetricIdValue);
+            var dependencyMetric = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.DependencyDurationMetricIdValue);
+
+            if (enableStandardMetrics)
+            {
+                Assert.NotNull(requestMetric);
+                Assert.NotNull(dependencyMetric);
+            }
+            else
+            {
+                Assert.Null(requestMetric);
+                Assert.Null(dependencyMetric);
+            }
+
+            // Verify performance counter metrics
+            MetricsData? FindMetric(string expectedName) => metricTelemetryItems
+                .Select(ti => (MetricsData)ti.Data.BaseData)
+                .FirstOrDefault(md => md.Metrics.Count > 0 && md.Metrics[0].Name == expectedName);
+
+            var requestRate = FindMetric(PerfCounterConstants.RequestRateMetricIdValue);
+            var privateBytes = FindMetric(PerfCounterConstants.ProcessPrivateBytesMetricIdValue);
+
+            if (enablePerfCounters)
+            {
+                // At least some perf counter metrics should be present
+                Assert.True(requestRate != null || privateBytes != null, "Expected at least one performance counter metric when enabled");
+            }
+            else
+            {
+                Assert.Null(requestRate);
+                Assert.Null(privateBytes);
+            }
         }
     }
 }

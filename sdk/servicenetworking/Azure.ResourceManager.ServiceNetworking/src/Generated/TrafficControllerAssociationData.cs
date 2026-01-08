@@ -9,96 +9,81 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    /// <summary>
-    /// A class representing the TrafficControllerAssociation data model.
-    /// Association Subresource of Traffic Controller
-    /// </summary>
+    /// <summary> Association Subresource of Traffic Controller. </summary>
     public partial class TrafficControllerAssociationData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public TrafficControllerAssociationData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="associationType"> Association Type. </param>
-        /// <param name="subnet"> Association Subnet. </param>
-        /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TrafficControllerAssociationType? associationType, WritableSubResource subnet, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal TrafficControllerAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AssociationProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            AssociationType = associationType;
-            Subnet = subnet;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrafficControllerAssociationData"/> for deserialization. </summary>
-        internal TrafficControllerAssociationData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal AssociationProperties Properties { get; set; }
 
-        /// <summary> Association Type. </summary>
-        public TrafficControllerAssociationType? AssociationType { get; set; }
-        /// <summary> Association Subnet. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SubnetId
+        /// <summary> Provisioning State of Traffic Controller Association Resource. </summary>
+        public ServiceNetworkingProvisioningState? ProvisioningState
         {
-            get => Subnet is null ? default : Subnet.Id;
-            set
+            get
             {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
-        /// <summary> Provisioning State of Traffic Controller Association Resource. </summary>
-        public ServiceNetworkingProvisioningState? ProvisioningState { get; }
+        /// <summary> Association ID. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AssociationProperties();
+                }
+                Properties.SubnetId = value;
+            }
+        }
+
+        /// <summary> Association Type. </summary>
+        public TrafficControllerAssociationType? AssociationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssociationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AssociationProperties();
+                }
+                Properties.AssociationType = value.Value;
+            }
+        }
     }
 }
