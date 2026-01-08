@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -270,7 +270,8 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual AsyncPageable<TrafficManagerProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,7 +287,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -299,7 +300,8 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual Pageable<TrafficManagerProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,7 +317,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -358,7 +360,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -401,7 +403,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -446,7 +448,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

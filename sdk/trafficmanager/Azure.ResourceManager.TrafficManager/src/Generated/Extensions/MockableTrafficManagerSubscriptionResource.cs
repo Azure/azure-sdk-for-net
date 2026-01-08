@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -159,7 +159,8 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         public virtual AsyncPageable<TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -188,7 +189,8 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         public virtual Pageable<TrafficManagerProfileResource> GetTrafficManagerProfiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles", "value", "nextLink", cancellationToken);
         }
     }
 }

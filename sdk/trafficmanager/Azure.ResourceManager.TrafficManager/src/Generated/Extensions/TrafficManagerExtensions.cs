@@ -39,25 +39,6 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TrafficManagerEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrafficManagerEndpointResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerEndpointResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TrafficManagerEndpointResource"/> object. </returns>
-        public static TrafficManagerEndpointResource GetTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerEndpointResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="TrafficManagerProfileResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TrafficManagerProfileResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -96,25 +77,6 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TrafficManagerHeatMapResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrafficManagerHeatMapResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerHeatMapResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerHeatMapResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TrafficManagerHeatMapResource"/> object. </returns>
-        public static TrafficManagerHeatMapResource GetTrafficManagerHeatMapResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerHeatMapResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="TrafficManagerUserMetricsResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TrafficManagerUserMetricsResource.CreateResourceIdentifier(string)" /> to create a <see cref="TrafficManagerUserMetricsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -131,6 +93,44 @@ namespace Azure.ResourceManager.TrafficManager
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableTrafficManagerArmClient(client).GetTrafficManagerUserMetricsResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TrafficManagerEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficManagerEndpointResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrafficManagerEndpointResource"/> object. </returns>
+        public static TrafficManagerEndpointResource GetTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerEndpointResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TrafficManagerHeatMapResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficManagerHeatMapResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerHeatMapResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerHeatMapResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrafficManagerHeatMapResource"/> object. </returns>
+        public static TrafficManagerHeatMapResource GetTrafficManagerHeatMapResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerHeatMapResource(id);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
