@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class AvsPrivateCloudDatastoreResource : IJsonModel<AvsPrivateCloudDatastoreData>
     {
-        private static AvsPrivateCloudDatastoreData s_dataDeserializationInstance;
-        private static AvsPrivateCloudDatastoreData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AvsPrivateCloudDatastoreData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AvsPrivateCloudDatastoreData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AvsPrivateCloudDatastoreData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsPrivateCloudDatastoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvsPrivateCloudDatastoreData>)Data).Write(writer, options);
 
-        AvsPrivateCloudDatastoreData IJsonModel<AvsPrivateCloudDatastoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsPrivateCloudDatastoreData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsPrivateCloudDatastoreData IJsonModel<AvsPrivateCloudDatastoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AvsPrivateCloudDatastoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvsPrivateCloudDatastoreData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AvsPrivateCloudDatastoreData IPersistableModel<AvsPrivateCloudDatastoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsPrivateCloudDatastoreData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<AvsPrivateCloudDatastoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsPrivateCloudDatastoreData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvsPrivateCloudDatastoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

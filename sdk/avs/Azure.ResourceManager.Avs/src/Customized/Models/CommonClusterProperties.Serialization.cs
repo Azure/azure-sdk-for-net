@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-
+/*
 namespace Azure.ResourceManager.Avs.Models
 {
     public partial class CommonClusterProperties : IUtf8JsonSerializable, IJsonModel<CommonClusterProperties>
@@ -184,3 +184,4 @@ namespace Azure.ResourceManager.Avs.Models
         string IPersistableModel<CommonClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
+*/

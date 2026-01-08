@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class WorkloadNetworkDnsZoneOperationSource : IOperationSource<WorkloadNetworkDnsZoneResource>
+    /// <summary></summary>
+    internal partial class WorkloadNetworkDnsZoneOperationSource : IOperationSource<WorkloadNetworkDnsZoneResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal WorkloadNetworkDnsZoneOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         WorkloadNetworkDnsZoneResource IOperationSource<WorkloadNetworkDnsZoneResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkDnsZoneData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            WorkloadNetworkDnsZoneData data = WorkloadNetworkDnsZoneData.DeserializeWorkloadNetworkDnsZoneData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new WorkloadNetworkDnsZoneResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<WorkloadNetworkDnsZoneResource> IOperationSource<WorkloadNetworkDnsZoneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkDnsZoneData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
-            return await Task.FromResult(new WorkloadNetworkDnsZoneResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            WorkloadNetworkDnsZoneData data = WorkloadNetworkDnsZoneData.DeserializeWorkloadNetworkDnsZoneData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new WorkloadNetworkDnsZoneResource(_client, data);
         }
     }
 }

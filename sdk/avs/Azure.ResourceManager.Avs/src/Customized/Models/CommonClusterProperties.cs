@@ -7,11 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The common properties of a cluster. </summary>
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("VsanDatastoreName", typeof(string))]
     public partial class CommonClusterProperties
     {
+        /*
         /// <summary>
         /// Keeps track of any properties unknown to the library.
         /// <para>
@@ -75,5 +78,6 @@ namespace Azure.ResourceManager.Avs.Models
         public int? ClusterId { get; private protected set; }
         /// <summary> The hosts. </summary>
         public IList<string> Hosts { get; private protected set; }
+        */
     }
 }

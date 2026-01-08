@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class WorkloadNetworkSegmentOperationSource : IOperationSource<WorkloadNetworkSegmentResource>
+    /// <summary></summary>
+    internal partial class WorkloadNetworkSegmentOperationSource : IOperationSource<WorkloadNetworkSegmentResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal WorkloadNetworkSegmentOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         WorkloadNetworkSegmentResource IOperationSource<WorkloadNetworkSegmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkSegmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            WorkloadNetworkSegmentData data = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new WorkloadNetworkSegmentResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<WorkloadNetworkSegmentResource> IOperationSource<WorkloadNetworkSegmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkSegmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
-            return await Task.FromResult(new WorkloadNetworkSegmentResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            WorkloadNetworkSegmentData data = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new WorkloadNetworkSegmentResource(_client, data);
         }
     }
 }

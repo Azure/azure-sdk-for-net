@@ -8,15 +8,19 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
+    /// <summary>
+    /// The properties of an addon
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AddonSrmProperties"/>, <see cref="AddonVrProperties"/>, <see cref="AddonHcxProperties"/>, and <see cref="AddonArcProperties"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownAddonProperties))]
-    public partial class AvsPrivateCloudAddonProperties : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudAddonProperties>
+    public abstract partial class AvsPrivateCloudAddonProperties : IJsonModel<AvsPrivateCloudAddonProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudAddonProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsPrivateCloudAddonProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +32,11 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -41,15 +44,15 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,43 +61,55 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
-        AvsPrivateCloudAddonProperties IJsonModel<AvsPrivateCloudAddonProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsPrivateCloudAddonProperties IJsonModel<AvsPrivateCloudAddonProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AvsPrivateCloudAddonProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAvsPrivateCloudAddonProperties(document.RootElement, options);
         }
 
-        internal static AvsPrivateCloudAddonProperties DeserializeAvsPrivateCloudAddonProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AvsPrivateCloudAddonProperties DeserializeAvsPrivateCloudAddonProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("addonType", out JsonElement discriminator))
+            if (element.TryGetProperty("addonType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element, options);
-                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element, options);
-                    case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element, options);
-                    case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element, options);
+                    case "SRM":
+                        return AddonSrmProperties.DeserializeAddonSrmProperties(element, options);
+                    case "VR":
+                        return AddonVrProperties.DeserializeAddonVrProperties(element, options);
+                    case "HCX":
+                        return AddonHcxProperties.DeserializeAddonHcxProperties(element, options);
+                    case "Arc":
+                        return AddonArcProperties.DeserializeAddonArcProperties(element, options);
                 }
             }
             return UnknownAddonProperties.DeserializeUnknownAddonProperties(element, options);
         }
 
-        BinaryData IPersistableModel<AvsPrivateCloudAddonProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AvsPrivateCloudAddonProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -104,15 +119,20 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
-        AvsPrivateCloudAddonProperties IPersistableModel<AvsPrivateCloudAddonProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsPrivateCloudAddonProperties IPersistableModel<AvsPrivateCloudAddonProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AvsPrivateCloudAddonProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAvsPrivateCloudAddonProperties(document.RootElement, options);
                     }
                 default:
@@ -120,6 +140,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsPrivateCloudAddonProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

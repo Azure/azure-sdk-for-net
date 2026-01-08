@@ -17,34 +17,6 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAvsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
-        /// <param name="vsanDatastoreName"> Name of the vsan datastore associated with the cluster. </param>
-        /// <returns> A new <see cref="Avs.AvsPrivateCloudClusterData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvsPrivateCloudClusterData AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsSku sku, int? clusterSize = null, AvsPrivateCloudClusterProvisioningState? provisioningState = null, int? clusterId = null, IEnumerable<string> hosts = null, string vsanDatastoreName = null)
-        {
-            return AvsPrivateCloudClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                clusterSize,
-                provisioningState,
-                clusterId,
-                hosts?.ToList(),
-                vsanDatastoreName,
-                sku);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -282,22 +254,34 @@ namespace Azure.ResourceManager.Avs.Models
                 vsanDatastoreName: null
             );
         }
-        /// <summary> Initializes a new instance of <see cref="Models.CommonClusterProperties"/>. </summary>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
-        /// <returns> A new <see cref="Models.CommonClusterProperties"/> instance for mocking. </returns>
-        public static CommonClusterProperties CommonClusterProperties(int? clusterSize = null, AvsPrivateCloudClusterProvisioningState? provisioningState = null, int? clusterId = null, IEnumerable<string> hosts = null)
-        {
-            hosts ??= new List<string>();
 
-            return CommonClusterProperties(
-                clusterSize: clusterSize,
-                provisioningState: provisioningState,
-                clusterId: clusterId,
-                hosts: hosts?.ToList()
-            );
-        }
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudDatastoreData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The state of the datastore provisioning. </param>
+        /// <param name="netAppVolumeId"> An Azure NetApp Files volume. </param>
+        /// <param name="diskPoolVolume"> An iSCSI volume. </param>
+        /// <param name="status"> The operational status of the datastore. </param>
+        /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, ResourceIdentifier netAppVolumeId, DiskPoolVolume diskPoolVolume, DatastoreStatus? status)
+            => AvsPrivateCloudDatastoreData(id, name, resourceType, systemData, provisioningState, netAppVolumeId, diskPoolVolume, null, null, status);
+
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudDatastoreData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The state of the datastore provisioning. </param>
+        /// <param name="netAppVolumeId"> An Azure NetApp Files volume. </param>
+        /// <param name="diskPoolVolume"> An iSCSI volume. </param>
+        /// <param name="elasticSanVolumeTargetId"> An Elastic SAN volume. </param>
+        /// <param name="status"> The operational status of the datastore. </param>
+        /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, ResourceIdentifier netAppVolumeId, DiskPoolVolume diskPoolVolume, ResourceIdentifier elasticSanVolumeTargetId, DatastoreStatus? status)
+            => AvsPrivateCloudDatastoreData(id, name, resourceType, systemData, provisioningState, netAppVolumeId, diskPoolVolume, elasticSanVolumeTargetId, null, status);
     }
 }

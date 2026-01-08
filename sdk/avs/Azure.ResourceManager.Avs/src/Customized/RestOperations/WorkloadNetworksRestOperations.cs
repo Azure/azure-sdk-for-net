@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Avs.Models;
-
+/*
 namespace Azure.ResourceManager.Avs
 {
     internal partial class WorkloadNetworksRestOperations
@@ -120,4 +120,4 @@ namespace Azure.ResourceManager.Avs
             }
         }
     }
-}
+}*/
