@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,38 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class DataflowOpenTelemetryServiceAccountAuthentication : DataflowOpenTelemetryAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/>. </summary>
-        /// <param name="serviceAccountTokenSettings"> Kubernetes service account token authentication. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceAccountTokenSettings"/> is null. </exception>
-        public DataflowOpenTelemetryServiceAccountAuthentication(DataflowEndpointAuthenticationServiceAccountToken serviceAccountTokenSettings)
+        /// <param name="serviceAccountTokenAudience"> Audience of the service account. Optional, defaults to the broker internal service account audience. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceAccountTokenAudience"/> is null. </exception>
+        public DataflowOpenTelemetryServiceAccountAuthentication(string serviceAccountTokenAudience) : base(DataflowOpenTelemetryAuthenticationMethod.ServiceAccountToken)
         {
-            Argument.AssertNotNull(serviceAccountTokenSettings, nameof(serviceAccountTokenSettings));
+            Argument.AssertNotNull(serviceAccountTokenAudience, nameof(serviceAccountTokenAudience));
 
-            ServiceAccountTokenSettings = serviceAccountTokenSettings;
-            Method = DataflowOpenTelemetryAuthenticationMethod.ServiceAccountToken;
+            ServiceAccountTokenSettings = new DataflowEndpointAuthenticationServiceAccountToken(serviceAccountTokenAudience);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/>. </summary>
         /// <param name="method"> The authentication method. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serviceAccountTokenSettings"> Kubernetes service account token authentication. </param>
-        internal DataflowOpenTelemetryServiceAccountAuthentication(DataflowOpenTelemetryAuthenticationMethod method, IDictionary<string, BinaryData> serializedAdditionalRawData, DataflowEndpointAuthenticationServiceAccountToken serviceAccountTokenSettings) : base(method, serializedAdditionalRawData)
+        internal DataflowOpenTelemetryServiceAccountAuthentication(DataflowOpenTelemetryAuthenticationMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataflowEndpointAuthenticationServiceAccountToken serviceAccountTokenSettings) : base(@method, additionalBinaryDataProperties)
         {
             ServiceAccountTokenSettings = serviceAccountTokenSettings;
-            Method = method;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/> for deserialization. </summary>
-        internal DataflowOpenTelemetryServiceAccountAuthentication()
-        {
         }
 
         /// <summary> Kubernetes service account token authentication. </summary>
         internal DataflowEndpointAuthenticationServiceAccountToken ServiceAccountTokenSettings { get; set; }
+
         /// <summary> Audience of the service account. Optional, defaults to the broker internal service account audience. </summary>
         public string ServiceAccountTokenAudience
         {
-            get => ServiceAccountTokenSettings is null ? default : ServiceAccountTokenSettings.Audience;
-            set => ServiceAccountTokenSettings = new DataflowEndpointAuthenticationServiceAccountToken(value);
+            get
+            {
+                return ServiceAccountTokenSettings is null ? default : ServiceAccountTokenSettings.Audience;
+            }
+            set
+            {
+                ServiceAccountTokenSettings = new DataflowEndpointAuthenticationServiceAccountToken(value);
+            }
         }
     }
 }

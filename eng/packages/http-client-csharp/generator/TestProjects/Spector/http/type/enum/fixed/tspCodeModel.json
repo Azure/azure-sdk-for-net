@@ -623,7 +623,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Enum.Fixed.endpoint"
+              "crossLanguageDefinitionId": "Type.Enum.Fixed.String.endpoint"
             }
           ],
           "initializedBy": 0,

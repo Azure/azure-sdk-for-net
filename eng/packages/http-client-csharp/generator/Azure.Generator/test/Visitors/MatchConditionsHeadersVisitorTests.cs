@@ -268,10 +268,8 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(protocolMethod, "Protocol method should be found.");
             Assert.IsNotNull(protocolMethod?.BodyStatements);
 
-            var bodyText = protocolMethod!.BodyStatements!.ToDisplayString();
-
-            Assert.IsTrue(bodyText.Contains("throw new global::System.ArgumentException(\"Service does not support the If-Match header for this operation"));
-            Assert.IsTrue(bodyText.Contains("throw new global::System.ArgumentException(\"Service does not support the If-Unmodified-Since header for this operation"));
+            var result = protocolMethod!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
         }
 
         [TestCase(true)]

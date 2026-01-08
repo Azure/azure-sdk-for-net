@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Qumulo;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.Qumulo.Models
     public readonly partial struct QumuloArmProvisioningState : IEquatable<QumuloArmProvisioningState>
     {
         private readonly string _value;
+        /// <summary> File system resource creation request accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> File system resource creation started. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> File system resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> File system resource deletion started. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> File system resource creation successful. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> File system resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> File system resource creation canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> File system resource is deleted. </summary>
+        private const string DeletedValue = "Deleted";
 
         /// <summary> Initializes a new instance of <see cref="QumuloArmProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QumuloArmProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AcceptedValue = "Accepted";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string DeletedValue = "Deleted";
+            _value = value;
+        }
 
         /// <summary> File system resource creation request accepted. </summary>
         public static QumuloArmProvisioningState Accepted { get; } = new QumuloArmProvisioningState(AcceptedValue);
+
         /// <summary> File system resource creation started. </summary>
         public static QumuloArmProvisioningState Creating { get; } = new QumuloArmProvisioningState(CreatingValue);
+
         /// <summary> File system resource is being updated. </summary>
         public static QumuloArmProvisioningState Updating { get; } = new QumuloArmProvisioningState(UpdatingValue);
+
         /// <summary> File system resource deletion started. </summary>
         public static QumuloArmProvisioningState Deleting { get; } = new QumuloArmProvisioningState(DeletingValue);
+
         /// <summary> File system resource creation successful. </summary>
         public static QumuloArmProvisioningState Succeeded { get; } = new QumuloArmProvisioningState(SucceededValue);
+
         /// <summary> File system resource creation failed. </summary>
         public static QumuloArmProvisioningState Failed { get; } = new QumuloArmProvisioningState(FailedValue);
+
         /// <summary> File system resource creation canceled. </summary>
         public static QumuloArmProvisioningState Canceled { get; } = new QumuloArmProvisioningState(CanceledValue);
+
         /// <summary> File system resource is deleted. </summary>
         public static QumuloArmProvisioningState Deleted { get; } = new QumuloArmProvisioningState(DeletedValue);
+
         /// <summary> Determines if two <see cref="QumuloArmProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QumuloArmProvisioningState left, QumuloArmProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QumuloArmProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QumuloArmProvisioningState left, QumuloArmProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QumuloArmProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QumuloArmProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QumuloArmProvisioningState(string value) => new QumuloArmProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QumuloArmProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QumuloArmProvisioningState?(string value) => value == null ? null : new QumuloArmProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QumuloArmProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QumuloArmProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

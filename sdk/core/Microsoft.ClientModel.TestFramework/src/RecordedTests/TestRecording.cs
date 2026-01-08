@@ -34,6 +34,32 @@ public class TestRecording : IAsyncDisposable
     private readonly TestProxyProcess? _proxy;
     private readonly RecordedTestBase _recordedTestBase;
 
+    // This is a list of all default sanitizers applied in the test-proxy EXCEPT AZSDK0000 which is the Authorization
+    // header sanitizer, which should not be removed
+    // There isn't a documented list anywhere, and it's not possible to query the test-proxy for them, this list comes
+    // from visiting http://localhost:5000/Info/Active while the test-proxy is running as described here:
+    // https://github.com/Azure/azure-sdk-tools/tree/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy#removing-a-sanitizer
+    private static List<string> _defaultSanitizersApplied = [ "AZSDK1000", "AZSDK1001", "AZSDK1002", "AZSDK1003",
+        "AZSDK1004", "AZSDK1005", "AZSDK1006", "AZSDK1007", "AZSDK1008", "AZSDK2001", "AZSDK2002", "AZSDK2003",
+        "AZSDK2004", "AZSDK2005", "AZSDK2006", "AZSDK2007", "AZSDK2008", "AZSDK2009", "AZSDK2010", "AZSDK2011",
+        "AZSDK2012", "AZSDK2013", "AZSDK2014", "AZSDK2015", "AZSDK2016", "AZSDK2017", "AZSDK2018", "AZSDK2019",
+        "AZSDK2020", "AZSDK2021", "AZSDK2022", "AZSDK2023", "AZSDK2024", "AZSDK2025", "AZSDK2026", "AZSDK2027",
+        "AZSDK2028", "AZSDK2029", "AZSDK2030", "AZSDK2031", "AZSDK3000", "AZSDK3001", "AZSDK3002", "AZSDK3004",
+        "AZSDK3005", "AZSDK3006", "AZSDK3007", "AZSDK3008", "AZSDK3009", "AZSDK3010", "AZSDK3011", "AZSDK3012",
+        "AZSDK3400", "AZSDK3401", "AZSDK3402", "AZSDK3403", "AZSDK3404", "AZSDK3405", "AZSDK3406", "AZSDK3407",
+        "AZSDK3408", "AZSDK3409", "AZSDK3410", "AZSDK3411", "AZSDK3412", "AZSDK3413", "AZSDK3414", "AZSDK3415",
+        "AZSDK3416", "AZSDK3417", "AZSDK3418", "AZSDK3419", "AZSDK3420", "AZSDK3421", "AZSDK3422", "AZSDK3423",
+        "AZSDK3424", "AZSDK3425", "AZSDK3426", "AZSDK3427", "AZSDK3428", "AZSDK3429", "AZSDK3430", "AZSDK3431",
+        "AZSDK3432", "AZSDK3433", "AZSDK3435", "AZSDK3436", "AZSDK3437", "AZSDK3438", "AZSDK3439", "AZSDK3440",
+        "AZSDK3441", "AZSDK3442", "AZSDK3443", "AZSDK3444", "AZSDK3445", "AZSDK3446", "AZSDK3447", "AZSDK3448",
+        "AZSDK3449", "AZSDK3450", "AZSDK3451", "AZSDK3452", "AZSDK3453", "AZSDK3454", "AZSDK3455", "AZSDK3456",
+        "AZSDK3457", "AZSDK3458", "AZSDK3459", "AZSDK3460", "AZSDK3461", "AZSDK3462", "AZSDK3463", "AZSDK3464",
+        "AZSDK3465", "AZSDK3466", "AZSDK3467", "AZSDK3468", "AZSDK3469", "AZSDK3470", "AZSDK3471", "AZSDK3472",
+        "AZSDK3473", "AZSDK3474", "AZSDK3475", "AZSDK3477", "AZSDK3478", "AZSDK3479", "AZSDK3480", "AZSDK3482",
+        "AZSDK3483", "AZSDK3484", "AZSDK3485", "AZSDK3486", "AZSDK3487", "AZSDK3488", "AZSDK3489", "AZSDK3490",
+        "AZSDK3491", "AZSDK3492", "AZSDK3493", "AZSDK3494", "AZSDK3495", "AZSDK3496", "AZSDK3497", "AZSDK3498",
+        "AZSDK4000", "AZSDK4001", "AZSDK4003", "AZSDK4004"];
+
     internal TestRecordingMismatchException? MismatchException;
     internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
@@ -476,6 +502,11 @@ public class TestRecording : IAsyncDisposable
             throw new InvalidOperationException("TestProxyProcess.AdminClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
         }
 
+        if (!_recordedTestBase.UseDefaultSanitizers)
+        {
+            await _proxy.AdminClient.RemoveSanitizersAsync(new SanitizerList(_defaultSanitizersApplied), RecordingId, cancellationToken).ConfigureAwait(false);
+        }
+
         List<SanitizerAddition> sanitizers = new();
 
         foreach (string header in _recordedTestBase.SanitizedHeaders)
@@ -504,6 +535,7 @@ public class TestRecording : IAsyncDisposable
 
         sanitizers.AddRange(_recordedTestBase.BodyKeySanitizers);
         sanitizers.AddRange(_recordedTestBase.BodyRegexSanitizers);
+        sanitizers.AddRange(_recordedTestBase.CustomSanitizers);
 
         if (sanitizers.Count > 0)
         {

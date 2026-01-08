@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
-    internal class SapVirtualInstanceOperationSource : IOperationSource<SapVirtualInstanceResource>
+    /// <summary></summary>
+    internal partial class SapVirtualInstanceOperationSource : IOperationSource<SapVirtualInstanceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SapVirtualInstanceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SapVirtualInstanceResource IOperationSource<SapVirtualInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SapVirtualInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SapVirtualInstanceData data = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SapVirtualInstanceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SapVirtualInstanceResource> IOperationSource<SapVirtualInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SapVirtualInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
-            return await Task.FromResult(new SapVirtualInstanceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SapVirtualInstanceData data = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SapVirtualInstanceResource(_client, data);
         }
     }
 }

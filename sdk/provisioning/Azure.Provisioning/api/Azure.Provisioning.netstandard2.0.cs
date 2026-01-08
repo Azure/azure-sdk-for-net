@@ -831,6 +831,13 @@ namespace Azure.Provisioning.Primitives
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.BicepStatement> Statements { get { throw null; } }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
     }
+    public sealed partial class BicepMetadata
+    {
+        public BicepMetadata() { }
+        public uint? BatchSize { get { throw null; } set { } }
+        public string? Description { get { throw null; } set { } }
+        public bool OnlyIfNotExists { get { throw null; } set { } }
+    }
     public partial class BicepValueReference
     {
         public BicepValueReference(Azure.Provisioning.Primitives.ProvisionableConstruct construct, string propertyName, params string[]? path) { }
@@ -933,6 +940,7 @@ namespace Azure.Provisioning.Primitives
     public abstract partial class ProvisionableResource : Azure.Provisioning.Primitives.NamedProvisionableConstruct
     {
         protected ProvisionableResource(string bicepIdentifier, Azure.Core.ResourceType resourceType, string? resourceVersion = null) : base (default(string)) { }
+        public Azure.Provisioning.Primitives.BicepMetadata BicepMetadata { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Provisioning.Primitives.ProvisionableResource> DependsOn { get { throw null; } }
         public bool IsExistingResource { get { throw null; } protected set { } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
