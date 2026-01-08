@@ -131,14 +131,16 @@ namespace Azure.Generator.Management.Utilities
             // For non-singleton resource, if there is no update method, we will add the create method as update to the resource methods.
             // However, this only makes sense if there's a Get/Read method, otherwise the resource can never be retrieved to be updated.
             bool hasGetMethod = methodsInResource.Any(m => m.Kind == ResourceOperationKind.Read);
-            if (resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null && hasGetMethod)
+            bool canAddCreateAsUpdate = resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null && hasGetMethod;
+            if (canAddCreateAsUpdate && createMethod is not null)
             {
                 methodsInResource.Add(createMethod);
             }
 
             // If there's no Get operation and the resource is not a singleton, move Delete from Resource to Collection
             // This is because without Get, you can't obtain a Resource instance to call Delete on
-            if (!hasGetMethod && resourceMetadata.SingletonResourceName is null)
+            bool shouldMoveDeleteToCollection = !hasGetMethod && resourceMetadata.SingletonResourceName is null;
+            if (shouldMoveDeleteToCollection)
             {
                 var deleteMethod = methodsInResource.FirstOrDefault(m => m.Kind == ResourceOperationKind.Delete);
                 if (deleteMethod is not null)
