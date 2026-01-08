@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
         /// <param name="latitude"> The Latitude of the Azure Extended Zone. </param>
         /// <param name="homeLocation"> The Home Location of the Azure Extended Zone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedZoneProperties(ProvisioningState? provisioningState, RegistrationState? registrationState, string displayName, string regionalDisplayName, string regionType, string regionCategory, string geography, string geographyGroup, string longitude, string latitude, string homeLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtendedZoneProperties(EdgeZonesProvisioningState? provisioningState, EdgeZonesRegistrationState? registrationState, string displayName, string regionalDisplayName, string regionType, string regionCategory, string geography, string geographyGroup, string longitude, string latitude, string homeLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             RegistrationState = registrationState;
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.EdgeZones.Models
         }
 
         /// <summary> Status of the last operation performed by the subscription on the Edge Zone resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public EdgeZonesProvisioningState? ProvisioningState { get; }
 
         /// <summary> Indicates the Azure Extended Zone registration’s approval status. </summary>
-        public RegistrationState? RegistrationState { get; }
+        public EdgeZonesRegistrationState? RegistrationState { get; }
 
         /// <summary> Display name of the Azure Extended Zone. </summary>
         public string DisplayName { get; }

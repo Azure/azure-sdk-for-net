@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
         /// <param name="latitude"> The Latitude of the Azure Extended Zone. </param>
         /// <param name="homeLocation"> The Home Location of the Azure Extended Zone. </param>
         /// <returns> A new <see cref="Models.ExtendedZoneProperties"/> instance for mocking. </returns>
-        public static ExtendedZoneProperties ExtendedZoneProperties(ProvisioningState? provisioningState = default, RegistrationState? registrationState = default, string displayName = default, string regionalDisplayName = default, string regionType = default, string regionCategory = default, string geography = default, string geographyGroup = default, string longitude = default, string latitude = default, string homeLocation = default)
+        public static ExtendedZoneProperties ExtendedZoneProperties(EdgeZonesProvisioningState? provisioningState = default, EdgeZonesRegistrationState? registrationState = default, string displayName = default, string regionalDisplayName = default, string regionType = default, string regionCategory = default, string geography = default, string geographyGroup = default, string longitude = default, string latitude = default, string homeLocation = default)
         {
             return new ExtendedZoneProperties(
                 provisioningState,

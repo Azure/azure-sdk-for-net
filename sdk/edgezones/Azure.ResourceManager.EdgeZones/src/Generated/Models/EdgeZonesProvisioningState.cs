@@ -12,7 +12,7 @@ using Azure.ResourceManager.EdgeZones;
 namespace Azure.ResourceManager.EdgeZones.Models
 {
     /// <summary> The status of the current operation. </summary>
-    public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
+    public readonly partial struct EdgeZonesProvisioningState : IEquatable<EdgeZonesProvisioningState>
     {
         private readonly string _value;
         /// <summary> Resource has been created. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.EdgeZones.Models
         /// <summary> Accepted State. </summary>
         private const string AcceptedValue = "Accepted";
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeZonesProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProvisioningState(string value)
+        public EdgeZonesProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,50 +41,50 @@ namespace Azure.ResourceManager.EdgeZones.Models
         }
 
         /// <summary> Resource has been created. </summary>
-        public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
+        public static EdgeZonesProvisioningState Succeeded { get; } = new EdgeZonesProvisioningState(SucceededValue);
 
         /// <summary> Resource creation failed. </summary>
-        public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+        public static EdgeZonesProvisioningState Failed { get; } = new EdgeZonesProvisioningState(FailedValue);
 
         /// <summary> Resource creation was canceled. </summary>
-        public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
+        public static EdgeZonesProvisioningState Canceled { get; } = new EdgeZonesProvisioningState(CanceledValue);
 
         /// <summary> Provisioning State. </summary>
-        public static ProvisioningState Provisioning { get; } = new ProvisioningState(ProvisioningValue);
+        public static EdgeZonesProvisioningState Provisioning { get; } = new EdgeZonesProvisioningState(ProvisioningValue);
 
         /// <summary> Updating State. </summary>
-        public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
+        public static EdgeZonesProvisioningState Updating { get; } = new EdgeZonesProvisioningState(UpdatingValue);
 
         /// <summary> Deleting State. </summary>
-        public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
+        public static EdgeZonesProvisioningState Deleting { get; } = new EdgeZonesProvisioningState(DeletingValue);
 
         /// <summary> Accepted State. </summary>
-        public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
+        public static EdgeZonesProvisioningState Accepted { get; } = new EdgeZonesProvisioningState(AcceptedValue);
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeZonesProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
+        public static bool operator ==(EdgeZonesProvisioningState left, EdgeZonesProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeZonesProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProvisioningState left, ProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(EdgeZonesProvisioningState left, EdgeZonesProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeZonesProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningState(string value) => new ProvisioningState(value);
+        public static implicit operator EdgeZonesProvisioningState(string value) => new EdgeZonesProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeZonesProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningState?(string value) => value == null ? null : new ProvisioningState(value);
+        public static implicit operator EdgeZonesProvisioningState?(string value) => value == null ? null : new EdgeZonesProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is EdgeZonesProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EdgeZonesProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

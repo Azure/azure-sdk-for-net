@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.EdgeZones.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
-            RegistrationState? registrationState = default;
+            EdgeZonesProvisioningState? provisioningState = default;
+            EdgeZonesRegistrationState? registrationState = default;
             string displayName = default;
             string regionalDisplayName = default;
             string regionType = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new EdgeZonesProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("registrationState"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
                     {
                         continue;
                     }
-                    registrationState = new RegistrationState(prop.Value.GetString());
+                    registrationState = new EdgeZonesRegistrationState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
