@@ -3,12 +3,7 @@
 ## 12.0.0-preview.59 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2026-04-06.
 
 ## 12.0.0-preview.58 (2025-11-17)
 
