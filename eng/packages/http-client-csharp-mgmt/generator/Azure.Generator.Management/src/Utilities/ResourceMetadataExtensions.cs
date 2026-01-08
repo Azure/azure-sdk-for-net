@@ -128,7 +128,9 @@ namespace Azure.Generator.Management.Utilities
             }
 
             // For non-singleton resource, if there is no update method, we will add the create method as update to the resource methods.
-            if (resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null)
+            // However, this only makes sense if there's a Get/Read method, otherwise the resource can never be retrieved to be updated.
+            bool hasGetMethod = methodsInResource.Any(m => m.Kind == ResourceOperationKind.Read);
+            if (resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null && hasGetMethod)
             {
                 methodsInResource.Add(createMethod);
             }
