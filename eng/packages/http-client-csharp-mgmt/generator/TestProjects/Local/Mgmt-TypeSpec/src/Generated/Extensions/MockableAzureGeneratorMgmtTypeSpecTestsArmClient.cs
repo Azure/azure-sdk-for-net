@@ -332,6 +332,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new SampleDataResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="WorkloadNetworkVmGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
+        public virtual WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(ResourceIdentifier id)
+        {
+            WorkloadNetworkVmGroupResource.ValidateResourceId(id);
+            return new WorkloadNetworkVmGroupResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">

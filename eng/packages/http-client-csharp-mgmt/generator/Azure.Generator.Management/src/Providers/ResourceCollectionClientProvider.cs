@@ -401,7 +401,8 @@ namespace Azure.Generator.Management.Providers
             }
 
             var restClientInfo = _clientInfos[_get.InputClient];
-            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, isAsync, true);
+            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync, methodName);
         }
 
         private List<MethodProvider> BuildGetMethods()
