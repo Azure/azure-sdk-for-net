@@ -7,60 +7,90 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
     /// <summary> A string indicating what entity categories to return. </summary>
     public readonly partial struct EntityCategory : IEquatable<EntityCategory>
     {
         private readonly string _value;
+        /// <summary> Entities describing a physical location. </summary>
+        private const string LocationValue = "location";
+        /// <summary> Entities describing an organization. </summary>
+        private const string OrganizationValue = "organization";
+        /// <summary> Entities describing a person. </summary>
+        private const string PersonValue = "person";
+        /// <summary> Entities describing a quantity. </summary>
+        private const string QuantityValue = "quantity";
+        /// <summary> Entities describing a date and time. </summary>
+        private const string DatetimeValue = "datetime";
+        /// <summary> Entities describing a URL. </summary>
+        private const string UrlValue = "url";
+        /// <summary> Entities describing an email address. </summary>
+        private const string EmailValue = "email";
 
         /// <summary> Initializes a new instance of <see cref="EntityCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntityCategory(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LocationValue = "location";
-        private const string OrganizationValue = "organization";
-        private const string PersonValue = "person";
-        private const string QuantityValue = "quantity";
-        private const string DatetimeValue = "datetime";
-        private const string UrlValue = "url";
-        private const string EmailValue = "email";
+            _value = value;
+        }
 
         /// <summary> Entities describing a physical location. </summary>
         public static EntityCategory Location { get; } = new EntityCategory(LocationValue);
+
         /// <summary> Entities describing an organization. </summary>
         public static EntityCategory Organization { get; } = new EntityCategory(OrganizationValue);
+
         /// <summary> Entities describing a person. </summary>
         public static EntityCategory Person { get; } = new EntityCategory(PersonValue);
+
         /// <summary> Entities describing a quantity. </summary>
         public static EntityCategory Quantity { get; } = new EntityCategory(QuantityValue);
+
         /// <summary> Entities describing a date and time. </summary>
         public static EntityCategory Datetime { get; } = new EntityCategory(DatetimeValue);
+
         /// <summary> Entities describing a URL. </summary>
         public static EntityCategory Url { get; } = new EntityCategory(UrlValue);
+
         /// <summary> Entities describing an email address. </summary>
         public static EntityCategory Email { get; } = new EntityCategory(EmailValue);
+
         /// <summary> Determines if two <see cref="EntityCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntityCategory left, EntityCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EntityCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntityCategory left, EntityCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EntityCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EntityCategory(string value) => new EntityCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EntityCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EntityCategory?(string value) => value == null ? null : new EntityCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntityCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EntityCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,122 +7,99 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
     /// <summary> Represents a datasource definition, which can be used to configure an indexer. </summary>
     public partial class SearchIndexerDataSourceConnection
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
+        /// <param name="name"> The name of the datasource. </param>
+        /// <param name="type"> The type of the datasource. </param>
+        /// <param name="credentials"> Credentials for the datasource. </param>
+        /// <param name="container"> The data container for the datasource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="credentials"/> or <paramref name="container"/> is null. </exception>
+        public SearchIndexerDataSourceConnection(string name, SearchIndexerDataSourceType @type, DataSourceCredentials credentials, SearchIndexerDataContainer container)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(credentials, nameof(credentials));
+            Argument.AssertNotNull(container, nameof(container));
+
+            Name = name;
+            Type = @type;
+            Credentials = credentials;
+            Container = container;
+            IndexerPermissionOptions = new ChangeTrackingList<IndexerPermissionOption>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
         /// <param name="name"> The name of the datasource. </param>
         /// <param name="description"> The description of the datasource. </param>
         /// <param name="type"> The type of the datasource. </param>
         /// <param name="subType"> A specific type of the data source, in case the resource is capable of different modalities. For example, 'MongoDb' for certain 'cosmosDb' accounts. </param>
-        /// <param name="credentialsInternal"> Credentials for the datasource. </param>
+        /// <param name="credentials"> Credentials for the datasource. </param>
         /// <param name="container"> The data container for the datasource. </param>
-        /// <param name="identity">
-        /// An explicit managed identity to use for this datasource. If not specified and the connection string is a managed identity, the system-assigned managed identity is used. If not specified, the value remains unchanged. If "none" is specified, the value of this property is cleared.
-        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
-        /// </param>
+        /// <param name="identity"> An explicit managed identity to use for this datasource. If not specified and the connection string is a managed identity, the system-assigned managed identity is used. If not specified, the value remains unchanged. If "none" is specified, the value of this property is cleared. </param>
         /// <param name="indexerPermissionOptions"> Ingestion options with various types of permission data. </param>
-        /// <param name="dataChangeDetectionPolicy">
-        /// The data change detection policy for the datasource.
-        /// Please note <see cref="Models.DataChangeDetectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HighWaterMarkChangeDetectionPolicy"/> and <see cref="SqlIntegratedChangeTrackingPolicy"/>.
-        /// </param>
-        /// <param name="dataDeletionDetectionPolicy">
-        /// The data deletion detection policy for the datasource.
-        /// Please note <see cref="Models.DataDeletionDetectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/> and <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>.
-        /// </param>
-        /// <param name="etag"> The ETag of the data source. </param>
+        /// <param name="dataChangeDetectionPolicy"> The data change detection policy for the datasource. </param>
+        /// <param name="dataDeletionDetectionPolicy"> The data deletion detection policy for the datasource. </param>
+        /// <param name="eTag"> The ETag of the data source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your datasource definition when you want full assurance that no one, not even Microsoft, can decrypt your data source definition. Once you have encrypted your data source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your datasource definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerDataSourceConnection(string name, string description, SearchIndexerDataSourceType type, string subType, DataSourceCredentials credentialsInternal, SearchIndexerDataContainer container, SearchIndexerDataIdentity identity, IList<IndexerPermissionOption> indexerPermissionOptions, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, string etag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SearchIndexerDataSourceConnection(string name, string description, SearchIndexerDataSourceType @type, string subType, DataSourceCredentials credentials, SearchIndexerDataContainer container, SearchIndexerDataIdentity identity, IList<IndexerPermissionOption> indexerPermissionOptions, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, string eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
-            Type = type;
+            Type = @type;
             SubType = subType;
-            CredentialsInternal = credentialsInternal;
+            Credentials = credentials;
             Container = container;
             Identity = identity;
             IndexerPermissionOptions = indexerPermissionOptions;
             DataChangeDetectionPolicy = dataChangeDetectionPolicy;
             DataDeletionDetectionPolicy = dataDeletionDetectionPolicy;
-            _etag = etag;
+            ETag = eTag;
             EncryptionKey = encryptionKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/> for deserialization. </summary>
-        internal SearchIndexerDataSourceConnection()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the datasource. </summary>
         public string Name { get; set; }
+
         /// <summary> The description of the datasource. </summary>
         public string Description { get; set; }
+
         /// <summary> The type of the datasource. </summary>
         public SearchIndexerDataSourceType Type { get; set; }
+
         /// <summary> A specific type of the data source, in case the resource is capable of different modalities. For example, 'MongoDb' for certain 'cosmosDb' accounts. </summary>
         public string SubType { get; }
+
+        /// <summary> Credentials for the datasource. </summary>
+        public DataSourceCredentials Credentials { get; set; }
+
         /// <summary> The data container for the datasource. </summary>
         public SearchIndexerDataContainer Container { get; set; }
-        /// <summary>
-        /// An explicit managed identity to use for this datasource. If not specified and the connection string is a managed identity, the system-assigned managed identity is used. If not specified, the value remains unchanged. If "none" is specified, the value of this property is cleared.
-        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
-        /// </summary>
+
+        /// <summary> An explicit managed identity to use for this datasource. If not specified and the connection string is a managed identity, the system-assigned managed identity is used. If not specified, the value remains unchanged. If "none" is specified, the value of this property is cleared. </summary>
         public SearchIndexerDataIdentity Identity { get; set; }
+
         /// <summary> Ingestion options with various types of permission data. </summary>
-        public IList<IndexerPermissionOption> IndexerPermissionOptions { get; }
-        /// <summary>
-        /// The data change detection policy for the datasource.
-        /// Please note <see cref="Models.DataChangeDetectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HighWaterMarkChangeDetectionPolicy"/> and <see cref="SqlIntegratedChangeTrackingPolicy"/>.
-        /// </summary>
+        public IList<IndexerPermissionOption> IndexerPermissionOptions { get; set; }
+
+        /// <summary> The data change detection policy for the datasource. </summary>
         public DataChangeDetectionPolicy DataChangeDetectionPolicy { get; set; }
-        /// <summary>
-        /// The data deletion detection policy for the datasource.
-        /// Please note <see cref="Models.DataDeletionDetectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/> and <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>.
-        /// </summary>
+
+        /// <summary> The data deletion detection policy for the datasource. </summary>
         public DataDeletionDetectionPolicy DataDeletionDetectionPolicy { get; set; }
+
+        /// <summary> The ETag of the data source. </summary>
+        public string ETag { get; set; }
+
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your datasource definition when you want full assurance that no one, not even Microsoft, can decrypt your data source definition. Once you have encrypted your data source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your datasource definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
         public SearchResourceEncryptionKey EncryptionKey { get; set; }
     }

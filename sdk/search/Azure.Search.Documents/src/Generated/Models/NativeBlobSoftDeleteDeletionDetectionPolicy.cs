@@ -8,23 +8,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
     /// <summary> Defines a data deletion detection policy utilizing Azure Blob Storage's native soft delete feature for deletion detection. </summary>
     public partial class NativeBlobSoftDeleteDeletionDetectionPolicy : DataDeletionDetectionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/>. </summary>
-        public NativeBlobSoftDeleteDeletionDetectionPolicy()
+        public NativeBlobSoftDeleteDeletionDetectionPolicy() : base("#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy")
         {
-            ODataType = "#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy";
         }
 
         /// <summary> Initializes a new instance of <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of data deletion detection policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NativeBlobSoftDeleteDeletionDetectionPolicy(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, serializedAdditionalRawData)
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NativeBlobSoftDeleteDeletionDetectionPolicy(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType, additionalBinaryDataProperties)
         {
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy";
         }
     }
 }

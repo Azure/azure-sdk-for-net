@@ -8,23 +8,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.KnowledgeBases.Models
+namespace Azure.Search.Documents.Models
 {
     /// <summary> Run knowledge retrieval with medium reasoning effort. </summary>
     public partial class KnowledgeRetrievalMediumReasoningEffort : KnowledgeRetrievalReasoningEffort
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalMediumReasoningEffort"/>. </summary>
-        public KnowledgeRetrievalMediumReasoningEffort()
+        public KnowledgeRetrievalMediumReasoningEffort() : base(KnowledgeRetrievalReasoningEffortKind.Medium)
         {
-            Kind = KnowledgeRetrievalReasoningEffortKind.Medium;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalMediumReasoningEffort"/>. </summary>
         /// <param name="kind"> The kind of reasoning effort. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeRetrievalMediumReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeRetrievalMediumReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
-            Kind = kind;
         }
     }
 }

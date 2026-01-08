@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.Search.Documents.Models
     public readonly partial struct SemanticQueryRewritesResultType : IEquatable<SemanticQueryRewritesResultType>
     {
         private readonly string _value;
+        /// <summary> Query rewrites were not successfully generated for this request. Only the original query was used to retrieve the results. </summary>
+        private const string OriginalQueryOnlyValue = "originalQueryOnly";
 
         /// <summary> Initializes a new instance of <see cref="SemanticQueryRewritesResultType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SemanticQueryRewritesResultType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OriginalQueryOnlyValue = "originalQueryOnly";
+            _value = value;
+        }
 
         /// <summary> Query rewrites were not successfully generated for this request. Only the original query was used to retrieve the results. </summary>
         public static SemanticQueryRewritesResultType OriginalQueryOnly { get; } = new SemanticQueryRewritesResultType(OriginalQueryOnlyValue);
+
         /// <summary> Determines if two <see cref="SemanticQueryRewritesResultType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SemanticQueryRewritesResultType left, SemanticQueryRewritesResultType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SemanticQueryRewritesResultType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SemanticQueryRewritesResultType left, SemanticQueryRewritesResultType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SemanticQueryRewritesResultType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SemanticQueryRewritesResultType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SemanticQueryRewritesResultType(string value) => new SemanticQueryRewritesResultType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SemanticQueryRewritesResultType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SemanticQueryRewritesResultType?(string value) => value == null ? null : new SemanticQueryRewritesResultType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SemanticQueryRewritesResultType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SemanticQueryRewritesResultType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

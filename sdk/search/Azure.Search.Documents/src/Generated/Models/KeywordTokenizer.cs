@@ -7,28 +7,33 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
     /// <summary> Emits the entire input as a single token. This tokenizer is implemented using Apache Lucene. </summary>
     public partial class KeywordTokenizer : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of <see cref="KeywordTokenizer"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of tokenizer. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="maxTokenLength"> The maximum token length. Default is 256. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
-        /// <param name="bufferSize"></param>
-        internal KeywordTokenizer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxTokenLength, int? bufferSize) : base(oDataType, name, serializedAdditionalRawData)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public KeywordTokenizer(string name) : base("#Microsoft.Azure.Search.KeywordTokenizer", name)
         {
-            MaxTokenLength = maxTokenLength;
-            BufferSize = bufferSize;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.KeywordTokenizerV2";
+            Argument.AssertNotNull(name, nameof(name));
+
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeywordTokenizer"/> for deserialization. </summary>
-        internal KeywordTokenizer()
+        /// <summary> Initializes a new instance of <see cref="KeywordTokenizer"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="bufferSize"> The read buffer size in bytes. Default is 256. </param>
+        internal KeywordTokenizer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? bufferSize) : base(odataType, name, additionalBinaryDataProperties)
         {
+            BufferSize = bufferSize;
         }
+
+        /// <summary> The read buffer size in bytes. Default is 256. </summary>
+        public int? BufferSize { get; set; }
     }
 }

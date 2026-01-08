@@ -7,28 +7,38 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
     /// <summary> Generates n-grams of the given size(s). This token filter is implemented using Apache Lucene. </summary>
     public partial class NGramTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of <see cref="NGramTokenFilter"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="minGram"> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </param>
-        /// <param name="maxGram"> The maximum n-gram length. Default is 2. Maximum is 300. </param>
-        internal NGramTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? minGram, int? maxGram) : base(oDataType, name, serializedAdditionalRawData)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public NGramTokenFilter(string name) : base("#Microsoft.Azure.Search.NGramTokenFilter", name)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NGramTokenFilter"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="minGram"> The minimum n-gram length. Default is 1. Must be less than the value of maxGram. </param>
+        /// <param name="maxGram"> The maximum n-gram length. Default is 2. </param>
+        internal NGramTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? minGram, int? maxGram) : base(odataType, name, additionalBinaryDataProperties)
         {
             MinGram = minGram;
             MaxGram = maxGram;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.NGramTokenFilterV2";
         }
 
-        /// <summary> Initializes a new instance of <see cref="NGramTokenFilter"/> for deserialization. </summary>
-        internal NGramTokenFilter()
-        {
-        }
+        /// <summary> The minimum n-gram length. Default is 1. Must be less than the value of maxGram. </summary>
+        public int? MinGram { get; set; }
+
+        /// <summary> The maximum n-gram length. Default is 2. </summary>
+        public int? MaxGram { get; set; }
     }
 }

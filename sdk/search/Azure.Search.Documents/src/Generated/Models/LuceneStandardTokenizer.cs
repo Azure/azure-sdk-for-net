@@ -7,26 +7,33 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
     /// <summary> Breaks text following the Unicode Text Segmentation rules. This tokenizer is implemented using Apache Lucene. </summary>
     public partial class LuceneStandardTokenizer : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of <see cref="LuceneStandardTokenizer"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of tokenizer. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
-        internal LuceneStandardTokenizer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxTokenLength) : base(oDataType, name, serializedAdditionalRawData)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public LuceneStandardTokenizer(string name) : base("#Microsoft.Azure.Search.StandardTokenizer", name)
         {
-            MaxTokenLength = maxTokenLength;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.StandardTokenizerV2";
+            Argument.AssertNotNull(name, nameof(name));
+
         }
 
-        /// <summary> Initializes a new instance of <see cref="LuceneStandardTokenizer"/> for deserialization. </summary>
-        internal LuceneStandardTokenizer()
+        /// <summary> Initializes a new instance of <see cref="LuceneStandardTokenizer"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. </param>
+        internal LuceneStandardTokenizer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxTokenLength) : base(odataType, name, additionalBinaryDataProperties)
         {
+            MaxTokenLength = maxTokenLength;
         }
+
+        /// <summary> The maximum token length. Default is 255. Tokens longer than the maximum length are split. </summary>
+        public int? MaxTokenLength { get; set; }
     }
 }

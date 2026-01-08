@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Search.Documents.Models
     public readonly partial struct QueryRewritesType : IEquatable<QueryRewritesType>
     {
         private readonly string _value;
+        /// <summary> Do not generate additional query rewrites for this query. </summary>
+        private const string NoneValue = "none";
+        /// <summary> Generate alternative query terms to increase the recall of a search request. </summary>
+        private const string GenerativeValue = "generative";
 
         /// <summary> Initializes a new instance of <see cref="QueryRewritesType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueryRewritesType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "none";
-        private const string GenerativeValue = "generative";
+            _value = value;
+        }
 
         /// <summary> Do not generate additional query rewrites for this query. </summary>
         public static QueryRewritesType None { get; } = new QueryRewritesType(NoneValue);
+
         /// <summary> Generate alternative query terms to increase the recall of a search request. </summary>
         public static QueryRewritesType Generative { get; } = new QueryRewritesType(GenerativeValue);
+
         /// <summary> Determines if two <see cref="QueryRewritesType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QueryRewritesType left, QueryRewritesType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QueryRewritesType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QueryRewritesType left, QueryRewritesType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryRewritesType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QueryRewritesType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QueryRewritesType(string value) => new QueryRewritesType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QueryRewritesType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QueryRewritesType?(string value) => value == null ? null : new QueryRewritesType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QueryRewritesType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QueryRewritesType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

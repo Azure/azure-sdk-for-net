@@ -8,14 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
-    public partial class TokenFilter : IUtf8JsonSerializable, IJsonModel<TokenFilter>
+    /// <summary>
+    /// Base type for token filters.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AsciiFoldingTokenFilter"/>, <see cref="CjkBigramTokenFilter"/>, <see cref="CommonGramTokenFilter"/>, <see cref="DictionaryDecompounderTokenFilter"/>, <see cref="EdgeNGramTokenFilter"/>, <see cref="EdgeNGramTokenFilterV2"/>, <see cref="ElisionTokenFilter"/>, <see cref="KeepTokenFilter"/>, <see cref="KeywordMarkerTokenFilter"/>, <see cref="LengthTokenFilter"/>, <see cref="LimitTokenFilter"/>, <see cref="NGramTokenFilter"/>, <see cref="NGramTokenFilterV2"/>, <see cref="PatternCaptureTokenFilter"/>, <see cref="PatternReplaceTokenFilter"/>, <see cref="PhoneticTokenFilter"/>, <see cref="ShingleTokenFilter"/>, <see cref="SnowballTokenFilter"/>, <see cref="StemmerTokenFilter"/>, <see cref="StemmerOverrideTokenFilter"/>, <see cref="StopwordsTokenFilter"/>, <see cref="SynonymTokenFilter"/>, <see cref="TruncateTokenFilter"/>, <see cref="UniqueTokenFilter"/>, and <see cref="WordDelimiterTokenFilter"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownTokenFilter))]
+    public abstract partial class TokenFilter : IJsonModel<TokenFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TokenFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TokenFilter"/> for deserialization. </summary>
+        internal TokenFilter()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -27,25 +37,24 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TokenFilter)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(ODataType);
+            writer.WriteStringValue(OdataType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -54,22 +63,97 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        TokenFilter IJsonModel<TokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TokenFilter IJsonModel<TokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TokenFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TokenFilter)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTokenFilter(document.RootElement, options);
         }
 
-        BinaryData IPersistableModel<TokenFilter>.Write(ModelReaderWriterOptions options)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TokenFilter DeserializeTokenFilter(JsonElement element, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("@odata.type"u8, out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "#Microsoft.Azure.Search.AsciiFoldingTokenFilter":
+                        return AsciiFoldingTokenFilter.DeserializeAsciiFoldingTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.CjkBigramTokenFilter":
+                        return CjkBigramTokenFilter.DeserializeCjkBigramTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.CommonGramTokenFilter":
+                        return CommonGramTokenFilter.DeserializeCommonGramTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.DictionaryDecompounderTokenFilter":
+                        return DictionaryDecompounderTokenFilter.DeserializeDictionaryDecompounderTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.EdgeNGramTokenFilter":
+                        return EdgeNGramTokenFilter.DeserializeEdgeNGramTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.EdgeNGramTokenFilterV2":
+                        return EdgeNGramTokenFilterV2.DeserializeEdgeNGramTokenFilterV2(element, options);
+                    case "#Microsoft.Azure.Search.ElisionTokenFilter":
+                        return ElisionTokenFilter.DeserializeElisionTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.KeepTokenFilter":
+                        return KeepTokenFilter.DeserializeKeepTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.KeywordMarkerTokenFilter":
+                        return KeywordMarkerTokenFilter.DeserializeKeywordMarkerTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.LengthTokenFilter":
+                        return LengthTokenFilter.DeserializeLengthTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.LimitTokenFilter":
+                        return LimitTokenFilter.DeserializeLimitTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.NGramTokenFilter":
+                        return NGramTokenFilter.DeserializeNGramTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.NGramTokenFilterV2":
+                        return NGramTokenFilterV2.DeserializeNGramTokenFilterV2(element, options);
+                    case "#Microsoft.Azure.Search.PatternCaptureTokenFilter":
+                        return PatternCaptureTokenFilter.DeserializePatternCaptureTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.PatternReplaceTokenFilter":
+                        return PatternReplaceTokenFilter.DeserializePatternReplaceTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.PhoneticTokenFilter":
+                        return PhoneticTokenFilter.DeserializePhoneticTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.ShingleTokenFilter":
+                        return ShingleTokenFilter.DeserializeShingleTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.SnowballTokenFilter":
+                        return SnowballTokenFilter.DeserializeSnowballTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.StemmerTokenFilter":
+                        return StemmerTokenFilter.DeserializeStemmerTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.StemmerOverrideTokenFilter":
+                        return StemmerOverrideTokenFilter.DeserializeStemmerOverrideTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.StopwordsTokenFilter":
+                        return StopwordsTokenFilter.DeserializeStopwordsTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.SynonymTokenFilter":
+                        return SynonymTokenFilter.DeserializeSynonymTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.TruncateTokenFilter":
+                        return TruncateTokenFilter.DeserializeTruncateTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.UniqueTokenFilter":
+                        return UniqueTokenFilter.DeserializeUniqueTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.WordDelimiterTokenFilter":
+                        return WordDelimiterTokenFilter.DeserializeWordDelimiterTokenFilter(element, options);
+                }
+            }
+            return UnknownTokenFilter.DeserializeUnknownTokenFilter(element, options);
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TokenFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -79,15 +163,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        TokenFilter IPersistableModel<TokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TokenFilter IPersistableModel<TokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TokenFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTokenFilter(document.RootElement, options);
                     }
                 default:
@@ -95,22 +184,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TokenFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TokenFilter FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTokenFilter(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

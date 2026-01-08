@@ -7,74 +7,59 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
     /// <summary> A customer-managed encryption key in Azure Key Vault. Keys that you create and manage can be used to encrypt or decrypt data-at-rest, such as indexes and synonym maps. </summary>
     public partial class SearchResourceEncryptionKey
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/>. </summary>
+        /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
+        /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be `https://my-keyvault-name.vault.azure.net`. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="vaultUri"/> is null. </exception>
+        public SearchResourceEncryptionKey(string keyName, string vaultUri)
+        {
+            Argument.AssertNotNull(keyName, nameof(keyName));
+            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
+
+            KeyName = keyName;
+            VaultUri = vaultUri;
+        }
 
         /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/>. </summary>
         /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="keyVersion"> The version of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be `https://my-keyvault-name.vault.azure.net`. </param>
-        /// <param name="accessCredentialsInternal"> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </param>
-        /// <param name="identity">
-        /// An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If "none" is specified, the value of this property is cleared.
-        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchResourceEncryptionKey(string keyName, string keyVersion, string vaultUri, AzureActiveDirectoryApplicationCredentials accessCredentialsInternal, SearchIndexerDataIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="accessCredentials"> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </param>
+        /// <param name="identity"> An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If "none" is specified, the value of this property is cleared. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SearchResourceEncryptionKey(string keyName, string keyVersion, string vaultUri, AzureActiveDirectoryApplicationCredentials accessCredentials, SearchIndexerDataIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
-            _vaultUri = vaultUri;
-            AccessCredentialsInternal = accessCredentialsInternal;
+            VaultUri = vaultUri;
+            AccessCredentials = accessCredentials;
             Identity = identity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/> for deserialization. </summary>
-        internal SearchResourceEncryptionKey()
-        {
-        }
-        /// <summary>
-        /// An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If "none" is specified, the value of this property is cleared.
-        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
-        /// </summary>
+        /// <summary> The name of your Azure Key Vault key to be used to encrypt your data at rest. </summary>
+        public string KeyName { get; set; }
+
+        /// <summary> The version of your Azure Key Vault key to be used to encrypt your data at rest. </summary>
+        public string KeyVersion { get; set; }
+
+        /// <summary> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be `https://my-keyvault-name.vault.azure.net`. </summary>
+        public string VaultUri { get; set; }
+
+        /// <summary> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </summary>
+        public AzureActiveDirectoryApplicationCredentials AccessCredentials { get; set; }
+
+        /// <summary> An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If "none" is specified, the value of this property is cleared. </summary>
         public SearchIndexerDataIdentity Identity { get; set; }
     }
 }

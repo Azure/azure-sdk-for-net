@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Search.Documents.Models
     public readonly partial struct QueryAnswerType : IEquatable<QueryAnswerType>
     {
         private readonly string _value;
+        /// <summary> Do not return answers for the query. </summary>
+        private const string NoneValue = "none";
+        /// <summary> Extracts answer candidates from the contents of the documents returned in response to a query expressed as a question in natural language. </summary>
+        private const string ExtractiveValue = "extractive";
 
         /// <summary> Initializes a new instance of <see cref="QueryAnswerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueryAnswerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "none";
-        private const string ExtractiveValue = "extractive";
+            _value = value;
+        }
 
         /// <summary> Do not return answers for the query. </summary>
         public static QueryAnswerType None { get; } = new QueryAnswerType(NoneValue);
+
         /// <summary> Extracts answer candidates from the contents of the documents returned in response to a query expressed as a question in natural language. </summary>
         public static QueryAnswerType Extractive { get; } = new QueryAnswerType(ExtractiveValue);
+
         /// <summary> Determines if two <see cref="QueryAnswerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QueryAnswerType left, QueryAnswerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QueryAnswerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QueryAnswerType left, QueryAnswerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryAnswerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QueryAnswerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QueryAnswerType(string value) => new QueryAnswerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QueryAnswerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QueryAnswerType?(string value) => value == null ? null : new QueryAnswerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QueryAnswerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QueryAnswerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class VectorizableTextQuery : IUtf8JsonSerializable, IJsonModel<VectorizableTextQuery>
+    /// <summary> The query parameters to use for vector search when a text value that needs to be vectorized is provided. </summary>
+    public partial class VectorizableTextQuery : VectorQuery, IJsonModel<VectorizableTextQuery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorizableTextQuery>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="VectorizableTextQuery"/> for deserialization. </summary>
+        internal VectorizableTextQuery()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VectorizableTextQuery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizableTextQuery>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VectorizableTextQuery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VectorizableTextQuery)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
@@ -44,149 +49,171 @@ namespace Azure.Search.Documents.Models
             }
         }
 
-        VectorizableTextQuery IJsonModel<VectorizableTextQuery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VectorizableTextQuery IJsonModel<VectorizableTextQuery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VectorizableTextQuery)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override VectorQuery JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizableTextQuery>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VectorizableTextQuery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VectorizableTextQuery)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVectorizableTextQuery(document.RootElement, options);
         }
 
-        internal static VectorizableTextQuery DeserializeVectorizableTextQuery(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VectorizableTextQuery DeserializeVectorizableTextQuery(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string text = default;
-            QueryRewritesType? queryRewrites = default;
-            VectorQueryKind kind = default;
-            int? k = default;
-            string fields = default;
+            int? kNearestNeighbors = default;
+            IList<string> fields = default;
             bool? exhaustive = default;
             double? oversampling = default;
             float? weight = default;
             VectorThreshold threshold = default;
             string filterOverride = default;
             int? perDocumentVectorLimit = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            VectorQueryKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string text = default;
+            QueryRewritesType? queryRewrites = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("text"u8))
+                if (prop.NameEquals("k"u8))
                 {
-                    text = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("queryRewrites"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    queryRewrites = new QueryRewritesType(property.Value.GetString());
+                    kNearestNeighbors = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("fields"u8))
                 {
-                    kind = new VectorQueryKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("k"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    k = property.Value.GetInt32();
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    fields = array;
                     continue;
                 }
-                if (property.NameEquals("fields"u8))
+                if (prop.NameEquals("exhaustive"u8))
                 {
-                    fields = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("exhaustive"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    exhaustive = property.Value.GetBoolean();
+                    exhaustive = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("oversampling"u8))
+                if (prop.NameEquals("oversampling"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    oversampling = property.Value.GetDouble();
+                    oversampling = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("weight"u8))
+                if (prop.NameEquals("weight"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    weight = property.Value.GetSingle();
+                    weight = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("threshold"u8))
+                if (prop.NameEquals("threshold"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    threshold = VectorThreshold.DeserializeVectorThreshold(property.Value, options);
+                    threshold = VectorThreshold.DeserializeVectorThreshold(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("filterOverride"u8))
+                if (prop.NameEquals("filterOverride"u8))
                 {
-                    filterOverride = property.Value.GetString();
+                    filterOverride = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("perDocumentVectorLimit"u8))
+                if (prop.NameEquals("perDocumentVectorLimit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    perDocumentVectorLimit = property.Value.GetInt32();
+                    perDocumentVectorLimit = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new VectorQueryKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("text"u8))
+                {
+                    text = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("queryRewrites"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryRewrites = new QueryRewritesType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VectorizableTextQuery(
-                kind,
-                k,
-                fields,
+                kNearestNeighbors,
+                fields ?? new ChangeTrackingList<string>(),
                 exhaustive,
                 oversampling,
                 weight,
                 threshold,
                 filterOverride,
                 perDocumentVectorLimit,
-                serializedAdditionalRawData,
+                kind,
+                additionalBinaryDataProperties,
                 text,
                 queryRewrites);
         }
 
-        BinaryData IPersistableModel<VectorizableTextQuery>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizableTextQuery>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VectorizableTextQuery>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VectorizableTextQuery>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -196,15 +223,20 @@ namespace Azure.Search.Documents.Models
             }
         }
 
-        VectorizableTextQuery IPersistableModel<VectorizableTextQuery>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizableTextQuery>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VectorizableTextQuery IPersistableModel<VectorizableTextQuery>.Create(BinaryData data, ModelReaderWriterOptions options) => (VectorizableTextQuery)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override VectorQuery PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VectorizableTextQuery>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVectorizableTextQuery(document.RootElement, options);
                     }
                 default:
@@ -212,22 +244,7 @@ namespace Azure.Search.Documents.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VectorizableTextQuery>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new VectorizableTextQuery FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVectorizableTextQuery(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

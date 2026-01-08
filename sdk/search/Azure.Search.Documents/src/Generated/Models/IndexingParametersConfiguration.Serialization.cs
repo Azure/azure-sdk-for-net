@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
-    public partial class IndexingParametersConfiguration : IUtf8JsonSerializable, IJsonModel<IndexingParametersConfiguration>
+    /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
+    public partial class IndexingParametersConfiguration : IJsonModel<IndexingParametersConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IndexingParametersConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IndexingParametersConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ParsingMode))
             {
                 writer.WritePropertyName("parsingMode"u8);
@@ -81,27 +81,13 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(MarkdownParsingSubmode))
             {
-                if (MarkdownParsingSubmode != null)
-                {
-                    writer.WritePropertyName("markdownParsingSubmode"u8);
-                    writer.WriteStringValue(MarkdownParsingSubmode.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("markdownParsingSubmode");
-                }
+                writer.WritePropertyName("markdownParsingSubmode"u8);
+                writer.WriteStringValue(MarkdownParsingSubmode.Value.ToString());
             }
             if (Optional.IsDefined(MarkdownHeaderDepth))
             {
-                if (MarkdownHeaderDepth != null)
-                {
-                    writer.WritePropertyName("markdownHeaderDepth"u8);
-                    writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("markdownHeaderDepth");
-                }
+                writer.WritePropertyName("markdownHeaderDepth"u8);
+                writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
             }
             if (Optional.IsDefined(DocumentRoot))
             {
@@ -133,34 +119,46 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("executionEnvironment"u8);
                 writer.WriteStringValue(ExecutionEnvironment.Value.ToString());
             }
-            if (Optional.IsDefined(_queryTimeout))
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteStringValue(_queryTimeout);
+                writer.WriteStringValue(QueryTimeout);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<object>(item.Value, options);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
         }
 
-        IndexingParametersConfiguration IJsonModel<IndexingParametersConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IndexingParametersConfiguration IJsonModel<IndexingParametersConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IndexingParametersConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIndexingParametersConfiguration(document.RootElement, options);
         }
 
-        internal static IndexingParametersConfiguration DeserializeIndexingParametersConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IndexingParametersConfiguration DeserializeIndexingParametersConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -180,156 +178,154 @@ namespace Azure.Search.Documents.Indexes.Models
             BlobIndexerDataToExtract? dataToExtract = default;
             BlobIndexerImageAction? imageAction = default;
             bool? allowSkillsetToReadFileData = default;
-            BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm = default;
+            BlobIndexerPDFTextRotationAlgorithm? pdfTextRotationAlgorithm = default;
             IndexerExecutionEnvironment? executionEnvironment = default;
             string queryTimeout = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("parsingMode"u8))
+                if (prop.NameEquals("parsingMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    parsingMode = new BlobIndexerParsingMode(property.Value.GetString());
+                    parsingMode = new BlobIndexerParsingMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("excludedFileNameExtensions"u8))
+                if (prop.NameEquals("excludedFileNameExtensions"u8))
                 {
-                    excludedFileNameExtensions = property.Value.GetString();
+                    excludedFileNameExtensions = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("indexedFileNameExtensions"u8))
+                if (prop.NameEquals("indexedFileNameExtensions"u8))
                 {
-                    indexedFileNameExtensions = property.Value.GetString();
+                    indexedFileNameExtensions = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("failOnUnsupportedContentType"u8))
+                if (prop.NameEquals("failOnUnsupportedContentType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failOnUnsupportedContentType = property.Value.GetBoolean();
+                    failOnUnsupportedContentType = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("failOnUnprocessableDocument"u8))
+                if (prop.NameEquals("failOnUnprocessableDocument"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failOnUnprocessableDocument = property.Value.GetBoolean();
+                    failOnUnprocessableDocument = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("indexStorageMetadataOnlyForOversizedDocuments"u8))
+                if (prop.NameEquals("indexStorageMetadataOnlyForOversizedDocuments"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    indexStorageMetadataOnlyForOversizedDocuments = property.Value.GetBoolean();
+                    indexStorageMetadataOnlyForOversizedDocuments = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("delimitedTextHeaders"u8))
+                if (prop.NameEquals("delimitedTextHeaders"u8))
                 {
-                    delimitedTextHeaders = property.Value.GetString();
+                    delimitedTextHeaders = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("delimitedTextDelimiter"u8))
+                if (prop.NameEquals("delimitedTextDelimiter"u8))
                 {
-                    delimitedTextDelimiter = property.Value.GetString();
+                    delimitedTextDelimiter = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firstLineContainsHeaders"u8))
+                if (prop.NameEquals("firstLineContainsHeaders"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    firstLineContainsHeaders = property.Value.GetBoolean();
+                    firstLineContainsHeaders = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("markdownParsingSubmode"u8))
+                if (prop.NameEquals("markdownParsingSubmode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         markdownParsingSubmode = null;
                         continue;
                     }
-                    markdownParsingSubmode = new MarkdownParsingSubmode(property.Value.GetString());
+                    markdownParsingSubmode = new MarkdownParsingSubmode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("markdownHeaderDepth"u8))
+                if (prop.NameEquals("markdownHeaderDepth"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         markdownHeaderDepth = null;
                         continue;
                     }
-                    markdownHeaderDepth = new MarkdownHeaderDepth(property.Value.GetString());
+                    markdownHeaderDepth = new MarkdownHeaderDepth(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("documentRoot"u8))
+                if (prop.NameEquals("documentRoot"u8))
                 {
-                    documentRoot = property.Value.GetString();
+                    documentRoot = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataToExtract"u8))
+                if (prop.NameEquals("dataToExtract"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataToExtract = new BlobIndexerDataToExtract(property.Value.GetString());
+                    dataToExtract = new BlobIndexerDataToExtract(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("imageAction"u8))
+                if (prop.NameEquals("imageAction"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    imageAction = new BlobIndexerImageAction(property.Value.GetString());
+                    imageAction = new BlobIndexerImageAction(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowSkillsetToReadFileData"u8))
+                if (prop.NameEquals("allowSkillsetToReadFileData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allowSkillsetToReadFileData = property.Value.GetBoolean();
+                    allowSkillsetToReadFileData = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("pdfTextRotationAlgorithm"u8))
+                if (prop.NameEquals("pdfTextRotationAlgorithm"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pdfTextRotationAlgorithm = new BlobIndexerPdfTextRotationAlgorithm(property.Value.GetString());
+                    pdfTextRotationAlgorithm = new BlobIndexerPDFTextRotationAlgorithm(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("executionEnvironment"u8))
+                if (prop.NameEquals("executionEnvironment"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    executionEnvironment = new IndexerExecutionEnvironment(property.Value.GetString());
+                    executionEnvironment = new IndexerExecutionEnvironment(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queryTimeout"u8))
+                if (prop.NameEquals("queryTimeout"u8))
                 {
-                    queryTimeout = property.Value.GetString();
+                    queryTimeout = prop.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new IndexingParametersConfiguration(
                 parsingMode,
                 excludedFileNameExtensions,
@@ -352,10 +348,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalProperties);
         }
 
-        BinaryData IPersistableModel<IndexingParametersConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IndexingParametersConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -365,15 +364,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        IndexingParametersConfiguration IPersistableModel<IndexingParametersConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IndexingParametersConfiguration IPersistableModel<IndexingParametersConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IndexingParametersConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIndexingParametersConfiguration(document.RootElement, options);
                     }
                 default:
@@ -381,22 +385,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IndexingParametersConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static IndexingParametersConfiguration FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIndexingParametersConfiguration(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }
