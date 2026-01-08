@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                             List<SolutionMetadataProperties> array = new List<SolutionMetadataProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SolutionMetadataProperties.DeserializeSolutionMetadataProperties(item));
+                                // array.Add(SolutionMetadataProperties.DeserializeSolutionMetadataProperties(item));
                             }
                             solutions = array;
                             continue;

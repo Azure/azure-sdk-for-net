@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             SolutionType = solutionType;
             Description = description;
             RequiredParameterSets = requiredParameterSets;
-            Solutions = solutions;
+            // Solutions = solutions;
         }
     }
 }

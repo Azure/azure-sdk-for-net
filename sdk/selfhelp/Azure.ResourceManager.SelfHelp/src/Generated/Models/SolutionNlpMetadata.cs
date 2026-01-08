@@ -15,79 +15,122 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Nlp Metadata resource. </summary>
     public partial class SolutionNlpMetadata : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SolutionNlpMetadata"/>. </summary>
         public SolutionNlpMetadata()
         {
-            Solutions = new ChangeTrackingList<SolutionMetadataProperties>();
-            RelatedServices = new ChangeTrackingList<ClassificationService>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SolutionNlpMetadata"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="problemTitle"> Title of the problem classification. </param>
-        /// <param name="problemDescription"> Description of the problem classification. </param>
-        /// <param name="serviceId"> Id of the service (https://learn.microsoft.com/en-us/rest/api/support/services?view=rest-support-2020-04-01) that may be used to create a support ticket. </param>
-        /// <param name="problemClassificationId"> Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket. </param>
-        /// <param name="solutions"> The list of solution metadata. </param>
-        /// <param name="relatedServices"> The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionNlpMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string problemTitle, string problemDescription, string serviceId, string problemClassificationId, IList<SolutionMetadataProperties> solutions, IList<ClassificationService> relatedServices, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Solution metadata Resource properties. </param>
+        internal SolutionNlpMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NlpSolutions properties) : base(id, name, resourceType, systemData)
         {
-            ProblemTitle = problemTitle;
-            ProblemDescription = problemDescription;
-            ServiceId = serviceId;
-            ProblemClassificationId = problemClassificationId;
-            Solutions = solutions;
-            RelatedServices = relatedServices;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Solution metadata Resource properties. </summary>
+        internal NlpSolutions Properties { get; set; }
+
         /// <summary> Title of the problem classification. </summary>
-        public string ProblemTitle { get; set; }
+        public string ProblemTitle
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProblemTitle;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NlpSolutions();
+                }
+                Properties.ProblemTitle = value;
+            }
+        }
+
         /// <summary> Description of the problem classification. </summary>
-        public string ProblemDescription { get; set; }
+        public string ProblemDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProblemDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NlpSolutions();
+                }
+                Properties.ProblemDescription = value;
+            }
+        }
+
         /// <summary> Id of the service (https://learn.microsoft.com/en-us/rest/api/support/services?view=rest-support-2020-04-01) that may be used to create a support ticket. </summary>
-        public string ServiceId { get; set; }
+        public string ServiceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NlpSolutions();
+                }
+                Properties.ServiceId = value;
+            }
+        }
+
         /// <summary> Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket. </summary>
-        public string ProblemClassificationId { get; set; }
+        public string ProblemClassificationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProblemClassificationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NlpSolutions();
+                }
+                Properties.ProblemClassificationId = value;
+            }
+        }
+
         /// <summary> The list of solution metadata. </summary>
-        public IList<SolutionMetadataProperties> Solutions { get; }
+        public IList<SolutionMetadataProperties> Solutions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NlpSolutions();
+                }
+                return Properties.Solutions;
+            }
+        }
+
         /// <summary> The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object. </summary>
-        public IList<ClassificationService> RelatedServices { get; }
+        public IList<ClassificationService> RelatedServices
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NlpSolutions();
+                }
+                return Properties.RelatedServices;
+            }
+        }
     }
 }
