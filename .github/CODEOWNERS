@@ -1236,3 +1236,6 @@
 
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang @ArthurMa1978
+
+# Add Johnathan Walker as code owner for Event Hubs SDK
+/sdk/messaging/Azure.Messaging.EventHubs/* @j7nw4r
