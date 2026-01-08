@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> The FilePropertySemantics. </summary>
-    internal readonly partial struct FilePropertySemantics : IEquatable<FilePropertySemantics>
+    public readonly partial struct FilePropertySemantics : IEquatable<FilePropertySemantics>
     {
         private readonly string _value;
 
