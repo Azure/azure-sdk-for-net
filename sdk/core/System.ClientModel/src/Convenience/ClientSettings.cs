@@ -28,17 +28,18 @@ public class ClientSettings
     /// <summary>
     /// .
     /// </summary>
-    public void Bind(IConfigurationSection? section = null)
+    public void Bind(IConfigurationSection section)
     {
-        IsInitialized = true;
-        if (Credential is null && section is not null)
+        if (section is null)
         {
-            Credential = new CredentialSettings(section.GetSection("Credential"));
+            throw new ArgumentNullException(nameof(section));
         }
 
-        if (CredentialObject is null && Credential?.CredentialSource == "ApiKey")
+        Credential ??= new CredentialSettings(section.GetSection("Credential"));
+
+        if (CredentialObject is null && Credential.CredentialSource == "ApiKey")
         {
-            CredentialObject = Credential?.Key;
+            CredentialObject = Credential.Key;
         }
 
         BindCore(section);
@@ -47,10 +48,5 @@ public class ClientSettings
     /// <summary>
     /// .
     /// </summary>
-    protected bool IsInitialized { get; private set; }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    protected virtual void BindCore(IConfigurationSection? section = null) { }
+    protected virtual void BindCore(IConfigurationSection section) { }
 }

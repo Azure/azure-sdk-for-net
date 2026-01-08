@@ -387,10 +387,6 @@ namespace Azure.Identity
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
-    public static partial class OptionsBuilderExtensions
-    {
-        public static Microsoft.Extensions.Options.OptionsBuilder<T> WithAzureCredential<T>(this Microsoft.Extensions.Options.OptionsBuilder<T> builder) where T : System.ClientModel.Primitives.ClientSettings { throw null; }
-    }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This credential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
     public partial class SharedTokenCacheCredential : Azure.Core.TokenCredential

@@ -24,9 +24,6 @@ namespace Azure.ResourceManager
         /// <inheritdoc/>
         protected override void BindCore(IConfigurationSection section)
         {
-            if (section == null)
-                return;
-
             DefaultSubscriptionId = section["DefaultSubscriptionId"];
             // for schema should we have a layer for ClientOptions section.GetSection("ClientOptions")
             Options = new ArmClientOptions(section.GetSection("Options"));

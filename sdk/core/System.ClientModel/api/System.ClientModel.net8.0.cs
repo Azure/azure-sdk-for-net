@@ -225,10 +225,9 @@ namespace System.ClientModel.Primitives
         public ClientSettings() { }
         public System.ClientModel.CredentialSettings? Credential { get { throw null; } set { } }
         public object? CredentialObject { get { throw null; } set { } }
-        protected bool IsInitialized { get { throw null; } }
         public object? Options { get { throw null; } set { } }
-        public void Bind(Microsoft.Extensions.Configuration.IConfigurationSection? section = null) { }
-        protected virtual void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection? section = null) { }
+        public void Bind(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        protected virtual void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public abstract partial class CollectionResult
     {
