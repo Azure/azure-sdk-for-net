@@ -17,6 +17,7 @@ namespace Azure.Data.AppConfiguration
     [ModelReaderWriterBuildable(typeof(ConfigurationSetting))]
     [ModelReaderWriterBuildable(typeof(ConfigurationSettingsFilter))]
     [ModelReaderWriterBuildable(typeof(ConfigurationSnapshot))]
+    [ModelReaderWriterBuildable(typeof(KeyValueListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SettingLabel))]
     [ModelReaderWriterBuildable(typeof(SnapshotUpdateParameters))]
