@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     internal static partial class ManagedHsmSkuNameExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ManagedHsmSkuName value) => value switch
         {
             ManagedHsmSkuName.StandardB1 => "Standard_B1",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.KeyVault.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedHsmSkuName value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ManagedHsmSkuName ToManagedHsmSkuName(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_B1")) return ManagedHsmSkuName.StandardB1;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_B32")) return ManagedHsmSkuName.CustomB32;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_B6")) return ManagedHsmSkuName.CustomB6;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_C42")) return ManagedHsmSkuName.CustomC42;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_C10")) return ManagedHsmSkuName.CustomC10;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_B1"))
+            {
+                return ManagedHsmSkuName.StandardB1;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_B32"))
+            {
+                return ManagedHsmSkuName.CustomB32;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_B6"))
+            {
+                return ManagedHsmSkuName.CustomB6;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_C42"))
+            {
+                return ManagedHsmSkuName.CustomC42;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_C10"))
+            {
+                return ManagedHsmSkuName.CustomC10;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedHsmSkuName value.");
         }
     }
