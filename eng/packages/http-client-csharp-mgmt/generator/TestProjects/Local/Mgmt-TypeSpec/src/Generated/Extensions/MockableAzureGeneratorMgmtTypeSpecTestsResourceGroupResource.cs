@@ -654,6 +654,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetSampleDatas().Get(sampleDataName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ScriptExecutions in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ScriptExecutions and their operations over a ScriptExecutionResource. </returns>
+        public virtual ScriptExecutionCollection GetScriptExecutions()
+        {
+            return GetCachedClient(client => new ScriptExecutionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a script execution
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/scriptExecutions/{scriptExecutionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScriptExecutions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptExecutionName"> Name of the script execution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScriptExecutionResource>> GetScriptExecutionAsync(string scriptExecutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scriptExecutionName, nameof(scriptExecutionName));
+
+            return await GetScriptExecutions().GetAsync(scriptExecutionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a script execution
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/scriptExecutions/{scriptExecutionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScriptExecutions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptExecutionName"> Name of the script execution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScriptExecutionResource> GetScriptExecution(string scriptExecutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scriptExecutionName, nameof(scriptExecutionName));
+
+            return GetScriptExecutions().Get(scriptExecutionName, cancellationToken);
+        }
+
         /// <summary>
         /// list private links on the given resource
         /// <list type="bullet">
