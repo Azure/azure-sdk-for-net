@@ -1239,3 +1239,6 @@
 
 # Add Johnathan Walker as code owner for Event Hubs SDK
 /sdk/messaging/Azure.Messaging.EventHubs/* @j7nw4r
+
+# Add Johnathan Walker as code owner for Service Bus SDK
+/sdk/messaging/Azure.Messaging.ServiceBus/* @j7nw4r
