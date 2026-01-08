@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkPublicIPCollection : ArmCollection, IEnumerable<WorkloadNetworkPublicIPResource>, IAsyncEnumerable<WorkloadNetworkPublicIPResource>
     {
-        private readonly ClientDiagnostics _workloadNetworkPublicIpsClientDiagnostics;
-        private readonly WorkloadNetworkPublicIps _workloadNetworkPublicIpsRestClient;
+        private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
+        private readonly WorkloadNetworks _workloadNetworksRestClient;
 
         /// <summary> Initializes a new instance of WorkloadNetworkPublicIPCollection for mocking. </summary>
         protected WorkloadNetworkPublicIPCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Avs
         internal WorkloadNetworkPublicIPCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(WorkloadNetworkPublicIPResource.ResourceType, out string workloadNetworkPublicIPApiVersion);
-            _workloadNetworkPublicIpsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkPublicIPResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworkPublicIpsRestClient = new WorkloadNetworkPublicIps(_workloadNetworkPublicIpsClientDiagnostics, Pipeline, Endpoint, workloadNetworkPublicIPApiVersion ?? "2025-09-01");
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkPublicIPResource.ResourceType.Namespace, Diagnostics);
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkPublicIPApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Avs
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkPublicIpsClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPublicIpsRestClient.CreateCreatePublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, WorkloadNetworkPublicIPData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateCreatePublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, WorkloadNetworkPublicIPData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkPublicIPResource> operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(
                     new WorkloadNetworkPublicIPOperationSource(Client),
-                    _workloadNetworkPublicIpsClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Avs
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkPublicIpsClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPublicIpsRestClient.CreateCreatePublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, WorkloadNetworkPublicIPData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateCreatePublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, WorkloadNetworkPublicIPData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkPublicIPResource> operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(
                     new WorkloadNetworkPublicIPOperationSource(Client),
-                    _workloadNetworkPublicIpsClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkPublicIPResource>> GetAsync(string publicIPId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkPublicIPResource>> GetPublicIPAsync(string publicIPId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
-            using DiagnosticScope scope = _workloadNetworkPublicIpsClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetPublicIP");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPublicIpsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkPublicIPData> response = Response.FromValue(WorkloadNetworkPublicIPData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkPublicIPResource> Get(string publicIPId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkPublicIPResource> GetPublicIP(string publicIPId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
-            using DiagnosticScope scope = _workloadNetworkPublicIpsClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetPublicIP");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPublicIpsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkPublicIPData> response = Response.FromValue(WorkloadNetworkPublicIPData.FromResponse(result), result);
                 if (response.Value == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIpsGetPublicIPsAsyncCollectionResultOfT(_workloadNetworkPublicIpsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkPublicIPResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworksGetPublicIPsAsyncCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkPublicIPResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIpsGetPublicIPsCollectionResultOfT(_workloadNetworkPublicIpsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkPublicIPResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworksGetPublicIPsCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkPublicIPResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
-            using DiagnosticScope scope = _workloadNetworkPublicIpsClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Exists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Exists");
             scope.Start();
             try
             {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPublicIpsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkPublicIPData> response = default;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
-            using DiagnosticScope scope = _workloadNetworkPublicIpsClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Exists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Exists");
             scope.Start();
             try
             {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPublicIpsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkPublicIPData> response = default;
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
-            using DiagnosticScope scope = _workloadNetworkPublicIpsClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetIfExists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPublicIpsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkPublicIPData> response = default;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
-            using DiagnosticScope scope = _workloadNetworkPublicIpsClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetIfExists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPublicIpsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkPublicIPData> response = default;

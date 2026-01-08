@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
-            return await GetWorkloadNetworkDhcps().GetAsync(dhcpId, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadNetworkDhcps().GetDhcpAsync(dhcpId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a WorkloadNetworkDhcp. </summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
-            return GetWorkloadNetworkDhcps().Get(dhcpId, cancellationToken);
+            return GetWorkloadNetworkDhcps().GetDhcp(dhcpId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkDnsServices in the <see cref="WorkloadNetworkResource"/>. </summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
 
-            return await GetWorkloadNetworkDnsServices().GetAsync(dnsServiceId, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadNetworkDnsServices().GetDnsServiceAsync(dnsServiceId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a WorkloadNetworkDnsService. </summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
 
-            return GetWorkloadNetworkDnsServices().Get(dnsServiceId, cancellationToken);
+            return GetWorkloadNetworkDnsServices().GetDnsService(dnsServiceId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkDnsZones in the <see cref="WorkloadNetworkResource"/>. </summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
-            return await GetWorkloadNetworkDnsZones().GetAsync(dnsZoneId, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadNetworkDnsZones().GetDnsZoneAsync(dnsZoneId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a WorkloadNetworkDnsZone. </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
-            return GetWorkloadNetworkDnsZones().Get(dnsZoneId, cancellationToken);
+            return GetWorkloadNetworkDnsZones().GetDnsZone(dnsZoneId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkGateways in the <see cref="WorkloadNetworkResource"/>. </summary>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
 
-            return await GetWorkloadNetworkGateways().GetAsync(gatewayId, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadNetworkGateways().GetGatewayAsync(gatewayId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a WorkloadNetworkGateway. </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
 
-            return GetWorkloadNetworkGateways().Get(gatewayId, cancellationToken);
+            return GetWorkloadNetworkGateways().GetGateway(gatewayId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkPortMirroringProfiles in the <see cref="WorkloadNetworkResource"/>. </summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
 
-            return await GetWorkloadNetworkPortMirroringProfiles().GetAsync(portMirroringId, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadNetworkPortMirroringProfiles().GetPortMirroringAsync(portMirroringId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a WorkloadNetworkPortMirroring. </summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
 
-            return GetWorkloadNetworkPortMirroringProfiles().Get(portMirroringId, cancellationToken);
+            return GetWorkloadNetworkPortMirroringProfiles().GetPortMirroring(portMirroringId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkPublicIPs in the <see cref="WorkloadNetworkResource"/>. </summary>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
-            return await GetWorkloadNetworkPublicIPs().GetAsync(publicIPId, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadNetworkPublicIPs().GetPublicIPAsync(publicIPId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a WorkloadNetworkPublicIP. </summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
-            return GetWorkloadNetworkPublicIPs().Get(publicIPId, cancellationToken);
+            return GetWorkloadNetworkPublicIPs().GetPublicIP(publicIPId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkSegments in the <see cref="WorkloadNetworkResource"/>. </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
-            return await GetWorkloadNetworkSegments().GetAsync(segmentId, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadNetworkSegments().GetSegmentAsync(segmentId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a WorkloadNetworkSegment. </summary>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
-            return GetWorkloadNetworkSegments().Get(segmentId, cancellationToken);
+            return GetWorkloadNetworkSegments().GetSegment(segmentId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkVirtualMachines in the <see cref="WorkloadNetworkResource"/>. </summary>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
-            return await GetWorkloadNetworkVirtualMachines().GetAsync(virtualMachineId, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadNetworkVirtualMachines().GetVirtualMachineAsync(virtualMachineId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a WorkloadNetworkVirtualMachine. </summary>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
-            return GetWorkloadNetworkVirtualMachines().Get(virtualMachineId, cancellationToken);
+            return GetWorkloadNetworkVirtualMachines().GetVirtualMachine(virtualMachineId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkVmGroups in the <see cref="WorkloadNetworkResource"/>. </summary>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            return await GetWorkloadNetworkVmGroups().GetAsync(vmGroupId, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadNetworkVmGroups().GetVMGroupAsync(vmGroupId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a WorkloadNetworkVMGroup. </summary>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            return GetWorkloadNetworkVmGroups().Get(vmGroupId, cancellationToken);
+            return GetWorkloadNetworkVmGroups().GetVMGroup(vmGroupId, cancellationToken);
         }
     }
 }

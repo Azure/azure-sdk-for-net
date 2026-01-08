@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkVirtualMachineResource : ArmResource
     {
-        private readonly ClientDiagnostics _workloadNetworkVirtualMachinesClientDiagnostics;
-        private readonly WorkloadNetworkVirtualMachines _workloadNetworkVirtualMachinesRestClient;
+        private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
+        private readonly WorkloadNetworks _workloadNetworksRestClient;
         private readonly WorkloadNetworkVirtualMachineData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/virtualMachines";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Avs
         internal WorkloadNetworkVirtualMachineResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string workloadNetworkVirtualMachineApiVersion);
-            _workloadNetworkVirtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _workloadNetworkVirtualMachinesRestClient = new WorkloadNetworkVirtualMachines(_workloadNetworkVirtualMachinesClientDiagnostics, Pipeline, Endpoint, workloadNetworkVirtualMachineApiVersion ?? "2025-09-01");
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkVirtualMachineApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WorkloadNetworkVirtualMachineResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkVirtualMachinesClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVirtualMachineRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkVirtualMachineData> response = Response.FromValue(WorkloadNetworkVirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WorkloadNetworkVirtualMachineResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkVirtualMachinesClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineResource.Get");
             scope.Start();
             try
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVirtualMachineRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkVirtualMachineData> response = Response.FromValue(WorkloadNetworkVirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)

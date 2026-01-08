@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkPortMirroringProfileResource : ArmResource
     {
-        private readonly ClientDiagnostics _workloadNetworkPortMirroringProfilesClientDiagnostics;
-        private readonly WorkloadNetworkPortMirroringProfiles _workloadNetworkPortMirroringProfilesRestClient;
+        private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
+        private readonly WorkloadNetworks _workloadNetworksRestClient;
         private readonly WorkloadNetworkPortMirroringProfileData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Avs
         internal WorkloadNetworkPortMirroringProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string workloadNetworkPortMirroringProfileApiVersion);
-            _workloadNetworkPortMirroringProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _workloadNetworkPortMirroringProfilesRestClient = new WorkloadNetworkPortMirroringProfiles(_workloadNetworkPortMirroringProfilesClientDiagnostics, Pipeline, Endpoint, workloadNetworkPortMirroringProfileApiVersion ?? "2025-09-01");
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkPortMirroringProfileApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WorkloadNetworkPortMirroringProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkPortMirroringProfilesClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkPortMirroringProfileData> response = Response.FromValue(WorkloadNetworkPortMirroringProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WorkloadNetworkPortMirroringProfileResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkPortMirroringProfilesClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.Get");
             scope.Start();
             try
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkPortMirroringProfileData> response = Response.FromValue(WorkloadNetworkPortMirroringProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkPortMirroringProfilesClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.Update");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.Update");
             scope.Start();
             try
             {
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateUpdatePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkPortMirroringProfileData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateUpdatePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkPortMirroringProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkPortMirroringProfileResource> operation = new AvsArmOperation<WorkloadNetworkPortMirroringProfileResource>(
                     new WorkloadNetworkPortMirroringProfileOperationSource(Client),
-                    _workloadNetworkPortMirroringProfilesClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkPortMirroringProfilesClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.Update");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.Update");
             scope.Start();
             try
             {
@@ -283,11 +283,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateUpdatePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkPortMirroringProfileData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateUpdatePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkPortMirroringProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkPortMirroringProfileResource> operation = new AvsArmOperation<WorkloadNetworkPortMirroringProfileResource>(
                     new WorkloadNetworkPortMirroringProfileOperationSource(Client),
-                    _workloadNetworkPortMirroringProfilesClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -328,9 +328,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeletePortMirroringAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkPortMirroringProfilesClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.Delete");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.DeletePortMirroring");
             scope.Start();
             try
             {
@@ -338,9 +338,9 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateDeletePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AvsArmOperation operation = new AvsArmOperation(_workloadNetworkPortMirroringProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -377,9 +377,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeletePortMirroring(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkPortMirroringProfilesClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.Delete");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileResource.DeletePortMirroring");
             scope.Start();
             try
             {
@@ -387,9 +387,9 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateDeletePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                AvsArmOperation operation = new AvsArmOperation(_workloadNetworkPortMirroringProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkGatewayResource : ArmResource
     {
-        private readonly ClientDiagnostics _workloadNetworkGatewaysClientDiagnostics;
-        private readonly WorkloadNetworkGateways _workloadNetworkGatewaysRestClient;
+        private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
+        private readonly WorkloadNetworks _workloadNetworksRestClient;
         private readonly WorkloadNetworkGatewayData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/gateways";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Avs
         internal WorkloadNetworkGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string workloadNetworkGatewayApiVersion);
-            _workloadNetworkGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _workloadNetworkGatewaysRestClient = new WorkloadNetworkGateways(_workloadNetworkGatewaysClientDiagnostics, Pipeline, Endpoint, workloadNetworkGatewayApiVersion ?? "2025-09-01");
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkGatewayApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WorkloadNetworkGatewayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkGatewaysClientDiagnostics.CreateScope("WorkloadNetworkGatewayResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkGatewayData> response = Response.FromValue(WorkloadNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WorkloadNetworkGatewayResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkGatewaysClientDiagnostics.CreateScope("WorkloadNetworkGatewayResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayResource.Get");
             scope.Start();
             try
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkGatewayData> response = Response.FromValue(WorkloadNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,21 +15,21 @@ using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal partial class WorkloadNetworkVmGroupsGetVMGroupsCollectionResultOfT : Pageable<WorkloadNetworkVmGroupData>
+    internal partial class WorkloadNetworksGetPortMirroringAsyncCollectionResultOfT : AsyncPageable<WorkloadNetworkPortMirroringProfileData>
     {
-        private readonly WorkloadNetworkVmGroups _client;
+        private readonly WorkloadNetworks _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _privateCloudName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of WorkloadNetworkVmGroupsGetVMGroupsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The WorkloadNetworkVmGroups client used to send requests. </param>
+        /// <summary> Initializes a new instance of WorkloadNetworksGetPortMirroringAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The WorkloadNetworks client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public WorkloadNetworkVmGroupsGetVMGroupsCollectionResultOfT(WorkloadNetworkVmGroups client, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public WorkloadNetworksGetPortMirroringAsyncCollectionResultOfT(WorkloadNetworks client, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,22 +38,22 @@ namespace Azure.ResourceManager.Avs
             _context = context;
         }
 
-        /// <summary> Gets the pages of WorkloadNetworkVmGroupsGetVMGroupsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of WorkloadNetworksGetPortMirroringAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of WorkloadNetworkVmGroupsGetVMGroupsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<WorkloadNetworkVmGroupData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of WorkloadNetworksGetPortMirroringAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<WorkloadNetworkPortMirroringProfileData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                WorkloadNetworkVMGroupsList result = WorkloadNetworkVMGroupsList.FromResponse(response);
-                yield return Page<WorkloadNetworkVmGroupData>.FromValues((IReadOnlyList<WorkloadNetworkVmGroupData>)result.Value, nextPage?.AbsoluteUri, response);
+                WorkloadNetworkPortMirroringList result = WorkloadNetworkPortMirroringList.FromResponse(response);
+                yield return Page<WorkloadNetworkPortMirroringProfileData>.FromValues((IReadOnlyList<WorkloadNetworkPortMirroringProfileData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -64,14 +65,14 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetVMGroupsRequest(nextLink, _subscriptionId, _resourceGroupName, _privateCloudName, _context) : _client.CreateGetVMGroupsRequest(_subscriptionId, _resourceGroupName, _privateCloudName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPortMirroringRequest(nextLink, _subscriptionId, _resourceGroupName, _privateCloudName, _context) : _client.CreateGetPortMirroringRequest(_subscriptionId, _resourceGroupName, _privateCloudName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.GetAll");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

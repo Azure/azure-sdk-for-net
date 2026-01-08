@@ -15,21 +15,21 @@ using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal partial class WorkloadNetworkDhcpConfigurationsGetDhcpAsyncCollectionResultOfT : AsyncPageable<WorkloadNetworkDhcpData>
+    internal partial class WorkloadNetworksGetDnsServicesAsyncCollectionResultOfT : AsyncPageable<WorkloadNetworkDnsServiceData>
     {
-        private readonly WorkloadNetworkDhcpConfigurations _client;
+        private readonly WorkloadNetworks _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _privateCloudName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of WorkloadNetworkDhcpConfigurationsGetDhcpAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The WorkloadNetworkDhcpConfigurations client used to send requests. </param>
+        /// <summary> Initializes a new instance of WorkloadNetworksGetDnsServicesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The WorkloadNetworks client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public WorkloadNetworkDhcpConfigurationsGetDhcpAsyncCollectionResultOfT(WorkloadNetworkDhcpConfigurations client, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public WorkloadNetworksGetDnsServicesAsyncCollectionResultOfT(WorkloadNetworks client, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Avs
             _context = context;
         }
 
-        /// <summary> Gets the pages of WorkloadNetworkDhcpConfigurationsGetDhcpAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of WorkloadNetworksGetDnsServicesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of WorkloadNetworkDhcpConfigurationsGetDhcpAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<WorkloadNetworkDhcpData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of WorkloadNetworksGetDnsServicesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<WorkloadNetworkDnsServiceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Avs
                 {
                     yield break;
                 }
-                WorkloadNetworkDhcpList result = WorkloadNetworkDhcpList.FromResponse(response);
-                yield return Page<WorkloadNetworkDhcpData>.FromValues((IReadOnlyList<WorkloadNetworkDhcpData>)result.Value, nextPage?.AbsoluteUri, response);
+                WorkloadNetworkDnsServicesList result = WorkloadNetworkDnsServicesList.FromResponse(response);
+                yield return Page<WorkloadNetworkDnsServiceData>.FromValues((IReadOnlyList<WorkloadNetworkDnsServiceData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Avs
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDhcpRequest(nextLink, _subscriptionId, _resourceGroupName, _privateCloudName, _context) : _client.CreateGetDhcpRequest(_subscriptionId, _resourceGroupName, _privateCloudName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetDnsServicesRequest(nextLink, _subscriptionId, _resourceGroupName, _privateCloudName, _context) : _client.CreateGetDnsServicesRequest(_subscriptionId, _resourceGroupName, _privateCloudName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetAll");
             scope.Start();
             try
             {

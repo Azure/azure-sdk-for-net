@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkDnsZoneResource : ArmResource
     {
-        private readonly ClientDiagnostics _workloadNetworkDnsZonesClientDiagnostics;
-        private readonly WorkloadNetworkDnsZones _workloadNetworkDnsZonesRestClient;
+        private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
+        private readonly WorkloadNetworks _workloadNetworksRestClient;
         private readonly WorkloadNetworkDnsZoneData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/dnsZones";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Avs
         internal WorkloadNetworkDnsZoneResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string workloadNetworkDnsZoneApiVersion);
-            _workloadNetworkDnsZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _workloadNetworkDnsZonesRestClient = new WorkloadNetworkDnsZones(_workloadNetworkDnsZonesClientDiagnostics, Pipeline, Endpoint, workloadNetworkDnsZoneApiVersion ?? "2025-09-01");
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkDnsZoneApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WorkloadNetworkDnsZoneResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkDnsZoneData> response = Response.FromValue(WorkloadNetworkDnsZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WorkloadNetworkDnsZoneResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Get");
             scope.Start();
             try
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkDnsZoneData> response = Response.FromValue(WorkloadNetworkDnsZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Update");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Update");
             scope.Start();
             try
             {
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateUpdateDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkDnsZoneData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateUpdateDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkDnsZoneData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkDnsZoneResource> operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(
                     new WorkloadNetworkDnsZoneOperationSource(Client),
-                    _workloadNetworkDnsZonesClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Update");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Update");
             scope.Start();
             try
             {
@@ -283,11 +283,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateUpdateDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkDnsZoneData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateUpdateDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkDnsZoneData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkDnsZoneResource> operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(
                     new WorkloadNetworkDnsZoneOperationSource(Client),
-                    _workloadNetworkDnsZonesClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -328,9 +328,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteDnsZoneAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Delete");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.DeleteDnsZone");
             scope.Start();
             try
             {
@@ -338,9 +338,9 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateDeleteDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AvsArmOperation operation = new AvsArmOperation(_workloadNetworkDnsZonesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -377,9 +377,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeleteDnsZone(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Delete");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.DeleteDnsZone");
             scope.Start();
             try
             {
@@ -387,9 +387,9 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateDeleteDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                AvsArmOperation operation = new AvsArmOperation(_workloadNetworkDnsZonesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

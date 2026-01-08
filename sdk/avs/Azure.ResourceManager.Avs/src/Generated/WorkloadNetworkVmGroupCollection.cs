@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkVmGroupCollection : ArmCollection, IEnumerable<WorkloadNetworkVmGroupResource>, IAsyncEnumerable<WorkloadNetworkVmGroupResource>
     {
-        private readonly ClientDiagnostics _workloadNetworkVmGroupsClientDiagnostics;
-        private readonly WorkloadNetworkVmGroups _workloadNetworkVmGroupsRestClient;
+        private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
+        private readonly WorkloadNetworks _workloadNetworksRestClient;
 
         /// <summary> Initializes a new instance of WorkloadNetworkVmGroupCollection for mocking. </summary>
         protected WorkloadNetworkVmGroupCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Avs
         internal WorkloadNetworkVmGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(WorkloadNetworkVmGroupResource.ResourceType, out string workloadNetworkVmGroupApiVersion);
-            _workloadNetworkVmGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworkVmGroupsRestClient = new WorkloadNetworkVmGroups(_workloadNetworkVmGroupsClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2025-09-01");
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Avs
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateCreateVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkVmGroupResource> operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(
                     new WorkloadNetworkVmGroupOperationSource(Client),
-                    _workloadNetworkVmGroupsClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Avs
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateCreateVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkVmGroupResource> operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(
                     new WorkloadNetworkVmGroupOperationSource(Client),
-                    _workloadNetworkVmGroupsClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> GetAsync(string vmGroupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> GetVMGroupAsync(string vmGroupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetVMGroup");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkVmGroupResource> Get(string vmGroupId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkVmGroupResource> GetVMGroup(string vmGroupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetVMGroup");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetVMGroupsAsyncCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkVmGroupResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworksGetVMGroupsAsyncCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkVmGroupResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetVMGroupsCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkVmGroupResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworksGetVMGroupsCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkVmGroupResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Exists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Exists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;

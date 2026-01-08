@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkDhcpCollection : ArmCollection, IEnumerable<WorkloadNetworkDhcpResource>, IAsyncEnumerable<WorkloadNetworkDhcpResource>
     {
-        private readonly ClientDiagnostics _workloadNetworkDhcpConfigurationsClientDiagnostics;
-        private readonly WorkloadNetworkDhcpConfigurations _workloadNetworkDhcpConfigurationsRestClient;
+        private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
+        private readonly WorkloadNetworks _workloadNetworksRestClient;
 
         /// <summary> Initializes a new instance of WorkloadNetworkDhcpCollection for mocking. </summary>
         protected WorkloadNetworkDhcpCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Avs
         internal WorkloadNetworkDhcpCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(WorkloadNetworkDhcpResource.ResourceType, out string workloadNetworkDhcpApiVersion);
-            _workloadNetworkDhcpConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkDhcpResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworkDhcpConfigurationsRestClient = new WorkloadNetworkDhcpConfigurations(_workloadNetworkDhcpConfigurationsClientDiagnostics, Pipeline, Endpoint, workloadNetworkDhcpApiVersion ?? "2025-09-01");
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkDhcpResource.ResourceType.Namespace, Diagnostics);
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkDhcpApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Avs
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkDhcpConfigurationsClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDhcpConfigurationsRestClient.CreateCreateDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dhcpId, WorkloadNetworkDhcpData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateCreateDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dhcpId, WorkloadNetworkDhcpData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkDhcpResource> operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(
                     new WorkloadNetworkDhcpOperationSource(Client),
-                    _workloadNetworkDhcpConfigurationsClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Avs
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkDhcpConfigurationsClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDhcpConfigurationsRestClient.CreateCreateDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dhcpId, WorkloadNetworkDhcpData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateCreateDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dhcpId, WorkloadNetworkDhcpData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkDhcpResource> operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(
                     new WorkloadNetworkDhcpOperationSource(Client),
-                    _workloadNetworkDhcpConfigurationsClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkDhcpResource>> GetAsync(string dhcpId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkDhcpResource>> GetDhcpAsync(string dhcpId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
-            using DiagnosticScope scope = _workloadNetworkDhcpConfigurationsClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetDhcp");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDhcpConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkDhcpData> response = Response.FromValue(WorkloadNetworkDhcpData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkDhcpResource> Get(string dhcpId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkDhcpResource> GetDhcp(string dhcpId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
-            using DiagnosticScope scope = _workloadNetworkDhcpConfigurationsClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetDhcp");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDhcpConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkDhcpData> response = Response.FromValue(WorkloadNetworkDhcpData.FromResponse(result), result);
                 if (response.Value == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkDhcpData, WorkloadNetworkDhcpResource>(new WorkloadNetworkDhcpConfigurationsGetDhcpAsyncCollectionResultOfT(_workloadNetworkDhcpConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDhcpResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkDhcpData, WorkloadNetworkDhcpResource>(new WorkloadNetworksGetDhcpAsyncCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDhcpResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkDhcpData, WorkloadNetworkDhcpResource>(new WorkloadNetworkDhcpConfigurationsGetDhcpCollectionResultOfT(_workloadNetworkDhcpConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDhcpResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkDhcpData, WorkloadNetworkDhcpResource>(new WorkloadNetworksGetDhcpCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDhcpResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
-            using DiagnosticScope scope = _workloadNetworkDhcpConfigurationsClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Exists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Exists");
             scope.Start();
             try
             {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDhcpConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkDhcpData> response = default;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
-            using DiagnosticScope scope = _workloadNetworkDhcpConfigurationsClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Exists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Exists");
             scope.Start();
             try
             {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDhcpConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkDhcpData> response = default;
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
-            using DiagnosticScope scope = _workloadNetworkDhcpConfigurationsClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetIfExists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDhcpConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkDhcpData> response = default;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
-            using DiagnosticScope scope = _workloadNetworkDhcpConfigurationsClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetIfExists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDhcpConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkDhcpData> response = default;

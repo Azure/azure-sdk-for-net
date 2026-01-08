@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkDnsZoneCollection : ArmCollection, IEnumerable<WorkloadNetworkDnsZoneResource>, IAsyncEnumerable<WorkloadNetworkDnsZoneResource>
     {
-        private readonly ClientDiagnostics _workloadNetworkDnsZonesClientDiagnostics;
-        private readonly WorkloadNetworkDnsZones _workloadNetworkDnsZonesRestClient;
+        private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
+        private readonly WorkloadNetworks _workloadNetworksRestClient;
 
         /// <summary> Initializes a new instance of WorkloadNetworkDnsZoneCollection for mocking. </summary>
         protected WorkloadNetworkDnsZoneCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Avs
         internal WorkloadNetworkDnsZoneCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(WorkloadNetworkDnsZoneResource.ResourceType, out string workloadNetworkDnsZoneApiVersion);
-            _workloadNetworkDnsZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkDnsZoneResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworkDnsZonesRestClient = new WorkloadNetworkDnsZones(_workloadNetworkDnsZonesClientDiagnostics, Pipeline, Endpoint, workloadNetworkDnsZoneApiVersion ?? "2025-09-01");
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkDnsZoneResource.ResourceType.Namespace, Diagnostics);
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkDnsZoneApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Avs
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateCreateDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, WorkloadNetworkDnsZoneData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateCreateDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, WorkloadNetworkDnsZoneData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkDnsZoneResource> operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(
                     new WorkloadNetworkDnsZoneOperationSource(Client),
-                    _workloadNetworkDnsZonesClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Avs
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateCreateDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, WorkloadNetworkDnsZoneData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworksRestClient.CreateCreateDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, WorkloadNetworkDnsZoneData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkDnsZoneResource> operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(
                     new WorkloadNetworkDnsZoneOperationSource(Client),
-                    _workloadNetworkDnsZonesClientDiagnostics,
+                    _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkDnsZoneResource>> GetAsync(string dnsZoneId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkDnsZoneResource>> GetDnsZoneAsync(string dnsZoneId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.GetDnsZone");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkDnsZoneData> response = Response.FromValue(WorkloadNetworkDnsZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkDnsZoneResource> Get(string dnsZoneId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkDnsZoneResource> GetDnsZone(string dnsZoneId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.GetDnsZone");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkDnsZoneData> response = Response.FromValue(WorkloadNetworkDnsZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZonesGetDnsZonesAsyncCollectionResultOfT(_workloadNetworkDnsZonesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDnsZoneResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworksGetDnsZonesAsyncCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDnsZoneResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZonesGetDnsZonesCollectionResultOfT(_workloadNetworkDnsZonesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDnsZoneResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworksGetDnsZonesCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDnsZoneResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.Exists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.Exists");
             scope.Start();
             try
             {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkDnsZoneData> response = default;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.Exists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.Exists");
             scope.Start();
             try
             {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkDnsZoneData> response = default;
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.GetIfExists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkDnsZoneData> response = default;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
-            using DiagnosticScope scope = _workloadNetworkDnsZonesClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.GetIfExists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkDnsZoneData> response = default;
