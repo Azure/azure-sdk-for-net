@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterKeyEncryptionKeyIdentityType : IEquatable<MongoClusterKeyEncryptionKeyIdentityType>
     {
         private readonly string _value;
+        /// <summary> User assigned identity. </summary>
+        private const string UserAssignedIdentityValue = "UserAssignedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterKeyEncryptionKeyIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterKeyEncryptionKeyIdentityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UserAssignedIdentityValue = "UserAssignedIdentity";
+            _value = value;
+        }
 
         /// <summary> User assigned identity. </summary>
         public static MongoClusterKeyEncryptionKeyIdentityType UserAssignedIdentity { get; } = new MongoClusterKeyEncryptionKeyIdentityType(UserAssignedIdentityValue);
+
         /// <summary> Determines if two <see cref="MongoClusterKeyEncryptionKeyIdentityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterKeyEncryptionKeyIdentityType left, MongoClusterKeyEncryptionKeyIdentityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterKeyEncryptionKeyIdentityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterKeyEncryptionKeyIdentityType left, MongoClusterKeyEncryptionKeyIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterKeyEncryptionKeyIdentityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterKeyEncryptionKeyIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterKeyEncryptionKeyIdentityType(string value) => new MongoClusterKeyEncryptionKeyIdentityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterKeyEncryptionKeyIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterKeyEncryptionKeyIdentityType?(string value) => value == null ? null : new MongoClusterKeyEncryptionKeyIdentityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterKeyEncryptionKeyIdentityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterKeyEncryptionKeyIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
