@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (KeyVaultIPRule item in IpRules)
+                foreach (KeyVaultIPRule item in IPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }

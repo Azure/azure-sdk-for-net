@@ -15,16 +15,16 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The parameters used to check the availability of the managed hsm name. </summary>
-    public partial class ManagedHsmNameAvailabilityParameters : IJsonModel<ManagedHsmNameAvailabilityParameters>
+    public partial class ManagedHsmNameAvailabilityContent : IJsonModel<ManagedHsmNameAvailabilityContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedHsmNameAvailabilityParameters"/> for deserialization. </summary>
-        internal ManagedHsmNameAvailabilityParameters()
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmNameAvailabilityContent"/> for deserialization. </summary>
+        internal ManagedHsmNameAvailabilityContent()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedHsmNameAvailabilityParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedHsmNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmNameAvailabilityParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedHsmNameAvailabilityParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedHsmNameAvailabilityContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -61,24 +61,24 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedHsmNameAvailabilityParameters IJsonModel<ManagedHsmNameAvailabilityParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedHsmNameAvailabilityContent IJsonModel<ManagedHsmNameAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedHsmNameAvailabilityParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedHsmNameAvailabilityContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmNameAvailabilityParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedHsmNameAvailabilityParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedHsmNameAvailabilityContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedHsmNameAvailabilityParameters(document.RootElement, options);
+            return DeserializeManagedHsmNameAvailabilityContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedHsmNameAvailabilityParameters DeserializeManagedHsmNameAvailabilityParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedHsmNameAvailabilityContent DeserializeManagedHsmNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,58 +98,58 @@ namespace Azure.ResourceManager.KeyVault.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedHsmNameAvailabilityParameters(name, additionalBinaryDataProperties);
+            return new ManagedHsmNameAvailabilityContent(name, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedHsmNameAvailabilityParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedHsmNameAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmNameAvailabilityParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedHsmNameAvailabilityParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedHsmNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedHsmNameAvailabilityParameters IPersistableModel<ManagedHsmNameAvailabilityParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedHsmNameAvailabilityContent IPersistableModel<ManagedHsmNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedHsmNameAvailabilityParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedHsmNameAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmNameAvailabilityParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedHsmNameAvailabilityParameters(document.RootElement, options);
+                        return DeserializeManagedHsmNameAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedHsmNameAvailabilityParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedHsmNameAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedHsmNameAvailabilityParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedHsmNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="managedHsmNameAvailabilityParameters"> The <see cref="ManagedHsmNameAvailabilityParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ManagedHsmNameAvailabilityParameters managedHsmNameAvailabilityParameters)
+        /// <param name="managedHsmNameAvailabilityContent"> The <see cref="ManagedHsmNameAvailabilityContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ManagedHsmNameAvailabilityContent managedHsmNameAvailabilityContent)
         {
-            if (managedHsmNameAvailabilityParameters == null)
+            if (managedHsmNameAvailabilityContent == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedHsmNameAvailabilityParameters, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(managedHsmNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

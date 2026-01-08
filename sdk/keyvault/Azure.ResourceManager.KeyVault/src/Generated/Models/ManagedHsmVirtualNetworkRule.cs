@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.KeyVault.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmVirtualNetworkRule"/>. </summary>
-        /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ManagedHsmVirtualNetworkRule(ResourceIdentifier id)
+        /// <param name="subnetId"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
+        public ManagedHsmVirtualNetworkRule(ResourceIdentifier subnetId)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
-            Id = id;
+            SubnetId = subnetId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmVirtualNetworkRule"/>. </summary>
-        /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
+        /// <param name="subnetId"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmVirtualNetworkRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedHsmVirtualNetworkRule(ResourceIdentifier subnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            SubnetId = subnetId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

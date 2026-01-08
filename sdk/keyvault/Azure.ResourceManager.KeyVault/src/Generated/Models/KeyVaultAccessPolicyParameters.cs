@@ -20,16 +20,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyParameters"/>. </summary>
-        /// <param name="properties"> Properties of the access policy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public KeyVaultAccessPolicyParameters(KeyVaultAccessPolicyProperties properties)
-        {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Properties = properties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyParameters"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
@@ -51,19 +41,5 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Properties of the access policy. </summary>
         [WirePath("properties")]
         internal KeyVaultAccessPolicyProperties Properties { get; set; }
-
-        /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </summary>
-        [WirePath("properties.accessPolicies")]
-        public IList<KeyVaultAccessPolicy> AccessPolicies
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new KeyVaultAccessPolicyProperties();
-                }
-                return Properties.AccessPolicies;
-            }
-        }
     }
 }

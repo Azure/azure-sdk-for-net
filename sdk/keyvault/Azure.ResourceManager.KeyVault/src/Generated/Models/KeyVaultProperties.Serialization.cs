@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    vaultUri = new Uri(prop.Value.GetString());
+                    vaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("hsmPoolResourceId"u8))

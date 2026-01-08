@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    hsmUri = new Uri(prop.Value.GetString());
+                    hsmUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableSoftDelete"u8))

@@ -14,17 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Resource information with extended details. </summary>
-    public partial class KeyVaultData : ResourceData
+    public partial class KeyVaultData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultData"/>. </summary>
-        /// <param name="properties"> Properties of the vault. </param>
-        internal KeyVaultData(Models.KeyVaultProperties properties)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal KeyVaultData(AzureLocation location) : base(location)
         {
-            Properties = properties;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultData"/>. </summary>
@@ -33,27 +31,13 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the vault. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        internal KeyVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, Models.KeyVaultProperties properties, IDictionary<string, string> tags, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal KeyVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, Models.KeyVaultProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Tags = tags;
-            Location = location;
         }
-
-        /// <summary> Properties of the vault. </summary>
-        [WirePath("properties")]
-        public Models.KeyVaultProperties Properties { get; }
-
-        /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; }
     }
 }
