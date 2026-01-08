@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         /// <summary> Initializes a new instance of <see cref="AttestationPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
-        internal AttestationPrivateEndpointConnectionListResult(IEnumerable<AttestationPrivateEndpointConnection> value)
+        internal AttestationPrivateEndpointConnectionListResult(IEnumerable<AttestationPrivateEndpointConnectionData> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationPrivateEndpointConnectionListResult(IList<AttestationPrivateEndpointConnection> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestationPrivateEndpointConnectionListResult(IList<AttestationPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <summary> The PrivateEndpointConnection items on this page. </summary>
-        public IList<AttestationPrivateEndpointConnection> Value { get; }
+        public IList<AttestationPrivateEndpointConnectionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

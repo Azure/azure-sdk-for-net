@@ -34,5 +34,14 @@ namespace Azure.ResourceManager.Attestation.Mocking
             AttestationProviderResource.ValidateResourceId(id);
             return new AttestationProviderResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="AttestationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AttestationPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual AttestationPrivateEndpointConnectionResource GetAttestationPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            AttestationPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new AttestationPrivateEndpointConnectionResource(Client, id);
+        }
     }
 }

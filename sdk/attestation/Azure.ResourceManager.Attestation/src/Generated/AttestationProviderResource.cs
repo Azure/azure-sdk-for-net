@@ -768,5 +768,38 @@ namespace Azure.ResourceManager.Attestation
                 throw;
             }
         }
+
+        /// <summary> Gets a collection of AttestationPrivateEndpointConnections in the <see cref="AttestationProviderResource"/>. </summary>
+        /// <returns> An object representing collection of AttestationPrivateEndpointConnections and their operations over a AttestationPrivateEndpointConnectionResource. </returns>
+        public virtual AttestationPrivateEndpointConnectionCollection GetAttestationPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new AttestationPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified private endpoint connection associated with the attestation provider. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AttestationPrivateEndpointConnectionResource>> GetAttestationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetAttestationPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified private endpoint connection associated with the attestation provider. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AttestationPrivateEndpointConnectionResource> GetAttestationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetAttestationPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Attestation.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AttestationPrivateEndpointConnection item in Value)
+            foreach (AttestationPrivateEndpointConnectionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            IList<AttestationPrivateEndpointConnection> value = default;
+            IList<AttestationPrivateEndpointConnectionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AttestationPrivateEndpointConnection> array = new List<AttestationPrivateEndpointConnection>();
+                    List<AttestationPrivateEndpointConnectionData> array = new List<AttestationPrivateEndpointConnectionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AttestationPrivateEndpointConnection.DeserializeAttestationPrivateEndpointConnection(item, options));
+                        array.Add(AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    nextLink = new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

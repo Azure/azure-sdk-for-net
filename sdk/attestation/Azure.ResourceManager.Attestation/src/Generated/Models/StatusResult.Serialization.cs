@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Attestation.Models
             if (Optional.IsDefined(AttestUri))
             {
                 writer.WritePropertyName("attestUri"u8);
-                writer.WriteStringValue(AttestUri);
+                writer.WriteStringValue(AttestUri.AbsoluteUri);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (AttestationPrivateEndpointConnection item in PrivateEndpointConnections)
+                foreach (AttestationPrivateEndpointConnectionData item in PrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.Attestation.Models
             }
             string trustModel = default;
             AttestationServiceStatus? status = default;
-            string attestUri = default;
+            Uri attestUri = default;
             PublicNetworkAccessType? publicNetworkAccess = default;
-            IReadOnlyList<AttestationPrivateEndpointConnection> privateEndpointConnections = default;
+            IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections = default;
             TpmAttestationAuthenticationType? tpmAttestationAuthentication = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -136,7 +136,11 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
                 if (prop.NameEquals("attestUri"u8))
                 {
-                    attestUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    attestUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -154,10 +158,10 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    List<AttestationPrivateEndpointConnection> array = new List<AttestationPrivateEndpointConnection>();
+                    List<AttestationPrivateEndpointConnectionData> array = new List<AttestationPrivateEndpointConnectionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AttestationPrivateEndpointConnection.DeserializeAttestationPrivateEndpointConnection(item, options));
+                        array.Add(AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 status,
                 attestUri,
                 publicNetworkAccess,
-                privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnection>(),
+                privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>(),
                 tpmAttestationAuthentication,
                 additionalBinaryDataProperties);
         }

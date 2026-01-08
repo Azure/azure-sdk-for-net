@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Attestation
         }
 
         /// <summary> Gets the uri of attestation service. </summary>
-        public string AttestUri
+        public Uri AttestUri
         {
             get
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Attestation
         }
 
         /// <summary> List of private endpoint connections associated with the attestation provider. </summary>
-        public IReadOnlyList<AttestationPrivateEndpointConnection> PrivateEndpointConnections
+        public IReadOnlyList<AttestationPrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get
             {

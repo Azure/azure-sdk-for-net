@@ -12,17 +12,17 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Attestation;
+using Azure.ResourceManager.Attestation.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Attestation.Models
+namespace Azure.ResourceManager.Attestation
 {
     /// <summary> The Private Endpoint Connection resource. </summary>
-    public partial class AttestationPrivateEndpointConnection : ResourceData, IJsonModel<AttestationPrivateEndpointConnection>
+    public partial class AttestationPrivateEndpointConnectionData : ResourceData, IJsonModel<AttestationPrivateEndpointConnectionData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AttestationPrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AttestationPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.Attestation.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AttestationPrivateEndpointConnection IJsonModel<AttestationPrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AttestationPrivateEndpointConnection)JsonModelCreateCore(ref reader, options);
+        AttestationPrivateEndpointConnectionData IJsonModel<AttestationPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AttestationPrivateEndpointConnectionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAttestationPrivateEndpointConnection(document.RootElement, options);
+            return DeserializeAttestationPrivateEndpointConnectionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AttestationPrivateEndpointConnection DeserializeAttestationPrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options)
+        internal static AttestationPrivateEndpointConnectionData DeserializeAttestationPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AttestationPrivateEndpointConnection(
+            return new AttestationPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -135,62 +135,62 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AttestationPrivateEndpointConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AttestationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAttestationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AttestationPrivateEndpointConnection IPersistableModel<AttestationPrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => (AttestationPrivateEndpointConnection)PersistableModelCreateCore(data, options);
+        AttestationPrivateEndpointConnectionData IPersistableModel<AttestationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AttestationPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAttestationPrivateEndpointConnection(document.RootElement, options);
+                        return DeserializeAttestationPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AttestationPrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AttestationPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="attestationPrivateEndpointConnection"> The <see cref="AttestationPrivateEndpointConnection"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AttestationPrivateEndpointConnection attestationPrivateEndpointConnection)
+        /// <param name="attestationPrivateEndpointConnectionData"> The <see cref="AttestationPrivateEndpointConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AttestationPrivateEndpointConnectionData attestationPrivateEndpointConnectionData)
         {
-            if (attestationPrivateEndpointConnection == null)
+            if (attestationPrivateEndpointConnectionData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(attestationPrivateEndpointConnection, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(attestationPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AttestationPrivateEndpointConnection"/> from. </param>
-        internal static AttestationPrivateEndpointConnection FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AttestationPrivateEndpointConnectionData"/> from. </param>
+        internal static AttestationPrivateEndpointConnectionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAttestationPrivateEndpointConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAttestationPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

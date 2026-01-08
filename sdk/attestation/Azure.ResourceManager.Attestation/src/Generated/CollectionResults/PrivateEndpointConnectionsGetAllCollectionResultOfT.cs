@@ -14,7 +14,7 @@ using Azure.ResourceManager.Attestation.Models;
 
 namespace Azure.ResourceManager.Attestation
 {
-    internal partial class PrivateEndpointConnectionsGetAllCollectionResultOfT : Pageable<AttestationPrivateEndpointConnection>
+    internal partial class PrivateEndpointConnectionsGetAllCollectionResultOfT : Pageable<AttestationPrivateEndpointConnectionData>
     {
         private readonly PrivateEndpointConnections _client;
         private readonly string _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateEndpointConnectionsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AttestationPrivateEndpointConnection>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<AttestationPrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Attestation
                     yield break;
                 }
                 AttestationPrivateEndpointConnectionListResult result = AttestationPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<AttestationPrivateEndpointConnection>.FromValues((IReadOnlyList<AttestationPrivateEndpointConnection>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AttestationPrivateEndpointConnectionData>.FromValues((IReadOnlyList<AttestationPrivateEndpointConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Attestation
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _providerName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _providerName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAttestationResourceGroupResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AttestationPrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try
             {

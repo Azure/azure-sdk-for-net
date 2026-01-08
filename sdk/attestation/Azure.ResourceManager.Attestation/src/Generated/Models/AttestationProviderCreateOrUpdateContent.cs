@@ -13,22 +13,22 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Attestation.Models
 {
     /// <summary> Attestation Providers List. </summary>
-    public partial class AttestationProviderListResult
+    public partial class AttestationProviderCreateOrUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AttestationProviderListResult"/>. </summary>
-        internal AttestationProviderListResult()
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderCreateOrUpdateContent"/>. </summary>
+        internal AttestationProviderCreateOrUpdateContent()
         {
             Value = new ChangeTrackingList<AttestationProviderData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AttestationProviderListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderCreateOrUpdateContent"/>. </summary>
         /// <param name="systemData"> The system metadata relating to this resource. </param>
         /// <param name="value"> Attestation Provider array. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationProviderListResult(SystemData systemData, IList<AttestationProviderData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestationProviderCreateOrUpdateContent(SystemData systemData, IList<AttestationProviderData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SystemData = systemData;
             Value = value;

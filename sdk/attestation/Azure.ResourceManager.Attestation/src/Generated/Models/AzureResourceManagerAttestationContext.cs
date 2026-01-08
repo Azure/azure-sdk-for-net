@@ -15,14 +15,15 @@ namespace Azure.ResourceManager.Attestation
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AttestationPrivateEndpointConnection))]
+    [ModelReaderWriterBuildable(typeof(AttestationPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(AttestationPrivateEndpointConnectionListResult))]
+    [ModelReaderWriterBuildable(typeof(AttestationPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(AttestationPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(AttestationPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(AttestationPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(AttestationPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(AttestationProviderCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(AttestationProviderData))]
-    [ModelReaderWriterBuildable(typeof(AttestationProviderListResult))]
     [ModelReaderWriterBuildable(typeof(AttestationProviderPatch))]
     [ModelReaderWriterBuildable(typeof(AttestationProviderResource))]
     [ModelReaderWriterBuildable(typeof(AttestationServiceCreationParams))]

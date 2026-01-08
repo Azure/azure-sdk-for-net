@@ -57,6 +57,24 @@ namespace Azure.ResourceManager.Attestation
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="AttestationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAttestationArmClient.GetAttestationPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AttestationPrivateEndpointConnectionResource"/> object. </returns>
+        public static AttestationPrivateEndpointConnectionResource GetAttestationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAttestationArmClient(client).GetAttestationPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of AttestationProviders in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -112,160 +130,6 @@ namespace Azure.ResourceManager.Attestation
         }
 
         /// <summary>
-        /// Gets the specified private endpoint connection associated with the attestation provider.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationResourceGroupResource.GetAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<AttestationPrivateEndpointConnection>> GetAsync(this ResourceGroupResource resourceGroupResource, string providerName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableAttestationResourceGroupResource(resourceGroupResource).GetAsync(providerName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified private endpoint connection associated with the attestation provider.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationResourceGroupResource.Get(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<AttestationPrivateEndpointConnection> Get(this ResourceGroupResource resourceGroupResource, string providerName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAttestationResourceGroupResource(resourceGroupResource).Get(providerName, privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Update the state of specified private endpoint connection associated with the attestation provider.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationResourceGroupResource.CreateAsync(string, string, AttestationPrivateEndpointConnection, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<AttestationPrivateEndpointConnection>> CreateAsync(this ResourceGroupResource resourceGroupResource, string providerName, string privateEndpointConnectionName, AttestationPrivateEndpointConnection properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableAttestationResourceGroupResource(resourceGroupResource).CreateAsync(providerName, privateEndpointConnectionName, properties, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Update the state of specified private endpoint connection associated with the attestation provider.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationResourceGroupResource.Create(string, string, AttestationPrivateEndpointConnection, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<AttestationPrivateEndpointConnection> Create(this ResourceGroupResource resourceGroupResource, string providerName, string privateEndpointConnectionName, AttestationPrivateEndpointConnection properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAttestationResourceGroupResource(resourceGroupResource).Create(providerName, privateEndpointConnectionName, properties, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified private endpoint connection associated with the attestation provider.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationResourceGroupResource.DeleteAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response> DeleteAsync(this ResourceGroupResource resourceGroupResource, string providerName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableAttestationResourceGroupResource(resourceGroupResource).DeleteAsync(providerName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified private endpoint connection associated with the attestation provider.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationResourceGroupResource.Delete(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response Delete(this ResourceGroupResource resourceGroupResource, string providerName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAttestationResourceGroupResource(resourceGroupResource).Delete(providerName, privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the private endpoint connections associated with the attestation provider.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationResourceGroupResource.GetAllAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AttestationPrivateEndpointConnection"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AttestationPrivateEndpointConnection> GetAllAsync(this ResourceGroupResource resourceGroupResource, string providerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAttestationResourceGroupResource(resourceGroupResource).GetAllAsync(providerName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the private endpoint connections associated with the attestation provider.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationResourceGroupResource.GetAll(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="providerName"> Name of the attestation provider. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AttestationPrivateEndpointConnection"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AttestationPrivateEndpointConnection> GetAll(this ResourceGroupResource resourceGroupResource, string providerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAttestationResourceGroupResource(resourceGroupResource).GetAll(providerName, cancellationToken);
-        }
-
-        /// <summary>
         /// Returns a list of attestation providers in a subscription.
         /// <item>
         /// <term> Mocking. </term>
@@ -275,12 +139,11 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AttestationProviderResource> GetAttestationProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<AttestationProviderCreateOrUpdateContent>> GetAttestationProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetAttestationProvidersAsync(cancellationToken);
+            return await GetMockableAttestationSubscriptionResource(subscriptionResource).GetAttestationProvidersAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -293,8 +156,7 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AttestationProviderResource> GetAttestationProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<AttestationProviderCreateOrUpdateContent> GetAttestationProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -311,7 +173,7 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AttestationProviderListResult>> GetDefaultAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<AttestationProviderCreateOrUpdateContent>> GetDefaultAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -328,7 +190,7 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AttestationProviderListResult> GetDefault(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<AttestationProviderCreateOrUpdateContent> GetDefault(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
