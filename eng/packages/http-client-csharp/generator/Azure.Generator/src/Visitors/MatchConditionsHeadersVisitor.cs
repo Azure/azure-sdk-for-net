@@ -385,7 +385,7 @@ namespace Azure.Generator.Visitors
                     keyword.Update(keyword.Keyword, invoke);
                     expr.Update(expression: keyword);
                     break;
-                case ExpressionStatement { Expression: AssignmentExpression { Value: ClientResponseApi { Original: InvokeMethodExpression invoke } } }:
+                case ExpressionStatement { Expression: AssignmentExpression { Value: InvokeMethodExpression invoke } }:
                     UpdateInvokeMethodArguments(invoke, replacementParameter);
                     break;
                 case ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } keyword } expr:
