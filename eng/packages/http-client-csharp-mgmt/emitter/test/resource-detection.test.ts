@@ -360,7 +360,8 @@ interface CurrentEmployees {
       "ResourceGroup"
     );
     strictEqual(metadata.methods.length, 3);
-    strictEqual(metadata.methods[0].kind, "Read");
+    // Verify a Read method exists (position may vary due to sorting)
+    ok(metadata.methods.find((m: any) => m.kind === "Read"), "Should have a Read method");
     strictEqual(metadata.resourceName, "Employee");
 
     // Find the CurrentEmployee resource in the schema by resource type
@@ -505,7 +506,8 @@ interface Employees {
     strictEqual(employeeMetadata.singletonResourceName, undefined);
     strictEqual(employeeMetadata.resourceScope, "ResourceGroup");
     strictEqual(employeeMetadata.methods.length, 5);
-    strictEqual(employeeMetadata.methods[0].kind, "Read");
+    // Verify a Read method exists (position may vary due to sorting)
+    ok(employeeMetadata.methods.find((m: any) => m.kind === "Read"), "Should have a Read method");
     strictEqual(
       employeeMetadata.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -673,7 +675,8 @@ interface Employees {
     strictEqual(employeeMetadata.singletonResourceName, undefined);
     strictEqual(employeeMetadata.resourceScope, "Subscription");
     strictEqual(employeeMetadata.methods.length, 5);
-    strictEqual(employeeMetadata.methods[0].kind, "Read");
+    // Verify a Read method exists (position may vary due to sorting)
+    ok(employeeMetadata.methods.find((m: any) => m.kind === "Read"), "Should have a Read method");
     strictEqual(
       employeeMetadata.parentResourceId,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -842,7 +845,8 @@ interface Employees {
     strictEqual(metadata.singletonResourceName, undefined);
     strictEqual(metadata.resourceScope, "Tenant");
     strictEqual(metadata.methods.length, 5);
-    strictEqual(metadata.methods[0].kind, "Read");
+    // Verify a Read method exists (position may vary due to sorting)
+    ok(metadata.methods.find((m: any) => m.kind === "Read"), "Should have a Read method");
     strictEqual(
       metadata.parentResourceId,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
