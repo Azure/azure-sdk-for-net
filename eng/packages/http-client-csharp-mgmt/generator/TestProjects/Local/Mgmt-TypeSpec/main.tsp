@@ -19,6 +19,7 @@ import "./multiplepaths.tsp";
 import "./testresourcetype.tsp";
 import "./resourcedata.tsp";
 import "./scheduledaction.tsp";
+import "./arraybody.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;

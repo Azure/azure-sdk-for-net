@@ -951,6 +951,33 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new ScheduledActionsExtensionProperties(actionId, status, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Script execution resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.ScriptExecutionData"/> instance for mocking. </returns>
+        public static ScriptExecutionData ScriptExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScriptExecutionProperties properties = default)
+        {
+            return new ScriptExecutionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Script execution properties. </summary>
+        /// <param name="output"> Output of the script execution. </param>
+        /// <param name="error"> Error of the script execution. </param>
+        /// <returns> A new <see cref="Models.ScriptExecutionProperties"/> instance for mocking. </returns>
+        public static ScriptExecutionProperties ScriptExecutionProperties(string output = default, string error = default)
+        {
+            return new ScriptExecutionProperties(output, error, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>
