@@ -89,102 +89,6 @@ namespace Azure.ResourceManager.Hci.Vm
         }
 
         /// <summary>
-        /// Implements GuestAgent GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/guestAgents/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GuestAgents_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciVmGuestAgentResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HciVmGuestAgentResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _guestAgentsClientDiagnostics.CreateScope("HciVmGuestAgentResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HciVmGuestAgentData> response = Response.FromValue(HciVmGuestAgentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new HciVmGuestAgentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Implements GuestAgent GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/guestAgents/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GuestAgents_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciVmGuestAgentResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HciVmGuestAgentResource> Get(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _guestAgentsClientDiagnostics.CreateScope("HciVmGuestAgentResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HciVmGuestAgentData> response = Response.FromValue(HciVmGuestAgentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new HciVmGuestAgentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Create Or Update GuestAgent.
         /// <list type="bullet">
         /// <item>
@@ -294,6 +198,102 @@ namespace Azure.ResourceManager.Hci.Vm
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Implements GuestAgent GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/guestAgents/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestAgents_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciVmGuestAgentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<HciVmGuestAgentResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _guestAgentsClientDiagnostics.CreateScope("HciVmGuestAgentResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciVmGuestAgentData> response = Response.FromValue(HciVmGuestAgentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new HciVmGuestAgentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Implements GuestAgent GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/guestAgents/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestAgents_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciVmGuestAgentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<HciVmGuestAgentResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _guestAgentsClientDiagnostics.CreateScope("HciVmGuestAgentResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciVmGuestAgentData> response = Response.FromValue(HciVmGuestAgentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new HciVmGuestAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

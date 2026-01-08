@@ -406,15 +406,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Retrieve health metrics of a storage pool
+        /// Disable the existing AVS connection
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getHealthStatus. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/disableAvsConnection. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> StoragePools_GetHealthStatus. </description>
+        /// <description> StoragePools_DisableAvsConnection. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -426,10 +426,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StoragePoolHealthInfo>> GetHealthStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DisableAvsConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetHealthStatus");
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.DisableAvsConnection");
             scope.Start();
             try
             {
@@ -437,14 +438,14 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storagePoolsRestClient.CreateGetHealthStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StoragePoolHealthInfo> response = Response.FromValue(StoragePoolHealthInfo.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _storagePoolsRestClient.CreateDisableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
-                return response;
+                return operation;
             }
             catch (Exception e)
             {
@@ -454,15 +455,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Retrieve health metrics of a storage pool
+        /// Disable the existing AVS connection
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getHealthStatus. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/disableAvsConnection. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> StoragePools_GetHealthStatus. </description>
+        /// <description> StoragePools_DisableAvsConnection. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -474,10 +475,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StoragePoolHealthInfo> GetHealthStatus(CancellationToken cancellationToken = default)
+        public virtual ArmOperation DisableAvsConnection(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetHealthStatus");
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.DisableAvsConnection");
             scope.Start();
             try
             {
@@ -485,14 +487,226 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storagePoolsRestClient.CreateGetHealthStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StoragePoolHealthInfo> response = Response.FromValue(StoragePoolHealthInfo.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _storagePoolsRestClient.CreateDisableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
-                return response;
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiate a connection between the storage pool and a specified AVS SDDC resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/enableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_EnableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Storage pool EnableAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> EnableAvsConnectionAsync(WaitUntil waitUntil, StoragePoolEnableAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.EnableAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storagePoolsRestClient.CreateEnableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolEnableAvsConnectionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiate a connection between the storage pool and a specified AVS SDDC resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/enableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_EnableAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Storage pool EnableAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation EnableAvsConnection(WaitUntil waitUntil, StoragePoolEnableAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.EnableAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storagePoolsRestClient.CreateEnableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolEnableAvsConnectionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Finalize an already started AVS connection to a specific AVS SDDC
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/finalizeAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_FinalizeAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Storage pool FinalizeAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> FinalizeAvsConnectionAsync(WaitUntil waitUntil, StoragePoolFinalizeAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.FinalizeAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storagePoolsRestClient.CreateFinalizeAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolFinalizeAvsConnectionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Finalize an already started AVS connection to a specific AVS SDDC
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/finalizeAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_FinalizeAvsConnection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Storage pool FinalizeAvsConnection properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation FinalizeAvsConnection(WaitUntil waitUntil, StoragePoolFinalizeAvsConnectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.FinalizeAvsConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storagePoolsRestClient.CreateFinalizeAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolFinalizeAvsConnectionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -694,15 +908,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Initiate a connection between the storage pool and a specified AVS SDDC resource
+        /// Retrieve health metrics of a storage pool
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/enableAvsConnection. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getHealthStatus. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> StoragePools_EnableAvsConnection. </description>
+        /// <description> StoragePools_GetHealthStatus. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -714,15 +928,10 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Storage pool EnableAvsConnection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> EnableAvsConnectionAsync(WaitUntil waitUntil, StoragePoolEnableAvsConnectionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StoragePoolHealthInfo>> GetHealthStatusAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.EnableAvsConnection");
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetHealthStatus");
             scope.Start();
             try
             {
@@ -730,14 +939,14 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storagePoolsRestClient.CreateEnableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolEnableAvsConnectionContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
+                HttpMessage message = _storagePoolsRestClient.CreateGetHealthStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StoragePoolHealthInfo> response = Response.FromValue(StoragePoolHealthInfo.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
+                return response;
             }
             catch (Exception e)
             {
@@ -747,15 +956,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Initiate a connection between the storage pool and a specified AVS SDDC resource
+        /// Retrieve health metrics of a storage pool
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/enableAvsConnection. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getHealthStatus. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> StoragePools_EnableAvsConnection. </description>
+        /// <description> StoragePools_GetHealthStatus. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -767,15 +976,10 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Storage pool EnableAvsConnection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation EnableAvsConnection(WaitUntil waitUntil, StoragePoolEnableAvsConnectionContent content, CancellationToken cancellationToken = default)
+        public virtual Response<StoragePoolHealthInfo> GetHealthStatus(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.EnableAvsConnection");
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetHealthStatus");
             scope.Start();
             try
             {
@@ -783,218 +987,14 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storagePoolsRestClient.CreateEnableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolEnableAvsConnectionContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
+                HttpMessage message = _storagePoolsRestClient.CreateGetHealthStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StoragePoolHealthInfo> response = Response.FromValue(StoragePoolHealthInfo.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Disable the existing AVS connection
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/disableAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_DisableAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DisableAvsConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.DisableAvsConnection");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateDisableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Disable the existing AVS connection
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/disableAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_DisableAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation DisableAvsConnection(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.DisableAvsConnection");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateDisableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Finalize an already started AVS connection to a specific AVS SDDC
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/finalizeAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_FinalizeAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Storage pool FinalizeAvsConnection properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> FinalizeAvsConnectionAsync(WaitUntil waitUntil, StoragePoolFinalizeAvsConnectionContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.FinalizeAvsConnection");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateFinalizeAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolFinalizeAvsConnectionContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Finalize an already started AVS connection to a specific AVS SDDC
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/finalizeAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_FinalizeAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Storage pool FinalizeAvsConnection properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation FinalizeAvsConnection(WaitUntil waitUntil, StoragePoolFinalizeAvsConnectionContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.FinalizeAvsConnection");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateFinalizeAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolFinalizeAvsConnectionContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
+                return response;
             }
             catch (Exception e)
             {

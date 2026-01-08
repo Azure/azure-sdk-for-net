@@ -13265,7 +13265,7 @@
                     "$id": "1034",
                     "methodId": "MgmtTypeSpec.Zoos.zooAddressList",
                     "kind": "Action",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/zooAddressList",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/recommend",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}"
                   },
@@ -13273,7 +13273,7 @@
                     "$id": "1035",
                     "methodId": "MgmtTypeSpec.Zoos.recommend",
                     "kind": "Action",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/recommend",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/zooAddressList",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}"
                   }
