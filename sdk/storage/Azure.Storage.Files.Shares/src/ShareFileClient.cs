@@ -7803,6 +7803,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public Uri GenerateUserDelegationSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey)
             => GenerateUserDelegationSasUri(permissions, expiresOn, userDelegationKey, out _);
