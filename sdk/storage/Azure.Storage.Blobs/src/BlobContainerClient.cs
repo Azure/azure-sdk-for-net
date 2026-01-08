@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -2606,12 +2605,13 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [OverloadResolutionPriority(-1)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Pageable<BlobItem> GetBlobs(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string prefix = null,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobTraits traits,
+            BlobStates states,
+            string prefix,
+            CancellationToken cancellationToken) =>
             new GetBlobsAsyncCollection(this, traits, states, prefix, startFrom: default).ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -2650,12 +2650,13 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [OverloadResolutionPriority(-1)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual AsyncPageable<BlobItem> GetBlobsAsync(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string prefix = null,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobTraits traits,
+            BlobStates states,
+            string prefix,
+            CancellationToken cancellationToken) =>
             new GetBlobsAsyncCollection(this, traits, states, prefix, startFrom: default).ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -2943,12 +2944,13 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [OverloadResolutionPriority(-1)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Pageable<BlobHierarchyItem> GetBlobsByHierarchy(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string delimiter = null,
-            string prefix = null,
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobTraits traits,
+            BlobStates states,
+            string delimiter,
+            string prefix,
             CancellationToken cancellationToken = default) =>
             new GetBlobsByHierarchyAsyncCollection(this, delimiter, traits, states, prefix, startFrom: default).ToSyncCollection(cancellationToken);
 
@@ -3007,13 +3009,14 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [OverloadResolutionPriority(-1)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string delimiter = null,
-            string prefix = null,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobTraits traits,
+            BlobStates states,
+            string delimiter,
+            string prefix,
+            CancellationToken cancellationToken) =>
             new GetBlobsByHierarchyAsyncCollection(this, delimiter, traits, states, prefix, startFrom: default).ToAsyncCollection(cancellationToken);
 
         /// <summary>
