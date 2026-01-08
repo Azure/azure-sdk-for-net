@@ -66,21 +66,21 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 To transcribe a file using profanity filters, create a stream from the file, specify the filter mode in the `TranscriptionOptions` and call `TranscribeAsync` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
 
 ```C# Snippet:TranscribeWithProfanityFilter
-string filePath = "path/to/audio.wav";
-TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
-using (FileStream fileStream = File.Open(filePath, FileMode.Open))
+string audioFilePath = "path/to/audio.wav";
+using FileStream audioStream = File.OpenRead(audioFilePath);
+
+// Configure profanity filtering
+TranscriptionOptions options = new TranscriptionOptions(audioStream)
 {
-    var options = new TranscriptionOptions(fileStream);
-    options.ProfanityFilterMode = ProfanityFilterMode.Masked;
+    ProfanityFilterMode = ProfanityFilterMode.Masked // Masks profanity with asterisks
+};
 
-    var response = await client.TranscribeAsync(options);
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+TranscriptionResult result = response.Value;
 
-    Console.WriteLine($"File Duration: {response.Value.Duration}");
-    foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
-    {
-        Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
-    }
-}
+Console.WriteLine("Transcription with profanity filtering:");
+var channelPhrases = result.PhrasesByChannel.First();
+Console.WriteLine(channelPhrases.Text);
 ```
 
 ## Transcribe with Active Channels Options
@@ -91,7 +91,7 @@ If not specified, multiple channels are merged and transcribed jointly. Only up 
 
 ```C# Snippet:TranscribeWithActiveChannels
 string filePath = "path/to/audio.wav";
-TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
+TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions(fileStream);

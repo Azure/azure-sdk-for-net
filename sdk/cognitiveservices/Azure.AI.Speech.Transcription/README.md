@@ -106,8 +106,11 @@ We guarantee that all client instance methods are thread-safe and independent of
 Create a `TranscriptionClient` using your Speech service endpoint and API key:
 
 ```C# Snippet:CreateTranscriptionClient
+// Get the endpoint and API key from your Speech resource in the Azure portal
 Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
 ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
+
+// Create the TranscriptionClient
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 ```
 
@@ -118,7 +121,6 @@ Transcribe audio from a local file using the synchronous API:
 ```C# Snippet:TranscribeLocalFileSync
 string filePath = "path/to/audio.wav";
 TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
-
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions(fileStream);
@@ -137,7 +139,6 @@ Or use the asynchronous API:
 ```C# Snippet:TranscribeLocalFileAsync
 string filePath = "path/to/audio.wav";
 TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
-
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions(fileStream);
@@ -155,29 +156,39 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 
 Configure transcription options like locale, profanity filtering, and speaker diarization:
 
-```C# Snippet:TranscribeWithOptions
-string filePath = "path/to/audio.wav";
-TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
+```C# Snippet:TranscribeWithMultipleOptions
+string audioFilePath = "path/to/meeting.wav";
+using FileStream audioStream = File.OpenRead(audioFilePath);
 
-using (FileStream fileStream = File.Open(filePath, FileMode.Open))
+// Combine multiple options for a complete transcription solution
+TranscriptionOptions options = new TranscriptionOptions(audioStream)
 {
-    var options = new TranscriptionOptions(fileStream)
+    ProfanityFilterMode = ProfanityFilterMode.Masked,
+    DiarizationOptions = new TranscriptionDiarizationOptions
     {
-        ProfanityFilterMode = ProfanityFilterMode.Masked,
-        DiarizationOptions = new TranscriptionDiarizationOptions
-        {
-            MaxSpeakers = 2
-        }
-    };
-    options.Locales.Add("en-US");
-
-    var response = await client.TranscribeAsync(options);
-
-    Console.WriteLine($"File Duration: {response.Value.Duration}");
-    foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
+        // Enabled is automatically set to true when MaxSpeakers is specified
+        MaxSpeakers = 5
+    },
+    PhraseList = new PhraseListProperties
     {
-        Console.WriteLine($"[Speaker {phrase.Speaker}] {phrase.Text}");
+        BiasingWeight = 3.0f
     }
+};
+
+// Add locale and custom phrases
+options.Locales.Add("en-US");
+options.PhraseList.Phrases.Add("quarterly report");
+options.PhraseList.Phrases.Add("action items");
+options.PhraseList.Phrases.Add("stakeholders");
+
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+TranscriptionResult result = response.Value;
+
+Console.WriteLine($"Meeting transcription ({result.Duration}):");
+var channelPhrases = result.PhrasesByChannel.First();
+foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
+{
+    Console.WriteLine($"[Speaker {phrase.Speaker}] {phrase.Text}");
 }
 ```
 
@@ -186,15 +197,21 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 Transcribe audio directly from a publicly accessible URL:
 
 ```C# Snippet:TranscribeFromUrl
+// Specify the URL of the audio file to transcribe
 Uri audioUrl = new Uri("https://example.com/audio/sample.wav");
+
+// Configure transcription to use the remote URL
 TranscriptionOptions options = new TranscriptionOptions(audioUrl);
 
+// No audio stream needed - the service fetches the file from the URL
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
+Console.WriteLine($"Transcribed audio from URL: {audioUrl}");
 Console.WriteLine($"Duration: {result.Duration}");
+
 var channelPhrases = result.PhrasesByChannel.First();
-Console.WriteLine($"Transcription: {channelPhrases.Text}");
+Console.WriteLine($"\nTranscription:\n{channelPhrases.Text}");
 ```
 
 For more examples, see the [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitiveservices/Azure.AI.Speech.Transcription/samples) directory.

@@ -190,7 +190,7 @@ namespace Azure.AI.Speech.Transcription.Samples
         [Test]
         public async Task TranscribeWithProfanityFilter()
         {
-            #region Snippet:TranscribeWithProfanityFilter
+            #region Snippet:TranscribeWithProfanityFilterOption
 #if SNIPPET
             string filePath = "path/to/audio.wav";
             TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new ApiKeyCredential("your apikey"));
@@ -211,7 +211,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                     Console.WriteLine($"{phrase.Offset}-{phrase.Offset+phrase.Duration}: {phrase.Text}");
                 }
             }
-            #endregion Snippet:TranscribeWithProfanityFilter
+            #endregion Snippet:TranscribeWithProfanityFilterOption
         }
 
         [Test]
