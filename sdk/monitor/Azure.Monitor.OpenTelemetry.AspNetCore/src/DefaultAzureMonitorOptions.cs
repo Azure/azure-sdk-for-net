@@ -97,6 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             if (ratio >= 0.0 && ratio <= 1.0)
                             {
                                 options.SamplingRatio = (float)ratio;
+                                options.TracesPerSecond = null; // Explicitly set to null to use fixed-percentage sampling
                             }
                             else
                             {

@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             var options = new AzureMonitorOptions();
             configurator.Configure(options);
             Assert.Equal(1.0f, options.SamplingRatio); // default
-            Assert.Null(options.TracesPerSecond);
+            Assert.Equal(5.0, options.TracesPerSecond); // Default value retained
 
             // invalid negative rate
             configValues = new List<KeyValuePair<string, string?>>
@@ -73,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             configurator = new DefaultAzureMonitorOptions(configuration);
             options = new AzureMonitorOptions();
             configurator.Configure(options);
-            Assert.Null(options.TracesPerSecond);
+            Assert.Equal(5.0, options.TracesPerSecond); // Default value retained
             Assert.Equal(1.0f, options.SamplingRatio);
         }
 

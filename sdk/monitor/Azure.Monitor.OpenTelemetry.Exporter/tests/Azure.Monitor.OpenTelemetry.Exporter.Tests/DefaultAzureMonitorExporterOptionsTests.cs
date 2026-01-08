@@ -110,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
                 // Assert - defaults unchanged
                 Assert.Equal(1.0f, options.SamplingRatio);
-                Assert.Null(options.TracesPerSecond);
+                Assert.Equal(5.0, options.TracesPerSecond); // Default value retained
 
                 // Now test invalid negative rate_limited
                 configValues = new List<KeyValuePair<string, string?>>
@@ -126,7 +126,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 defaultConfigurator.Configure(options);
 
                 // Assert
-                Assert.Null(options.TracesPerSecond);
+                Assert.Equal(5.0, options.TracesPerSecond); // Default value retained
                 Assert.Equal(1.0f, options.SamplingRatio);
             }
             finally

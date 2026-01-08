@@ -70,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// For example, specifying 0.5 means one request every two seconds.
         /// When both TracesPerSecond and SamplingRatio are specified, TracesPerSecond takes precedence.
         /// </summary>
-        public double? TracesPerSecond { get; set; }
+        public double? TracesPerSecond { get; set; } = 5.0;
 
         /// <summary>
         /// Override the default directory for offline storage.

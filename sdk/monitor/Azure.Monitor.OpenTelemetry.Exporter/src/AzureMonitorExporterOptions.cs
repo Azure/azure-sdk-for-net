@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// For example, specifying 0.5 means one request every two seconds.
         /// When both TracesPerSecond and SamplingRatio are specified, TracesPerSecond takes precedence.
         /// </summary>
-        public double? TracesPerSecond { get; set; }
+        public double? TracesPerSecond { get; set; } = 5.0;
 
         /// <summary>
         /// The <see cref="ServiceVersion"/> of the Azure Monitor ingestion API.
