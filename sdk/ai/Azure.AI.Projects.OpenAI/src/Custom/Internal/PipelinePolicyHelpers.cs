@@ -47,10 +47,7 @@ internal static partial class PipelinePolicyHelpers
                         builder.Reset(requestUri);
                         builder.AppendQuery(key, generatedValue, escape: true);
 
-                        // ClientUriBuilder.Reset removes existing query; we need to restore it
-                        request.Uri = string.IsNullOrEmpty(requestUri.Query)
-                            ? builder.ToUri()
-                            : new Uri($"{builder.ToUri()}&{requestUri.Query.Substring(1)}");
+                        request.Uri = builder.ToUri();
                     }
                 }),
                 PipelinePosition.PerCall);
