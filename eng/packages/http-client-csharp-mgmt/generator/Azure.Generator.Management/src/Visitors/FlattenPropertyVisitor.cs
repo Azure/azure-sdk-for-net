@@ -203,8 +203,8 @@ namespace Azure.Generator.Management.Visitors
 
             for (int flattenedPropertyIndex = 0, fullConstructorParameterIndex = 0; ; fullConstructorParameterIndex++)
             {
-                // If we have processed all the constructor parameters, we can break the loop.
-                if (fullConstructorParameterIndex >= constructorParameters.Count)
+                // If we have processed all the flattened properties or all the constructor parameters, we can break the loop.
+                if (flattenedPropertyIndex >= flattenedProperties.Count || fullConstructorParameterIndex >= constructorParameters.Count)
                 {
                     break;
                 }
@@ -220,12 +220,6 @@ namespace Azure.Generator.Management.Visitors
                         break;
                     }
                     fullConstructorParameterIndex++;
-                }
-
-                // If we have processed all the flattened properties, we can break the loop.
-                if (flattenedPropertyIndex >= flattenedProperties.Count)
-                {
-                    break;
                 }
 
                 var (flattenedProperty, _) = flattenedProperties[flattenedPropertyIndex];
@@ -262,8 +256,8 @@ namespace Azure.Generator.Management.Visitors
                         {
                             // Theoretically there should be only one flattened property for the constructor parameter type, and the corresponding parameter should be singleton as well.
                             // For some reason, there are multiple parameters of the same type in some constructors, we need to enforce that we use the correct one.
-                            var flattenPropertyNames = list.Select(x => x.FlattenedProperty.Name).ToHashSet();
-                            var innerFlattenedProperties = flattenedProperties.Where(x => flattenPropertyNames.Contains(x.FlattenedProperty.Name)).ToList();
+                            var flattenPropertyNames = list.Select(x => x.FlattenedProperty.Type).ToHashSet();
+                            var innerFlattenedProperties = flattenedProperties.Where(x => flattenPropertyNames.Contains(x.FlattenedProperty.Type)).ToList();
                             var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
                             parameters.Add(New.Instance(constructorParameterType, innerParameters));
                         }
@@ -283,17 +277,9 @@ namespace Azure.Generator.Management.Visitors
             }
 
             // If the additionalProperties parameter is missing at the end, we need to pass a new instance for it.
-            while (parameters.Count < constructorParameters.Count)
+            if (parameters.Count < constructorParameters.Count && additionalPropertyIndex == constructorParameters.Count - 1)
             {
-                if (additionalPropertyIndex >= 0 && parameters.Count == additionalPropertyIndex)
-                {
-                    parameters.Add(Null);
-                }
-                else
-                {
-                    // For any other missing parameters, add Null
-                    parameters.Add(Null);
-                }
+                parameters.Add(Null);
             }
             return parameters.ToArray();
 
