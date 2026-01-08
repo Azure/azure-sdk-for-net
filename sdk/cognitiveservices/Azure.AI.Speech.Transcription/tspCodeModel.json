@@ -1607,7 +1607,7 @@
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
-          "doc": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus.api.cognitive.microsoft.com.",
+          "doc": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus.api.cognitive.microsoft.com).",
           "type": {
             "$id": "121",
             "kind": "url",

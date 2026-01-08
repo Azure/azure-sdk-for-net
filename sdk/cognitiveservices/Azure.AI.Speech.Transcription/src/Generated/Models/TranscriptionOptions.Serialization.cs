@@ -144,7 +144,7 @@ namespace Azure.AI.Speech.Transcription
                     {
                         continue;
                     }
-                    audioUri = new Uri(prop.Value.GetString());
+                    audioUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("locales"u8))
@@ -183,7 +183,7 @@ namespace Azure.AI.Speech.Transcription
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, new Uri(prop0.Value.GetString()));
+                            dictionary.Add(prop0.Name, string.IsNullOrEmpty(prop0.Value.GetString()) ? null : new Uri(prop0.Value.GetString()));
                         }
                     }
                     models = dictionary;
