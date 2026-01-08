@@ -513,7 +513,7 @@
   <!-- Versions for internal tooling mapped to the dev feed -->
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20251209.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20260107.1</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260108.1</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20260107.1</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>
