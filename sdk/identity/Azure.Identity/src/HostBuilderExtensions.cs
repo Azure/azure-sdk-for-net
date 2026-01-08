@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using Azure.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -19,18 +17,17 @@ namespace Azure.Identity
         /// <summary>
         /// .
         /// </summary>
+        /// <typeparam name="TClient"></typeparam>
+        /// <typeparam name="TSettings"></typeparam>
         /// <param name="host"></param>
         /// <param name="sectionName"></param>
         /// <returns></returns>
-        public static IHostApplicationBuilder AddAzureCredential(this IHostApplicationBuilder host, string sectionName)
-        {
-            DefaultAzureCredentialOptions options = new(new CredentialSettings(host.Configuration.GetSection(sectionName)));
-            DefaultAzureCredential credential = new DefaultAzureCredential(options);
-            host.Services.AddSingleton<TokenCredential>(sp => credential);
-            host.Services.AddSingleton<AuthenticationTokenProvider>(sp => credential);
-
-            return host;
-        }
+        public static IHostApplicationBuilder AddAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
+            this IHostApplicationBuilder host,
+            string sectionName)
+                where TSettings : ClientSettings, new()
+                where TClient : class
+            => host.AddAzureClient<TClient, TSettings>(sectionName, default);
 
         /// <summary>
         /// .
@@ -44,7 +41,7 @@ namespace Azure.Identity
         public static IHostApplicationBuilder AddAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
             this IHostApplicationBuilder host,
             string sectionName,
-            Action<TSettings> configureSettings = default)
+            Action<TSettings> configureSettings)
                 where TSettings : ClientSettings, new()
                 where TClient : class
         {
@@ -66,13 +63,30 @@ namespace Azure.Identity
         /// <param name="host"></param>
         /// <param name="key"></param>
         /// <param name="sectionName"></param>
+        /// <returns></returns>
+        public static IHostApplicationBuilder AddKeyedAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
+            this IHostApplicationBuilder host,
+            string key,
+            string sectionName)
+                where TSettings : ClientSettings, new()
+                where TClient : class
+            => host.AddKeyedAzureClient<TClient, TSettings>(key, sectionName, default);
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <typeparam name="TClient"></typeparam>
+        /// <typeparam name="TSettings"></typeparam>
+        /// <param name="host"></param>
+        /// <param name="key"></param>
+        /// <param name="sectionName"></param>
         /// <param name="configureSettings"></param>
         /// <returns></returns>
         public static IHostApplicationBuilder AddKeyedAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
             this IHostApplicationBuilder host,
             string key,
             string sectionName,
-            Action<TSettings> configureSettings = default)
+            Action<TSettings> configureSettings)
                 where TSettings : ClientSettings, new()
                 where TClient : class
         {
