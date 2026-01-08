@@ -305,14 +305,10 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            // Filter out resources that don't have a Get operation and aren't singletons
-            // These resources can't be instantiated individually, only through collections
-            var resourcesToGenerate = ResourceProviders.Where(r => r.HasGetOperation || r.IsSingleton).ToList();
-
             // we need to add the clients (including resources, collections, mockable resources and extension static class)
             // to the types to keep
             // otherwise, they will be trimmed off or internalized by the post processor
-            foreach (var resource in resourcesToGenerate)
+            foreach (var resource in ResourceProviders)
             {
                 ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
             }
@@ -336,14 +332,14 @@ namespace Azure.Generator.Management
                 ArmOperationOfT,
                 .. OperationSourceDict.Values,
                 ProviderConstants,
-                .. resourcesToGenerate,
+                .. ResourceProviders,
                 .. ResourceCollectionProviders,
                 .. MockableResourceProviders,
                 ExtensionProvider,
                 PageableWrapper,
                 AsyncPageableWrapper,
                 .. arrayResponseCollectionResults,
-                .. resourcesToGenerate.SelectMany(r => r.SerializationProviders)];
+                .. ResourceProviders.SelectMany(r => r.SerializationProviders)];
         }
 
         private List<ArrayResponseCollectionResultDefinition> ExtractArrayResponseCollectionResults()

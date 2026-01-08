@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -78,7 +79,7 @@ namespace Azure.Generator.Management.Utilities
                         methodsInResource.Add(method);
                         break;
                     case ResourceOperationKind.Delete:
-                        // only resource has get
+                        // Delete goes to resource if there's a Get operation, otherwise to collection
                         methodsInResource.Add(method);
                         break;
                     case ResourceOperationKind.Action:
@@ -133,6 +134,18 @@ namespace Azure.Generator.Management.Utilities
             if (resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null && hasGetMethod)
             {
                 methodsInResource.Add(createMethod);
+            }
+
+            // If there's no Get operation and the resource is not a singleton, move Delete from Resource to Collection
+            // This is because without Get, you can't obtain a Resource instance to call Delete on
+            if (!hasGetMethod && resourceMetadata.SingletonResourceName is null)
+            {
+                var deleteMethod = methodsInResource.FirstOrDefault(m => m.Kind == ResourceOperationKind.Delete);
+                if (deleteMethod is not null)
+                {
+                    methodsInResource.Remove(deleteMethod);
+                    methodsInCollection.Add(deleteMethod);
+                }
             }
 
             return new(methodsInResource, methodsInCollection, methodsInExtension);
