@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static string? ExtensionLabel { get; set; }
 
-        internal static string? GetVersion(Type? type = default)
+        internal static string? GetVersion(Type? type = null)
         {
             if (type == null)
             {
