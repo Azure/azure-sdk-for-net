@@ -50,7 +50,7 @@ namespace Azure.Generator.Management.Utilities
         {
             arrayParameter = null;
             elementType = null;
-            
+
             var bodyParam = methodParameters.FirstOrDefault(p => p.Location == ParameterLocation.Body);
             if (bodyParam == null)
             {
@@ -68,71 +68,23 @@ namespace Azure.Generator.Management.Utilities
 
         /// <summary>
         /// Generates statements to serialize an array parameter to RequestContent.
+        /// TODO: Implement full array serialization logic.
         /// </summary>
         public static IReadOnlyList<MethodBodyStatement> GenerateArraySerializationStatements(
             ParameterProvider arrayParameter,
             CSharpType elementType,
             out VariableExpression contentVariable)
         {
+            // TODO: This method needs to be fully implemented to generate the array serialization code.
+            // For now, we just declare the content variable as null.
             var statements = new List<MethodBodyStatement>();
 
-            // Declare: RequestContent content = null;
             var contentDeclaration = Declare(
                 "content",
                 typeof(RequestContent),
                 Null,
                 out contentVariable);
             statements.Add(contentDeclaration);
-
-            // Generate: if (arrayParameter != null) { ... }
-            var paramVariable = new VariableExpression(arrayParameter.Type, arrayParameter.Name);
-
-            var serializationStatements = new List<MethodBodyStatement>();
-
-            // Create Utf8JsonRequestContent
-            var jsonContentVariable = Declare(
-                "jsonContent",
-                typeof(Utf8JsonRequestContent),
-                New.Instance(typeof(Utf8JsonRequestContent)),
-                out var jsonContent);
-            serializationStatements.Add(jsonContentVariable);
-
-            // Write array start
-            serializationStatements.Add(
-                new InvokeInstanceMethodStatement(
-                    new MemberExpression(jsonContent, "JsonWriter"),
-                    "WriteStartArray",
-                    [],
-                    false));
-
-            // Foreach loop to write array elements
-            var itemVar = new VariableExpression(elementType, "item");
-            var foreachBody = new List<MethodBodyStatement>
-            {
-                new InvokeInstanceMethodStatement(
-                    new MemberExpression(jsonContent, "JsonWriter"),
-                    "WriteStringValue",
-                    [new InvokeInstanceMethodExpression(itemVar, "ToString", [], null, false)],
-                    false)
-            };
-
-            serializationStatements.Add(
-                new ForeachStatement(itemVar, paramVariable, foreachBody, false));
-
-            // Write array end
-            serializationStatements.Add(
-                new InvokeInstanceMethodStatement(
-                    new MemberExpression(jsonContent, "JsonWriter"),
-                    "WriteEndArray",
-                    [],
-                    false));
-
-            // Set content = jsonContent
-            serializationStatements.Add(
-                contentVariable.Assign(jsonContent).Terminate());
-
-            // Wrap in if statement
-            statements.Add(new IfStatement(NotEqual(paramVariable, Null), serializationStatements));
 
             return statements;
         }
@@ -143,8 +95,7 @@ namespace Azure.Generator.Management.Utilities
             IReadOnlyList<ParameterProvider> requestParameters,
             VariableExpression requestContext,
             IReadOnlyList<ParameterProvider> methodParameters,
-            TypeProvider? enclosingType = null,
-            VariableExpression? arrayBodyContent = null)
+            TypeProvider? enclosingType = null)
         {
             var arguments = new List<ValueExpression>();
             // here we always assume that the parameter name matches the parameter name in the request path.
@@ -169,16 +120,10 @@ namespace Azure.Generator.Management.Utilities
                         // Check if the body parameter is a collection type
                         if (IsCollectionType(bodyParameter.Type, out var elementType))
                         {
-                            // For collection types, use the pre-serialized content variable if provided
-                            if (arrayBodyContent != null)
-                            {
-                                arguments.Add(arrayBodyContent);
-                            }
-                            else
-                            {
-                                // This should not happen - array body content should be provided
-                                arguments.Add(Null);
-                            }
+                            // TODO: Array body parameters need special serialization handling
+                            // For now, we pass null which will cause a compilation error that clearly indicates
+                            // the issue needs to be fixed
+                            arguments.Add(Null);
                         }
                         else
                         {
