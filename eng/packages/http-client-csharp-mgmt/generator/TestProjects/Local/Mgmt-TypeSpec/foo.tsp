@@ -47,6 +47,9 @@ model FooProperties {
 
   optionalProperty?: SafeFlattenModel;
 
+  /** Test ApplicationProfile flattening scenario */
+  vmProfile?: VmProfile;
+
   /** ETag property for testing etag parameter name generation */
   etag?: Azure.Core.eTag;
 
@@ -63,6 +66,18 @@ model NestedFooModel {
 
 model SafeFlattenModel {
   flattenedProperty?: string[];
+}
+
+// Test case for ApplicationProfile -> GalleryApplications flattening
+// This tests that when a suffix (Profile) is stripped, singular/plural matching works correctly
+model ApplicationProfile {
+  /** Specifies the gallery applications that should be made available */
+  galleryApplications?: string[];
+}
+
+model VmProfile {
+  /** Application profile */
+  applicationProfile?: ApplicationProfile;
 }
 
 @armResourceOperations

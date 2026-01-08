@@ -191,6 +191,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
+        /// <summary> Test ApplicationProfile flattening scenario. </summary>
+        [WirePath("properties.vmProfile")]
+        public VmProfile VmProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.VmProfile = value;
+            }
+        }
+
         /// <summary> ETag property for testing etag parameter name generation. </summary>
         [WirePath("properties.etag")]
         public ETag? ETag

@@ -48,10 +48,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop2"></param>
         /// <param name="nestedProperty"></param>
         /// <param name="optionalProperty"></param>
+        /// <param name="vmProfile"> Test ApplicationProfile flattening scenario. </param>
         /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, ETag? eTag, WritableSubResource writableSubResourceProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, VmProfile vmProfile, ETag? eTag, WritableSubResource writableSubResourceProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             Something = something;
@@ -62,6 +63,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             Prop2 = prop2;
             NestedProperty = nestedProperty;
             OptionalProperty = optionalProperty;
+            VmProfile = vmProfile;
             ETag = eTag;
             WritableSubResourceProp = writableSubResourceProp;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -102,6 +104,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Gets or sets the OptionalProperty. </summary>
         [WirePath("optionalProperty")]
         internal SafeFlattenModel OptionalProperty { get; set; }
+
+        /// <summary> Test ApplicationProfile flattening scenario. </summary>
+        [WirePath("vmProfile")]
+        public VmProfile VmProfile { get; set; }
 
         /// <summary> ETag property for testing etag parameter name generation. </summary>
         [WirePath("etag")]
