@@ -7,50 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The LoggingRule. </summary>
     public partial class LoggingRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoggingRule"/>. </summary>
         /// <param name="action"> The action. </param>
         /// <param name="direction"> The direction. </param>
         /// <param name="detailLevel"> The detail level. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
-        public LoggingRule(string action, LoggingDirection direction, LoggingDetail detailLevel)
+        public LoggingRule(string action, LoggingDirections direction, LoggingDetails detailLevel)
         {
             Argument.AssertNotNull(action, nameof(action));
 
@@ -64,28 +36,26 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="direction"> The direction. </param>
         /// <param name="detailLevel"> The detail level. </param>
         /// <param name="hiddenPropertyPaths"> The hidden property paths. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoggingRule(string action, LoggingDirection direction, LoggingDetail detailLevel, LoggingHiddenPropertyPaths hiddenPropertyPaths, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoggingRule(string action, LoggingDirections direction, LoggingDetails detailLevel, LoggingRuleHiddenPropertyPaths hiddenPropertyPaths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             Direction = direction;
             DetailLevel = detailLevel;
             HiddenPropertyPaths = hiddenPropertyPaths;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LoggingRule"/> for deserialization. </summary>
-        internal LoggingRule()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The action. </summary>
         public string Action { get; set; }
+
         /// <summary> The direction. </summary>
-        public LoggingDirection Direction { get; set; }
+        public LoggingDirections Direction { get; set; }
+
         /// <summary> The detail level. </summary>
-        public LoggingDetail DetailLevel { get; set; }
+        public LoggingDetails DetailLevel { get; set; }
+
         /// <summary> The hidden property paths. </summary>
-        public LoggingHiddenPropertyPaths HiddenPropertyPaths { get; set; }
+        public LoggingRuleHiddenPropertyPaths HiddenPropertyPaths { get; set; }
     }
 }

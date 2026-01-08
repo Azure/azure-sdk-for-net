@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> Resource group lock option during move. </summary>
     internal partial class ResourceProviderManifestResourceGroupLockOptionDuringMove
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManifestResourceGroupLockOptionDuringMove"/>. </summary>
         public ResourceProviderManifestResourceGroupLockOptionDuringMove()
@@ -52,11 +23,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManifestResourceGroupLockOptionDuringMove"/>. </summary>
         /// <param name="blockActionVerb"> The action verb that will be blocked when the resource group is locked during move. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManifestResourceGroupLockOptionDuringMove(BlockActionVerb? blockActionVerb, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderManifestResourceGroupLockOptionDuringMove(BlockActionVerb? blockActionVerb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlockActionVerb = blockActionVerb;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The action verb that will be blocked when the resource group is locked during move. </summary>

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     internal static partial class ResourceAccessPolicyExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResourceAccessPolicy value) => value switch
         {
             ResourceAccessPolicy.NotSpecified => "NotSpecified",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResourceAccessPolicy value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ResourceAccessPolicy ToResourceAccessPolicy(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return ResourceAccessPolicy.NotSpecified;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AcisReadAllowed")) return ResourceAccessPolicy.AcisReadAllowed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AcisActionAllowed")) return ResourceAccessPolicy.AcisActionAllowed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified"))
+            {
+                return ResourceAccessPolicy.NotSpecified;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AcisReadAllowed"))
+            {
+                return ResourceAccessPolicy.AcisReadAllowed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AcisActionAllowed"))
+            {
+                return ResourceAccessPolicy.AcisActionAllowed;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResourceAccessPolicy value.");
         }
     }

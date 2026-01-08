@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ProviderHub;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ProviderHub.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableProviderHubResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableProviderHubResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableProviderHubResourceGroupResource for mocking. </summary>
         protected MockableProviderHubResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableProviderHubResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableProviderHubResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableProviderHubResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ProviderMonitorSettingResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProviderMonitorSettingResources and their operations over a ProviderMonitorSettingResource. </returns>
+        /// <summary> Gets a collection of ProviderMonitorSettings in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ProviderMonitorSettings and their operations over a ProviderMonitorSettingResource. </returns>
         public virtual ProviderMonitorSettingCollection GetProviderMonitorSettings()
         {
             return GetCachedClient(client => new ProviderMonitorSettingCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// Gets the provider monitor setting details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ProviderMonitorSettingResource>> GetProviderMonitorSettingAsync(string providerMonitorSettingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerMonitorSettingName, nameof(providerMonitorSettingName));
+
             return await GetProviderMonitorSettings().GetAsync(providerMonitorSettingName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// Gets the provider monitor setting details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         [ForwardsClientCalls]
         public virtual Response<ProviderMonitorSettingResource> GetProviderMonitorSetting(string providerMonitorSettingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerMonitorSettingName, nameof(providerMonitorSettingName));
+
             return GetProviderMonitorSettings().Get(providerMonitorSettingName, cancellationToken);
         }
     }

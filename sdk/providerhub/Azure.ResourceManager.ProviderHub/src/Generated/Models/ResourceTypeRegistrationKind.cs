@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ResourceTypeRegistrationKind : IEquatable<ResourceTypeRegistrationKind>
     {
         private readonly string _value;
+        /// <summary> Resource type served by the ProviderHub service. </summary>
+        private const string ManagedValue = "Managed";
+        /// <summary> Resource type served by both the ProviderHub &amp; the onboarded Resource Provider Services (i.e. The type has a mix of managed and direct endpoints). </summary>
+        private const string HybridValue = "Hybrid";
+        /// <summary> Resource type served by the onboarded Resource Provider Service. </summary>
+        private const string DirectValue = "Direct";
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceTypeRegistrationKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ManagedValue = "Managed";
-        private const string HybridValue = "Hybrid";
-        private const string DirectValue = "Direct";
+            _value = value;
+        }
 
         /// <summary> Resource type served by the ProviderHub service. </summary>
         public static ResourceTypeRegistrationKind Managed { get; } = new ResourceTypeRegistrationKind(ManagedValue);
+
         /// <summary> Resource type served by both the ProviderHub &amp; the onboarded Resource Provider Services (i.e. The type has a mix of managed and direct endpoints). </summary>
         public static ResourceTypeRegistrationKind Hybrid { get; } = new ResourceTypeRegistrationKind(HybridValue);
+
         /// <summary> Resource type served by the onboarded Resource Provider Service. </summary>
         public static ResourceTypeRegistrationKind Direct { get; } = new ResourceTypeRegistrationKind(DirectValue);
+
         /// <summary> Determines if two <see cref="ResourceTypeRegistrationKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceTypeRegistrationKind left, ResourceTypeRegistrationKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceTypeRegistrationKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceTypeRegistrationKind left, ResourceTypeRegistrationKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceTypeRegistrationKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceTypeRegistrationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceTypeRegistrationKind(string value) => new ResourceTypeRegistrationKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceTypeRegistrationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceTypeRegistrationKind?(string value) => value == null ? null : new ResourceTypeRegistrationKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceTypeRegistrationKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceTypeRegistrationKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

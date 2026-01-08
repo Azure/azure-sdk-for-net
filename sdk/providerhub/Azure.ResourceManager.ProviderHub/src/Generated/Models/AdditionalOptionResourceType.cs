@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct AdditionalOptionResourceType : IEquatable<AdditionalOptionResourceType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AdditionalOptionResourceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AdditionalOptionResourceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ProtectedAsyncOperationPollingValue = "ProtectedAsyncOperationPolling";
         private const string ProtectedAsyncOperationPollingAuditOnlyValue = "ProtectedAsyncOperationPollingAuditOnly";
 
-        /// <summary> ProtectedAsyncOperationPolling. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalOptionResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AdditionalOptionResourceType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ProtectedAsyncOperationPolling. </summary>
         public static AdditionalOptionResourceType ProtectedAsyncOperationPolling { get; } = new AdditionalOptionResourceType(ProtectedAsyncOperationPollingValue);
-        /// <summary> ProtectedAsyncOperationPollingAuditOnly. </summary>
+
+        /// <summary> Gets the ProtectedAsyncOperationPollingAuditOnly. </summary>
         public static AdditionalOptionResourceType ProtectedAsyncOperationPollingAuditOnly { get; } = new AdditionalOptionResourceType(ProtectedAsyncOperationPollingAuditOnlyValue);
+
         /// <summary> Determines if two <see cref="AdditionalOptionResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AdditionalOptionResourceType left, AdditionalOptionResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AdditionalOptionResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AdditionalOptionResourceType left, AdditionalOptionResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AdditionalOptionResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AdditionalOptionResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AdditionalOptionResourceType(string value) => new AdditionalOptionResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AdditionalOptionResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AdditionalOptionResourceType?(string value) => value == null ? null : new AdditionalOptionResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AdditionalOptionResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AdditionalOptionResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

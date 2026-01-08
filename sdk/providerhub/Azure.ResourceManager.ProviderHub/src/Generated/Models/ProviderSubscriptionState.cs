@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ProviderSubscriptionState : IEquatable<ProviderSubscriptionState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProviderSubscriptionState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProviderSubscriptionState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotDefinedValue = "NotDefined";
         private const string EnabledValue = "Enabled";
         private const string WarnedValue = "Warned";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string DisabledValue = "Disabled";
         private const string DeletedValue = "Deleted";
 
-        /// <summary> NotDefined. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderSubscriptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProviderSubscriptionState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotDefined. </summary>
         public static ProviderSubscriptionState NotDefined { get; } = new ProviderSubscriptionState(NotDefinedValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static ProviderSubscriptionState Enabled { get; } = new ProviderSubscriptionState(EnabledValue);
-        /// <summary> Warned. </summary>
+
+        /// <summary> Gets the Warned. </summary>
         public static ProviderSubscriptionState Warned { get; } = new ProviderSubscriptionState(WarnedValue);
-        /// <summary> PastDue. </summary>
+
+        /// <summary> Gets the PastDue. </summary>
         public static ProviderSubscriptionState PastDue { get; } = new ProviderSubscriptionState(PastDueValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static ProviderSubscriptionState Disabled { get; } = new ProviderSubscriptionState(DisabledValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static ProviderSubscriptionState Deleted { get; } = new ProviderSubscriptionState(DeletedValue);
+
         /// <summary> Determines if two <see cref="ProviderSubscriptionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderSubscriptionState left, ProviderSubscriptionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProviderSubscriptionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderSubscriptionState left, ProviderSubscriptionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderSubscriptionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProviderSubscriptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProviderSubscriptionState(string value) => new ProviderSubscriptionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProviderSubscriptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProviderSubscriptionState?(string value) => value == null ? null : new ProviderSubscriptionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderSubscriptionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProviderSubscriptionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

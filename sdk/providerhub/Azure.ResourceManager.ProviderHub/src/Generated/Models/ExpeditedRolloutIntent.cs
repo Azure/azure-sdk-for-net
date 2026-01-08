@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ExpeditedRolloutIntent : IEquatable<ExpeditedRolloutIntent>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ExpeditedRolloutIntent"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExpeditedRolloutIntent(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string HotfixValue = "Hotfix";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpeditedRolloutIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ExpeditedRolloutIntent(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ExpeditedRolloutIntent NotSpecified { get; } = new ExpeditedRolloutIntent(NotSpecifiedValue);
-        /// <summary> Hotfix. </summary>
+
+        /// <summary> Gets the Hotfix. </summary>
         public static ExpeditedRolloutIntent Hotfix { get; } = new ExpeditedRolloutIntent(HotfixValue);
+
         /// <summary> Determines if two <see cref="ExpeditedRolloutIntent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpeditedRolloutIntent left, ExpeditedRolloutIntent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpeditedRolloutIntent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpeditedRolloutIntent left, ExpeditedRolloutIntent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpeditedRolloutIntent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpeditedRolloutIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpeditedRolloutIntent(string value) => new ExpeditedRolloutIntent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpeditedRolloutIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpeditedRolloutIntent?(string value) => value == null ? null : new ExpeditedRolloutIntent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpeditedRolloutIntent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpeditedRolloutIntent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

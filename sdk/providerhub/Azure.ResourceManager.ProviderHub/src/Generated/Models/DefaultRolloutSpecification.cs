@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The DefaultRolloutSpecification. </summary>
     public partial class DefaultRolloutSpecification
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DefaultRolloutSpecification"/>. </summary>
         public DefaultRolloutSpecification()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="providerRegistration"> The provider registration. </param>
         /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
         /// <param name="autoProvisionConfig"> The auto provisioning config. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultRolloutSpecification(DefaultRolloutSpecificationExpeditedRollout expeditedRollout, CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, DefaultRolloutAutoProvisionConfig autoProvisionConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DefaultRolloutSpecification(DefaultRolloutSpecificationExpeditedRollout expeditedRollout, DefaultRolloutSpecificationCanary canary, DefaultRolloutSpecificationLowTraffic lowTraffic, DefaultRolloutSpecificationMediumTraffic mediumTraffic, DefaultRolloutSpecificationHighTraffic highTraffic, DefaultRolloutSpecificationRestOfTheWorldGroupOne restOfTheWorldGroupOne, DefaultRolloutSpecificationRestOfTheWorldGroupTwo restOfTheWorldGroupTwo, DefaultRolloutSpecificationProviderRegistration providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, DefaultRolloutAutoProvisionConfig autoProvisionConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpeditedRollout = expeditedRollout;
             Canary = canary;
@@ -75,40 +47,54 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProviderRegistration = providerRegistration;
             ResourceTypeRegistrations = resourceTypeRegistrations;
             AutoProvisionConfig = autoProvisionConfig;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The expedited rollout definition. </summary>
         internal DefaultRolloutSpecificationExpeditedRollout ExpeditedRollout { get; set; }
+
+        /// <summary> The canary traffic region configuration. </summary>
+        public DefaultRolloutSpecificationCanary Canary { get; set; }
+
+        /// <summary> The low traffic region configuration. </summary>
+        public DefaultRolloutSpecificationLowTraffic LowTraffic { get; set; }
+
+        /// <summary> The medium traffic region configuration. </summary>
+        public DefaultRolloutSpecificationMediumTraffic MediumTraffic { get; set; }
+
+        /// <summary> The high traffic region configuration. </summary>
+        public DefaultRolloutSpecificationHighTraffic HighTraffic { get; set; }
+
+        /// <summary> The rest of the world group one region configuration. </summary>
+        public DefaultRolloutSpecificationRestOfTheWorldGroupOne RestOfTheWorldGroupOne { get; set; }
+
+        /// <summary> The rest of the world group two region configuration. </summary>
+        public DefaultRolloutSpecificationRestOfTheWorldGroupTwo RestOfTheWorldGroupTwo { get; set; }
+
+        /// <summary> The provider registration. </summary>
+        public DefaultRolloutSpecificationProviderRegistration ProviderRegistration { get; set; }
+
+        /// <summary> The resource type registrations. </summary>
+        public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
+
+        /// <summary> The auto provisioning config. </summary>
+        public DefaultRolloutAutoProvisionConfig AutoProvisionConfig { get; set; }
+
         /// <summary> Indicates whether expedited rollout is enabled/disabled. </summary>
         public bool? IsExpeditedRolloutEnabled
         {
-            get => ExpeditedRollout is null ? default : ExpeditedRollout.IsExpeditedRolloutEnabled;
+            get
+            {
+                return ExpeditedRollout is null ? default : ExpeditedRollout.IsExpeditedRolloutEnabled;
+            }
             set
             {
                 if (ExpeditedRollout is null)
+                {
                     ExpeditedRollout = new DefaultRolloutSpecificationExpeditedRollout();
+                }
                 ExpeditedRollout.IsExpeditedRolloutEnabled = value;
             }
         }
-
-        /// <summary> The canary traffic region configuration. </summary>
-        public CanaryTrafficRegionRolloutConfiguration Canary { get; set; }
-        /// <summary> The low traffic region configuration. </summary>
-        public TrafficRegionRolloutConfiguration LowTraffic { get; set; }
-        /// <summary> The medium traffic region configuration. </summary>
-        public TrafficRegionRolloutConfiguration MediumTraffic { get; set; }
-        /// <summary> The high traffic region configuration. </summary>
-        public TrafficRegionRolloutConfiguration HighTraffic { get; set; }
-        /// <summary> The rest of the world group one region configuration. </summary>
-        public TrafficRegionRolloutConfiguration RestOfTheWorldGroupOne { get; set; }
-        /// <summary> The rest of the world group two region configuration. </summary>
-        public TrafficRegionRolloutConfiguration RestOfTheWorldGroupTwo { get; set; }
-        /// <summary> The provider registration. </summary>
-        public ProviderRegistrationData ProviderRegistration { get; set; }
-        /// <summary> The resource type registrations. </summary>
-        public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
-        /// <summary> The auto provisioning config. </summary>
-        public DefaultRolloutAutoProvisionConfig AutoProvisionConfig { get; set; }
     }
 }

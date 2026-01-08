@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Initializes a new instance of <see cref="DefaultRolloutSpecificationExpeditedRollout"/>. </summary>
         /// <param name="isExpeditedRolloutEnabled"> Indicates whether expedited rollout is enabled/disabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultRolloutSpecificationExpeditedRollout(bool? isExpeditedRolloutEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(isExpeditedRolloutEnabled, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DefaultRolloutSpecificationExpeditedRollout(bool? isExpeditedRolloutEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(isExpeditedRolloutEnabled, additionalBinaryDataProperties)
         {
         }
     }

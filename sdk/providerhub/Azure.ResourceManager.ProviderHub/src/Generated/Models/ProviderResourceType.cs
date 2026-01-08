@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ProviderResourceType. </summary>
     public partial class ProviderResourceType
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
         internal ProviderResourceType()
@@ -97,8 +70,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="notifications"> The notifications. </param>
         /// <param name="linkedNotificationRules"> The linked notification rules. </param>
         /// <param name="resourceProviderAuthorizationRules"> The resource provider authorization rules. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderResourceType(string name, ResourceRoutingType? routingType, AdditionalOptionResourceType? additionalOptions, CrossTenantTokenValidation? crossTenantTokenValidation, ResourceValidation? resourceValidation, IReadOnlyList<string> allowedUnauthorizedActions, IReadOnlyList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions, IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings, IReadOnlyList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IReadOnlyList<LoggingRule> loggingRules, IReadOnlyList<ThrottlingRule> throttlingRules, IReadOnlyList<ResourceProviderEndpoint> endpoints, MarketplaceType? marketplaceType, IdentityManagement identityManagement, BinaryData metadata, IReadOnlyList<string> requiredFeatures, ProviderFeaturesRule featuresRule, IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules, IReadOnlyList<ServiceTreeInfo> serviceTreeInfos, ProviderRequestHeaderOptions requestHeaderOptions, string skuLink, IReadOnlyList<string> disallowedActionVerbs, TemplateDeploymentPolicy templateDeploymentPolicy, IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations, IReadOnlyList<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy, ProviderQuotaRule quotaRule, IReadOnlyList<ProviderNotification> notifications, IReadOnlyList<LinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderResourceType(string name, ResourceRoutingType? routingType, AdditionalOptionResourceType? additionalOptions, CrossTenantTokenValidation? crossTenantTokenValidation, ResourceValidation? resourceValidation, IReadOnlyList<string> allowedUnauthorizedActions, IReadOnlyList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions, IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings, IReadOnlyList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IReadOnlyList<LoggingRule> loggingRules, IReadOnlyList<ThrottlingRule> throttlingRules, IReadOnlyList<ResourceProviderEndpoint> endpoints, MarketplaceType? marketplaceType, ResourceTypeIdentityManagement identityManagement, BinaryData metadata, IReadOnlyList<string> requiredFeatures, ResourceTypeFeaturesRule featuresRule, IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules, IReadOnlyList<ServiceTreeInfo> serviceTreeInfos, ResourceTypeRequestHeaderOptions requestHeaderOptions, string skuLink, IReadOnlyList<string> disallowedActionVerbs, ResourceTypeTemplateDeploymentPolicy templateDeploymentPolicy, IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations, IReadOnlyList<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy, ProviderQuotaRule quotaRule, IReadOnlyList<ProviderNotification> notifications, IReadOnlyList<LinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             RoutingType = routingType;
@@ -131,116 +104,152 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Notifications = notifications;
             LinkedNotificationRules = linkedNotificationRules;
             ResourceProviderAuthorizationRules = resourceProviderAuthorizationRules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource type name. </summary>
         public string Name { get; }
+
         /// <summary> The resource routing type. </summary>
         public ResourceRoutingType? RoutingType { get; }
+
         /// <summary> The additional options. </summary>
         public AdditionalOptionResourceType? AdditionalOptions { get; }
+
         /// <summary> The cross tenant token validation. </summary>
         public CrossTenantTokenValidation? CrossTenantTokenValidation { get; }
+
         /// <summary> The resource validation. </summary>
         public ResourceValidation? ResourceValidation { get; }
+
         /// <summary> The allowed unauthorized actions. </summary>
         public IReadOnlyList<string> AllowedUnauthorizedActions { get; }
+
         /// <summary> The allowed unauthorized actions extensions. </summary>
         public IReadOnlyList<AllowedUnauthorizedActionsExtension> AllowedUnauthorizedActionsExtensions { get; }
+
         /// <summary> The authorization action mappings. </summary>
         public IReadOnlyList<AuthorizationActionMapping> AuthorizationActionMappings { get; }
+
         /// <summary> The linked access checks. </summary>
         public IReadOnlyList<LinkedAccessCheck> LinkedAccessChecks { get; }
+
         /// <summary> The default api version. </summary>
         public string DefaultApiVersion { get; }
+
         /// <summary> The logging rules. </summary>
         public IReadOnlyList<LoggingRule> LoggingRules { get; }
+
         /// <summary> The throttling rules. </summary>
         public IReadOnlyList<ThrottlingRule> ThrottlingRules { get; }
+
         /// <summary> The endpoints. </summary>
         public IReadOnlyList<ResourceProviderEndpoint> Endpoints { get; }
+
         /// <summary> The marketplace type. </summary>
         public MarketplaceType? MarketplaceType { get; }
+
         /// <summary> The identity management. </summary>
-        internal IdentityManagement IdentityManagement { get; }
-        /// <summary> The type. </summary>
-        public IdentityManagementType? ManagementType
-        {
-            get => IdentityManagement?.ManagementType;
-        }
+        internal ResourceTypeIdentityManagement IdentityManagement { get; }
 
         /// <summary>
         /// The metadata.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public BinaryData Metadata { get; }
+
         /// <summary> The required features. </summary>
         public IReadOnlyList<string> RequiredFeatures { get; }
+
         /// <summary> The features rule. </summary>
-        internal ProviderFeaturesRule FeaturesRule { get; }
-        /// <summary> The required feature policy. </summary>
-        public FeaturesPolicy? RequiredFeaturesPolicy
-        {
-            get => FeaturesRule?.RequiredFeaturesPolicy;
-        }
+        internal ResourceTypeFeaturesRule FeaturesRule { get; }
 
         /// <summary> The subscription state rules. </summary>
         public IReadOnlyList<ProviderSubscriptionStateRule> SubscriptionStateRules { get; }
+
         /// <summary> The service tree infos. </summary>
         public IReadOnlyList<ServiceTreeInfo> ServiceTreeInfos { get; }
+
         /// <summary> The request header options. </summary>
-        public ProviderRequestHeaderOptions RequestHeaderOptions { get; }
+        public ResourceTypeRequestHeaderOptions RequestHeaderOptions { get; }
+
         /// <summary> The sku link. </summary>
         public string SkuLink { get; }
+
         /// <summary> The disallowed action verbs. </summary>
         public IReadOnlyList<string> DisallowedActionVerbs { get; }
+
         /// <summary> The template deployment policy. </summary>
-        public TemplateDeploymentPolicy TemplateDeploymentPolicy { get; }
+        public ResourceTypeTemplateDeploymentPolicy TemplateDeploymentPolicy { get; }
+
         /// <summary> The extended locations. </summary>
         public IReadOnlyList<ProviderHubExtendedLocationOptions> ExtendedLocations { get; }
+
         /// <summary> The linked operation rules. </summary>
         public IReadOnlyList<LinkedOperationRule> LinkedOperationRules { get; }
+
         /// <summary> The resource deletion policy. </summary>
         public ManifestResourceDeletionPolicy? ResourceDeletionPolicy { get; }
+
         /// <summary> The quota rule. </summary>
         public ProviderQuotaRule QuotaRule { get; }
+
         /// <summary> The notifications. </summary>
         public IReadOnlyList<ProviderNotification> Notifications { get; }
+
         /// <summary> The linked notification rules. </summary>
         public IReadOnlyList<LinkedNotificationRule> LinkedNotificationRules { get; }
+
         /// <summary> The resource provider authorization rules. </summary>
         internal ResourceProviderAuthorizationRules ResourceProviderAuthorizationRules { get; }
+
+        /// <summary> The type. </summary>
+        public IdentityManagementTypes? IdentityManagementType
+        {
+            get
+            {
+                return IdentityManagement.Type;
+            }
+        }
+
+        /// <summary> The required feature policy. </summary>
+        public FeaturesPolicy? RequiredFeaturesPolicy
+        {
+            get
+            {
+                return FeaturesRule.RequiredFeaturesPolicy;
+            }
+        }
+
         /// <summary> The async operation polling rules. </summary>
         public AsyncOperationPollingRules AsyncOperationPollingRules
         {
-            get => ResourceProviderAuthorizationRules?.AsyncOperationPollingRules;
+            get
+            {
+                return ResourceProviderAuthorizationRules.AsyncOperationPollingRules;
+            }
         }
     }
 }

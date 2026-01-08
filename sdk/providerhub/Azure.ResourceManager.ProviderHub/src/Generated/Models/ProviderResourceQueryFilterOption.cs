@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ProviderResourceQueryFilterOption : IEquatable<ProviderResourceQueryFilterOption>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProviderResourceQueryFilterOption"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProviderResourceQueryFilterOption(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string EnableSubscriptionFilterOnTenantValue = "EnableSubscriptionFilterOnTenant";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderResourceQueryFilterOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProviderResourceQueryFilterOption(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ProviderResourceQueryFilterOption NotSpecified { get; } = new ProviderResourceQueryFilterOption(NotSpecifiedValue);
-        /// <summary> EnableSubscriptionFilterOnTenant. </summary>
+
+        /// <summary> Gets the EnableSubscriptionFilterOnTenant. </summary>
         public static ProviderResourceQueryFilterOption EnableSubscriptionFilterOnTenant { get; } = new ProviderResourceQueryFilterOption(EnableSubscriptionFilterOnTenantValue);
+
         /// <summary> Determines if two <see cref="ProviderResourceQueryFilterOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderResourceQueryFilterOption left, ProviderResourceQueryFilterOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProviderResourceQueryFilterOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderResourceQueryFilterOption left, ProviderResourceQueryFilterOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderResourceQueryFilterOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProviderResourceQueryFilterOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProviderResourceQueryFilterOption(string value) => new ProviderResourceQueryFilterOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProviderResourceQueryFilterOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProviderResourceQueryFilterOption?(string value) => value == null ? null : new ProviderResourceQueryFilterOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderResourceQueryFilterOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProviderResourceQueryFilterOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

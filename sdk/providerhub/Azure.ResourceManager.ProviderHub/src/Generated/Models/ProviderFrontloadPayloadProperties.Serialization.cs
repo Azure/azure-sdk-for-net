@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ProviderFrontloadPayloadProperties : IUtf8JsonSerializable, IJsonModel<ProviderFrontloadPayloadProperties>
+    /// <summary> The ProviderFrontloadPayloadProperties. </summary>
+    public partial class ProviderFrontloadPayloadProperties : IJsonModel<ProviderFrontloadPayloadProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderFrontloadPayloadProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ProviderFrontloadPayloadProperties"/> for deserialization. </summary>
+        internal ProviderFrontloadPayloadProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProviderFrontloadPayloadProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayloadProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayloadProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProviderFrontloadPayloadProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("operationType"u8);
             writer.WriteStringValue(OperationType);
             writer.WritePropertyName("providerNamespace"u8);
@@ -48,15 +53,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(ServiceFeatureFlag.ToString());
             writer.WritePropertyName("includeResourceTypes"u8);
             writer.WriteStartArray();
-            foreach (var item in IncludeResourceTypes)
+            foreach (string item in IncludeResourceTypes)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("excludeResourceTypes"u8);
             writer.WriteStartArray();
-            foreach (var item in ExcludeResourceTypes)
+            foreach (string item in ExcludeResourceTypes)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -66,20 +81,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteObjectValue(OverrideEndpointLevelFields, options);
             writer.WritePropertyName("ignoreFields"u8);
             writer.WriteStartArray();
-            foreach (var item in IgnoreFields)
+            foreach (string item in IgnoreFields)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,22 +108,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        ProviderFrontloadPayloadProperties IJsonModel<ProviderFrontloadPayloadProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProviderFrontloadPayloadProperties IJsonModel<ProviderFrontloadPayloadProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ProviderFrontloadPayloadProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayloadProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayloadProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProviderFrontloadPayloadProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeProviderFrontloadPayloadProperties(document.RootElement, options);
         }
 
-        internal static ProviderFrontloadPayloadProperties DeserializeProviderFrontloadPayloadProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ProviderFrontloadPayloadProperties DeserializeProviderFrontloadPayloadProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,89 +141,108 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ServiceFeatureFlagAction serviceFeatureFlag = default;
             IList<string> includeResourceTypes = default;
             IList<string> excludeResourceTypes = default;
-            ManifestLevelPropertyBag overrideManifestLevelFields = default;
-            ResourceTypeEndpointBase overrideEndpointLevelFields = default;
+            FrontloadPayloadPropertiesOverrideManifestLevelFields overrideManifestLevelFields = default;
+            FrontloadPayloadPropertiesOverrideEndpointLevelFields overrideEndpointLevelFields = default;
             IList<string> ignoreFields = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("operationType"u8))
+                if (prop.NameEquals("operationType"u8))
                 {
-                    operationType = property.Value.GetString();
+                    operationType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerNamespace"u8))
+                if (prop.NameEquals("providerNamespace"u8))
                 {
-                    providerNamespace = property.Value.GetString();
+                    providerNamespace = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("frontloadLocation"u8))
+                if (prop.NameEquals("frontloadLocation"u8))
                 {
-                    frontloadLocation = property.Value.GetString();
+                    frontloadLocation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("copyFromLocation"u8))
+                if (prop.NameEquals("copyFromLocation"u8))
                 {
-                    copyFromLocation = property.Value.GetString();
+                    copyFromLocation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("environmentType"u8))
+                if (prop.NameEquals("environmentType"u8))
                 {
-                    environmentType = new AvailableCheckInManifestEnvironment(property.Value.GetString());
+                    environmentType = new AvailableCheckInManifestEnvironment(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serviceFeatureFlag"u8))
+                if (prop.NameEquals("serviceFeatureFlag"u8))
                 {
-                    serviceFeatureFlag = new ServiceFeatureFlagAction(property.Value.GetString());
+                    serviceFeatureFlag = new ServiceFeatureFlagAction(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("includeResourceTypes"u8))
+                if (prop.NameEquals("includeResourceTypes"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     includeResourceTypes = array;
                     continue;
                 }
-                if (property.NameEquals("excludeResourceTypes"u8))
+                if (prop.NameEquals("excludeResourceTypes"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     excludeResourceTypes = array;
                     continue;
                 }
-                if (property.NameEquals("overrideManifestLevelFields"u8))
+                if (prop.NameEquals("overrideManifestLevelFields"u8))
                 {
-                    overrideManifestLevelFields = ManifestLevelPropertyBag.DeserializeManifestLevelPropertyBag(property.Value, options);
+                    overrideManifestLevelFields = FrontloadPayloadPropertiesOverrideManifestLevelFields.DeserializeFrontloadPayloadPropertiesOverrideManifestLevelFields(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("overrideEndpointLevelFields"u8))
+                if (prop.NameEquals("overrideEndpointLevelFields"u8))
                 {
-                    overrideEndpointLevelFields = ResourceTypeEndpointBase.DeserializeResourceTypeEndpointBase(property.Value, options);
+                    overrideEndpointLevelFields = FrontloadPayloadPropertiesOverrideEndpointLevelFields.DeserializeFrontloadPayloadPropertiesOverrideEndpointLevelFields(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("ignoreFields"u8))
+                if (prop.NameEquals("ignoreFields"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     ignoreFields = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ProviderFrontloadPayloadProperties(
                 operationType,
                 providerNamespace,
@@ -211,13 +255,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 overrideManifestLevelFields,
                 overrideEndpointLevelFields,
                 ignoreFields,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ProviderFrontloadPayloadProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayloadProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ProviderFrontloadPayloadProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayloadProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -227,15 +274,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        ProviderFrontloadPayloadProperties IPersistableModel<ProviderFrontloadPayloadProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayloadProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProviderFrontloadPayloadProperties IPersistableModel<ProviderFrontloadPayloadProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ProviderFrontloadPayloadProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayloadProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeProviderFrontloadPayloadProperties(document.RootElement, options);
                     }
                 default:
@@ -243,6 +295,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ProviderFrontloadPayloadProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

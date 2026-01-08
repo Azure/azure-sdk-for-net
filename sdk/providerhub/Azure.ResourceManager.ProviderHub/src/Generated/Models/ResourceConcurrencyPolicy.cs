@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ResourceConcurrencyPolicy : IEquatable<ResourceConcurrencyPolicy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ResourceConcurrencyPolicy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceConcurrencyPolicy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string SynchronizeBeginExtensionValue = "SynchronizeBeginExtension";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceConcurrencyPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceConcurrencyPolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ResourceConcurrencyPolicy NotSpecified { get; } = new ResourceConcurrencyPolicy(NotSpecifiedValue);
-        /// <summary> SynchronizeBeginExtension. </summary>
+
+        /// <summary> Gets the SynchronizeBeginExtension. </summary>
         public static ResourceConcurrencyPolicy SynchronizeBeginExtension { get; } = new ResourceConcurrencyPolicy(SynchronizeBeginExtensionValue);
+
         /// <summary> Determines if two <see cref="ResourceConcurrencyPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceConcurrencyPolicy left, ResourceConcurrencyPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceConcurrencyPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceConcurrencyPolicy left, ResourceConcurrencyPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceConcurrencyPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceConcurrencyPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceConcurrencyPolicy(string value) => new ResourceConcurrencyPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceConcurrencyPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceConcurrencyPolicy?(string value) => value == null ? null : new ResourceConcurrencyPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceConcurrencyPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceConcurrencyPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceTypeEndpointBase. </summary>
     public partial class ResourceTypeEndpointBase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpointBase"/>. </summary>
         /// <param name="enabled"> Whether it's enabled. </param>
@@ -60,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="apiVersion"> The api version. </param>
         /// <param name="zones"> The zones. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersions"/>, <paramref name="endpointUri"/>, <paramref name="locations"/>, <paramref name="requiredFeatures"/>, <paramref name="featuresRule"/>, <paramref name="dstsConfiguration"/>, <paramref name="skuLink"/>, <paramref name="apiVersion"/> or <paramref name="zones"/> is null. </exception>
-        public ResourceTypeEndpointBase(bool enabled, IEnumerable<string> apiVersions, Uri endpointUri, IEnumerable<string> locations, IEnumerable<string> requiredFeatures, ProviderFeaturesRule featuresRule, TimeSpan timeout, ProviderEndpointType endpointType, ProviderDstsConfiguration dstsConfiguration, string skuLink, string apiVersion, IEnumerable<string> zones)
+        public ResourceTypeEndpointBase(bool enabled, IEnumerable<string> apiVersions, string endpointUri, IEnumerable<string> locations, IEnumerable<string> requiredFeatures, ResourceTypeEndpointBaseFeaturesRule featuresRule, TimeSpan timeout, ProviderEndpointType endpointType, ResourceTypeEndpointBaseDstsConfiguration dstsConfiguration, string skuLink, string apiVersion, IEnumerable<string> zones)
         {
             Argument.AssertNotNull(apiVersions, nameof(apiVersions));
             Argument.AssertNotNull(endpointUri, nameof(endpointUri));
@@ -99,8 +71,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="skuLink"> The sku link. </param>
         /// <param name="apiVersion"> The api version. </param>
         /// <param name="zones"> The zones. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeEndpointBase(bool enabled, IList<string> apiVersions, Uri endpointUri, IList<string> locations, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, TimeSpan timeout, ProviderEndpointType endpointType, ProviderDstsConfiguration dstsConfiguration, string skuLink, string apiVersion, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeEndpointBase(bool enabled, IList<string> apiVersions, string endpointUri, IList<string> locations, IList<string> requiredFeatures, ResourceTypeEndpointBaseFeaturesRule featuresRule, TimeSpan timeout, ProviderEndpointType endpointType, ResourceTypeEndpointBaseDstsConfiguration dstsConfiguration, string skuLink, string apiVersion, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             ApiVersions = apiVersions;
@@ -114,43 +86,52 @@ namespace Azure.ResourceManager.ProviderHub.Models
             SkuLink = skuLink;
             ApiVersion = apiVersion;
             Zones = zones;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpointBase"/> for deserialization. </summary>
-        internal ResourceTypeEndpointBase()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether it's enabled. </summary>
         public bool Enabled { get; }
+
         /// <summary> The api versions. </summary>
         public IList<string> ApiVersions { get; }
+
         /// <summary> The endpoint uri. </summary>
-        public Uri EndpointUri { get; }
+        public string EndpointUri { get; }
+
         /// <summary> The locations. </summary>
         public IList<string> Locations { get; }
+
         /// <summary> The required features. </summary>
         public IList<string> RequiredFeatures { get; }
+
         /// <summary> The features rule. </summary>
-        internal ProviderFeaturesRule FeaturesRule { get; }
-        /// <summary> The required feature policy. </summary>
-        public FeaturesPolicy? RequiredFeaturesPolicy
-        {
-            get => FeaturesRule?.RequiredFeaturesPolicy;
-        }
+        internal ResourceTypeEndpointBaseFeaturesRule FeaturesRule { get; }
 
         /// <summary> This is a TimeSpan property. </summary>
         public TimeSpan Timeout { get; }
+
         /// <summary> The endpoint type. </summary>
         public ProviderEndpointType EndpointType { get; }
+
         /// <summary> The dsts configuration. </summary>
-        public ProviderDstsConfiguration DstsConfiguration { get; }
+        public ResourceTypeEndpointBaseDstsConfiguration DstsConfiguration { get; }
+
         /// <summary> The sku link. </summary>
         public string SkuLink { get; }
+
         /// <summary> The api version. </summary>
         public string ApiVersion { get; }
+
         /// <summary> The zones. </summary>
         public IList<string> Zones { get; }
+
+        /// <summary> The required feature policy. </summary>
+        public FeaturesPolicy? RequiredFeaturesPolicy
+        {
+            get
+            {
+                return FeaturesRule.RequiredFeaturesPolicy;
+            }
+        }
     }
 }

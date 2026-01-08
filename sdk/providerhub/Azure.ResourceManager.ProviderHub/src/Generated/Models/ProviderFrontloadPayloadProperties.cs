@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ProviderFrontloadPayloadProperties. </summary>
     public partial class ProviderFrontloadPayloadProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProviderFrontloadPayloadProperties"/>. </summary>
         /// <param name="operationType"> The operation type. </param>
@@ -59,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="overrideEndpointLevelFields"> The endpoint level fields to override. </param>
         /// <param name="ignoreFields"> The fields to ignore. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationType"/>, <paramref name="providerNamespace"/>, <paramref name="frontloadLocation"/>, <paramref name="copyFromLocation"/>, <paramref name="includeResourceTypes"/>, <paramref name="excludeResourceTypes"/>, <paramref name="overrideManifestLevelFields"/>, <paramref name="overrideEndpointLevelFields"/> or <paramref name="ignoreFields"/> is null. </exception>
-        public ProviderFrontloadPayloadProperties(string operationType, string providerNamespace, string frontloadLocation, string copyFromLocation, AvailableCheckInManifestEnvironment environmentType, ServiceFeatureFlagAction serviceFeatureFlag, IEnumerable<string> includeResourceTypes, IEnumerable<string> excludeResourceTypes, ManifestLevelPropertyBag overrideManifestLevelFields, ResourceTypeEndpointBase overrideEndpointLevelFields, IEnumerable<string> ignoreFields)
+        public ProviderFrontloadPayloadProperties(string operationType, string providerNamespace, string frontloadLocation, string copyFromLocation, AvailableCheckInManifestEnvironment environmentType, ServiceFeatureFlagAction serviceFeatureFlag, IEnumerable<string> includeResourceTypes, IEnumerable<string> excludeResourceTypes, FrontloadPayloadPropertiesOverrideManifestLevelFields overrideManifestLevelFields, FrontloadPayloadPropertiesOverrideEndpointLevelFields overrideEndpointLevelFields, IEnumerable<string> ignoreFields)
         {
             Argument.AssertNotNull(operationType, nameof(operationType));
             Argument.AssertNotNull(providerNamespace, nameof(providerNamespace));
@@ -96,8 +68,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="overrideManifestLevelFields"> The manifest level fields to override. </param>
         /// <param name="overrideEndpointLevelFields"> The endpoint level fields to override. </param>
         /// <param name="ignoreFields"> The fields to ignore. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderFrontloadPayloadProperties(string operationType, string providerNamespace, string frontloadLocation, string copyFromLocation, AvailableCheckInManifestEnvironment environmentType, ServiceFeatureFlagAction serviceFeatureFlag, IList<string> includeResourceTypes, IList<string> excludeResourceTypes, ManifestLevelPropertyBag overrideManifestLevelFields, ResourceTypeEndpointBase overrideEndpointLevelFields, IList<string> ignoreFields, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderFrontloadPayloadProperties(string operationType, string providerNamespace, string frontloadLocation, string copyFromLocation, AvailableCheckInManifestEnvironment environmentType, ServiceFeatureFlagAction serviceFeatureFlag, IList<string> includeResourceTypes, IList<string> excludeResourceTypes, FrontloadPayloadPropertiesOverrideManifestLevelFields overrideManifestLevelFields, FrontloadPayloadPropertiesOverrideEndpointLevelFields overrideEndpointLevelFields, IList<string> ignoreFields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationType = operationType;
             ProviderNamespace = providerNamespace;
@@ -110,41 +82,49 @@ namespace Azure.ResourceManager.ProviderHub.Models
             OverrideManifestLevelFields = overrideManifestLevelFields;
             OverrideEndpointLevelFields = overrideEndpointLevelFields;
             IgnoreFields = ignoreFields;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProviderFrontloadPayloadProperties"/> for deserialization. </summary>
-        internal ProviderFrontloadPayloadProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The operation type. </summary>
         public string OperationType { get; }
+
         /// <summary> The provider namespace. </summary>
         public string ProviderNamespace { get; }
+
         /// <summary> The frontload location. </summary>
         public string FrontloadLocation { get; }
+
         /// <summary> The copy from location. </summary>
         public string CopyFromLocation { get; }
+
         /// <summary> The environment type. </summary>
         public AvailableCheckInManifestEnvironment EnvironmentType { get; }
+
         /// <summary> The service feature flag. </summary>
         public ServiceFeatureFlagAction ServiceFeatureFlag { get; }
+
         /// <summary> The resource types to include. </summary>
         public IList<string> IncludeResourceTypes { get; }
+
         /// <summary> The resource types to exclude. </summary>
         public IList<string> ExcludeResourceTypes { get; }
+
         /// <summary> The manifest level fields to override. </summary>
-        internal ManifestLevelPropertyBag OverrideManifestLevelFields { get; }
+        internal FrontloadPayloadPropertiesOverrideManifestLevelFields OverrideManifestLevelFields { get; }
+
+        /// <summary> The endpoint level fields to override. </summary>
+        public FrontloadPayloadPropertiesOverrideEndpointLevelFields OverrideEndpointLevelFields { get; }
+
+        /// <summary> The fields to ignore. </summary>
+        public IList<string> IgnoreFields { get; }
+
         /// <summary> The resource hydration accounts. </summary>
         public IList<ResourceHydrationAccount> OverrideManifestLevelFieldsResourceHydrationAccounts
         {
-            get => OverrideManifestLevelFields?.ResourceHydrationAccounts;
+            get
+            {
+                return OverrideManifestLevelFields is null ? default : OverrideManifestLevelFields.ResourceHydrationAccounts;
+            }
         }
-
-        /// <summary> The endpoint level fields to override. </summary>
-        public ResourceTypeEndpointBase OverrideEndpointLevelFields { get; }
-        /// <summary> The fields to ignore. </summary>
-        public IList<string> IgnoreFields { get; }
     }
 }

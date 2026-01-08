@@ -7,49 +7,23 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceTypeSkuLocationInfo. </summary>
     public partial class ResourceTypeSkuLocationInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuLocationInfo"/>. </summary>
         /// <param name="location"> The location. </param>
-        public ResourceTypeSkuLocationInfo(AzureLocation location)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public ResourceTypeSkuLocationInfo(string location)
         {
+            Argument.AssertNotNull(location, nameof(location));
+
             Location = location;
             Zones = new ChangeTrackingList<string>();
             ZoneDetails = new ChangeTrackingList<ResourceTypeSkuZoneDetail>();
@@ -62,30 +36,29 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="zoneDetails"> The zone details. </param>
         /// <param name="extendedLocations"> The extended locations. </param>
         /// <param name="locationType"> The type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeSkuLocationInfo(AzureLocation location, IList<string> zones, IList<ResourceTypeSkuZoneDetail> zoneDetails, IList<string> extendedLocations, ProviderExtendedLocationType? locationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeSkuLocationInfo(string location, IList<string> zones, IList<ResourceTypeSkuZoneDetail> zoneDetails, IList<string> extendedLocations, ProviderExtendedLocationType? locationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Zones = zones;
             ZoneDetails = zoneDetails;
             ExtendedLocations = extendedLocations;
             LocationType = locationType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuLocationInfo"/> for deserialization. </summary>
-        internal ResourceTypeSkuLocationInfo()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The location. </summary>
-        public AzureLocation Location { get; set; }
+        public string Location { get; set; }
+
         /// <summary> The zones. </summary>
         public IList<string> Zones { get; }
+
         /// <summary> The zone details. </summary>
         public IList<ResourceTypeSkuZoneDetail> ZoneDetails { get; }
+
         /// <summary> The extended locations. </summary>
         public IList<string> ExtendedLocations { get; }
+
         /// <summary> The type. </summary>
         public ProviderExtendedLocationType? LocationType { get; set; }
     }

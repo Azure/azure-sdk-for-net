@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Initializes a new instance of <see cref="ProviderRegistrationPropertiesPrivateResourceProviderConfiguration"/>. </summary>
         /// <param name="allowedSubscriptions"> The allowed subscriptions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderRegistrationPropertiesPrivateResourceProviderConfiguration(IList<string> allowedSubscriptions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(allowedSubscriptions, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderRegistrationPropertiesPrivateResourceProviderConfiguration(IList<string> allowedSubscriptions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(allowedSubscriptions, additionalBinaryDataProperties)
         {
         }
     }

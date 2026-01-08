@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceProviderManifest. </summary>
     public partial class ResourceProviderManifest
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManifest"/>. </summary>
         internal ResourceProviderManifest()
@@ -80,8 +53,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="notifications"> The notifications. </param>
         /// <param name="linkedNotificationRules"> The linked notification rules. </param>
         /// <param name="resourceProviderAuthorizationRules"> The resource provider authorization rules. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManifest(ResourceProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IReadOnlyList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, IReadOnlyList<ProviderResourceType> resourceTypes, ResourceProviderManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata, bool? isTenantLinkedNotificationEnabled, IReadOnlyList<ProviderNotification> notifications, IReadOnlyList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderManifest(ResourceProviderManifestProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IReadOnlyList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, ResourceProviderManifestFeaturesRule featuresRule, ResourceProviderManifestRequestHeaderOptions requestHeaderOptions, IReadOnlyList<ProviderResourceType> resourceTypes, ResourceProviderManifestManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ResourceProviderManifestReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata, bool? isTenantLinkedNotificationEnabled, IReadOnlyList<ProviderNotification> notifications, IReadOnlyList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProviderAuthentication = providerAuthentication;
             ProviderAuthorizations = providerAuthorizations;
@@ -104,96 +77,122 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Notifications = notifications;
             LinkedNotificationRules = linkedNotificationRules;
             ResourceProviderAuthorizationRules = resourceProviderAuthorizationRules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provider authentication. </summary>
-        internal ResourceProviderAuthentication ProviderAuthentication { get; }
-        /// <summary> The allowed audiences. </summary>
-        public IList<string> ProviderAuthenticationAllowedAudiences
-        {
-            get => ProviderAuthentication?.AllowedAudiences;
-        }
+        internal ResourceProviderManifestProviderAuthentication ProviderAuthentication { get; }
 
         /// <summary> The provider authorizations. </summary>
         public IReadOnlyList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
+
         /// <summary> The namespace. </summary>
         public string Namespace { get; }
+
         /// <summary> The services. </summary>
         public IReadOnlyList<ResourceProviderService> Services { get; }
+
         /// <summary> The service name. </summary>
         public string ServiceName { get; }
+
         /// <summary> The provider version. </summary>
         public string ProviderVersion { get; }
+
         /// <summary> The provider type. </summary>
         public ResourceProviderType? ProviderType { get; }
+
         /// <summary> The required features. </summary>
         public IReadOnlyList<string> RequiredFeatures { get; }
+
         /// <summary> The features rule. </summary>
-        internal ProviderFeaturesRule FeaturesRule { get; }
-        /// <summary> The required feature policy. </summary>
-        public FeaturesPolicy? RequiredFeaturesPolicy
-        {
-            get => FeaturesRule?.RequiredFeaturesPolicy;
-        }
+        internal ResourceProviderManifestFeaturesRule FeaturesRule { get; }
 
         /// <summary> The request header options. </summary>
-        public ProviderRequestHeaderOptions RequestHeaderOptions { get; }
+        public ResourceProviderManifestRequestHeaderOptions RequestHeaderOptions { get; }
+
         /// <summary> The resource types. </summary>
         public IReadOnlyList<ProviderResourceType> ResourceTypes { get; }
+
         /// <summary> The resource provider management. </summary>
-        public ResourceProviderManagement Management { get; }
+        public ResourceProviderManifestManagement Management { get; }
+
         /// <summary> The capabilities. </summary>
         public IReadOnlyList<ResourceProviderCapabilities> Capabilities { get; }
+
         /// <summary> The cross tenant token validation. </summary>
         public CrossTenantTokenValidation? CrossTenantTokenValidation { get; }
+
         /// <summary>
         /// The metadata.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public BinaryData Metadata { get; }
+
         /// <summary> The global notification endpoints. </summary>
         public IReadOnlyList<ResourceProviderEndpoint> GlobalNotificationEndpoints { get; }
+
         /// <summary> The re-register subscription metadata. </summary>
-        public ReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata { get; }
+        public ResourceProviderManifestReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata { get; }
+
         /// <summary> Whether tenant linked notification is enabled. </summary>
         public bool? IsTenantLinkedNotificationEnabled { get; }
+
         /// <summary> The notifications. </summary>
         public IReadOnlyList<ProviderNotification> Notifications { get; }
+
         /// <summary> The linked notification rules. </summary>
         public IReadOnlyList<FanoutLinkedNotificationRule> LinkedNotificationRules { get; }
+
         /// <summary> The resource provider authorization rules. </summary>
         internal ResourceProviderAuthorizationRules ResourceProviderAuthorizationRules { get; }
+
+        /// <summary> The allowed audiences. </summary>
+        public IList<string> ProviderAuthenticationAllowedAudiences
+        {
+            get
+            {
+                return ProviderAuthentication.AllowedAudiences;
+            }
+        }
+
+        /// <summary> The required feature policy. </summary>
+        public FeaturesPolicy? RequiredFeaturesPolicy
+        {
+            get
+            {
+                return FeaturesRule.RequiredFeaturesPolicy;
+            }
+        }
+
         /// <summary> The async operation polling rules. </summary>
         public AsyncOperationPollingRules AsyncOperationPollingRules
         {
-            get => ResourceProviderAuthorizationRules?.AsyncOperationPollingRules;
+            get
+            {
+                return ResourceProviderAuthorizationRules.AsyncOperationPollingRules;
+            }
         }
     }
 }

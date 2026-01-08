@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct LinkedOperation : IEquatable<LinkedOperation>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LinkedOperation"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LinkedOperation(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string CrossResourceGroupResourceMoveValue = "CrossResourceGroupResourceMove";
         private const string CrossSubscriptionResourceMoveValue = "CrossSubscriptionResourceMove";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LinkedOperation(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static LinkedOperation None { get; } = new LinkedOperation(NoneValue);
-        /// <summary> CrossResourceGroupResourceMove. </summary>
+
+        /// <summary> Gets the CrossResourceGroupResourceMove. </summary>
         public static LinkedOperation CrossResourceGroupResourceMove { get; } = new LinkedOperation(CrossResourceGroupResourceMoveValue);
-        /// <summary> CrossSubscriptionResourceMove. </summary>
+
+        /// <summary> Gets the CrossSubscriptionResourceMove. </summary>
         public static LinkedOperation CrossSubscriptionResourceMove { get; } = new LinkedOperation(CrossSubscriptionResourceMoveValue);
+
         /// <summary> Determines if two <see cref="LinkedOperation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LinkedOperation left, LinkedOperation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LinkedOperation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LinkedOperation left, LinkedOperation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkedOperation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LinkedOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LinkedOperation(string value) => new LinkedOperation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LinkedOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LinkedOperation?(string value) => value == null ? null : new LinkedOperation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LinkedOperation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LinkedOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

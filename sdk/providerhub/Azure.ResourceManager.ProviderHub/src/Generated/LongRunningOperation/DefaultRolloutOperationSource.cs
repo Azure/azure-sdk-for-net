@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    internal class DefaultRolloutOperationSource : IOperationSource<DefaultRolloutResource>
+    /// <summary></summary>
+    internal partial class DefaultRolloutOperationSource : IOperationSource<DefaultRolloutResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DefaultRolloutOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DefaultRolloutResource IOperationSource<DefaultRolloutResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DefaultRolloutData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DefaultRolloutData data = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DefaultRolloutResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DefaultRolloutResource> IOperationSource<DefaultRolloutResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DefaultRolloutData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
-            return await Task.FromResult(new DefaultRolloutResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DefaultRolloutData data = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DefaultRolloutResource(_client, data);
         }
     }
 }

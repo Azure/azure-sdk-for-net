@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The CheckinManifestInfo. </summary>
     public partial class CheckinManifestInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CheckinManifestInfo"/>. </summary>
         /// <param name="isCheckedIn"> Whether the manifest is checked in. </param>
@@ -62,27 +34,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="statusMessage"> The status message. </param>
         /// <param name="pullRequest"> The pull request. </param>
         /// <param name="commitId"> The commit id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckinManifestInfo(bool isCheckedIn, string statusMessage, string pullRequest, string commitId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CheckinManifestInfo(bool isCheckedIn, string statusMessage, string pullRequest, string commitId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsCheckedIn = isCheckedIn;
             StatusMessage = statusMessage;
             PullRequest = pullRequest;
             CommitId = commitId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CheckinManifestInfo"/> for deserialization. </summary>
-        internal CheckinManifestInfo()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether the manifest is checked in. </summary>
         public bool IsCheckedIn { get; set; }
+
         /// <summary> The status message. </summary>
         public string StatusMessage { get; set; }
+
         /// <summary> The pull request. </summary>
         public string PullRequest { get; set; }
+
         /// <summary> The commit id. </summary>
         public string CommitId { get; set; }
     }

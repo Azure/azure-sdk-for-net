@@ -8,48 +8,19 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The CustomRolloutStatus. </summary>
     public partial class CustomRolloutStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomRolloutStatus"/>. </summary>
         public CustomRolloutStatus()
         {
-            CompletedRegions = new ChangeTrackingList<AzureLocation>();
             FailedOrSkippedRegions = new ChangeTrackingDictionary<string, ExtendedErrorInfo>();
         }
 
@@ -57,20 +28,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="completedRegions"> The completed regions. </param>
         /// <param name="failedOrSkippedRegions"> The failed or skipped regions. </param>
         /// <param name="manifestCheckinStatus"> The manifest checkin status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRolloutStatus(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, CheckinManifestInfo manifestCheckinStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CustomRolloutStatus(AzureLocation? completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, CustomRolloutStatusManifestCheckinStatus manifestCheckinStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CompletedRegions = completedRegions;
             FailedOrSkippedRegions = failedOrSkippedRegions;
             ManifestCheckinStatus = manifestCheckinStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The completed regions. </summary>
-        public IList<AzureLocation> CompletedRegions { get; }
+        public AzureLocation? CompletedRegions { get; set; }
+
         /// <summary> The failed or skipped regions. </summary>
         public IDictionary<string, ExtendedErrorInfo> FailedOrSkippedRegions { get; }
+
         /// <summary> The manifest checkin status. </summary>
-        public CheckinManifestInfo ManifestCheckinStatus { get; set; }
+        public CustomRolloutStatusManifestCheckinStatus ManifestCheckinStatus { get; set; }
     }
 }
