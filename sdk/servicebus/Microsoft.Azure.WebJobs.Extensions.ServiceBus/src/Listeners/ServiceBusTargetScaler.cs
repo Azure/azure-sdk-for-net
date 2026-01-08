@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
 {
     internal class ServiceBusTargetScaler : ITargetScaler
     {
-        private readonly string _functionId;
+        private readonly string _functionName;
         private readonly ServiceBusMetricsProvider _serviceBusMetricsProvider;
         private readonly ServiceBusOptions _options;
         private readonly bool _isSessionsEnabled;
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
         private readonly ILogger _logger;
 
         public ServiceBusTargetScaler(
-            string functionId,
+            string functionName,
             string entityPath,
             ServiceBusEntityType entityType,
             Lazy<ServiceBusReceiver> receiver,
@@ -37,10 +37,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             ILoggerFactory loggerFactory
             )
         {
-            _functionId = functionId;
-            _serviceBusMetricsProvider = new ServiceBusMetricsProvider(entityPath, entityType, receiver, administrationClient, loggerFactory);
+            _functionName = functionName;
+            _serviceBusMetricsProvider = new ServiceBusMetricsProvider(_functionName, entityPath, entityType, receiver, administrationClient, loggerFactory);
             _entityPath = entityPath;
-            _targetScalerDescriptor = new TargetScalerDescriptor(functionId);
+            _targetScalerDescriptor = new TargetScalerDescriptor(functionName);
             _logger = loggerFactory.CreateLogger<ServiceBusTargetScaler>();
             _options = options;
             _singleDispatch = singleDispatch;
@@ -108,7 +108,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                 targetWorkerCount = int.MaxValue;
             }
 
-            _logger.LogInformation($"Target worker count for function '{_functionId}' is '{targetWorkerCount}' (EntityPath='{_entityPath}', MessageCount ='{messageCount}', Concurrency='{concurrency}').");
+            _logger.LogFunctionScaleVote(_functionName, targetWorkerCount, (int)messageCount, concurrency,
+                $"EntityPath='{_entityPath}', MessageCount ='{messageCount}', Concurrency='{concurrency}'.");
 
             return new TargetScalerResult
             {
