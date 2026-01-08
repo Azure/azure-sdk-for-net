@@ -323,7 +323,7 @@ namespace Azure.Security.KeyVault.Certificates
                     byte[] rawData = Convert.FromBase64String(value);
 
                     X509Certificate2 x509;
-#if NET10_0_OR_GREATER
+#if NET9_0_OR_GREATER
                     x509 = X509CertificateLoader.LoadPkcs12(rawData, (string)null, options.KeyStorageFlags);
 #else
                     x509 = new(rawData, (string)null, options.KeyStorageFlags);
@@ -458,7 +458,7 @@ namespace Azure.Security.KeyVault.Certificates
                     byte[] rawData = Convert.FromBase64String(value);
 
                     X509Certificate2 x509;
-#if NET10_0_OR_GREATER
+#if NET9_0_OR_GREATER
                     x509 = X509CertificateLoader.LoadPkcs12(rawData, (string)null, options.KeyStorageFlags);
 #else
                     x509 = new(rawData, (string)null, options.KeyStorageFlags);

@@ -70,7 +70,7 @@ public static class AzureAIProjectsExtensions
 
     private static EmbeddingsClient CreateEmbeddingsClient(this ClientConnectionProvider workspace)
     {
-        ClientConnection connection = workspace.GetConnection(typeof(ChatCompletionsClient).FullName);
+        ClientConnection connection = workspace.GetConnection(typeof(EmbeddingsClient).FullName);
 
         if (!connection.TryGetLocatorAsUri(out Uri uri))
         {
@@ -157,7 +157,7 @@ public static class AzureAIProjectsExtensions
 
     private static SearchIndexerClient CreateSearchIndexerClient(this ClientConnectionProvider workspace)
     {
-        ClientConnection connection = workspace.GetConnection(typeof(SearchIndexClient).FullName);
+        ClientConnection connection = workspace.GetConnection(typeof(SearchIndexerClient).FullName);
 
         if (!connection.TryGetLocatorAsUri(out Uri uri))
         {
