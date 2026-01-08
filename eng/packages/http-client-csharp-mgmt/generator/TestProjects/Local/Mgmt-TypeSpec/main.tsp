@@ -48,8 +48,10 @@ namespace MgmtTypeSpec {
   @@clientLocation(WorkloadNetworkSegments.delete, "WorkloadNetworks");
 
   @@clientName(WorkloadNetworkVmGroups.get, "GetVmGroup");
+  @@clientName(WorkloadNetworkVmGroups.update, "UpdateVmGroup");
   @@clientName(WorkloadNetworkVmGroups.delete, "DeleteVmGroup");
   @@clientName(WorkloadNetworkSegments.get, "GetSegment");
+  @@clientName(WorkloadNetworkSegments.update, "UpdateSegment");
   @@clientName(WorkloadNetworkSegments.delete, "DeleteSegment");
 
   #suppress "deprecated"

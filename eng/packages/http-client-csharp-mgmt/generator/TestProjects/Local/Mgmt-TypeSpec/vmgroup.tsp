@@ -99,6 +99,12 @@ interface WorkloadNetworkVmGroups {
   createOrUpdate is ArmResourceCreateOrReplaceAsync<WorkloadNetworkVmGroup>;
 
   /**
+   * Update a VM Group.
+   * Uses @@clientName to rename to 'UpdateVmGroup', but should still generate as 'Update'/'UpdateAsync'.
+   */
+  update is ArmCustomPatchAsync<WorkloadNetworkVmGroup, WorkloadNetworkVmGroup>;
+
+  /**
    * Delete a VM Group.
    * Uses @@clientName to rename to 'DeleteVmGroup', but should still generate as 'Delete'/'DeleteAsync'.
    */
@@ -122,6 +128,12 @@ interface WorkloadNetworkSegments {
    * Create or update a Segment.
    */
   createOrUpdate is ArmResourceCreateOrReplaceAsync<WorkloadNetworkSegment>;
+
+  /**
+   * Update a Segment.
+   * Uses @@clientName to rename to 'UpdateSegment', but should still generate as 'Update'/'UpdateAsync'.
+   */
+  update is ArmCustomPatchAsync<WorkloadNetworkSegment, WorkloadNetworkSegment>;
 
   /**
    * Delete a Segment.
