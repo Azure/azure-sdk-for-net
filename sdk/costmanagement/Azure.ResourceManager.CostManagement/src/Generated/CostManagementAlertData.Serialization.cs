@@ -286,6 +286,7 @@ namespace Azure.ResourceManager.CostManagement
                 name,
                 type,
                 systemData,
+                eTag,
                 definition,
                 description,
                 source,
@@ -297,7 +298,6 @@ namespace Azure.ResourceManager.CostManagement
                 modificationTime,
                 statusModificationUserName,
                 statusModificationTime,
-                eTag,
                 serializedAdditionalRawData);
         }
 

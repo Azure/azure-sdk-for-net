@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateView()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/PrivateView.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/PrivateView.json
             // this example is just showing the usage of "Views_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletePrivateView()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/PrivateViewDelete.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/PrivateViewDelete.json
             // this example is just showing the usage of "Views_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdatePrivateView()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/PrivateViewCreateOrUpdate.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/PrivateViewCreateOrUpdate.json
             // this example is just showing the usage of "Views_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             CostManagementViewData data = new CostManagementViewData
             {
+                ETag = new ETag("\"1d4ff9fe66f1d10\""),
                 DisplayName = "swagger Example",
                 Chart = ViewChartType.Table,
                 Accumulated = AccumulatedType.True,
@@ -132,7 +133,6 @@ Name = "swaggerTagKey",
 Direction = ReportConfigSortingType.Ascending,
 }},
                 },
-                ETag = new ETag("\"1d4ff9fe66f1d10\""),
             };
             ArmOperation<TenantsCostManagementViewsResource> lro = await tenantsCostManagementViews.UpdateAsync(WaitUntil.Completed, data);
             TenantsCostManagementViewsResource result = lro.Value;

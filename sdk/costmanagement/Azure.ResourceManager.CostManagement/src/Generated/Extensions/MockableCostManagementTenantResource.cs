@@ -18,34 +18,26 @@ namespace Azure.ResourceManager.CostManagement.Mocking
     /// <summary> A class to add extension methods to TenantResource. </summary>
     public partial class MockableCostManagementTenantResource : ArmResource
     {
-        private ClientDiagnostics _benefitUtilizationSummariesClientDiagnostics;
-        private BenefitUtilizationSummariesRestOperations _benefitUtilizationSummariesRestClient;
-        private ClientDiagnostics _billingAccountScopeClientDiagnostics;
-        private BillingAccountScopeRestOperations _billingAccountScopeRestClient;
-        private ClientDiagnostics _billingProfileScopeClientDiagnostics;
-        private BillingProfileScopeRestOperations _billingProfileScopeRestClient;
-        private ClientDiagnostics _reservationOrderScopeClientDiagnostics;
-        private ReservationOrderScopeRestOperations _reservationOrderScopeRestClient;
-        private ClientDiagnostics _reservationScopeClientDiagnostics;
-        private ReservationScopeRestOperations _reservationScopeRestClient;
-        private ClientDiagnostics _savingsPlanOrderScopeClientDiagnostics;
-        private SavingsPlanOrderScopeRestOperations _savingsPlanOrderScopeRestClient;
-        private ClientDiagnostics _savingsPlanScopeClientDiagnostics;
-        private SavingsPlanScopeRestOperations _savingsPlanScopeRestClient;
         private ClientDiagnostics _costManagementAlertAlertsClientDiagnostics;
         private AlertsRestOperations _costManagementAlertAlertsRestClient;
-        private ClientDiagnostics _forecastClientDiagnostics;
-        private ForecastRestOperations _forecastRestClient;
-        private ClientDiagnostics _dimensionsClientDiagnostics;
-        private DimensionsRestOperations _dimensionsRestClient;
-        private ClientDiagnostics _queryClientDiagnostics;
-        private QueryRestOperations _queryRestClient;
-        private ClientDiagnostics _generateReservationDetailsReportClientDiagnostics;
-        private GenerateReservationDetailsReportRestOperations _generateReservationDetailsReportRestClient;
-        private ClientDiagnostics _priceSheetClientDiagnostics;
-        private PriceSheetRestOperations _priceSheetRestClient;
         private ClientDiagnostics _scheduledActionsClientDiagnostics;
         private ScheduledActionsRestOperations _scheduledActionsRestClient;
+        private ClientDiagnostics _dimensionsClientDiagnostics;
+        private DimensionsRestOperations _dimensionsRestClient;
+        private ClientDiagnostics _forecastClientDiagnostics;
+        private ForecastRestOperations _forecastRestClient;
+        private ClientDiagnostics _queryClientDiagnostics;
+        private QueryRestOperations _queryRestClient;
+        private ClientDiagnostics _priceSheetClientDiagnostics;
+        private PriceSheetRestOperations _priceSheetRestClient;
+        private ClientDiagnostics _benefitUtilizationSummariesClientDiagnostics;
+        private BenefitUtilizationSummariesRestOperations _benefitUtilizationSummariesRestClient;
+        private ClientDiagnostics _generateBenefitUtilizationSummariesReportClientDiagnostics;
+        private GenerateBenefitUtilizationSummariesReportRestOperations _generateBenefitUtilizationSummariesReportRestClient;
+        private ClientDiagnostics _generateReservationDetailsReportClientDiagnostics;
+        private GenerateReservationDetailsReportRestOperations _generateReservationDetailsReportRestClient;
+        private ClientDiagnostics _costAllocationRuleDefinitionCostAllocationRulesClientDiagnostics;
+        private CostAllocationRulesRestOperations _costAllocationRuleDefinitionCostAllocationRulesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableCostManagementTenantResource"/> class for mocking. </summary>
         protected MockableCostManagementTenantResource()
@@ -59,108 +51,31 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         {
         }
 
-        private ClientDiagnostics BenefitUtilizationSummariesClientDiagnostics => _benefitUtilizationSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BenefitUtilizationSummariesRestOperations BenefitUtilizationSummariesRestClient => _benefitUtilizationSummariesRestClient ??= new BenefitUtilizationSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics BillingAccountScopeClientDiagnostics => _billingAccountScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BillingAccountScopeRestOperations BillingAccountScopeRestClient => _billingAccountScopeRestClient ??= new BillingAccountScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics BillingProfileScopeClientDiagnostics => _billingProfileScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BillingProfileScopeRestOperations BillingProfileScopeRestClient => _billingProfileScopeRestClient ??= new BillingProfileScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ReservationOrderScopeClientDiagnostics => _reservationOrderScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ReservationOrderScopeRestOperations ReservationOrderScopeRestClient => _reservationOrderScopeRestClient ??= new ReservationOrderScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ReservationScopeClientDiagnostics => _reservationScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ReservationScopeRestOperations ReservationScopeRestClient => _reservationScopeRestClient ??= new ReservationScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SavingsPlanOrderScopeClientDiagnostics => _savingsPlanOrderScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SavingsPlanOrderScopeRestOperations SavingsPlanOrderScopeRestClient => _savingsPlanOrderScopeRestClient ??= new SavingsPlanOrderScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SavingsPlanScopeClientDiagnostics => _savingsPlanScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SavingsPlanScopeRestOperations SavingsPlanScopeRestClient => _savingsPlanScopeRestClient ??= new SavingsPlanScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CostManagementAlertAlertsClientDiagnostics => _costManagementAlertAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementAlertResource.ResourceType.Namespace, Diagnostics);
         private AlertsRestOperations CostManagementAlertAlertsRestClient => _costManagementAlertAlertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CostManagementAlertResource.ResourceType));
-        private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ForecastRestOperations ForecastRestClient => _forecastRestClient ??= new ForecastRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DimensionsClientDiagnostics => _dimensionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DimensionsRestOperations DimensionsRestClient => _dimensionsRestClient ??= new DimensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics QueryClientDiagnostics => _queryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private QueryRestOperations QueryRestClient => _queryRestClient ??= new QueryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics GenerateReservationDetailsReportClientDiagnostics => _generateReservationDetailsReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private GenerateReservationDetailsReportRestOperations GenerateReservationDetailsReportRestClient => _generateReservationDetailsReportRestClient ??= new GenerateReservationDetailsReportRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private PriceSheetRestOperations PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ScheduledActionsRestOperations ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DimensionsClientDiagnostics => _dimensionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DimensionsRestOperations DimensionsRestClient => _dimensionsRestClient ??= new DimensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ForecastRestOperations ForecastRestClient => _forecastRestClient ??= new ForecastRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics QueryClientDiagnostics => _queryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private QueryRestOperations QueryRestClient => _queryRestClient ??= new QueryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private PriceSheetRestOperations PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics BenefitUtilizationSummariesClientDiagnostics => _benefitUtilizationSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BenefitUtilizationSummariesRestOperations BenefitUtilizationSummariesRestClient => _benefitUtilizationSummariesRestClient ??= new BenefitUtilizationSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics GenerateBenefitUtilizationSummariesReportClientDiagnostics => _generateBenefitUtilizationSummariesReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private GenerateBenefitUtilizationSummariesReportRestOperations GenerateBenefitUtilizationSummariesReportRestClient => _generateBenefitUtilizationSummariesReportRestClient ??= new GenerateBenefitUtilizationSummariesReportRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics GenerateReservationDetailsReportClientDiagnostics => _generateReservationDetailsReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private GenerateReservationDetailsReportRestOperations GenerateReservationDetailsReportRestClient => _generateReservationDetailsReportRestClient ??= new GenerateReservationDetailsReportRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CostAllocationRuleDefinitionCostAllocationRulesClientDiagnostics => _costAllocationRuleDefinitionCostAllocationRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostAllocationRuleDefinitionResource.ResourceType.Namespace, Diagnostics);
+        private CostAllocationRulesRestOperations CostAllocationRuleDefinitionCostAllocationRulesRestClient => _costAllocationRuleDefinitionCostAllocationRulesRestClient ??= new CostAllocationRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CostAllocationRuleDefinitionResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary> Gets a collection of TenantsCostManagementViewsResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of TenantsCostManagementViewsResources and their operations over a TenantsCostManagementViewsResource. </returns>
-        public virtual TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews()
-        {
-            return GetCachedClient(client => new TenantsCostManagementViewsCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the view by view name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Views_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="viewName"> View name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TenantsCostManagementViewsResource>> GetTenantsCostManagementViewsAsync(string viewName, CancellationToken cancellationToken = default)
-        {
-            return await GetAllTenantsCostManagementViews().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the view by view name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Views_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="viewName"> View name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<TenantsCostManagementViewsResource> GetTenantsCostManagementViews(string viewName, CancellationToken cancellationToken = default)
-        {
-            return GetAllTenantsCostManagementViews().Get(viewName, cancellationToken);
         }
 
         /// <summary> Gets a collection of TenantScheduledActionResources in the TenantResource. </summary>
@@ -183,7 +98,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,7 +129,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,828 +147,147 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             return GetTenantScheduledActions().Get(name, cancellationToken);
         }
 
+        /// <summary> Gets a collection of TenantsCostManagementViewsResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TenantsCostManagementViewsResources and their operations over a TenantsCostManagementViewsResource. </returns>
+        public virtual TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews()
+        {
+            return GetCachedClient(client => new TenantsCostManagementViewsCollection(client, Id));
+        }
+
         /// <summary>
-        /// Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'.
+        /// Gets the view by view name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
+        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BenefitUtilizationSummaries_ListByBillingAccountId</description>
+        /// <description>Views_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="viewName"> View name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TenantsCostManagementViewsResource>> GetTenantsCostManagementViewsAsync(string viewName, CancellationToken cancellationToken = default)
+        {
+            return await GetAllTenantsCostManagementViews().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the view by view name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Views_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> View name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TenantsCostManagementViewsResource> GetTenantsCostManagementViews(string viewName, CancellationToken cancellationToken = default)
+        {
+            return GetAllTenantsCostManagementViews().Get(viewName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CostAllocationRuleDefinitionResources in the TenantResource. </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BenefitUtilizationSummaries_ListByBillingAccountId</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An object representing collection of CostAllocationRuleDefinitionResources and their operations over a CostAllocationRuleDefinitionResource. </returns>
+        public virtual CostAllocationRuleDefinitionCollection GetCostAllocationRuleDefinitions(string billingAccountId)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
+            return new CostAllocationRuleDefinitionCollection(Client, Id, billingAccountId);
         }
 
         /// <summary>
-        /// Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'.
+        /// Get a cost allocation rule by rule name and billing account or enterprise enrollment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BenefitUtilizationSummaries_ListByBillingProfileId</description>
+        /// <description>CostAllocationRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostAllocationRuleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CostAllocationRuleDefinitionResource>> GetCostAllocationRuleDefinitionAsync(string billingAccountId, string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
+            return await GetCostAllocationRuleDefinitions(billingAccountId).GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'.
+        /// Get a cost allocation rule by rule name and billing account or enterprise enrollment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BenefitUtilizationSummaries_ListByBillingProfileId</description>
+        /// <description>CostAllocationRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostAllocationRuleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CostAllocationRuleDefinitionResource> GetCostAllocationRuleDefinition(string billingAccountId, string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the savings plan utilization summaries for daily or monthly grain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BenefitUtilizationSummaries_ListBySavingsPlanOrder</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
-        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the savings plan utilization summaries for daily or monthly grain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BenefitUtilizationSummaries_ListBySavingsPlanOrder</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
-        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the savings plan utilization summaries for daily or monthly grain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BenefitUtilizationSummaries_ListBySavingsPlanId</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
-        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the savings plan utilization summaries for daily or monthly grain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BenefitUtilizationSummaries_ListBySavingsPlanId</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
-        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
-        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided billing account. This API supports only enrollment accounts.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccountScope_GenerateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = BillingAccountScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
-            scope.Start();
-            try
-            {
-                var response = await BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided billing account. This API supports only enrollment accounts.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccountScope_GenerateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = BillingAccountScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
-            scope.Start();
-            try
-            {
-                var response = BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided billing account and billing profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProfileScope_GenerateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = BillingProfileScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
-            scope.Start();
-            try
-            {
-                var response = await BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided billing account and billing profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProfileScope_GenerateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = BillingProfileScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
-            scope.Start();
-            try
-            {
-                var response = BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, billingProfileId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided reservation order.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderScope_GenerateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="reservationOrderId"> Reservation Order ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ReservationOrderScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
-            scope.Start();
-            try
-            {
-                var response = await ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided reservation order.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderScope_GenerateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="reservationOrderId"> Reservation Order ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ReservationOrderScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
-            scope.Start();
-            try
-            {
-                var response = ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided reservation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationScope_GenerateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="reservationOrderId"> Reservation Order ID. </param>
-        /// <param name="reservationId"> Reservation ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ReservationScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope");
-            scope.Start();
-            try
-            {
-                var response = await ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided reservation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationScope_GenerateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="reservationOrderId"> Reservation Order ID. </param>
-        /// <param name="reservationId"> Reservation ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ReservationScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope");
-            scope.Start();
-            try
-            {
-                var response = ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, reservationId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided savings plan order.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderScope_GenerateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = SavingsPlanOrderScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
-            scope.Start();
-            try
-            {
-                var response = await SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided savings plan order.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderScope_GenerateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = SavingsPlanOrderScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
-            scope.Start();
-            try
-            {
-                var response = SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(savingsPlanOrderId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided savings plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanScope_GenerateBenefitUtilizationSummariesReportAsync</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = SavingsPlanScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
-            scope.Start();
-            try
-            {
-                var response = await SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsyncAsync(savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Triggers generation of a benefit utilization summaries report for the provided savings plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanScope_GenerateBenefitUtilizationSummariesReportAsync</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
-        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = SavingsPlanScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
-            scope.Start();
-            try
-            {
-                var response = SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, savingsPlanId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCostAllocationRuleDefinitions(billingAccountId).Get(ruleName, cancellationToken);
         }
 
         /// <summary>
@@ -1069,7 +303,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1104,7 +338,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1127,6 +361,142 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
+        /// Checks availability and correctness of the name for a scheduled action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScheduledActionAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementTenantResource.CheckCostManagementNameAvailabilityByScheduledAction");
+            scope.Start();
+            try
+            {
+                var response = await ScheduledActionsRestClient.CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks availability and correctness of the name for a scheduled action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScheduledAction(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementTenantResource.CheckCostManagementNameAvailabilityByScheduledAction");
+            scope.Start();
+            try
+            {
+                var response = ScheduledActionsRestClient.CheckNameAvailability(content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists the dimensions by the external cloud provider type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/dimensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dimensions_ByExternalCloudProviderType</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DimensionsRestClient.CreateByExternalCloudProviderTypeNextPageRequest(nextLink, options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the dimensions by the external cloud provider type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/dimensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dimensions_ByExternalCloudProviderType</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CostManagementDimension> ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DimensionsRestClient.CreateByExternalCloudProviderTypeNextPageRequest(nextLink, options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Lists the forecast charges for external cloud provider type defined.
         /// <list type="bullet">
         /// <item>
@@ -1139,13 +509,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
-        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
+        /// <param name="forecastDefinition"> The request body. </param>
         /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1182,13 +552,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
-        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
+        /// <param name="forecastDefinition"> The request body. </param>
         /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1213,64 +583,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Lists the dimensions by the external cloud provider type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/dimensions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Dimensions_ByExternalCloudProviderType</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the dimensions by the external cloud provider type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/dimensions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Dimensions_ByExternalCloudProviderType</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CostManagementDimension> ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
-        }
-
-        /// <summary>
         /// Query the usage data for external cloud provider type defined.
         /// <list type="bullet">
         /// <item>
@@ -1283,13 +595,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
-        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
+        /// <param name="queryDefinition"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
@@ -1325,13 +637,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
-        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
+        /// <param name="queryDefinition"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
@@ -1355,41 +667,53 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Generates the reservations details report for provided date range asynchronously based on enrollment id. The Reservation usage details can be viewed only by certain enterprise roles. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role
+        /// Generates the pricesheet for the provided billing period asynchronously based on the Enrollment ID. This is for Enterprise Agreement customers.
+        ///
+        /// **Migrate to version 2025-03-01**
+        ///
+        /// You can use the 2025-03-01 API version with the new URI:
+        ///
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.CostManagement/pricesheets/default/download'
+        ///
+        /// With a new schema detailed below, the new version of the price sheet provides additional information and includes prices for Azure Reserved Instances (RI) for the current billing period. We recommend downloading an Azure Price Sheet for when entering a new billing period if you would maintain an ongoing record of past Azure Reserved Instance (RI) pricing.
+        ///
+        /// The EA Azure price sheet is available for billing periods in the past 13 months. To request a price sheet for a billing period older than 13 months, please contact support.
+        ///
+        /// The Azure price sheet download experience has been updated from a single .csv file to a zip file containing multiple .csv files, each with max size of 75MB. The 2023-11-01 version has been upgraded to use http POST method; details can be found below.
+        ///
+        /// All versions of the Microsoft.Consumption Azure Price Sheet - Download by Billing Account (including 2022-06-01, 2021-10-01, 2020-01-01-preview, 2019-10-01, 2019-05-01) are scheduled to be retired on 01 June 2026 and will no longer be supported after this date.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateReservationDetailsReport</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.CostManagement/pricesheets/default/download</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GenerateReservationDetailsReport_ByBillingAccountId</description>
+        /// <description>PriceSheet_DownloadByBillingAccount</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountId"> Enrollment ID (Legacy BillingAccount ID). </param>
-        /// <param name="startDate"> Start Date. </param>
-        /// <param name="endDate"> End Date. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is null. </exception>
+        public virtual async Task<ArmOperation<OperationStatus>> DownloadByBillingAccountPriceSheetAsync(WaitUntil waitUntil, string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNull(startDate, nameof(startDate));
-            Argument.AssertNotNull(endDate, nameof(endDate));
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
-            using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.ByBillingAccountIdGenerateReservationDetailsReport");
+            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadByBillingAccountPriceSheet");
             scope.Start();
             try
             {
-                var response = await GenerateReservationDetailsReportRestClient.ByBillingAccountIdAsync(billingAccountId, startDate, endDate, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
+                var response = await PriceSheetRestClient.DownloadByBillingAccountAsync(billingAccountId, billingPeriodName, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingAccountRequest(billingAccountId, billingPeriodName).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1402,41 +726,1069 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Generates the reservations details report for provided date range asynchronously based on enrollment id. The Reservation usage details can be viewed only by certain enterprise roles. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role
+        /// Generates the pricesheet for the provided billing period asynchronously based on the Enrollment ID. This is for Enterprise Agreement customers.
+        ///
+        /// **Migrate to version 2025-03-01**
+        ///
+        /// You can use the 2025-03-01 API version with the new URI:
+        ///
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.CostManagement/pricesheets/default/download'
+        ///
+        /// With a new schema detailed below, the new version of the price sheet provides additional information and includes prices for Azure Reserved Instances (RI) for the current billing period. We recommend downloading an Azure Price Sheet for when entering a new billing period if you would maintain an ongoing record of past Azure Reserved Instance (RI) pricing.
+        ///
+        /// The EA Azure price sheet is available for billing periods in the past 13 months. To request a price sheet for a billing period older than 13 months, please contact support.
+        ///
+        /// The Azure price sheet download experience has been updated from a single .csv file to a zip file containing multiple .csv files, each with max size of 75MB. The 2023-11-01 version has been upgraded to use http POST method; details can be found below.
+        ///
+        /// All versions of the Microsoft.Consumption Azure Price Sheet - Download by Billing Account (including 2022-06-01, 2021-10-01, 2020-01-01-preview, 2019-10-01, 2019-05-01) are scheduled to be retired on 01 June 2026 and will no longer be supported after this date.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateReservationDetailsReport</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.CostManagement/pricesheets/default/download</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GenerateReservationDetailsReport_ByBillingAccountId</description>
+        /// <description>PriceSheet_DownloadByBillingAccount</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountId"> Enrollment ID (Legacy BillingAccount ID). </param>
-        /// <param name="startDate"> Start Date. </param>
-        /// <param name="endDate"> End Date. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        public virtual ArmOperation<OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is null. </exception>
+        public virtual ArmOperation<OperationStatus> DownloadByBillingAccountPriceSheet(WaitUntil waitUntil, string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNull(startDate, nameof(startDate));
-            Argument.AssertNotNull(endDate, nameof(endDate));
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
-            using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.ByBillingAccountIdGenerateReservationDetailsReport");
+            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadByBillingAccountPriceSheet");
             scope.Start();
             try
             {
-                var response = GenerateReservationDetailsReportRestClient.ByBillingAccountId(billingAccountId, startDate, endDate, cancellationToken);
-                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
+                var response = PriceSheetRestClient.DownloadByBillingAccount(billingAccountId, billingPeriodName, cancellationToken);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingAccountRequest(billingAccountId, billingPeriodName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a URL to download the pricesheet for an invoice. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}/providers/Microsoft.CostManagement/pricesheets/default/download</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_DownloadByInvoice</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="billingAccountName"> BillingAccount ID. </param>
+        /// <param name="billingProfileName"> Billing Profile Name. </param>
+        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
+        public virtual async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
+
+            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheet");
+            scope.Start();
+            try
+            {
+                var response = await PriceSheetRestClient.DownloadByInvoiceAsync(billingAccountName, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByInvoiceRequest(billingAccountName, billingProfileName, invoiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a URL to download the pricesheet for an invoice. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}/providers/Microsoft.CostManagement/pricesheets/default/download</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_DownloadByInvoice</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="billingAccountName"> BillingAccount ID. </param>
+        /// <param name="billingProfileName"> Billing Profile Name. </param>
+        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
+        public virtual ArmOperation<DownloadURL> DownloadPriceSheet(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
+
+            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheet");
+            scope.Start();
+            try
+            {
+                var response = PriceSheetRestClient.DownloadByInvoice(billingAccountName, billingProfileName, invoiceName, cancellationToken);
+                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByInvoiceRequest(billingAccountName, billingProfileName, invoiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a URL to download the current month's pricesheet for a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        ///
+        /// You can use the new 2023-09-01 API version for billing periods January 2023 onwards. Azure Reserved Instance (RI) pricing is only available through the new version of the API.
+        ///
+        /// Due to Azure product growth, the Azure price sheet download experience in this preview version will be updated from a single csv/json file to a Zip file containing multiple csv/json files, each with max size of 75MB.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.CostManagement/pricesheets/default/download</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_DownloadByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="billingAccountName"> BillingAccount ID. </param>
+        /// <param name="billingProfileName"> Billing Profile Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
+        public virtual async Task<ArmOperation<PricesheetDownloadProperties>> DownloadPriceSheetByBillingProfileAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+
+            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheetByBillingProfile");
+            scope.Start();
+            try
+            {
+                var response = await PriceSheetRestClient.DownloadByBillingProfileAsync(billingAccountName, billingProfileName, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<PricesheetDownloadProperties>(new PricesheetDownloadPropertiesOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a URL to download the current month's pricesheet for a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        ///
+        /// You can use the new 2023-09-01 API version for billing periods January 2023 onwards. Azure Reserved Instance (RI) pricing is only available through the new version of the API.
+        ///
+        /// Due to Azure product growth, the Azure price sheet download experience in this preview version will be updated from a single csv/json file to a Zip file containing multiple csv/json files, each with max size of 75MB.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.CostManagement/pricesheets/default/download</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_DownloadByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="billingAccountName"> BillingAccount ID. </param>
+        /// <param name="billingProfileName"> Billing Profile Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
+        public virtual ArmOperation<PricesheetDownloadProperties> DownloadPriceSheetByBillingProfile(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+
+            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheetByBillingProfile");
+            scope.Start();
+            try
+            {
+                var response = PriceSheetRestClient.DownloadByBillingProfile(billingAccountName, billingProfileName, cancellationToken);
+                var operation = new CostManagementArmOperation<PricesheetDownloadProperties>(new PricesheetDownloadPropertiesOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BenefitUtilizationSummaries_ListByBillingProfileId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BenefitUtilizationSummaries_ListByBillingProfileId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BenefitUtilizationSummaries_ListByBillingAccountId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BenefitUtilizationSummaries_ListByBillingAccountId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the savings plan utilization summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BenefitUtilizationSummaries_ListBySavingsPlanOrder</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
+        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the savings plan utilization summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BenefitUtilizationSummaries_ListBySavingsPlanOrder</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
+        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the savings plan utilization summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BenefitUtilizationSummaries_ListBySavingsPlanId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
+        /// <param name="savingsPlanId"> Savings plan ID. </param>
+        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the savings plan utilization summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BenefitUtilizationSummaries_ListBySavingsPlanId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
+        /// <param name="savingsPlanId"> Savings plan ID. </param>
+        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided billing account and billing profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
+            scope.Start();
+            try
+            {
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateByBillingProfileAsync(billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByBillingProfileRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided billing account and billing profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
+            scope.Start();
+            try
+            {
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateByBillingProfile(billingAccountId, billingProfileId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByBillingProfileRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided billing account. This API supports only enrollment accounts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
+            scope.Start();
+            try
+            {
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateByBillingAccountAsync(billingAccountId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByBillingAccountRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided billing account. This API supports only enrollment accounts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
+            scope.Start();
+            try
+            {
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateByBillingAccount(billingAccountId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByBillingAccountRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided savings plan order.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanOrderId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
+            scope.Start();
+            try
+            {
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateBySavingsPlanOrderIdAsync(savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBySavingsPlanOrderIdRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided savings plan order.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanOrderId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
+            scope.Start();
+            try
+            {
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateBySavingsPlanOrderId(savingsPlanOrderId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBySavingsPlanOrderIdRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided savings plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
+        /// <param name="savingsPlanId"> Savings plan ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
+            scope.Start();
+            try
+            {
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateBySavingsPlanIdAsync(savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided savings plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
+        /// <param name="savingsPlanId"> Savings plan ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
+            scope.Start();
+            try
+            {
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateBySavingsPlanId(savingsPlanOrderId, savingsPlanId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided reservation order.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationOrderId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reservationOrderId"> Reservation Order ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
+            scope.Start();
+            try
+            {
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateByReservationOrderIdAsync(reservationOrderId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByReservationOrderIdRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided reservation order.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationOrderId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reservationOrderId"> Reservation Order ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
+            scope.Start();
+            try
+            {
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateByReservationOrderId(reservationOrderId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByReservationOrderIdRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided reservation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reservationOrderId"> Reservation Order ID. </param>
+        /// <param name="reservationId"> Reservation ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope");
+            scope.Start();
+            try
+            {
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateByReservationIdAsync(reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByReservationIdRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided reservation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reservationOrderId"> Reservation Order ID. </param>
+        /// <param name="reservationId"> Reservation ID. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope");
+            scope.Start();
+            try
+            {
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateByReservationId(reservationOrderId, reservationId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByReservationIdRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1453,7 +1805,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateReservationDetailsReport</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateReservationDetailsReport</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -1461,13 +1813,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="startDate"> Start Date. </param>
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1502,7 +1854,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateReservationDetailsReport</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateReservationDetailsReport</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -1510,13 +1862,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="startDate"> Start Date. </param>
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1547,41 +1899,41 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Gets a URL to download the pricesheet for an invoice. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// Generates the reservations details report for provided date range asynchronously based on enrollment id. The Reservation usage details can be viewed only by certain enterprise roles. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}/providers/Microsoft.CostManagement/pricesheets/default/download</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateReservationDetailsReport</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PriceSheet_Download</description>
+        /// <description>GenerateReservationDetailsReport_ByBillingAccountId</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="startDate"> Start Date. </param>
+        /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
-        public virtual async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        public virtual async Task<ArmOperation<OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(startDate, nameof(startDate));
+            Argument.AssertNotNull(endDate, nameof(endDate));
 
-            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheet");
+            using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.ByBillingAccountIdGenerateReservationDetailsReport");
             scope.Start();
             try
             {
-                var response = await PriceSheetRestClient.DownloadAsync(billingAccountName, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadRequest(billingAccountName, billingProfileName, invoiceName).Request, response, OperationFinalStateVia.Location);
+                var response = await GenerateReservationDetailsReportRestClient.ByBillingAccountIdAsync(billingAccountId, startDate, endDate, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1594,41 +1946,41 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Gets a URL to download the pricesheet for an invoice. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// Generates the reservations details report for provided date range asynchronously based on enrollment id. The Reservation usage details can be viewed only by certain enterprise roles. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}/providers/Microsoft.CostManagement/pricesheets/default/download</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateReservationDetailsReport</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PriceSheet_Download</description>
+        /// <description>GenerateReservationDetailsReport_ByBillingAccountId</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="startDate"> Start Date. </param>
+        /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
-        public virtual ArmOperation<DownloadURL> DownloadPriceSheet(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        public virtual ArmOperation<OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(startDate, nameof(startDate));
+            Argument.AssertNotNull(endDate, nameof(endDate));
 
-            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheet");
+            using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.ByBillingAccountIdGenerateReservationDetailsReport");
             scope.Start();
             try
             {
-                var response = PriceSheetRestClient.Download(billingAccountName, billingProfileName, invoiceName, cancellationToken);
-                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadRequest(billingAccountName, billingProfileName, invoiceName).Request, response, OperationFinalStateVia.Location);
+                var response = GenerateReservationDetailsReportRestClient.ByBillingAccountId(billingAccountId, startDate, endDate, cancellationToken);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1641,124 +1993,38 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Gets a URL to download the current month's pricesheet for a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.Due to Azure product growth, the Azure price sheet download experience in this preview version will be updated from a single csv file to a Zip file containing multiple csv files, each with max 200k records.
+        /// Checks availability and correctness of a name for a cost allocation rule
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.CostManagement/pricesheets/default/download</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PriceSheet_DownloadByBillingProfile</description>
+        /// <description>CostAllocationRules_CheckNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostAllocationRuleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        public virtual async Task<ArmOperation<DownloadURL>> DownloadByBillingProfilePriceSheetAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadByBillingProfilePriceSheet");
-            scope.Start();
-            try
-            {
-                var response = await PriceSheetRestClient.DownloadByBillingProfileAsync(billingAccountName, billingProfileName, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a URL to download the current month's pricesheet for a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.Due to Azure product growth, the Azure price sheet download experience in this preview version will be updated from a single csv file to a Zip file containing multiple csv files, each with max 200k records.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.CostManagement/pricesheets/default/download</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PriceSheet_DownloadByBillingProfile</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        public virtual ArmOperation<DownloadURL> DownloadByBillingProfilePriceSheet(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadByBillingProfilePriceSheet");
-            scope.Start();
-            try
-            {
-                var response = PriceSheetRestClient.DownloadByBillingProfile(billingAccountName, billingProfileName, cancellationToken);
-                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks availability and correctness of the name for a scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Cost allocation rule to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScheduledActionAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostAllocationRuleCheckNameAvailabilityResponse>> CheckNameAvailabilityCostAllocationRuleAsync(CostAllocationRuleCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementTenantResource.CheckCostManagementNameAvailabilityByScheduledAction");
+            using var scope = CostAllocationRuleDefinitionCostAllocationRulesClientDiagnostics.CreateScope("MockableCostManagementTenantResource.CheckNameAvailabilityCostAllocationRule");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+                var response = await CostAllocationRuleDefinitionCostAllocationRulesRestClient.CheckNameAvailabilityAsync(_billingAccountId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1769,34 +2035,38 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Checks availability and correctness of the name for a scheduled action.
+        /// Checks availability and correctness of a name for a cost allocation rule
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/checkNameAvailability</description>
+        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CheckNameAvailability</description>
+        /// <description>CostAllocationRules_CheckNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostAllocationRuleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Cost allocation rule to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScheduledAction(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CostAllocationRuleCheckNameAvailabilityResponse> CheckNameAvailabilityCostAllocationRule(CostAllocationRuleCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementTenantResource.CheckCostManagementNameAvailabilityByScheduledAction");
+            using var scope = CostAllocationRuleDefinitionCostAllocationRulesClientDiagnostics.CreateScope("MockableCostManagementTenantResource.CheckNameAvailabilityCostAllocationRule");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.CheckNameAvailability(content, cancellationToken);
+                var response = CostAllocationRuleDefinitionCostAllocationRulesRestClient.CheckNameAvailability(_billingAccountId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

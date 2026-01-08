@@ -63,12 +63,15 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="submittedOn"> The time when export was queued to be run. </param>
         /// <param name="processingStartOn"> The time when export was picked up to be run. </param>
         /// <param name="processingEndOn"> The time when the export run finished. </param>
+        /// <param name="startOn"> The start datetime for the export. </param>
+        /// <param name="endOn"> The end datetime for the export. </param>
         /// <param name="fileName"> The name of the exported file. </param>
+        /// <param name="manifestFile"> The manifest file location(URI location) for the exported files. </param>
         /// <param name="runSettings"> The export settings that were in effect for this run. </param>
         /// <param name="error"> The details of any error. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportRunExecutionType? executionType, ExportRunExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartOn, DateTimeOffset? processingEndOn, string fileName, CommonExportProperties runSettings, ExportRunErrorDetails error, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportRunExecutionType? executionType, ExportRunExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartOn, DateTimeOffset? processingEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string fileName, string manifestFile, CommonExportProperties runSettings, ExportRunErrorDetails error, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExecutionType = executionType;
             Status = status;
@@ -76,7 +79,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             SubmittedOn = submittedOn;
             ProcessingStartOn = processingStartOn;
             ProcessingEndOn = processingEndOn;
+            StartOn = startOn;
+            EndOn = endOn;
             FileName = fileName;
+            ManifestFile = manifestFile;
             RunSettings = runSettings;
             Error = error;
             ETag = eTag;
@@ -95,8 +101,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         public DateTimeOffset? ProcessingStartOn { get; set; }
         /// <summary> The time when the export run finished. </summary>
         public DateTimeOffset? ProcessingEndOn { get; set; }
+        /// <summary> The start datetime for the export. </summary>
+        public DateTimeOffset? StartOn { get; set; }
+        /// <summary> The end datetime for the export. </summary>
+        public DateTimeOffset? EndOn { get; set; }
         /// <summary> The name of the exported file. </summary>
         public string FileName { get; set; }
+        /// <summary> The manifest file location(URI location) for the exported files. </summary>
+        public string ManifestFile { get; set; }
         /// <summary> The export settings that were in effect for this run. </summary>
         public CommonExportProperties RunSettings { get; set; }
         /// <summary> The details of any error. </summary>

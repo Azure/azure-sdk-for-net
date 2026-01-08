@@ -57,14 +57,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportDeliveryDestination"/>. </summary>
+        /// <param name="destinationType"> The export delivery destination type. Currently only 'AzureBlob' is supported. </param>
         /// <param name="resourceId"> The resource id of the storage account where exports will be delivered. This is not required if a sasToken and storageAccount are specified. </param>
         /// <param name="container"> The name of the container where exports will be uploaded. If the container does not exist it will be created. </param>
         /// <param name="rootFolderPath"> The name of the directory where exports will be uploaded. </param>
         /// <param name="sasToken"> A SAS token for the storage account. For a restricted set of Azure customers this together with storageAccount can be specified instead of resourceId. Note: the value returned by the API for this property will always be obfuscated. Returning this same obfuscated value will not result in the SAS token being updated. To update this value a new SAS token must be specified. </param>
         /// <param name="storageAccount"> The storage account where exports will be uploaded. For a restricted set of Azure customers this together with sasToken can be specified instead of resourceId. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDeliveryDestination(ResourceIdentifier resourceId, string container, string rootFolderPath, string sasToken, string storageAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExportDeliveryDestination(DestinationType? destinationType, ResourceIdentifier resourceId, string container, string rootFolderPath, string sasToken, string storageAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            DestinationType = destinationType;
             ResourceId = resourceId;
             Container = container;
             RootFolderPath = rootFolderPath;
@@ -78,6 +80,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
         }
 
+        /// <summary> The export delivery destination type. Currently only 'AzureBlob' is supported. </summary>
+        public DestinationType? DestinationType { get; set; }
         /// <summary> The resource id of the storage account where exports will be delivered. This is not required if a sasToken and storageAccount are specified. </summary>
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The name of the container where exports will be uploaded. If the container does not exist it will be created. </summary>
